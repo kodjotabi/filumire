@@ -5,7 +5,7 @@ import type {
 import {
   MockEduTutor,
   type EduTutorResponse,
-} from "../../packages/ai/index.ts";
+} from "../../packages/ai";
 
 export interface EduTutorServiceRequest {
   learnerState: LearnerState;

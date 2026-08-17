@@ -3,7 +3,7 @@ import type {
   AdaptiveDecisionRequest,
   AdaptiveDecisionResponse,
 } from "../../packages/contracts";
-import { selectPedagogicalAction } from "../../packages/pedagogy/index.ts";
+import { selectPedagogicalAction } from "../../packages/pedagogy";
 
 export function makeAdaptiveDecision(
   request: AdaptiveDecisionRequest,
