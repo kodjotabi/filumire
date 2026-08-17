@@ -1,5 +1,12 @@
 import { NextResponse } from "next/server";
-import { createInitialLearnerState, applyEvidence } from "../../../../../services/learner-state";
+import {
+  createInitialLearnerState,
+  applyEvidence,
+} from "../../../../../services/learner-state";
+import {
+  getLearnerState,
+  saveLearnerState,
+} from "../../../../../services/learner-state-store";
 import { evaluateAssessment } from "../../../../../services/assessment";
 import { makeAdaptiveDecision } from "../../../../../services/adaptive-engine";
 import { generateInstruction } from "../../../../../services/edututor";
@@ -17,10 +24,15 @@ export async function POST(request: Request) {
       response: body.response,
     };
 
-    let learnerState = createInitialLearnerState(
-      submission.learnerId,
-      submission.competencyId,
-    );
+    let learnerState =
+      getLearnerState(
+        submission.learnerId,
+        submission.competencyId,
+      ) ??
+      createInitialLearnerState(
+        submission.learnerId,
+        submission.competencyId,
+      );
 
     const assessment = evaluateAssessment(
       submission,
@@ -31,6 +43,8 @@ export async function POST(request: Request) {
       learnerState,
       assessment.evidence,
     );
+
+    saveLearnerState(learnerState);
 
     const adaptiveDecision = makeAdaptiveDecision({
       learnerId: submission.learnerId,
