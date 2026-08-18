@@ -3,11 +3,12 @@ import type {
   AdaptiveDecision,
   AssessmentItemId,
   CompetencyId,
-  EvidenceId,
   LearnerId,
   LearnerState,
   SessionId,
 } from "../domain";
+
+import type { LearningContent } from "../content";
 
 export interface DiagnosticRequest {
   learnerId: LearnerId;
@@ -18,7 +19,7 @@ export interface DiagnosticRequest {
 export interface DiagnosticResponse {
   sessionId: SessionId;
   learnerState: LearnerState;
-  evidenceIds: EvidenceId[];
+  evidenceIds: string[];
 }
 
 export interface AssessmentSubmission {
@@ -30,7 +31,7 @@ export interface AssessmentSubmission {
 }
 
 export interface AssessmentResult {
-  evidenceId: EvidenceId;
+  evidenceId: string;
   learnerId: LearnerId;
   sessionId: SessionId;
   assessmentItemId: AssessmentItemId;
@@ -45,6 +46,7 @@ export interface AdaptiveDecisionRequest {
 
 export interface AdaptiveDecisionResponse {
   decision: AdaptiveDecision;
+  content?: LearningContent;
 }
 
 export interface LearningActionRequest {

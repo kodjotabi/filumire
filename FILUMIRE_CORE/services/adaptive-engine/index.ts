@@ -4,6 +4,7 @@ import type {
   AdaptiveDecisionResponse,
 } from "../../packages/contracts";
 import { selectPedagogicalAction } from "../../packages/pedagogy";
+import { selectLearningContent } from "../content-selection";
 
 export function makeAdaptiveDecision(
   request: AdaptiveDecisionRequest,
@@ -36,7 +37,13 @@ export function makeAdaptiveDecision(
     createdAt: new Date().toISOString(),
   };
 
+  const content = selectLearningContent(
+    request.learnerState,
+    pedagogicalDecision.action,
+  );
+
   return {
     decision,
+    content,
   };
 }
