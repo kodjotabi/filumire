@@ -5,6 +5,7 @@ import type {
 } from "../../packages/contracts";
 import { selectPedagogicalAction } from "../../packages/pedagogy";
 import { selectLearningContent } from "../content-selection";
+import { getEvidence } from "../evidence-store";
 
 export function makeAdaptiveDecision(
   request: AdaptiveDecisionRequest,
@@ -15,11 +16,26 @@ export function makeAdaptiveDecision(
     throw new Error("No competency state available for adaptive decision.");
   }
 
+  const evidence = getEvidence(
+    request.learnerId,
+    competency.competencyId,
+  );
+
+  let consecutiveFailures = 0;
+
+  for (let index = evidence.length - 1; index >= 0; index -= 1) {
+    if (evidence[index].outcome !== "incorrect") {
+      break;
+    }
+
+    consecutiveFailures += 1;
+  }
+
   const context = {
     masteryEstimate: competency.masteryEstimate,
     confidence: competency.confidence,
     evidenceCount: competency.evidenceCount,
-    consecutiveFailures: 0,
+    consecutiveFailures,
     prerequisiteSatisfied: true,
   };
 
@@ -32,7 +48,7 @@ export function makeAdaptiveDecision(
     action: pedagogicalDecision.action,
     competencyId: competency.competencyId,
     reasonCode: pedagogicalDecision.reasonCode,
-    evidenceIds: [],
+    evidenceIds: evidence.map((item) => item.id),
     policyVersion: "policy-0.1",
     createdAt: new Date().toISOString(),
   };

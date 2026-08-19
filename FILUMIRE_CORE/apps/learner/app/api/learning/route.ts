@@ -7,6 +7,7 @@ import {
   getLearnerState,
   saveLearnerState,
 } from "../../../../../services/learner-state-store";
+import { saveEvidence } from "../../../../../services/evidence-store";
 import { evaluateAssessment } from "../../../../../services/assessment";
 import { makeAdaptiveDecision } from "../../../../../services/adaptive-engine";
 import { generateInstruction } from "../../../../../services/edututor";
@@ -41,6 +42,8 @@ export async function POST(request: Request) {
       submission,
       body.expectedResponse,
     );
+
+    saveEvidence(assessment.evidence);
 
     learnerState = applyEvidence(
       learnerState,
