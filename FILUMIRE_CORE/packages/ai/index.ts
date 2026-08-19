@@ -19,7 +19,11 @@ export interface EduTutorModel {
 export class MockEduTutor implements EduTutorModel {
   async generate(request: EduTutorRequest): Promise<EduTutorResponse> {
     return {
-      content: `FILUMIRE instructional response for ${request.action} on competency ${request.competencyId}.`,
+      content: [
+        `FILUMIRE instructional response for ${request.action} on competency ${request.competencyId}.`,
+        "",
+        request.instructionalContext,
+      ].join("\n"),
       modelId: "mock-edututor-0.1",
       generatedAt: new Date().toISOString(),
     };
