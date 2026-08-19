@@ -10,7 +10,10 @@ import {
 import { evaluateAssessment } from "../../../../../services/assessment";
 import { makeAdaptiveDecision } from "../../../../../services/adaptive-engine";
 import { generateInstruction } from "../../../../../services/edututor";
+import { seedContent } from "../../../../../services/content-store/seed";
 import type { AssessmentSubmission } from "../../../../../packages/contracts";
+
+seedContent();
 
 export async function POST(request: Request) {
   try {
