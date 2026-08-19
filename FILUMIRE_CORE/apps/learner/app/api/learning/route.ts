@@ -55,6 +55,7 @@ export async function POST(request: Request) {
     const instruction = await generateInstruction({
       learnerState,
       decision: adaptiveDecision.decision,
+      content: adaptiveDecision.content,
       instructionalContext:
         body.instructionalContext ??
         "FILUMIRE adaptive-learning session.",
@@ -64,6 +65,7 @@ export async function POST(request: Request) {
       learnerState,
       assessment,
       decision: adaptiveDecision.decision,
+      content: adaptiveDecision.content,
       instruction,
     });
   } catch {
