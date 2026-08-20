@@ -7,16 +7,16 @@ import { selectPedagogicalAction } from "../../packages/pedagogy";
 import { selectLearningContent } from "../content-selection";
 import { getEvidence } from "../evidence-store";
 
-export function makeAdaptiveDecision(
+export async function makeAdaptiveDecision(
   request: AdaptiveDecisionRequest,
-): AdaptiveDecisionResponse {
+): Promise<AdaptiveDecisionResponse> {
   const competency = request.learnerState.competencies[0];
 
   if (!competency) {
     throw new Error("No competency state available for adaptive decision.");
   }
 
-  const evidence = getEvidence(
+  const evidence = await getEvidence(
     request.learnerId,
     competency.competencyId,
   );

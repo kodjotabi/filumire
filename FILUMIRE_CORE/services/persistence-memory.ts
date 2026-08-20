@@ -17,18 +17,18 @@ function getKey(
 export class MemoryPersistenceStore
   implements PersistenceStore
 {
-  getLearnerState(
+  async getLearnerState(
     learnerId: string,
     competencyId: string,
-  ): LearnerState | undefined {
+  ): Promise<LearnerState | undefined> {
     return learnerStates.get(
       getKey(learnerId, competencyId),
     );
   }
 
-  saveLearnerState(
+  async saveLearnerState(
     state: LearnerState,
-  ): void {
+  ): Promise<void> {
     for (const competency of state.competencies) {
       learnerStates.set(
         getKey(
@@ -40,9 +40,9 @@ export class MemoryPersistenceStore
     }
   }
 
-  saveEvidence(
+  async saveEvidence(
     evidence: LearningEvidence,
-  ): void {
+  ): Promise<void> {
     const key = getKey(
       evidence.learnerId,
       evidence.competencyId,
@@ -56,10 +56,10 @@ export class MemoryPersistenceStore
     ]);
   }
 
-  getEvidence(
+  async getEvidence(
     learnerId: string,
     competencyId: string,
-  ): LearningEvidence[] {
+  ): Promise<LearningEvidence[]> {
     return (
       evidenceStore.get(
         getKey(learnerId, competencyId),
@@ -67,7 +67,7 @@ export class MemoryPersistenceStore
     );
   }
 
-  getAllEvidence(): LearningEvidence[] {
+  async getAllEvidence(): Promise<LearningEvidence[]> {
     return Array.from(
       evidenceStore.values(),
     ).flat();

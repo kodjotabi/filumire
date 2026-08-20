@@ -1,22 +1,22 @@
 import type { LearningEvidence } from "../../packages/domain";
-import { memoryPersistence } from "../persistence-memory";
+import { persistenceStore } from "../persistence-provider";
 
-export function saveEvidence(
+export async function saveEvidence(
   evidence: LearningEvidence,
-): void {
-  memoryPersistence.saveEvidence(evidence);
+): Promise<void> {
+  await persistenceStore.saveEvidence(evidence);
 }
 
-export function getEvidence(
+export async function getEvidence(
   learnerId: string,
   competencyId: string,
-): LearningEvidence[] {
-  return memoryPersistence.getEvidence(
+): Promise<LearningEvidence[]> {
+  return persistenceStore.getEvidence(
     learnerId,
     competencyId,
   );
 }
 
-export function getAllEvidence(): LearningEvidence[] {
-  return memoryPersistence.getAllEvidence();
+export async function getAllEvidence(): Promise<LearningEvidence[]> {
+  return persistenceStore.getAllEvidence();
 }

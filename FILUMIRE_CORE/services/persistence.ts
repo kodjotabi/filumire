@@ -7,20 +7,20 @@ export interface PersistenceStore {
   getLearnerState(
     learnerId: string,
     competencyId: string,
-  ): LearnerState | undefined;
+  ): Promise<LearnerState | undefined>;
 
   saveLearnerState(
     state: LearnerState,
-  ): void;
+  ): Promise<void>;
 
   saveEvidence(
     evidence: LearningEvidence,
-  ): void;
+  ): Promise<void>;
 
   getEvidence(
     learnerId: string,
     competencyId: string,
-  ): LearningEvidence[];
+  ): Promise<LearningEvidence[]>;
 
-  getAllEvidence(): LearningEvidence[];
+  getAllEvidence(): Promise<LearningEvidence[]>;
 }

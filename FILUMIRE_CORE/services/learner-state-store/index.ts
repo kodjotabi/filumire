@@ -1,18 +1,18 @@
 import type { LearnerState } from "../../packages/domain";
-import { memoryPersistence } from "../persistence-memory";
+import { persistenceStore } from "../persistence-provider";
 
-export function getLearnerState(
+export async function getLearnerState(
   learnerId: string,
   competencyId: string,
-): LearnerState | undefined {
-  return memoryPersistence.getLearnerState(
+): Promise<LearnerState | undefined> {
+  return persistenceStore.getLearnerState(
     learnerId,
     competencyId,
   );
 }
 
-export function saveLearnerState(
+export async function saveLearnerState(
   state: LearnerState,
-): void {
-  memoryPersistence.saveLearnerState(state);
+): Promise<void> {
+  await persistenceStore.saveLearnerState(state);
 }

@@ -7,7 +7,9 @@ import {
   getLearnerState,
   saveLearnerState,
 } from "../../../../../services/learner-state-store";
-import { saveEvidence } from "../../../../../services/evidence-store";
+import {
+  saveEvidence,
+} from "../../../../../services/evidence-store";
 import { evaluateAssessment } from "../../../../../services/assessment";
 import { makeAdaptiveDecision } from "../../../../../services/adaptive-engine";
 import { generateInstruction } from "../../../../../services/edututor";
@@ -29,10 +31,10 @@ export async function POST(request: Request) {
     };
 
     let learnerState =
-      getLearnerState(
+      (await getLearnerState(
         submission.learnerId,
         submission.competencyId,
-      ) ??
+      )) ??
       createInitialLearnerState(
         submission.learnerId,
         submission.competencyId,
@@ -43,16 +45,16 @@ export async function POST(request: Request) {
       body.expectedResponse,
     );
 
-    saveEvidence(assessment.evidence);
+    await saveEvidence(assessment.evidence);
 
     learnerState = applyEvidence(
       learnerState,
       assessment.evidence,
     );
 
-    saveLearnerState(learnerState);
+    await saveLearnerState(learnerState);
 
-    const adaptiveDecision = makeAdaptiveDecision({
+    const adaptiveDecision = await makeAdaptiveDecision({
       learnerId: submission.learnerId,
       sessionId: submission.sessionId,
       learnerState,
