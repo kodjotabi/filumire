@@ -76,10 +76,18 @@ export async function POST(request: Request) {
       content: adaptiveDecision.content,
       instruction,
     });
-  } catch {
+  } catch (error) {
+    console.error(
+      "FILUMIRE learning API error:",
+      error,
+    );
+
     return NextResponse.json(
       {
-        error: "Unable to process learning interaction.",
+        error:
+          error instanceof Error
+            ? error.message
+            : "Unable to process learning interaction.",
       },
       { status: 400 },
     );
