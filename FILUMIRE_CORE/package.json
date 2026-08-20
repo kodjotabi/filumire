@@ -13,6 +13,7 @@
     "test": "npm test"
   },
   "devDependencies": {
+    "drizzle-kit": "^0.31.10",
     "typescript": "^5.7.2"
   },
   "dependencies": {
