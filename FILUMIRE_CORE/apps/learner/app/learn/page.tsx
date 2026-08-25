@@ -1,12 +1,12 @@
-﻿"use client";
+"use client";
+
+import { useEffect, useState } from "react";
 
 const DEVELOPMENT_LEARNER_ID =
   "learner-demo-001";
 
 const SESSION_ID =
   `session-${DEVELOPMENT_LEARNER_ID}`;
-
-import { useEffect, useState } from "react";
 
 type LearningContent = {
   id: string;
@@ -31,15 +31,19 @@ type LearningResponse = {
       evidenceCount: number;
     }>;
   };
+
   decision: {
     action: string;
     competencyId: string;
     reasonCode: string;
   };
+
   content?: LearningContent;
+
   instruction: {
     content: string;
   };
+
   interaction?: {
     type: string;
     evidenceId: string;
@@ -59,15 +63,102 @@ type EvidenceOutcome =
   | "skipped"
   | "observed";
 
-
-
-
-
 const API_HEADERS = {
   "Content-Type": "application/json",
   "x-filumire-learner-id":
     DEVELOPMENT_LEARNER_ID,
 };
+
+function parseOptions(
+  value?: string,
+): string[] {
+  if (!value) {
+    return [];
+  }
+
+  try {
+    const parsed =
+      JSON.parse(value);
+
+    return Array.isArray(parsed)
+      ? parsed.filter(
+          (item): item is string =>
+            typeof item === "string",
+        )
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+function actionLabel(
+  action: string,
+): string {
+  switch (action) {
+    case "teach":
+      return "Let's learn this together.";
+
+    case "practice":
+      return "Let's practise what you have learned.";
+
+    case "scaffold":
+      return "Let's work through this step by step.";
+
+    case "remediate":
+      return "Let's look at this another way.";
+
+    case "reassess":
+      return "Let's check what you understand now.";
+
+    case "diagnose":
+      return "Let's find out what you already know.";
+
+    case "retention_check":
+      return "Let's see what you remember.";
+
+    case "transfer_check":
+      return "Let's see if you can use it somewhere new.";
+
+    case "advance":
+      return "You are ready for the next step.";
+
+    case "complete":
+      return "You have completed this learning sequence.";
+
+    default:
+      return "Let's keep learning.";
+  }
+}
+
+function buttonLabel(
+  action: string,
+): string {
+  switch (action) {
+    case "teach":
+      return "Continue learning";
+
+    case "practice":
+      return "Continue practising";
+
+    case "scaffold":
+      return "Continue";
+
+    case "remediate":
+      return "Continue";
+
+    case "reassess":
+      return "Try again";
+
+    case "diagnose":
+      return "Start";
+
+    case "advance":
+      return "Continue to the next step";
+
+    default:
+      return "Continue";
+  }
+}
 
 export default function LearnPage() {
   const [data, setData] =
@@ -103,11 +194,13 @@ export default function LearnPage() {
 
       if (!response.ok) {
         const result =
-          await response.json().catch(() => null);
+          await response
+            .json()
+            .catch(() => null);
 
         throw new Error(
           result?.error ??
-            "Unable to load learning session.",
+            "Unable to load the learning session.",
         );
       }
 
@@ -120,7 +213,7 @@ export default function LearnPage() {
       setError(
         err instanceof Error
           ? err.message
-          : "Unable to load learning session.",
+          : "Unable to load the learning session.",
       );
     } finally {
       setLoading(false);
@@ -161,11 +254,13 @@ export default function LearnPage() {
 
       if (!response.ok) {
         const result =
-          await response.json().catch(() => null);
+          await response
+            .json()
+            .catch(() => null);
 
         throw new Error(
           result?.error ??
-            "Unable to submit learning interaction.",
+            "Unable to submit the learning interaction.",
         );
       }
 
@@ -178,7 +273,7 @@ export default function LearnPage() {
       setError(
         err instanceof Error
           ? err.message
-          : "Unable to submit learning interaction.",
+          : "Unable to submit the learning interaction.",
       );
     } finally {
       setSubmitting(false);
@@ -224,11 +319,13 @@ export default function LearnPage() {
 
       if (!response.ok) {
         const result =
-          await response.json().catch(() => null);
+          await response
+            .json()
+            .catch(() => null);
 
         throw new Error(
           result?.error ??
-            "Unable to submit assessment.",
+            "Unable to submit your answer.",
         );
       }
 
@@ -241,7 +338,7 @@ export default function LearnPage() {
       setError(
         err instanceof Error
           ? err.message
-          : "Unable to submit assessment.",
+          : "Unable to submit your answer.",
       );
     } finally {
       setSubmitting(false);
@@ -254,40 +351,221 @@ export default function LearnPage() {
 
   if (loading) {
     return (
-      <main
-        style={{
-          maxWidth: 720,
-          margin: "0 auto",
-          padding: 32,
-          fontFamily: "Arial, sans-serif",
-        }}
-      >
-        <h1>FILUMIRE EduTutor</h1>
-        <p>Loading learning session...</p>
+      <main className="page">
+        <div className="shell">
+          <header className="header">
+            <div className="brand">
+              FILUMIRE
+            </div>
+
+            <div className="brand-subtitle">
+              EduTutor
+            </div>
+          </header>
+
+          <section className="card loading-card">
+            <div className="loader" />
+            <p>
+              Preparing your learning session...
+            </p>
+          </section>
+        </div>
+
+        <style jsx>{`
+          .page {
+            min-height: 100vh;
+            background: #f6f3ed;
+            color: #171717;
+            font-family:
+              Arial,
+              Helvetica,
+              sans-serif;
+          }
+
+          .shell {
+            width: min(860px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 28px 0 64px;
+          }
+
+          .header {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            padding: 8px 0 28px;
+          }
+
+          .brand {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+          }
+
+          .brand-subtitle {
+            font-size: 16px;
+            color: #666;
+          }
+
+          .card {
+            background: white;
+            border: 1px solid #dedbd4;
+            border-radius: 18px;
+            padding: 42px;
+            box-shadow:
+              0 8px 30px rgba(0, 0, 0, 0.04);
+          }
+
+          .loading-card {
+            min-height: 260px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+          }
+
+          .loader {
+            width: 30px;
+            height: 30px;
+            border: 3px solid #ddd;
+            border-top-color: #171717;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+          }
+
+          @keyframes spin {
+            to {
+              transform: rotate(360deg);
+            }
+          }
+
+          @media (max-width: 600px) {
+            .shell {
+              width: min(
+                100% - 20px,
+                860px
+              );
+              padding-top: 18px;
+            }
+
+            .card {
+              padding: 26px 20px;
+            }
+          }
+        `}</style>
       </main>
     );
   }
 
   if (error) {
     return (
-      <main
-        style={{
-          maxWidth: 720,
-          margin: "0 auto",
-          padding: 32,
-          fontFamily: "Arial, sans-serif",
-        }}
-      >
-        <h1>FILUMIRE EduTutor</h1>
+      <main className="page">
+        <div className="shell">
+          <header className="header">
+            <div className="brand">
+              FILUMIRE
+            </div>
 
-        <p>{error}</p>
+            <div className="brand-subtitle">
+              EduTutor
+            </div>
+          </header>
 
-        <button
-          onClick={loadLearning}
-          disabled={loading}
-        >
-          Try again
-        </button>
+          <section className="card error-card">
+            <h1>
+              Something went wrong
+            </h1>
+
+            <p>{error}</p>
+
+            <button
+              onClick={loadLearning}
+              disabled={loading}
+              className="primary-button"
+            >
+              Try again
+            </button>
+          </section>
+        </div>
+
+        <style jsx>{`
+          .page {
+            min-height: 100vh;
+            background: #f6f3ed;
+            color: #171717;
+            font-family:
+              Arial,
+              Helvetica,
+              sans-serif;
+          }
+
+          .shell {
+            width: min(860px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 28px 0 64px;
+          }
+
+          .header {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            padding: 8px 0 28px;
+          }
+
+          .brand {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+          }
+
+          .brand-subtitle {
+            font-size: 16px;
+            color: #666;
+          }
+
+          .card {
+            background: white;
+            border: 1px solid #dedbd4;
+            border-radius: 18px;
+            padding: 42px;
+            box-shadow:
+              0 8px 30px rgba(0, 0, 0, 0.04);
+          }
+
+          h1 {
+            margin: 0 0 12px;
+            font-size: 30px;
+          }
+
+          p {
+            line-height: 1.65;
+            color: #4d4d4d;
+          }
+
+          .primary-button {
+            margin-top: 18px;
+            padding: 13px 22px;
+            border: 0;
+            border-radius: 10px;
+            background: #171717;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+          }
+
+          @media (max-width: 600px) {
+            .shell {
+              width: min(
+                100% - 20px,
+                860px
+              );
+            }
+
+            .card {
+              padding: 26px 20px;
+            }
+          }
+        `}</style>
       </main>
     );
   }
@@ -297,11 +575,9 @@ export default function LearnPage() {
   }
 
   const options =
-    data.content?.metadata?.options
-      ? (JSON.parse(
-          data.content.metadata.options,
-        ) as string[])
-      : [];
+    parseOptions(
+      data.content?.metadata?.options,
+    );
 
   const competency =
     data.learnerState.competencies.find(
@@ -310,217 +586,128 @@ export default function LearnPage() {
         data.decision.competencyId,
     );
 
+  const action =
+    data.decision.action;
+
   const isRetentionCheck =
-    data.decision.action ===
-    "retention_check";
+    action === "retention_check";
 
   const isTransferCheck =
-    data.decision.action ===
-    "transfer_check";
+    action === "transfer_check";
+
+  const isComplete =
+    action === "complete";
+
+  const hasAssessment =
+    Boolean(
+      data.content?.assessmentItemId,
+    ) &&
+    options.length > 0;
 
   const isLesson =
     data.content?.type === "lesson";
 
-  const isComplete =
-    data.decision.action ===
-    "complete";
+  const showContinue =
+    Boolean(data.content) &&
+    !hasAssessment &&
+    !isRetentionCheck &&
+    !isTransferCheck &&
+    !isComplete;
 
   return (
-    <main
-      style={{
-        maxWidth: 720,
-        margin: "0 auto",
-        padding: 32,
-        fontFamily:
-          "Arial, sans-serif",
-      }}
-    >
-      <h1>
-        FILUMIRE EduTutor
-      </h1>
+    <main className="page">
+      <div className="shell">
+        <header className="header">
+          <div>
+            <div className="brand">
+              FILUMIRE
+            </div>
 
-      <p>
-        Learn step by step.
-      </p>
+            <div className="brand-subtitle">
+              EduTutor
+            </div>
+          </div>
+        </header>
 
-      <hr />
+        <div className="progress-track">
+          <div className="progress-fill" />
+        </div>
 
-      <p>
-        <strong>
-          Current action:
-        </strong>{" "}
-        {data.decision.action}
-      </p>
+        <section className="card">
+          <div className="welcome">
+            <span>
+              Your learning session
+            </span>
+          </div>
 
-      <p>
-        <strong>
-          Competency:
-        </strong>{" "}
-        {data.decision.competencyId}
-      </p>
+          <h1>
+            {actionLabel(action)}
+          </h1>
 
-      {competency && (
-        <p>
-          Evidence:{" "}
-          {competency.evidenceCount}
-          {" | "}
-          Confidence:{" "}
-          {competency.confidence}
-          {" | "}
-          Mastery:{" "}
-          {competency.masteryEstimate}
-        </p>
-      )}
+          {data.content && (
+            <>
+              <h2>
+                {data.content.title}
+              </h2>
 
-      {data.content && (
-        <>
-          <h2>
-            {data.content.title}
-          </h2>
+              <div className="lesson-body">
+                {data.content.body}
+              </div>
+            </>
+          )}
 
-          <p>
-            {data.content.body}
-          </p>
-
-          {isRetentionCheck && (
-            <div
-              style={{
-                marginTop: 24,
-                padding: 20,
-                border: "1px solid #ccc",
-                borderRadius: 8,
-              }}
-            >
-              <h3>
-                Retention check
-              </h3>
+          {data.instruction?.content && (
+            <div className="tutor-message">
+              <div className="tutor-label">
+                EduTutor
+              </div>
 
               <p>
-                Do you remember and understand
-                what you just learned?
+                {data.instruction.content}
               </p>
-
-              <button
-                onClick={() =>
-                  submitInteraction(
-                    "retention",
-                    "correct",
-                  )
-                }
-                disabled={submitting}
-                style={{
-                  marginRight: 12,
-                  padding: "10px 16px",
-                }}
-              >
-                {submitting
-                  ? "Checking..."
-                  : "Yes, I retained it"}
-              </button>
-
-              <button
-                onClick={() =>
-                  submitInteraction(
-                    "retention",
-                    "incorrect",
-                  )
-                }
-                disabled={submitting}
-                style={{
-                  padding: "10px 16px",
-                }}
-              >
-                I need more practice
-              </button>
             </div>
           )}
 
-          {isTransferCheck && (
-            <div
-              style={{
-                marginTop: 24,
-                padding: 20,
-                border: "1px solid #ccc",
-                borderRadius: 8,
-              }}
-            >
-              <h3>
-                Transfer check
-              </h3>
+          {hasAssessment && (
+            <div className="assessment">
+              <div className="assessment-label">
+                Your answer
+              </div>
 
-              <p>
-                Can you apply what you learned
-                in a new situation?
-              </p>
-
-              <button
-                onClick={() =>
-                  submitInteraction(
-                    "transfer",
-                    "correct",
-                  )
-                }
-                disabled={submitting}
-                style={{
-                  marginRight: 12,
-                  padding: "10px 16px",
-                }}
-              >
-                {submitting
-                  ? "Checking..."
-                  : "Yes, I can apply it"}
-              </button>
-
-              <button
-                onClick={() =>
-                  submitInteraction(
-                    "transfer",
-                    "incorrect",
-                  )
-                }
-                disabled={submitting}
-                style={{
-                  padding: "10px 16px",
-                }}
-              >
-                I need more practice
-              </button>
-            </div>
-          )}
-
-          {options.length > 0 && (
-            <div
-              style={{
-                marginTop: 20,
-              }}
-            >
-              {options.map(
-                (option) => (
-                  <label
-                    key={option}
-                    style={{
-                      display: "block",
-                      marginBottom: 12,
-                    }}
-                  >
-                    <input
-                      type="radio"
-                      name="answer"
-                      value={option}
-                      checked={
+              <div className="options">
+                {options.map(
+                  (option) => (
+                    <label
+                      key={option}
+                      className={
                         selectedResponse ===
                         option
+                          ? "option selected"
+                          : "option"
                       }
-                      onChange={() =>
-                        setSelectedResponse(
-                          option,
-                        )
-                      }
-                    />{" "}
-                    {option}
-                  </label>
-                ),
-              )}
+                    >
+                      <input
+                        type="radio"
+                        name="answer"
+                        value={option}
+                        checked={
+                          selectedResponse ===
+                          option
+                        }
+                        onChange={() =>
+                          setSelectedResponse(
+                            option,
+                          )
+                        }
+                      />
+
+                      <span>
+                        {option}
+                      </span>
+                    </label>
+                  ),
+                )}
+              </div>
 
               <button
                 onClick={
@@ -530,6 +717,7 @@ export default function LearnPage() {
                   !selectedResponse ||
                   submitting
                 }
+                className="primary-button"
               >
                 {submitting
                   ? "Checking..."
@@ -538,27 +726,432 @@ export default function LearnPage() {
             </div>
           )}
 
-          {isLesson &&
-            options.length === 0 &&
-            !isRetentionCheck &&
-            !isTransferCheck && (
-              <button
-                onClick={loadLearning}
-                disabled={loading}
-              >
-                Continue
-              </button>
-            )}
-        </>
-      )}
+          {isRetentionCheck && (
+            <div className="check-card">
+              <h3>
+                Do you remember it?
+              </h3>
 
-      {isComplete && (
-        <p>
-          You have completed this
-          learning sequence.
-        </p>
-      )}
+              <p>
+                Think about what you have just
+                learned. Choose the answer that
+                best describes where you are.
+              </p>
+
+              <div className="button-row">
+                <button
+                  onClick={() =>
+                    submitInteraction(
+                      "retention",
+                      "correct",
+                    )
+                  }
+                  disabled={submitting}
+                  className="primary-button"
+                >
+                  I remember it
+                </button>
+
+                <button
+                  onClick={() =>
+                    submitInteraction(
+                      "retention",
+                      "incorrect",
+                    )
+                  }
+                  disabled={submitting}
+                  className="secondary-button"
+                >
+                  I need more practice
+                </button>
+              </div>
+            </div>
+          )}
+
+          {isTransferCheck && (
+            <div className="check-card">
+              <h3>
+                Can you use it somewhere new?
+              </h3>
+
+              <p>
+                Learning is stronger when you can
+                apply an idea beyond the example
+                where you first learned it.
+              </p>
+
+              <div className="button-row">
+                <button
+                  onClick={() =>
+                    submitInteraction(
+                      "transfer",
+                      "correct",
+                    )
+                  }
+                  disabled={submitting}
+                  className="primary-button"
+                >
+                  Yes, I can use it
+                </button>
+
+                <button
+                  onClick={() =>
+                    submitInteraction(
+                      "transfer",
+                      "incorrect",
+                    )
+                  }
+                  disabled={submitting}
+                  className="secondary-button"
+                >
+                  I need more practice
+                </button>
+              </div>
+            </div>
+          )}
+
+          {showContinue && (
+            <button
+              onClick={loadLearning}
+              disabled={submitting}
+              className="primary-button"
+            >
+              {buttonLabel(action)}
+            </button>
+          )}
+
+          {isComplete && (
+            <div className="complete-card">
+              <div className="complete-mark">
+                ✓
+              </div>
+
+              <h2>
+                You have completed this
+                learning sequence.
+              </h2>
+
+              <p>
+                You have worked through the
+                learning sequence and demonstrated
+                the required understanding.
+              </p>
+            </div>
+          )}
+
+          {submitting && (
+            <div className="status">
+              Updating your learning session...
+            </div>
+          )}
+
+          {competency && (
+            <div className="learner-footer">
+              <span>
+                Keep going. Your learning path
+                adapts as you learn.
+              </span>
+            </div>
+          )}
+        </section>
+      </div>
+
+      <style jsx>{`
+        .page {
+          min-height: 100vh;
+          background: #f6f3ed;
+          color: #171717;
+          font-family:
+            Arial,
+            Helvetica,
+            sans-serif;
+        }
+
+        .shell {
+          width: min(860px, calc(100% - 32px));
+          margin: 0 auto;
+          padding: 28px 0 64px;
+        }
+
+        .header {
+          display: flex;
+          align-items: baseline;
+          justify-content: space-between;
+          padding: 8px 0 22px;
+        }
+
+        .brand {
+          font-size: 30px;
+          font-weight: 800;
+          letter-spacing: 0.04em;
+        }
+
+        .brand-subtitle {
+          margin-top: 3px;
+          color: #666;
+          font-size: 15px;
+        }
+
+        .progress-track {
+          height: 5px;
+          margin-bottom: 24px;
+          overflow: hidden;
+          border-radius: 99px;
+          background: #dedbd4;
+        }
+
+        .progress-fill {
+          width: 72%;
+          height: 100%;
+          border-radius: 99px;
+          background: #171717;
+        }
+
+        .card {
+          background: white;
+          border: 1px solid #dedbd4;
+          border-radius: 20px;
+          padding: 44px;
+          box-shadow:
+            0 10px 36px rgba(0, 0, 0, 0.045);
+        }
+
+        .welcome {
+          margin-bottom: 16px;
+          color: #777;
+          font-size: 14px;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+        }
+
+        h1 {
+          margin: 0 0 28px;
+          max-width: 700px;
+          font-size: clamp(30px, 5vw, 46px);
+          line-height: 1.08;
+        }
+
+        h2 {
+          margin: 0 0 18px;
+          font-size: 28px;
+          line-height: 1.2;
+        }
+
+        h3 {
+          margin: 0 0 10px;
+          font-size: 22px;
+        }
+
+        .lesson-body {
+          max-width: 720px;
+          white-space: pre-line;
+          font-size: 19px;
+          line-height: 1.75;
+          color: #333;
+        }
+
+        .tutor-message {
+          margin-top: 28px;
+          padding: 20px 22px;
+          border-left: 4px solid #171717;
+          background: #f7f5f0;
+          border-radius: 0 12px 12px 0;
+        }
+
+        .tutor-label {
+          margin-bottom: 7px;
+          font-size: 13px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+        }
+
+        .tutor-message p {
+          margin: 0;
+          line-height: 1.6;
+          color: #444;
+        }
+
+        .assessment {
+          margin-top: 32px;
+          padding-top: 28px;
+          border-top: 1px solid #e5e2dc;
+        }
+
+        .assessment-label {
+          margin-bottom: 14px;
+          font-size: 14px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+        }
+
+        .options {
+          display: grid;
+          gap: 10px;
+          margin-bottom: 20px;
+        }
+
+        .option {
+          display: flex;
+          align-items: center;
+          gap: 13px;
+          padding: 16px 18px;
+          border: 1px solid #d8d5ce;
+          border-radius: 12px;
+          cursor: pointer;
+          font-size: 17px;
+          transition:
+            border-color 0.15s ease,
+            background 0.15s ease;
+        }
+
+        .option:hover {
+          background: #faf9f6;
+        }
+
+        .option.selected {
+          border-color: #171717;
+          background: #f3f1ec;
+        }
+
+        .option input {
+          width: 18px;
+          height: 18px;
+        }
+
+        .check-card {
+          margin-top: 30px;
+          padding: 24px;
+          border: 1px solid #ddd9d1;
+          border-radius: 15px;
+          background: #faf9f6;
+        }
+
+        .check-card p {
+          margin: 0 0 22px;
+          color: #555;
+          line-height: 1.6;
+        }
+
+        .button-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        .primary-button,
+        .secondary-button {
+          padding: 13px 21px;
+          border-radius: 10px;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+        }
+
+        .primary-button {
+          margin-top: 22px;
+          border: 0;
+          background: #171717;
+          color: white;
+        }
+
+        .button-row .primary-button {
+          margin-top: 0;
+        }
+
+        .secondary-button {
+          border: 1px solid #cfcac1;
+          background: white;
+          color: #171717;
+        }
+
+        .primary-button:disabled,
+        .secondary-button:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
+        .complete-card {
+          margin-top: 30px;
+          padding: 28px;
+          border-radius: 15px;
+          background: #f3f1ec;
+          text-align: center;
+        }
+
+        .complete-mark {
+          width: 48px;
+          height: 48px;
+          margin: 0 auto 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          background: #171717;
+          color: white;
+          font-size: 24px;
+        }
+
+        .complete-card h2 {
+          font-size: 25px;
+        }
+
+        .complete-card p {
+          max-width: 560px;
+          margin: 0 auto;
+          color: #555;
+          line-height: 1.6;
+        }
+
+        .status {
+          margin-top: 18px;
+          color: #777;
+          font-size: 14px;
+        }
+
+        .learner-footer {
+          margin-top: 34px;
+          padding-top: 20px;
+          border-top: 1px solid #e5e2dc;
+          color: #777;
+          font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+          .shell {
+            width: min(
+              100% - 20px,
+              860px
+            );
+            padding-top: 18px;
+          }
+
+          .card {
+            padding: 28px 20px;
+            border-radius: 16px;
+          }
+
+          .brand {
+            font-size: 25px;
+          }
+
+          .lesson-body {
+            font-size: 17px;
+          }
+
+          .button-row {
+            flex-direction: column;
+          }
+
+          .button-row
+            .primary-button,
+          .button-row
+            .secondary-button {
+            width: 100%;
+          }
+        }
+      `}</style>
     </main>
   );
 }
-

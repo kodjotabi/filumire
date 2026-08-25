@@ -8,12 +8,11 @@
    - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 3.9s
+ ✓ Ready in 2.4s
  ○ Compiling /learn ...
- ✓ Compiled /learn in 1135ms (531 modules)
- GET /learn 200 in 1885ms
- GET /learn 200 in 64ms
+ ✓ Compiled /learn in 964ms (537 modules)
+ GET /learn 200 in 1432ms
  ○ Compiling /api/learning ...
- ✓ Compiled /api/learning in 1215ms (680 modules)
- GET /api/learning?sessionId=session-runtime-validation-20260825142438254 200 in 3258ms
- GET /api/learning 401 in 38ms
+ ✓ Compiled /api/learning in 729ms (686 modules)
+ GET /api/learning?sessionId=session-runtime-validation-20260825145550292 200 in 2550ms
+ GET /api/learning 401 in 21ms
