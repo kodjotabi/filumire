@@ -1,10 +1,23 @@
-import type { LearningEvidence } from "../../packages/domain";
-import { persistenceStore } from "../persistence-provider";
+﻿import type {
+  LearningEvidence,
+} from "../../packages/domain";
+
+import {
+  persistenceStore,
+} from "../persistence-provider";
 
 export async function saveEvidence(
   evidence: LearningEvidence,
 ): Promise<void> {
-  await persistenceStore.saveEvidence(evidence);
+  if (!evidence) {
+    throw new Error(
+      "Evidence store received undefined evidence.",
+    );
+  }
+
+  await persistenceStore.saveEvidence(
+    evidence,
+  );
 }
 
 export async function getEvidence(
@@ -17,6 +30,8 @@ export async function getEvidence(
   );
 }
 
-export async function getAllEvidence(): Promise<LearningEvidence[]> {
+export async function getAllEvidence(): Promise<
+  LearningEvidence[]
+> {
   return persistenceStore.getAllEvidence();
 }

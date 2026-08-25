@@ -1,0 +1,19 @@
+
+> @filumire/learner@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.23
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.68.107:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 3.9s
+ ○ Compiling /learn ...
+ ✓ Compiled /learn in 1135ms (531 modules)
+ GET /learn 200 in 1885ms
+ GET /learn 200 in 64ms
+ ○ Compiling /api/learning ...
+ ✓ Compiled /api/learning in 1215ms (680 modules)
+ GET /api/learning?sessionId=session-runtime-validation-20260825142438254 200 in 3258ms
+ GET /api/learning 401 in 38ms

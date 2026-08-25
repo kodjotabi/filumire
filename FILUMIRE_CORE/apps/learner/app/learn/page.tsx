@@ -1,242 +1,564 @@
-"use client";
+﻿"use client";
 
-import { useState } from "react";
+const DEVELOPMENT_LEARNER_ID =
+  "learner-demo-001";
 
-const question = {
-  question: "Which number comes next?",
-  options: ["2", "3", "4", "5"],
-  answer: "4",
+const SESSION_ID =
+  `session-${DEVELOPMENT_LEARNER_ID}`;
+
+import { useEffect, useState } from "react";
+
+type LearningContent = {
+  id: string;
+  competencyId: string;
+  type: string;
+  title: string;
+  body: string;
+  assessmentItemId?: string;
+  metadata?: {
+    options?: string;
+    expectedResponse?: string;
+  };
 };
 
-export default function LearningSession() {
-  const [selected, setSelected] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<{
-    correct: boolean;
-    instruction: string;
+type LearningResponse = {
+  learnerState: {
+    learnerId: string;
+    competencies: Array<{
+      competencyId: string;
+      masteryEstimate: number;
+      confidence: number;
+      evidenceCount: number;
+    }>;
+  };
+  decision: {
     action: string;
-  } | null>(null);
+    competencyId: string;
+    reasonCode: string;
+  };
+  content?: LearningContent;
+  instruction: {
+    content: string;
+  };
+  interaction?: {
+    type: string;
+    evidenceId: string;
+    outcome: string;
+  };
+};
 
-  function selectAnswer(option: string) {
-    if (submitted || loading) {
-      return;
-    }
+type InteractionType =
+  | "assessment"
+  | "retention"
+  | "transfer";
 
-    setSelected(option);
-    setResult(null);
-  }
+type EvidenceOutcome =
+  | "correct"
+  | "incorrect"
+  | "partial"
+  | "skipped"
+  | "observed";
 
-  async function submitAnswer() {
-    if (!selected || loading) {
-      return;
-    }
 
+
+
+
+const API_HEADERS = {
+  "Content-Type": "application/json",
+  "x-filumire-learner-id":
+    DEVELOPMENT_LEARNER_ID,
+};
+
+export default function LearnPage() {
+  const [data, setData] =
+    useState<LearningResponse | null>(null);
+
+  const [selectedResponse, setSelectedResponse] =
+    useState("");
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [submitting, setSubmitting] =
+    useState(false);
+
+  const [error, setError] =
+    useState("");
+
+  async function loadLearning() {
     setLoading(true);
+    setError("");
 
     try {
-      const response = await fetch("/api/learning", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          learnerId: "learner-test-001",
-          sessionId: "session-test-001",
-          assessmentItemId: "item-test-001",
-          competencyId: "competency-test-001",
-          response: selected,
-          expectedResponse: question.answer,
-          instructionalContext:
-            "Test instructional context for the FILUMIRE adaptive-learning loop.",
-        }),
-      });
-
-      const data = await response.json();
+      const response =
+        await fetch(
+          `/api/learning?sessionId=${SESSION_ID}`,
+          {
+            headers: {
+              "x-filumire-learner-id":
+                DEVELOPMENT_LEARNER_ID,
+            },
+          },
+        );
 
       if (!response.ok) {
+        const result =
+          await response.json().catch(() => null);
+
         throw new Error(
-          data.error ?? "Learning request failed.",
+          result?.error ??
+            "Unable to load learning session.",
         );
       }
 
-      setSubmitted(true);
+      const result =
+        (await response.json()) as LearningResponse;
 
-      setResult({
-        correct: data.assessment.result.correct,
-        instruction: data.instruction.content,
-        action: data.decision.action,
-      });
-    } catch (error) {
-      console.error(
-        "FILUMIRE learner interaction error:",
-        error,
+      setData(result);
+      setSelectedResponse("");
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Unable to load learning session.",
       );
-
-      setResult({
-        correct: false,
-        instruction:
-          "The learning interaction could not be processed. Please try again.",
-        action: "error",
-      });
     } finally {
       setLoading(false);
     }
   }
 
+  async function submitInteraction(
+    interactionType: InteractionType,
+    outcome: EvidenceOutcome,
+  ) {
+    if (!data) {
+      return;
+    }
+
+    setSubmitting(true);
+    setError("");
+
+    try {
+      const response =
+        await fetch("/api/learning", {
+          method: "POST",
+          headers: API_HEADERS,
+          body: JSON.stringify({
+            learnerId:
+              data.learnerState.learnerId,
+
+            sessionId:
+              SESSION_ID,
+
+            interactionType,
+
+            competencyId:
+              data.decision.competencyId,
+
+            outcome,
+          }),
+        });
+
+      if (!response.ok) {
+        const result =
+          await response.json().catch(() => null);
+
+        throw new Error(
+          result?.error ??
+            "Unable to submit learning interaction.",
+        );
+      }
+
+      const result =
+        (await response.json()) as LearningResponse;
+
+      setData(result);
+      setSelectedResponse("");
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Unable to submit learning interaction.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  async function submitAssessment() {
+    if (
+      !data?.content?.assessmentItemId ||
+      !selectedResponse
+    ) {
+      return;
+    }
+
+    setSubmitting(true);
+    setError("");
+
+    try {
+      const response =
+        await fetch("/api/learning", {
+          method: "POST",
+          headers: API_HEADERS,
+          body: JSON.stringify({
+            learnerId:
+              data.learnerState.learnerId,
+
+            sessionId:
+              SESSION_ID,
+
+            interactionType:
+              "assessment",
+
+            assessmentItemId:
+              data.content.assessmentItemId,
+
+            competencyId:
+              data.decision.competencyId,
+
+            response:
+              selectedResponse,
+          }),
+        });
+
+      if (!response.ok) {
+        const result =
+          await response.json().catch(() => null);
+
+        throw new Error(
+          result?.error ??
+            "Unable to submit assessment.",
+        );
+      }
+
+      const result =
+        (await response.json()) as LearningResponse;
+
+      setData(result);
+      setSelectedResponse("");
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Unable to submit assessment.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  useEffect(() => {
+    loadLearning();
+  }, []);
+
+  if (loading) {
+    return (
+      <main
+        style={{
+          maxWidth: 720,
+          margin: "0 auto",
+          padding: 32,
+          fontFamily: "Arial, sans-serif",
+        }}
+      >
+        <h1>FILUMIRE EduTutor</h1>
+        <p>Loading learning session...</p>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main
+        style={{
+          maxWidth: 720,
+          margin: "0 auto",
+          padding: 32,
+          fontFamily: "Arial, sans-serif",
+        }}
+      >
+        <h1>FILUMIRE EduTutor</h1>
+
+        <p>{error}</p>
+
+        <button
+          onClick={loadLearning}
+          disabled={loading}
+        >
+          Try again
+        </button>
+      </main>
+    );
+  }
+
+  if (!data) {
+    return null;
+  }
+
+  const options =
+    data.content?.metadata?.options
+      ? (JSON.parse(
+          data.content.metadata.options,
+        ) as string[])
+      : [];
+
+  const competency =
+    data.learnerState.competencies.find(
+      (item) =>
+        item.competencyId ===
+        data.decision.competencyId,
+    );
+
+  const isRetentionCheck =
+    data.decision.action ===
+    "retention_check";
+
+  const isTransferCheck =
+    data.decision.action ===
+    "transfer_check";
+
+  const isLesson =
+    data.content?.type === "lesson";
+
+  const isComplete =
+    data.decision.action ===
+    "complete";
+
   return (
     <main
       style={{
-        maxWidth: "700px",
+        maxWidth: 720,
         margin: "0 auto",
-        padding: "40px 24px",
-        fontFamily: "Arial, sans-serif",
+        padding: 32,
+        fontFamily:
+          "Arial, sans-serif",
       }}
     >
-      <header style={{ marginBottom: "40px" }}>
-        <p
-          style={{
-            fontSize: "14px",
-            fontWeight: 700,
-            marginBottom: "8px",
-          }}
-        >
-          FILUMIRE EduTutor
+      <h1>
+        FILUMIRE EduTutor
+      </h1>
+
+      <p>
+        Learn step by step.
+      </p>
+
+      <hr />
+
+      <p>
+        <strong>
+          Current action:
+        </strong>{" "}
+        {data.decision.action}
+      </p>
+
+      <p>
+        <strong>
+          Competency:
+        </strong>{" "}
+        {data.decision.competencyId}
+      </p>
+
+      {competency && (
+        <p>
+          Evidence:{" "}
+          {competency.evidenceCount}
+          {" | "}
+          Confidence:{" "}
+          {competency.confidence}
+          {" | "}
+          Mastery:{" "}
+          {competency.masteryEstimate}
         </p>
+      )}
 
-        <h1
-          style={{
-            fontSize: "32px",
-            margin: "0 0 8px",
-          }}
-        >
-          Learning Session
-        </h1>
+      {data.content && (
+        <>
+          <h2>
+            {data.content.title}
+          </h2>
 
-        <p style={{ margin: 0 }}>
-          Let&apos;s learn step by step.
-        </p>
-      </header>
+          <p>
+            {data.content.body}
+          </p>
 
-      <section>
-        <p
-          style={{
-            fontSize: "14px",
-            fontWeight: 600,
-            marginBottom: "12px",
-          }}
-        >
-          Question 1 of 1
-        </p>
+          {isRetentionCheck && (
+            <div
+              style={{
+                marginTop: 24,
+                padding: 20,
+                border: "1px solid #ccc",
+                borderRadius: 8,
+              }}
+            >
+              <h3>
+                Retention check
+              </h3>
 
-        <h2
-          style={{
-            fontSize: "24px",
-            marginBottom: "24px",
-          }}
-        >
-          {question.question}
-        </h2>
+              <p>
+                Do you remember and understand
+                what you just learned?
+              </p>
 
-        <div
-          style={{
-            display: "flex",
-            gap: "12px",
-            flexWrap: "wrap",
-            marginBottom: "24px",
-          }}
-        >
-          {question.options.map((option) => {
-            const isSelected = selected === option;
-
-            return (
               <button
-                key={option}
-                type="button"
-                onClick={() => selectAnswer(option)}
-                disabled={submitted || loading}
+                onClick={() =>
+                  submitInteraction(
+                    "retention",
+                    "correct",
+                  )
+                }
+                disabled={submitting}
                 style={{
-                  minWidth: "70px",
-                  padding: "14px 20px",
-                  fontSize: "18px",
-                  fontWeight: isSelected ? 700 : 400,
-                  border: isSelected
-                    ? "3px solid #000"
-                    : "1px solid #999",
-                  borderRadius: "8px",
-                  background: isSelected
-                    ? "#e8e8e8"
-                    : "#ffffff",
-                  cursor:
-                    submitted || loading
-                      ? "default"
-                      : "pointer",
+                  marginRight: 12,
+                  padding: "10px 16px",
                 }}
               >
-                {option}
+                {submitting
+                  ? "Checking..."
+                  : "Yes, I retained it"}
               </button>
-            );
-          })}
-        </div>
 
-        {selected && !submitted && (
-          <p
-            style={{
-              marginBottom: "16px",
-              fontWeight: 600,
-            }}
-          >
-            Selected answer: {selected}
-          </p>
-        )}
+              <button
+                onClick={() =>
+                  submitInteraction(
+                    "retention",
+                    "incorrect",
+                  )
+                }
+                disabled={submitting}
+                style={{
+                  padding: "10px 16px",
+                }}
+              >
+                I need more practice
+              </button>
+            </div>
+          )}
 
-        {!submitted && (
-          <button
-            type="button"
-            onClick={submitAnswer}
-            disabled={!selected || loading}
-            style={{
-              padding: "14px 24px",
-              fontSize: "16px",
-              fontWeight: 700,
-              border: "none",
-              borderRadius: "8px",
-              cursor:
-                !selected || loading
-                  ? "not-allowed"
-                  : "pointer",
-              opacity:
-                !selected || loading ? 0.5 : 1,
-            }}
-          >
-            {loading ? "Processing..." : "Submit Answer"}
-          </button>
-        )}
+          {isTransferCheck && (
+            <div
+              style={{
+                marginTop: 24,
+                padding: 20,
+                border: "1px solid #ccc",
+                borderRadius: 8,
+              }}
+            >
+              <h3>
+                Transfer check
+              </h3>
 
-        {result && (
-          <section
-            style={{
-              marginTop: "32px",
-              padding: "24px",
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-            }}
-          >
-            <p style={{ fontWeight: 700 }}>
-              {result.correct
-                ? "Correct."
-                : "Not quite. FILUMIRE has recorded the response."}
-            </p>
+              <p>
+                Can you apply what you learned
+                in a new situation?
+              </p>
 
-            <p>{result.instruction}</p>
+              <button
+                onClick={() =>
+                  submitInteraction(
+                    "transfer",
+                    "correct",
+                  )
+                }
+                disabled={submitting}
+                style={{
+                  marginRight: 12,
+                  padding: "10px 16px",
+                }}
+              >
+                {submitting
+                  ? "Checking..."
+                  : "Yes, I can apply it"}
+              </button>
 
-            <p>
-              <strong>Next learning action:</strong>{" "}
-              {result.action}
-            </p>
-          </section>
-        )}
-      </section>
+              <button
+                onClick={() =>
+                  submitInteraction(
+                    "transfer",
+                    "incorrect",
+                  )
+                }
+                disabled={submitting}
+                style={{
+                  padding: "10px 16px",
+                }}
+              >
+                I need more practice
+              </button>
+            </div>
+          )}
+
+          {options.length > 0 && (
+            <div
+              style={{
+                marginTop: 20,
+              }}
+            >
+              {options.map(
+                (option) => (
+                  <label
+                    key={option}
+                    style={{
+                      display: "block",
+                      marginBottom: 12,
+                    }}
+                  >
+                    <input
+                      type="radio"
+                      name="answer"
+                      value={option}
+                      checked={
+                        selectedResponse ===
+                        option
+                      }
+                      onChange={() =>
+                        setSelectedResponse(
+                          option,
+                        )
+                      }
+                    />{" "}
+                    {option}
+                  </label>
+                ),
+              )}
+
+              <button
+                onClick={
+                  submitAssessment
+                }
+                disabled={
+                  !selectedResponse ||
+                  submitting
+                }
+              >
+                {submitting
+                  ? "Checking..."
+                  : "Submit answer"}
+              </button>
+            </div>
+          )}
+
+          {isLesson &&
+            options.length === 0 &&
+            !isRetentionCheck &&
+            !isTransferCheck && (
+              <button
+                onClick={loadLearning}
+                disabled={loading}
+              >
+                Continue
+              </button>
+            )}
+        </>
+      )}
+
+      {isComplete && (
+        <p>
+          You have completed this
+          learning sequence.
+        </p>
+      )}
     </main>
   );
 }
+

@@ -10,11 +10,20 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "npm test"
+    "test": "npm run test:adaptive && npm run test:progression && npm run test:security && npm run test:identity && npm run test:intervention && npm run test:language",
+    "test:adaptive": "tsx --env-file=.env.local ./tests/adaptive-learning-loop.test.ts",
+    "test:progression": "tsx --env-file=.env.local ./tests/competency-003-adaptive-loop.test.ts",
+    "test:security": "tsx --env-file=.env.local ./tests/api-assessment-security.test.ts",
+    "test:identity": "tsx --env-file=.env.local ./tests/api-identity-security.test.ts",
+    "test:intervention": "tsx --env-file=.env.local ./tests/intervention-lifecycle.test.ts",
+    "test:language": "tsx --env-file=.env.local ./tests/content-language-selection.test.ts",
+    "build:learner": "npm run build --workspace=@filumire/learner",
+    "validate:all": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/validate-all.ps1"
   },
   "devDependencies": {
     "@types/pg": "^8.23.1",
     "drizzle-kit": "^0.31.10",
+    "tsx": "^4.23.12",
     "typescript": "^5.7.2"
   },
   "dependencies": {
