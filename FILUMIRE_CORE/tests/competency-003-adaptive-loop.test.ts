@@ -1,4 +1,4 @@
-import {
+﻿import {
   createInitialLearnerState,
   applyEvidence,
   getLearnerState,
@@ -428,15 +428,15 @@ async function runProgression(): Promise<void> {
         diagnosticConfidence: 1,
 
         retentionState: {
-          status: "retained",
-          confidence: 1,
-          evidenceIds: [],
+          status: "retained" as const,
+                  confidence: 1,
+                  evidenceIds: [],
         },
 
         transferState: {
-          status: "demonstrated",
-          confidence: 1,
-          evidenceIds: [],
+          status: "demonstrated" as const,
+                  confidence: 1,
+                  evidenceIds: [],
         },
 
         readinessState: {
@@ -501,13 +501,13 @@ async function runProgression(): Promise<void> {
                 ...item,
 
                 retentionState: {
-                  status: "retained",
+                  status: "retained" as const,
                   confidence: 1,
                   evidenceIds: [],
                 },
 
                 transferState: {
-                  status: "demonstrated",
+                  status: "demonstrated" as const,
                   confidence: 1,
                   evidenceIds: [],
                 },
@@ -668,3 +668,4 @@ runProgression().catch(
     process.exitCode = 1;
   },
 );
+

@@ -4,6 +4,8 @@
   LearnerId,
   CompetencyId,
   SessionId,
+  InstructionalStrategy,
+  ResponseMode,
 } from "./index";
 
 export type InterventionId = string;
@@ -44,6 +46,10 @@ export interface LearningIntervention {
   decisionId: DecisionId;
 
   type: InterventionType;
+
+  instructionalStrategy?: InstructionalStrategy;
+
+  responseMode?: ResponseMode;
 
   status: InterventionStatus;
 

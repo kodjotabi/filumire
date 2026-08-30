@@ -1,6 +1,7 @@
 ﻿import type {
   EvidenceOutcome,
   LearnerState,
+  LearnerCompetencyState,
 } from "../../packages/domain";
 
 import {
@@ -45,6 +46,32 @@ function confidenceFromOutcome(
   return 0;
 }
 
+function calculateReadiness(
+  competency: LearnerCompetencyState,
+) {
+  const ready =
+    competency.masteryEstimate >= 0.8 &&
+    competency.confidence >= 0.8 &&
+    competency.retentionState?.status ===
+      "retained" &&
+    competency.retentionState?.confidence >=
+      0.8 &&
+    competency.transferState?.status ===
+      "demonstrated" &&
+    competency.transferState?.confidence >=
+      0.8;
+
+  return {
+    readyForAdvancement: ready,
+    confidence: ready ? 1 : 0,
+    reasonCode: ready
+      ? "MASTERY_RETENTION_TRANSFER_CONFIRMED"
+      : "MASTERY_RETENTION_TRANSFER_NOT_CONFIRMED",
+    evaluatedAt:
+      new Date().toISOString(),
+  };
+}
+
 export async function recordRetentionCheck(
   input: {
     learnerId: string;
@@ -76,53 +103,87 @@ export async function recordRetentionCheck(
       input.outcome,
     );
 
-  const updated:
-    LearnerState = {
+  const updatedCompetencies:
+    LearnerCompetencyState[] =
+    state.competencies.map(
+      (competency) =>
+        competency.competencyId ===
+        input.competencyId
+          ? {
+              ...competency,
+
+              retentionState: {
+                status:
+                  retained
+                    ? "retained"
+                    : "not_retained",
+
+                lastCheckedAt:
+                  timestamp,
+
+                confidence,
+
+                evidenceIds: [
+                  ...(competency
+                    .retentionState
+                    ?.evidenceIds ??
+                    []),
+
+                  input.evidenceId,
+                ],
+              },
+
+              lastUpdated:
+                timestamp,
+
+              stateVersion:
+                "state-0.4",
+            }
+          : competency,
+    );
+
+  const updatedCompetency =
+    updatedCompetencies.find(
+      (competency) =>
+        competency.competencyId ===
+        input.competencyId,
+    );
+
+  if (!updatedCompetency) {
+    throw new Error(
+      "Competency not found after retention update.",
+    );
+  }
+
+  const readinessState =
+    calculateReadiness(
+      updatedCompetency,
+    );
+
+  const finalCompetencies:
+    LearnerCompetencyState[] =
+    updatedCompetencies.map(
+      (competency) =>
+        competency.competencyId ===
+        input.competencyId
+          ? {
+              ...competency,
+              readinessState,
+            }
+          : competency,
+    );
+
+  const updated: LearnerState = {
     ...state,
 
     competencies:
-      state.competencies.map(
-        (competency) =>
-          competency.competencyId ===
-          input.competencyId
-            ? {
-                ...competency,
-
-                retentionState: {
-                  status:
-                    retained
-                      ? "retained"
-                      : "not_retained",
-
-                  lastCheckedAt:
-                    timestamp,
-
-                  confidence,
-
-                  evidenceIds: [
-                    ...(competency
-                      .retentionState
-                      ?.evidenceIds ??
-                      []),
-
-                    input.evidenceId,
-                  ],
-                },
-
-                lastUpdated:
-                  timestamp,
-
-                stateVersion:
-                  "state-0.3",
-              }
-            : competency,
-      ),
+      finalCompetencies,
 
     updatedAt:
       timestamp,
 
     stateVersion:
-      "state-0.3",
+      "state-0.4",
   };
 
   await saveLearnerState(
@@ -176,53 +237,87 @@ export async function recordTransferCheck(
       input.outcome,
     );
 
-  const updated:
-    LearnerState = {
+  const updatedCompetencies:
+    LearnerCompetencyState[] =
+    state.competencies.map(
+      (competency) =>
+        competency.competencyId ===
+        input.competencyId
+          ? {
+              ...competency,
+
+              transferState: {
+                status:
+                  demonstrated
+                    ? "demonstrated"
+                    : "not_demonstrated",
+
+                lastCheckedAt:
+                  timestamp,
+
+                confidence,
+
+                evidenceIds: [
+                  ...(competency
+                    .transferState
+                    ?.evidenceIds ??
+                    []),
+
+                  input.evidenceId,
+                ],
+              },
+
+              lastUpdated:
+                timestamp,
+
+              stateVersion:
+                "state-0.4",
+            }
+          : competency,
+    );
+
+  const updatedCompetency =
+    updatedCompetencies.find(
+      (competency) =>
+        competency.competencyId ===
+        input.competencyId,
+    );
+
+  if (!updatedCompetency) {
+    throw new Error(
+      "Competency not found after transfer update.",
+    );
+  }
+
+  const readinessState =
+    calculateReadiness(
+      updatedCompetency,
+    );
+
+  const finalCompetencies:
+    LearnerCompetencyState[] =
+    updatedCompetencies.map(
+      (competency) =>
+        competency.competencyId ===
+        input.competencyId
+          ? {
+              ...competency,
+              readinessState,
+            }
+          : competency,
+    );
+
+  const updated: LearnerState = {
     ...state,
 
     competencies:
-      state.competencies.map(
-        (competency) =>
-          competency.competencyId ===
-          input.competencyId
-            ? {
-                ...competency,
-
-                transferState: {
-                  status:
-                    demonstrated
-                      ? "demonstrated"
-                      : "not_demonstrated",
-
-                  lastCheckedAt:
-                    timestamp,
-
-                  confidence,
-
-                  evidenceIds: [
-                    ...(competency
-                      .transferState
-                      ?.evidenceIds ??
-                      []),
-
-                    input.evidenceId,
-                  ],
-                },
-
-                lastUpdated:
-                  timestamp,
-
-                stateVersion:
-                  "state-0.3",
-              }
-            : competency,
-      ),
+      finalCompetencies,
 
     updatedAt:
       timestamp,
 
     stateVersion:
-      "state-0.3",
+      "state-0.4",
   };
 
   await saveLearnerState(
@@ -263,13 +358,10 @@ export async function evaluateRetentionIntervention(
     );
   }
 
-  const result =
-    await evaluateInterventionFromEvidence(
-      interventionId,
-      evidence,
-    );
-
-  return result;
+  return evaluateInterventionFromEvidence(
+    interventionId,
+    evidence,
+  );
 }
 
 export async function evaluateTransferIntervention(
@@ -290,11 +382,8 @@ export async function evaluateTransferIntervention(
     );
   }
 
-  const result =
-    await evaluateInterventionFromEvidence(
-      interventionId,
-      evidence,
-    );
-
-  return result;
+  return evaluateInterventionFromEvidence(
+    interventionId,
+    evidence,
+  );
 }

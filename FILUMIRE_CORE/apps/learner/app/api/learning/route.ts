@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 
 import type {
   AssessmentSubmission,
@@ -12,7 +12,6 @@ import {
 } from "../../../../../services/learner-state";
 
 import { makeAdaptiveDecision } from "../../../../../services/adaptive-engine";
-
 import { generateInstruction } from "../../../../../services/edututor";
 
 import {
@@ -22,11 +21,11 @@ import {
 
 import { saveEvidence } from "../../../../../services/evidence-store";
 
-import { seedContent } from "../../../../../services/content-store/seed";
-
 import {
   getContentForCompetency,
 } from "../../../../../services/content-store";
+
+import { seedContent } from "../../../../../services/content-store/seed";
 
 import {
   resolveRequestIdentity,
@@ -44,8 +43,7 @@ import {
 
 seedContent();
 
-const DEFAULT_SESSION_ID =
-  "session-demo-001";
+const DEFAULT_SESSION_ID = "session-demo-001";
 
 type InteractionType =
   | "assessment"
@@ -59,13 +57,9 @@ type EvidenceOutcome =
   | "skipped"
   | "observed";
 
-function unauthorizedResponse(
-  message: string,
-) {
+function unauthorizedResponse(message: string) {
   return NextResponse.json(
-    {
-      error: message,
-    },
+    { error: message },
     { status: 401 },
   );
 }
@@ -112,7 +106,6 @@ async function assertOwnedSession(
       sessionId,
       learnerId,
     );
-
     return;
   }
 
@@ -125,9 +118,7 @@ async function assertOwnedSession(
 async function ensureCompetencyState(
   learnerId: string,
   learnerState: Awaited<
-    ReturnType<
-      typeof createInitialLearnerState
-    >
+    ReturnType<typeof createInitialLearnerState>
   >,
   competencyId: string,
 ) {
@@ -170,9 +161,7 @@ async function buildLearningResponse(
   learnerId: string,
   sessionId: string,
   learnerState: Awaited<
-    ReturnType<
-      typeof createInitialLearnerState
-    >
+    ReturnType<typeof createInitialLearnerState>
   >,
 ) {
   const adaptiveDecision =
@@ -378,77 +367,13 @@ export async function POST(
       interactionType ===
         "transfer"
     ) {
-      if (
-        !isEvidenceOutcome(
-          body.outcome,
-        )
-      ) {
-        return NextResponse.json(
-          {
-            error:
-              "A valid outcome is required for retention or transfer.",
-          },
-          { status: 400 },
-        );
-      }
-
-      const evidenceId =
-        `${interactionType}-${body.competencyId}-${crypto.randomUUID()}`;
-
-      if (
-        interactionType ===
-        "retention"
-      ) {
-        await recordRetentionCheck({
-          learnerId:
-            authenticatedLearnerId,
-          competencyId:
-            body.competencyId,
-          evidenceId,
-          outcome:
-            body.outcome,
-        });
-      } else {
-        await recordTransferCheck({
-          learnerId:
-            authenticatedLearnerId,
-          competencyId:
-            body.competencyId,
-          evidenceId,
-          outcome:
-            body.outcome,
-        });
-      }
-
-      const learnerState =
-        await getLearnerState(
-          authenticatedLearnerId,
-          body.competencyId,
-        );
-
-      if (!learnerState) {
-        throw new Error(
-          "Learner state not found after retention or transfer check.",
-        );
-      }
-
-      const response =
-        await buildLearningResponse(
-          authenticatedLearnerId,
-          body.sessionId,
-          learnerState,
-        );
-
-      return NextResponse.json({
-        ...response,
-        interaction: {
-          type:
-            interactionType,
-          evidenceId,
-          outcome:
-            body.outcome,
+      return NextResponse.json(
+        {
+          error:
+            "Retention and transfer outcomes must be established by trusted evidence and cannot be supplied directly by the client.",
         },
-      });
+        { status: 400 },
+      );
     }
 
     if (

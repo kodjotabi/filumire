@@ -1,5 +1,7 @@
-﻿import type {
+import type {
   EvidenceId,
+  InstructionalStrategy,
+  ResponseMode,
   InterventionType,
   LearnerId,
   CompetencyId,
@@ -28,6 +30,8 @@ export async function createIntervention(
     sessionId: SessionId;
     decisionId: string;
     type: InterventionType;
+    instructionalStrategy?: InstructionalStrategy;
+    responseMode?: ResponseMode;
     policyVersion?: string;
   },
 ): Promise<LearningIntervention> {
@@ -53,6 +57,12 @@ export async function createIntervention(
 
     type:
       input.type,
+
+    instructionalStrategy:
+      input.instructionalStrategy,
+
+    responseMode:
+      input.responseMode,
 
     status:
       "active",

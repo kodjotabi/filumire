@@ -1,4 +1,4 @@
-import type {
+﻿import type {
   AdaptiveDecisionRequest,
   AdaptiveDecisionResponse,
 } from "../../packages/contracts";
@@ -10,6 +10,8 @@ import {
 
 import {
   selectPedagogicalAction,
+  selectInstructionalStrategy,
+  selectResponseMode,
 } from "../../packages/pedagogy";
 
 import {
@@ -60,14 +62,12 @@ export async function makeAdaptiveDecision(
         (item) =>
           item.competencyId !==
             competency.competencyId &&
-          item.masteryEstimate >=
-            0.8 &&
-          item.confidence >=
-            0.8 &&
-          item.retentionState
-            ?.status === "retained" &&
-          item.transferState
-            ?.status === "demonstrated",
+          item.masteryEstimate >= 0.8 &&
+          item.confidence >= 0.8 &&
+          item.retentionState?.status ===
+            "retained" &&
+          item.transferState?.status ===
+            "demonstrated",
       )
       .map(
         (item) =>
@@ -135,7 +135,25 @@ export async function makeAdaptiveDecision(
         competency.readinessState
           ?.readyForAdvancement ??
         false,
+
+      strategyEvidence:
+        competency.strategyEvidence,
+
+      responseModeEvidence:
+        competency.responseModeEvidence,
     });
+
+  const strategyDecision =
+    selectInstructionalStrategy(
+      pedagogicalDecision.action,
+      competency.strategyEvidence,
+    );
+
+  const responseModeDecision =
+    selectResponseMode(
+      pedagogicalDecision.action,
+      competency.responseModeEvidence,
+    );
 
   const decision:
     AdaptiveDecisionResponse["decision"] = {
@@ -174,11 +192,25 @@ export async function makeAdaptiveDecision(
 
     confidence:
       competency.confidence,
+
+    instructionalStrategy:
+      strategyDecision
+        .instructionalStrategy,
+
+    responseMode:
+      responseModeDecision
+        .responseMode,
   };
 
-  let contentState =
-    learnerState;
-
+  /*
+   * Intervention persistence is authoritative.
+   *
+   * The intervention store owns the intervention
+   * record. The Learner Model is not independently
+   * mutated here. Subsequent evidence is responsible
+   * for updating intervention history through
+   * applyEvidence().
+   */
   if (
     pedagogicalDecision.action ===
       "teach" ||
@@ -191,7 +223,11 @@ export async function makeAdaptiveDecision(
     pedagogicalDecision.action ===
       "reassess" ||
     pedagogicalDecision.action ===
-      "diagnose"
+      "diagnose" ||
+    pedagogicalDecision.action ===
+      "retention_check" ||
+    pedagogicalDecision.action ===
+      "transfer_check"
   ) {
     const intervention =
       await createIntervention({
@@ -213,60 +249,30 @@ export async function makeAdaptiveDecision(
         type:
           pedagogicalDecision.action,
 
+        instructionalStrategy:
+          strategyDecision
+            .instructionalStrategy,
+
+        responseMode:
+          responseModeDecision
+            .responseMode,
+
         policyVersion:
           "intervention-v1",
       });
 
     decision.interventionId =
       intervention.interventionId;
-
-    const interventionRecord = {
-      interventionId:
-        intervention.interventionId,
-
-      competencyId:
-        competency.competencyId,
-
-      type:
-        pedagogicalDecision.action,
-
-      startedAt:
-        intervention.startedAt,
-
-      outcome:
-        intervention.outcome,
-
-      evidenceIds:
-        intervention.evidenceIds,
-    };
-
-    contentState = {
-      ...learnerState,
-
-      competencies:
-        learnerState.competencies.map(
-          (item) =>
-            item.competencyId ===
-            competency.competencyId
-              ? {
-                  ...item,
-
-                  interventionHistory:
-                    [
-                      ...(item.interventionHistory ??
-                        []),
-
-                      interventionRecord,
-                    ],
-                }
-              : item,
-        ),
-    };
-
-    await saveLearnerState(
-      contentState,
-    );
   }
+
+  /*
+   * Strategy and response-mode selections are part
+   * of the decision, but are not duplicated into
+   * Learner Model history here.
+   *
+   * The next evidence event records what happened
+   * after the selected approach.
+   */
 
   const usedAssessmentItemIds =
     evidence
@@ -296,7 +302,7 @@ export async function makeAdaptiveDecision(
 
   const content =
     selectLearningContent(
-      contentState,
+      learnerState,
       pedagogicalDecision.action,
       usedAssessmentItemIds,
       usedContentIds,

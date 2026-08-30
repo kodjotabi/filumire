@@ -1,7 +1,9 @@
-import type {
+﻿import type {
   DiagnosticState,
   LearningEvidence,
   InterventionType,
+  InstructionalStrategy,
+  ResponseMode,
 } from "../../packages/domain";
 
 import type {
@@ -23,18 +25,11 @@ function resolveDiagnosticRule(
   response: unknown,
   diagnosticRules?: string,
 ): DiagnosticRule | undefined {
-  if (!diagnosticRules) {
-    return undefined;
-  }
+  if (!diagnosticRules) return undefined;
 
   try {
     const rules =
-      JSON.parse(
-        diagnosticRules,
-      ) as Record<
-        string,
-        DiagnosticRule
-      >;
+      JSON.parse(diagnosticRules) as Record<string, DiagnosticRule>;
 
     const responseKey =
       typeof response === "string"
@@ -50,14 +45,12 @@ function resolveDiagnosticRule(
 function resolveMetadataInterventionType(
   metadata?: Record<string, string>,
 ): InterventionType | undefined {
-  const value =
-    metadata?.interventionType;
+  const value = metadata?.interventionType;
 
-  if (!value) {
-    return undefined;
-  }
+  if (!value) return undefined;
 
-  const validTypes: InterventionType[] = [
+  const valid: InterventionType[] = [
+    "diagnose",
     "teach",
     "practice",
     "scaffold",
@@ -68,10 +61,63 @@ function resolveMetadataInterventionType(
     "teacher_review",
   ];
 
-  return validTypes.includes(
-    value as InterventionType,
-  )
+  return valid.includes(value as InterventionType)
     ? (value as InterventionType)
+    : undefined;
+}
+
+function resolveMetadataStrategy(
+  metadata?: Record<string, string>,
+): InstructionalStrategy | undefined {
+  const value = metadata?.instructionalStrategy;
+
+  if (!value) return undefined;
+
+  const valid: InstructionalStrategy[] = [
+    "direct_explanation",
+    "worked_example",
+    "guided_practice",
+    "questioning",
+    "visual_representation",
+    "concrete_representation",
+    "analogy",
+    "demonstration",
+    "story_context",
+    "step_by_step_scaffold",
+    "error_analysis",
+    "retrieval_practice",
+    "mixed_representation",
+  ];
+
+  return valid.includes(value as InstructionalStrategy)
+    ? (value as InstructionalStrategy)
+    : undefined;
+}
+
+function resolveMetadataResponseMode(
+  metadata?: Record<string, string>,
+): ResponseMode | undefined {
+  const value = metadata?.responseMode;
+
+  if (!value) return undefined;
+
+  const valid: ResponseMode[] = [
+    "multiple_choice",
+    "short_answer",
+    "constructed_response",
+    "worked_solution",
+    "explanation",
+    "error_identification",
+    "sequence_ordering",
+    "matching",
+    "classification",
+    "application",
+    "oral_response",
+    "observed_performance",
+  ];
+
+  return valid.includes(value as ResponseMode)
+    ? (value as ResponseMode)
     : undefined;
 }
 
@@ -85,15 +131,10 @@ export async function evaluateAssessment(
   evidence: LearningEvidence;
 }> {
   const correct =
-    JSON.stringify(
-      submission.response,
-    ) ===
-    JSON.stringify(
-      expectedResponse,
-    );
+    JSON.stringify(submission.response) ===
+    JSON.stringify(expectedResponse);
 
-  const now =
-    new Date().toISOString();
+  const now = new Date().toISOString();
 
   const diagnosticRule =
     !correct
@@ -103,51 +144,48 @@ export async function evaluateAssessment(
         )
       : undefined;
 
-  /*
-   * Explicit metadata remains supported.
-   *
-   * When metadata does not provide the type,
-   * resolve it from the persisted intervention.
-   */
   let interventionType =
-    resolveMetadataInterventionType(
-      metadata,
-    );
+    resolveMetadataInterventionType(metadata);
 
-  if (
-    !interventionType &&
-    submission.interventionId
-  ) {
+  let instructionalStrategy =
+    resolveMetadataStrategy(metadata);
+
+  let responseMode =
+    resolveMetadataResponseMode(metadata);
+
+  if (submission.interventionId) {
     const intervention =
       await getIntervention(
         submission.interventionId,
       );
 
     interventionType =
+      interventionType ??
       intervention?.type;
+
+    instructionalStrategy =
+      instructionalStrategy ??
+      intervention?.instructionalStrategy;
+
+    responseMode =
+      responseMode ??
+      intervention?.responseMode;
   }
 
-  const evidence:
-    LearningEvidence = {
-    id:
-      `ev-${crypto.randomUUID()}`,
+  const evidence: LearningEvidence = {
+    id: `ev-${crypto.randomUUID()}`,
 
-    learnerId:
-      submission.learnerId,
+    learnerId: submission.learnerId,
+    competencyId: submission.competencyId,
 
-    competencyId:
-      submission.competencyId,
-
-    source:
-      "assessment",
+    source: "assessment",
 
     outcome:
       correct
         ? "correct"
         : "incorrect",
 
-    timestamp:
-      now,
+    timestamp: now,
 
     assessmentItemId:
       submission.assessmentItemId,
@@ -157,8 +195,11 @@ export async function evaluateAssessment(
 
     contentId,
 
-    policyVersion:
-      "assessment-0.4",
+    instructionalStrategy,
+
+    responseMode,
+
+    policyVersion: "assessment-0.6",
 
     errorPattern:
       diagnosticRule?.errorPattern,
@@ -177,18 +218,11 @@ export async function evaluateAssessment(
 
   return {
     result: {
-      evidenceId:
-        evidence.id,
-
-      learnerId:
-        submission.learnerId,
-
-      sessionId:
-        submission.sessionId,
-
+      evidenceId: evidence.id,
+      learnerId: submission.learnerId,
+      sessionId: submission.sessionId,
       assessmentItemId:
         submission.assessmentItemId,
-
       correct,
     },
 

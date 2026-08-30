@@ -165,6 +165,57 @@ const initialContent: LearningContent[] = [
   },
 
   {
+    id: "content-number-sequence-transfer-001-en",
+    competencyId: "competency-test-001",
+    type: "assessment",
+    title: "Number Sequence Transfer",
+    body: "A shop packs oranges in groups of 5. If the first three groups contain 5, 10, and 15 oranges, how many oranges will be in the next group?",
+    language: "en",
+    assessmentItemId:
+      "item-number-sequence-transfer-001-en",
+    metadata: {
+      options: JSON.stringify([
+        "18",
+        "20",
+        "25",
+        "30",
+      ]),
+      expectedResponse: "20",
+    },
+    prerequisiteContentIds: [
+      "content-number-sequence-reassessment-001-en",
+    ],
+    version: "content-0.5",
+    createdAt: now,
+    updatedAt: now,
+  },
+
+  {
+    id: "content-number-sequence-transfer-001-fr",
+    competencyId: "competency-test-001",
+    type: "assessment",
+    title: "Transfert sur les suites numériques",
+    body: "Un magasin emballe des oranges par groupes de 5. Si les trois premiers groupes contiennent 5, 10 et 15 oranges, combien d'oranges y aura-t-il dans le groupe suivant ?",
+    language: "fr",
+    assessmentItemId:
+      "item-number-sequence-transfer-001-fr",
+    metadata: {
+      options: JSON.stringify([
+        "18",
+        "20",
+        "25",
+        "30",
+      ]),
+      expectedResponse: "20",
+    },
+    prerequisiteContentIds: [
+      "content-number-sequence-reassessment-001-fr",
+    ],
+    version: "content-0.5",
+    createdAt: now,
+    updatedAt: now,
+  },
+  {
     id: "content-number-sequence-patterns-assessment-001-en",
     competencyId: "competency-test-002",
     type: "assessment",
@@ -993,3 +1044,4 @@ export function seedContent(): void {
     saveContent(content);
   }
 }
+

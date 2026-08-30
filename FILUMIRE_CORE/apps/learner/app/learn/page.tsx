@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 const DEVELOPMENT_LEARNER_ID =
-  "learner-demo-001";
+  "learner-runtime-feedback-001";
 
 const SESSION_ID =
   `session-${DEVELOPMENT_LEARNER_ID}`;
@@ -44,6 +44,12 @@ type LearningResponse = {
     content: string;
   };
 
+  assessment?: {
+    result: {
+      correct: boolean;
+    };
+  };
+
   interaction?: {
     type: string;
     evidenceId: string;
@@ -77,15 +83,19 @@ function parseOptions(
   }
 
   try {
-    const parsed =
-      JSON.parse(value);
+    const parsed = JSON.parse(value);
 
-    return Array.isArray(parsed)
-      ? parsed.filter(
-          (item): item is string =>
-            typeof item === "string",
-        )
-      : [];
+    if (!Array.isArray(parsed)) {
+      return [];
+    }
+
+    return parsed
+      .filter(
+        (item): item is string =>
+          typeof item === "string",
+      )
+      .map((item) => item.trim())
+      .filter(Boolean);
   } catch {
     return [];
   }
@@ -152,11 +162,71 @@ function buttonLabel(
     case "diagnose":
       return "Start";
 
+    case "retention_check":
+      return "Continue";
+
+    case "transfer_check":
+      return "Continue";
+
     case "advance":
       return "Continue to the next step";
 
     default:
       return "Continue";
+  }
+}
+
+function feedbackTitle(
+  outcome: string,
+): string {
+  switch (outcome) {
+    case "correct":
+      return "Correct";
+
+    case "incorrect":
+      return "Not quite";
+
+    case "partial":
+      return "Partly correct";
+
+    default:
+      return "Answer recorded";
+  }
+}
+
+function feedbackMessage(
+  outcome: string,
+): string {
+  switch (outcome) {
+    case "correct":
+      return "Well done. FILUMIRE has recorded this as successful evidence.";
+
+    case "incorrect":
+      return "That answer was not correct. FILUMIRE will use this evidence to decide what you need next.";
+
+    case "partial":
+      return "You have part of it right. FILUMIRE will use this evidence to guide what comes next.";
+
+    default:
+      return "Your response has been recorded.";
+  }
+}
+
+function feedbackIcon(
+  outcome: string,
+): string {
+  switch (outcome) {
+    case "correct":
+      return "✓";
+
+    case "incorrect":
+      return "✕";
+
+    case "partial":
+      return "•";
+
+    default:
+      return "•";
   }
 }
 
@@ -176,9 +246,13 @@ export default function LearnPage() {
   const [error, setError] =
     useState("");
 
+  const [assessmentFeedback, setAssessmentFeedback] =
+    useState<string | null>(null);
+
   async function loadLearning() {
     setLoading(true);
     setError("");
+    setAssessmentFeedback(null);
 
     try {
       const response =
@@ -230,6 +304,7 @@ export default function LearnPage() {
 
     setSubmitting(true);
     setError("");
+    setAssessmentFeedback(null);
 
     try {
       const response =
@@ -332,6 +407,27 @@ export default function LearnPage() {
       const result =
         (await response.json()) as LearningResponse;
 
+      /*
+       * Preserve the assessment result while
+       * FILUMIRE advances to the next adaptive
+       * instructional response.
+       *
+       * The API returns:
+       *
+       * assessment.result.correct
+       *
+       * alongside the next decision/content.
+       */
+      if (result.assessment) {
+        setAssessmentFeedback(
+          result.assessment.result.correct
+            ? "correct"
+            : "incorrect",
+        );
+      } else {
+        setAssessmentFeedback(null);
+      }
+
       setData(result);
       setSelectedResponse("");
     } catch (err) {
@@ -365,6 +461,7 @@ export default function LearnPage() {
 
           <section className="card loading-card">
             <div className="loader" />
+
             <p>
               Preparing your learning session...
             </p>
@@ -604,9 +701,6 @@ export default function LearnPage() {
     ) &&
     options.length > 0;
 
-  const isLesson =
-    data.content?.type === "lesson";
-
   const showContinue =
     Boolean(data.content) &&
     !hasAssessment &&
@@ -639,6 +733,37 @@ export default function LearnPage() {
               Your learning session
             </span>
           </div>
+
+          {assessmentFeedback && (
+            <div
+              className={`assessment-feedback ${assessmentFeedback}`}
+              role="status"
+              aria-live="polite"
+            >
+              <div
+                className="feedback-icon"
+                aria-hidden="true"
+              >
+                {feedbackIcon(
+                  assessmentFeedback,
+                )}
+              </div>
+
+              <div className="feedback-content">
+                <div className="feedback-title">
+                  {feedbackTitle(
+                    assessmentFeedback,
+                  )}
+                </div>
+
+                <div className="feedback-message">
+                  {feedbackMessage(
+                    assessmentFeedback,
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
 
           <h1>
             {actionLabel(action)}
@@ -676,9 +801,9 @@ export default function LearnPage() {
 
               <div className="options">
                 {options.map(
-                  (option) => (
+                  (option, index) => (
                     <label
-                      key={option}
+                      key={`${option}-${index}`}
                       className={
                         selectedResponse ===
                         option
@@ -699,9 +824,12 @@ export default function LearnPage() {
                             option,
                           )
                         }
+                        disabled={
+                          submitting
+                        }
                       />
 
-                      <span>
+                      <span className="option-text">
                         {option}
                       </span>
                     </label>
@@ -988,22 +1116,25 @@ export default function LearnPage() {
 
         .options {
           display: grid;
+          grid-template-columns: 1fr;
           gap: 10px;
+          width: 100%;
           margin-bottom: 20px;
         }
 
         .option {
+          box-sizing: border-box;
           display: flex;
           align-items: center;
           gap: 13px;
+          width: 100%;
+          min-height: 54px;
           padding: 16px 18px;
           border: 1px solid #d8d5ce;
           border-radius: 12px;
           cursor: pointer;
           font-size: 17px;
-          transition:
-            border-color 0.15s ease,
-            background 0.15s ease;
+          line-height: 1.2;
         }
 
         .option:hover {
@@ -1018,6 +1149,64 @@ export default function LearnPage() {
         .option input {
           width: 18px;
           height: 18px;
+          flex: 0 0 18px;
+        }
+
+        .option-text {
+          display: block;
+          min-width: 0;
+          white-space: nowrap;
+        }
+
+        .assessment-feedback {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          margin-bottom: 28px;
+          padding: 18px 20px;
+          border-radius: 14px;
+          border: 1px solid #d8d5ce;
+          background: #faf9f6;
+        }
+
+        .assessment-feedback.correct {
+          border-color: #b8cdb8;
+          background: #f3f8f3;
+        }
+
+        .assessment-feedback.incorrect {
+          border-color: #d8bcbc;
+          background: #fbf4f4;
+        }
+
+        .assessment-feedback.partial {
+          border-color: #d8cdb2;
+          background: #faf7ef;
+        }
+
+        .feedback-icon {
+          width: 44px;
+          height: 44px;
+          flex: 0 0 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          background: #171717;
+          color: white;
+          font-size: 25px;
+          font-weight: 700;
+        }
+
+        .feedback-title {
+          font-size: 19px;
+          font-weight: 700;
+        }
+
+        .feedback-message {
+          margin-top: 4px;
+          color: #555;
+          line-height: 1.5;
         }
 
         .check-card {
@@ -1149,6 +1338,10 @@ export default function LearnPage() {
           .button-row
             .secondary-button {
             width: 100%;
+          }
+
+          .assessment-feedback {
+            align-items: flex-start;
           }
         }
       `}</style>
