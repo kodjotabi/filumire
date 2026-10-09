@@ -1,3 +1,13 @@
 FILUMIRE_CORE/node_modules/
 FILUMIRE_CORE/.next/
 FILUMIRE_CORE/apps/*/.next/
+
+# Generated artifacts (FILUMIRE_CLAUDE workspace)
+node_modules/
+.next/
+.vercel/
+out/
+coverage/
+*.tsbuildinfo
+npm-debug.log*
+.DS_Store
