@@ -468,6 +468,239 @@ export function AskFiluPage({
           border-radius: 50%;
           background: #7fb2ff;
         }
+
+        /* Tablet: larger tap targets and a taller conversation */
+        @media (min-width: 768px) {
+          .askPage {
+            gap: 16px;
+          }
+
+          .fHero {
+            min-height: 124px;
+          }
+
+          .fHeroText h1 {
+            font-size: 38px;
+          }
+
+          .fHeroText p {
+            max-width: 320px;
+            font-size: 16px;
+          }
+
+          .fHeroArt {
+            width: 190px;
+          }
+
+          .fHeroArt img {
+            height: 116px;
+          }
+
+          .fNote {
+            width: 100px;
+            font-size: 14px;
+          }
+
+          .fTopic {
+            gap: 14px;
+            padding: 16px 20px;
+            border-radius: 18px;
+          }
+
+          .fTopicIcon {
+            width: 52px;
+            height: 52px;
+          }
+
+          .fTopicText small {
+            font-size: 12px;
+          }
+
+          .fTopicText strong {
+            font-size: 19px;
+          }
+
+          .fTopicText span,
+          .fTopicGoals b {
+            font-size: 14px;
+          }
+
+          .fTopicGoals {
+            width: 160px;
+          }
+
+          .fTrack {
+            height: 9px;
+          }
+
+          .fHelp h2 {
+            font-size: 22px;
+          }
+
+          .fHelp p {
+            margin-bottom: 12px;
+            font-size: 14px;
+          }
+
+          .fModes {
+            gap: 12px;
+          }
+
+          .fMode {
+            min-height: 76px;
+            padding: 12px 16px;
+            border-radius: 16px;
+          }
+
+          .fMode b {
+            font-size: 15px;
+          }
+
+          .fMode span {
+            font-size: 12.5px;
+          }
+
+          .fChat {
+            max-height: 360px;
+            gap: 12px;
+            padding: 16px;
+            border-radius: 18px;
+          }
+
+          .fUser img,
+          .fFilu img {
+            width: 36px;
+            height: 36px;
+          }
+
+          .fUserBubble,
+          .fBubble p {
+            font-size: 15px;
+          }
+
+          .fBubble {
+            padding: 10px 16px;
+          }
+
+          .fBubble small {
+            font-size: 11px;
+          }
+
+          .fInput input {
+            height: 48px;
+            padding: 0 18px;
+            font-size: 15px;
+          }
+
+          .fInput button {
+            width: 48px;
+            height: 48px;
+          }
+        }
+
+        /* Laptop and desktop: context and actions on the left,
+           the conversation on the right */
+        @media (min-width: 1024px) {
+          .askPage {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+            grid-template-areas:
+              "hero chat"
+              "topic chat"
+              "help chat"
+              "help input"
+              "footer footer";
+            grid-template-rows: auto auto auto auto 1fr;
+            gap: 20px 24px;
+          }
+
+          .fHero {
+            grid-area: hero;
+            padding-top: 0;
+          }
+
+          .fHeroText {
+            min-width: 0;
+          }
+
+          .fHeroText h1 {
+            font-size: 32px;
+          }
+
+          .fHeroArt {
+            flex: none;
+            width: 110px;
+          }
+
+          .fHeroArt img {
+            height: 92px;
+          }
+
+          .fNote {
+            width: 74px;
+            padding: 6px;
+            font-size: 11.5px;
+          }
+
+          .fTopic {
+            grid-area: topic;
+            flex-wrap: wrap;
+          }
+
+          .fTopicGoals {
+            width: 100%;
+            padding-left: 66px;
+          }
+
+          .fHelp {
+            grid-area: help;
+          }
+
+          .fModes {
+            grid-template-columns: minmax(0, 1fr);
+          }
+
+          .fChat {
+            grid-area: chat;
+            min-height: 360px;
+            max-height: 640px;
+            padding: 20px;
+          }
+
+          .fInput {
+            grid-area: input;
+            align-self: start;
+          }
+
+          .homeFooter {
+            grid-area: footer;
+            align-self: end;
+          }
+        }
+
+        @media (min-width: 1280px) {
+          .askPage {
+            column-gap: 32px;
+          }
+
+          .fHeroText h1 {
+            font-size: 38px;
+          }
+
+          .fHeroArt {
+            width: 180px;
+          }
+
+          .fHeroArt img {
+            height: 112px;
+          }
+
+          .fNote {
+            width: 96px;
+            padding: 8px;
+            font-size: 13px;
+          }
+        }
       `}</style>
     </div>
   );

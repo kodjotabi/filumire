@@ -686,6 +686,270 @@ export function ProgressPage({
           color: #3d3a66;
           font-size: 11px;
         }
+
+        /* Tablet: same order, roomier cards and readable text */
+        @media (min-width: 768px) {
+          .progressPage {
+            gap: 14px;
+          }
+
+          .pHero {
+            min-height: 128px;
+          }
+
+          .pHero h1 {
+            font-size: 34px;
+          }
+
+          .pHero p {
+            max-width: 340px;
+            font-size: 16px;
+          }
+
+          .pHero img {
+            height: 124px;
+          }
+
+          .pBubble {
+            right: 120px;
+            width: 118px;
+            height: 92px;
+            font-size: 16px;
+          }
+
+          .pOverall {
+            grid-template-columns: 56px minmax(0, 1fr) minmax(0, 1.4fr);
+            column-gap: 16px;
+            padding: 16px 20px;
+            border-radius: 18px;
+          }
+
+          .pOverallIcon {
+            width: 56px;
+            height: 56px;
+          }
+
+          .pOverallText strong {
+            font-size: 18px;
+          }
+
+          .pOverallText small,
+          .pOverallBar small {
+            font-size: 13px;
+          }
+
+          .pOverallBar b {
+            font-size: 26px;
+          }
+
+          .pTrack {
+            height: 10px;
+          }
+
+          .pHead h2 {
+            font-size: 22px;
+          }
+
+          .pHead :global(a) {
+            font-size: 14px;
+          }
+
+          .pGrid {
+            gap: 12px;
+          }
+
+          .pGrid :global(.pCard) {
+            grid-template-columns: 44px minmax(0, 1fr);
+            column-gap: 12px;
+            row-gap: 8px;
+            padding: 14px 16px;
+            border-radius: 16px;
+          }
+
+          .pIcon {
+            width: 44px;
+            height: 44px;
+          }
+
+          .pIcon :global(svg) {
+            width: 26px;
+            height: 26px;
+          }
+
+          .pCardName strong,
+          .pCardName b {
+            font-size: 15px;
+          }
+
+          .pChip {
+            font-size: 12px;
+          }
+
+          .pArrow {
+            right: 14px;
+            bottom: 12px;
+          }
+
+          .pGrowing {
+            grid-template-columns: 48px minmax(0, 1fr);
+            min-height: 76px;
+            padding: 12px 130px 12px 16px;
+            border-radius: 18px;
+          }
+
+          .pSprout {
+            width: 48px;
+            height: 48px;
+          }
+
+          .pGrowing strong {
+            font-size: 17px;
+          }
+
+          .pGrowing p {
+            font-size: 13px;
+          }
+
+          .pGrowNote {
+            top: 10px;
+            right: 14px;
+            width: 104px;
+            font-size: 15px;
+          }
+
+          .pLists {
+            gap: 12px;
+          }
+
+          .pList {
+            padding: 16px;
+            border-radius: 18px;
+          }
+
+          .pList strong {
+            font-size: 16px;
+          }
+
+          .pList small {
+            font-size: 12px;
+          }
+
+          .pList li {
+            gap: 10px;
+            padding: 5px 0;
+            font-size: 14px;
+          }
+
+          .pList li b {
+            font-size: 14px;
+          }
+
+          .pList li i {
+            width: 22px;
+            height: 22px;
+            flex-basis: 22px;
+            font-size: 11px;
+          }
+
+          .pQuote {
+            grid-template-columns: 40px minmax(0, 1fr) auto;
+            padding: 14px 18px;
+            border-radius: 18px;
+          }
+
+          .pQuote p,
+          .pQuote b {
+            font-size: 14px;
+          }
+        }
+
+        /* Laptop and desktop: subjects beside growth and focus lists */
+        @media (min-width: 1024px) {
+          .progressPage {
+            display: grid;
+            grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+            grid-template-areas:
+              "hero hero"
+              "overall overall"
+              "subjects growing"
+              "subjects lists"
+              "quote quote"
+              "footer footer";
+            grid-template-rows: auto auto auto auto auto 1fr;
+            gap: 20px 24px;
+            align-items: start;
+          }
+
+          .pHero {
+            grid-area: hero;
+            padding-top: 0;
+          }
+
+          .pHero h1 {
+            font-size: 36px;
+          }
+
+          .pHero img {
+            right: 12px;
+          }
+
+          .pOverall {
+            grid-area: overall;
+          }
+
+          .pSubjects {
+            grid-area: subjects;
+          }
+
+          .pGrid {
+            grid-template-columns: minmax(0, 1fr);
+          }
+
+          .pGrowing {
+            grid-area: growing;
+            padding: 14px 16px;
+          }
+
+          .pGrowNote {
+            position: static;
+            grid-column: 1 / -1;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 0 5px;
+            width: auto;
+            margin-top: 8px;
+            transform: none;
+          }
+
+          .pLists {
+            grid-area: lists;
+            grid-template-columns: minmax(0, 1fr);
+          }
+
+          .pQuote {
+            grid-area: quote;
+          }
+
+          .homeFooter {
+            grid-area: footer;
+            align-self: end;
+          }
+        }
+
+        @media (min-width: 1280px) {
+          .progressPage {
+            column-gap: 32px;
+          }
+
+          .pGrid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+
+          .pGrid :global(.pCard) {
+            min-height: 132px;
+            align-content: center;
+          }
+        }
       `}</style>
     </div>
   );

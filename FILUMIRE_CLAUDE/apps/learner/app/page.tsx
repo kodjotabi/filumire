@@ -16,6 +16,22 @@ export default function HomePage() {
         />
       </header>
 
+      {/* Tablet and up: a real header bar replaces the 390px artwork. */}
+      <header className="wideTopbar">
+        <Link href="/" className="wideLogo" aria-label="FILUMIRE home">
+          <img src="/filumire-logo-white.svg" alt="FILUMIRE" />
+        </Link>
+        <Link href="/adult" className="wideAdultLink">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="8.5" cy="7.5" r="3.6" />
+            <circle cx="16.5" cy="8.5" r="3" />
+            <path d="M1.5 20c0-3.9 3-6.4 7-6.4s7 2.5 7 6.4z" />
+            <path d="M16 14.2c3.4 0 6.5 1.9 6.5 5.3V20H17c0-2.3-.4-4.3-1-5.8z" />
+          </svg>
+          Parent / Teacher Login
+        </Link>
+      </header>
+
       <section className="content">
 
         <h1>
@@ -157,6 +173,68 @@ export default function HomePage() {
         .copyright { left: 24px; font-size: 8.5px; }
         .footerTag { right: 23px; font-size: 6.5px; letter-spacing: .9px; }
         @media (min-width: 391px) { .home { box-shadow: 0 0 0 1px #e5e5e5; } }
+        .wideTopbar { display: none; }
+
+        /* Tablet: full-width page, real header, centred column */
+        @media (min-width: 768px) {
+          .home { display: flex; flex-direction: column; max-width: none; min-height: 100dvh; box-shadow: none; }
+          .home .topbar { display: none; }
+          .home .wideTopbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 76px; padding: 0 max(32px, calc((100% - 1200px) / 2)); background: #123f78; }
+          .wideLogo { display: inline-flex; }
+          .wideLogo img { display: block; width: 150px; height: auto; }
+          .wideAdultLink { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 18px; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; color: #ffffff; font-size: 14px; font-weight: 700; text-decoration: none; }
+          .wideAdultLink:hover { background: rgba(255,255,255,.1); }
+          .wideAdultLink svg { width: 22px; height: 22px; flex: none; fill: currentColor; }
+          .home .content { flex: 1; width: min(640px, calc(100% - 64px)); padding-top: 40px; }
+          .home h1 { font-size: 40px; }
+          .home .tagline { margin-top: 6px; font-size: 21px; }
+          .home .learners { max-width: 560px; margin: 18px auto 14px; }
+          .home .intro { font-size: 17px; line-height: 1.45; }
+          .home .choose { margin: 26px 0 14px; font-size: 17px; }
+          .home .languages { width: 420px; gap: 12px; }
+          .home .language { border-radius: 16px; transition: transform 140ms ease; }
+          .home .language:hover { transform: translateY(-2px); }
+          .home .languageText { left: 22.5%; }
+          .home .languageText strong { font-size: 18px; }
+          .home .languageText small { margin-top: 4px; font-size: 16px; }
+          .home .features { width: 100%; margin-top: 40px; gap: 14px; }
+          .home .feature { padding: 18px 10px; border-radius: 18px; background: #f2f7fd; }
+          .home .feature img { width: 60px; height: 60px; margin-bottom: 10px; }
+          .home .feature strong { white-space: normal; font-size: 14px; }
+          .home .feature span { margin-top: 4px; font-size: 13px; line-height: 1.3; }
+          .home .footer { height: clamp(150px, 20vw, 260px); margin-top: 48px; overflow: hidden; }
+          .home .footer > img { height: 100%; object-fit: cover; object-position: center 15%; }
+          .home .future { top: 22px; font-size: 14px; }
+          .home .future::after { width: 56px; height: 4px; margin-top: 5px; }
+          .home .copyright, .home .footerTag { bottom: 16px; }
+          .home .copyright { left: max(32px, calc((100% - 1200px) / 2)); font-size: 13px; }
+          .home .footerTag { right: max(32px, calc((100% - 1200px) / 2)); font-size: 11px; letter-spacing: 2px; }
+        }
+
+        /* Laptop and desktop: welcome and language choice beside the
+           learners artwork, benefits in a row underneath */
+        @media (min-width: 1024px) {
+          .home .content {
+            display: grid;
+            width: min(1200px, calc(100% - 64px));
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+            grid-template-areas: ". art" "title art" "tag art" "intro art" "choose art" "langs art" ". art" "feat feat";
+            grid-template-rows: 1fr auto auto auto auto auto 1fr auto;
+            column-gap: 56px;
+            padding-top: 48px;
+            text-align: left;
+          }
+          .home h1 { grid-area: title; font-size: 48px; }
+          .home .tagline { grid-area: tag; font-size: 22px; }
+          .home .learners { grid-area: art; align-self: center; max-width: none; margin: 0; }
+          .home .intro { grid-area: intro; margin: 22px 0 0; font-size: 18px; }
+          .home .choose { grid-area: choose; margin: 28px 0 14px; }
+          .home .languages { grid-area: langs; width: min(440px, 100%); margin: 0; }
+          .home .features { grid-area: feat; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-top: 48px; }
+          .home .feature { display: grid; grid-template-columns: 56px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 14px; align-content: center; padding: 18px 20px; text-align: left; }
+          .home .feature img { grid-row: span 2; width: 56px; height: 56px; margin: 0; }
+          .home .feature span { margin-top: 3px; }
+        }
       `}</style>
     </main>
   );

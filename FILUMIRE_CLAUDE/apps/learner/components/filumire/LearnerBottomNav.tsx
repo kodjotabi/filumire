@@ -10,6 +10,12 @@ export type LearnerNavItem =
 type LearnerBottomNavProps = {
   active: LearnerNavItem;
   language?: "en" | "fr";
+  /*
+   * "app" (default) is the bottom bar on mobile and tablet and becomes
+   * a fixed sidebar from 1024px. "inline" stays a bar in the page flow
+   * at every width (single flowing pages such as sign-in).
+   */
+  variant?: "app" | "inline";
 };
 
 function NavIcon({ name }: { name: string }) {
@@ -55,6 +61,7 @@ function NavIcon({ name }: { name: string }) {
 export function LearnerBottomNav({
   active,
   language = "en",
+  variant = "app",
 }: LearnerBottomNavProps) {
   const items = [
     {
@@ -100,9 +107,21 @@ export function LearnerBottomNav({
 
   return (
     <nav
-      className="filumireBottomNav"
+      className={
+        variant === "inline"
+          ? "filumireBottomNav filumireBottomNavInline"
+          : "filumireBottomNav"
+      }
       aria-label="Learner navigation"
     >
+      {/* Hidden on mobile and tablet; the sidebar's logo row from 1024px. */}
+      <Link
+        href={`/dashboard?lang=${language}`}
+        className="filumireNavBrand"
+        aria-label="FILUMIRE learner home"
+      >
+        <img src="/filumire-logo-white.svg" alt="FILUMIRE" />
+      </Link>
       {items.map((item) => (
         <Link
           key={item.key}

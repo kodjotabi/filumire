@@ -61,6 +61,16 @@ select:disabled {
   --filumire-mobile-width: 390px;
   --filumire-header-height: 72px;
   --filumire-nav-height: 72px;
+
+  /* Responsive layout conventions (see "Responsive layouts" below).
+     Breakpoints: mobile < 768px (the approved 390px design),
+     tablet >= 768px, laptop >= 1024px, desktop >= 1280px. */
+  --filumire-tablet-width: 760px;
+  --filumire-sidebar-width: 248px;
+  --filumire-content-max: 1120px;
+  --filumire-frame-max: 1200px;
+  --filumire-gutter-tablet: 28px;
+  --filumire-gutter-desktop: 40px;
   /* Shared interface palette (values from Pages 1 and 3) */
   --ui-bar: #123f78;
   --ui-back: #2b5ba8;
@@ -566,4 +576,645 @@ a {
 .adultRoleSwitch a.active {
   background: var(--filumire-surface);
   box-shadow: 0 1px 4px rgba(0, 59, 113, 0.15);
+}
+
+/* ------------------------------------------------------------------
+   Responsive layouts
+   The 390px mobile design above is the reference and is left as is.
+   Everything below either targets elements that do not render on
+   mobile or sits inside a min-width media query:
+     tablet  >= 768px  constrained 760px frame, bottom navigation
+     laptop  >= 1024px sidebar navigation, multi-column content
+     desktop >= 1280px wider grids and spacing
+   ------------------------------------------------------------------ */
+
+/* Sidebar brand row, shown only when the nav becomes a sidebar. */
+.filumireNavBrand {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .filumireNavItem {
+    gap: 6px;
+    font-size: 11.5px;
+  }
+
+  .filumireNavIcon {
+    width: 26px;
+    height: 26px;
+  }
+
+  /* Learner dashboard content: tablet gutters and four-up subjects */
+  .learnerShell .learnerContent.homeScreen {
+    padding: 8px var(--filumire-gutter-tablet) 0;
+  }
+
+  .homeScreen .homeFooter {
+    height: 104px;
+    margin: auto calc(-1 * var(--filumire-gutter-tablet)) 0;
+  }
+
+  .homeScreen .homeFooter p {
+    top: 10px;
+    font-size: 12px;
+  }
+
+  .homeScreen .homeFooter.hand p {
+    font-size: 17px;
+  }
+
+  .homeScreen .homeGreeting h1,
+  .homeScreen .subjectHero h1 {
+    font-size: 32px;
+  }
+
+  .homeScreen .homeGreeting p,
+  .homeScreen .subjectHero p {
+    font-size: 16px;
+  }
+
+  .homeScreen .homeNote {
+    right: 20px;
+    font-size: 19px;
+  }
+
+  .homeScreen .homeSubjects {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .homeScreen .homeSubject {
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+    min-height: 132px;
+    padding: 14px 14px 12px;
+    border-radius: 16px;
+  }
+
+  .homeScreen .homeSubjectText {
+    padding-right: 0;
+  }
+
+  .homeScreen .homeSubjectText strong {
+    font-size: 15px;
+  }
+
+  .homeScreen .homeSubjectText small {
+    font-size: 12.5px;
+  }
+
+  .homeScreen .homeSubjectProgress {
+    align-self: end;
+    margin-top: 2px;
+  }
+
+  .homeScreen .homeSectionHead h2 {
+    font-size: 22px;
+  }
+
+  .homeScreen .homeSeeAll {
+    font-size: 14px;
+  }
+
+  .homeScreen .homeTiles {
+    gap: 14px;
+  }
+
+  .homeScreen .homeTile {
+    min-height: 118px;
+    padding: 14px 16px;
+  }
+
+  .homeScreen .homeTile strong {
+    font-size: 16px;
+  }
+
+  .homeScreen .homeTile small {
+    font-size: 13px;
+  }
+
+  .homeScreen .homeContinue {
+    padding: 18px 22px;
+    border-radius: 22px;
+  }
+
+  .homeScreen .homeContinueArt {
+    top: 34px;
+    right: 24px;
+    width: 104px;
+    height: 104px;
+  }
+
+  .homeScreen .homeContinueHead > div {
+    max-width: 62%;
+  }
+
+  .homeScreen .homeContinueHead h2 {
+    font-size: 26px;
+  }
+
+  .homeScreen .homeContinueHead p {
+    font-size: 15px;
+  }
+
+  .homeScreen .homeTrack,
+  .homeScreen .homeTrackMeta {
+    width: 62%;
+  }
+
+  .homeScreen .homeCta {
+    max-width: 340px;
+    height: 44px;
+    margin-top: 14px;
+  }
+
+  .homeScreen .learningNext {
+    padding: 20px 22px;
+  }
+
+  .homeScreen .learningStart {
+    max-width: 340px;
+  }
+
+  .homeScreen .subjectProgress,
+  .homeScreen .subjectCurrent {
+    padding: 14px 18px;
+  }
+
+  .homeScreen .subjectCurrentBody p {
+    -webkit-line-clamp: 2;
+  }
+
+  .homeScreen .subjectCta {
+    max-width: 340px;
+    height: 44px;
+  }
+
+  .homeScreen .subjectKeep {
+    padding-right: 190px;
+  }
+
+  .homeScreen .subjectKeepArt {
+    right: 96px;
+  }
+
+  .homeScreen .subjectKeepNote {
+    right: 12px;
+    width: 76px;
+    font-size: 14px;
+  }
+
+  .adultRoleSwitch {
+    max-width: 520px;
+    margin-top: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Learner navigation becomes a fixed sidebar. Pages that use it
+     reserve --filumire-sidebar-width on the left (dashboard, learn). */
+  .filumireBottomNav:not(.filumireBottomNavInline) {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    width: var(--filumire-sidebar-width);
+    min-height: 0;
+    margin: 0;
+    padding: 18px 16px 24px;
+    overflow-y: auto;
+    box-shadow: 4px 0 24px rgba(0, 59, 113, 0.14);
+  }
+
+  .filumireBottomNav:not(.filumireBottomNavInline) .filumireNavBrand {
+    display: flex;
+    align-items: center;
+    min-height: 54px;
+    margin: 0 0 14px;
+    padding: 0 10px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .filumireNavBrand img {
+    display: block;
+    width: 148px;
+    height: auto;
+  }
+
+  .filumireBottomNav:not(.filumireBottomNavInline) .filumireNavItem {
+    flex: 0 0 auto;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 14px;
+    min-height: 50px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 15px;
+    line-height: 1.2;
+    text-align: left;
+  }
+
+  .filumireBottomNav:not(.filumireBottomNavInline) .filumireNavItem:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .filumireBottomNav:not(.filumireBottomNavInline) .filumireNavItemActive {
+    background: rgba(255, 255, 255, 0.14);
+    font-weight: 700;
+  }
+
+  .filumireBottomNav:not(.filumireBottomNavInline) .filumireNavItemActive::after {
+    top: 12px;
+    bottom: 12px;
+    left: 0;
+    right: auto;
+    width: 4px;
+    height: auto;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* Learner header: the sidebar carries the logo, so the header keeps
+     its actions and lines up with the content column. */
+  .learnerShell .filumireLearnerHeader {
+    padding-right: max(var(--filumire-gutter-desktop), calc((100% - var(--filumire-content-max)) / 2 + var(--filumire-gutter-desktop)));
+    padding-left: max(var(--filumire-gutter-desktop), calc((100% - var(--filumire-content-max)) / 2 + var(--filumire-gutter-desktop)));
+  }
+
+  .learnerShell .filumireLearnerHeader .filumireHeaderLogo {
+    display: none;
+  }
+
+  .learnerShell .filumireSetupHeader .filumireSetupAskFilu {
+    font-size: 12px;
+  }
+
+  .learnerShell .filumireAskFilu {
+    font-size: 13px;
+  }
+
+  /* Parent and teacher headers line up with their content frame. */
+  .page > .filumireLearnerHeader {
+    padding-right: max(32px, calc((100% - var(--filumire-frame-max)) / 2));
+    padding-left: max(32px, calc((100% - var(--filumire-frame-max)) / 2));
+  }
+
+  /* Learner dashboard content column */
+  .learnerShell .learnerContent.homeScreen {
+    width: 100%;
+    max-width: var(--filumire-content-max);
+    margin: 0 auto;
+    padding: 28px var(--filumire-gutter-desktop) 0;
+  }
+
+  .homeScreen .homeFooter {
+    height: clamp(120px, 12vw, 168px);
+    margin: auto 0 0;
+    border-top: 24px solid var(--filumire-surface);
+  }
+
+  .homeScreen .homeFooter p {
+    top: 14px;
+    font-size: 14px;
+  }
+
+  .homeScreen .homeFooter.hand p {
+    font-size: 19px;
+  }
+
+  .homeScreen .homeGreeting h1,
+  .homeScreen .subjectHero h1 {
+    font-size: 36px;
+  }
+
+  .homeScreen .homeNote {
+    top: -4px;
+    right: 28px;
+    font-size: 21px;
+  }
+
+  /* Home: greeting, continue card beside quick tiles, subjects row */
+  .learnerShell .learnerContent.homeScreen.homeView {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+    grid-template-rows: auto auto auto 1fr;
+    gap: 22px 24px;
+  }
+
+  .homeView .homeGreeting,
+  .learningView .homeGreeting {
+    grid-column: 1 / -1;
+    min-height: 0;
+    padding: 0 4px;
+  }
+
+  .homeView .homeContinue {
+    grid-column: 1;
+    margin-top: 0;
+    padding: 24px 28px;
+  }
+
+  .homeView .homeContinueArt {
+    top: 46px;
+    right: 24px;
+    width: 76px;
+    height: 76px;
+  }
+
+  /* Keep the subject and topic clear of the avatar artwork */
+  .homeView .homeContinueHead > div {
+    max-width: calc(100% - 146px);
+  }
+
+  .homeView .homeContinueHead h2 {
+    font-size: 22px;
+    overflow-wrap: anywhere;
+  }
+
+  .homeView .homeTrack {
+    height: 10px;
+    margin-top: 20px;
+  }
+
+  .homeView .homeTrackMeta {
+    font-size: 13px;
+  }
+
+  .homeView .homeCta {
+    height: 48px;
+    margin-top: 20px;
+    font-size: 17px;
+  }
+
+  .homeView .homeTiles {
+    grid-row: 2;
+    grid-column: 2;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin-top: 0;
+  }
+
+  .homeView .homeTile {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    column-gap: 14px;
+    align-content: center;
+    align-items: center;
+    min-height: 0;
+    padding: 14px 44px 14px 16px;
+  }
+
+  .homeView .homeTileIcon {
+    grid-row: span 2;
+    width: 48px;
+    height: 48px;
+  }
+
+  .homeView .homeTileIcon svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .homeView .homeTile strong {
+    margin-top: 0;
+    font-size: 17px;
+  }
+
+  .homeView .homeTile small {
+    margin-top: 3px;
+    padding-right: 0;
+    font-size: 13.5px;
+  }
+
+  .homeView .homeTile .homeChevron {
+    top: 50%;
+    bottom: auto;
+    right: 16px;
+    transform: translateY(-50%);
+  }
+
+  .homeView .homeToday {
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
+
+  .homeView .homeFooter,
+  .learningView .homeFooter {
+    grid-column: 1 / -1;
+    align-self: end;
+  }
+
+  .homeScreen .homeSubjects {
+    gap: 16px;
+    margin-top: 12px;
+  }
+
+  .homeScreen .homeSubject {
+    min-height: 148px;
+    padding: 18px 18px 14px;
+    border-radius: 18px;
+    transition: transform 140ms ease, box-shadow 140ms ease;
+  }
+
+  .homeScreen .homeSubject:hover,
+  .homeView .homeTile:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--filumire-shadow);
+  }
+
+  .homeScreen .homeSubjectIcon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .homeScreen .homeSubjectIcon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .homeScreen .homeChevron {
+    top: 18px;
+    right: 16px;
+  }
+
+  /* My Learning (laptop): subjects row, then the recommendation */
+  .learningView .homeSubjects {
+    margin-top: 0;
+  }
+
+  .learningView .learningNext {
+    margin-top: 22px;
+    padding: 24px;
+    border-radius: 20px;
+  }
+
+  .learningView .learningNext h2 {
+    font-size: 22px;
+  }
+
+  .learningView .learningStart {
+    max-width: none;
+    height: 48px;
+  }
+
+  /* Subject page: progress and current topic beside learning areas */
+  .homeScreen .subjectPage {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "hero hero"
+      "progress areas"
+      "current areas"
+      "keep keep"
+      "footer footer";
+    grid-template-rows: auto auto auto auto 1fr;
+    gap: 20px 24px;
+    align-items: start;
+  }
+
+  .homeScreen .subjectHero {
+    grid-area: hero;
+    min-height: 0;
+    padding: 0 4px;
+  }
+
+  .homeScreen .subjectHero .homeSubjectIcon {
+    width: 76px;
+    height: 76px;
+  }
+
+  .homeScreen .subjectHero .homeSubjectIcon svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .homeScreen .subjectProgress {
+    grid-area: progress;
+    margin-top: 0;
+    padding: 18px 20px;
+    border-radius: 18px;
+  }
+
+  .homeScreen .subjectProgress strong {
+    font-size: 16px;
+  }
+
+  .homeScreen .subjectProgress small {
+    font-size: 13px;
+  }
+
+  .homeScreen .subjectCurrent {
+    grid-area: current;
+    margin-top: 0;
+    padding: 18px 20px;
+    border-radius: 18px;
+  }
+
+  .homeScreen .subjectCurrentBody h2 {
+    font-size: 21px;
+  }
+
+  .homeScreen .subjectCurrentBody p {
+    -webkit-line-clamp: 3;
+    font-size: 14px;
+  }
+
+  .homeScreen .subjectCta {
+    max-width: none;
+    height: 46px;
+    margin-top: 14px;
+  }
+
+  .homeScreen .subjectAreas {
+    grid-area: areas;
+    margin: 0;
+    padding: 18px 20px;
+    border: 1px solid var(--filumire-border);
+    border-radius: 18px;
+    background: var(--filumire-surface);
+  }
+
+  .homeScreen .subjectArea {
+    padding: 10px 14px;
+  }
+
+  .homeScreen .subjectArea strong {
+    font-size: 15px;
+  }
+
+  .homeScreen .subjectKeep {
+    grid-area: keep;
+    min-height: 96px;
+    margin-top: 0;
+    padding: 14px 230px 14px 20px;
+    border-radius: 18px;
+  }
+
+  .homeScreen .subjectKeepArt {
+    right: 112px;
+    width: 84px;
+  }
+
+  .homeScreen .subjectKeepNote {
+    right: 16px;
+    width: 88px;
+    font-size: 15px;
+  }
+
+  .homeScreen .subjectPage > .homeFooter {
+    grid-area: footer;
+    align-self: end;
+  }
+
+  .adultRoleSwitch {
+    margin-top: 24px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .learnerShell .learnerContent.homeScreen.homeView,
+  .homeScreen .subjectPage {
+    column-gap: 32px;
+  }
+
+  .homeView .homeContinueArt {
+    top: 40px;
+    right: 28px;
+    width: 124px;
+    height: 124px;
+  }
+
+  .homeView .homeContinueHead > div {
+    max-width: calc(100% - 200px);
+  }
+
+  .homeView .homeContinueHead h2 {
+    font-size: 28px;
+  }
+
+  /* My Learning (desktop): subjects 2x2 beside the recommendation */
+  .learnerShell .learnerContent.homeScreen.learningView {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr;
+    gap: 22px 32px;
+  }
+
+  .learningView .homeSubjects {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: start;
+  }
+
+  .learningView .learningNext {
+    align-self: start;
+    margin-top: 0;
+  }
+
+  .learningView .learningNextItem {
+    padding-right: 160px;
+  }
 }

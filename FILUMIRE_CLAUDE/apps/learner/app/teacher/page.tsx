@@ -704,6 +704,7 @@ export default function TeacherPage() {
                 </div>
               )}
 
+              <div className="workspace-split">
               <section className="card">
                 <div className="section-label">
                   Learning priorities
@@ -863,6 +864,7 @@ export default function TeacherPage() {
                   )}
                 </div>
               </section>
+              </div>
 
               {data.summary.pendingReviews.length >
                 0 && (
@@ -2306,6 +2308,75 @@ export default function TeacherPage() {
           .two-column,
           .teacher-tools {
             grid-template-columns: 1fr;
+          }
+        }
+
+        /* Tablet: two mastery measures per row instead of one long list */
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .detail-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
+
+        @media (min-width: 768px) {
+          .adultFooter {
+            height: clamp(140px, 18vw, 240px);
+            overflow: hidden;
+          }
+
+          .adultFooter img {
+            height: 100%;
+            object-fit: cover;
+            object-position: center 15%;
+          }
+        }
+
+        /* Laptop and desktop: wider frame, metrics and measures in rows */
+        @media (min-width: 1024px) {
+          .shell {
+            width: min(var(--filumire-frame-max), calc(100% - 64px));
+            padding-top: 32px;
+          }
+
+          .overview-grid {
+            gap: 20px;
+            margin-bottom: 24px;
+          }
+
+          .metric-card {
+            padding: 22px 16px;
+          }
+
+          .metric-value {
+            font-size: 34px;
+          }
+
+          .metric-label {
+            font-size: 14px;
+          }
+
+          .detail-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 22px;
+          }
+
+          .teacher-tools {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+          }
+        }
+
+        /* Desktop: priorities beside the subject overview */
+        @media (min-width: 1280px) {
+          .workspace-split {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+            align-items: start;
+            gap: 24px;
+            margin-bottom: 20px;
+          }
+
+          .workspace-split > .card {
+            margin-bottom: 0;
           }
         }
       `}</style>

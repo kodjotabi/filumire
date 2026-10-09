@@ -250,6 +250,26 @@ export function SubjectGrid({
           font-size: 8px;
         }
 
+        @media (min-width: 768px) {
+          .filumireSubjectGrid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+          }
+
+          .filumireSubjectGrid.compact :global(.filumireSubjectCard) {
+            min-height: 72px;
+            padding: 12px;
+          }
+
+          .filumireSubjectGrid.compact .filumireSubjectName {
+            font-size: 14px;
+          }
+
+          .filumireSubjectGrid.compact .filumireSubjectAction {
+            font-size: 11px;
+          }
+        }
+
         @media (max-width: 360px) {
           .filumireSubjectCard {
             grid-template-columns: 30px 1fr;

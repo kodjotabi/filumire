@@ -353,6 +353,160 @@ export default function ProfilePage({
         .prSwitch.on i {
           left: 23px;
         }
+
+        /* Tablet: larger identity block, stats and settings rows */
+        @media (min-width: 768px) {
+          .profilePage {
+            gap: 16px;
+          }
+
+          .prTop {
+            gap: 20px;
+          }
+
+          .prAvatar {
+            width: 104px;
+            height: 104px;
+          }
+
+          .prWho {
+            min-width: 0;
+          }
+
+          .prWho h1 {
+            margin-bottom: 10px;
+            font-size: 36px;
+            overflow-wrap: anywhere;
+          }
+
+          .prEdit {
+            padding: 9px 20px;
+            font-size: 14px;
+          }
+
+          .prStats {
+            gap: 12px;
+          }
+
+          .prStats div {
+            padding: 16px 8px;
+            border-radius: 18px;
+          }
+
+          .prStats b {
+            font-size: 30px;
+          }
+
+          .prStats span {
+            font-size: 14px;
+          }
+
+          .prQuote {
+            gap: 16px;
+            padding: 12px 18px;
+            border-radius: 18px;
+          }
+
+          .prQuote img {
+            height: 64px;
+          }
+
+          .prQuote p {
+            font-size: 16px;
+          }
+
+          .prList h2 {
+            margin-bottom: 10px;
+            font-size: 21px;
+          }
+
+          .prRow {
+            min-height: 50px;
+            margin-bottom: 8px;
+            padding: 0 18px;
+            border-radius: 14px;
+            font-size: 15px;
+          }
+
+          .prRow em {
+            font-size: 14px;
+          }
+
+          .prLang button {
+            padding: 7px 14px;
+            font-size: 13px;
+          }
+        }
+
+        /* Laptop and desktop: summary on the left, settings on the right */
+        @media (min-width: 1024px) {
+          .profilePage {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+            grid-template-areas:
+              "top settings"
+              "stats settings"
+              "quote settings"
+              "footer footer";
+            grid-template-rows: auto auto 1fr auto;
+            gap: 20px 24px;
+            align-items: start;
+          }
+
+          .prTop {
+            grid-area: top;
+            padding-top: 0;
+          }
+
+          .prAvatar {
+            flex: none;
+            width: 88px;
+            height: 88px;
+          }
+
+          .prWho h1 {
+            font-size: 30px;
+          }
+
+          .prStats {
+            grid-area: stats;
+          }
+
+          .prQuote {
+            grid-area: quote;
+          }
+
+          .prList {
+            grid-area: settings;
+            padding: 20px;
+            border: 1px solid var(--filumire-border);
+            border-radius: 20px;
+            background: var(--filumire-surface);
+          }
+
+          .prRow:last-child {
+            margin-bottom: 0;
+          }
+
+          .homeFooter {
+            grid-area: footer;
+          }
+        }
+
+        @media (min-width: 1280px) {
+          .profilePage {
+            column-gap: 32px;
+          }
+
+          .prAvatar {
+            width: 104px;
+            height: 104px;
+          }
+
+          .prWho h1 {
+            font-size: 36px;
+          }
+        }
       `}</style>
     </div>
   );

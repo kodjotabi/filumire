@@ -625,7 +625,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
               </div>
             )}
             {view === "home" && (
-              <div className="learnerContent homeScreen">
+              <div className="learnerContent homeScreen homeView">
                 <section className="homeGreeting">
                   <h1>{homeText.helloPre}{homeText.helloName ? <span>{homeText.helloName}</span> : null}{homeText.helloPost}</h1>
                   <p>
@@ -754,7 +754,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
             )}
 
             {view === "learning" && (
-              <div className="learnerContent homeScreen">
+              <div className={`learnerContent homeScreen ${selectedSubject ? "subjectView" : "learningView"}`}>
                 {selectedSubjectId && !overview ? null : !selectedSubject ? (
                   <>
                     <section className="homeGreeting">
@@ -1537,6 +1537,28 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
           }
         }
 
+        @media (min-width: 768px) {
+          .learnerStateCard {
+            width: auto;
+            max-width: 560px;
+            margin: 48px auto;
+            padding: 32px;
+          }
+        }
+
+        /* Laptop and desktop: the navigation is a fixed sidebar
+           (globals.css), so the shell fills the remaining width. */
+        @media (min-width: 1024px) {
+          .learnerPage {
+            padding-left: var(--filumire-sidebar-width);
+          }
+
+          .learnerShell {
+            max-width: none;
+            box-shadow: none;
+          }
+        }
+
         .learnerShell:has(.approvedSetup) .filumireBottomNav {
           position: relative;
           bottom: auto;
@@ -2008,6 +2030,123 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
             padding: 8px 18px 0;
           }
         }
+
+        /* Tablet and up: the setup form becomes a centred, readable
+           column instead of the full-width phone composition. */
+        @media (min-width: 768px) {
+          .learnerContent.approvedSetup {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 24px 32px 0;
+          }
+
+          .approvedSetup .setupSteps {
+            margin: 4px 0 24px;
+          }
+
+          .approvedSetup .setupStep small {
+            font-size: 12px;
+          }
+
+          .approvedSetupIntro {
+            margin-bottom: 20px;
+            padding-right: 140px;
+          }
+
+          .approvedSetupIntro h1 {
+            font-size: 28px;
+          }
+
+          .approvedSetupIntro p {
+            max-width: 460px;
+            font-size: 15px;
+          }
+
+          .approvedSetup .setupNote {
+            top: -6px;
+            right: 6px;
+            width: 112px;
+            font-size: 14px;
+          }
+
+          .approvedSetup .setupFields {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+          }
+
+          .approvedSetup .setupField {
+            padding: 16px;
+            border-radius: 14px;
+          }
+
+          .approvedSetup .setupFieldLabel {
+            font-size: 14px;
+          }
+
+          .approvedSetup .setupInput {
+            height: 42px;
+            font-size: 15px;
+          }
+
+          .approvedSetup .setupFieldHelp {
+            max-width: none;
+            font-size: 12px;
+          }
+
+          .approvedSetup .setupAvatarSection,
+          .approvedSetupSubjects {
+            margin-top: 14px;
+          }
+
+          .approvedSetup .setupAvatarSection {
+            padding: 16px 18px;
+            border-radius: 14px;
+          }
+
+          .approvedSetup .setupAvatarText strong {
+            font-size: 17px;
+          }
+
+          .approvedSetup .setupAvatarText small,
+          .approvedSetup .setupLearningText small {
+            font-size: 12.5px;
+          }
+
+          .approvedSetup .setupAvatarChoices {
+            justify-content: flex-start;
+            gap: 22px;
+            margin-top: 14px;
+          }
+
+          .approvedSetup .setupAvatarChoice {
+            width: 84px;
+            height: 84px;
+          }
+
+          .approvedSetup .setupLearningHeading {
+            padding: 12px 16px;
+          }
+
+          .approvedSetup .setupLearningText strong {
+            font-size: 16px;
+          }
+
+          .approvedSetup .setupSubjectGridWrap {
+            margin-top: 10px;
+          }
+
+          .approvedSetup .setupFooterScene {
+            margin: 16px -32px 0;
+            padding: 24px 32px 28px;
+          }
+
+          .approvedSetup :global(.approvedSetupContinue) {
+            max-width: 360px;
+            min-height: 48px;
+            margin: 0 auto;
+            font-size: 16px;
+          }
+        }
       `}</style>
 
       <style jsx global>{`
@@ -2061,11 +2200,13 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
           }
         }
 
-        .learnerShell:has(.approvedSetup) .filumireBottomNav {
-          position: relative;
-          bottom: auto;
-          z-index: 2;
-          box-shadow: none;
+        @media (max-width: 1023px) {
+          .learnerShell:has(.approvedSetup) .filumireBottomNav {
+            position: relative;
+            bottom: auto;
+            z-index: 2;
+            box-shadow: none;
+          }
         }
         `}</style>
     </main>

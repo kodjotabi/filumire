@@ -888,13 +888,16 @@ export default function LearnPage() {
 
   return (
     <main className="page">
-      <div className="shell">
+      <div className="shell learnerShell">
         <LearnerHeader
           backHref="/dashboard"
           showAskFilu={true} setupHeader language={language}
         />
 
         <div className="learnBody">
+          {/* learnSide / learnMain are layout-only (display: contents on
+              mobile and tablet); from 1024px they form two columns. */}
+          <div className="learnSide">
           <section className="learnBanner">
             <span className="bannerIcon">
               <CalculatorIcon />
@@ -942,6 +945,9 @@ export default function LearnPage() {
               </div>
             ))}
           </nav>
+          </div>
+
+          <div className="learnMain">
 
         {connectivity === "offline" && !pending && (
           <div
@@ -1249,6 +1255,7 @@ export default function LearnPage() {
             </span>
           </button>
         )}
+          </div>
         </div>
 
         <footer className="learnFooter">
@@ -1810,6 +1817,11 @@ export default function LearnPage() {
           height: auto;
         }
 
+        .learnSide,
+        .learnMain {
+          display: contents;
+        }
+
         @media (min-width: 768px) {
           .shell {
             min-height: calc(100dvh - 48px);
@@ -1819,6 +1831,211 @@ export default function LearnPage() {
             border: 1px solid var(--filumire-border);
             border-radius: 24px;
             box-shadow: var(--filumire-shadow);
+          }
+
+          .learnBody {
+            gap: 14px;
+            padding: 20px 28px 16px;
+          }
+
+          .learnBanner {
+            padding: 14px 18px 16px;
+            border-radius: 18px;
+          }
+
+          .bannerText h1 {
+            font-size: 24px;
+          }
+
+          .bannerText p {
+            font-size: 16px;
+          }
+
+          .learnBanner strong {
+            font-size: 24px;
+          }
+
+          .learningStage {
+            font-size: 0.82rem;
+          }
+
+          .lessonPanel {
+            padding: 0 18px 18px;
+            border-radius: 22px;
+          }
+
+          .lessonHero {
+            min-height: 136px;
+            padding-top: 18px;
+          }
+
+          .lessonHero small {
+            font-size: 15px;
+          }
+
+          .lessonHero h1 {
+            font-size: 26px;
+          }
+
+          .lessonHero img {
+            height: 136px;
+          }
+
+          .card {
+            padding: 20px 24px;
+            border-radius: 18px;
+          }
+
+          .card h2 {
+            font-size: 24px;
+          }
+
+          .lesson-body {
+            font-size: 17px;
+            line-height: 1.55;
+          }
+
+          .tutor-message p {
+            font-size: 15.5px;
+          }
+
+          .option {
+            padding: 14px 16px;
+            font-size: 16px;
+          }
+
+          .lessonPanel.teach {
+            padding: 14px;
+          }
+
+          .lessonPanel.teach .card {
+            padding: 20px 24px 0;
+          }
+
+          .teachFoot img {
+            height: 104px;
+          }
+
+          .learnFooter {
+            height: 104px;
+          }
+        }
+
+        /* Laptop: the learner sidebar is fixed on the left and the
+           lesson sits in a centred frame beside it. */
+        @media (min-width: 1024px) {
+          .page {
+            padding: 0 32px 0 calc(var(--filumire-sidebar-width) + 32px);
+          }
+
+          .shell {
+            max-width: var(--filumire-content-max);
+            min-height: calc(100dvh - 48px);
+            /* clip (not hidden) so the sticky side column can stick */
+            overflow: clip;
+          }
+
+          .learnBody {
+            padding: 28px 32px 20px;
+          }
+
+          .lessonHero h1 {
+            max-width: 72%;
+            font-size: 28px;
+          }
+
+          .card {
+            padding: 24px 30px;
+          }
+
+          .options {
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+          }
+
+          .primary-button {
+            font-size: 17px;
+          }
+
+          .assessment .primary-button {
+            display: flex;
+            width: auto;
+            min-width: 260px;
+            margin-left: auto;
+          }
+
+          .nextButton {
+            align-self: flex-end;
+            width: auto;
+            min-width: 260px;
+          }
+
+          .learnFooter {
+            height: clamp(120px, 12vw, 168px);
+          }
+        }
+
+        /* Desktop: session summary and stages in a sticky column
+           beside the activity. */
+        @media (min-width: 1280px) {
+          .learnBody {
+            display: grid;
+            grid-template-columns: 300px minmax(0, 1fr);
+            align-items: start;
+            gap: 28px;
+            padding: 32px 36px 24px;
+          }
+
+          .learnSide {
+            position: sticky;
+            top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+          }
+
+          .learnMain {
+            display: flex;
+            min-height: 100%;
+            flex-direction: column;
+            gap: 14px;
+          }
+
+          .bannerText h1 {
+            font-size: 20px;
+          }
+
+          .bannerText p {
+            font-size: 14px;
+          }
+
+          .learnBanner strong {
+            font-size: 20px;
+          }
+
+          /* Stages become a vertical stepper */
+          .learningStages {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 0;
+            padding: 16px 18px;
+            border: 1px solid var(--filumire-border);
+            border-radius: 18px;
+            background: var(--filumire-surface);
+          }
+
+          .learningStage {
+            flex-direction: row;
+            gap: 12px;
+            padding: 6px 0;
+            font-size: 0.9rem;
+            text-align: left;
+          }
+
+          .learningStage:not(:last-child)::after {
+            top: 40px;
+            left: 16px;
+            width: 2px;
+            height: calc(100% - 34px);
           }
         }
       `}</style>

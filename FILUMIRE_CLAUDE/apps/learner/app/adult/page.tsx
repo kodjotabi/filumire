@@ -282,7 +282,7 @@ export default function AdultSupervisionPage() {
 
         {viewState === "ready" &&
           data?.summary && (
-            <>
+            <div className="parent-grid">
               <section className="card hero-card parent-overview">
                 <div className="parent-overview-top">
                   <div>
@@ -477,7 +477,7 @@ export default function AdultSupervisionPage() {
               )}
 
               {isGuardian && (
-                <section className="card">
+                <section className="card parent-messages">
                   <div className="section-heading">
                     Parent-teacher messages
                   </div>
@@ -568,7 +568,7 @@ export default function AdultSupervisionPage() {
                   </button>
                 </section>
               )}
-            </>
+            </div>
           )}
       </div>
 
@@ -1035,6 +1035,72 @@ export default function AdultSupervisionPage() {
             align-items: flex-start;
             flex-direction: column;
             gap: 4px;
+          }
+        }
+
+        /* Tablet: a little more room inside the overview */
+        @media (min-width: 768px) {
+          .brand-subtitle {
+            margin-bottom: 18px;
+            font-size: 22px;
+          }
+
+          .parent-progress-ring {
+            width: 124px;
+            min-width: 124px;
+            height: 124px;
+          }
+
+          .parent-progress-ring strong {
+            font-size: 30px;
+          }
+
+          .adultFooter {
+            height: clamp(140px, 18vw, 240px);
+            overflow: hidden;
+          }
+
+          .adultFooter img {
+            height: 100%;
+            object-fit: cover;
+            object-position: center 15%;
+          }
+        }
+
+        /* Laptop and desktop: overview across the top, the detail
+           cards in two columns, messages full width underneath */
+        @media (min-width: 1024px) {
+          .shell {
+            width: min(var(--filumire-frame-max), calc(100% - 64px));
+            padding-top: 32px;
+          }
+
+          .parent-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            align-items: start;
+            gap: 24px;
+          }
+
+          .parent-grid > .card {
+            margin-bottom: 0;
+          }
+
+          .parent-grid > .parent-overview,
+          .parent-grid > .parent-messages {
+            grid-column: 1 / -1;
+          }
+
+          .parent-overview {
+            padding: 36px 40px;
+          }
+
+          .parent-messages .message-list {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+
+          .parent-messages textarea {
+            max-width: 760px;
           }
         }
       `}</style>

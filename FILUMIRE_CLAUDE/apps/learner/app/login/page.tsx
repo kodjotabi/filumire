@@ -182,7 +182,7 @@ export default function LoginPage() {
         <p>A brighter tomorrow for every learner.</p>
       </section>
 
-      <LearnerBottomNav active="home" language={language} />
+      <LearnerBottomNav active="home" language={language} variant="inline" />
 
       <style>{`
         .loginPage { width: 100%; max-width: 390px; min-height: 844px; margin: 0 auto; background: #ffffff; color: var(--ui-ink); font-family: inherit; }
@@ -232,6 +232,66 @@ export default function LoginPage() {
         /* The global nav is sticky (bottom: 0) for the scrolling app screens; on this single flowing page it must sit in the flow at the end, or it floats over the form on shorter viewports. */
         .loginPage .filumireBottomNav { position: static; margin-top: 0; }
         @media (min-width: 391px) { .loginPage { box-shadow: 0 0 0 1px #e5e5e5; } }
+
+        /* Tablet: a wider centred column with larger type and fields */
+        @media (min-width: 768px) {
+          .loginPage { max-width: 640px; box-shadow: 0 0 0 1px #e5e5e5, 0 12px 40px rgba(0, 59, 113, 0.08); }
+          .topbar { padding: 0 32px; }
+          .logo { width: 128px; }
+          .adultLink { font-size: 13px; }
+          .heroTitle { top: 44px; left: 40px; font-size: 40px; }
+          .heroGreeting { top: 96px; left: 42px; font-size: 19px; }
+          .heroIntro { top: 130px; left: 42px; font-size: 14.5px; }
+          .signInCard, .newAccount, .localTesting { width: calc(100% - 64px); padding: 20px 22px; border-radius: 20px; }
+          .newAccount, .localTesting { margin-top: 14px; }
+          .signInCard { margin-top: 20px; }
+          .signInCard h2, .newAccount h2 { font-size: 24px; }
+          .cardIntro, .newAccount p { font-size: 14px; }
+          form label { margin-top: 14px; font-size: 14px; }
+          .field { height: 48px; border-radius: 12px; }
+          .field input { font-size: 15px; }
+          .forgot { margin: 10px 0 12px auto; font-size: 13px; }
+          .signInButton, .createButton { height: 48px; border-radius: 12px; font-size: 16px; }
+          .authMessage { font-size: 13px; }
+          .localTesting h2 { font-size: 16px; }
+          .localTesting p { font-size: 13px; }
+          .localTestingLinks a { padding: 12px 8px; font-size: 14px; }
+          .landscape { height: 120px; margin-top: 24px; }
+          .landscape p { top: 12px; font-size: 13px; }
+        }
+
+        /* Laptop and desktop: artwork and welcome on the left, sign-in
+           on the right; header, landscape and navigation span the page. */
+        @media (min-width: 1024px) {
+          .loginPage {
+            display: grid;
+            max-width: none;
+            grid-template-columns: minmax(40px, 1fr) minmax(0, 672px) minmax(428px, 528px) minmax(40px, 1fr);
+            grid-template-areas:
+              "top top top top"
+              ". hero card ."
+              ". hero new ."
+              ". hero local ."
+              ". hero . ."
+              "land land land land"
+              "nav nav nav nav";
+            grid-template-rows: auto auto auto auto 1fr auto auto;
+            box-shadow: none;
+          }
+          .topbar { grid-area: top; padding: 0 max(40px, calc((100% - 1200px) / 2)); }
+          .hero { grid-area: hero; align-self: stretch; min-height: 520px; margin-top: 40px; border-radius: 28px; aspect-ratio: auto; }
+          .heroTitle { top: 48px; left: 48px; font-size: 48px; }
+          .heroGreeting { top: 112px; left: 50px; font-size: 22px; }
+          .heroIntro { top: 150px; left: 50px; font-size: 16px; }
+          .signInCard, .newAccount, .localTesting { width: auto; margin-left: 48px; margin-right: 0; }
+          .signInCard { grid-area: card; margin-top: 40px; }
+          .newAccount { grid-area: new; }
+          .localTesting { grid-area: local; }
+          .landscape { grid-area: land; height: clamp(120px, 12vw, 180px); margin-top: 48px; }
+          .landscape p { top: 16px; font-size: 15px; }
+          .loginPage .filumireBottomNav { grid-area: nav; padding: 0 max(40px, calc((100% - 1200px) / 2)); }
+          .loginPage .filumireNavItem { flex-direction: row; gap: 10px; font-size: 14px; }
+        }
       `}</style>
     </main>
   );

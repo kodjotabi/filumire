@@ -555,6 +555,249 @@ export function ChallengesPage({
           color: #3d3a66;
           font-size: 11px;
         }
+
+        /* Tablet: roomier challenge card, rows and badges */
+        @media (min-width: 768px) {
+          .challengesPage {
+            gap: 16px;
+          }
+
+          .cHead h1 {
+            font-size: 30px;
+          }
+
+          .cHead p {
+            font-size: 15px;
+          }
+
+          .cToday {
+            grid-template-columns: 48px minmax(0, 1fr);
+            column-gap: 14px;
+            row-gap: 8px;
+            padding: 18px 20px 20px;
+            border-radius: 20px;
+          }
+
+          .cTodayIcon {
+            width: 48px;
+            height: 48px;
+          }
+
+          .cTodayText strong {
+            font-size: 19px;
+          }
+
+          .cTodayText small {
+            font-size: 13px;
+          }
+
+          .cToday img {
+            top: 12px;
+            right: 16px;
+            height: 104px;
+          }
+
+          .cTodayBody {
+            padding-right: 120px;
+          }
+
+          .cTodayBody h2 {
+            font-size: 21px;
+          }
+
+          .cTodayBody p,
+          .cTodayBar b {
+            font-size: 14px;
+          }
+
+          .cTrack {
+            height: 10px;
+          }
+
+          .cToday :global(.cStart) {
+            max-width: 360px;
+            min-height: 48px;
+            margin-top: 6px;
+          }
+
+          .cSecHead h2 {
+            font-size: 21px;
+          }
+
+          .cSecHead :global(a) {
+            font-size: 14px;
+          }
+
+          .cRows {
+            gap: 10px;
+          }
+
+          .cRows :global(.cRow) {
+            grid-template-columns: 44px minmax(0, 1fr) auto 14px;
+            column-gap: 14px;
+            padding: 12px 16px;
+            border-radius: 16px;
+          }
+
+          .cRowIcon {
+            width: 44px;
+            height: 44px;
+          }
+
+          .cRowIcon :global(svg) {
+            width: 24px;
+            height: 24px;
+          }
+
+          .cRowText strong {
+            font-size: 15px;
+          }
+
+          .cRowText small,
+          .cRows :global(.cRow) b {
+            font-size: 13px;
+          }
+
+          .cBadges {
+            gap: 12px;
+          }
+
+          .cBadge {
+            padding: 16px 12px;
+            border-radius: 16px;
+          }
+
+          .cMedal {
+            width: 48px;
+            height: 48px;
+          }
+
+          .cMedal svg {
+            width: 30px;
+            height: 30px;
+          }
+
+          .cBadge strong {
+            margin-top: 8px;
+            font-size: 15px;
+          }
+
+          .cBadge small,
+          .cBadge em {
+            font-size: 12px;
+          }
+
+          .cQuote {
+            grid-template-columns: 36px minmax(0, 1fr) auto;
+            padding: 14px 18px;
+            border-radius: 18px;
+          }
+
+          .cQuote span {
+            font-size: 28px;
+          }
+
+          .cQuote p,
+          .cQuote b {
+            font-size: 14px;
+          }
+        }
+
+        /* Laptop and desktop: today's challenge beside the other
+           challenges and achievements */
+        @media (min-width: 1024px) {
+          .challengesPage {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            grid-template-areas:
+              "head head"
+              "today more"
+              "today ach"
+              "quote quote"
+              "footer footer";
+            grid-template-rows: auto auto auto auto 1fr;
+            gap: 20px 24px;
+            align-items: start;
+          }
+
+          .cHead {
+            grid-area: head;
+            padding-top: 0;
+          }
+
+          .cHead h1 {
+            font-size: 36px;
+          }
+
+          .cToday {
+            grid-area: today;
+            align-self: stretch;
+            align-content: start;
+            padding: 24px;
+          }
+
+          .cToday img {
+            height: 96px;
+          }
+
+          /* Title and subtitle wrap before the illustration */
+          .cTodayText {
+            padding-right: 92px;
+          }
+
+          .cTodayBody {
+            margin-top: 44px;
+            padding-right: 0;
+          }
+
+          .cTodayBody h2 {
+            font-size: 24px;
+          }
+
+          .cTodayBar {
+            margin-top: 8px;
+          }
+
+          .cToday :global(.cStart) {
+            max-width: none;
+            margin-top: 14px;
+          }
+
+          .cMore {
+            grid-area: more;
+          }
+
+          .cAch {
+            grid-area: ach;
+          }
+
+          .cQuote {
+            grid-area: quote;
+          }
+
+          .homeFooter {
+            grid-area: footer;
+            align-self: end;
+          }
+        }
+
+        @media (min-width: 1280px) {
+          .challengesPage {
+            column-gap: 32px;
+          }
+
+          .cToday img {
+            height: 120px;
+          }
+
+          .cTodayText {
+            padding-right: 116px;
+          }
+
+          .cTodayBody {
+            margin-top: 56px;
+          }
+        }
       `}</style>
     </div>
   );
