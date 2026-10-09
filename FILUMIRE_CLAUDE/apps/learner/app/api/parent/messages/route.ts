@@ -99,6 +99,7 @@ export async function POST(
         : "Unable to create parent message.";
 
     const status =
+      message.toLowerCase().includes("unauthenticated") ||
       message.toLowerCase().includes("identity") ||
       message.toLowerCase().includes("authentication")
         ? 401
@@ -159,6 +160,7 @@ export async function GET(
         : "Unable to load parent messages.";
 
     const status =
+      message.toLowerCase().includes("unauthenticated") ||
       message.toLowerCase().includes("identity") ||
       message.toLowerCase().includes("authentication")
         ? 401

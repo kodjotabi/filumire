@@ -127,6 +127,29 @@ async function teacherThreadChecks(): Promise<void> {
 
   const url = `/api/teacher/messages?learnerId=${learnerId}`;
 
+  // Production: development headers are ignored and a missing session is
+  // 401 (was 500 because "Unauthenticated ..." was not mapped).
+  const restoreEnv = setNodeEnv("production");
+  try {
+    assert.equal((await teacherMessagesGet(request(url, teacherId))).status, 401);
+    assert.equal(
+      (await parentMessagesGet(
+        request(`/api/parent/messages?learnerId=${learnerId}`, guardianId),
+      )).status,
+      401,
+    );
+    assert.equal(
+      (await teacherMessagesPost(
+        request("/api/teacher/messages", teacherId, {
+          learnerId, text: "x", clientRequestId: "prod",
+        }),
+      )).status,
+      401,
+    );
+  } finally {
+    restoreEnv();
+  }
+
   assert.equal((await teacherMessagesGet(request(url, undefined))).status, 401);
   assert.equal((await teacherMessagesGet(request(url, outsiderId))).status, 403);
   // A guardian cannot use the teacher route, nor a teacher the parent route.
