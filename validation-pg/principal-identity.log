@@ -1,0 +1,27 @@
+{ test: 'principal creation and status resolution', result: 'PASS' }
+{
+  test: 'external identity maps to existing principal',
+  result: 'PASS'
+}
+{
+  test: 'external identity cannot reference a missing principal',
+  result: 'PASS'
+}
+{
+  test: 'duplicate provider namespace and subject rejected',
+  result: 'PASS'
+}
+{
+  test: 'same provider subject under a different provider namespace is allowed',
+  result: 'PASS'
+}
+{
+  test: 'multiple external identities may map to one principal',
+  result: 'PASS'
+}
+{
+  test: 'creating principals/external identities does not create or modify learners',
+  result: 'PASS'
+}
+{ test: 'Stage 1 learner foreign keys remain intact', result: 'PASS' }
+{ principalIdentityTest: 'PASS' }

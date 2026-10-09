@@ -1,0 +1,8 @@
+{
+  pilotMeasurementV1: 'PASS',
+  persisted: 1,
+  duplicateProtected: true,
+  learnerStateMutated: false,
+  learningEvidenceCreated: false,
+  researchBoundaryProtected: true
+}

@@ -1,0 +1,1227 @@
+﻿
+========================================
+ FILUMIRE AUTOMATED VALIDATION
+========================================
+
+----------------------------------------
+tests/adaptive-learning-loop.test.ts
+----------------------------------------
+{
+  attempt: 1,
+  outcome: 'incorrect',
+  masteryEstimate: 0,
+  confidence: 0.28250000000000003,
+  evidenceCount: 1,
+  diagnosticState: 'conceptual_misunderstanding',
+  diagnosticConfidence: 0.9,
+  errorPatterns: [ 'sequence_rule_not_identified' ],
+  interventionHistory: [],
+  action: 'teach',
+  reasonCode: 'CONCEPTUAL_MISUNDERSTANDING',
+  instruction: 'Recognise and continue simple number sequences.\n' +
+    '\n' +
+    'Recognise and continue simple number sequences.\n' +
+    '\n' +
+    'Give a short answer in your own words.'
+}
+{
+  attempt: 2,
+  outcome: 'incorrect',
+  masteryEstimate: 0,
+  confidence: 0.32749999999999996,
+  evidenceCount: 2,
+  diagnosticState: 'conceptual_misunderstanding',
+  diagnosticConfidence: 0.9,
+  errorPatterns: [ 'sequence_rule_not_identified' ],
+  interventionHistory: [],
+  action: 'teach',
+  reasonCode: 'CONCEPTUAL_MISUNDERSTANDING',
+  instruction: 'Recognise and continue simple number sequences.\n' +
+    '\n' +
+    'Recognise and continue simple number sequences.\n' +
+    '\n' +
+    'Give a short answer in your own words.'
+}
+{
+  attempt: 3,
+  outcome: 'incorrect',
+  masteryEstimate: 0,
+  confidence: 0.3775,
+  evidenceCount: 3,
+  diagnosticState: 'conceptual_misunderstanding',
+  diagnosticConfidence: 0.9,
+  errorPatterns: [ 'sequence_rule_not_identified' ],
+  interventionHistory: [],
+  action: 'teach',
+  reasonCode: 'CONCEPTUAL_MISUNDERSTANDING',
+  instruction: 'Recognise and continue simple number sequences.\n' +
+    '\n' +
+    'Recognise and continue simple number sequences.\n' +
+    '\n' +
+    'Give a short answer in your own words.'
+}
+{
+  attempt: 4,
+  outcome: 'correct',
+  masteryEstimate: 0.2388888888888889,
+  confidence: 0.42750000000000005,
+  evidenceCount: 4,
+  diagnosticState: 'probable_mastery',
+  diagnosticConfidence: 0.42750000000000005,
+  errorPatterns: [ 'sequence_rule_not_identified' ],
+  interventionHistory: [],
+  action: 'practice',
+  reasonCode: 'PRACTICE_REQUIRED',
+  instruction: 'Work through Number Sequences one step at a time. Check each step before continuing.\n' +
+    '\n' +
+    'Recognise and continue simple number sequences.\n' +
+    '\n' +
+    'Give a short answer in your own words.'
+}
+{
+  attempt: 5,
+  outcome: 'correct',
+  masteryEstimate: 0.3726666666666667,
+  confidence: 0.4775,
+  evidenceCount: 5,
+  diagnosticState: 'probable_mastery',
+  diagnosticConfidence: 0.4775,
+  errorPatterns: [ 'sequence_rule_not_identified' ],
+  interventionHistory: [],
+  action: 'practice',
+  reasonCode: 'PRACTICE_REQUIRED',
+  instruction: 'Work through Number Sequences one step at a time. Check each step before continuing.\n' +
+    '\n' +
+    'Recognise and continue simple number sequences.\n' +
+    '\n' +
+    'Give a short answer in your own words.'
+}
+PASS: tests/adaptive-learning-loop.test.ts
+
+----------------------------------------
+tests/competency-003-adaptive-loop.test.ts
+----------------------------------------
+{
+  stage: 'mastery evidence',
+  competency: 'competency-test-003',
+  attempt: 1,
+  outcome: 'correct',
+  masteryEstimate: 1,
+  confidence: 0.495,
+  action: 'diagnose',
+  reasonCode: 'INSUFFICIENT_EVIDENCE'
+}
+{
+  stage: 'mastery evidence',
+  competency: 'competency-test-003',
+  attempt: 2,
+  outcome: 'correct',
+  masteryEstimate: 1,
+  confidence: 0.6849999999999999,
+  action: 'diagnose',
+  reasonCode: 'INSUFFICIENT_EVIDENCE'
+}
+{
+  stage: 'mastery evidence',
+  competency: 'competency-test-003',
+  attempt: 3,
+  outcome: 'correct',
+  masteryEstimate: 1,
+  confidence: 0.84,
+  action: 'retention_check',
+  reasonCode: 'RETENTION_REQUIRED'
+}
+{
+  stage: 'retention',
+  competency: 'competency-test-003',
+  status: 'retained',
+  confidence: 1
+}
+{
+  stage: 'post-retention decision',
+  competency: 'competency-test-003',
+  action: 'transfer_check',
+  reasonCode: 'TRANSFER_REQUIRED'
+}
+{
+  stage: 'transfer',
+  competency: 'competency-test-003',
+  status: 'demonstrated',
+  confidence: 1
+}
+{
+  stage: 'post-transfer decision',
+  competency: 'competency-test-003',
+  action: 'advance',
+  reasonCode: 'MASTERY_RETENTION_TRANSFER_CONFIRMED',
+  nextCompetency: 'competency-test-004'
+}
+{
+  stage: '003 advancement',
+  result: 'PASS',
+  nextCompetency: 'competency-test-004'
+}
+{
+  stage: 'mastery evidence',
+  competency: 'competency-test-004',
+  attempt: 1,
+  outcome: 'correct',
+  masteryEstimate: 1,
+  confidence: 0.495,
+  action: 'diagnose',
+  reasonCode: 'INSUFFICIENT_EVIDENCE'
+}
+{
+  stage: 'mastery evidence',
+  competency: 'competency-test-004',
+  attempt: 2,
+  outcome: 'correct',
+  masteryEstimate: 1,
+  confidence: 0.6849999999999999,
+  action: 'diagnose',
+  reasonCode: 'INSUFFICIENT_EVIDENCE'
+}
+{
+  stage: 'mastery evidence',
+  competency: 'competency-test-004',
+  attempt: 3,
+  outcome: 'correct',
+  masteryEstimate: 1,
+  confidence: 0.84,
+  action: 'retention_check',
+  reasonCode: 'RETENTION_REQUIRED'
+}
+{
+  stage: 'retention',
+  competency: 'competency-test-004',
+  status: 'retained',
+  confidence: 1
+}
+{
+  stage: 'post-retention decision',
+  competency: 'competency-test-004',
+  action: 'transfer_check',
+  reasonCode: 'TRANSFER_REQUIRED'
+}
+{
+  stage: 'transfer',
+  competency: 'competency-test-004',
+  status: 'demonstrated',
+  confidence: 1
+}
+{
+  stage: 'post-transfer decision',
+  competency: 'competency-test-004',
+  action: 'advance',
+  reasonCode: 'MASTERY_RETENTION_TRANSFER_CONFIRMED',
+  nextCompetency: 'competency-test-005'
+}
+{
+  stage: '004 advancement',
+  result: 'PASS',
+  nextCompetency: 'competency-test-005'
+}
+{
+  stage: '005 diagnostic',
+  competency: 'competency-test-005',
+  action: 'diagnose',
+  reasonCode: 'INSUFFICIENT_EVIDENCE',
+  contentType: 'assessment',
+  contentTitle: 'Applying Number Pattern Rules Check',
+  assessmentItemId: 'item-applying-number-pattern-rules-diagnostic-001'
+}
+{
+  progression: '003 -> retention -> transfer -> advance -> 004 -> retention -> transfer -> advance -> 005 -> diagnose',
+  result: 'PASS',
+  diagnosticContentType: 'assessment',
+  diagnosticContentTitle: 'Applying Number Pattern Rules Check',
+  diagnosticAssessmentItemId: 'item-applying-number-pattern-rules-diagnostic-001'
+}
+PASS: tests/competency-003-adaptive-loop.test.ts
+
+----------------------------------------
+tests/adaptive-content-intervention-integration.test.ts
+----------------------------------------
+{
+  stage: 'diagnostic decision',
+  action: 'teach',
+  reasonCode: 'CONCEPTUAL_MISUNDERSTANDING',
+  interventionId: 'intervention-2c37266e-ed70-420b-8a41-ef1181c9d17d',
+  contentType: 'lesson',
+  contentTitle: 'Understanding Number Sequences'
+}
+RECOVERY EVIDENCE: {
+  id: 'ev-f3a8f950-a66f-44cf-aa42-76201aef9df8',
+  learnerId: 'learner-adaptive-integration',
+  competencyId: 'competency-test-001',
+  source: 'assessment',
+  outcome: 'correct',
+  timestamp: '2026-10-07T10:09:25.842Z',
+  assessmentItemId: 'item-number-sequence-practice-001',
+  sessionId: 'session-adaptive-integration-recovery',
+  contentId: undefined,
+  purpose: 'intervention_evaluation',
+  independence: 'guided',
+  supportLevel: 0.6,
+  difficulty: 'unknown',
+  representation: 'unknown',
+  strength: undefined,
+  attemptCount: undefined,
+  contextTags: undefined,
+  errorClass: undefined,
+  errorPattern: undefined,
+  prerequisiteCompetencyId: undefined,
+  misconceptionId: undefined,
+  exposureCount: undefined,
+  evaluatorType: 'system_exact_match',
+  evaluatorId: 'filumire-system-exact-match',
+  evaluationPolicyVersion: 'assessment-exact-match-1',
+  interpretationVersion: 'evidence-v1.1',
+  instructionalStrategy: 'direct_explanation',
+  responseMode: 'short_answer',
+  policyVersion: 'assessment-0.9',
+  diagnosticState: undefined,
+  diagnosticConfidence: undefined,
+  interventionId: 'intervention-2c37266e-ed70-420b-8a41-ef1181c9d17d',
+  interventionType: 'teach'
+}
+STATE AFTER APPLY: [
+  {
+    "interventionId": "intervention-2c37266e-ed70-420b-8a41-ef1181c9d17d",
+    "competencyId": "competency-test-001",
+    "type": "teach",
+    "startedAt": "2026-10-07T10:09:25.842Z",
+    "completedAt": "2026-10-07T10:09:25.842Z",
+    "outcome": "effective",
+    "evidenceIds": [
+      "ev-f3a8f950-a66f-44cf-aa42-76201aef9df8"
+    ]
+  }
+]
+PERSISTED INTERVENTION RECORD: {
+  interventionId: 'intervention-2c37266e-ed70-420b-8a41-ef1181c9d17d',
+  competencyId: 'competency-test-001',
+  type: 'teach',
+  startedAt: '2026-10-07T10:09:25.842Z',
+  completedAt: '2026-10-07T10:09:25.842Z',
+  outcome: 'effective',
+  evidenceIds: [ 'ev-f3a8f950-a66f-44cf-aa42-76201aef9df8' ]
+}
+{ adaptiveContentInterventionIntegration: 'PASS' }
+PASS: tests/adaptive-content-intervention-integration.test.ts
+
+----------------------------------------
+tests/complete-intervention-loop.test.ts
+----------------------------------------
+{
+  stage: 'initial adaptive decision',
+  action: 'teach',
+  reasonCode: 'CONCEPTUAL_MISUNDERSTANDING',
+  interventionId: 'intervention-49643efc-fb52-4f61-9fff-98db0695d471'
+}
+RECOVERY EVIDENCE: {
+  id: 'ev-080b210d-bb22-4fb4-8ad2-bc8177ce578c',
+  learnerId: 'learner-complete-intervention-loop',
+  competencyId: 'competency-test-001',
+  source: 'assessment',
+  outcome: 'correct',
+  timestamp: '2026-10-07T10:09:31.244Z',
+  assessmentItemId: 'item-complete-intervention-recovery-001',
+  sessionId: 'session-complete-intervention-loop-recovery',
+  contentId: undefined,
+  purpose: 'intervention_evaluation',
+  independence: 'guided',
+  supportLevel: 0.6,
+  difficulty: 'unknown',
+  representation: 'unknown',
+  strength: undefined,
+  attemptCount: undefined,
+  contextTags: undefined,
+  errorClass: undefined,
+  errorPattern: undefined,
+  prerequisiteCompetencyId: undefined,
+  misconceptionId: undefined,
+  exposureCount: undefined,
+  evaluatorType: 'system_exact_match',
+  evaluatorId: 'filumire-system-exact-match',
+  evaluationPolicyVersion: 'assessment-exact-match-1',
+  interpretationVersion: 'evidence-v1.1',
+  instructionalStrategy: 'direct_explanation',
+  responseMode: 'short_answer',
+  policyVersion: 'assessment-0.9',
+  diagnosticState: undefined,
+  diagnosticConfidence: undefined,
+  interventionId: 'intervention-49643efc-fb52-4f61-9fff-98db0695d471',
+  interventionType: 'teach'
+}
+STATE AFTER APPLY: [
+  {
+    "interventionId": "intervention-49643efc-fb52-4f61-9fff-98db0695d471",
+    "competencyId": "competency-test-001",
+    "type": "teach",
+    "startedAt": "2026-10-07T10:09:31.244Z",
+    "completedAt": "2026-10-07T10:09:31.244Z",
+    "outcome": "effective",
+    "evidenceIds": [
+      "ev-080b210d-bb22-4fb4-8ad2-bc8177ce578c"
+    ]
+  }
+]
+{
+  completeInterventionLoop: 'PASS',
+  interventionId: 'intervention-49643efc-fb52-4f61-9fff-98db0695d471',
+  recoveryOutcome: 'correct',
+  interventionType: 'teach',
+  evidenceId: 'ev-080b210d-bb22-4fb4-8ad2-bc8177ce578c'
+}
+PASS: tests/complete-intervention-loop.test.ts
+
+----------------------------------------
+tests/intervention-adaptive-integration.test.ts
+----------------------------------------
+{
+  stage: 'initial adaptive decision',
+  action: 'diagnose',
+  reasonCode: 'INSUFFICIENT_EVIDENCE',
+  interventionId: 'intervention-3b6598ac-5984-43cd-8de3-9a0d0c0afc07'
+}
+FAILED RECOVERY EVIDENCE: {
+  id: 'ev-ac5b9c60-1e38-4a52-872d-3f69df4f3920',
+  learnerId: 'learner-intervention-failure',
+  competencyId: 'competency-test-001',
+  source: 'assessment',
+  outcome: 'incorrect',
+  timestamp: '2026-10-07T10:09:33.820Z',
+  assessmentItemId: 'item-intervention-failure-002',
+  sessionId: 'session-intervention-failure-1791367773815-failed-recovery',
+  contentId: undefined,
+  purpose: 'diagnostic',
+  independence: 'independent',
+  supportLevel: 0,
+  difficulty: 'unknown',
+  representation: 'unknown',
+  strength: undefined,
+  attemptCount: undefined,
+  contextTags: undefined,
+  errorClass: undefined,
+  errorPattern: undefined,
+  prerequisiteCompetencyId: undefined,
+  misconceptionId: undefined,
+  exposureCount: undefined,
+  evaluatorType: 'system_exact_match',
+  evaluatorId: 'filumire-system-exact-match',
+  evaluationPolicyVersion: 'assessment-exact-match-1',
+  interpretationVersion: 'evidence-v1.1',
+  instructionalStrategy: undefined,
+  responseMode: 'multiple_choice',
+  policyVersion: 'assessment-0.9',
+  diagnosticState: undefined,
+  diagnosticConfidence: undefined,
+  interventionId: 'intervention-3b6598ac-5984-43cd-8de3-9a0d0c0afc07',
+  interventionType: 'diagnose'
+}
+{
+  stage: 'intervention outcome',
+  interventionId: 'intervention-3b6598ac-5984-43cd-8de3-9a0d0c0afc07',
+  status: 'completed',
+  outcome: 'ineffective',
+  evidenceIds: [ 'ev-ac5b9c60-1e38-4a52-872d-3f69df4f3920' ]
+}
+{
+  stage: 'post-failure adaptive decision',
+  action: 'reassess',
+  reasonCode: 'INEFFECTIVE_INTERVENTION',
+  interventionId: 'intervention-44a5b4aa-19f5-4274-88b0-70d15f3c851d',
+  contentType: undefined
+}
+{
+  interventionFailureRecovery: 'PASS',
+  failedIntervention: 'intervention-3b6598ac-5984-43cd-8de3-9a0d0c0afc07',
+  failedOutcome: 'ineffective',
+  reassessmentIntervention: 'intervention-44a5b4aa-19f5-4274-88b0-70d15f3c851d',
+  reassessmentAction: 'reassess',
+  reassessmentReason: 'INEFFECTIVE_INTERVENTION'
+}
+PASS: tests/intervention-adaptive-integration.test.ts
+
+----------------------------------------
+tests/intervention-lifecycle.test.ts
+----------------------------------------
+{
+  test: 'intervention created',
+  interventionId: 'intervention-089d0961-c445-46a0-9b5c-55e8ddc247a1',
+  status: 'active',
+  outcome: 'not_yet_evaluated'
+}
+{
+  test: 'intervention evaluated',
+  status: 'completed',
+  outcome: 'effective',
+  evidenceIds: [ 'evidence-intervention-001', 'evidence-intervention-002' ]
+}
+{ interventionLifecycleTest: 'PASS' }
+PASS: tests/intervention-lifecycle.test.ts
+
+----------------------------------------
+tests/intervention-persistence.test.ts
+----------------------------------------
+{
+  interventionPersistence: 'PASS',
+  interventionId: 'intervention-7343c3ec-813f-475f-b130-307d550f4e1e',
+  learnerStateIntervention: 'intervention-7343c3ec-813f-475f-b130-307d550f4e1e',
+  outcome: 'effective'
+}
+PASS: tests/intervention-persistence.test.ts
+
+----------------------------------------
+tests/content-selection.test.ts
+----------------------------------------
+{
+  test: 'diagnostic selection',
+  action: 'diagnose',
+  contentType: 'assessment',
+  contentTitle: 'Applying Number Pattern Rules Check',
+  assessmentItemId: 'item-applying-number-pattern-rules-diagnostic-001'
+}
+{
+  test: 'teaching selection',
+  action: 'teach',
+  contentType: 'lesson',
+  contentTitle: 'Applying Number Pattern Rules',
+  assessmentItemId: undefined
+}
+{
+  test: 'practice selection',
+  action: 'practice',
+  contentType: 'practice',
+  contentTitle: 'Applying the Pattern Rule',
+  assessmentItemId: 'item-applying-number-pattern-rules-practice-001-en'
+}
+{
+  test: 'scaffold selection',
+  action: 'scaffold',
+  contentType: 'scaffold',
+  contentTitle: 'Find the Pattern Step by Step',
+  assessmentItemId: undefined
+}
+{
+  test: 'remediation selection',
+  action: 'remediate',
+  contentType: 'remediation',
+  contentTitle: 'Pattern Rule Remediation',
+  assessmentItemId: undefined
+}
+{
+  test: 'reassessment selection',
+  action: 'reassess',
+  contentType: 'assessment',
+  contentTitle: 'Applying Number Pattern Rules Check',
+  assessmentItemId: 'item-applying-number-pattern-rules-diagnostic-001'
+}
+{
+  test: 'advance selection',
+  action: 'advance',
+  contentType: 'lesson',
+  contentTitle: 'Applying Number Pattern Rules',
+  assessmentItemId: undefined
+}
+{
+  test: 'diagnostic avoids used assessment',
+  selected: 'item-applying-number-pattern-rules-reassessment-001-en'
+}
+{
+  test: 'reassessment falls back when assessments exhausted',
+  selectedType: 'assessment',
+  selectedTitle: 'Applying Number Pattern Rules Reassessment'
+}
+{ contentSelectionTest: 'PASS' }
+PASS: tests/content-selection.test.ts
+
+----------------------------------------
+tests/content-language-selection.test.ts
+----------------------------------------
+{
+  bilingualContentSelection: 'PASS',
+  englishContent: 'bilingual-en-lesson',
+  frenchContent: 'bilingual-fr-lesson'
+}
+PASS: tests/content-language-selection.test.ts
+
+----------------------------------------
+tests/governed-instructional-engine.test.ts
+----------------------------------------
+{ test: 'governed instructional service', result: 'PASS' }
+{ test: 'instructional context validation', result: 'PASS' }
+{ test: 'production learner governed instruction', result: 'PASS' }
+{ governedInstructionalEngineTest: 'PASS', persistence: 'memory' }
+PASS: tests/governed-instructional-engine.test.ts
+
+----------------------------------------
+tests/four-subject-filu-v1.test.ts
+----------------------------------------
+English FILU PASS: teach -> demonstration -> observed_performance
+Mathematics FILU PASS: scaffold -> step_by_step_scaffold -> constructed_response
+Science FILU PASS: remediate -> error_analysis -> multiple_choice
+Computing FILU PASS: practice -> retrieval_practice -> multiple_choice
+Four-subject FILU V1 PASS.
+PASS: tests/four-subject-filu-v1.test.ts
+
+----------------------------------------
+tests/learner-intelligence-policy.test.ts
+----------------------------------------
+{
+  test: 'misconception',
+  action: 'remediate',
+  reasonCode: 'MISCONCEPTION'
+}
+{
+  test: 'conceptual misunderstanding',
+  action: 'teach',
+  reasonCode: 'CONCEPTUAL_MISUNDERSTANDING'
+}
+{
+  test: 'procedural error',
+  action: 'scaffold',
+  reasonCode: 'PROCEDURAL_ERROR'
+}
+{
+  test: 'ineffective intervention',
+  action: 'reassess',
+  reasonCode: 'INEFFECTIVE_INTERVENTION'
+}
+{
+  test: 'retention required',
+  action: 'retention_check',
+  reasonCode: 'RETENTION_REQUIRED'
+}
+{
+  test: 'transfer required',
+  action: 'transfer_check',
+  reasonCode: 'TRANSFER_REQUIRED'
+}
+{
+  test: 'advancement',
+  action: 'advance',
+  reasonCode: 'MASTERY_RETENTION_TRANSFER_CONFIRMED'
+}
+{ intelligencePolicyTest: 'PASS' }
+PASS: tests/learner-intelligence-policy.test.ts
+
+----------------------------------------
+tests/adaptive-learner-intelligence.test.ts
+----------------------------------------
+{ test: 'diagnosis-driven interventions', result: 'PASS' }
+{ test: 'longitudinal learner signals', result: 'PASS' }
+{ test: 'careless execution diagnosis', result: 'PASS' }
+{ test: 'production diagnostic metadata', result: 'PASS' }
+{ adaptiveLearnerIntelligenceTest: 'PASS', persistence: 'memory' }
+PASS: tests/adaptive-learner-intelligence.test.ts
+
+----------------------------------------
+tests/retention-transfer-policy.test.ts
+----------------------------------------
+{
+  test: 'retention required',
+  action: 'retention_check',
+  reasonCode: 'RETENTION_REQUIRED'
+}
+{
+  test: 'transfer required',
+  action: 'transfer_check',
+  reasonCode: 'TRANSFER_REQUIRED'
+}
+{
+  test: 'advancement after retention and transfer',
+  action: 'advance',
+  reasonCode: 'MASTERY_RETENTION_TRANSFER_CONFIRMED'
+}
+{
+  test: 'completion after retention and transfer',
+  action: 'complete',
+  reasonCode: 'LEARNING_PATH_COMPLETE'
+}
+{ retentionTransferPolicy: 'PASS' }
+PASS: tests/retention-transfer-policy.test.ts
+
+----------------------------------------
+tests/retention-transfer.test.ts
+----------------------------------------
+{
+  test: 'retention check',
+  interventionId: 'intervention-2f3d5891-1588-4bc0-ba1d-39277ec6a7f2',
+  status: 'retained',
+  confidence: 1
+}
+{
+  test: 'transfer check',
+  interventionId: 'intervention-08912c8f-cd03-47ee-bb69-e27e89eccff4',
+  status: 'demonstrated',
+  confidence: 1
+}
+{ retentionTransferTest: 'PASS' }
+PASS: tests/retention-transfer.test.ts
+
+----------------------------------------
+tests/api-assessment-security.test.ts
+----------------------------------------
+{
+  securityTest: 'API assessment integrity and learner ownership',
+  clientExpectedResponse: '999999',
+  clientResponse: '999999',
+  serverExpectedResponse: '48',
+  maliciousAnswerAccepted: false,
+  validAnswerAccepted: true,
+  crossCompetencyContentExposed: false,
+  learnerAEvidenceOwner: 'learner-security-owner-a',
+  learnerBEvidenceOwner: 'learner-security-owner-b',
+  sessionOwnership: 'session-owner-a',
+  result: 'PASS'
+}
+PASS: tests/api-assessment-security.test.ts
+
+----------------------------------------
+tests/api-identity-security.test.ts
+----------------------------------------
+{
+  test: 'A-D/G-J: successful Principal auth-session cutover',
+  result: 'PASS'
+}
+{
+  test: 'C: provider subject is not auto-created as Learner',
+  result: 'SKIP',
+  reason: 'direct learner table assertion requires PostgreSQL'
+}
+powershell : FILUMIRE session issuance: learner authorization rejected { reason: 'No authorised learner is available 
+for this principal.' }
+At line:1 char:385
++ ... UILD = "1"; powershell -NoProfile -ExecutionPolicy Bypass -File .\scr ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FILUMIRE sessio...s principal.' }:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+FILUMIRE session issuance: learner authorization rejected {
+  reason: 'Explicit learner selection is required for this principal.'
+}
+{
+  test: 'E/F: zero or multiple authorised Learners prevent issuance',
+  result: 'PASS'
+}
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: invalid production session.' }
+{
+  test: 'K/L/M: missing, revoked, or expired auth sessions fail',
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: invalid production session.' }
+  result: 'PASS'
+}
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: invalid production session.' }
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: invalid production session.' }
+{
+  test: 'N: revoked Principal-Learner authorization rejects replay',
+  result: 'PASS'
+}
+FILUMIRE session issuance: authentication rejected { reason: 'Unauthenticated request: invalid external identity.' }
+{ test: 'O: forged external identity still fails', result: 'PASS' }
+{
+  test: 'P: auth-session persistence failure prevents token issuance',
+  result: 'PASS'
+}
+{
+  test: 'Q: development identity behaviour still works',
+  result: 'PASS'
+}
+{
+  test: 'R: legacy learner session service remains intact',
+  result: 'PASS'
+}
+{ test: 'logout revokes Principal auth session', result: 'PASS' }
+{ identitySecurityTest: 'PASS', persistence: 'memory' }
+PASS: tests/api-identity-security.test.ts
+
+----------------------------------------
+tests/production-learner-journey.test.ts
+----------------------------------------
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: invalid production session.' }
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: invalid production session.' }
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: invalid production session.' }
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: invalid production session.' }
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: production session is required.' 
+}
+FILUMIRE session issuance: learner authorization rejected { reason: 'Requested learner is not authorised for this 
+principal.' }
+{ productionLearnerJourneyTest: 'PASS', persistence: 'memory' }
+PASS: tests/production-learner-journey.test.ts
+
+----------------------------------------
+tests/production-curriculum-foundation.test.ts
+----------------------------------------
+{ test: 'Ghana pilot curriculum structure', result: 'PASS' }
+{ productionCurriculumFoundationTest: 'PASS', persistence: 'memory' }
+PASS: tests/production-curriculum-foundation.test.ts
+
+----------------------------------------
+tests/curriculum-framework.test.ts
+----------------------------------------
+{
+  test: 'valid curriculum/version/grade/subject resolution',
+  result: 'PASS'
+}
+{ test: 'unknown curriculum rejected', result: 'PASS' }
+{ test: 'unknown/inconsistent grade rejected', result: 'PASS' }
+{ test: 'unknown/inconsistent subject rejected', result: 'PASS' }
+{
+  test: 'subject capability reflects Math partial / English partial / Science full',
+  result: 'PASS'
+}
+{ test: 'curriculum-to-competency mapping integrity', result: 'PASS' }
+{ test: 'competency relationship integrity', result: 'PASS' }
+{ curriculumFrameworkTest: 'PASS' }
+PASS: tests/curriculum-framework.test.ts
+
+----------------------------------------
+tests/b4-curriculum-integrity.test.ts
+----------------------------------------
+B4 curriculum integrity PASS: 115 nodes, 112 coded nodes.
+PASS: tests/b4-curriculum-integrity.test.ts
+
+----------------------------------------
+tests/b4-science-curriculum-integrity.test.ts
+----------------------------------------
+B4 Science curriculum integrity PASS: 60 nodes, 24 learning indicators, 24 direct adaptive mappings.
+PASS: tests/b4-science-curriculum-integrity.test.ts
+
+----------------------------------------
+tests/b4-science-adaptive-slice.test.ts
+----------------------------------------
+B4 Science adaptive slice PASS: authoritative mapping, competency, diagnosis, content, retention and transfer verified.
+PASS: tests/b4-science-adaptive-slice.test.ts
+
+----------------------------------------
+tests/b4-science-adaptive-coverage.test.ts
+----------------------------------------
+B4 Science adaptive coverage PASS: 24 competencies, 24 mappings, 192 content records, mastery + retention + transfer evidence verified.
+PASS: tests/b4-science-adaptive-coverage.test.ts
+
+----------------------------------------
+tests/b4-mathematics-adaptive-coverage.test.ts
+----------------------------------------
+B4 Mathematics adaptive mapping coverage PASS: 71 official indicators, 64 competencies, 71 direct indicator mappings.
+PASS: tests/b4-mathematics-adaptive-coverage.test.ts
+
+----------------------------------------
+tests/b4-computing-curriculum-integrity.test.ts
+----------------------------------------
+{
+  computingCurriculumIntegrity: 'PASS',
+  strands: 3,
+  subStrands: 6,
+  standards: 7,
+  indicators: 27,
+  competencies: 27,
+  totalFrameworkNodes: 43
+}
+PASS: tests/b4-computing-curriculum-integrity.test.ts
+
+----------------------------------------
+tests/b4-computing-adaptive-coverage.test.ts
+----------------------------------------
+B4 Computing adaptive coverage PASS: 27 competencies, 27 mappings, 216 content records, mastery + retention + transfer evidence verified.
+PASS: tests/b4-computing-adaptive-coverage.test.ts
+
+----------------------------------------
+tests/b4-english-adaptive-coverage.test.ts
+----------------------------------------
+{
+  englishAdaptiveCoverage: 'PASS',
+  authoritativeIndicators: 131,
+  competencies: 131,
+  evidenceDesigns: 131,
+  contentRecords: 1048
+}
+PASS: tests/b4-english-adaptive-coverage.test.ts
+
+----------------------------------------
+tests/four-subject-adaptive-intelligence.test.ts
+----------------------------------------
+English PASS: struggle -> diagnosis -> mastery -> retention -> transfer -> competency-gh-english-b4-2-2-1-2
+Mathematics PASS: struggle -> diagnosis -> mastery -> retention -> transfer -> competency-gh-math-b4-number-patterns-002
+Science PASS: struggle -> diagnosis -> mastery -> retention -> transfer -> competency-gh-science-b4-2-2-1-2
+Computing PASS: struggle -> diagnosis -> mastery -> retention -> transfer -> competency-gh-computing-b4-input-devices-001
+Four-subject adaptive intelligence PASS.
+PASS: tests/four-subject-adaptive-intelligence.test.ts
+
+----------------------------------------
+tests/learner-learning-context-persistence.test.ts
+----------------------------------------
+{
+  test: 'learner learning-context lazy default persists',
+  result: 'PASS'
+}
+{ test: 'existing context is reused, not recreated', result: 'PASS' }
+{
+  test: 'updateActiveCompetency preserves the rest of the context',
+  result: 'PASS'
+}
+{
+  learnerLearningContextPersistenceTest: 'PASS',
+  persistence: 'memory'
+}
+PASS: tests/learner-learning-context-persistence.test.ts
+
+----------------------------------------
+tests/production-curriculum-resolution.test.ts
+----------------------------------------
+{
+  test: 'valid resolution creates/uses learner learning context',
+  result: 'PASS'
+}
+{
+  test: 'existing Ghana Mathematics learner journey still works',
+  result: 'PASS'
+}
+{ test: 'unknown curriculum rejected', result: 'PASS' }
+{ test: 'unknown/inconsistent grade rejected', result: 'PASS' }
+{ test: 'unknown/inconsistent subject rejected', result: 'PASS' }
+{
+  test: 'invalid active competency: explicit override rejected, stale context falls back safely',
+  result: 'PASS'
+}
+{
+  test: 'changing active context does not corrupt existing evidence/state',
+  result: 'PASS'
+}
+{ test: 'adult summary follows real active context', result: 'PASS' }
+{ productionCurriculumResolutionTest: 'PASS', persistence: 'memory' }
+PASS: tests/production-curriculum-resolution.test.ts
+
+----------------------------------------
+tests/production-learner-product-experience.test.ts
+----------------------------------------
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: production session is required.' 
+}
+FILUMIRE learning: session/authorization rejected { reason: 'Session does not belong to the authenticated learner.' }
+PASS: production learner product experience
+PASS: tests/production-learner-product-experience.test.ts
+
+----------------------------------------
+tests/learner-ui-runtime-integrity.test.ts
+----------------------------------------
+PASS: learner UI runtime integrity
+PASS: tests/learner-ui-runtime-integrity.test.ts
+
+----------------------------------------
+tests/adult-supervision.test.ts
+----------------------------------------
+{ test: 'zero authorized learners', result: 'PASS' }
+{ test: 'one authorized learner with real progress', result: 'PASS' }
+{ test: 'multiple authorized learners', result: 'PASS' }
+FILUMIRE adult summary: adult authorization rejected { reason: 'Requested learner is not authorised for this 
+principal.' }
+FILUMIRE adult summary: adult authorization rejected { reason: 'Requested learner is not authorised for this 
+principal.' }
+{
+  test: 'unauthorized cross-principal learner access rejected',
+  result: 'PASS'
+}
+FILUMIRE adult summary: adult authorization rejected { reason: 'Requested learner is not authorised for this 
+principal.' }
+{ test: 'revoked relationship denied', result: 'PASS' }
+{ test: 'adult route is read-only', result: 'PASS' }
+FILUMIRE adult summary: authentication rejected { reason: 'Unauthenticated request: principal identity is required.' }
+{ test: 'missing principal identity rejected', result: 'PASS' }
+{
+  test: 'production session cookie resolves principal for adult summary',
+  result: 'PASS'
+}
+{ adultSupervisionTest: 'PASS', persistence: 'memory' }
+PASS: tests/adult-supervision.test.ts
+
+----------------------------------------
+tests/ghana-pilot-context.test.ts
+----------------------------------------
+{
+  test: 'pilot-authored/non-official status preserved',
+  result: 'PASS'
+}
+{
+  test: 'mathematical competency/content grounding remains valid',
+  assessmentItemCount: 15479,
+  result: 'PASS'
+}
+{
+  test: 'locally contextualised examples present without being forced',
+  localContextItemCount: 489,
+  totalItems: 22354,
+  result: 'PASS'
+}
+{ test: 'initial pilot competency resolves content', result: 'PASS' }
+{ ghanaPilotContextTest: 'PASS' }
+PASS: tests/ghana-pilot-context.test.ts
+
+----------------------------------------
+tests/low-connectivity-sync.test.ts
+----------------------------------------
+{ test: 'first synchronization creates real evidence', result: 'PASS' }
+{ test: 'duplicate synchronization is idempotent', result: 'PASS' }
+{ test: 'new client request id creates new evidence', result: 'PASS' }
+{
+  test: 'queued interaction cannot establish retention/transfer outcomes',
+  result: 'PASS'
+}
+{ test: 'malformed pending submission fails safely', result: 'PASS' }
+FILUMIRE learning: session/authorization rejected { reason: 'Session does not belong to the authenticated learner.' }
+{
+  test: 'cross-learner session synchronization rejected',
+  result: 'PASS'
+}
+{ lowConnectivitySyncTest: 'PASS', persistence: 'memory' }
+PASS: tests/low-connectivity-sync.test.ts
+
+----------------------------------------
+tests/pending-submission-client.test.ts
+----------------------------------------
+{ test: 'pending submission round-trips locally', result: 'PASS' }
+{
+  test: 'pending submission clears after synchronization',
+  result: 'PASS'
+}
+{
+  test: 'malformed/stale pending submission fails safely',
+  result: 'PASS'
+}
+{ pendingSubmissionClientTest: 'PASS' }
+PASS: tests/pending-submission-client.test.ts
+
+----------------------------------------
+tests/pilot-concurrency-hardening.test.ts
+----------------------------------------
+{
+  test: 'concurrent identical clientRequestId cannot double-apply evidence',
+  result: 'PASS'
+}
+{
+  test: 'concurrent distinct submissions do not lose an update',
+  result: 'PASS'
+}
+{ concurrencyHardeningTest: 'PASS', persistence: 'memory' }
+PASS: tests/pilot-concurrency-hardening.test.ts
+
+----------------------------------------
+tests/pilot-session-hardening.test.ts
+----------------------------------------
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: invalid production session.' }
+{ test: 'malformed session token fails safely', result: 'PASS' }
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: production session is required.' 
+}
+{ test: 'missing session rejected', result: 'PASS' }
+FILUMIRE learning: session/authorization rejected { reason: 'Session does not belong to the authenticated learner.' }
+{ test: 'manually changed sessionId on GET rejected', result: 'PASS' }
+FILUMIRE learning: session/authorization rejected { reason: 'Session does not belong to the authenticated learner.' }
+{ test: 'manually changed sessionId on POST rejected', result: 'PASS' }
+{
+  test: 'valid session/sessionId combination still succeeds',
+  result: 'PASS'
+}
+{ sessionHardeningTest: 'PASS' }
+PASS: tests/pilot-session-hardening.test.ts
+
+----------------------------------------
+tests/pilot-storage-hardening.test.ts
+----------------------------------------
+{
+  test: 'inaccessible/throwing localStorage fails safe',
+  result: 'PASS'
+}
+{ storageHardeningTest: 'PASS' }
+PASS: tests/pilot-storage-hardening.test.ts
+
+----------------------------------------
+tests/pilot-smoke-journey.test.ts
+----------------------------------------
+{
+  step: 'authorized learner loads real Ghana pilot with governed instruction',
+  result: 'PASS'
+}
+{
+  step: 'trusted response persists evidence and updates learner intelligence',
+  nextAction: 'diagnose',
+  result: 'PASS'
+}
+{ step: 'duplicate/retry produces no double evidence', result: 'PASS' }
+{
+  step: 'authorized adult sees resulting trusted learning state',
+  result: 'PASS'
+}
+FILUMIRE adult summary: adult authorization rejected { reason: 'Requested learner is not authorised for this 
+principal.' }
+{
+  step: "unauthorized adult cannot see the learner's state",
+  result: 'PASS'
+}
+{ pilotSmokeJourneyTest: 'PASS', persistence: 'memory' }
+PASS: tests/pilot-smoke-journey.test.ts
+
+----------------------------------------
+tests/payment-service-config.test.ts
+----------------------------------------
+{ paymentServiceConfiguration: 'PASS' }
+PASS: tests/payment-service-config.test.ts
+
+----------------------------------------
+tests/payment-service.test.ts
+----------------------------------------
+{
+  paymentService: 'PASS',
+  initialization: 'pending',
+  verification: 'successful'
+}
+PASS: tests/payment-service.test.ts
+
+----------------------------------------
+tests/paystack-adapter.test.ts
+----------------------------------------
+{
+  paystackAdapter: 'PASS',
+  initialization: 'pending',
+  verification: 'successful'
+}
+PASS: tests/paystack-adapter.test.ts
+
+----------------------------------------
+tests/evidence-context-v1.test.ts
+----------------------------------------
+5 independent authored-style answers: 1.00 0.85 STRONG_MASTERY_EVIDENCE
+8 worked-example-supported answers: 0.84 0.55 DEVELOPING_MASTERY
+STEP A TESTS PASS
+PASS: tests/evidence-context-v1.test.ts
+
+----------------------------------------
+tests/misconception-evidence-v1.test.ts
+----------------------------------------
+MISCONCEPTION TESTS PASS
+PASS: tests/misconception-evidence-v1.test.ts
+
+----------------------------------------
+tests/offline-shell-v1.test.ts
+----------------------------------------
+OFFLINE SHELL TESTS PASS
+PASS: tests/offline-shell-v1.test.ts
+
+----------------------------------------
+tests/learner-path-v1.test.ts
+----------------------------------------
+LEARNER PATH TESTS PASS
+PASS: tests/learner-path-v1.test.ts
+
+----------------------------------------
+tests/learner-path-curriculum-v1.test.ts
+----------------------------------------
+LEARNER PATH CURRICULUM TEST PASS
+PASS: tests/learner-path-curriculum-v1.test.ts
+
+----------------------------------------
+tests/time-aware-retention-v1.test.ts
+----------------------------------------
+TIME-AWARE RETENTION TESTS PASS
+PASS: tests/time-aware-retention-v1.test.ts
+
+----------------------------------------
+tests/time-aware-retention-engine-v1.test.ts
+----------------------------------------
+TIME-AWARE RETENTION ENGINE TESTS PASS
+PASS: tests/time-aware-retention-engine-v1.test.ts
+
+----------------------------------------
+tests/b5-science-v1.test.ts
+----------------------------------------
+b5 science v1 test passed
+PASS: tests/b5-science-v1.test.ts
+
+----------------------------------------
+tests/b6-science-v1.test.ts
+----------------------------------------
+b6 science v1 test passed
+PASS: tests/b6-science-v1.test.ts
+
+----------------------------------------
+tests/b5-computing-v1.test.ts
+----------------------------------------
+b5 computing v1 test passed
+PASS: tests/b5-computing-v1.test.ts
+
+----------------------------------------
+tests/b6-computing-v1.test.ts
+----------------------------------------
+b6 computing v1 test passed
+PASS: tests/b6-computing-v1.test.ts
+
+----------------------------------------
+tests/b5-mathematics-v1.test.ts
+----------------------------------------
+b5 mathematics v1 test passed
+PASS: tests/b5-mathematics-v1.test.ts
+
+----------------------------------------
+tests/b6-mathematics-v1.test.ts
+----------------------------------------
+b6 mathematics v1 test passed
+PASS: tests/b6-mathematics-v1.test.ts
+
+----------------------------------------
+tests/b5-english-v1.test.ts
+----------------------------------------
+b5 english v1 test passed
+PASS: tests/b5-english-v1.test.ts
+
+----------------------------------------
+tests/b6-english-v1.test.ts
+----------------------------------------
+b6 english v1 test passed
+PASS: tests/b6-english-v1.test.ts
+
+----------------------------------------
+tests/b5-b6-english-runtime.test.ts
+----------------------------------------
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: production session is required.' 
+}
+{ test: 'Basic 5 English runtime', result: 'PASS' }
+{ test: 'Basic 6 English runtime', result: 'PASS' }
+{ b5b6EnglishRuntime: 'PASS', persistence: 'memory' }
+PASS: tests/b5-b6-english-runtime.test.ts
+
+----------------------------------------
+tests/b5-b6-english-adaptive-loop.test.ts
+----------------------------------------
+Basic 5 English struggle PASS: wrong x2 -> misconception -> remediate -> intervention evidence -> practice
+Basic 5 English progression PASS: diagnose -> diagnose -> diagnose -> practice -> retention_check -> retention_check -> transfer_check -> transfer_check -> advance -> competency-gh-english-b5-3-5-1-2
+Basic 6 English struggle PASS: wrong x2 -> misconception -> remediate -> intervention evidence -> practice
+Basic 6 English progression PASS: diagnose -> diagnose -> diagnose -> retention_check -> retention_check -> transfer_check -> transfer_check -> advance -> competency-gh-english-b6-5-4-1-2
+B5/B6 English adaptive loop PASS.
+PASS: tests/b5-b6-english-adaptive-loop.test.ts
+
+----------------------------------------
+LEARNER PRODUCTION BUILD
+----------------------------------------
+Skipped: FILUMIRE_SKIP_BUILD=1
+
+----------------------------------------
+LIVE LEARNER RUNTIME
+----------------------------------------
+Creating runtime validation session...
+{"learnerId":"learner-runtime-validation-001","sessionId":"session-runtime-validation-20261007101235161","result":"PASS"}
+PASS: runtime validation session created
+Starting learner server...
+Learner server process started. PID: 15048
+PASS: /learn returned 200
+
+Checking authenticated learning route...
+PASS: authenticated learning route returned 200
+PASS: learning route returned valid JSON
+
+Checking unauthenticated security boundary...
+PASS: unauthenticated learning route returned 401
+
+Stopping learner server...
+Learner server stopped.
+
+========================================
+FILUMIRE VALIDATION: PASS
+========================================

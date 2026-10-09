@@ -1,0 +1,134 @@
+handoff/backup-before-b5/packages/curriculum-framework/index.ts(1,49): error TS2307: Cannot find module '../curriculum/ghana-b4-science-adaptive' or its corresponding type declarations.
+handoff/backup-before-b5/packages/curriculum-framework/index.ts(2,51): error TS2307: Cannot find module '../curriculum/ghana-b4-computing-adaptive' or its corresponding type declarations.
+handoff/backup-before-b5/packages/curriculum-framework/index.ts(3,35): error TS2307: Cannot find module '../domain' or its corresponding type declarations.
+handoff/backup-before-b5/packages/curriculum-framework/index.ts(16,8): error TS2307: Cannot find module './ghana-b4-mathematics' or its corresponding type declarations.
+handoff/backup-before-b5/packages/curriculum-framework/index.ts(20,8): error TS2307: Cannot find module './ghana-b4-science' or its corresponding type declarations.
+handoff/backup-before-b5/packages/curriculum-framework/index.ts(23,8): error TS2307: Cannot find module './ghana-b4-computing' or its corresponding type declarations.
+handoff/backup-before-b5/packages/curriculum-framework/index.ts(573,14): error TS7006: Parameter 'spec' implicitly has an 'any' type.
+handoff/backup-before-b5/packages/curriculum-framework/index.ts(574,11): error TS7006: Parameter 'spec' implicitly has an 'any' type.
+handoff/backup-before-b5/packages/curriculum-framework/index.ts(588,49): error TS7006: Parameter 'spec' implicitly has an 'any' type.
+handoff/backup-before-b5/packages/curriculum-framework/index.ts(590,16): error TS7006: Parameter 'indicator' implicitly has an 'any' type.
+handoff/backup-before-b5/packages/curriculum-framework/index.ts(591,13): error TS7006: Parameter 'indicator' implicitly has an 'any' type.
+handoff/backup-before-b5/packages/curriculum/index.ts(7,8): error TS2307: Cannot find module './ghana-b4-computing-runtime' or its corresponding type declarations.
+handoff/backup-before-b5/packages/curriculum/index.ts(14,8): error TS2307: Cannot find module './ghana-b4-mathematics-runtime' or its corresponding type declarations.
+handoff/backup-before-b5/packages/curriculum/index.ts(21,8): error TS2307: Cannot find module './ghana-b4-science-runtime' or its corresponding type declarations.
+handoff/backup-before-b5/packages/curriculum/index.ts(29,8): error TS2307: Cannot find module './ghana-b4-english-runtime' or its corresponding type declarations.
+handoff/backup-before-b5/services/content-store/authored-builder.ts(1,38): error TS2307: Cannot find module '../../packages/content' or its corresponding type declarations.
+handoff/backup-before-b5/services/content-store/seed.ts(1,52): error TS2307: Cannot find module './ghana-b4-english-content' or its corresponding type declarations.
+handoff/backup-before-b5/services/content-store/seed.ts(2,52): error TS2307: Cannot find module './ghana-b4-science-content' or its corresponding type declarations.
+handoff/backup-before-b5/services/content-store/seed.ts(3,54): error TS2307: Cannot find module './ghana-b4-computing-content' or its corresponding type declarations.
+handoff/backup-before-b5/services/content-store/seed.ts(4,56): error TS2307: Cannot find module './ghana-b4-mathematics-content' or its corresponding type declarations.
+handoff/backup-before-b5/services/content-store/seed.ts(5,38): error TS2307: Cannot find module '../../packages/content' or its corresponding type declarations.
+handoff/backup-before-b5/services/content-store/seed.ts(7,59): error TS2307: Cannot find module './authored-index' or its corresponding type declarations.
+handoff/backup-before-b5/services/content-store/seed.ts(8,29): error TS2307: Cannot find module '.' or its corresponding type declarations.
+handoff/backup-before-b5/services/content-store/seed.ts(13,49): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-b5/services/content-store/seed.ts(14,49): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-b5/services/content-store/seed.ts(15,51): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-b5/services/content-store/seed.ts(16,55): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-b6/packages/curriculum-framework/index.ts(1,49): error TS2307: Cannot find module '../curriculum/ghana-b4-science-adaptive' or its corresponding type declarations.
+handoff/backup-before-b6/packages/curriculum-framework/index.ts(2,51): error TS2307: Cannot find module '../curriculum/ghana-b4-computing-adaptive' or its corresponding type declarations.
+handoff/backup-before-b6/packages/curriculum-framework/index.ts(3,50): error TS2307: Cannot find module '../curriculum/ghana-b5-science-adaptive' or its corresponding type declarations.
+handoff/backup-before-b6/packages/curriculum-framework/index.ts(4,40): error TS2307: Cannot find module './ghana-b5-science' or its corresponding type declarations.
+handoff/backup-before-b6/packages/curriculum-framework/index.ts(5,35): error TS2307: Cannot find module '../domain' or its corresponding type declarations.
+handoff/backup-before-b6/packages/curriculum-framework/index.ts(20,8): error TS2307: Cannot find module './ghana-b4-mathematics' or its corresponding type declarations.
+handoff/backup-before-b6/packages/curriculum-framework/index.ts(24,8): error TS2307: Cannot find module './ghana-b4-science' or its corresponding type declarations.
+handoff/backup-before-b6/packages/curriculum-framework/index.ts(27,8): error TS2307: Cannot find module './ghana-b4-computing' or its corresponding type declarations.
+handoff/backup-before-b6/packages/curriculum-framework/index.ts(604,14): error TS7006: Parameter 'spec' implicitly has an 'any' type.
+handoff/backup-before-b6/packages/curriculum-framework/index.ts(605,11): error TS7006: Parameter 'spec' implicitly has an 'any' type.
+handoff/backup-before-b6/packages/curriculum-framework/index.ts(619,49): error TS7006: Parameter 'spec' implicitly has an 'any' type.
+handoff/backup-before-b6/packages/curriculum-framework/index.ts(621,16): error TS7006: Parameter 'indicator' implicitly has an 'any' type.
+handoff/backup-before-b6/packages/curriculum-framework/index.ts(622,13): error TS7006: Parameter 'indicator' implicitly has an 'any' type.
+handoff/backup-before-b6/packages/curriculum-framework/index.ts(629,44): error TS7006: Parameter 'spec' implicitly has an 'any' type.
+handoff/backup-before-b6/packages/curriculum/index.ts(7,8): error TS2307: Cannot find module './ghana-b5-science-runtime' or its corresponding type declarations.
+handoff/backup-before-b6/packages/curriculum/index.ts(14,8): error TS2307: Cannot find module './ghana-b4-computing-runtime' or its corresponding type declarations.
+handoff/backup-before-b6/packages/curriculum/index.ts(21,8): error TS2307: Cannot find module './ghana-b4-mathematics-runtime' or its corresponding type declarations.
+handoff/backup-before-b6/packages/curriculum/index.ts(28,8): error TS2307: Cannot find module './ghana-b4-science-runtime' or its corresponding type declarations.
+handoff/backup-before-b6/packages/curriculum/index.ts(36,8): error TS2307: Cannot find module './ghana-b4-english-runtime' or its corresponding type declarations.
+handoff/backup-before-b6/services/content-store/seed.ts(1,52): error TS2307: Cannot find module './ghana-b4-english-content' or its corresponding type declarations.
+handoff/backup-before-b6/services/content-store/seed.ts(2,52): error TS2307: Cannot find module './ghana-b4-science-content' or its corresponding type declarations.
+handoff/backup-before-b6/services/content-store/seed.ts(3,54): error TS2307: Cannot find module './ghana-b4-computing-content' or its corresponding type declarations.
+handoff/backup-before-b6/services/content-store/seed.ts(4,56): error TS2307: Cannot find module './ghana-b4-mathematics-content' or its corresponding type declarations.
+handoff/backup-before-b6/services/content-store/seed.ts(5,38): error TS2307: Cannot find module '../../packages/content' or its corresponding type declarations.
+handoff/backup-before-b6/services/content-store/seed.ts(7,59): error TS2307: Cannot find module './authored-index' or its corresponding type declarations.
+handoff/backup-before-b6/services/content-store/seed.ts(8,45): error TS2307: Cannot find module './authored-index-b5-science' or its corresponding type declarations.
+handoff/backup-before-b6/services/content-store/seed.ts(9,29): error TS2307: Cannot find module '.' or its corresponding type declarations.
+handoff/backup-before-b6/services/content-store/seed.ts(14,49): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-b6/services/content-store/seed.ts(15,49): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-b6/services/content-store/seed.ts(16,51): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-b6/services/content-store/seed.ts(17,55): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-interface-completion/apps/learner/app/teacher/page.tsx(173,16): error TS7006: Parameter 'subject' implicitly has an 'any' type.
+handoff/backup-before-interface-completion/apps/learner/app/teacher/page.tsx(179,16): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-interface-completion/apps/learner/app/teacher/page.tsx(225,10): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-interface-completion/apps/learner/app/teacher/page.tsx(657,24): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-interface-completion/apps/learner/app/teacher/page.tsx(693,32): error TS7006: Parameter 'reason' implicitly has an 'any' type.
+handoff/backup-before-interface-completion/apps/learner/app/teacher/page.tsx(718,22): error TS7006: Parameter 'subject' implicitly has an 'any' type.
+handoff/backup-before-interface-completion/apps/learner/app/teacher/page.tsx(763,30): error TS7006: Parameter 'competency' implicitly has an 'any' type.
+handoff/backup-before-interface-completion/apps/learner/app/teacher/page.tsx(815,24): error TS7006: Parameter 'review' implicitly has an 'any' type.
+handoff/backup-before-interface-completion/apps/learner/app/teacher/page.tsx(1009,28): error TS7006: Parameter 'reason' implicitly has an 'any' type.
+handoff/backup-before-interface-completion/apps/learner/app/teacher/page.tsx(1171,28): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-interface-completion/apps/learner/app/teacher/page.tsx(1264,30): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-interface-completion/apps/learner/app/teacher/page.tsx(1321,30): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-interface-completion/services/identity/index.ts(11,8): error TS2307: Cannot find module '../auth-session' or its corresponding type declarations.
+handoff/backup-before-interface-completion/services/identity/index.ts(17,8): error TS2307: Cannot find module '../principal' or its corresponding type declarations.
+handoff/backup-before-interface-completion/services/identity/index.ts(21,8): error TS2307: Cannot find module '../../packages/domain' or its corresponding type declarations.
+handoff/backup-before-interface-completion/services/teacher-client.ts(3,8): error TS2307: Cannot find module './teacher-summary' or its corresponding type declarations.
+handoff/backup-before-learnerpath/learner-state-index.ts(16,8): error TS2307: Cannot find module '../persistence-provider' or its corresponding type declarations.
+handoff/backup-before-learnerpath/learner-state-index.ts(20,8): error TS2307: Cannot find module '../diagnosis' or its corresponding type declarations.
+handoff/backup-before-learnerpath/learner-state-index.ts(24,8): error TS2307: Cannot find module '../mastery' or its corresponding type declarations.
+handoff/backup-before-learnerpath/learner-state-index.ts(28,8): error TS2307: Cannot find module '../intervention' or its corresponding type declarations.
+handoff/backup-before-learnerpath/learner-state-index.ts(33,8): error TS2307: Cannot find module '../retention-transfer/evaluator' or its corresponding type declarations.
+handoff/backup-before-stepA/assessment-index.ts(24,8): error TS2307: Cannot find module '../intervention-store' or its corresponding type declarations.
+handoff/backup-before-stepA/contracts-index.ts(7,8): error TS2307: Cannot find module '../domain' or its corresponding type declarations.
+handoff/backup-before-stepA/contracts-index.ts(11,8): error TS2307: Cannot find module '../content' or its corresponding type declarations.
+handoff/backup-before-stepD/learner-state-index.ts(16,8): error TS2307: Cannot find module '../persistence-provider' or its corresponding type declarations.
+handoff/backup-before-stepD/learner-state-index.ts(20,8): error TS2307: Cannot find module '../diagnosis' or its corresponding type declarations.
+handoff/backup-before-stepD/learner-state-index.ts(24,8): error TS2307: Cannot find module '../mastery' or its corresponding type declarations.
+handoff/backup-before-stepD/learner-state-index.ts(28,8): error TS2307: Cannot find module '../intervention' or its corresponding type declarations.
+handoff/backup-before-stepD/learner-state-index.ts(33,8): error TS2307: Cannot find module '../retention-transfer/evaluator' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-computing-adaptive-coverage.test.ts(3,8): error TS2307: Cannot find module '../packages/curriculum/ghana-b4-computing-adaptive' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-computing-adaptive-coverage.test.ts(8,8): error TS2307: Cannot find module '../packages/curriculum' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-computing-adaptive-coverage.test.ts(15,8): error TS2307: Cannot find module '../packages/curriculum-framework' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-computing-adaptive-coverage.test.ts(19,8): error TS2307: Cannot find module '../services/content-store/ghana-b4-computing-content' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-computing-adaptive-coverage.test.ts(23,8): error TS2307: Cannot find module '../services/content-store' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-computing-adaptive-coverage.test.ts(27,8): error TS2307: Cannot find module '../services/content-store/seed' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-computing-adaptive-coverage.test.ts(47,6): error TS7006: Parameter 'competency' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-computing-adaptive-coverage.test.ts(61,4): error TS7006: Parameter 'node' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-computing-adaptive-coverage.test.ts(73,6): error TS7006: Parameter 'mapping' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-computing-adaptive-coverage.test.ts(84,6): error TS7006: Parameter 'candidate' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-computing-adaptive-coverage.test.ts(115,6): error TS7006: Parameter 'candidate' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-computing-adaptive-coverage.test.ts(144,6): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-computing-adaptive-coverage.test.ts(149,6): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-computing-adaptive-coverage.test.ts(154,6): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-computing-adaptive-coverage.test.ts(159,6): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-science-adaptive-coverage.test.ts(3,8): error TS2307: Cannot find module '../packages/curriculum/ghana-b4-science-adaptive' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-science-adaptive-coverage.test.ts(8,8): error TS2307: Cannot find module '../packages/curriculum' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-science-adaptive-coverage.test.ts(15,8): error TS2307: Cannot find module '../packages/curriculum-framework' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-science-adaptive-coverage.test.ts(19,8): error TS2307: Cannot find module '../services/content-store/ghana-b4-science-content' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-science-adaptive-coverage.test.ts(23,8): error TS2307: Cannot find module '../services/content-store' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-science-adaptive-coverage.test.ts(27,8): error TS2307: Cannot find module '../services/content-store/seed' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-science-adaptive-coverage.test.ts(47,6): error TS7006: Parameter 'competency' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-science-adaptive-coverage.test.ts(61,4): error TS7006: Parameter 'node' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-science-adaptive-coverage.test.ts(73,6): error TS7006: Parameter 'candidate' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-science-adaptive-coverage.test.ts(104,6): error TS7006: Parameter 'candidate' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-science-adaptive-coverage.test.ts(133,6): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-science-adaptive-coverage.test.ts(138,6): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-science-adaptive-coverage.test.ts(143,6): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-science-adaptive-coverage.test.ts(148,6): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-science-adaptive-slice.test.ts(6,8): error TS2307: Cannot find module '../packages/curriculum' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-science-adaptive-slice.test.ts(18,8): error TS2307: Cannot find module '../packages/curriculum-framework' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-science-adaptive-slice.test.ts(22,8): error TS2307: Cannot find module '../services/content-store' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-science-adaptive-slice.test.ts(26,8): error TS2307: Cannot find module '../services/content-store/seed' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-science-adaptive-slice.test.ts(30,8): error TS2307: Cannot find module '../services/content-selection' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-science-adaptive-slice.test.ts(34,8): error TS2307: Cannot find module '../services/assessment' or its corresponding type declarations.
+handoff/backup-before-testfix/b4-science-adaptive-slice.test.ts(97,8): error TS7006: Parameter 'mapping' implicitly has an 'any' type.
+handoff/backup-before-testfix/b4-science-adaptive-slice.test.ts(128,13): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-timeaware/adaptive-engine-index.ts(18,8): error TS2307: Cannot find module '../adaptive-policy' or its corresponding type declarations.
+handoff/backup-before-timeaware/adaptive-engine-index.ts(22,8): error TS2307: Cannot find module '../content-selection' or its corresponding type declarations.
+handoff/backup-before-timeaware/adaptive-engine-index.ts(26,8): error TS2307: Cannot find module '../evidence-store' or its corresponding type declarations.
+handoff/backup-before-timeaware/adaptive-engine-index.ts(30,8): error TS2307: Cannot find module '../intervention-store' or its corresponding type declarations.
+handoff/backup-before-timeaware/adaptive-engine-index.ts(34,8): error TS2307: Cannot find module '../learner-state' or its corresponding type declarations.
+handoff/backup-before-timeaware/adaptive-engine-index.ts(187,10): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-timeaware/adaptive-engine-index.ts(283,10): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-timeaware/adaptive-engine-index.ts(288,11): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-timeaware/adaptive-engine-index.ts(296,10): error TS7006: Parameter 'item' implicitly has an 'any' type.
+handoff/backup-before-timeaware/adaptive-engine-index.ts(301,11): error TS7006: Parameter 'item' implicitly has an 'any' type.

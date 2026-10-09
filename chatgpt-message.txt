@@ -1,0 +1,638 @@
+You are helping design one part of an adaptive learning engine (FILUMIRE).
+You will NOT write production code. Produce a design spec another engineer will
+implement and verify against the real codebase.
+
+PROBLEM
+Mastery is estimated from a history of evidence (answers). Early mistakes keep too
+much weight: after a learner is taught/remediated and then answers correctly, old
+mistakes still drag mastery down, so struggling learners need too many correct
+answers and run out of questions.
+
+The product owner's decision is pasted below ("RECORDED DECISION"). It is specific:
+after an intervention is evaluated effective (a correct answer under
+teach/remediate/scaffold), current mastery is estimated mainly from evidence since
+that point, and earlier pre-instruction errors stop counting toward CURRENT mastery.
+They stay stored. Design to that rule.
+
+HARD CONSTRAINTS
+- masteryThreshold stays 0.8; confidenceThreshold stays 0.8.
+- At least 3 independent (unassisted) correct answers still required.
+- Retention and transfer evidence still required.
+- Assisted answers count less; repeated-question answers count less than fresh ones.
+- Never delete or modify stored evidence; only its weight in CURRENT mastery changes.
+- One remediation + one correct answer must NOT reach mastery.
+- Do not lower thresholds.
+
+DELIVER (headings 1-5, precise and concise)
+1. How the CURRENT code computes mastery and confidence, from the pasted code only.
+   Say clearly where you are unsure. Do not invent functions or fields.
+2. The proposed scheme: how "intervention evaluated effective" is detected from
+   existing fields; what counts after that point; whether earlier CORRECT answers
+   still count; weights for assisted and repeated evidence; effect on confidence;
+   how retention/transfer fit; any new fields (minimal). Formulas or pseudocode.
+3. Worked numeric examples (mastery + confidence after each answer, final result):
+   a. perfect learner; b. one early error; c. two early errors;
+   d. fails, remediation, then correct answers;
+   e. as (d) but only ONE correct after remediation (must NOT reach mastery);
+   f. post-remediation correct answers on REPEATED questions (count less);
+   g. assisted correct answers only (must not reach mastery);
+   h. topic with only 2 questions in total (no deadlock, confidence honestly limited,
+      no manufactured mastery).
+4. Test table: scenario, answer sequence, expected mastery, expected confidence,
+   mastery gate pass/fail.
+5. Risks and edge cases: second remediation, regression after mastery, learner gets
+   worse after remediation, anything to check in the real code.
+
+==================== RECORDED DECISION ====================
+## Decision (Tabi, 7 October): mastery option B
+After an intervention is evaluated effective (correct answer under teach/remediate/scaffold), mastery is estimated
+mainly from evidence since that point; earlier, pre-instruction errors stop counting. Unchanged: masteryThreshold 0.8,
+confidenceThreshold 0.8, at least 3 independent correct answers, retention + transfer before advancing. Implement in
+4B step 3 (services/mastery), with tests that the thresholds are unchanged and that guided/repeated evidence still
+counts less. Validation of the model itself comes from pilot measures (retention after mastery, false-mastery rate,
+teacher agreement, learning gain, stuck rate, time to mastery), proposed as a step before the pilot.
+
+==================== services/mastery/index.ts ====================
+﻿import type {
+  LearningEvidence,
+} from "../../packages/domain";
+
+export const MASTERY_ENGINE_VERSION = "mastery-v1";
+
+export const MASTERY_V1_POLICY = {
+  minimumVerificationObservations: 3,
+  minimumIndependentCorrectObservations: 3,
+  masteryThreshold: 0.8,
+  confidenceThreshold: 0.8,
+  preferredEvidenceQuantity: 5,
+  minimumVerificationRepresentations: 2,
+} as const;
+
+export type MasteryReasonCode =
+  | "NO_MASTERY_EVIDENCE"
+  | "INSUFFICIENT_MASTERY_EVIDENCE"
+  | "DEVELOPING_MASTERY"
+  | "STRONG_MASTERY_EVIDENCE";
+
+export interface MasteryDimensions {
+  correctness: number;
+  independence: number;
+  evidenceStrength: number;
+  difficultyCoverage: number;
+  variation: number;
+  recency: number;
+}
+
+export interface MasteryResult {
+  masteryEstimate: number;
+  confidence: number;
+  evidenceCount: number;
+  masteryEvidenceCount: number;
+  reasonCode: MasteryReasonCode;
+  dimensions: MasteryDimensions;
+  evidenceIds: string[];
+  version: typeof MASTERY_ENGINE_VERSION;
+}
+
+const clamp = (value: number): number =>
+  Math.max(0, Math.min(1, value));
+
+function average(values: number[]): number {
+  if (values.length === 0) {
+    return 0;
+  }
+
+  return (
+    values.reduce(
+      (sum, value) => sum + value,
+      0,
+    ) / values.length
+  );
+}
+
+function outcomeValue(
+  evidence: LearningEvidence,
+): number {
+  switch (evidence.outcome) {
+    case "correct":
+      return 1;
+    case "partial":
+      return 0.5;
+    case "incorrect":
+      return 0;
+    default:
+      return 0;
+  }
+}
+
+function independenceValue(
+  evidence: LearningEvidence,
+): number {
+  switch (evidence.independence) {
+    case "independent":
+      return 1;
+    case "light_support":
+      return 0.8;
+    case "guided":
+      return 0.55;
+    case "fully_supported":
+      return 0.3;
+    default:
+      return 0.6;
+  }
+}
+
+function strengthValue(
+  evidence: LearningEvidence,
+): number {
+  switch (evidence.strength) {
+    case "strong":
+      return 1;
+    case "moderate":
+      return 0.75;
+    case "weak":
+      return 0.45;
+    default:
+      return 0.55;
+  }
+}
+
+function difficultyValue(
+  evidence: LearningEvidence,
+): number {
+  switch (evidence.difficulty) {
+    case "extension":
+      return 1;
+    case "challenging":
+      return 1;
+    case "standard":
+      return 0.85;
+    case "foundational":
+      return 0.65;
+    default:
+      return 0.7;
+  }
+}
+
+function isMasteryEvidence(
+  evidence: LearningEvidence,
+): boolean {
+  if (
+    evidence.purpose === "retention" ||
+    evidence.purpose === "transfer"
+  ) {
+    return false;
+  }
+
+  if (
+    evidence.interventionType === "retention_check" ||
+    evidence.interventionType === "transfer_check"
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
+function recencyWeight(
+  index: number,
+  total: number,
+): number {
+  if (total <= 1) {
+    return 1;
+  }
+
+  /*
+   * Older evidence remains meaningful, but newer evidence
+   * carries moderately greater weight.
+   */
+  return 0.8 + 0.2 * (index / (total - 1));
+}
+
+function weightedAverage(
+  values: number[],
+  weights: number[],
+): number {
+  if (values.length === 0) {
+    return 0;
+  }
+
+  const totalWeight =
+    weights.reduce(
+      (sum, weight) => sum + weight,
+      0,
+    );
+
+  if (totalWeight === 0) {
+    return 0;
+  }
+
+  return (
+    values.reduce(
+      (sum, value, index) =>
+        sum + value * weights[index],
+      0,
+    ) / totalWeight
+  );
+}
+
+function variationScore(
+  evidence: LearningEvidence[],
+): number {
+  const representations = new Set<string>(
+    evidence
+      .map((item) => item.representation)
+      .filter(
+        (value): value is NonNullable<typeof value> =>
+          value !== undefined &&
+          value !== "unknown",
+      ),
+  );
+
+  /*
+   * Real-life contexts also count as variation: the same
+   * competency shown in different settings is stronger
+   * evidence than repeated familiarity with one setting.
+   */
+  for (const item of evidence) {
+    for (const tag of item.contextTags ?? []) {
+      representations.add(`context:${tag}`);
+    }
+  }
+
+  if (representations.size >= 3) {
+    return 1;
+  }
+
+  if (representations.size === 2) {
+    return 0.7;
+  }
+
+  if (representations.size === 1) {
+    return 0.4;
+  }
+
+  return 0.2;
+}
+
+function difficultyCoverageScore(
+  evidence: LearningEvidence[],
+): number {
+  if (evidence.length === 0) {
+    return 0;
+  }
+
+  return average(
+    evidence.map(difficultyValue),
+  );
+}
+
+export function evaluateMastery(
+  evidenceHistory: LearningEvidence[],
+): MasteryResult {
+  const masteryEvidence =
+    [...evidenceHistory]
+      .filter(isMasteryEvidence)
+      .sort(
+        (a, b) =>
+          new Date(a.timestamp).getTime() -
+          new Date(b.timestamp).getTime(),
+      );
+
+  if (masteryEvidence.length === 0) {
+    return {
+      masteryEstimate: 0,
+      confidence: 0,
+      evidenceCount: evidenceHistory.length,
+      masteryEvidenceCount: 0,
+      reasonCode: "NO_MASTERY_EVIDENCE",
+      dimensions: {
+        correctness: 0,
+        independence: 0,
+        evidenceStrength: 0,
+        difficultyCoverage: 0,
+        variation: 0,
+        recency: 0,
+      },
+      evidenceIds: [],
+      version: MASTERY_ENGINE_VERSION,
+    };
+  }
+
+  const recencyWeights =
+    masteryEvidence.map(
+      (_, index) =>
+        recencyWeight(
+          index,
+          masteryEvidence.length,
+        ),
+    );
+
+  const correctness =
+    weightedAverage(
+      masteryEvidence.map(outcomeValue),
+      recencyWeights,
+    );
+
+  const independence =
+    weightedAverage(
+      masteryEvidence.map(independenceValue),
+      recencyWeights,
+    );
+
+  /*
+   * Correctness is the primary competence signal.
+   * Independence controls whether successful performance can
+   * legitimately count as mastery.
+   */
+  const masteryEstimate = clamp(
+    correctness *
+      (0.65 + 0.35 * independence),
+  );
+
+  const evidenceStrength =
+    average(
+      masteryEvidence.map(strengthValue),
+    );
+
+  const difficultyCoverage =
+    difficultyCoverageScore(
+      masteryEvidence,
+    );
+
+  const variation =
+    variationScore(masteryEvidence);
+
+  const recency =
+    average(recencyWeights);
+
+  /*
+   * Confidence measures how well the mastery estimate is
+   * supported. Quantity alone cannot create confidence.
+   */
+  const quantityCoverage =
+    Math.min(
+      masteryEvidence.length / 5,
+      1,
+    );
+
+  const independentCorrectCount =
+    masteryEvidence.filter(
+      (item) =>
+        item.outcome === "correct" &&
+        item.independence === "independent",
+    ).length;
+
+  const independentVerification =
+    Math.min(
+      independentCorrectCount / 3,
+      1,
+    );
+
+  const confidence = clamp(
+    quantityCoverage * 0.25 +
+      independentVerification * 0.3 +
+      evidenceStrength * 0.15 +
+      difficultyCoverage * 0.1 +
+      variation * 0.15 +
+      recency * 0.05,
+  );
+
+  let reasonCode: MasteryReasonCode =
+    "DEVELOPING_MASTERY";
+
+  if (masteryEvidence.length < 3) {
+    reasonCode =
+      "INSUFFICIENT_MASTERY_EVIDENCE";
+  } else if (
+    masteryEstimate >= 0.8 &&
+    confidence >= 0.8 &&
+    independentCorrectCount >= 3
+  ) {
+    reasonCode =
+      "STRONG_MASTERY_EVIDENCE";
+  }
+
+  return {
+    masteryEstimate,
+    confidence,
+    evidenceCount: evidenceHistory.length,
+    masteryEvidenceCount:
+      masteryEvidence.length,
+    reasonCode,
+    dimensions: {
+      correctness,
+      independence,
+      evidenceStrength,
+      difficultyCoverage,
+      variation,
+      recency,
+    },
+    evidenceIds:
+      masteryEvidence.map(
+        (item) => item.id,
+      ),
+    version: MASTERY_ENGINE_VERSION,
+  };
+}
+
+
+==================== packages/domain/index.ts (lines 21-60) ====================
+export type EvidenceOutcome =
+  | "correct"
+  | "incorrect"
+  | "partial"
+  | "skipped"
+  | "observed";
+
+/*
+ * Why this evidence was collected.
+ *
+ * Purpose is distinct from source. An assessment source,
+ * for example, may be used for diagnosis, mastery
+ * verification, retention, or transfer.
+ */
+export type EvidencePurpose =
+  | "diagnostic"
+  | "practice"
+  | "mastery"
+  | "retention"
+  | "transfer"
+  | "intervention_evaluation"
+  | "teacher_observation";
+
+/*
+ * How independently the learner produced the response.
+ *
+ * Supported success is valid positive evidence but must
+ * not be treated as equivalent to independent success.
+ */
+export type EvidenceIndependence =
+  | "independent"
+  | "light_support"
+  | "guided"
+  | "fully_supported"
+  | "unknown";
+
+export type EvidenceDifficulty =
+  | "foundational"
+  | "standard"
+  | "challenging"
+
+==================== packages/domain/index.ts (lines 220-375) ====================
+export type InterventionOutcome =
+  | "not_yet_evaluated"
+  | "ineffective"
+  | "partial_recovery"
+  | "effective"
+  | "effective_with_retention"
+  | "effective_with_transfer";
+
+export interface DiagnosticEvidenceSummary {
+  diagnosticState: DiagnosticState;
+  evidenceCount: number;
+  lastEvidenceAt: string;
+  confidence: number;
+  errorPatterns: string[];
+}
+
+export interface OutcomePerformanceSummary {
+  attempts: number;
+  successfulAttempts: number;
+  unsuccessfulAttempts: number;
+  lastOutcome?: EvidenceOutcome;
+  lastEvidenceAt?: string;
+  confidence: number;
+}
+
+export interface InterventionResponseSummary {
+  interventionType: InterventionType;
+  attempts: number;
+  successfulAttempts: number;
+  unsuccessfulAttempts: number;
+  lastOutcome?: InterventionOutcome;
+  lastEvidenceAt?: string;
+  effectiveness: StrategyEffectiveness;
+}
+
+export interface LearningEvidence {
+  id: EvidenceId;
+  learnerId: LearnerId;
+  competencyId: CompetencyId;
+  source: EvidenceSource;
+  outcome: EvidenceOutcome;
+  timestamp: string;
+
+  assessmentItemId?: AssessmentItemId;
+  sessionId?: SessionId;
+  contentId?: ContentId;
+
+  /*
+   * Evidence V1 semantics.
+   *
+   * These fields allow downstream engines to distinguish
+   * what was being measured, under what conditions, and
+   * how strongly the observation should influence an
+   * educational conclusion.
+   */
+  purpose?: EvidencePurpose;
+  independence?: EvidenceIndependence;
+  supportLevel?: number;
+  difficulty?: EvidenceDifficulty;
+  representation?: EvidenceRepresentation;
+  strength?: EvidenceStrength;
+
+  /*
+   * Structured interpretation signals.
+   *
+   * errorPattern remains for backward compatibility while
+   * errorClass provides a controlled diagnostic vocabulary.
+   */
+  errorClass?: EvidenceErrorClass;
+  errorPattern?: string;
+
+  prerequisiteCompetencyId?: CompetencyId;
+  misconceptionId?: string;
+
+  /*
+   * Exposure information helps FILUMIRE avoid treating
+   * repeated familiarity with the same item as equivalent
+   * to varied demonstrations of competence.
+   */
+  exposureCount?: number;
+
+  /*
+   * Evidence V1.1 context.
+   *
+   * attemptCount is the learner's attempt number for this
+   * item. contextTags record the real-life contexts the item
+   * was set in, so FILUMIRE can tell varied demonstrations of
+   * competence apart from repeated familiar ones.
+   */
+  attemptCount?: number;
+  contextTags?: string[];
+
+  /*
+   * Interpretation provenance.
+   *
+   * evaluatorId and evaluationPolicyVersion identify who
+   * or what produced the educational interpretation.
+   */
+  evaluatorType?: EvidenceEvaluatorType;
+  evaluatorId?: string;
+  evaluationPolicyVersion?: string;
+  interpretationVersion?: string;
+
+  /*
+   * The instructional strategy that preceded
+   * this evidence, when applicable.
+   */
+  instructionalStrategy?: InstructionalStrategy;
+
+  /*
+   * The response mode through which the learner
+   * demonstrated the evidence, when applicable.
+   */
+  responseMode?: ResponseMode;
+
+  policyVersion: string;
+
+  /*
+   * Legacy diagnostic fields remain during the V1
+   * migration. Diagnosis will subsequently become a
+   * separate, revisable interpretation layer.
+   */
+  diagnosticState?: DiagnosticState;
+  diagnosticConfidence?: number;
+
+  interventionType?: InterventionType;
+  interventionId?: InterventionId;
+}
+
+export interface LearnerInterventionRecord {
+  interventionId: InterventionId;
+  competencyId: CompetencyId;
+  type: InterventionType;
+
+  /*
+   * Strategy used by this intervention.
+   */
+  instructionalStrategy?: InstructionalStrategy;
+
+  startedAt: string;
+  completedAt?: string;
+
+  outcome?: InterventionOutcome;
+
+  evidenceIds: EvidenceId[];
+}
+
+export type PrerequisiteState =
+  | "unknown"
+  | "not_ready"
+  | "developing"
+  | "ready"
+  | "mastered";
+
+export interface RetentionState {
+  status:

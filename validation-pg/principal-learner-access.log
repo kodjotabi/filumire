@@ -1,0 +1,13 @@
+{ test: 'A: create self relationship', result: 'PASS' }
+{ test: 'B: create guardian relationship', result: 'PASS' }
+{ test: 'C: one Principal -> multiple Learners', result: 'PASS' }
+{ test: 'D: one Learner -> multiple Principals', result: 'PASS' }
+{ test: 'E: revoked relationship', result: 'PASS' }
+{ test: 'F: unrelated Principal', result: 'PASS' }
+{ test: 'G: missing Principal', result: 'PASS' }
+{ test: 'H: missing Learner', result: 'PASS' }
+{ test: 'I: duplicate relationship', result: 'PASS' }
+{ test: 'J: multiple relationship types', result: 'PASS' }
+{ test: 'K: delimiter/composite-key safety', result: 'PASS' }
+{ test: 'L: educational isolation', result: 'PASS' }
+{ principalLearnerAccessTest: 'PASS' }

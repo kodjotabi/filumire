@@ -1,0 +1,1810 @@
+{
+  "description": "Payments Phase 2 step 3 B3: canonical purchase text + sha256 vectors. TypeScript results recorded by scripts/build-payment-canonical-vectors.ts; PostgreSQL parity is checked by scripts/sql/payment-hash-parity-check.sql (B4, after 0019).",
+  "canonicalVersion": "v1",
+  "valid": [
+    {
+      "name": "base",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "b631d6bb7fbf47d10e41a887b451d4d005127f455b36c0da2da5d6a380cebcb8"
+      }
+    },
+    {
+      "name": "beneficiary_order_reversed",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_a",
+          "lrn_b"
+        ]
+      },
+      "sameAs": "base",
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "b631d6bb7fbf47d10e41a887b451d4d005127f455b36c0da2da5d6a380cebcb8"
+      }
+    },
+    {
+      "name": "terms_key_order_changed",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"subjects\":[\"english\",\"maths\"],\"months\":1}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "sameAs": "base",
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "b631d6bb7fbf47d10e41a887b451d4d005127f455b36c0da2da5d6a380cebcb8"
+      }
+    },
+    {
+      "name": "terms_whitespace_changed",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{ \"months\" : 1 ,\n\t\"subjects\" : [ \"english\" , \"maths\" ] }",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "sameAs": "base",
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "b631d6bb7fbf47d10e41a887b451d4d005127f455b36c0da2da5d6a380cebcb8"
+      }
+    },
+    {
+      "name": "amount_changed",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2501,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "differsFrom": "base",
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2501\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "97a0f84744e51ab2fef73fc7d6b9b57af392bec264bd9603ac4c8e61b32d7926"
+      }
+    },
+    {
+      "name": "product_version_changed",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.11",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "differsFrom": "base",
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.11\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "f7eb2a1dfeb98dc9d974ba41ab3c76c47346532b46871133472121c4615aa4d3"
+      }
+    },
+    {
+      "name": "product_code_changed",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_termly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "differsFrom": "base",
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_termly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "612e43d44151627886ee70371b18c96d1c4b87adef675f3fbe3f169a1a83c7f2"
+      }
+    },
+    {
+      "name": "terms_value_changed",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":2,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "differsFrom": "base",
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":2,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "58bde74d2ffd7d0545eb0017d69f968c126ca480ab13ab671a67cf996c0ac261"
+      }
+    },
+    {
+      "name": "terms_array_order_matters",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"maths\",\"english\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "differsFrom": "base",
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"maths\\\",\\\"english\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "259c2bf0e219e1f92e85d26fecc0e486ce199de46940c51879233206a43f590b"
+      }
+    },
+    {
+      "name": "beneficiary_removed",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_a"
+        ]
+      },
+      "differsFrom": "base",
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a\"",
+        "sha256": "f90ddfe1dda41c55243706955f3d7ec1f6cff8da7b224dc9f7e34463b8c3a248"
+      }
+    },
+    {
+      "name": "mode_live",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "live",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "differsFrom": "base",
+      "note": "canonical form allows live; 0019 refuses live obligations by CHECK",
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"live\"|\"lrn_a,lrn_b\"",
+        "sha256": "c5a99d18d484772065654a4e959f502bc355b1eb81df31faf630ff2acd896f99"
+      }
+    },
+    {
+      "name": "amount_min",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 1,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"1\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "18ef7eaebbf1ec40b1d2d709f4fc2d707b3e7e47e9ce1be89b216ff7492f8c24"
+      }
+    },
+    {
+      "name": "amount_int4_max",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2147483647,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2147483647\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "791a472a27c11d17e9c236de3ee7314b66e0b824e40d5f07075d2745d006e9c6"
+      }
+    },
+    {
+      "name": "terms_safe_integer_max",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"n\":9007199254740991}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"n\\\":9007199254740991}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "c7d0a399012e9898607b0616d4d079eaa4e28f174ade44300ba50db3eae25a11"
+      }
+    },
+    {
+      "name": "terms_safe_integer_min",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"n\":-9007199254740991}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"n\\\":-9007199254740991}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "45dd3b72db8fbcb11d5262fde6dda0d383d0dd577fc9ebbcc3810ca0971004ef"
+      }
+    },
+    {
+      "name": "terms_zero",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"n\":0}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"n\\\":0}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "7878317dcfca0312c8572c7916184e23e3889ea320bf3dab70c4955a4413a0d4"
+      }
+    },
+    {
+      "name": "terms_empty_object",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "2504c976a9efd80f23df37a0142eb716d02ac8785837025334aedb0cc4077aec"
+      }
+    },
+    {
+      "name": "terms_nested",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"z\":[],\"a\":{\"b\":[1,{\"e\":false,\"c\":null,\"d\":true}],\"o\":{}}}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"a\\\":{\\\"b\\\":[1,{\\\"c\\\":null,\\\"d\\\":true,\\\"e\\\":false}],\\\"o\\\":{}},\\\"z\\\":[]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "f03f73b70ba4ea1076d558381fc5d17db88d0b02f1d1cd08e15bf272df8537e6"
+      }
+    },
+    {
+      "name": "escaping_label",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "Quote \" backslash \\ slash / tab\t nl\n cr\r bs\b ff\f ctl\u0001 us\u001f del",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"Quote \\\" backslash \\\\ slash / tab\\t nl\\n cr\\r bs\\b ff\\f ctl\\u0001 us\\u001f del\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "b580bb938a94e3101e01e2c4f2aa51328345b538ccbef1fa9f65b0f1f235af47"
+      }
+    },
+    {
+      "name": "escaping_terms_string",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"note\":\"\\\"\\\\/\\t\\n\\u001f  \"}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"note\\\":\\\"\\\\\\\"\\\\\\\\/\\\\t\\\\n\\\\u001f  \\\"}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "8bc203d15e8fba629348ee3de5c26ad4c14af2fa120dfda48747b42cd01d2070"
+      }
+    },
+    {
+      "name": "unicode_label_nfc",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "Fée — 数学 🧮 Ɔɛ",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"Fée — 数学 🧮 Ɔɛ\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "41c3db006e8d6b443e42117443911457bd6c1308f06300c7fd10bd0347cb8aab"
+      }
+    },
+    {
+      "name": "unicode_payer_nfc",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "prïncipal-Ɛ",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"prïncipal-Ɛ\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "10e5e3b784265d84f26eb31d845770063a5013ed31bd398226d159f6a8615032"
+      }
+    },
+    {
+      "name": "unicode_terms_astral",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"icon\":\"🧮\",\"name\":\"ɔɛ\"}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"icon\\\":\\\"🧮\\\",\\\"name\\\":\\\"ɔɛ\\\"}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "0a984c1fac2b09993320b32935b897913b6a57ff23b9ef0c2b452d05293444a8"
+      }
+    },
+    {
+      "name": "separator_in_payer",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "payer\"|\"x,y",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"payer\\\"|\\\"x,y\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "50c89037e80694b83392100bfb3f5c0692736605c52de3c3613216b4bc07b83e"
+      }
+    },
+    {
+      "name": "learner_id_punctuation",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "a.b_c:d-e",
+          "A-1"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"A-1,a.b_c:d-e\"",
+        "sha256": "2d0fe22fa894e7433f3f3479cb6bd44a772f7ccd22e045896e08dfc697751c35"
+      }
+    },
+    {
+      "name": "learner_ascii_sort",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "abc",
+          "_x",
+          "Zed",
+          "ABC",
+          "0a"
+        ]
+      },
+      "note": "C/UTF-16 order: 0a, ABC, Zed, _x, abc",
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"0a,ABC,Zed,_x,abc\"",
+        "sha256": "82b370e30cc8e7af70e50a702b56359422acff62903e1e08ccf33e793d023582"
+      }
+    },
+    {
+      "name": "learners_max_20",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_19",
+          "lrn_18",
+          "lrn_17",
+          "lrn_16",
+          "lrn_15",
+          "lrn_14",
+          "lrn_13",
+          "lrn_12",
+          "lrn_11",
+          "lrn_10",
+          "lrn_09",
+          "lrn_08",
+          "lrn_07",
+          "lrn_06",
+          "lrn_05",
+          "lrn_04",
+          "lrn_03",
+          "lrn_02",
+          "lrn_01",
+          "lrn_00"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_00,lrn_01,lrn_02,lrn_03,lrn_04,lrn_05,lrn_06,lrn_07,lrn_08,lrn_09,lrn_10,lrn_11,lrn_12,lrn_13,lrn_14,lrn_15,lrn_16,lrn_17,lrn_18,lrn_19\"",
+        "sha256": "8750a5250097d3434b5cc6d3444f8e76b027064f2ffb70f06d9baa451237a245"
+      }
+    },
+    {
+      "name": "label_max_120",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "d65fb0ff8652b2bdda4515c5e9df70abf997b6e30d626e241dc2947a4d0ee818"
+      }
+    },
+    {
+      "name": "payer_max_200",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "2206a883a14a821e510bc07be97e7fc6faa1220c7eae221250f4025710f7943f"
+      }
+    },
+    {
+      "name": "label_120_astral_code_points",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "note": "length counts code points (PostgreSQL length())",
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "446bca92bd02aeb4e2bd1e3f4b9c3361ba1e9a5ebf3fbde48036145df9a33ea9"
+      }
+    },
+    {
+      "name": "payer_200_astral_code_points",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "c595648d2d39f9edc22f232f98074603b2ca990d52a70dd7c82b90373d01b853"
+      }
+    },
+    {
+      "name": "label_inner_whitespace",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "　a ",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "note": "not blank: contains a non-whitespace character",
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"　a \"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "70ad8a3e2f6ef1c1173ba822c2f7860ea9a92cbc5f8b6ec03843485df4ccb5fb"
+      }
+    },
+    {
+      "name": "label_zero_width_space",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "​",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "note": "U+200B is not trim() whitespace",
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"​\"|\"{\\\"months\\\":1,\\\"subjects\\\":[\\\"english\\\",\\\"maths\\\"]}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "5737a652f68b520aef5b8805f9db807ad9a96aa60115d56fffab3bd135a223e5"
+      }
+    },
+    {
+      "name": "terms_n_1000",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"n\":1000}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"n\\\":1000}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "810dedde01857f803cbde91711e7a83ef7db08450ca26994450152cb54837a86"
+      }
+    },
+    {
+      "name": "terms_n_1",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"n\":1}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"n\\\":1}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "a995b76ac5739322767ca341c0035e1862fa96089f15df4a7b885ec25e4aba75"
+      }
+    },
+    {
+      "name": "terms_n_2",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"n\":2}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"n\\\":2}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "e5bcd60977f09b2e897ef65a48a616346581770db086ea1081644faf43298421"
+      }
+    },
+    {
+      "name": "terms_s_a_slash_b",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"s\":\"a/b\"}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"s\\\":\\\"a/b\\\"}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "5a08585fc323a36a26192b284beb9cfff44c69d7267c2f377a682ebcfa057fec"
+      }
+    },
+    {
+      "name": "terms_s_e_acute",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"s\":\"é\"}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "expected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"s\\\":\\\"é\\\"}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "481b048ff3b1f1c261b5d0f02fd5c592c7d3837984dc90d0aafc88d28115993e"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "learner_with_comma",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_a,lrn_b"
+        ]
+      },
+      "why": "',' is the list separator"
+    },
+    {
+      "name": "learner_non_ascii",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_é"
+        ]
+      },
+      "why": "sort order differs between UTF-16 and bytes outside ASCII"
+    },
+    {
+      "name": "learner_duplicate",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_a",
+          "lrn_a"
+        ]
+      },
+      "why": "duplicate beneficiary"
+    },
+    {
+      "name": "learners_empty",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": []
+      },
+      "why": "at least one beneficiary"
+    },
+    {
+      "name": "learners_21",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_00",
+          "lrn_01",
+          "lrn_02",
+          "lrn_03",
+          "lrn_04",
+          "lrn_05",
+          "lrn_06",
+          "lrn_07",
+          "lrn_08",
+          "lrn_09",
+          "lrn_10",
+          "lrn_11",
+          "lrn_12",
+          "lrn_13",
+          "lrn_14",
+          "lrn_15",
+          "lrn_16",
+          "lrn_17",
+          "lrn_18",
+          "lrn_19",
+          "lrn_20"
+        ]
+      },
+      "why": "at most 20 beneficiaries"
+    },
+    {
+      "name": "learner_empty_string",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          ""
+        ]
+      },
+      "why": "empty id"
+    },
+    {
+      "name": "amount_zero",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 0,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "positive"
+    },
+    {
+      "name": "amount_negative",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": -1,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "positive"
+    },
+    {
+      "name": "amount_over_int4",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2147483648,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "amount_minor is integer (int4)"
+    },
+    {
+      "name": "amount_fraction",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 25.5,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "integer minor units"
+    },
+    {
+      "name": "label_nfd",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "Fée",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "not NFC"
+    },
+    {
+      "name": "label_nul",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "a\u0000b",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "PostgreSQL text cannot hold U+0000"
+    },
+    {
+      "name": "label_lone_high_surrogate",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "a\ud800b",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "unpaired surrogate"
+    },
+    {
+      "name": "label_lone_low_surrogate",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "a\udc00",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "unpaired surrogate"
+    },
+    {
+      "name": "label_blank",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "   ",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "blank"
+    },
+    {
+      "name": "label_121",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "over 120"
+    },
+    {
+      "name": "label_121_astral_code_points",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "over 120 code points"
+    },
+    {
+      "name": "label_tab_only",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "\t",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "blank (btrim() alone would keep it)"
+    },
+    {
+      "name": "label_ideographic_space_only",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "　 ﻿",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "blank"
+    },
+    {
+      "name": "payer_201_astral_code_points",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮🧮",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "over 200 code points"
+    },
+    {
+      "name": "payer_empty",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "empty"
+    },
+    {
+      "name": "payer_201",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "over 200"
+    },
+    {
+      "name": "payer_nfd",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pé",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "not NFC"
+    },
+    {
+      "name": "terms_string_nfd",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"s\":\"e\\u0301\"}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "not NFC"
+    },
+    {
+      "name": "terms_lone_surrogate",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"s\":\"\\udc00\"}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "unpaired surrogate"
+    },
+    {
+      "name": "terms_nul",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"s\":\"\\u0000\"}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "jsonb cannot hold U+0000"
+    },
+    {
+      "name": "terms_fraction",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"n\":2.5}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "integers only"
+    },
+    {
+      "name": "terms_unsafe_integer",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"n\":9007199254740992}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "beyond 2^53-1"
+    },
+    {
+      "name": "terms_key_space",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"bad key\":1}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "keys are ASCII identifiers"
+    },
+    {
+      "name": "terms_key_digit_first",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"1a\":1}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "keys are ASCII identifiers"
+    },
+    {
+      "name": "terms_key_non_ascii",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"é\":1}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "keys are ASCII identifiers"
+    },
+    {
+      "name": "terms_top_level_array",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "[1]",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "terms must be an object"
+    },
+    {
+      "name": "terms_top_level_null",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "null",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "terms must be an object"
+    },
+    {
+      "name": "product_code_uppercase",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "Sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "pattern"
+    },
+    {
+      "name": "product_code_separator",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_a|t1",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "pattern"
+    },
+    {
+      "name": "product_version_space",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "v 1",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "pattern"
+    },
+    {
+      "name": "currency_lowercase",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "ghs",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "pattern"
+    },
+    {
+      "name": "mode_unknown",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "test",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "sandbox or live"
+    },
+    {
+      "name": "obligation_id_separator",
+      "input": {
+        "id": "obl|1",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"months\":1,\"subjects\":[\"english\",\"maths\"]}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "why": "pattern"
+    }
+  ],
+  "formatting": [
+    {
+      "name": "number_exponent",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"n\":1e3}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "sameAsTs": "terms_n_1000",
+      "sqlExpected": "same_hash",
+      "why": "jsonb stores 1e3 as numeric 1000 (scale 0)",
+      "tsExpected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"n\\\":1000}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "810dedde01857f803cbde91711e7a83ef7db08450ca26994450152cb54837a86"
+      }
+    },
+    {
+      "name": "number_negative_zero",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"n\":-0}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "sameAsTs": "terms_zero",
+      "sqlExpected": "same_hash",
+      "why": "numeric has no negative zero",
+      "tsExpected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"n\\\":0}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "7878317dcfca0312c8572c7916184e23e3889ea320bf3dab70c4955a4413a0d4"
+      }
+    },
+    {
+      "name": "number_trailing_zero",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"n\":1.0}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "sameAsTs": "terms_n_1",
+      "sqlExpected": "refused",
+      "why": "jsonb keeps 1.0; SQL accepts integer spellings only",
+      "tsExpected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"n\\\":1}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "a995b76ac5739322767ca341c0035e1862fa96089f15df4a7b885ec25e4aba75"
+      }
+    },
+    {
+      "name": "number_upper_exponent_fraction",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"n\":10E-1}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "sameAsTs": "terms_n_1",
+      "sqlExpected": "refused",
+      "why": "jsonb keeps 1.0",
+      "tsExpected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"n\\\":1}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "a995b76ac5739322767ca341c0035e1862fa96089f15df4a7b885ec25e4aba75"
+      }
+    },
+    {
+      "name": "string_escaped_solidus",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"s\":\"a\\/b\"}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "sameAsTs": "terms_s_a_slash_b",
+      "sqlExpected": "same_hash",
+      "why": "\\/ decodes to / on both sides",
+      "tsExpected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"s\\\":\\\"a/b\\\"}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "5a08585fc323a36a26192b284beb9cfff44c69d7267c2f377a682ebcfa057fec"
+      }
+    },
+    {
+      "name": "string_unicode_escape",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"s\":\"\\u00e9\"}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "sameAsTs": "terms_s_e_acute",
+      "sqlExpected": "same_hash",
+      "why": "\\u00e9 decodes to U+00E9 on both sides",
+      "tsExpected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"s\\\":\\\"é\\\"}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "481b048ff3b1f1c261b5d0f02fd5c592c7d3837984dc90d0aafc88d28115993e"
+      }
+    },
+    {
+      "name": "duplicate_key_last_wins",
+      "input": {
+        "id": "obl_0123456789abcdef0123456789abcdef",
+        "payerPrincipalId": "pr_payer_001",
+        "productCode": "sandbox_monthly",
+        "productVersion": "2026.10",
+        "productLabel": "FILUMIRE monthly (sandbox)",
+        "termsJson": "{\"n\":1,\"n\":2}",
+        "amountMinor": 2500,
+        "currency": "GHS",
+        "mode": "sandbox",
+        "learnerIds": [
+          "lrn_b",
+          "lrn_a"
+        ]
+      },
+      "sameAsTs": "terms_n_2",
+      "sqlExpected": "same_hash",
+      "why": "JSON.parse and jsonb both keep the last value",
+      "tsExpected": {
+        "canonicalText": "\"v1\"|\"obl_0123456789abcdef0123456789abcdef\"|\"pr_payer_001\"|\"sandbox_monthly\"|\"2026.10\"|\"FILUMIRE monthly (sandbox)\"|\"{\\\"n\\\":2}\"|\"2500\"|\"GHS\"|\"sandbox\"|\"lrn_a,lrn_b\"",
+        "sha256": "e5bcd60977f09b2e897ef65a48a616346581770db086ea1081644faf43298421"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+.env.local
+
+# Local authoritative curriculum source documents
+docs/curriculum-sources/**/*.pdf
+docs/curriculum-sources/**/*.docx
+docs/curriculum-sources/**/*.rtf
+docs/curriculum-sources/**/*-source.txt
+
+# Derived curriculum research artifacts kept local
+docs/curriculum-sources/**/*-node-statements.txt
+docs/curriculum-sources/**/*-code-inventory.txt
+
+docs/curriculum-sources/**/*-authoritative-context.txt
+
+docs/curriculum-sources/**/*-node-statements-clean.txt
+
+# Local secrets (e.g. .env.postgres-test.local for the filumire_test database)
+.env.*.local

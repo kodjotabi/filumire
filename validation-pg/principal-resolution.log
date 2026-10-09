@@ -1,0 +1,25 @@
+{
+  test: 'first resolution provisions principal and mapping',
+  result: 'PASS'
+}
+{
+  test: 'repeated resolution returns the same principal ID',
+  result: 'PASS'
+}
+{
+  test: 'different provider namespaces with the same subject remain distinct',
+  result: 'PASS'
+}
+{
+  test: 'delimiter-collision strings remain independent',
+  result: 'PASS'
+}
+{
+  test: 'concurrent resolution converges to one canonical principal',
+  result: 'PASS'
+}
+{
+  test: 'principal resolution does not create or modify learners',
+  result: 'PASS'
+}
+{ principalResolutionTest: 'PASS' }

@@ -1,0 +1,8 @@
+{
+  test: 'Evidence V1 PostgreSQL atomic persistence round trip',
+  verifiedFields: 30,
+  firstInsertNew: true,
+  duplicateProtected: true,
+  learnerStateMutationCount: 1,
+  result: 'PASS'
+}

@@ -1,0 +1,50 @@
+
+> filumire-core@0.1.0 build:learner
+> npm run build --workspace=@filumire/learner
+
+
+> @filumire/learner@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.23
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 4.7s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/19) ...
+   Generating static pages (4/19) 
+   Generating static pages (9/19) 
+   Generating static pages (14/19) 
+ ✓ Generating static pages (19/19)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                      161 B         106 kB
+├ ○ /_not-found                            988 B         104 kB
+├ ○ /adult                               4.59 kB         114 kB
+├ ƒ /api/adult/summary                     148 B         103 kB
+├ ƒ /api/learning                          148 B         103 kB
+├ ƒ /api/parent/messages                   148 B         103 kB
+├ ƒ /api/session/issue                     148 B         103 kB
+├ ƒ /api/session/logout                    148 B         103 kB
+├ ƒ /api/teacher/actions                   148 B         103 kB
+├ ƒ /api/teacher/notes                     148 B         103 kB
+├ ƒ /api/teacher/observations              148 B         103 kB
+├ ƒ /api/teacher/review                    148 B         103 kB
+├ ƒ /api/teacher/summary                   148 B         103 kB
+├ ○ /dashboard                           23.3 kB         133 kB
+├ ○ /learn                               9.96 kB         119 kB
+├ ○ /login                               3.56 kB         110 kB
+└ ○ /teacher                             9.01 kB         115 kB
++ First Load JS shared by all             103 kB
+  ├ chunks/18-536e344942e9442c.js        46.4 kB
+  ├ chunks/87c73c54-24122e7b92478d00.js  54.2 kB
+  └ other shared chunks (total)          1.99 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

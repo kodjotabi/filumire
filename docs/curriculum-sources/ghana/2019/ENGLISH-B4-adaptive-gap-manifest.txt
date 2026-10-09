@@ -1,0 +1,100 @@
+FILUMIRE GHANA BASIC 4 ENGLISH ADAPTIVE EXPANSION MANIFEST
+Authoritative indicators: 131
+Existing adaptive indicators: 37
+New adaptive targets: 94
+Target total adaptive coverage: 131
+
+B4.2.2.1.1 | matching | Match sounds to their corresponding letter/letter patterns (e.g. initial/final consonants ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ m, j, f, s, etc., initial short vowelsÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ a, e, i, o, uÃƒÂ¢Ã¢â€šÂ¬Ã‚Â, final ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œyÃƒÂ¢Ã¢â€šÂ¬Ã‚Â as vowel, silent letters etc.)
+B4.2.2.1.2 | oral_response | Read single-syllable-words with taught consonant digraphs (sh-ship, ch-rich, ck-lock) and when reading continuous texts
+B4.2.2.1.3 | application | Use words with consonant digraphs to make meaningful sentences
+B4.2.2.2.1 | classification | Recognise and read words using a variety of cues, including prefixes and word beginnings
+B4.2.3.1.1 | application | Use common rhyming/ending words to decode words.  e. g. at, pat, mat, fat, etc.
+B4.2.3.1.2 | oral_response | Read words with digraphs to make meaningful sentences
+B4.2.4.1.1 | application | Use closing diphthongs e.g. /ei/, /ai/, /oi/ to make meaningful sentences
+B4.2.5.1.1 | oral_response | Orally produce single-syllable words by blending sounds (phonemes), including consonant blends
+B4.2.5.1.2 | application | Use the spelling-sound correspondences for common consonant digraphs
+B4.2.6.1.1 | application | Use level-appropriate content words (nouns, verbs, adjectives and adverbs) and function words (prepositions) appropriately in spoken and written communication
+B4.2.6.1.2 | application | Use the following terms: compound word, idiom, simile, synonym, antonym, pre-fix, suffix, phrasal verb etc. in spoken and written expressions
+B4.2.6.2.1 | application | Develop a rich vocabulary stock through extensive reading of age-appropriate texts
+B4.2.6.3.1 | explanation | Deduce meaning of words from how they are used
+B4.2.6.3.2 | explanation | Deduce meaning of words from how they relate to one another (synonyms, antonyms)
+B4.2.6.4.1 | application | Expand vocabulary stock through affixation
+B4.2.6.4.2 | classification | Recognise the playful use of words in spoken and written language (jokes, riddles)
+B4.2.6.4.3 | application | Use words suitable for purpose, audience, context and culture in relation to type of texts (exposition/explanation)
+B4.2.7.1.1 | explanation | Construct meaning from texts read
+B4.2.7.1.2 | sequence_ordering | Note and recall main ideas in a sequence
+B4.2.7.1.3 | short_answer | Skim for main ideas in texts
+B4.2.7.1.4 | short_answer | Read level-appropriate texts silently and closely for comprehension.
+B4.2.7.2.1 | explanation | Respond to a text with reasons
+B4.2.7.2.2 | explanation | Make connections between a text and personal experiences/real life.
+B4.2.7.2.3 | classification | Demonstrate awareness of the structure of texts, including introduction, body and conclusion
+B4.2.7.3.1 | explanation | Determine the contextual meaning of words and phrases
+B4.2.8.1.1 | short_answer | Read silently and reasonably for meaning from levelappropriate texts
+B4.2.8.1.2 | short_answer | Find meaning of words as used in context
+B4.2.8.1.3 | application | Answer questions based on the passage read
+B4.2.9.1.1 | oral_response | Read grade- level texts at good pace, with accuracy and expression
+B4.2.9.1.2 | application | Use recognition strategies to confirm understanding of level-appropriate texts
+B4.2.10.1.1 | oral_response | Summarise level-appropriate passages/texts orally
+B4.2.10.1.2 | constructed_response | Write short summary of a level-appropriate passage/text read
+B4.3.1.1.1 | classification | Identify and use nouns  to identify people, animals, events and objects
+B4.3.1.1.2 | classification | Identify and use: proper nouns ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ refer to cities and countries and), Common nouns
+B4.3.1.1.3 | classification | Identify and use collective nouns to refer to a group of objects and people
+B4.3.1.1.4 | classification | Identify and use abstract nouns to refer to concepts and ideas.
+B4.3.2.1.1 | classification | Identify and use the definite and indefinite articles ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œaÃƒÂ¢Ã¢â€šÂ¬Ã‚Â and ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œanÃƒÂ¢Ã¢â€šÂ¬Ã‚Â to refer to a person, animal, event, time or objects in general
+B4.3.2.1.2 | classification | Identify and use quantifiers to show quantities
+B4.3.2.1.3 | classification | Identify and use possessive pronouns to show possession
+B4.3.2.1.4 | classification | Identify and use demonstratives: this, that, these and those
+B4.3.2.1.5 | classification | Identify and use interrogative determiners ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œwhich, whoseÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ to find out about specific persons or objects
+B4.3.3.1.1 | classification | Identify and use different types of pronouns, including personal and interrogative pronouns
+B4.3.4.1.1 | application | Use adjectives to make comparisons
+B4.3.5.1.1 | application | Use different types of verbs, including main verbs and helping verbs
+B4.3.5.1.2 | application | Use appropriate subject-verb agreement
+B4.3.5.1.3 | application | Use the simple present form of verbs for habitual actions, universal statements, facts, instantaneous present and scheduled future actions
+B4.3.5.1.4 | application | Use regular form of the simple past tense of verbs
+B4.3.5.1.5 | application | Use the simple past form of verbs for completed actions or events and regular actions in the past
+B4.3.5.1.6 | application | Use the simple present form of verbs to relate past events to the present
+B4.3.5.1.7 | application | Use the imperative form of the verb to give commands or orders, make suggestions
+B4.3.6.1.1 | application | Use adverbs of time and place appropriately ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Revise adverbs by having learners identify them in sentences.
+B4.3.6.1.2 | application | Use adverbs of time to modify verbs.
+B4.3.7.1.1 | application | Use idiomatic expressions appropriately in communication
+B4.3.8.1.1 | classification | Identify and use simple conjunctions such as and, but, or and nor to link similar ideas, contrasting ideas and alternatives
+B4.3.9.1.1 | application | Use modals to express a variety of meanings: ÃƒÂ¢Ã‹â€ Ã¢â‚¬â„¢ can: conveys ability
+B4.3.10.1.1 | application | Use prepositions to convey direction, period of time, purpose, possession and comparison
+B4.4.2.1.1 | observed_performance | Write clearly using joined letters of consistent size
+B4.4.2.1.2 | application | Use simple sentences clearly and correctly
+B4.4.6.1.1 | constructed_response | Choose appropriate ways and modes of writing for a variety of purposes, audiences, and contexts, and organise facts, ideas and/or points of view in a way appropriate to the mode of delivery, using appropriate text features
+B4.4.6.1.2 | classification | Identify the main idea and minor ideas/supporting details in a paragraph
+B4.4.9.1.1 | constructed_response | Select a topic of choice on issues in the immediate environment, brainstorm and organise ideas before writing
+B4.4.9.2.1 | constructed_response | Develop ideas into a one-paragraph draft using appropriate nouns or pronouns within and across sentences to aid cohesion and avoid ambiguity
+B4.4.9.3.1 | constructed_response | Review and revise the one-paragraph draft taking out irrelevant details
+B4.4.9.3.2 | constructed_response | Proofread draft, checking capitalisation, usage, punctuation and spelling
+B4.4.9.3.3 | observed_performance | Display writing piece for other peers to read
+B4.4.10.1.1 | constructed_response | Write about real or imagined experiences or events following story structure (beginning, middle and ending), using appropriate nouns or pronouns within and across sentences to aid cohesion.
+B4.4.11.1.1 | constructed_response | Write freely about topics of choice in their immediate environment
+B4.4.11.1.2 | constructed_response | Write poems and imaginative, narrative stories and illustrate them
+B4.4.12.1.1 | application | Use descriptive words/expressions to describe places, personal experiences and events
+B4.4.13.1.1 | constructed_response | Support opinions with simple sentences
+B4.4.13.2.1 | constructed_response | Introduce claim(s) and support them with clear reasons and relevant evidence
+B4.4.13.2.2 | application | Use words, phrases, and clauses to clarify the relationships between claim(s) and reasons
+B4.4.13.2.3 | constructed_response | Establish and maintain a formal style
+B4.4.13.2.4 | constructed_response | Provide a concluding statement that follows from argument presented
+B4.4.14.1.1 | constructed_response | Write words giving information about family
+B4.4.14.2.1 | observed_performance | Write picture events about personal experiences and make  radio/TV presentations
+B4.4.15.1.1 | constructed_response | Write to friends about personal experiences using appropriate letter formats
+B4.5.2.1.1 | application | Use the comma: before and  after "Yes" and "No" in sentences after addressing a person, e.g. Kofi, can you help me?
+B4.5.3.1.1 | classification | Identify and use nouns in sentences to identify people, animals, events and objects
+B4.5.3.1.2 | classification | Identify and use proper nouns and common nouns
+B4.5.3.1.3 | classification | Identify and use collective nouns to refer to a group of objects and people
+B4.5.3.1.4 | classification | Identify and use abstract nouns to refer to concepts and ideas
+B4.5.4.1.1 | application | Use the singular and plural subjects and the verb forms that go with them
+B4.5.4.1.2 | application | Demonstrate the use of the simple past form in speech and in writing to express past conditions
+B4.5.4.1.3 | application | Use the present perfect form of verbs to relate past events to the present
+B4.5.5.1.1 | application | Use adjectives to make comparisons                e.g.
+B4.5.5.1.2 | classification | Differentiate between how the comparative and superlative adjective forms are used in sentences
+B4.5.6.1.1 | application | Use adverbs to talk about  when and where the action of a verb took place
+B4.5.7.1.1 | application | Use prepositions to convey direction, period of time, purpose, possession and comparison
+B4.5.8.1.1 | classification | Identify and use conjunctions such as and, but, or and nor to link similar ideas, contrasting ideas and alternatives
+B4.5.9.1.1 | classification | Identify subjects and verbs in simple  sentences
+B4.5.9.1.2 | application | Construct simple sentences correctly
+B4.5.10.1.1 | application | Use invented spelling to increase fluency and free writing
+B4.6.1.1.1 | constructed_response | Read a variety of age-  and level appropriate books and present  a-two-paragraph summary of each book read

@@ -1,0 +1,44 @@
+{
+  test: 'A-D/G-J: successful Principal auth-session cutover',
+  result: 'PASS'
+}
+{
+  test: 'C: provider subject is not auto-created as Learner',
+  result: 'PASS'
+}
+FILUMIRE session issuance: learner authorization rejected { reason: 'No authorised learner is available for this principal.' }
+FILUMIRE session issuance: learner authorization rejected {
+  reason: 'Explicit learner selection is required for this principal.'
+}
+{
+  test: 'E/F: zero or multiple authorised Learners prevent issuance',
+  result: 'PASS'
+}
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: invalid production session.' }
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: invalid production session.' }
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: invalid production session.' }
+{
+  test: 'K/L/M: missing, revoked, or expired auth sessions fail',
+  result: 'PASS'
+}
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: invalid production session.' }
+{
+  test: 'N: revoked Principal-Learner authorization rejects replay',
+  result: 'PASS'
+}
+FILUMIRE session issuance: authentication rejected { reason: 'Unauthenticated request: invalid external identity.' }
+{ test: 'O: forged external identity still fails', result: 'PASS' }
+{
+  test: 'P: auth-session persistence failure prevents token issuance',
+  result: 'PASS'
+}
+{
+  test: 'Q: development identity behaviour still works',
+  result: 'PASS'
+}
+{
+  test: 'R: legacy learner session service remains intact',
+  result: 'PASS'
+}
+{ test: 'logout revokes Principal auth session', result: 'PASS' }
+{ identitySecurityTest: 'PASS', persistence: 'postgres' }

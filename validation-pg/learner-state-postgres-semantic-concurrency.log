@@ -1,0 +1,9 @@
+{
+  test: 'PostgreSQL learner-state semantic concurrency',
+  persistedEvidenceRows: 2,
+  expectedStateEvidenceCount: 2,
+  persistedStateEvidenceCount: 2,
+  expectedMasteryEstimate: 0.38222222222222224,
+  persistedMasteryEstimate: 0.38222222222222224,
+  result: 'NO_LOST_UPDATE_OBSERVED'
+}

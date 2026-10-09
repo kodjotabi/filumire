@@ -1,0 +1,5 @@
+{
+  test: 'Postgres evidence round trip (both read paths)',
+  fieldsChecked: 33,
+  result: 'PASS'
+}

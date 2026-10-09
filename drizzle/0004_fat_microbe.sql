@@ -1,0 +1,1 @@
+ALTER TABLE "learner_states" ADD CONSTRAINT "learner_states_learner_competency_pk" PRIMARY KEY("learner_id","competency_id");

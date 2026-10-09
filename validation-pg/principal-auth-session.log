@@ -1,0 +1,16 @@
+{
+  test: 'A/B: create and retrieve principal auth session',
+  result: 'PASS'
+}
+{ test: 'C: active unexpired session validates', result: 'PASS' }
+{ test: 'D: wrong Principal does not validate', result: 'PASS' }
+{ test: 'E: expired session does not validate', result: 'PASS' }
+{ test: 'F/G/H: revoked session behavior', result: 'PASS' }
+{ test: 'I/J: last activity guarded by active state', result: 'PASS' }
+{ test: 'K: duplicate session ID rejected', result: 'PASS' }
+{ test: 'L: missing Principal rejected', result: 'PASS' }
+{
+  test: 'M: existing learner-bound sessions remain unaffected',
+  result: 'PASS'
+}
+{ principalAuthSessionTest: 'PASS', persistence: 'postgres' }

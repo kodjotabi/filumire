@@ -1,0 +1,7 @@
+{
+  test: 'PostgreSQL learner-state concurrent creation',
+  attemptedWrites: 24,
+  duplicateRows: 1,
+  writeFailures: 0,
+  result: 'NO_RACE_OBSERVED'
+}

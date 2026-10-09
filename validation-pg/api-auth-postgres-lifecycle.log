@@ -1,0 +1,10 @@
+FILUMIRE learning: session/authorization rejected { reason: 'Unauthenticated request: invalid production session.' }
+{
+  test: 'PostgreSQL Principal auth-session production lifecycle',
+  sessionsCreated: 3,
+  authenticatedLearning: true,
+  logoutPersistsRevocation: true,
+  revokedCookieReplayRejected: true,
+  legacyLearnerSessionsCreated: 0,
+  result: 'PASS'
+}

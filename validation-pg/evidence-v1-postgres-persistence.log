@@ -1,0 +1,7 @@
+{
+  test: 'Evidence V1 PostgreSQL persistence round trip',
+  evidenceId: 'ev-evidence-v1-2e9cc359-d42f-4106-9f5c-cead387defa7',
+  verifiedFields: 30,
+  duplicateProtected: true,
+  result: 'PASS'
+}
