@@ -1218,3 +1218,351 @@ a {
     padding-right: 160px;
   }
 }
+
+/* ------------------------------------------------------------------
+   Shared interface pieces (overhaul, 9 October)
+   ------------------------------------------------------------------ */
+
+/* Keyboard users can jump past the header and navigation. */
+.filumireSkipLink {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #ffffff;
+  color: var(--ui-ink);
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: var(--filumire-shadow);
+}
+
+.filumireSkipLink:focus {
+  top: 12px;
+}
+
+.visuallyHidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Language switch: single button (learner header) and EN | FR group */
+.filumireLangSwitch {
+  display: inline-grid;
+  place-items: center;
+  min-width: 34px;
+  height: 30px;
+  padding: 0 7px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 8px;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+.filumireLangSwitch:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.filumireLangSwitch.light {
+  border-color: var(--ui-line);
+  color: var(--ui-ink);
+}
+
+.filumireLangToggle {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+}
+
+.filumireLangToggle button {
+  min-width: 38px;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+.filumireLangToggle button.on {
+  background: #ffffff;
+  color: var(--ui-ink);
+}
+
+.filumireLangToggle.light {
+  border-color: var(--ui-line);
+}
+
+.filumireLangToggle.light button {
+  color: var(--ui-ink);
+}
+
+.filumireLangToggle.light button.on {
+  background: var(--ui-ink);
+  color: #ffffff;
+}
+
+/* Loading, error and empty panels shared by every learner screen */
+.fState {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 24px 16px;
+  padding: 24px 22px;
+  border: 1px solid var(--filumire-border);
+  border-radius: var(--filumire-radius-lg);
+  background: #ffffff;
+  box-shadow: var(--filumire-shadow);
+  color: var(--ui-ink);
+}
+
+.fState.inline {
+  margin: 12px 0;
+}
+
+.fState h1,
+.fState h2 {
+  margin: 0;
+  color: var(--ui-ink);
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.fState p {
+  margin: 0;
+  color: var(--ui-ink-soft);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.fStateIcon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ui-blue-tint);
+  color: var(--ui-blue);
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.fStateIcon.warn {
+  background: var(--ui-amber-tint);
+  color: var(--ui-amber);
+}
+
+.fStateActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.fButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--ui-blue);
+  color: #ffffff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.fButton.secondary {
+  border: 1.5px solid var(--ui-line);
+  background: #ffffff;
+  color: var(--ui-ink);
+}
+
+.fButton:disabled {
+  opacity: 0.6;
+}
+
+.fSpinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid var(--filumire-border);
+  border-top-color: var(--ui-blue);
+  border-radius: 50%;
+  animation: fSpin 0.8s linear infinite;
+}
+
+@keyframes fSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Skeleton blocks while a screen's data loads */
+.fSkeleton {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.fSkeleton span {
+  display: block;
+  height: 72px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #eef3f8 25%, #f7fafc 50%, #eef3f8 75%);
+  background-size: 200% 100%;
+  animation: fShimmer 1.2s ease-in-out infinite;
+}
+
+.fSkeleton span:first-child {
+  height: 96px;
+}
+
+@keyframes fShimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .filumireLangSwitch {
+    min-width: 40px;
+    height: 34px;
+    font-size: 12px;
+  }
+
+  .fState {
+    margin: 32px auto;
+    width: min(640px, calc(100% - 48px));
+    padding: 32px;
+  }
+
+  .fState.inline {
+    width: auto;
+    margin: 16px 0;
+  }
+}
+
+.filuAvatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ui-violet);
+  color: #ffffff;
+}
+
+.filuAvatar svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+.filuAvatar .cut {
+  fill: var(--ui-violet);
+}
+
+.filuAvatar .cutline {
+  fill: none;
+  stroke: var(--ui-violet);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+/* Dashboard main region (skip-link target) keeps the shell's column flow. */
+.learnerMainRegion {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  min-width: 0;
+}
+
+.learnerMainRegion:focus {
+  outline: none;
+}
+
+.approvedSetup ol.setupSteps {
+  padding: 0;
+  list-style: none;
+}
+
+.approvedSetup .setupReadonly {
+  display: flex !important;
+  align-items: center;
+  background: #f3f8fd !important;
+  color: var(--ui-ink) !important;
+  font-weight: 700;
+}
+
+/* FILU EduTutor */
+.filuAvatar.fFiluAvatar {
+  width: 30px;
+  height: 30px;
+}
+
+.filuAvatar.fFiluAvatar svg {
+  width: 19px;
+  height: 19px;
+}
+
+.fBackToLesson {
+  align-self: flex-start;
+  margin: 4px 0 8px;
+}
+
+@media (min-width: 768px) {
+  .filuAvatar.fFiluAvatar {
+    width: 38px;
+    height: 38px;
+  }
+
+  .filuAvatar.fFiluAvatar svg {
+    width: 23px;
+    height: 23px;
+  }
+}
+
+.homeScreen .subjectEmpty {
+  margin: 0;
+  color: var(--ui-ink-soft);
+  font-size: 13.5px;
+  line-height: 1.4;
+}

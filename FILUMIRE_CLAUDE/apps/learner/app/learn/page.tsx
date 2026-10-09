@@ -1,12 +1,16 @@
 "use client";
 
+import Link from "next/link";
+import type { CSSProperties } from "react";
 import { LearnerHeader } from "../../components/filumire/LearnerHeader";
 import { useLearnerAvatar } from "../../components/filumire/avatars";
 import { fetchLearningOverview, type LearningOverview } from "../../services/learning-client";
 import { findFilumireSubject, subjectLabel, toFilumireSubjects } from "../../components/filumire/subjects";
 import { LearnerBottomNav } from "../../components/filumire/LearnerBottomNav";
+import { SubjectIcon } from "../../components/filumire/SubjectIcon";
+import { useLanguage, withLang, type Language } from "../../components/filumire/language";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   fetchLearningSession,
@@ -62,50 +66,95 @@ function parseOptions(
   }
 }
 
+/*
+ * Interface copy is written in English and looked up here for
+ * French. Curriculum content (titles, bodies, options) comes from
+ * the server in the learner's content language and is never
+ * translated on the client.
+ */
 const FR_TEXT: Record<string, string> = {
-  "Let\u2019s understand": "Comprenons",
-  "Let\u2019s practise": "Entra\u00eenons-nous",
-  "Let\u2019s apply": "Appliquons",
-  "Let\u2019s check": "V\u00e9rifions",
-  "Let\u2019s reflect": "R\u00e9fl\u00e9chissons",
-  Understand: "D\u00e9couvrir",
+  "Let’s understand": "Comprenons",
+  "Let’s practise": "Entraînons-nous",
+  "Let’s apply": "Appliquons",
+  "Let’s check": "Vérifions",
+  "Let’s reflect": "Réfléchissons",
+  Understand: "Découvrir",
   Practise: "S'exercer",
   Apply: "Appliquer",
-  Check: "V\u00e9rifier",
-  Reflect: "R\u00e9fl\u00e9chir",
+  Check: "Vérifier",
+  Reflect: "Réfléchir",
   "Next:": "Suivant :",
-  "Let's learn this together.": "Apprenons \u00e7a ensemble.",
+  "Let's learn this together.": "Apprenons ça ensemble.",
   "Let's practise what you have learned.": "Pratiquons ce que tu as appris.",
-  "Let's work through this step by step.": "Avan\u00e7ons pas \u00e0 pas.",
-  "Let's look at this another way.": "Voyons \u00e7a autrement.",
-  "Let's check what you understand now.": "V\u00e9rifions ce que tu comprends maintenant.",
-  "Let's find out what you already know.": "Voyons ce que tu sais d\u00e9j\u00e0.",
+  "Let's work through this step by step.": "Avançons pas à pas.",
+  "Let's look at this another way.": "Voyons ça autrement.",
+  "Let's check what you understand now.": "Vérifions ce que tu comprends maintenant.",
+  "Let's find out what you already know.": "Voyons ce que tu sais déjà.",
   "Let's see what you remember.": "Voyons ce dont tu te souviens.",
   "Let's see if you can use it somewhere new.": "Voyons si tu peux l'utiliser ailleurs.",
-  "You are ready for the next step.": "Tu es pr\u00eat pour la prochaine \u00e9tape.",
-  "You have completed this learning sequence.": "Tu as termin\u00e9 cette s\u00e9quence d'apprentissage.",
+  "You are ready for the next step.": "Tu es prêt pour la prochaine étape.",
+  "You have completed this learning sequence.": "Tu as terminé cette séquence d'apprentissage.",
   "You have done all you can here for now.": "Tu as fait tout ce que tu pouvais ici pour l'instant.",
   "Some topics need a little more help before you can go on. Your teacher can see which ones. Come back later to try them again.": "Certains sujets demandent un peu plus d'aide avant de continuer. Ton enseignant peut voir lesquels. Reviens plus tard pour les essayer à nouveau.",
   "You have worked through the learning sequence and demonstrated the required understanding.": "Tu as parcouru la séquence d'apprentissage et montré la compréhension demandée.",
-  "Let's keep learning.": "Continuons \u00e0 apprendre.",
+  "Let's keep learning.": "Continuons à apprendre.",
   "Continue learning": "Continuer d'apprendre",
-  "Continue practising": "Continuer l'entra\u00eenement",
+  "Continue practising": "Continuer l'entraînement",
   Continue: "Continuer",
-  "Try again": "R\u00e9essayer",
+  "Try again": "Réessayer",
   Start: "Commencer",
-  "Continue to the next step": "Passer \u00e0 l'\u00e9tape suivante",
+  "Continue to the next step": "Passer à l'étape suivante",
   Correct: "Correct",
-  "Not quite": "Pas tout \u00e0 fait",
+  "Not quite": "Pas tout à fait",
   "Partly correct": "En partie correct",
-  "Answer recorded": "R\u00e9ponse enregistr\u00e9e",
-  "Well done. FILUMIRE has recorded this as successful evidence.": "Bravo. FILUMIRE l'a enregistr\u00e9 comme une r\u00e9ussite.",
-  "That answer was not correct. FILUMIRE will use this evidence to decide what you need next.": "Cette r\u00e9ponse n'\u00e9tait pas correcte. FILUMIRE s'en servira pour choisir la suite.",
-  "You have part of it right. FILUMIRE will use this evidence to guide what comes next.": "Tu as une partie de la bonne r\u00e9ponse. FILUMIRE s'en servira pour guider la suite.",
-  "Your response has been recorded.": "Ta r\u00e9ponse a \u00e9t\u00e9 enregistr\u00e9e.",
-  "Preparing your learning session...": "Pr\u00e9paration de ta s\u00e9ance...",
+  "Answer recorded": "Réponse enregistrée",
+  "Well done. FILUMIRE has recorded this as successful evidence.": "Bravo. FILUMIRE l'a enregistré comme une réussite.",
+  "That answer was not correct. FILUMIRE will use this evidence to decide what you need next.": "Cette réponse n'était pas correcte. FILUMIRE s'en servira pour choisir la suite.",
+  "You have part of it right. FILUMIRE will use this evidence to guide what comes next.": "Tu as une partie de la bonne réponse. FILUMIRE s'en servira pour guider la suite.",
+  "Your response has been recorded.": "Ta réponse a été enregistrée.",
+  "Sent to your teacher": "Envoyé à ton enseignant",
+  "Your teacher will look at your work. It will count towards your learning once it has been reviewed.": "Ton enseignant va regarder ton travail. Il comptera pour ton apprentissage une fois relu.",
+  "Preparing your learning session...": "Préparation de ta séance...",
+  "Something went wrong": "Un problème est survenu",
+  "We couldn't load this learning step. Please try again.": "Nous n'avons pas pu charger cette étape. Réessaie.",
+  "Please sign in": "Connecte-toi",
+  "Sign in to continue your learning journey.": "Connecte-toi pour poursuivre ton parcours d'apprentissage.",
+  "Go to sign in": "Aller à la connexion",
+  "You're offline": "Tu es hors ligne",
+  "FILUMIRE can't reach the server. Check your connection and try again.": "FILUMIRE n'arrive pas à joindre le serveur. Vérifie ta connexion puis réessaie.",
+  "Back to My Learning": "Retour à mon apprentissage",
+  "View my progress": "Voir ma progression",
+  "Choose another subject": "Choisir une autre matière",
+  "Ask FILU for help": "Demander de l'aide à FILU",
+  "You're offline. You can keep reading, and answers will be sent once you're back online.": "Tu es hors ligne. Tu peux continuer à lire ; tes réponses seront envoyées dès ton retour en ligne.",
+  "Sending your waiting answer...": "Envoi de ta réponse en attente...",
+  "Your answer is waiting to be sent. It hasn't been checked yet.": "Ta réponse attend d'être envoyée. Elle n'a pas encore été vérifiée.",
+  "Retry now": "Réessayer maintenant",
+  "Still unable to reach the server. Your answer is safely waiting and will be sent automatically when you're back online.": "Toujours impossible de joindre le serveur. Ta réponse est gardée et sera envoyée automatiquement dès ton retour en ligne.",
+  "Unable to send your waiting answer yet.": "Impossible d'envoyer ta réponse pour le moment.",
+  "Unable to submit your answer.": "Impossible d'envoyer ta réponse.",
+  "Unable to continue.": "Impossible de continuer.",
+  "Your response": "Ta réponse",
+  "Your answer": "Ta réponse",
+  "Choose one answer": "Choisis une réponse",
+  "Complete the activity above. Your response will be sent for teacher review before FILUMIRE uses it as learning evidence.": "Fais l'activité ci-dessus. Ta réponse sera relue par ton enseignant avant que FILUMIRE l'utilise.",
+  "Write your response here...": "Écris ta réponse ici...",
+  "Sending...": "Envoi...",
+  "Send for review": "Envoyer pour relecture",
+  "Checking...": "Vérification...",
+  "Submit answer": "Valider ma réponse",
+  "Updating your learning session...": "Mise à jour de ta séance...",
+  "Learning progress": "Progression",
+  "Learning stages": "Étapes d'apprentissage",
+  "Your learning session": "Ta séance d'apprentissage",
+  Learning: "Apprentissage",
+  "Think about it": "Réfléchis",
+  "What did you learn in this topic?": "Qu'as-tu appris dans ce thème ?",
+  "What helped you most?": "Qu'est-ce qui t'a le plus aidé ?",
+  "What would you like to practise again?": "Que voudrais-tu travailler encore ?",
 };
 
-function tr(language: string, text: string): string {
+function tr(language: Language, text: string): string {
   return language === "fr" ? (FR_TEXT[text] ?? text) : text;
 }
 
@@ -197,6 +246,9 @@ function feedbackTitle(
     case "partial":
       return "Partly correct";
 
+    case "pending-review":
+      return "Sent to your teacher";
+
     default:
       return "Answer recorded";
   }
@@ -215,6 +267,9 @@ function feedbackMessage(
     case "partial":
       return "You have part of it right. FILUMIRE will use this evidence to guide what comes next.";
 
+    case "pending-review":
+      return "Your teacher will look at your work. It will count towards your learning once it has been reviewed.";
+
     default:
       return "Your response has been recorded.";
   }
@@ -225,34 +280,34 @@ function feedbackIcon(
 ): string {
   switch (outcome) {
     case "correct":
-      return "\u2713";
+      return "✓";
 
     case "incorrect":
-      return "\u2715";
+      return "✕";
 
-    case "partial":
-      return "\u2022";
+    case "pending-review":
+      return "✉";
 
     default:
-      return "\u2022";
+      return "•";
   }
 }
+
+/* Banner colours follow the subject (same palette as the dashboard). */
+const SUBJECT_TINTS: Record<string, { tint: string; soft: string; accent: string }> = {
+  english: { tint: "#dcecfb", soft: "#c4defa", accent: "#0b7bff" },
+  mathematics: { tint: "#fdf3de", soft: "#fbe3b0", accent: "#f08a00" },
+  science: { tint: "#dff5e7", soft: "#bfe9cf", accent: "#12b350" },
+  computing: { tint: "#ece8fb", soft: "#d8cff7", accent: "#8466dc" },
+};
+
+type LoadFailure = "unauthenticated" | "offline" | "unavailable";
 
 function BulbIcon() {
   return (
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M9 18h6M10 21h4" />
       <path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3Z" />
-    </svg>
-  );
-}
-
-function CalculatorIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="5" y="2.5" width="14" height="19" rx="2.5" />
-      <rect x="8" y="5.5" width="8" height="3.5" rx="0.8" />
-      <path d="M8.5 13h.01M12 13h.01M15.5 13h.01M8.5 16h.01M12 16h.01M15.5 16h.01M8.5 19h.01M12 19h.01M15.5 19h.01" strokeWidth="2.4" />
     </svg>
   );
 }
@@ -292,15 +347,23 @@ function LessonVisual({ topic }: { topic: string }) {
 
 export default function LearnPage() {
   const [learnOverview, setLearnOverview] = useState<LearningOverview | null>(null);
-  const [language, setLanguage] = useState<"en" | "fr">("en");
+  const [language] = useLanguage();
+  const [subjectId, setSubjectId] = useState<string | null>(null);
   const learnerAvatar = useLearnerAvatar();
+  const feedbackRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (new URLSearchParams(window.location.search).get("lang") === "fr") {
-      setLanguage("fr");
-    }
+    const id = new URLSearchParams(window.location.search).get("subjectId");
+    setSubjectId(id);
+    let alive = true;
+    fetchLearningOverview(id || undefined).then((r) => {
+      if (alive) setLearnOverview(r);
+    });
+    return () => {
+      alive = false;
+    };
   }, []);
-  useEffect(() => { let alive = true; fetchLearningOverview(new URLSearchParams(window.location.search).get("subjectId") || undefined).then((r) => { if (alive) setLearnOverview(r); }); return () => { alive = false; }; }, []);
+
   const [data, setData] =
     useState<LearningResponse | null>(null);
 
@@ -315,6 +378,9 @@ export default function LearnPage() {
 
   const [error, setError] =
     useState("");
+
+  const [loadFailure, setLoadFailure] =
+    useState<LoadFailure | null>(null);
 
   const [assessmentFeedback, setAssessmentFeedback] =
     useState<string | null>(null);
@@ -338,6 +404,7 @@ export default function LearnPage() {
   async function loadLearning() {
     setLoading(true);
     setError("");
+    setLoadFailure(null);
     setAssessmentFeedback(null);
 
     try {
@@ -350,10 +417,13 @@ export default function LearnPage() {
       setData(result);
       setSelectedResponse("");
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Unable to load the learning session.",
+      setData(null);
+      setLoadFailure(
+        err instanceof LearningRequestError && err.status === 401
+          ? "unauthenticated"
+          : err instanceof LearningNetworkError
+            ? "offline"
+            : "unavailable",
       );
     } finally {
       setLoading(false);
@@ -403,9 +473,11 @@ export default function LearnPage() {
       }
 
       setError(
-        err instanceof Error
-          ? err.message
-          : "Unable to continue.",
+        err instanceof LearningNetworkError
+          ? "FILUMIRE can't reach the server. Check your connection and try again."
+          : err instanceof Error
+            ? err.message
+            : "Unable to continue.",
       );
     } finally {
       setSubmitting(false);
@@ -594,222 +666,123 @@ export default function LearnPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connectivity]);
 
-  if (loading) {
+  /* Move focus to the result so screen-reader and keyboard users
+     hear the feedback and continue from it. */
+  useEffect(() => {
+    if (assessmentFeedback) {
+      feedbackRef.current?.focus();
+    }
+  }, [assessmentFeedback]);
+
+  const backHref = subjectId
+    ? `/dashboard?view=learning&subjectId=${encodeURIComponent(subjectId)}`
+    : "/dashboard";
+  const learningHref = withLang("/dashboard?view=learning", language);
+  const progressHref = withLang("/dashboard?view=progress", language);
+  const askHref = withLang("/dashboard?view=ask-filu", language);
+
+  /* Loading and failure screens keep the learner's header and
+     navigation so there is always a way back. */
+  if (loading || !data) {
     return (
       <main className="page">
-        <div className="shell">
-          <header className="header">
-            <div className="brand">
-              FILUMIRE
-            </div>
-          </header>
+        <a className="filumireSkipLink" href="#learn-main">
+          {language === "fr" ? "Aller au contenu" : "Skip to content"}
+        </a>
+        <div className="shell learnerShell">
+          <LearnerHeader backHref={backHref} setupHeader language={language} />
 
-          <section className="card loading-card">
-            <div className="loader" />
+          <div id="learn-main" className="learnBody" tabIndex={-1}>
+            {loading ? (
+              <section className="fState inline" aria-busy="true">
+                <div className="fSpinner" />
+                <p role="status">{tr(language, "Preparing your learning session...")}</p>
+              </section>
+            ) : loadFailure === "unauthenticated" ? (
+              <section className="fState inline">
+                <span className="fStateIcon" aria-hidden="true">?</span>
+                <h1>{tr(language, "Please sign in")}</h1>
+                <p>{tr(language, "Sign in to continue your learning journey.")}</p>
+                <div className="fStateActions">
+                  <Link href={withLang("/login", language)} className="fButton">
+                    {tr(language, "Go to sign in")}
+                  </Link>
+                </div>
+              </section>
+            ) : (
+              <section className="fState inline" role="alert">
+                <span className="fStateIcon warn" aria-hidden="true">!</span>
+                <h1>
+                  {tr(language, loadFailure === "offline" ? "You're offline" : "Something went wrong")}
+                </h1>
+                <p>
+                  {tr(
+                    language,
+                    loadFailure === "offline"
+                      ? "FILUMIRE can't reach the server. Check your connection and try again."
+                      : "We couldn't load this learning step. Please try again.",
+                  )}
+                </p>
+                <div className="fStateActions">
+                  <button type="button" onClick={loadLearning} className="fButton">
+                    {tr(language, "Try again")}
+                  </button>
+                  <Link href={learningHref} className="fButton secondary">
+                    {tr(language, "Back to My Learning")}
+                  </Link>
+                </div>
+              </section>
+            )}
+          </div>
 
-            <p>
-              Preparing your learning session...
-            </p>
-          </section>
+          <LearnerBottomNav active="learning" language={language} />
         </div>
 
         <style jsx>{`
           .page {
-            min-height: 100vh;
-            background: #f6f3ed;
-            color: #171717;
-            font-family:
-              Arial,
-              Helvetica,
-              sans-serif;
+            min-height: 100dvh;
+            background: var(--filumire-bg);
+            color: var(--filumire-text);
           }
 
           .shell {
-            width: min(860px, calc(100% - 32px));
+            display: flex;
+            width: 100%;
+            max-width: 760px;
+            min-height: 100dvh;
             margin: 0 auto;
-            padding: 28px 0 64px;
-          }
-
-          .header {
-            display: flex;
-            align-items: baseline;
-            gap: 10px;
-            padding: 8px 0 28px;
-          }
-
-          .brand {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: 0.04em;
-          }
-
-          .brand-subtitle {
-            font-size: 16px;
-            color: #666;
-          }
-
-          .card {
-            background: white;
-            border: 1px solid #dedbd4;
-            border-radius: 18px;
-            padding: 42px;
-            box-shadow:
-              0 8px 30px rgba(0, 0, 0, 0.04);
-          }
-
-          .loading-card {
-            min-height: 260px;
-            display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 18px;
+            background: var(--filumire-surface);
           }
 
-          .loader {
-            width: 30px;
-            height: 30px;
-            border: 3px solid #ddd;
-            border-top-color: #171717;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+          .learnBody {
+            flex: 1;
+            padding: 8px 16px;
           }
 
-          @keyframes spin {
-            to {
-              transform: rotate(360deg);
+          .learnBody:focus {
+            outline: none;
+          }
+
+          @media (min-width: 1024px) {
+            .page {
+              padding: 0 32px 0 calc(var(--filumire-sidebar-width) + 32px);
             }
-          }
 
-          @media (max-width: 600px) {
             .shell {
-              width: min(
-                100% - 20px,
-                860px
-              );
-              padding-top: 18px;
+              max-width: var(--filumire-content-max);
             }
 
-            .card {
-              padding: 26px 20px;
+            .learnBody {
+              width: 100%;
+              max-width: 760px;
+              margin: 0 auto;
+              padding: 32px var(--filumire-gutter-desktop);
             }
           }
         `}</style>
       </main>
     );
-  }
-
-  if (error) {
-    return (
-      <main className="page">
-        <div className="shell">
-          <header className="header">
-            <div className="brand">
-              FILUMIRE
-            </div>
-          </header>
-
-          <section className="card error-card">
-            <h1>
-              Something went wrong
-            </h1>
-
-            <p>{error}</p>
-
-            <button
-              onClick={loadLearning}
-              disabled={loading}
-              className="primary-button"
-            >
-              Try again
-            </button>
-          </section>
-        </div>
-
-        <style jsx>{`
-          .page {
-            min-height: 100vh;
-            background: #f6f3ed;
-            color: #171717;
-            font-family:
-              Arial,
-              Helvetica,
-              sans-serif;
-          }
-
-          .shell {
-            width: min(860px, calc(100% - 32px));
-            margin: 0 auto;
-            padding: 28px 0 64px;
-          }
-
-          .header {
-            display: flex;
-            align-items: baseline;
-            gap: 10px;
-            padding: 8px 0 28px;
-          }
-
-          .brand {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: 0.04em;
-          }
-
-          .brand-subtitle {
-            font-size: 16px;
-            color: #666;
-          }
-
-          .card {
-            background: white;
-            border: 1px solid #dedbd4;
-            border-radius: 18px;
-            padding: 42px;
-            box-shadow:
-              0 8px 30px rgba(0, 0, 0, 0.04);
-          }
-
-          h1 {
-            margin: 0 0 12px;
-            font-size: 30px;
-          }
-
-          p {
-            line-height: 1.65;
-            color: #4d4d4d;
-          }
-
-          .primary-button {
-            margin-top: 18px;
-            padding: 13px 22px;
-            border: 0;
-            border-radius: 10px;
-            background: #171717;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-          }
-
-          @media (max-width: 600px) {
-            .shell {
-              width: min(
-                100% - 20px,
-                860px
-              );
-            }
-
-            .card {
-              padding: 26px 20px;
-            }
-          }
-        `}</style>
-      </main>
-    );
-  }
-
-  if (!data) {
-    return null;
   }
 
   const options =
@@ -819,13 +792,7 @@ export default function LearnPage() {
   const learnStat = learnOverview?.subjects[data?.progress.subjectId ?? ""];
   const learnSubject = findFilumireSubject(toFilumireSubjects(learnOverview?.availableSubjects), data?.progress.subjectId);
   const progressPercent = learnStat && learnStat.total > 0 ? Math.round((learnStat.completed / learnStat.total) * 100) : data ? Math.max(0, Math.min(100, data.progress.percent)) : 0;
-
-  const competency =
-    data.learnerState.competencies.find(
-      (item) =>
-        item.competencyId ===
-        data.decision.competencyId,
-    );
+  const tint = SUBJECT_TINTS[learnSubject?.key ?? "mathematics"];
 
   const action =
     data.decision.action;
@@ -849,6 +816,13 @@ export default function LearnPage() {
       "trusted_rubric_evaluation" ||
     data.content?.metadata?.expectedResponse ===
       "rubric_evaluated_performance";
+
+  /*
+   * Work sent for teacher review is not evidence yet. Until the
+   * learner moves on, the same activity is not offered again.
+   */
+  const awaitingReview =
+    assessmentFeedback === "pending-review";
 
   const hasAssessment =
     Boolean(data.content?.assessmentItemId) &&
@@ -886,11 +860,16 @@ export default function LearnPage() {
             ? 4
             : 0;
 
+  const stageLabel = tr(language, "Let’s " + learningStages[currentStage].toLowerCase());
+
   return (
     <main className="page">
+      <a className="filumireSkipLink" href="#learn-main">
+        {language === "fr" ? "Aller au contenu" : "Skip to content"}
+      </a>
       <div className="shell learnerShell">
         <LearnerHeader
-          backHref="/dashboard"
+          backHref={backHref}
           showAskFilu={true} setupHeader language={language}
         />
 
@@ -898,23 +877,30 @@ export default function LearnPage() {
           {/* learnSide / learnMain are layout-only (display: contents on
               mobile and tablet); from 1024px they form two columns. */}
           <div className="learnSide">
-          <section className="learnBanner">
+          <section
+            className="learnBanner"
+            style={{
+              "--bannerTint": tint.tint,
+              "--bannerSoft": tint.soft,
+              "--bannerAccent": tint.accent,
+            } as CSSProperties}
+          >
             <span className="bannerIcon">
-              <CalculatorIcon />
+              <SubjectIcon name={learnSubject?.key ?? "mathematics"} />
             </span>
             <div className="bannerText">
-              <h1>{subjectLabel(learnSubject?.name ?? data.progress.subjectName ?? "Learning", language)}</h1>
+              <h1>{subjectLabel(learnSubject?.name ?? data.progress.subjectName ?? tr(language, "Learning"), language)}</h1>
               <p>
                 {data.progress.competencyTitle ??
                   data.content?.title ??
-                  "Your learning session"}
+                  tr(language, "Your learning session")}
               </p>
             </div>
             <strong>{progressPercent}%</strong>
             <div
               className="progress-track"
               role="progressbar"
-              aria-label="Learning progress"
+              aria-label={tr(language, "Learning progress")}
               aria-valuemin={0}
               aria-valuemax={100}
               aria-valuenow={progressPercent}
@@ -926,9 +912,10 @@ export default function LearnPage() {
             </div>
           </section>
 
-          <nav className="learningStages" aria-label="Learning stages">
+          <nav aria-label={tr(language, "Learning stages")}>
+          <ol className="learningStages">
             {learningStages.map((stage, index) => (
-              <div
+              <li
                 key={stage}
                 className={`learningStage ${
                   index === currentStage
@@ -937,17 +924,19 @@ export default function LearnPage() {
                       ? "complete"
                       : ""
                 }`}
+                aria-current={index === currentStage ? "step" : undefined}
               >
-                <span className="stageDot">
-                  {index < currentStage ? "\u2713" : index + 1}
+                <span className="stageDot" aria-hidden="true">
+                  {index < currentStage ? "✓" : index + 1}
                 </span>
                 <span className="stageName">{tr(language, stage)}</span>
-              </div>
+              </li>
             ))}
+          </ol>
           </nav>
           </div>
 
-          <div className="learnMain">
+          <div id="learn-main" className="learnMain" tabIndex={-1}>
 
         {connectivity === "offline" && !pending && (
           <div
@@ -955,9 +944,7 @@ export default function LearnPage() {
             role="status"
             aria-live="polite"
           >
-            You&apos;re offline. You can keep reading,
-            and answers will be sent once you&apos;re
-            back online.
+            {tr(language, "You're offline. You can keep reading, and answers will be sent once you're back online.")}
           </div>
         )}
 
@@ -969,8 +956,8 @@ export default function LearnPage() {
           >
             <div>
               {syncing
-                ? "Sending your waiting answer..."
-                : "Your answer is waiting to be sent. It hasn't been checked yet."}
+                ? tr(language, "Sending your waiting answer...")
+                : tr(language, "Your answer is waiting to be sent. It hasn't been checked yet.")}
             </div>
 
             {!syncing && (
@@ -979,13 +966,13 @@ export default function LearnPage() {
                 onClick={() => attemptSync(pending)}
                 className="secondary-button"
               >
-                Retry now
+                {tr(language, "Retry now")}
               </button>
             )}
 
             {syncError && (
               <div className="connectivity-banner-error">
-                {syncError}
+                {tr(language, syncError)}
               </div>
             )}
           </div>
@@ -994,7 +981,7 @@ export default function LearnPage() {
         <section className={`lessonPanel${teachView ? " teach" : ""}`}>
           {!teachView && (
             <div className="lessonHero">
-              <small>{tr(language, "Let\u2019s " + learningStages[currentStage].toLowerCase())}</small>
+              <small>{stageLabel}</small>
               <h1>{tr(language, needsSupportPause ? "You have done all you can here for now." : actionLabel(action))}</h1>
               <img
                 src={learnerAvatar}
@@ -1006,12 +993,14 @@ export default function LearnPage() {
         <section className="card">
           {teachView && (
             <span className="lessonPill">
-              {tr(language, "Let\u2019s " + learningStages[currentStage].toLowerCase())}
+              {stageLabel}
             </span>
           )}
 
           {assessmentFeedback && (
             <div
+              ref={feedbackRef}
+              tabIndex={-1}
               className={`assessment-feedback ${assessmentFeedback}`}
               role="status"
               aria-live="polite"
@@ -1033,6 +1022,15 @@ export default function LearnPage() {
                 <div className="feedback-message">
                   {tr(language, feedbackMessage(assessmentFeedback))}
                 </div>
+              </div>
+            </div>
+          )}
+
+          {error && (
+            <div className="assessment-feedback incorrect" role="alert">
+              <div className="feedback-icon" aria-hidden="true">!</div>
+              <div className="feedback-content">
+                <div className="feedback-message">{tr(language, error)}</div>
               </div>
             </div>
           )}
@@ -1086,31 +1084,31 @@ export default function LearnPage() {
             </div>
           ) : null}
 
-          {requiresTrustedEvaluation && !pending && (
+          {requiresTrustedEvaluation && !pending && !awaitingReview && (
             <div className="assessment">
-              <div className="assessment-label">
-                Your response
-              </div>
+              <label className="assessment-label" htmlFor="learner-response">
+                {tr(language, "Your response")}
+              </label>
 
               <div className="tutor-message">
                 <span className="tipIcon" aria-hidden="true">
                   <BulbIcon />
                 </span>
                 <p>
-                  Complete the activity above. Your response will be sent for teacher review before FILUMIRE uses it as learning evidence.
+                  {tr(language, "Complete the activity above. Your response will be sent for teacher review before FILUMIRE uses it as learning evidence.")}
                 </p>
               </div>
 
               <textarea
+                id="learner-response"
                 className="rich-response"
                 value={selectedResponse}
                 onChange={(event) =>
                   setSelectedResponse(event.target.value)
                 }
-                placeholder="Write your response here..."
+                placeholder={tr(language, "Write your response here...")}
                 rows={6}
                 disabled={submitting}
-                aria-label="Your response"
               />
 
               <button
@@ -1119,16 +1117,20 @@ export default function LearnPage() {
                 onClick={submitAssessment}
                 disabled={submitting || !selectedResponse.trim()}
               >
-                {submitting ? "Sending..." : "Send for review"}
+                {tr(language, submitting ? "Sending..." : "Send for review")}
               </button>
             </div>
           )}
 
           {hasAssessment && !pending && (
-            <div className="assessment">
-              <div className="assessment-label">
-                Your answer
-              </div>
+            <fieldset className="assessment">
+              <legend className="assessment-label">
+                {tr(language, "Your answer")}
+                <span className="visuallyHidden">
+                  {" – "}
+                  {tr(language, "Choose one answer")}
+                </span>
+              </legend>
 
               <div className="options">
                 {options.map(
@@ -1169,6 +1171,7 @@ export default function LearnPage() {
               </div>
 
               <button
+                type="button"
                 onClick={
                   submitAssessment
                 }
@@ -1178,22 +1181,23 @@ export default function LearnPage() {
                 }
                 className="primary-button"
               >
-                {submitting
+                {tr(language, submitting
                   ? "Checking..."
-                  : "Submit answer"}
+                  : "Submit answer")}
               </button>
-            </div>
+            </fieldset>
           )}
 
           {showContinue && !teachView && (
             <button
+              type="button"
               onClick={continueLearning}
               disabled={submitting}
               className="primary-button"
             >
               {tr(language, buttonLabel(action))}
               <span className="arrow" aria-hidden="true">
-                {"\u2192"}
+                {"→"}
               </span>
             </button>
           )}
@@ -1211,8 +1215,8 @@ export default function LearnPage() {
 
           {isComplete && (
             <div className="complete-card">
-              <div className="complete-mark">
-                {"\u2713"}
+              <div className="complete-mark" aria-hidden="true">
+                {"✓"}
               </div>
 
               <h2>
@@ -1235,9 +1239,31 @@ export default function LearnPage() {
             </div>
           )}
 
+          {currentStage === 4 && (
+            <div className="reflectCard">
+              <strong>{tr(language, "Think about it")}</strong>
+              <ul>
+                <li>{tr(language, "What did you learn in this topic?")}</li>
+                <li>{tr(language, "What helped you most?")}</li>
+                <li>{tr(language, "What would you like to practise again?")}</li>
+              </ul>
+            </div>
+          )}
+
+          {(isComplete || awaitingReview) && (
+            <div className="lessonActions">
+              <Link href={learningHref} className="fButton">
+                {tr(language, isComplete ? "Choose another subject" : "Back to My Learning")}
+              </Link>
+              <Link href={progressHref} className="fButton secondary">
+                {tr(language, "View my progress")}
+              </Link>
+            </div>
+          )}
+
           {submitting && (
-            <div className="status">
-              Updating your learning session...
+            <div className="status" role="status">
+              {tr(language, "Updating your learning session...")}
             </div>
           )}
         </section>
@@ -1245,15 +1271,22 @@ export default function LearnPage() {
 
         {teachView && (
           <button
+            type="button"
             onClick={continueLearning}
             disabled={submitting}
             className="primary-button nextButton"
           >
             {tr(language, "Next:") + " " + tr(language, learningStages[Math.min(currentStage + 1, 4)])}
             <span className="arrow" aria-hidden="true">
-              {"\u2192"}
+              {"→"}
             </span>
           </button>
+        )}
+
+        {!isComplete && (
+          <Link href={askHref} className="askFiluLink">
+            {tr(language, "Ask FILU for help")}
+          </Link>
         )}
           </div>
         </div>
@@ -1265,6 +1298,104 @@ export default function LearnPage() {
         <LearnerBottomNav active="learning" language={language} />
       </div>
 
+      <style jsx>{`
+        /* Overhaul additions: subject-coloured banner, stage list,
+           answer fieldset, reflection and next-step actions. */
+        .learnBanner {
+          background: var(--bannerTint, #fdf3de) !important;
+        }
+
+        .bannerIcon {
+          background: var(--bannerSoft, #fbe3b0) !important;
+          color: var(--bannerAccent, #f08a00) !important;
+        }
+
+        .bannerIcon :global(svg) {
+          width: 26px;
+          height: 26px;
+          fill: currentColor;
+        }
+
+        .bannerIcon :global(.cut) {
+          fill: var(--bannerSoft, #fbe3b0);
+        }
+
+        .bannerIcon :global(.cutline) {
+          fill: none;
+          stroke: var(--bannerSoft, #fbe3b0);
+          stroke-width: 1.8;
+          stroke-linecap: round;
+        }
+
+        .bannerIcon :global(.line) {
+          fill: none;
+          stroke: currentColor;
+          stroke-width: 2;
+          stroke-linecap: round;
+        }
+
+        ol.learningStages {
+          margin: 0;
+          list-style: none;
+        }
+
+        fieldset.assessment {
+          min-width: 0;
+          margin: 4px 0 0;
+          padding: 0;
+          border: 0;
+        }
+
+        fieldset.assessment legend {
+          padding: 0;
+          margin-bottom: 8px;
+        }
+
+        .assessment-feedback:focus {
+          outline: 3px solid var(--filumire-navy);
+          outline-offset: 2px;
+        }
+
+        .reflectCard {
+          margin-top: 12px;
+          padding: 12px 14px;
+          border-radius: 12px;
+          background: #ece8fb;
+          color: var(--filumire-navy);
+        }
+
+        .reflectCard strong {
+          font-size: 15px;
+          font-weight: 800;
+        }
+
+        .reflectCard ul {
+          margin: 6px 0 0;
+          padding-left: 18px;
+          font-size: 14px;
+          line-height: 1.5;
+        }
+
+        .lessonActions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-top: 14px;
+        }
+
+        .learnMain :global(.askFiluLink) {
+          align-self: center;
+          margin: 6px 0 4px;
+          color: #0b7bff;
+          font-size: 14px;
+          font-weight: 800;
+          text-decoration: none;
+        }
+
+        .learnMain:focus {
+          outline: none;
+        }
+      `}</style>
       <style jsx>{`
         .page {
           min-height: 100dvh;

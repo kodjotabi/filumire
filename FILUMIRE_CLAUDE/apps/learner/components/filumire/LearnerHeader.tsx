@@ -2,14 +2,36 @@
 
 import Link from "next/link";
 import { useLearnerAvatar } from "./avatars";
+import { withLang, type Language } from "./language";
+import { LanguageToggle } from "./LanguageToggle";
 
 type LearnerHeaderProps = {
   backHref?: string;
   showAskFilu?: boolean;
-  language?: "en" | "fr";
+  language?: Language;
   setupHeader?: boolean;
 };
 
+const TEXT = {
+  en: {
+    back: "Back",
+    ask: "Ask FILU",
+    home: "FILUMIRE learner home",
+    profile: "My profile",
+  },
+  fr: {
+    back: "Retour",
+    ask: "Aide FILU",
+    home: "Accueil apprenant FILUMIRE",
+    profile: "Mon profil",
+  },
+} as const;
+
+/*
+ * Inside the learner app the FILUMIRE logo always returns to the
+ * learner's home (the dashboard) in the current language. Every
+ * link carries the language so it survives navigation.
+ */
 export function LearnerHeader({
   backHref,
   showAskFilu = true,
@@ -17,53 +39,53 @@ export function LearnerHeader({
   setupHeader = false,
 }: LearnerHeaderProps) {
   const avatarSrc = useLearnerAvatar();
+  const t = TEXT[language];
+  const homeHref = withLang("/dashboard", language);
+  const askHref = withLang("/dashboard?view=ask-filu", language);
+  const profileHref = withLang("/dashboard?view=profile", language);
+  const back = backHref ? withLang(backHref, language) : undefined;
+
   if (setupHeader) {
     return (
       <header className="filumireLearnerHeader filumireSetupHeader">
         <div className="filumireSetupHeaderLeft">
           <Link
-            href={backHref ?? "/login"}
+            href={back ?? withLang("/login", language)}
             className="filumireBack"
-            aria-label={language === "fr" ? "Retour" : "Back"}
           >
             <span className="filumireBackArrow" aria-hidden="true">‹</span>
-            <span>{language === "fr" ? "Retour" : "Back"}</span>
+            <span>{t.back}</span>
           </Link>
 
           <Link
-            href="/"
+            href={homeHref}
             className="filumireHeaderLogo filumireSetupLogo"
-            aria-label="FILUMIRE home"
+            aria-label={t.home}
           >
-            <img
-              src="/filumire-logo-white.svg"
-              alt="FILUMIRE"
-            />
+            <img src="/filumire-logo-white.svg" alt="FILUMIRE" />
           </Link>
         </div>
 
         <div className="filumireSetupHeaderRight">
-          <Link
-            href={`/dashboard?lang=${language}&view=ask-filu`}
-            className="filumireSetupAskFilu"
-          >
-            <span className="filumireSetupChatIcon" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-            </span>
-            <span>Ask FILU</span>
-          </Link>
+          <LanguageToggle language={language} variant="compact" />
+
+          {showAskFilu && (
+            <Link href={askHref} className="filumireSetupAskFilu">
+              <span className="filumireSetupChatIcon" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
+              <span>{t.ask}</span>
+            </Link>
+          )}
 
           <Link
-            href={`/dashboard?lang=${language}&view=profile`}
+            href={profileHref}
             className="filumireSetupAvatar"
-            aria-label="My profile"
+            aria-label={t.profile}
           >
-            <img
-              src={avatarSrc}
-              alt=""
-            />
+            <img src={avatarSrc} alt="" />
           </Link>
         </div>
       </header>
@@ -73,56 +95,45 @@ export function LearnerHeader({
   return (
     <header className="filumireLearnerHeader">
       <div className="filumireHeaderSide">
-        {backHref ? (
-          <Link
-            href={backHref}
-            className="filumireBack"
-            aria-label={language === "fr" ? "Retour" : "Back"}
-          >
+        {back ? (
+          <Link href={back} className="filumireBack">
             <span className="filumireBackArrow" aria-hidden="true"></span>
-            <span>{language === "fr" ? "Retour" : "Back"}</span>
+            <span>{t.back}</span>
           </Link>
         ) : (
           <Link
-            href="/"
+            href={homeHref}
             className="filumireHeaderLogo"
-            aria-label="FILUMIRE home"
+            aria-label={t.home}
           >
-            <img
-              src="/filumire-logo-white.svg"
-              alt="FILUMIRE"
-            />
+            <img src="/filumire-logo-white.svg" alt="FILUMIRE" />
           </Link>
         )}
       </div>
 
-      {backHref && (
+      {back && (
         <Link
-          href="/dashboard"
+          href={homeHref}
           className="filumireHeaderLogo filumireHeaderLogoCentered"
-          aria-label="FILUMIRE learner home"
+          aria-label={t.home}
         >
-          <img
-            src="/filumire-logo-white.svg"
-            alt="FILUMIRE"
-          />
+          <img src="/filumire-logo-white.svg" alt="FILUMIRE" />
         </Link>
       )}
 
       <div className="filumireHeaderActions">
+        <LanguageToggle language={language} variant="compact" />
+
         {showAskFilu && (
-          <Link
-            href="/dashboard?view=ask-filu"
-            className="filumireAskFilu"
-          >
-            Ask FILU
+          <Link href={askHref} className="filumireAskFilu">
+            {t.ask}
           </Link>
         )}
 
-        <span className="filumireBell" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9a6 6 0 1 1 12 0c0 6 2.5 7.5 2.5 7.5h-17S6 15 6 9z" /><path d="M10 20a2 2 0 0 0 4 0" /></svg></span><Link
-          href="/dashboard?view=profile"
+        <Link
+          href={profileHref}
           className="filumireAvatar"
-          aria-label="My profile"
+          aria-label={t.profile}
         >
           <img src={avatarSrc} alt="" />
         </Link>

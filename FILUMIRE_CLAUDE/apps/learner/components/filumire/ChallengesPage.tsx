@@ -5,10 +5,13 @@ import type { CSSProperties, ReactNode } from "react";
 
 import type { LearningOverview } from "../../services/learning-client";
 import { subjectLabel, toFilumireSubjects } from "./subjects";
+import { computeAchievements } from "./achievements";
 
 type ChallengesPageProps = {
   language: "en" | "fr";
   overview: LearningOverview | null;
+  overviewState?: "loading" | "ready" | "unavailable";
+  onRetry?: () => void;
   renderIcon: (key: string) => ReactNode;
   current: {
     subjectId: string;
@@ -41,12 +44,10 @@ const TEXT = {
     achievements: "Your Achievements",
     earned: "Earned",
     locked: "Not yet earned",
-    badges: [
-      { title: "First Goal", sub: "Finish your first learning goal" },
-      { title: "Subject Explorer", sub: "Start learning in two subjects" },
-      { title: "Steady Learner", sub: "Finish five learning goals" },
-    ],
     quote: "Keep learning, keep growing! You\u2019re making great progress!",
+    loading: "Loading your challenges...",
+    unavailable: "Your challenges couldn\u2019t be loaded right now.",
+    retry: "Try again",
   },
   fr: {
     title: "D\u00e9fis et r\u00e9ussites",
@@ -61,24 +62,48 @@ const TEXT = {
     achievements: "Tes r\u00e9ussites",
     earned: "Obtenu",
     locked: "Pas encore obtenu",
-    badges: [
-      { title: "Premier objectif", sub: "Termine ton premier objectif" },
-      { title: "Explorateur", sub: "Commence deux mati\u00e8res" },
-      { title: "Apprenant r\u00e9gulier", sub: "Termine cinq objectifs" },
-    ],
     quote: "Continue d\u2019apprendre, continue de grandir !",
+    loading: "Chargement de tes d\u00e9fis...",
+    unavailable: "Tes d\u00e9fis n\u2019ont pas pu \u00eatre charg\u00e9s pour le moment.",
+    retry: "R\u00e9essayer",
   },
 } as const;
-
-const BADGE_COLORS = ["#f5a00f", "#0b7bff", "#22a85a"];
 
 export function ChallengesPage({
   language,
   overview,
+  overviewState = "ready",
+  onRetry,
   renderIcon,
   current,
 }: ChallengesPageProps) {
   const t = TEXT[language];
+
+  if (!overview && overviewState !== "ready") {
+    return (
+      <div className="challengesPage">
+        {overviewState === "loading" ? (
+          <section className="fState inline" aria-busy="true">
+            <div className="fSpinner" />
+            <p role="status">{t.loading}</p>
+          </section>
+        ) : (
+          <section className="fState inline" role="alert">
+            <span className="fStateIcon warn" aria-hidden="true">!</span>
+            <h1>{t.title}</h1>
+            <p>{t.unavailable}</p>
+            {onRetry ? (
+              <div className="fStateActions">
+                <button type="button" className="fButton" onClick={onRetry}>
+                  {t.retry}
+                </button>
+              </div>
+            ) : null}
+          </section>
+        )}
+      </div>
+    );
+  }
 
   const rows = toFilumireSubjects(overview?.availableSubjects).map((subject) => {
     const stats = overview?.subjects[subject.subjectId];
@@ -89,9 +114,12 @@ export function ChallengesPage({
     return { subject, total, done, started, percent };
   });
 
-  const doneAll = rows.reduce((sum, row) => sum + row.done, 0);
-  const startedCount = rows.filter((row) => row.started).length;
-  const earned = [doneAll >= 1, startedCount >= 2, doneAll >= 5];
+  const achievements = computeAchievements(
+    toFilumireSubjects(overview?.availableSubjects).map(
+      (subject) => overview?.subjects[subject.subjectId],
+    ),
+    language,
+  );
 
   const currentPercent =
     current.total > 0
@@ -146,6 +174,7 @@ export function ChallengesPage({
         </Link>
       </section>
 
+      {others.length > 0 ? (
       <section className="cMore">
         <div className="cSecHead">
           <h2>{t.more}</h2>
@@ -165,7 +194,14 @@ export function ChallengesPage({
               <span className="cRowText">
                 <strong>{subjectLabel(subject.name, language)}</strong>
                 <small>{t.rowSub}</small>
-                <span className="cTrack small">
+                <span
+                  className="cTrack small"
+                  role="progressbar"
+                  aria-label={subjectLabel(subject.name, language)}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={percent}
+                >
                   <span style={{ width: `${percent}%` }} />
                 </span>
               </span>
@@ -180,16 +216,18 @@ export function ChallengesPage({
         </div>
       </section>
 
+      ) : null}
+
       <section className="cAch">
         <div className="cSecHead">
           <h2>{t.achievements}</h2>
         </div>
-        <div className="cBadges">
-          {t.badges.map((badge, index) => (
-            <div
-              key={badge.title}
-              className={`cBadge${earned[index] ? " on" : ""}`}
-              style={{ "--b": BADGE_COLORS[index] } as CSSProperties}
+        <ul className="cBadges">
+          {achievements.map((badge) => (
+            <li
+              key={badge.id}
+              className={`cBadge${badge.earned ? " on" : ""}`}
+              style={{ "--b": badge.color } as CSSProperties}
             >
               <span className="cMedal" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
@@ -197,11 +235,27 @@ export function ChallengesPage({
                 </svg>
               </span>
               <strong>{badge.title}</strong>
-              <small>{badge.sub}</small>
-              <em>{earned[index] ? t.earned : t.locked}</em>
-            </div>
+              <small>{badge.description}</small>
+              {!badge.earned ? (
+                <span
+                  className="cBadgeTrack"
+                  role="progressbar"
+                  aria-label={badge.title}
+                  aria-valuemin={0}
+                  aria-valuemax={badge.target}
+                  aria-valuenow={badge.current}
+                >
+                  <span style={{ width: `${Math.round((badge.current / badge.target) * 100)}%` }} />
+                </span>
+              ) : null}
+              <em>
+                {badge.earned
+                  ? t.earned
+                  : `${badge.current} / ${badge.target} · ${t.locked}`}
+              </em>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
 
       <section className="cQuote">
@@ -466,6 +520,26 @@ export function ChallengesPage({
           display: grid;
           grid-template-columns: repeat(3, minmax(0, 1fr));
           gap: 6px;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+
+        .cBadgeTrack {
+          display: block;
+          width: 80%;
+          height: 5px;
+          margin-top: 5px;
+          border-radius: 99px;
+          background: #e3ebf3;
+          overflow: hidden;
+        }
+
+        .cBadgeTrack span {
+          display: block;
+          height: 100%;
+          border-radius: inherit;
+          background: var(--b);
         }
 
         .cBadge {
@@ -477,11 +551,10 @@ export function ChallengesPage({
           border-radius: 12px;
           background: #ffffff;
           text-align: center;
-          opacity: 0.6;
         }
 
         .cBadge.on {
-          opacity: 1;
+          border-color: var(--b);
         }
 
         .cMedal {

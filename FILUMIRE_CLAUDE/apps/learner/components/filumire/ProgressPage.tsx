@@ -9,6 +9,17 @@ import { subjectLabel, toFilumireSubjects } from "./subjects";
 type ProgressPageProps = {
   language: "en" | "fr";
   overview: LearningOverview | null;
+  overviewState?: "loading" | "ready" | "unavailable";
+  onRetry?: () => void;
+  /* The learner's active topic, from the learning session. */
+  current?: {
+    subjectName: string;
+    title: string;
+    mastery: number;
+    evidenceCount: number;
+    readiness: boolean;
+    learnHref: string;
+  };
   renderIcon: (key: string) => ReactNode;
 };
 
@@ -27,6 +38,17 @@ const TEXT = {
     overall: "Overall Progress",
     across: "Across all subjects",
     onTrack: "You’re on track. Keep going!",
+    notStarted: "Start a subject to see your progress grow.",
+    loading: "Loading your progress...",
+    unavailable: "Your progress couldn’t be loaded right now.",
+    retry: "Try again",
+    mastery: "Current topic mastery",
+    masteryHelp:
+      "FILUMIRE confirms mastery only after you show your understanding more than once.",
+    answers: "answers checked",
+    ready: "Ready to move on",
+    building: "Still building",
+    practise: "Practise this topic",
     subjects: "Your Subjects",
     viewAll: "View all learning",
     good: "Doing Well",
@@ -54,6 +76,17 @@ const TEXT = {
     overall: "Progression globale",
     across: "Dans toutes les matières",
     onTrack: "Tu es sur la bonne voie. Continue !",
+    notStarted: "Commence une matière pour voir ta progression.",
+    loading: "Chargement de ta progression...",
+    unavailable: "Ta progression n’a pas pu être chargée pour le moment.",
+    retry: "Réessayer",
+    mastery: "Maîtrise du thème actuel",
+    masteryHelp:
+      "FILUMIRE confirme la maîtrise seulement quand tu as montré ta compréhension plusieurs fois.",
+    answers: "réponses vérifiées",
+    ready: "Prêt pour la suite",
+    building: "En construction",
+    practise: "Travailler ce thème",
     subjects: "Tes matières",
     viewAll: "Voir tout",
     good: "Bien parti",
@@ -79,9 +112,42 @@ const TEXT = {
 export function ProgressPage({
   language,
   overview,
+  overviewState = "ready",
+  onRetry,
+  current,
   renderIcon,
 }: ProgressPageProps) {
   const t = TEXT[language];
+
+  if (!overview && overviewState !== "ready") {
+    return (
+      <div className="progressPage">
+        {overviewState === "loading" ? (
+          <section className="fState inline" aria-busy="true">
+            <div className="fSpinner" />
+            <p role="status">{t.loading}</p>
+          </section>
+        ) : (
+          <section className="fState inline" role="alert">
+            <span className="fStateIcon warn" aria-hidden="true">!</span>
+            <h1>{t.title}</h1>
+            <p>{t.unavailable}</p>
+            {onRetry ? (
+              <div className="fStateActions">
+                <button type="button" className="fButton" onClick={onRetry}>
+                  {t.retry}
+                </button>
+              </div>
+            ) : null}
+          </section>
+        )}
+      </div>
+    );
+  }
+
+  const masteryPercent = current
+    ? Math.round(Math.max(0, Math.min(1, current.mastery)) * 100)
+    : 0;
 
   const rows = toFilumireSubjects(overview?.availableSubjects).map((subject) => {
     const stats = overview?.subjects[subject.subjectId];
@@ -152,9 +218,47 @@ export function ProgressPage({
           >
             <span style={{ width: `${overall}%` }} />
           </div>
-          <small>{t.onTrack}</small>
+          <small>
+            {rows.some((row) => row.tone !== "fresh") ? t.onTrack : t.notStarted}
+          </small>
         </div>
       </section>
+
+      {current && current.evidenceCount > 0 ? (
+        <section className="pMastery" aria-labelledby="p-mastery-title">
+          <div className="pMasteryHead">
+            <div>
+              <strong id="p-mastery-title">{t.mastery}</strong>
+              <small>
+                {current.subjectName} · {current.title}
+              </small>
+            </div>
+            <b>{masteryPercent}%</b>
+          </div>
+          <div
+            className="pTrack"
+            role="progressbar"
+            aria-labelledby="p-mastery-title"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={masteryPercent}
+          >
+            <span style={{ width: `${masteryPercent}%` }} />
+          </div>
+          <div className="pMasteryMeta">
+            <span className={`pChip ${current.readiness ? "good" : "learning"}`}>
+              {current.readiness ? t.ready : t.building}
+            </span>
+            <span>
+              {current.evidenceCount} {t.answers}
+            </span>
+          </div>
+          <p>{t.masteryHelp}</p>
+          <Link href={current.learnHref} className="pMasteryLink">
+            {t.practise} <span aria-hidden="true">{"→"}</span>
+          </Link>
+        </section>
+      ) : null}
 
       <section className="pSubjects">
         <div className="pHead">
@@ -180,7 +284,14 @@ export function ProgressPage({
                 <strong>{subjectLabel(subject.name, language, true)}</strong>
                 <b>{percent}%</b>
               </span>
-              <span className="pTrack small">
+              <span
+                className="pTrack small"
+                role="progressbar"
+                aria-label={subjectLabel(subject.name, language)}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={percent}
+              >
                 <span style={{ width: `${percent}%` }} />
               </span>
               <span className={`pChip ${tone}`}>{t[tone]}</span>
@@ -261,6 +372,66 @@ export function ProgressPage({
       </section>
 
       <style jsx>{`
+        .pMastery {
+          display: grid;
+          gap: 8px;
+          padding: 14px 16px;
+          border: 1px solid var(--filumire-border);
+          border-radius: 16px;
+          background: #ffffff;
+        }
+
+        .pMasteryHead {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 12px;
+        }
+
+        .pMasteryHead strong {
+          display: block;
+          color: var(--filumire-navy);
+          font-size: 16px;
+          font-weight: 800;
+        }
+
+        .pMasteryHead small {
+          display: block;
+          margin-top: 2px;
+          color: #3d5a78;
+          font-size: 12.5px;
+        }
+
+        .pMasteryHead b {
+          color: var(--filumire-navy);
+          font-size: 22px;
+          font-weight: 800;
+        }
+
+        .pMasteryMeta {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 8px;
+          color: #3d5a78;
+          font-size: 12px;
+        }
+
+        .pMastery p {
+          margin: 0;
+          color: #3d5a78;
+          font-size: 12.5px;
+          line-height: 1.4;
+        }
+
+        .pMastery :global(.pMasteryLink) {
+          justify-self: start;
+          color: #0b7bff;
+          font-size: 14px;
+          font-weight: 800;
+          text-decoration: none;
+        }
+
         .progressPage {
           display: flex;
           flex: 1;

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { type FilumireSubject } from "./subjects";
+import { subjectLabel, type FilumireSubject } from "./subjects";
 
 type SubjectGridProps = {
   language?: "en" | "fr";
@@ -141,7 +141,7 @@ export function SubjectGrid({
             </span>
 
             <span className="filumireSubjectName">
-              {subject.name}
+              {subjectLabel(subject.name, language)}
             </span>
 
             <span className="filumireSubjectAction">

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, type ReactNode } from "react";
 
 import type { LearningOverview } from "../../services/learning-client";
-import type { FilumireSubject, FilumireSubjectKey } from "./subjects";
+import { subjectLabel, type FilumireSubject, type FilumireSubjectKey } from "./subjects";
 
 type AreaStatus = "completed" | "inprogress" | "new";
 
@@ -31,6 +31,8 @@ const TEXT: Record<
     viewAll: string;
     less: string;
     cont: string;
+    start: string;
+    empty: string;
     keep: string;
     great: string;
     practice: string;
@@ -48,6 +50,8 @@ const TEXT: Record<
     viewAll: "View All",
     less: "Show less",
     cont: "Continue Learning",
+    start: "Start Learning",
+    empty: "Your topics for this subject will appear here once you start learning.",
     keep: "Keep going!",
     great: "You're making great progress in",
     practice: "Practice today, progress tomorrow!",
@@ -74,6 +78,8 @@ const TEXT: Record<
     viewAll: "Tout voir",
     less: "Voir moins",
     cont: "Continuer l'apprentissage",
+    start: "Commencer",
+    empty: "Tes thèmes pour cette matière apparaîtront ici dès que tu commenceras.",
     keep: "Continue !",
     great: "Tu progresses bien en",
     practice: "Pratique aujourd'hui, progresse demain !",
@@ -148,13 +154,14 @@ export function SubjectPage({
   const topicTitle = currentTitle || currentArea?.title || "";
   const start = Math.max(0, Math.min(currentIndex - 1, areas.length - 3));
   const shown = showAll ? areas : areas.slice(start, start + 3);
+  const name = subjectLabel(subject.name, language);
 
   return (
     <div className={`subjectPage ${subject.key}`}>
       <section className="subjectHero">
         <span className="homeSubjectIcon">{icon}</span>
         <div>
-          <h1>{subject.name}</h1>
+          <h1>{name}</h1>
           <p>{t.tagline[subject.key]}</p>
         </div>
         <div className="homeNote" aria-hidden="true">
@@ -170,6 +177,7 @@ export function SubjectPage({
           <span
             className="homeMiniTrack"
             role="progressbar"
+            aria-label={t.overall}
             aria-valuemin={0}
             aria-valuemax={100}
             aria-valuenow={percent}
@@ -202,6 +210,16 @@ export function SubjectPage({
             </Link>
           ) : null}
         </section>
+      ) : learnHref ? (
+        <section className="subjectCurrent">
+          <p className="subjectEmpty">{t.empty}</p>
+          <Link href={learnHref} className="subjectCta">
+            {t.start}
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </Link>
+        </section>
       ) : null}
 
       {areas.length > 0 ? (
@@ -213,6 +231,7 @@ export function SubjectPage({
                 type="button"
                 className="homeSeeAll"
                 onClick={() => setShowAll(!showAll)}
+                aria-expanded={showAll}
               >
                 {showAll ? t.less : t.viewAll}
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -247,7 +266,7 @@ export function SubjectPage({
         <div>
           <strong>{t.keep}</strong>
           <p>
-            {t.great} {subject.name}.
+            {t.great} {name}.
           </p>
         </div>
         <img className="subjectKeepArt" src="/images/home/boy-continue.png" alt="" />

@@ -1,6 +1,8 @@
 "use client";
 
-import { useLearnerAvatar } from "./avatars";
+import { useState, type FormEvent } from "react";
+import { AVATAR_KEY, LEARNER_AVATARS, useLearnerAvatar } from "./avatars";
+import { computeAchievements } from "./achievements";
 
 type Stat = { total: number; completed: number; tracked: number };
 
@@ -10,36 +12,53 @@ type Props = {
   name: string;
   onRename: (value: string) => void;
   overview: { subjects: Record<string, Stat> } | null;
+  gradeName?: string;
 };
 
 const text = {
   en: {
-    edit: "Edit Profile",
+    edit: "Edit name",
     learner: "Learner",
     ach: "Achievements",
     prog: "Progress",
-    active: "Active Challenges",
+    active: "Active Subjects",
     quote: "Every step you take makes you stronger. Keep going!",
     settings: "My Settings",
     name: "My Name",
-    lang: "Language Preference",
+    nameLabel: "Your name",
+    save: "Save",
+    cancel: "Cancel",
+    saved: "Saved.",
+    grade: "My Class",
+    gradeUnknown: "Set by your school",
+    avatar: "My Avatar",
+    chooseAvatar: "Choose avatar",
+    lang: "Language",
     notif: "Notifications",
     look: "App Appearance",
     privacy: "Privacy & Safety",
     help: "Help & Support",
     out: "Log Out",
-    soon: "Soon",
-    ask: "What should we call you?",
+    soon: "Coming soon",
+    device: "Your name and avatar are saved on this device only.",
   },
   fr: {
-    edit: "Modifier le profil",
+    edit: "Modifier le prénom",
     learner: "Apprenant",
     ach: "Réussites",
     prog: "Progrès",
-    active: "Défis actifs",
+    active: "Matières actives",
     quote: "Chaque pas te rend plus fort !",
     settings: "Mes paramètres",
-    name: "Mon nom",
+    name: "Mon prénom",
+    nameLabel: "Ton prénom",
+    save: "Enregistrer",
+    cancel: "Annuler",
+    saved: "Enregistré.",
+    grade: "Ma classe",
+    gradeUnknown: "Définie par ton école",
+    avatar: "Mon avatar",
+    chooseAvatar: "Choisir l’avatar",
     lang: "Langue",
     notif: "Notifications",
     look: "Apparence",
@@ -47,7 +66,7 @@ const text = {
     help: "Aide et assistance",
     out: "Se déconnecter",
     soon: "Bientôt",
-    ask: "Comment doit-on t'appeler ?",
+    device: "Ton prénom et ton avatar sont enregistrés seulement sur cet appareil.",
   },
 };
 
@@ -57,24 +76,46 @@ export default function ProfilePage({
   name,
   onRename,
   overview,
+  gradeName,
 }: Props) {
   const t = text[language];
   const avatarSrc = useLearnerAvatar();
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(name);
+  const [status, setStatus] = useState("");
   // The overview lists exactly the subjects of the learner's grade.
   const rows: Array<Stat | undefined> = Object.values(overview?.subjects ?? {});
   const total = rows.reduce((n, r) => n + (r?.total ?? 0), 0);
   const doneAll = rows.reduce((n, r) => n + (r?.completed ?? 0), 0);
-  const startedCount = rows.filter((r) => (r?.tracked ?? 0) > 0).length;
   const activeCount = rows.filter(
     (r) => (r?.tracked ?? 0) > 0 && (r?.completed ?? 0) < (r?.total ?? 0)
   ).length;
   const percent = total > 0 ? Math.round((doneAll / total) * 100) : 0;
-  const badges =
-    (doneAll >= 1 ? 1 : 0) + (startedCount >= 2 ? 1 : 0) + (doneAll >= 5 ? 1 : 0);
+  const badges = computeAchievements(rows, language).filter((a) => a.earned).length;
 
-  function rename() {
-    const value = window.prompt(t.ask, name);
-    if (value && value.trim()) onRename(value.trim());
+  function startEditing() {
+    setDraft(name);
+    setStatus("");
+    setEditing(true);
+  }
+
+  function saveName(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const value = draft.trim();
+    if (value) {
+      onRename(value);
+      setStatus(t.saved);
+    }
+    setEditing(false);
+  }
+
+  function chooseAvatar(id: string) {
+    try {
+      window.localStorage.setItem(AVATAR_KEY, id);
+    } catch {
+      /* storage unavailable */
+    }
+    window.dispatchEvent(new Event("filumire-avatar"));
   }
 
   async function logOut() {
@@ -85,8 +126,9 @@ export default function ProfilePage({
     } catch {}
     try {
       window.localStorage.removeItem("filumire.learnerName");
+      window.localStorage.removeItem(AVATAR_KEY);
     } catch {}
-    window.location.href = "/";
+    window.location.href = `/?lang=${language}`;
   }
 
   return (
@@ -95,11 +137,41 @@ export default function ProfilePage({
         <img className="prAvatar" src={avatarSrc} alt="" />
         <div className="prWho">
           <h1>{name || t.learner}</h1>
-          <button type="button" className="prEdit" onClick={rename}>
-            {t.edit}
-          </button>
+          {gradeName ? <p className="prGrade">{gradeName}</p> : null}
+          {!editing ? (
+            <button type="button" className="prEdit" onClick={startEditing}>
+              {t.edit}
+            </button>
+          ) : null}
         </div>
       </section>
+
+      {editing ? (
+        <form className="prNameForm" onSubmit={saveName}>
+          <label htmlFor="profile-name">{t.nameLabel}</label>
+          <input
+            id="profile-name"
+            type="text"
+            value={draft}
+            maxLength={40}
+            autoComplete="given-name"
+            autoFocus
+            onChange={(event) => setDraft(event.target.value)}
+          />
+          <div className="prNameActions">
+            <button type="submit" className="fButton" disabled={!draft.trim()}>
+              {t.save}
+            </button>
+            <button type="button" className="fButton secondary" onClick={() => setEditing(false)}>
+              {t.cancel}
+            </button>
+          </div>
+        </form>
+      ) : null}
+
+      <p className="visuallyHidden" role="status">
+        {status}
+      </p>
 
       <section className="prStats">
         <div>
@@ -124,24 +196,51 @@ export default function ProfilePage({
       <section className="prList">
         <h2>{t.settings}</h2>
 
-        <button type="button" className="prRow" onClick={rename}>
+        <button type="button" className="prRow" onClick={startEditing}>
           <span>{t.name}</span>
           <em>{name || t.learner}</em>
         </button>
 
         <div className="prRow">
-          <span>{t.lang}</span>
-          <div className="prLang">
+          <span>{t.grade}</span>
+          <em>{gradeName || t.gradeUnknown}</em>
+        </div>
+
+        <div className="prRow prAvatarRow">
+          <span id="profile-avatar-label">{t.avatar}</span>
+          <div className="prAvatars" role="group" aria-labelledby="profile-avatar-label">
+            {LEARNER_AVATARS.map((avatar, index) => (
+              <button
+                key={avatar.id}
+                type="button"
+                className={avatarSrc === avatar.src ? "on" : undefined}
+                aria-pressed={avatarSrc === avatar.src}
+                aria-label={`${t.chooseAvatar} ${index + 1}`}
+                onClick={() => chooseAvatar(avatar.id)}
+              >
+                <img src={avatar.src} alt="" />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="prRow">
+          <span id="profile-language-label">{t.lang}</span>
+          <div className="prLang" role="group" aria-labelledby="profile-language-label">
             <button
               type="button"
+              lang="en"
               className={language === "en" ? "on" : ""}
+              aria-pressed={language === "en"}
               onClick={() => onLanguage("en")}
             >
               English
             </button>
             <button
               type="button"
+              lang="fr"
               className={language === "fr" ? "on" : ""}
+              aria-pressed={language === "fr"}
               onClick={() => onLanguage("fr")}
             >
               Français
@@ -149,8 +248,9 @@ export default function ProfilePage({
           </div>
         </div>
 
-        {/* No notification service exists yet, so the switch would
-            save a setting that does nothing; shown as "Soon". */}
+        {/* No notification, theme, privacy or help service exists yet,
+            so these rows say so instead of offering controls that do
+            nothing. */}
         <div className="prRow dim">
           <span>{t.notif}</span>
           <em>{t.soon}</em>
@@ -169,6 +269,8 @@ export default function ProfilePage({
           <em>{t.soon}</em>
         </div>
 
+        <p className="prDevice">{t.device}</p>
+
         <button type="button" className="prRow out" onClick={logOut}>
           <span>{t.out}</span>
         </button>
@@ -177,6 +279,87 @@ export default function ProfilePage({
       <section className="homeFooter">
         <img src="/images/home/landscape%20footer.png" alt="" />
       </section>
+
+      <style jsx>{`
+        .prGrade {
+          margin: 0 0 8px;
+          color: #3d5a80;
+          font-size: 14px;
+          font-weight: 700;
+        }
+
+        .prNameForm {
+          display: grid;
+          gap: 8px;
+          padding: 14px;
+          border-radius: 14px;
+          background: #eaf3fc;
+        }
+
+        .prNameForm label {
+          color: #0f2a6b;
+          font-size: 14px;
+          font-weight: 800;
+        }
+
+        .prNameForm input {
+          height: 44px;
+          padding: 0 12px;
+          border: 2px solid #bcd8ef;
+          border-radius: 10px;
+          background: #fff;
+          color: #0f2a6b;
+          font: inherit;
+          font-size: 15px;
+        }
+
+        .prNameActions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+
+        .prAvatarRow {
+          flex-wrap: wrap;
+          gap: 8px;
+          padding-top: 6px;
+          padding-bottom: 6px;
+        }
+
+        .prAvatars {
+          display: flex;
+          gap: 6px;
+        }
+
+        .prAvatars button {
+          width: 40px;
+          height: 40px;
+          padding: 0;
+          overflow: hidden;
+          border: 2px solid transparent;
+          border-radius: 50%;
+          background: #fff;
+        }
+
+        .prAvatars button.on {
+          border-color: #1677ff;
+          box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1677ff;
+        }
+
+        .prAvatars img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .prDevice {
+          margin: 6px 4px 8px;
+          color: #3d5a80;
+          font-size: 12px;
+          line-height: 1.4;
+        }
+      `}</style>
 
       <style jsx>{`
         .profilePage {

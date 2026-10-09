@@ -1,11 +1,18 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { subjectLabel } from "./subjects";
 import { useLearnerAvatar } from "./avatars";
+import { FiluAvatar } from "./SubjectIcon";
 
 type Element = { type: string; text: string };
 
+/*
+ * FILU answers from the instruction the adaptive engine prepared for
+ * the learner's current step (explanation, hints, worked examples).
+ * It never invents content and never records evidence.
+ */
 type Props = {
   language: "en" | "fr";
   subjectName: string;
@@ -13,6 +20,7 @@ type Props = {
   done: number;
   total: number;
   elements: Element[];
+  lessonHref?: string;
 };
 
 type Mode = "explain" | "hint" | "understand";
@@ -37,6 +45,8 @@ const text = {
     none: "There is no help for this step yet. Keep going and FILU will be here.",
     typing: "Typing your own question is coming soon",
     send: "Send",
+    chat: "Conversation with FILU",
+    back: "Back to my lesson",
   },
   fr: {
     title: "Parle à FILU",
@@ -57,6 +67,8 @@ const text = {
     none: "Il n'y a pas encore d'aide pour cette étape. Continue, FILU sera là.",
     typing: "Poser ta propre question sera bientôt possible",
     send: "Envoyer",
+    chat: "Conversation avec FILU",
+    back: "Retour à ma leçon",
   },
 };
 
@@ -83,6 +95,7 @@ export function AskFiluPage({
   done,
   total,
   elements,
+  lessonHref,
 }: Props) {
   const t = text[language];
   const avatarSrc = useLearnerAvatar();
@@ -127,21 +140,30 @@ export function AskFiluPage({
           <b>
             {done} {t.of} {total} {t.goals}
           </b>
-          <span className="fTrack">
+          <span
+            className="fTrack"
+            role="progressbar"
+            aria-label={t.goals}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={percent}
+          >
             <span style={{ width: `${percent}%` }} />
           </span>
         </div>
       </section>
 
       <section className="fHelp">
-        <h2>{t.how}</h2>
+        <h2 id="filu-help-title">{t.how}</h2>
         <p>{t.choose}</p>
-        <div className="fModes">
+        <div className="fModes" role="group" aria-labelledby="filu-help-title">
           {choices.map((c) => (
             <button
               key={c.key}
               type="button"
               className={`fMode ${c.key}${mode === c.key ? " on" : ""}`}
+              aria-pressed={mode === c.key}
+              aria-controls="filu-chat"
               onClick={() => setMode(c.key)}
             >
               <b>{c.label}</b>
@@ -151,7 +173,14 @@ export function AskFiluPage({
         </div>
       </section>
 
-      <section className="fChat">
+      <section
+        id="filu-chat"
+        className="fChat"
+        role="log"
+        aria-live="polite"
+        aria-label={t.chat}
+        tabIndex={0}
+      >
         <div className="fUser">
           <span className="fUserBubble">{chosen}</span>
           <img src={avatarSrc} alt="" />
@@ -159,7 +188,7 @@ export function AskFiluPage({
 
         {shown.length === 0 && (
           <div className="fFilu">
-            <img src="/images/avatars/avatar-kofi.png" alt="" />
+            <FiluAvatar className="fFiluAvatar" />
             <div className="fBubble">
               <small>FILU</small>
               <p>{t.none}</p>
@@ -168,8 +197,8 @@ export function AskFiluPage({
         )}
 
         {shown.map((e, index) => (
-          <div className="fFilu" key={`${e.type}-${index}`}>
-            <img src="/images/avatars/avatar-kofi.png" alt="" />
+          <div className="fFilu" key={`${mode}-${e.type}-${index}`}>
+            <FiluAvatar className="fFiluAvatar" />
             <div className="fBubble">
               <small>{e.type === "worked_example" ? t.tryThis : "FILU"}</small>
               <p>{e.text}</p>
@@ -186,6 +215,12 @@ export function AskFiluPage({
           </svg>
         </button>
       </section>
+
+      {lessonHref ? (
+        <Link href={lessonHref} className="fButton fBackToLesson">
+          {t.back} <span aria-hidden="true">{"→"}</span>
+        </Link>
+      ) : null}
 
       <section className="homeFooter">
         <img src="/images/home/landscape%20footer.png" alt="" />

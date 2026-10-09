@@ -12,6 +12,7 @@ import {
 
 import {
   fetchLearningSession,
+  LearningNetworkError,
   LearningRequestError,
   type LearningResponse,
 } from "../../services/learning-client";
@@ -28,14 +29,20 @@ import { ProgressPage } from "../../components/filumire/ProgressPage";
 import { ChallengesPage } from "../../components/filumire/ChallengesPage";
 import { AskFiluPage } from "../../components/filumire/AskFiluPage";
 import ProfilePage from "../../components/filumire/ProfilePage";
-import { useLearnerAvatar } from "../../components/filumire/avatars";
+import { AVATAR_KEY, LEARNER_AVATARS, useLearnerAvatar } from "../../components/filumire/avatars";
 import { findFilumireSubject, subjectLabel, toFilumireSubjects } from "../../components/filumire/subjects";
+import { SubjectIcon } from "../../components/filumire/SubjectIcon";
+import { useLanguage, withLang } from "../../components/filumire/language";
 
 type ViewState =
   | "loading"
   | "ready"
   | "unauthenticated"
+  | "offline"
   | "unavailable";
+
+/* The subject overview loads separately from the learning session. */
+type OverviewState = "loading" | "ready" | "unavailable";
 
 type DashboardView =
   | "setup"
@@ -88,42 +95,6 @@ function Chevron({ className }: { className?: string }) {
   );
 }
 
-function SubjectIcon({ name }: { name: string }) {
-  const dots = [12.2, 15, 17.8].flatMap((y) => [8.8, 12, 15.2].map((x) => [x, y]));
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      {name === "english" && (
-        <g>
-          <path d="M12 6c-1.8-1.3-4-1.8-7-1.8v13c3 0 5.2.5 7 1.8 1.8-1.3 4-1.8 7-1.8v-13c-3 0-5.2.5-7 1.8z" />
-          <path className="cutline" d="M12 6.4V19" />
-        </g>
-      )}
-      {name === "mathematics" && (
-        <g>
-          <rect x="5" y="3" width="14" height="18" rx="2.4" />
-          <rect className="cut" x="7.6" y="5.6" width="8.8" height="3.6" rx="0.8" />
-          {dots.map(([x, y]) => (
-            <circle key={`${x}-${y}`} className="cut" cx={x} cy={y} r="0.95" />
-          ))}
-        </g>
-      )}
-      {name === "science" && (
-        <g>
-          <path d="M9.2 3h5.6v1.8h-.9v4.5l4.5 7.7A2.1 2.1 0 0 1 16.6 20H7.4a2.1 2.1 0 0 1-1.8-3.1l4.5-7.6V4.8h-.9z" />
-          <path className="cut" d="M8.4 14.6h7.2l1.5 2.6a.7.7 0 0 1-.6 1H7.5a.7.7 0 0 1-.6-1z" />
-        </g>
-      )}
-      {name === "computing" && (
-        <g>
-          <rect x="3" y="4" width="18" height="12.5" rx="2.2" />
-          <rect className="cut" x="5" y="6" width="14" height="8.5" rx="1" />
-          <path className="line" d="M9 20.5h6M12 16.5v4" />
-        </g>
-      )}
-    </svg>
-  );
-}
-
 function TileIcon({ name }: { name: string }) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -159,18 +130,59 @@ function TileIcon({ name }: { name: string }) {
 }
 const CHIP_TEXT = {
   en: { current: "Currently learning", new: "Start learning", done: "Well done!", good: "Making good progress", going: "Keep going" },
-  fr: { current: "En cours", new: "Commencer", done: "Bravo !", good: "Bons progr\u00e8s", going: "Continue !" },
+  fr: { current: "En cours", new: "Commencer", done: "Bravo !", good: "Bons progrès", going: "Continue !" },
 };
+
+const SETUP_TEXT = {
+  en: {
+    steps: ["Language", "Account", "Setup", "Start"],
+    stepsLabel: "Setup progress",
+    title: "Let’s set up your learning",
+    intro: "Tell us a little about yourself so FILUMIRE can get things ready for you.",
+    note: ["A brighter", "you starts", "here!"],
+    name: "Your name",
+    namePlaceholder: "Enter your name",
+    clear: "Clear name",
+    level: "Your class",
+    levelHelp: "Your class is set by your school. FILUMIRE uses it to choose learning that is right for you.",
+    levelUnknown: "Set by your school",
+    avatar: "Choose your avatar",
+    avatarHelp: "Pick the FILUMIRE learner you would like to represent you.",
+    chooseAvatar: "Choose avatar",
+    learning: "Your learning",
+    learningHelp: "FILUMIRE has prepared these subjects for your class.",
+    continue: "Continue",
+  },
+  fr: {
+    steps: ["Langue", "Compte", "Profil", "Début"],
+    stepsLabel: "Étapes de configuration",
+    title: "Préparons ton apprentissage",
+    intro: "Parle-nous un peu de toi pour que FILUMIRE prépare tout pour toi.",
+    note: ["Un avenir", "brillant", "commence ici !"],
+    name: "Ton prénom",
+    namePlaceholder: "Écris ton prénom",
+    clear: "Effacer le prénom",
+    level: "Ta classe",
+    levelHelp: "Ta classe est définie par ton école. FILUMIRE s’en sert pour choisir ce qui te convient.",
+    levelUnknown: "Définie par ton école",
+    avatar: "Choisis ton avatar",
+    avatarHelp: "Choisis l’apprenant FILUMIRE qui te représente.",
+    chooseAvatar: "Choisir l’avatar",
+    learning: "Ton apprentissage",
+    learningHelp: "FILUMIRE a préparé ces matières pour ta classe.",
+    continue: "Continuer",
+  },
+} as const;
+
 function LearnerDashboardView() {
-  const [language, setLanguage] =
-    useState<"en" | "fr">("en");
+  const searchKey = useSearchParams().toString();
+  const [language, setLanguage] = useLanguage(searchKey);
   const [view, setView] =
     useState<DashboardView>("home");
   const [selectedSubjectId, setSelectedSubjectId] =
     useState<string | null>(null);
 
   const [setupName, setSetupName] = useState("");
-  const [setupLevel, setSetupLevel] = useState("Primary 5");
   const [setupAvatar, setSetupAvatar] = useState("1");
   const [viewState, setViewState] =
     useState<ViewState>("loading");
@@ -179,23 +191,27 @@ function LearnerDashboardView() {
   const [learnerName, setLearnerName] = useState("");
   const learnerAvatarSrc = useLearnerAvatar();
   const [overview, setOverview] = useState<LearningOverview | null>(null);
+  const [overviewState, setOverviewState] = useState<OverviewState>("loading");
+  const [overviewAttempt, setOverviewAttempt] = useState(0);
 
   useEffect(() => {
     try {
-      setLearnerName(window.localStorage.getItem("filumire.learnerName") ?? "");
+      const savedName = window.localStorage.getItem("filumire.learnerName") ?? "";
+      setLearnerName(savedName);
+      setSetupName(savedName);
+      const savedAvatar = window.localStorage.getItem(AVATAR_KEY);
+      if (LEARNER_AVATARS.some((avatar) => avatar.id === savedAvatar)) {
+        setSetupAvatar(savedAvatar as string);
+      }
     } catch {
       setLearnerName("");
     }
   }, []);
 
-  const searchKey = useSearchParams().toString();
   useEffect(() => {
     const params =
       new URLSearchParams(window.location.search);
 
-    setLanguage(
-      params.get("lang") === "fr" ? "fr" : "en",
-    );
     setView(getDashboardView());
     setSelectedSubjectId(params.get("subjectId"));
   }, [searchKey]);
@@ -215,7 +231,9 @@ function LearnerDashboardView() {
         err instanceof LearningRequestError &&
           err.status === 401
           ? "unauthenticated"
-          : "unavailable",
+          : err instanceof LearningNetworkError
+            ? "offline"
+            : "unavailable",
       );
     }
   }, [selectedSubjectId]);
@@ -225,15 +243,20 @@ function LearnerDashboardView() {
   }, [load]);
 
   useEffect(() => {
-    if (view !== "setup" && view !== "home" && view !== "learning" && view !== "progress" && view !== "challenges" && view !== "profile") return;
+    if (view === "ask-filu") return;
     let alive = true;
+    setOverviewState("loading");
     fetchLearningOverview(selectedSubjectId || undefined).then((result) => {
-      if (alive) setOverview(result);
+      if (!alive) return;
+      setOverview(result);
+      setOverviewState(result ? "ready" : "unavailable");
     });
     return () => {
       alive = false;
     };
-  }, [view, selectedSubjectId]);
+  }, [view, selectedSubjectId, overviewAttempt]);
+
+  const retryOverview = () => setOverviewAttempt((n) => n + 1);
 
   // Subjects for the learner's grade, as returned by the server.
   const subjects = toFilumireSubjects(overview?.availableSubjects);
@@ -245,29 +268,6 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
     : data
       ? Math.max(0, Math.min(100, data.progress.percent))
       : 0;
-
-  const subjectName =
-    currentSubject?.name ?? data?.progress.subjectName ?? "Learning";
-  const competencyTitle =
-    data?.progress.competencyTitle ??
-    "Ready to continue learning?";
-  const completedCompetencies =
-    data?.progress.completedCompetencies ?? 0;
-  const competencyCount =
-    data?.progress.competencyCount ?? 0;
-  const remainingCompetencies = Math.max(
-    0,
-    competencyCount - completedCompetencies,
-  );
-
-  const selectedSubject =
-    findFilumireSubject(subjects, selectedSubjectId);
-
-  const selectedLearnHref = selectedSubject
-    ? `/learn?lang=${language}&subjectId=${encodeURIComponent(
-        selectedSubject.subjectId,
-      )}`
-    : null;
 
   const copy =
     language === "fr"
@@ -287,15 +287,23 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
           signIn: "Connecte-toi pour continuer",
           signInBody:
             "Connecte-toi pour poursuivre ton parcours d'apprentissage.",
+          signInButton: "Aller à la connexion",
+          offline: "Tu es hors ligne",
+          offlineBody:
+            "FILUMIRE n'arrive pas à joindre le serveur. Vérifie ta connexion puis réessaie.",
           unavailable:
             "L'apprentissage n'est pas disponible pour le moment",
           unavailableBody:
             "Nous n'avons pas pu charger ton parcours. Réessaie.",
+          overviewUnavailable: "Tes matières n'ont pas pu être chargées.",
+          noSubjects: "Aucune matière n'est encore prête pour ta classe. Ton enseignant peut t'aider.",
           retry: "Réessayer",
           continue: "Continuer",
           completed: "objectifs terminés",
           recommended: "Recommandé ensuite",
           backHome: "Retour à l'accueil",
+          learningFallback: "Apprentissage",
+          readyTitle: "Prêt à continuer ?",
         }
       : {
           hello: "Hello!",
@@ -313,24 +321,56 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
           signIn: "Please sign in",
           signInBody:
             "Sign in to continue your learning journey.",
+          signInButton: "Go to sign in",
+          offline: "You're offline",
+          offlineBody:
+            "FILUMIRE can't reach the server. Check your connection and try again.",
           unavailable:
             "Learning isn't available right now",
           unavailableBody:
             "We couldn't load your learning journey. Please try again.",
+          overviewUnavailable: "Your subjects couldn't be loaded.",
+          noSubjects: "No subjects are ready for your class yet. Your teacher can help.",
           retry: "Try again",
           continue: "Continue",
           completed: "learning goals completed",
           recommended: "Recommended Next",
           backHome: "Back to Home",
+          learningFallback: "Learning",
+          readyTitle: "Ready to continue learning?",
         };
+
+  const subjectName =
+    currentSubject?.name ?? data?.progress.subjectName ?? copy.learningFallback;
+  const competencyTitle =
+    data?.progress.competencyTitle ??
+    copy.readyTitle;
+  const completedCompetencies =
+    data?.progress.completedCompetencies ?? 0;
+  const competencyCount =
+    data?.progress.competencyCount ?? 0;
+
+  const selectedSubject =
+    findFilumireSubject(subjects, selectedSubjectId);
+
+  const selectedLearnHref = selectedSubject
+    ? `/learn?lang=${language}&subjectId=${encodeURIComponent(
+        selectedSubject.subjectId,
+      )}`
+    : null;
 
   const learnHref =
     `/learn?lang=${language}`;
 
-  function saveLearnerName() {
+  function saveLearnerProfile() {
     try {
       const name = setupName.trim();
-      window.localStorage.setItem("filumire.learnerAvatar", setupAvatar); window.dispatchEvent(new Event("filumire-avatar")); if (name) { window.localStorage.setItem("filumire.learnerName", name); setLearnerName(name); }
+      window.localStorage.setItem(AVATAR_KEY, setupAvatar);
+      window.dispatchEvent(new Event("filumire-avatar"));
+      if (name) {
+        window.localStorage.setItem("filumire.learnerName", name);
+        setLearnerName(name);
+      }
     } catch {
       /* storage unavailable: the greeting falls back to a plain hello */
     }
@@ -341,35 +381,35 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
       ? {
           helloPre: learnerName ? "Bonjour, " : "Bonjour !", helloName: learnerName, helloPost: learnerName ? " !" : "",
           greetingA: "Ravi de te revoir.",
-          greetingB: "Continuons \u00e0 apprendre !",
-          note: ["Progresser", "aujourd\u2019hui,", "demain sera", "plus beau !"],
+          greetingB: "Continuons à apprendre !",
+          note: ["Progresser", "aujourd’hui,", "demain sera", "plus beau !"],
           of: "sur",
           goalsShort: "objectifs",
           today: "Apprentissage du jour",
           seeAll: "Tout voir",
-          tileProgress: "Vois o\u00f9 tu en es.",
-          challengeTitle: "D\u00e9fi du jour",
-          tileChallenge: "Un nouveau d\u00e9fi pour toi !",
-          tileAsk: "Obtiens de l\u2019aide. Explore plus.",
-          footer: "M\u00eames apprenants. Des avenirs plus brillants.",
+          tileProgress: "Vois où tu en es.",
+          challengeTitle: "Défi du jour",
+          tileChallenge: "Un nouveau défi pour toi !",
+          tileAsk: "Obtiens de l’aide. Explore plus.",
+          footer: "Mêmes apprenants. Des avenirs plus brillants.",
           taglines: {
-            english: "Lis. R\u00e9fl\u00e9chis. Exprime-toi.",
-            mathematics: "R\u00e9sous. Progresse.",
-            science: "Explore. D\u00e9couvre.",
-            computing: "Cr\u00e9e. R\u00e9sous.",
+            english: "Lis. Réfléchis. Exprime-toi.",
+            mathematics: "Résous. Progresse.",
+            science: "Explore. Découvre.",
+            computing: "Crée. Résous.",
           },
         }
       : {
           helloPre: learnerName ? "Hello, " : "Hello!", helloName: learnerName, helloPost: learnerName ? "!" : "",
           greetingA: "Great to see you again.",
-          greetingB: "Let\u2019s keep learning!",
+          greetingB: "Let’s keep learning!",
           note: ["Progress", "today", "brighter", "tomorrow!"],
           of: "of",
           goalsShort: "goals",
-          today: "Today\u2019s Learning",
+          today: "Today’s Learning",
           seeAll: "See All",
-          tileProgress: "See how you\u2019re doing.",
-          challengeTitle: "Today\u2019s Challenge",
+          tileProgress: "See how you’re doing.",
+          challengeTitle: "Today’s Challenge",
           tileChallenge: "A new challenge for you!",
           tileAsk: "Get help. Explore more.",
           footer: "Same learners. Brighter futures.",
@@ -381,8 +421,47 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
           },
         };
 
+  const setupText = SETUP_TEXT[language];
+
+  /* Shown where the subject list would be when it is loading,
+     unavailable or (for a new grade) empty. */
+  function subjectsNotice() {
+    if (overviewState === "loading") {
+      return (
+        <div className="fSkeleton" aria-busy="true" aria-label={copy.preparing}>
+          <span />
+          <span />
+        </div>
+      );
+    }
+
+    if (overviewState === "unavailable") {
+      return (
+        <div className="fState inline" role="alert">
+          <p>{copy.overviewUnavailable}</p>
+          <button type="button" className="fButton secondary" onClick={retryOverview}>
+            {copy.retry}
+          </button>
+        </div>
+      );
+    }
+
+    if (subjects.length === 0) {
+      return (
+        <div className="fState inline" role="status">
+          <p>{copy.noSubjects}</p>
+        </div>
+      );
+    }
+
+    return null;
+  }
+
   return (
     <main className="learnerPage">
+      <a className="filumireSkipLink" href="#learner-main">
+        {language === "fr" ? "Aller au contenu" : "Skip to content"}
+      </a>
       <div className="learnerShell">
         {(
           <LearnerHeader
@@ -390,44 +469,53 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                     setupHeader={view === "setup" || view === "progress" || view === "challenges" || view === "ask-filu" || view === "profile"}
                     showAskFilu={view !== "ask-filu" && view !== "home" && view !== "learning"}
                     backHref={
-                      view === "home" || view === "learning"
+                      view === "home" || (view === "learning" && !selectedSubjectId)
                         ? undefined
-                        : `/dashboard?lang=${language}`
+                        : view === "learning"
+                          ? "/dashboard?view=learning"
+                          : "/dashboard"
                     }
                   />
         )}
 
+        <div id="learner-main" className="learnerMainRegion" tabIndex={-1}>
         {viewState === "loading" && (
-          <section className="learnerStateCard">
-            <div className="learnerLoader" />
-            <p>{copy.preparing}</p>
+          <section className="fState" aria-busy="true">
+            <div className="fSpinner" />
+            <p role="status">{copy.preparing}</p>
           </section>
         )}
 
         {viewState === "unauthenticated" && (
-          <section className="learnerStateCard">
+          <section className="fState">
+            <span className="fStateIcon" aria-hidden="true">?</span>
             <h1>{copy.signIn}</h1>
             <p>{copy.signInBody}</p>
-            <Link
-              href={`/login?lang=${language}`}
-              className="learnerPrimaryButton"
-            >
-              {copy.signIn}
-            </Link>
+            <div className="fStateActions">
+              <Link
+                href={`/login?lang=${language}`}
+                className="fButton"
+              >
+                {copy.signInButton}
+              </Link>
+            </div>
           </section>
         )}
 
-        {viewState === "unavailable" && (
-          <section className="learnerStateCard">
-            <h1>{copy.unavailable}</h1>
-            <p>{copy.unavailableBody}</p>
-            <button
-              type="button"
-              onClick={load}
-              className="learnerPrimaryButton"
-            >
-              {copy.retry}
-            </button>
+        {(viewState === "unavailable" || viewState === "offline") && (
+          <section className="fState" role="alert">
+            <span className="fStateIcon warn" aria-hidden="true">!</span>
+            <h1>{viewState === "offline" ? copy.offline : copy.unavailable}</h1>
+            <p>{viewState === "offline" ? copy.offlineBody : copy.unavailableBody}</p>
+            <div className="fStateActions">
+              <button
+                type="button"
+                onClick={load}
+                className="fButton"
+              >
+                {copy.retry}
+              </button>
+            </div>
           </section>
         )}
 
@@ -435,33 +523,24 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
           <>
             {view === "setup" && (
               <div className="learnerContent approvedSetup">
-                <div className="setupSteps" aria-label="Setup progress">
-                  <div className="setupStep complete">
-                    <span>1</span>
-                    <small>Language</small>
-                  </div>
-                  <div className="setupStep complete">
-                    <span>2</span>
-                    <small>Account</small>
-                  </div>
-                  <div className="setupStep active">
-                    <span>3</span>
-                    <small>Setup</small>
-                  </div>
-                  <div className="setupStep start">
-                    <span>4</span>
-                    <small>Start</small>
-                  </div>
-                </div>
+                <ol className="setupSteps" aria-label={setupText.stepsLabel}>
+                  {setupText.steps.map((step, index) => (
+                    <li
+                      key={step}
+                      className={`setupStep ${index < 2 ? "complete" : index === 2 ? "active" : "start"}`}
+                      aria-current={index === 2 ? "step" : undefined}
+                    >
+                      <span>{index + 1}</span>
+                      <small>{step}</small>
+                    </li>
+                  ))}
+                </ol>
 
                 <section className="approvedSetupIntro">
-                  <h1>Let&rsquo;s set up your learning</h1>
-                  <p>
-                    Tell us a little about your learning so FILUMIRE can get
-                    things ready for you.
-                  </p>
+                  <h1>{setupText.title}</h1>
+                  <p>{setupText.intro}</p>
                   <div className="setupNote" aria-hidden="true">
-                    A brighter<br />you starts<br />here!
+                    {setupText.note[0]}<br />{setupText.note[1]}<br />{setupText.note[2]}
                   </div>
                 </section>
 
@@ -475,23 +554,25 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                     </span>
                     <div className="setupFieldBody">
                       <label className="setupFieldLabel" htmlFor="setupName">
-                        Your name
+                        {setupText.name}
                       </label>
                       <div className="setupInputWrap">
                         <input
                           id="setupName"
                           className="setupInput"
                           type="text"
+                          autoComplete="given-name"
+                          maxLength={40}
                           value={setupName}
                           onChange={(event) => setSetupName(event.target.value)}
-                          placeholder="Enter your name"
+                          placeholder={setupText.namePlaceholder}
                         />
                         {setupName && (
                           <button
                             type="button"
                             className="setupClear"
                             onClick={() => setSetupName("")}
-                            aria-label="Clear name"
+                            aria-label={setupText.clear}
                           >
                             &times;
                           </button>
@@ -508,22 +589,16 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                       </svg>
                     </span>
                     <div className="setupFieldBody">
-                      <label className="setupFieldLabel" htmlFor="setupLevel">
-                        Your learning level
-                      </label>
-                      <select
-                        id="setupLevel"
-                        className="setupInput"
-                        value={setupLevel}
-                        onChange={(event) => setSetupLevel(event.target.value)}
-                      >
-                        <option>Primary 4</option>
-                        <option>Primary 5</option>
-                        <option>Primary 6</option>
-                      </select>
+                      {/* The grade is stored on the server and decides which
+                          curriculum the learner sees; it is shown, not edited. */}
+                      <span className="setupFieldLabel" id="setupLevelLabel">
+                        {setupText.level}
+                      </span>
+                      <output className="setupInput setupReadonly" aria-labelledby="setupLevelLabel">
+                        {overview?.gradeName || setupText.levelUnknown}
+                      </output>
                       <p className="setupFieldHelp">
-                        FILUMIRE uses your level to provide learning that is
-                        right for you.
+                        {setupText.levelHelp}
                       </p>
                     </div>
                   </div>
@@ -540,24 +615,17 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                       </svg>
                     </span>
                     <div className="setupAvatarText">
-                      <strong>Choose your avatar</strong>
-                      <small>
-                        Pick the FILUMIRE learner you would like to represent you.
-                      </small>
+                      <strong id="setupAvatarTitle">{setupText.avatar}</strong>
+                      <small>{setupText.avatarHelp}</small>
                     </div>
                   </div>
 
                   <div
                     className="setupAvatarChoices"
                     role="group"
-                    aria-label="Choose your avatar"
+                    aria-labelledby="setupAvatarTitle"
                   >
-                    {[
-                      { id: "1", name: "Kofi", src: "/images/avatars/avatar-kofi.png" },
-                      { id: "2", name: "Girl", src: "/images/avatars/avatar-girl.png" },
-                      { id: "3", name: "Glasses", src: "/images/avatars/avatar-glasses.png" },
-                      { id: "4", name: "Hijab", src: "/images/avatars/avatar-hijab.png" },
-                    ].map((avatar) => (
+                    {LEARNER_AVATARS.map((avatar, index) => (
                       <button
                         key={avatar.id}
                         type="button"
@@ -566,7 +634,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                         }`}
                         onClick={() => setSetupAvatar(avatar.id)}
                         aria-pressed={setupAvatar === avatar.id}
-                        aria-label={`Choose avatar: ${avatar.name}`}
+                        aria-label={`${setupText.chooseAvatar} ${index + 1}`}
                       >
                         <img className="setupAvatarImg" src={avatar.src} alt="" />
                         {setupAvatar === avatar.id && (
@@ -589,13 +657,17 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                       </svg>
                     </span>
                     <div className="setupLearningText">
-                      <strong>Your learning</strong>
-                      <small>FILUMIRE will prepare all four subjects for your level.</small>
+                      <strong>{setupText.learning}</strong>
+                      <small>{setupText.learningHelp}</small>
                     </div>
                   </div>
 
                   <div className="setupSubjectGridWrap">
-                    <SubjectGrid language={language} subjects={subjects} compact />
+                    {subjects.length > 0 ? (
+                      <SubjectGrid language={language} subjects={subjects} compact />
+                    ) : (
+                      subjectsNotice()
+                    )}
                   </div>
                 </section>
 
@@ -614,9 +686,9 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                   <Link
                     href={`/dashboard?lang=${language}`}
                     className="approvedSetupContinue"
-                    onClick={saveLearnerName}
+                    onClick={saveLearnerProfile}
                   >
-                    <span>Continue</span>
+                    <span>{setupText.continue}</span>
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                       <path d="M5 12h14M13 6l6 6-6 6" />
                     </svg>
@@ -640,7 +712,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                   </div>
                 </section>
 
-                <section className="homeContinue">
+                <section className="homeContinue" aria-labelledby="home-continue-title">
 <img className="homeContinueArt" src={learnerAvatarSrc} alt="" />
                   <span className="homeEyebrow">{copy.continueLearning}</span>
                   <div className="homeContinueHead">
@@ -648,7 +720,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                       <SubjectIcon name={currentSubject?.key ?? "english"} />
                     </span>
                     <div>
-                      <h2>{subjectLabel(subjectName, language)}</h2>
+                      <h2 id="home-continue-title">{subjectLabel(subjectName, language)}</h2>
                       <p>{competencyTitle}</p>
                     </div>
                   </div>
@@ -687,6 +759,8 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                       <Chevron />
                     </Link>
                   </div>
+
+                  {subjectsNotice()}
 
                   <div className="homeSubjects">
                     {subjects.map((subject) => {
@@ -755,7 +829,32 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
 
             {view === "learning" && (
               <div className={`learnerContent homeScreen ${selectedSubject ? "subjectView" : "learningView"}`}>
-                {selectedSubjectId && !overview ? null : !selectedSubject ? (
+                {selectedSubjectId && !selectedSubject ? (
+                  overviewState === "loading" ? (
+                    subjectsNotice()
+                  ) : (
+                    <section className="fState inline" role="alert">
+                      <h1>{language === "fr" ? "Matière introuvable" : "Subject not found"}</h1>
+                      <p>
+                        {overviewState === "unavailable"
+                          ? copy.overviewUnavailable
+                          : language === "fr"
+                            ? "Cette matière n’est pas disponible pour ta classe."
+                            : "This subject isn’t available for your class."}
+                      </p>
+                      <div className="fStateActions">
+                        {overviewState === "unavailable" ? (
+                          <button type="button" className="fButton" onClick={retryOverview}>
+                            {copy.retry}
+                          </button>
+                        ) : null}
+                        <Link href={withLang("/dashboard?view=learning", language)} className="fButton secondary">
+                          {copy.learning}
+                        </Link>
+                      </div>
+                    </section>
+                  )
+                ) : !selectedSubject ? (
                   <>
                     <section className="homeGreeting">
                       <h1>
@@ -763,16 +862,18 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                         <span>{language === "fr" ? "apprentissage" : "Learning"}</span>
                       </h1>
                       <p>
-                        {language === "fr" ? "Explore tes mati\u00e8res" : "Explore your subjects"}
+                        {language === "fr" ? "Explore tes matières" : "Explore your subjects"}
                         <br />
-                        {language === "fr" ? "et continue \u00e0 progresser." : "and keep making progress."}
+                        {language === "fr" ? "et continue à progresser." : "and keep making progress."}
                       </p>
                       <div className="homeNote" aria-hidden="true">
-                        {(language === "fr" ? ["Petits pas,", "grands", "progr\u00e8s !"] : ["Small", "steps", "big progress!"]).map((word) => (
+                        {(language === "fr" ? ["Petits pas,", "grands", "progrès !"] : ["Small", "steps", "big progress!"]).map((word) => (
                           <span key={word}>{word}</span>
                         ))}
                       </div>
                     </section>
+
+                    {subjectsNotice()}
 
                     <div className="homeSubjects">
                       {subjects.map((subject) => {
@@ -800,14 +901,21 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                             <span className="homeSubjectProgress">
                                 {started ? (
                                   <>
-                                    <span className="homeMiniTrack"><span style={{ width: `${percent}%` }} /></span>
+                                    <span
+                                      className="homeMiniTrack"
+                                      role="progressbar"
+                                      aria-label={subjectLabel(subject.name, language)}
+                                      aria-valuemin={0}
+                                      aria-valuemax={100}
+                                      aria-valuenow={percent}
+                                    ><span style={{ width: `${percent}%` }} /></span>
                                     <span className="homeMiniMeta">
                                       <span>{done} {homeText.of} {total} {homeText.goalsShort}</span>
                                       <strong>{percent}%</strong>
                                     </span>
                                   </>
                                 ) : null}
-                                <span className="learningChip">{CHIP_TEXT[language === "fr" ? "fr" : "en"][tone]}</span>
+                                <span className="learningChip">{CHIP_TEXT[language][tone]}</span>
                               </span>
                           </Link>
                         );
@@ -815,8 +923,8 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                     </div>
 
                     <section className="learningNext">
-                      <h2>{language === "fr" ? "Suivant recommand\u00e9" : "Recommended Next"}</h2>
-                      <p className="learningNextSub">{language === "fr" ? "Selon ton apprentissage r\u00e9cent" : "Based on your recent learning"}</p>
+                      <h2>{language === "fr" ? "Suivant recommandé" : "Recommended Next"}</h2>
+                      <p className="learningNextSub">{language === "fr" ? "Selon ton apprentissage récent" : "Based on your recent learning"}</p>
                       <div className={`learningNextItem ${currentSubject?.key ?? "english"}`}>
                         <span className="homeSubjectIcon">
                           <SubjectIcon name={currentSubject?.key ?? "english"} />
@@ -838,7 +946,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
 
                     <section className="homeFooter hand">
                   <img src="/images/home/landscape%20footer.png" alt="" />
-                  <p>{language === "fr" ? "Apprendre aujourd\u2019hui pour un avenir plus radieux." : "Learning today for a brighter tomorrow."}</p>
+                  <p>{language === "fr" ? "Apprendre aujourd’hui pour un avenir plus radieux." : "Learning today for a brighter tomorrow."}</p>
                 </section>
                   </>
                 ) : (
@@ -852,7 +960,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                       icon={<SubjectIcon name={selectedSubject.key} />}
                       footer={<section className="homeFooter">
                   <img src="/images/home/landscape%20footer.png" alt="" />
-                  
+
                 </section>}
                     />
                   </>
@@ -864,12 +972,22 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                 <ProgressPage
                   language={language}
                   overview={overview}
+                  overviewState={overviewState}
+                  onRetry={retryOverview}
+                  current={{
+                    subjectName: subjectLabel(subjectName, language),
+                    title: competencyTitle,
+                    mastery: data.progress.masteryEstimate,
+                    evidenceCount: data.progress.evidenceCount,
+                    readiness: data.progress.readiness,
+                    learnHref,
+                  }}
                   renderIcon={(key) => <SubjectIcon name={key} />}
                 />
               </div>
             )}
 
-            {view === "challenges" && (<div className="learnerContent homeScreen"><ChallengesPage language={language} overview={overview} renderIcon={(key) => <SubjectIcon name={key} />} current={{ subjectId: data?.progress.subjectId ?? "", subjectName, title: competencyTitle, done: completedCompetencies, total: competencyCount, startHref: learnHref }} /></div>)}
+            {view === "challenges" && (<div className="learnerContent homeScreen"><ChallengesPage language={language} overview={overview} overviewState={overviewState} onRetry={retryOverview} renderIcon={(key) => <SubjectIcon name={key} />} current={{ subjectId: data?.progress.subjectId ?? "", subjectName, title: competencyTitle, done: completedCompetencies, total: competencyCount, startHref: learnHref }} /></div>)}
 
             {view === "ask-filu" && (
         <div className="learnerContent homeScreen">
@@ -879,6 +997,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
             topic={competencyTitle}
             done={completedCompetencies}
             total={competencyCount}
+            lessonHref={learnHref}
             elements={
               data?.instruction.structured?.elements?.length
                 ? data.instruction.structured.elements
@@ -897,17 +1016,23 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
             onLanguage={setLanguage}
             name={learnerName}
             onRename={(value: string) => {
-              window.localStorage.setItem("filumire.learnerName", value);
+              try {
+                window.localStorage.setItem("filumire.learnerName", value);
+              } catch {
+                /* storage unavailable: the name lasts for this visit */
+              }
               setLearnerName(value);
             }}
             overview={overview}
+            gradeName={overview?.gradeName ?? ""}
           />
         </div>
       )}
-
-            <LearnerBottomNav active={view === "setup" ? "home" : navItemForView(view)} language={language} />
           </>
         )}
+        </div>
+
+        <LearnerBottomNav active={view === "setup" ? "home" : navItemForView(view)} language={language} />
       </div>
 
       <style jsx>{`
