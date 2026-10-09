@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
-import { AdultRoleSwitch } from "../../components/filumire/AdultRoleSwitch";
+import { AdultHeader, AdultRoleSwitch } from "../../components/filumire/AdultRoleSwitch";
+import { useLanguage, type Language } from "../../components/filumire/language";
 
 import {
   useCallback,
@@ -65,34 +66,167 @@ const NOTE_TYPES: {
   },
 ];
 
+/*
+ * French interface text, keyed by the English wording. Learner
+ * content, topic names and engine codes without an entry stay as
+ * the server sent them.
+ */
+const TEACHER_FR: Record<string, string> = {
+  "Teacher Workspace": "Espace enseignant",
+  "Loading teacher workspace...": "Chargement de l'espace enseignant...",
+  "Please sign in": "Veuillez vous connecter",
+  "Teacher authorization is required to view learner information.": "Une autorisation enseignant est nécessaire pour voir les informations de l'apprenant.",
+  "Go to sign in": "Aller à la connexion",
+  "Workspace unavailable": "Espace indisponible",
+  "The teacher workspace could not be loaded.": "L'espace enseignant n'a pas pu être chargé.",
+  "Try again": "Réessayer",
+  "No learners assigned": "Aucun apprenant attribué",
+  "No active teacher-learner relationships are available.": "Aucune relation enseignant-apprenant active n'est disponible.",
+  "Learner": "Apprenant",
+  "Select a learner": "Choisir un apprenant",
+  "Choose a learner to view their teaching priorities and progress.": "Choisissez un apprenant pour voir ses priorités et sa progression.",
+  "Need attention": "À surveiller",
+  "Teacher reviews": "Relectures enseignant",
+  "Active subjects": "Matières actives",
+  "Mastery check": "Contrôle de la maîtrise",
+  "How solid is this learner's mastery?": "La maîtrise de cet apprenant est-elle solide ?",
+  "Topics mastered": "Thèmes maîtrisés",
+  "Mastery not confirmed later": "Maîtrise non confirmée ensuite",
+  "Remembered after a day or more": "Retenu après un jour ou plus",
+  "Used in a new situation": "Utilisé dans une situation nouvelle",
+  "Teacher marking agrees": "Accord avec la correction enseignant",
+  "Stuck or out of questions": "Bloqué ou sans questions",
+  "Answers to reach mastery (median)": "Réponses pour atteindre la maîtrise (médiane)",
+  "Learning priorities": "Priorités d'apprentissage",
+  "Learners who may need support": "Apprenants qui peuvent avoir besoin d'aide",
+  "No competencies currently require teacher attention.": "Aucune compétence ne demande actuellement l'attention de l'enseignant.",
+  "Learning overview": "Aperçu de l'apprentissage",
+  "Teacher review": "Relecture enseignant",
+  "Learner responses to review teacher judgment": "Réponses d'apprenants à évaluer par l'enseignant",
+  "Competency": "Compétence",
+  "Assessment item": "Question d'évaluation",
+  "Submitted": "Envoyé",
+  "Learner response": "Réponse de l'apprenant",
+  "Learning detail": "Détail de l'apprentissage",
+  "Learning progression": "Progression",
+  "Retention": "Rétention",
+  "Transfer": "Transfert",
+  "Sent back to learn first": "Renvoyé vers un prérequis",
+  "Sent back on": "Renvoyé le",
+  "Ran out of questions": "Plus de questions disponibles",
+  "FILUMIRE tries again from": "FILUMIRE réessaie à partir du",
+  "Learning insight": "Analyse de l'apprentissage",
+  "Patterns noticed": "Tendances observées",
+  "Earlier learning to revisit": "Notions antérieures à revoir",
+  "Possible misunderstandings": "Erreurs de compréhension possibles",
+  "FILUMIRE learning response": "Réponse pédagogique de FILUMIRE",
+  "Current instructional direction": "Orientation pédagogique actuelle",
+  "Learning approach": "Approche d'apprentissage",
+  "Support approach": "Approche de soutien",
+  "Current learning state": "État d'apprentissage actuel",
+  "Recent learning considered": "Apprentissage récent pris en compte",
+  "Evidence": "Preuves",
+  "Recent learning record": "Historique récent",
+  "No evidence has been recorded for this competency.": "Aucune preuve n'a été enregistrée pour cette compétence.",
+  "Support history": "Historique du soutien",
+  "Instructional interventions": "Interventions pédagogiques",
+  "No interventions recorded.": "Aucune intervention enregistrée.",
+  "Learning over time": "Évolution dans le temps",
+  "Learning history": "Historique d'apprentissage",
+  "No progress history recorded.": "Aucun historique de progression enregistré.",
+  "Teacher support": "Soutien de l'enseignant",
+  "Add professional context": "Ajouter un contexte professionnel",
+  "Record observation": "Enregistrer une observation",
+  "Outcome": "Résultat",
+  "Professional note": "Note professionnelle",
+  "Note type": "Type de note",
+  "Note": "Note",
+  "Save note": "Enregistrer la note",
+  "Request learning support": "Demander un soutien",
+  "Request": "Demande",
+  "Reason (optional)": "Motif (facultatif)",
+  "Submit request": "Envoyer la demande",
+  "Parent-teacher messages": "Messages parents-enseignant",
+  "Messages with home": "Messages avec la famille",
+  "Messages share context with the learner's parent. They do not change FILUMIRE's learning decisions.": "Les messages partagent du contexte avec le parent de l'apprenant. Ils ne modifient pas les décisions d'apprentissage de FILUMIRE.",
+  "Loading messages...": "Chargement des messages...",
+  "No messages yet.": "Aucun message pour le moment.",
+  "Reply": "Répondre",
+  "The message service isn't available right now.": "Le service de messagerie n'est pas disponible pour le moment.",
+  " of ": " sur ",
+  " started": " commencés",
+  "No data yet": "Pas encore de données",
+  "Ready": "Prêt",
+  "Not yet ready": "Pas encore prêt",
+  " (done)": " (terminé)",
+  " (in progress)": " (en cours)",
+  "None recorded": "Rien d'enregistré",
+  "None identified": "Rien d'identifié",
+  "Parent": "Parent",
+  "Teacher": "Enseignant",
+  "Sending...": "Envoi...",
+  "Send message": "Envoyer le message",
+  "of": "sur",
+  "competencies need attention": "compétences à surveiller",
+  "mastery": "maîtrise",
+  "records": "éléments",
+  "Updated": "Mis à jour",
+  "Not recorded": "Non enregistré",
+  "Teacher observation recorded.": "Observation enregistrée.",
+  "Professional note saved.": "Note professionnelle enregistrée.",
+  "Teacher request submitted.": "Demande envoyée.",
+  "Review recorded as": "Relecture enregistrée :",
+  "Your teacher session is no longer authorized. Please sign in again.": "Votre session enseignant n'est plus autorisée. Veuillez vous reconnecter.",
+  "You do not have permission to perform this action for this learner.": "Vous n'avez pas l'autorisation d'effectuer cette action pour cet apprenant.",
+  "The request could not be completed.": "La demande n'a pas pu aboutir.",
+  "Request practice": "Demander de l'entraînement",
+  "Request explanation": "Demander une explication",
+  "Request review": "Demander une révision",
+  "Request reassessment": "Demander une réévaluation",
+  "Context": "Contexte",
+  "Instructional": "Pédagogique",
+  "Professional feedback": "Retour professionnel",
+  "Correct": "Correct",
+  "Partial": "Partiel",
+  "Incorrect": "Incorrect",
+  "Skipped": "Passé",
+  "Observed": "Observé",
+  "Message": "Message",
+};
+
+type Translate = (text: string) => string;
+
+const identity: Translate = (text) => text;
+
 function percent(value: number): string {
   return `${Math.round(value * 100)}%`;
 }
 
-function label(value?: string): string {
+function label(value?: string, t: Translate = identity): string {
   if (!value) {
-    return "Not recorded";
+    return t("Not recorded");
   }
 
-  return value
+  return t(value
     .replaceAll("_", " ")
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+    .replace(/\b\w/g, (letter) => letter.toUpperCase()));
 }
 
 /* Tranche 4F: a pilot measure with its counts, or an honest "no data". */
 function measure(
   value?: { numerator: number; denominator: number; rate: number | null },
+  t: Translate = identity,
 ): string {
   if (!value || value.rate === null) {
-    return "No data yet";
+    return t("No data yet");
   }
 
-  return `${percent(value.rate)} (${value.numerator} of ${value.denominator})`;
+  return `${percent(value.rate)} (${value.numerator}${t(" of ")}${value.denominator})`;
 }
 
-function dateTime(value?: string): string {
+function dateTime(value?: string, language: Language = "en"): string {
   if (!value) {
-    return "Not recorded";
+    return language === "fr" ? "Non enregistré" : "Not recorded";
   }
 
   const date = new Date(value);
@@ -101,7 +235,7 @@ function dateTime(value?: string): string {
     return value;
   }
 
-  return date.toLocaleString();
+  return date.toLocaleString(language === "fr" ? "fr-FR" : "en-GB");
 }
 
 function requestId(prefix: string): string {
@@ -117,23 +251,26 @@ function requestId(prefix: string): string {
     .slice(2)}`;
 }
 
-function errorMessage(error: unknown): string {
+function errorMessage(error: unknown, t: Translate = identity): string {
   if (error instanceof TeacherRequestError) {
     if (error.status === 401) {
-      return "Your teacher session is no longer authorized. Please sign in again.";
+      return t("Your teacher session is no longer authorized. Please sign in again.");
     }
 
     if (error.status === 403) {
-      return "You do not have permission to perform this action for this learner.";
+      return t("You do not have permission to perform this action for this learner.");
     }
 
     return error.message;
   }
 
-  return "The request could not be completed.";
+  return t("The request could not be completed.");
 }
 
 export default function TeacherPage() {
+  const [language, setLanguage] = useLanguage();
+  const t: Translate = (text) =>
+    language === "fr" ? (TEACHER_FR[text] ?? text) : text;
   const [viewState, setViewState] =
     useState<ViewState>("loading");
   const [data, setData] =
@@ -163,8 +300,13 @@ export default function TeacherPage() {
     async (
       learnerId?: string,
       preferredCompetencyId?: string | null,
+      background = false,
     ) => {
-      setViewState("loading");
+      // A refresh after saving keeps the workspace on screen (and the
+      // teacher's place in it) instead of swapping to the loader.
+      if (!background) {
+        setViewState("loading");
+      }
 
       try {
         const result = await fetchTeacherSummary(learnerId);
@@ -255,12 +397,13 @@ export default function TeacherPage() {
           await load(
             data.selectedLearnerId,
             selectedCompetencyId,
+            true,
           );
         }
 
         return true;
       } catch (error) {
-        setSubmissionError(errorMessage(error));
+        setSubmissionError(errorMessage(error, t));
         return false;
       } finally {
         setSubmissionState("idle");
@@ -270,6 +413,7 @@ export default function TeacherPage() {
       data?.selectedLearnerId,
       load,
       selectedCompetencyId,
+      t,
     ],
   );
 
@@ -302,7 +446,7 @@ export default function TeacherPage() {
             "teacher-observation",
           ),
         }),
-      "Teacher observation recorded.",
+      t("Teacher observation recorded."),
     );
   }, [
     data?.selectedLearnerId,
@@ -330,7 +474,7 @@ export default function TeacherPage() {
           text: noteText.trim(),
           clientRequestId: requestId("teacher-note"),
         }),
-      "Professional note saved.",
+      t("Professional note saved."),
     );
 
     if (success) {
@@ -364,7 +508,7 @@ export default function TeacherPage() {
             "teacher-action",
           ),
         }),
-      "Teacher request submitted.",
+      t("Teacher request submitted."),
     );
 
     if (success) {
@@ -389,12 +533,13 @@ export default function TeacherPage() {
             reviewId,
             outcome,
           }),
-        `Review recorded as ${label(
+        `${t("Review recorded as")} ${label(
           outcome,
+          t,
         ).toLowerCase()}.`,
       );
     },
-    [runSubmission],
+    [runSubmission, t],
   );
 
   const [thread, setThread] =
@@ -457,53 +602,55 @@ export default function TeacherPage() {
   const busy = submissionState === "saving";
 
   return (
-    <main className="page">
-      <header className="filumireLearnerHeader"><Link href="/" className="filumireHeaderLogo" aria-label="FILUMIRE home"><img src="/filumire-logo-white.svg" alt="FILUMIRE" /></Link></header>
-      <AdultRoleSwitch active="teacher" />
-      <div className="shell">
-        <div className="teacherTitle">Teacher Workspace</div>
+    <main className="page" lang={language}>
+      <a className="filumireSkipLink" href="#teacher-main">
+        {language === "fr" ? "Aller au contenu" : "Skip to content"}
+      </a>
+      <AdultHeader active="teacher" language={language} onLanguage={setLanguage} />
+      <AdultRoleSwitch active="teacher" language={language} />
+      <div className="shell" id="teacher-main">
+        <div className="teacherTitle">{t("Teacher Workspace")}</div>
         {data?.summary && (
             <div className="updated">
               {data.summary.updatedAt
-                ? `Updated ${dateTime(
+                ? `${t("Updated")} ${dateTime(
                     data.summary.updatedAt,
+                    language,
                   )}`
-                : "Learning overview"}
+                : t("Learning overview")}
             </div>
           )}
 
         {viewState === "loading" && (
-          <section className="card status-card">
-            Loading teacher workspace...
+          <section className="card status-card" role="status" aria-busy="true">
+            {t("Loading teacher workspace...")}
           </section>
         )}
 
         {viewState === "unauthenticated" && (
           <section className="card status-card">
-            <h1>Please sign in</h1>
+            <h1>{t("Please sign in")}</h1>
             <p>
-              Teacher authorization is required to
-              view learner information.
+              {t("Teacher authorization is required to view learner information.")}
             </p>
-            <a href="/login" className="primary-button">
-              Go to sign in
+            <a href={`/login?lang=${language}`} className="primary-button">
+              {t("Go to sign in")}
             </a>
           </section>
         )}
 
         {viewState === "unavailable" && (
           <section className="card status-card">
-            <h1>Workspace unavailable</h1>
+            <h1>{t("Workspace unavailable")}</h1>
             <p>
-              The teacher workspace could not be
-              loaded.
+              {t("The teacher workspace could not be loaded.")}
             </p>
             <button
               type="button"
               className="primary-button"
               onClick={() => void load()}
             >
-              Try again
+              {t("Try again")}
             </button>
           </section>
         )}
@@ -512,10 +659,9 @@ export default function TeacherPage() {
           data &&
           data.learners.length === 0 && (
             <section className="card status-card">
-              <h1>No learners assigned</h1>
+              <h1>{t("No learners assigned")}</h1>
               <p>
-                No active teacher-learner
-                relationships are available.
+                {t("No active teacher-learner relationships are available.")}
               </p>
             </section>
           )}
@@ -525,7 +671,7 @@ export default function TeacherPage() {
           data.learners.length > 1 && (
             <section className="card selector">
               <div className="section-label">
-                Learner
+                {t("Learner")}
               </div>
               <div className="learner-list">
                 {data.learners.map(
@@ -545,7 +691,7 @@ export default function TeacherPage() {
                         )
                       }
                     >
-                      Learner {index + 1}
+                      {t("Learner")} {index + 1}
                     </button>
                   ),
                 )}
@@ -556,10 +702,9 @@ export default function TeacherPage() {
         {viewState === "ready" &&
           data?.requiresSelection && (
             <section className="card status-card">
-              <h1>Select a learner</h1>
+              <h1>{t("Select a learner")}</h1>
               <p>
-                Choose a learner to view their
-                teaching priorities and progress.
+                {t("Choose a learner to view their teaching priorities and progress.")}
               </p>
             </section>
           )}
@@ -576,7 +721,7 @@ export default function TeacherPage() {
                     }
                   </div>
                   <div className="metric-label">
-                    Need attention
+                    {t("Need attention")}
                   </div>
                 </div>
 
@@ -588,7 +733,7 @@ export default function TeacherPage() {
                     }
                   </div>
                   <div className="metric-label">
-                    Teacher reviews
+                    {t("Teacher reviews")}
                   </div>
                 </div>
 
@@ -597,7 +742,7 @@ export default function TeacherPage() {
                     {data.summary.subjects.length}
                   </div>
                   <div className="metric-label">
-                    Active subjects
+                    {t("Active subjects")}
                   </div>
                 </div>
               </section>
@@ -605,81 +750,71 @@ export default function TeacherPage() {
               {data.summary.masteryMeasures && (
                 <section className="card">
                   <div className="section-label">
-                    Mastery check
+                    {t("Mastery check")}
                   </div>
                   <h2>
-                    How solid is this learner&apos;s mastery?
+                    {t("How solid is this learner's mastery?")}
                   </h2>
 
                   <div className="detail-grid">
                     <div>
                       <span className="detail-label">
-                        Topics mastered
+                        {t("Topics mastered")}
                       </span>
                       <strong>
                         {data.summary.masteryMeasures.competenciesMastered}
-                        {" of "}
+                        {t(" of ")}
                         {data.summary.masteryMeasures.competenciesAttempted}
-                        {" started"}
+                        {t(" started")}
                       </strong>
                     </div>
                     <div>
                       <span className="detail-label">
-                        Mastery not confirmed later
+                        {t("Mastery not confirmed later")}
                       </span>
                       <strong>
-                        {measure(
-                          data.summary.masteryMeasures.falseMasteryRate,
-                        )}
+                        {measure(data.summary.masteryMeasures.falseMasteryRate, t)}
                       </strong>
                     </div>
                     <div>
                       <span className="detail-label">
-                        Remembered after a day or more
+                        {t("Remembered after a day or more")}
                       </span>
                       <strong>
-                        {measure(
-                          data.summary.masteryMeasures.delayedRetentionAfterMastery,
-                        )}
+                        {measure(data.summary.masteryMeasures.delayedRetentionAfterMastery, t)}
                       </strong>
                     </div>
                     <div>
                       <span className="detail-label">
-                        Used in a new situation
+                        {t("Used in a new situation")}
                       </span>
                       <strong>
-                        {measure(
-                          data.summary.masteryMeasures.transferAfterMastery,
-                        )}
+                        {measure(data.summary.masteryMeasures.transferAfterMastery, t)}
                       </strong>
                     </div>
                     <div>
                       <span className="detail-label">
-                        Teacher marking agrees
+                        {t("Teacher marking agrees")}
                       </span>
                       <strong>
-                        {measure(
-                          data.summary.masteryMeasures.teacherAgreementAfterMastery,
-                        )}
+                        {measure(data.summary.masteryMeasures.teacherAgreementAfterMastery, t)}
                       </strong>
                     </div>
                     <div>
                       <span className="detail-label">
-                        Stuck or out of questions
+                        {t("Stuck or out of questions")}
                       </span>
                       <strong>
-                        {measure(
-                          data.summary.masteryMeasures.stuckRate,
-                        )}
+                        {measure(data.summary.masteryMeasures.stuckRate, t)}
                       </strong>
                     </div>
                     <div>
                       <span className="detail-label">
-                        Answers to reach mastery (median)
+                        {t("Answers to reach mastery (median)")}
                       </span>
                       <strong>
                         {data.summary.masteryMeasures.medianAnswersToMastery ??
-                          "No data yet"}
+                          t("No data yet")}
                       </strong>
                     </div>
                   </div>
@@ -707,15 +842,14 @@ export default function TeacherPage() {
               <div className="workspace-split">
               <section className="card">
                 <div className="section-label">
-                  Learning priorities
+                  {t("Learning priorities")}
                 </div>
-                <h1>Learners who may need support</h1>
+                <h1>{t("Learners who may need support")}</h1>
 
                 {data.summary.attentionQueue
                   .length === 0 ? (
                   <p>
-                    No competencies currently
-                    require teacher attention.
+                    {t("No competencies currently require teacher attention.")}
                   </p>
                 ) : (
                   <div className="attention-list">
@@ -761,7 +895,7 @@ export default function TeacherPage() {
                                   key={reason}
                                   className="chip"
                                 >
-                                  {label(reason)}
+                                  {label(reason, t)}
                                 </span>
                               ),
                             )}
@@ -775,9 +909,9 @@ export default function TeacherPage() {
 
               <section className="card">
                 <div className="section-label">
-                  Learning overview
+                  {t("Learning overview")}
                 </div>
-                <h1>Learning overview</h1>
+                <h1>{t("Learning overview")}</h1>
 
                 <div className="subject-list">
                   {data.summary.subjects.map(
@@ -795,12 +929,11 @@ export default function TeacherPage() {
                               {
                                 subject.competenciesNeedingAttention
                               }{" "}
-                              of{" "}
+                              {t("of")}{" "}
                               {
                                 subject.competencyCount
                               }{" "}
-                              competencies need
-                              attention
+                              {t("competencies need attention")}
                             </p>
                           </div>
 
@@ -853,7 +986,7 @@ export default function TeacherPage() {
                                   {percent(
                                     competency.masteryEstimate,
                                   )}{" "}
-                                  mastery
+                                  {t("mastery")}
                                 </span>
                               </button>
                             ),
@@ -870,11 +1003,10 @@ export default function TeacherPage() {
                 0 && (
                 <section className="card">
                   <div className="section-label">
-                    Teacher review
+                    {t("Teacher review")}
                   </div>
                   <h1>
-                    Learner responses to review
-                    teacher judgment
+                    {t("Learner responses to review teacher judgment")}
                   </h1>
 
                   <div className="review-list">
@@ -887,7 +1019,7 @@ export default function TeacherPage() {
                           <div className="detail-grid">
                             <div>
                               <span className="detail-label">
-                                Competency
+                                {t("Competency")}
                               </span>
                               <strong>
                                 {
@@ -897,7 +1029,7 @@ export default function TeacherPage() {
                             </div>
                             <div>
                               <span className="detail-label">
-                                Assessment item
+                                {t("Assessment item")}
                               </span>
                               <strong>
                                 {
@@ -907,19 +1039,17 @@ export default function TeacherPage() {
                             </div>
                             <div>
                               <span className="detail-label">
-                                Submitted
+                                {t("Submitted")}
                               </span>
                               <strong>
-                                {dateTime(
-                                  review.submittedAt,
-                                )}
+                                {dateTime(review.submittedAt, language)}
                               </strong>
                             </div>
                           </div>
 
                           <div className="response-box">
                             <span className="detail-label">
-                              Learner response
+                              {t("Learner response")}
                             </span>
                             <div>{review.response}</div>
                           </div>
@@ -939,7 +1069,7 @@ export default function TeacherPage() {
                                     )
                                   }
                                 >
-                                  {label(outcome)}
+                                  {label(outcome, t)}
                                 </button>
                               ),
                             )}
@@ -955,7 +1085,7 @@ export default function TeacherPage() {
                 <>
                   <section className="card">
                     <div className="section-label">
-                      Learning detail
+                      {t("Learning detail")}
                     </div>
                     <div className="detail-heading">
                       <div>
@@ -985,39 +1115,35 @@ export default function TeacherPage() {
                     <div className="detail-grid">
                   <div>
                     <span className="detail-label">
-                      Learning progression
+                      {t("Learning progression")}
                     </span>
                         <strong>
                           {selectedCompetency.readyForAdvancement
-                            ? "Ready"
-                            : "Not yet ready"}
+                            ? t("Ready")
+                            : t("Not yet ready")}
                         </strong>
                       </div>
                       <div>
                         <span className="detail-label">
-                          Retention
+                          {t("Retention")}
                         </span>
                         <strong>
-                          {label(
-                            selectedCompetency.retentionStatus,
-                          )}
+                          {label(selectedCompetency.retentionStatus, t)}
                         </strong>
                       </div>
                       <div>
                         <span className="detail-label">
-                          Transfer
+                          {t("Transfer")}
                         </span>
                         <strong>
-                          {label(
-                            selectedCompetency.transferStatus,
-                          )}
+                          {label(selectedCompetency.transferStatus, t)}
                         </strong>
                       </div>
                       {selectedCompetency.prerequisiteRepair && (
                         <>
                           <div>
                             <span className="detail-label">
-                              Sent back to learn first
+                              {t("Sent back to learn first")}
                             </span>
                             <strong>
                               {
@@ -1026,19 +1152,17 @@ export default function TeacherPage() {
                               }
                               {selectedCompetency.prerequisiteRepair
                                 .completed
-                                ? " (done)"
-                                : " (in progress)"}
+                                ? t(" (done)")
+                                : t(" (in progress)")}
                             </strong>
                           </div>
                           <div>
                             <span className="detail-label">
-                              Sent back on
+                              {t("Sent back on")}
                             </span>
                             <strong>
-                              {dateTime(
-                                selectedCompetency.prerequisiteRepair
-                                  .startedAt,
-                              )}
+                              {dateTime(selectedCompetency.prerequisiteRepair
+                                  .startedAt, language)}
                             </strong>
                           </div>
                         </>
@@ -1047,22 +1171,18 @@ export default function TeacherPage() {
                         <>
                           <div>
                             <span className="detail-label">
-                              Ran out of questions
+                              {t("Ran out of questions")}
                             </span>
                             <strong>
-                              {dateTime(
-                                selectedCompetency.needsSupportSince,
-                              )}
+                              {dateTime(selectedCompetency.needsSupportSince, language)}
                             </strong>
                           </div>
                           <div>
                             <span className="detail-label">
-                              FILUMIRE tries again from
+                              {t("FILUMIRE tries again from")}
                             </span>
                             <strong>
-                              {dateTime(
-                                selectedCompetency.needsSupportRetryAt,
-                              )}
+                              {dateTime(selectedCompetency.needsSupportRetryAt, language)}
                             </strong>
                           </div>
                         </>
@@ -1078,7 +1198,7 @@ export default function TeacherPage() {
                               key={reason}
                               className="chip"
                             >
-                              {label(reason)}
+                              {label(reason, t)}
                             </span>
                           ),
                         )}
@@ -1089,14 +1209,12 @@ export default function TeacherPage() {
                   <section className="two-column">
                     <article className="card">
                       <div className="section-label">
-                        Learning insight
+                        {t("Learning insight")}
                       </div>
                       <h2>
-                        {label(
-                          selectedCompetency
+                        {label(selectedCompetency
                             .diagnosisExplanation
-                            .diagnosticState,
-                        )}
+                            .diagnosticState, t)}
                       </h2>
                       <p>
                         Strength of current learning signal:{" "}
@@ -1112,7 +1230,7 @@ export default function TeacherPage() {
                       <div className="detail-stack">
                         <div>
                           <span className="detail-label">
-                            Patterns noticed
+                            {t("Patterns noticed")}
                           </span>
                           <div>
                             {selectedCompetency
@@ -1122,12 +1240,12 @@ export default function TeacherPage() {
                               ? selectedCompetency.diagnosisExplanation.errorPatterns.join(
                                   ", ",
                                 )
-                              : "None recorded"}
+                              : t("None recorded")}
                           </div>
                         </div>
                         <div>
                           <span className="detail-label">
-                            Earlier learning to revisit
+                            {t("Earlier learning to revisit")}
                           </span>
                           <div>
                             {selectedCompetency
@@ -1137,12 +1255,12 @@ export default function TeacherPage() {
                               ? selectedCompetency.diagnosisExplanation.prerequisiteCompetencyIds.join(
                                   ", ",
                                 )
-                              : "None identified"}
+                              : t("None identified")}
                           </div>
                         </div>
                         <div>
                           <span className="detail-label">
-                            Possible misunderstandings
+                            {t("Possible misunderstandings")}
                           </span>
                           <div>
                             {selectedCompetency
@@ -1152,7 +1270,7 @@ export default function TeacherPage() {
                               ? selectedCompetency.diagnosisExplanation.misconceptionIds.join(
                                   ", ",
                                 )
-                              : "None identified"}
+                              : t("None identified")}
                           </div>
                         </div>
                       </div>
@@ -1160,51 +1278,45 @@ export default function TeacherPage() {
 
                     <article className="card">
                       <div className="section-label">
-                        FILUMIRE learning response
+                        {t("FILUMIRE learning response")}
                       </div>
                       <h2>
-                        Current instructional direction
+                        {t("Current instructional direction")}
                       </h2>
                       <div className="detail-stack">
                         <div>
                           <span className="detail-label">
-                            Learning approach
+                            {t("Learning approach")}
                           </span>
                           <strong>
-                            {label(
-                              selectedCompetency
+                            {label(selectedCompetency
                                 .adaptiveExplanation
-                                .instructionalStrategy,
-                            )}
+                                .instructionalStrategy, t)}
                           </strong>
                         </div>
                         <div>
                           <span className="detail-label">
-                            Support approach
+                            {t("Support approach")}
                           </span>
                           <strong>
-                            {label(
-                              selectedCompetency
+                            {label(selectedCompetency
                                 .adaptiveExplanation
-                                .responseMode,
-                            )}
+                                .responseMode, t)}
                           </strong>
                         </div>
                         <div>
                           <span className="detail-label">
-                            Current learning state
+                            {t("Current learning state")}
                           </span>
                           <strong>
-                            {label(
-                              selectedCompetency
+                            {label(selectedCompetency
                                 .adaptiveExplanation
-                                .diagnosticState,
-                            )}
+                                .diagnosticState, t)}
                           </strong>
                         </div>
                         <div>
                           <span className="detail-label">
-                            Recent learning considered
+                            {t("Recent learning considered")}
                           </span>
                           <strong>
                             {
@@ -1213,7 +1325,7 @@ export default function TeacherPage() {
                                 .relevantEvidenceIds
                                 .length
                             }{" "}
-                            records
+                            {t("records")}
                           </strong>
                         </div>
                       </div>
@@ -1222,15 +1334,14 @@ export default function TeacherPage() {
 
                   <section className="card">
                     <div className="section-label">
-                      Evidence
+                      {t("Evidence")}
                     </div>
-                    <h1>Recent learning record</h1>
+                    <h1>{t("Recent learning record")}</h1>
 
                     {selectedCompetency.evidence
                       .length === 0 ? (
                       <p>
-                        No evidence has been recorded
-                        for this competency.
+                        {t("No evidence has been recorded for this competency.")}
                       </p>
                     ) : (
                       <div className="timeline">
@@ -1242,48 +1353,34 @@ export default function TeacherPage() {
                             >
                               <div className="timeline-top">
                                 <strong>
-                                  {label(
-                                    item.outcome,
-                                  )}
+                                  {label(item.outcome, t)}
                                 </strong>
                                 <span>
-                                  {dateTime(
-                                    item.timestamp,
-                                  )}
+                                  {dateTime(item.timestamp, language)}
                                 </span>
                               </div>
                               <div className="chips">
                                 <span className="chip">
-                                  {label(
-                                    item.source,
-                                  )}
+                                  {label(item.source, t)}
                                 </span>
                                 {item.purpose && (
                                   <span className="chip">
-                                    {label(
-                                      item.purpose,
-                                    )}
+                                    {label(item.purpose, t)}
                                   </span>
                                 )}
                                 {item.independence && (
                                   <span className="chip">
-                                    {label(
-                                      item.independence,
-                                    )}
+                                    {label(item.independence, t)}
                                   </span>
                                 )}
                                 {item.difficulty && (
                                   <span className="chip">
-                                    {label(
-                                      item.difficulty,
-                                    )}
+                                    {label(item.difficulty, t)}
                                   </span>
                                 )}
                                 {item.strength && (
                                   <span className="chip">
-                                    {label(
-                                      item.strength,
-                                    )}
+                                    {label(item.strength, t)}
                                   </span>
                                 )}
                               </div>
@@ -1291,9 +1388,7 @@ export default function TeacherPage() {
                                 item.errorPattern) && (
                                 <p>
                                   {item.errorClass
-                                    ? `Error: ${label(
-                                        item.errorClass,
-                                      )}`
+                                    ? `Error: ${label(item.errorClass, t)}`
                                     : ""}
                                   {item.errorClass &&
                                   item.errorPattern
@@ -1313,17 +1408,17 @@ export default function TeacherPage() {
                   <section className="two-column">
                     <article className="card">
                       <div className="section-label">
-                        Support history
+                        {t("Support history")}
                       </div>
                       <h1>
-                        Instructional interventions
+                        {t("Instructional interventions")}
                       </h1>
 
                       {selectedCompetency
                         .interventionHistory.length ===
                       0 ? (
                         <p>
-                          No interventions recorded.
+                          {t("No interventions recorded.")}
                         </p>
                       ) : (
                         <div className="timeline">
@@ -1336,30 +1431,22 @@ export default function TeacherPage() {
                                 className="timeline-item"
                               >
                                 <strong>
-                                  {label(item.type)}
+                                  {label(item.type, t)}
                                 </strong>
                                 <p>
-                                  {label(
-                                    item.instructionalStrategy,
-                                  )}
+                                  {label(item.instructionalStrategy, t)}
                                 </p>
                                 <div className="small">
                                   Started{" "}
-                                  {dateTime(
-                                    item.startedAt,
-                                  )}
+                                  {dateTime(item.startedAt, language)}
                                   {item.completedAt
-                                    ? ` | Completed ${dateTime(
-                                        item.completedAt,
-                                      )}`
+                                    ? ` | Completed ${dateTime(item.completedAt, language)}`
                                     : ""}
                                 </div>
                                 {item.outcome && (
                                   <div className="small">
                                     Outcome:{" "}
-                                    {label(
-                                      item.outcome,
-                                    )}
+                                    {label(item.outcome, t)}
                                   </div>
                                 )}
                               </div>
@@ -1371,16 +1458,15 @@ export default function TeacherPage() {
 
                     <article className="card">
                       <div className="section-label">
-                        Learning over time
+                        {t("Learning over time")}
                       </div>
-                      <h1>Learning history</h1>
+                      <h1>{t("Learning history")}</h1>
 
                       {selectedCompetency
                         .progressHistory.length ===
                       0 ? (
                         <p>
-                          No progress history
-                          recorded.
+                          {t("No progress history recorded.")}
                         </p>
                       ) : (
                         <div className="timeline">
@@ -1394,26 +1480,18 @@ export default function TeacherPage() {
                               >
                                 <div className="timeline-top">
                                   <strong>
-                                    {label(
-                                      item.outcome,
-                                    )}
+                                    {label(item.outcome, t)}
                                   </strong>
                                   <span>
-                                    {dateTime(
-                                      item.timestamp,
-                                    )}
+                                    {dateTime(item.timestamp, language)}
                                   </span>
                                 </div>
                                 <div className="small">
                                   {item.purpose
-                                    ? `${label(
-                                        item.purpose,
-                                      )}`
-                                    : "Evidence"}
+                                    ? `${label(item.purpose, t)}`
+                                    : t("Evidence")}
                                   {item.diagnosticState
-                                    ? ` | ${label(
-                                        item.diagnosticState,
-                                      )}`
+                                    ? ` | ${label(item.diagnosticState, t)}`
                                     : ""}
                                   {typeof item.diagnosticConfidence ===
                                   "number"
@@ -1432,19 +1510,19 @@ export default function TeacherPage() {
 
                   <section className="card">
                     <div className="section-label">
-                      Teacher support
+                      {t("Teacher support")}
                     </div>
                     <h1>
-                      Add professional context
+                      {t("Add professional context")}
                     </h1>
 
                     <div className="teacher-tools">
                       <article className="tool-panel">
                         <h2>
-                          Record observation
+                          {t("Record observation")}
                         </h2>
                         <label>
-                          Outcome
+                          {t("Outcome")}
                           <select
                             value={
                               observationOutcome
@@ -1463,7 +1541,7 @@ export default function TeacherPage() {
                                   key={outcome}
                                   value={outcome}
                                 >
-                                  {label(outcome)}
+                                  {label(outcome, t)}
                                 </option>
                               ),
                             )}
@@ -1477,16 +1555,16 @@ export default function TeacherPage() {
                             void recordObservation()
                           }
                         >
-                          Record observation
+                          {t("Record observation")}
                         </button>
                       </article>
 
                       <article className="tool-panel">
                         <h2>
-                          Professional note
+                          {t("Professional note")}
                         </h2>
                         <label>
-                          Note type
+                          {t("Note type")}
                           <select
                             value={noteType}
                             onChange={(event) =>
@@ -1507,14 +1585,14 @@ export default function TeacherPage() {
                                     option.value
                                   }
                                 >
-                                  {option.label}
+                                  {t(option.label)}
                                 </option>
                               ),
                             )}
                           </select>
                         </label>
                         <label>
-                          Note
+                          {t("Note")}
                           <textarea
                             value={noteText}
                             onChange={(event) =>
@@ -1536,16 +1614,16 @@ export default function TeacherPage() {
                             void saveNote()
                           }
                         >
-                          Save note
+                          {t("Save note")}
                         </button>
                       </article>
 
                       <article className="tool-panel">
                         <h2>
-                          Request learning support
+                          {t("Request learning support")}
                         </h2>
                         <label>
-                          Request
+                          {t("Request")}
                           <select
                             value={actionType}
                             onChange={(event) =>
@@ -1566,14 +1644,14 @@ export default function TeacherPage() {
                                     option.value
                                   }
                                 >
-                                  {option.label}
+                                  {t(option.label)}
                                 </option>
                               ),
                             )}
                           </select>
                         </label>
                         <label>
-                          Reason (optional)
+                          {t("Reason (optional)")}
                           <textarea
                             value={actionReason}
                             onChange={(event) =>
@@ -1593,7 +1671,7 @@ export default function TeacherPage() {
                             void submitAction()
                           }
                         >
-                          Submit request
+                          {t("Submit request")}
                         </button>
                       </article>
                     </div>
@@ -1604,18 +1682,15 @@ export default function TeacherPage() {
               {data?.selectedLearnerId && (
                 <section className="card">
                   <div className="section-label">
-                    Parent-teacher messages
+                    {t("Parent-teacher messages")}
                   </div>
-                  <h1>Messages with home</h1>
+                  <h1>{t("Messages with home")}</h1>
                   <p className="thread-intro">
-                    Messages share context with the
-                    learner&apos;s parent. They do not
-                    change FILUMIRE&apos;s learning
-                    decisions.
+                    {t("Messages share context with the learner's parent. They do not change FILUMIRE's learning decisions.")}
                   </p>
 
                   {threadState === "loading" && (
-                    <p>Loading messages...</p>
+                    <p>{t("Loading messages...")}</p>
                   )}
 
                   {thread.length > 0 && (
@@ -1629,13 +1704,11 @@ export default function TeacherPage() {
                             <strong>
                               {message.senderRole ===
                               "guardian"
-                                ? "Parent"
-                                : "Teacher"}
+                                ? t("Parent")
+                                : t("Teacher")}
                             </strong>
                             <span>
-                              {dateTime(
-                                message.createdAt,
-                              )}
+                              {dateTime(message.createdAt, language)}
                             </span>
                           </div>
                           <p>{message.text}</p>
@@ -1646,11 +1719,11 @@ export default function TeacherPage() {
 
                   {threadState !== "loading" &&
                     thread.length === 0 && (
-                      <p>No messages yet.</p>
+                      <p>{t("No messages yet.")}</p>
                     )}
 
                   <label>
-                    Reply
+                    {t("Reply")}
                     <textarea
                       value={threadText}
                       onChange={(event) =>
@@ -1665,8 +1738,7 @@ export default function TeacherPage() {
 
                   {threadState === "error" && (
                     <p className="thread-error">
-                      The message service isn&apos;t
-                      available right now.
+                      {t("The message service isn't available right now.")}
                     </p>
                   )}
 
@@ -1682,8 +1754,8 @@ export default function TeacherPage() {
                     }
                   >
                     {threadState === "sending"
-                      ? "Sending..."
-                      : "Send message"}
+                      ? t("Sending...")
+                      : t("Send message")}
                   </button>
                 </section>
               )}

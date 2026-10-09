@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
-import { AdultRoleSwitch } from "../../components/filumire/AdultRoleSwitch";
+import { AdultHeader, AdultRoleSwitch } from "../../components/filumire/AdultRoleSwitch";
+import { useLanguage, type Language } from "../../components/filumire/language";
 
 import {
   useCallback,
@@ -24,51 +25,134 @@ type ViewState =
   | "unauthenticated"
   | "unavailable";
 
-function relationshipLabel(
-  relationshipType: string,
-  index: number,
-): string {
-  if (relationshipType === "self") {
-    return "Your own learning";
-  }
+/*
+ * Interface copy only. Learning summaries (topic names, alerts,
+ * home-support guidance) come from the server and are shown as
+ * written.
+ */
+const TEXT = {
+  en: {
+    subtitle: "Parent & home",
+    own: "Your own learning",
+    learner: "Learner",
+    loading: "Loading learning overview...",
+    signIn: "Please sign in",
+    signInBody: "Sign in to view this learner's progress.",
+    goSignIn: "Go to sign in",
+    unavailable: "Overview isn't available right now",
+    unavailableBody: "We couldn't load the learning overview. Please try again.",
+    retry: "Try again",
+    noLearners: "No learners linked yet",
+    noLearnersBody: "There is no learner linked to your account yet.",
+    select: "Select a learner",
+    overview: "Learning overview",
+    current: "Current learning",
+    ready: "Ready when they are",
+    progress: "progress",
+    progressLabel: "Learning progress",
+    next: "What comes next",
+    notStarted:
+      "Once learning begins, you will see progress, current learning and useful ways to support the learner here.",
+    attention: "Needs your attention",
+    going: "How learning is going",
+    well: "Going well",
+    support: "Needs more support",
+    home: "What you can do at home",
+    recent: "Recent learning",
+    messages: "Parent-teacher messages",
+    messagesIntro:
+      "Share useful learning context with the teacher. Messages do not change FILUMIRE's learning decisions.",
+    loadingMessages: "Loading messages...",
+    parent: "Parent",
+    teacher: "Teacher",
+    noMessages: "No messages yet.",
+    message: "Message",
+    placeholder: "Share something that may help the teacher support this learner.",
+    messageError: "The message service isn't available right now.",
+    sending: "Sending...",
+    send: "Send message",
+    sent: "Message sent.",
+    outcomes: {
+      correct: "Correct",
+      incorrect: "Needs practice",
+      partial: "Partly correct",
+      other: "Recorded",
+    },
+  },
+  fr: {
+    subtitle: "Parents et maison",
+    own: "Votre propre apprentissage",
+    learner: "Apprenant",
+    loading: "Chargement de l'aperçu...",
+    signIn: "Veuillez vous connecter",
+    signInBody: "Connectez-vous pour voir la progression de cet apprenant.",
+    goSignIn: "Aller à la connexion",
+    unavailable: "L'aperçu n'est pas disponible pour le moment",
+    unavailableBody: "Nous n'avons pas pu charger l'aperçu. Veuillez réessayer.",
+    retry: "Réessayer",
+    noLearners: "Aucun apprenant associé",
+    noLearnersBody: "Aucun apprenant n'est encore associé à votre compte.",
+    select: "Choisir un apprenant",
+    overview: "Aperçu de l'apprentissage",
+    current: "Apprentissage en cours",
+    ready: "Prêt quand il le sera",
+    progress: "progression",
+    progressLabel: "Progression",
+    next: "La suite",
+    notStarted:
+      "Dès que l'apprentissage commence, vous verrez ici la progression, le thème en cours et des idées pour aider l'apprenant.",
+    attention: "À surveiller",
+    going: "Comment se passe l'apprentissage",
+    well: "Ce qui va bien",
+    support: "Besoin de plus d'aide",
+    home: "Ce que vous pouvez faire à la maison",
+    recent: "Apprentissage récent",
+    messages: "Messages parents-enseignant",
+    messagesIntro:
+      "Partagez des informations utiles avec l'enseignant. Les messages ne modifient pas les décisions d'apprentissage de FILUMIRE.",
+    loadingMessages: "Chargement des messages...",
+    parent: "Parent",
+    teacher: "Enseignant",
+    noMessages: "Aucun message pour le moment.",
+    message: "Message",
+    placeholder: "Partagez ce qui peut aider l'enseignant à accompagner cet apprenant.",
+    messageError: "Le service de messagerie n'est pas disponible pour le moment.",
+    sending: "Envoi...",
+    send: "Envoyer le message",
+    sent: "Message envoyé.",
+    outcomes: {
+      correct: "Correct",
+      incorrect: "À retravailler",
+      partial: "En partie correct",
+      other: "Enregistré",
+    },
+  },
+} as const;
 
-  if (relationshipType === "guardian") {
-    return `Learner ${index + 1}`;
-  }
-
-  return `Learner ${index + 1}`;
+function locale(language: Language): string {
+  return language === "fr" ? "fr-FR" : "en-GB";
 }
 
-function formatDate(value: string): string {
+function formatDate(value: string, language: Language): string {
   try {
-    return new Date(value).toLocaleDateString();
+    return new Date(value).toLocaleDateString(locale(language));
   } catch {
     return value;
   }
 }
 
-function formatDateTime(value: string): string {
+function formatDateTime(value: string, language: Language): string {
   try {
-    return new Date(value).toLocaleString();
+    return new Date(value).toLocaleString(locale(language));
   } catch {
     return value;
-  }
-}
-
-function outcomeLabel(outcome: string): string {
-  switch (outcome) {
-    case "correct":
-      return "Correct";
-    case "incorrect":
-      return "Needs practice";
-    case "partial":
-      return "Partly correct";
-    default:
-      return "Recorded";
   }
 }
 
 export default function AdultSupervisionPage() {
+  const [language, setLanguage] = useLanguage();
+  const t = TEXT[language];
+
   const [viewState, setViewState] =
     useState<ViewState>("loading");
 
@@ -83,7 +167,7 @@ export default function AdultSupervisionPage() {
 
   const [messageState, setMessageState] =
     useState<
-      "idle" | "loading" | "sending" | "error"
+      "idle" | "loading" | "sending" | "sent" | "error"
     >("idle");
 
   const load = useCallback(
@@ -155,6 +239,28 @@ export default function AdultSupervisionPage() {
   const isGuardian =
     selectedLearner?.relationshipType === "guardian";
 
+  function relationshipLabel(
+    relationshipType: string,
+    index: number,
+  ): string {
+    return relationshipType === "self"
+      ? t.own
+      : `${t.learner} ${index + 1}`;
+  }
+
+  function outcomeLabel(outcome: string): string {
+    switch (outcome) {
+      case "correct":
+        return t.outcomes.correct;
+      case "incorrect":
+        return t.outcomes.incorrect;
+      case "partial":
+        return t.outcomes.partial;
+      default:
+        return t.outcomes.other;
+    }
+  }
+
   async function sendMessage() {
     if (
       !data?.selectedLearnerId ||
@@ -181,54 +287,49 @@ export default function AdultSupervisionPage() {
         );
 
       setMessages(refreshed.messages);
-      setMessageState("idle");
+      setMessageState("sent");
     } catch {
       setMessageState("error");
     }
   }
 
   return (
-    <main className="page">
-      <header className="filumireLearnerHeader"><Link href="/" className="filumireHeaderLogo" aria-label="FILUMIRE home"><img src="/filumire-logo-white.svg" alt="FILUMIRE" /></Link></header>
-      <AdultRoleSwitch active="parent" />
-      <div className="shell">
-        <div className="brand-subtitle">Parent &amp; home</div>
+    <main className="page" lang={language}>
+      <a className="filumireSkipLink" href="#adult-main">
+        {language === "fr" ? "Aller au contenu" : "Skip to content"}
+      </a>
+      <AdultHeader active="parent" language={language} onLanguage={setLanguage} />
+      <AdultRoleSwitch active="parent" language={language} />
+      <div className="shell" id="adult-main">
+        <div className="brand-subtitle">{t.subtitle}</div>
 
         {viewState === "loading" && (
-          <section className="card loading-card">
+          <section className="card loading-card" aria-busy="true">
             <div className="loader" />
-            <p>Loading learning overview...</p>
+            <p role="status">{t.loading}</p>
           </section>
         )}
 
         {viewState === "unauthenticated" && (
           <section className="card">
-            <h1>Please sign in</h1>
-            <p>
-              Sign in to view this learner&apos;s
-              progress.
-            </p>
-            <a href="/login" className="primary-button">
-              Go to sign in
-            </a>
+            <h1>{t.signIn}</h1>
+            <p>{t.signInBody}</p>
+            <Link href={`/login?lang=${language}`} className="primary-button">
+              {t.goSignIn}
+            </Link>
           </section>
         )}
 
         {viewState === "unavailable" && (
-          <section className="card">
-            <h1>
-              Overview isn&apos;t available right now
-            </h1>
-            <p>
-              We couldn&apos;t load the learning
-              overview. Please try again.
-            </p>
+          <section className="card" role="alert">
+            <h1>{t.unavailable}</h1>
+            <p>{t.unavailableBody}</p>
             <button
               type="button"
               onClick={() => void load()}
               className="primary-button"
             >
-              Try again
+              {t.retry}
             </button>
           </section>
         )}
@@ -237,11 +338,8 @@ export default function AdultSupervisionPage() {
           data &&
           data.learners.length === 0 && (
             <section className="card">
-              <h1>No learners linked yet</h1>
-              <p>
-                There is no learner linked to your
-                account yet.
-              </p>
+              <h1>{t.noLearners}</h1>
+              <p>{t.noLearnersBody}</p>
             </section>
           )}
 
@@ -249,16 +347,17 @@ export default function AdultSupervisionPage() {
           data &&
           data.learners.length > 1 && (
             <section className="card">
-              <div className="eyebrow">
-                Select a learner
+              <div className="eyebrow" id="learner-select-label">
+                {t.select}
               </div>
 
-              <div className="learner-list">
+              <div className="learner-list" role="group" aria-labelledby="learner-select-label">
                 {data.learners.map(
                   (learner, index) => (
                     <button
                       key={learner.learnerId}
                       type="button"
+                      aria-pressed={learner.learnerId === data.selectedLearnerId}
                       className={
                         learner.learnerId ===
                         data.selectedLearnerId
@@ -287,36 +386,44 @@ export default function AdultSupervisionPage() {
                 <div className="parent-overview-top">
                   <div>
                     <div className="eyebrow">
-                      Learning overview
+                      {t.overview}
                     </div>
                     <h1>
                       {data.summary.hasActivity
                         ? data.summary.competencyTitle ??
-                          "Current learning"
-                        : "Ready when they are"}
+                          t.current
+                        : t.ready}
                     </h1>
                     <p className="parent-subject">
                       {data.summary.subjectName ??
-                        "Current learning"}
+                        t.current}
                     </p>
                   </div>
 
                   {data.summary.hasActivity && (
                     <div
                       className="parent-progress-ring"
-                      aria-label={`${data.summary.masteryPercent}% progress`}
+                      role="img"
+                      aria-label={`${t.progressLabel}: ${data.summary.masteryPercent}%`}
                     >
-                      <strong>
+                      <strong aria-hidden="true">
                         {data.summary.masteryPercent}%
                       </strong>
-                      <span>progress</span>
+                      <span aria-hidden="true">{t.progress}</span>
                     </div>
                   )}
                 </div>
 
                 {data.summary.hasActivity ? (
                   <>
-                    <div className="parent-progress-track">
+                    <div
+                      className="parent-progress-track"
+                      role="progressbar"
+                      aria-label={t.progressLabel}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-valuenow={Math.max(0, Math.min(100, data.summary.masteryPercent))}
+                    >
                       <div
                         className="parent-progress-fill"
                         style={{
@@ -333,7 +440,7 @@ export default function AdultSupervisionPage() {
 
                     {data.summary.nextFocus && (
                       <div className="parent-focus">
-                        <span>What comes next</span>
+                        <span>{t.next}</span>
                         <strong>
                           {data.summary.nextFocus}
                         </strong>
@@ -342,9 +449,7 @@ export default function AdultSupervisionPage() {
                   </>
                 ) : (
                   <p className="section-text">
-                    Once learning begins, you will see progress,
-                    current learning and useful ways to support
-                    the learner here.
+                    {t.notStarted}
                   </p>
                 )}
               </section>
@@ -352,9 +457,9 @@ export default function AdultSupervisionPage() {
               {data.summary.alerts &&
                 data.summary.alerts.length > 0 && (
                   <section className="card">
-                    <div className="section-heading">
-                      Needs your attention
-                    </div>
+                    <h2 className="section-heading">
+                      {t.attention}
+                    </h2>
 
                     <div className="stack">
                       {data.summary.alerts.map(
@@ -377,17 +482,17 @@ export default function AdultSupervisionPage() {
                 (data.summary.supportAreas?.length ??
                   0) > 0) && (
                 <section className="card">
-                  <div className="section-heading">
-                    How learning is going
-                  </div>
+                  <h2 className="section-heading">
+                    {t.going}
+                  </h2>
 
                   {data.summary.strengths &&
                     data.summary.strengths.length >
                       0 && (
                       <div>
-                        <div className="section-label">
-                          Going well
-                        </div>
+                        <h3 className="section-label">
+                          {t.well}
+                        </h3>
                         <ul className="plain-list">
                           {data.summary.strengths.map(
                             (item) => (
@@ -404,9 +509,9 @@ export default function AdultSupervisionPage() {
                     data.summary.supportAreas.length >
                       0 && (
                       <div>
-                        <div className="section-label">
-                          Needs more support
-                        </div>
+                        <h3 className="section-label">
+                          {t.support}
+                        </h3>
                         <ul className="plain-list">
                           {data.summary.supportAreas.map(
                             (item) => (
@@ -425,9 +530,9 @@ export default function AdultSupervisionPage() {
                 data.summary.homeSupport.length >
                   0 && (
                   <section className="card">
-                    <div className="section-heading">
-                      What you can do at home
-                    </div>
+                    <h2 className="section-heading">
+                      {t.home}
+                    </h2>
 
                     <div className="stack">
                       {data.summary.homeSupport.map(
@@ -451,9 +556,9 @@ export default function AdultSupervisionPage() {
               {data.summary.recentActivity.length >
                 0 && (
                 <section className="card">
-                  <div className="section-heading">
-                    Recent learning
-                  </div>
+                  <h2 className="section-heading">
+                    {t.recent}
+                  </h2>
 
                   <ul className="activity-list">
                     {data.summary.recentActivity.map(
@@ -464,9 +569,10 @@ export default function AdultSupervisionPage() {
                               entry.outcome,
                             )}
                           </span>
-                          <time>
+                          <time dateTime={entry.occurredAt}>
                             {formatDate(
                               entry.occurredAt,
+                              language,
                             )}
                           </time>
                         </li>
@@ -478,18 +584,16 @@ export default function AdultSupervisionPage() {
 
               {isGuardian && (
                 <section className="card parent-messages">
-                  <div className="section-heading">
-                    Parent-teacher messages
-                  </div>
+                  <h2 className="section-heading">
+                    {t.messages}
+                  </h2>
 
                   <p className="section-intro">
-                    Share useful learning context with
-                    the teacher. Messages do not change
-                    FILUMIRE&apos;s learning decisions.
+                    {t.messagesIntro}
                   </p>
 
                   {messageState === "loading" && (
-                    <p>Loading messages...</p>
+                    <p role="status">{t.loadingMessages}</p>
                   )}
 
                   {messages.length > 0 && (
@@ -503,14 +607,15 @@ export default function AdultSupervisionPage() {
                             <strong>
                               {message.senderRole ===
                               "guardian"
-                                ? "Parent"
-                                : "Teacher"}
+                                ? t.parent
+                                : t.teacher}
                             </strong>
-                            <span>
+                            <time dateTime={message.createdAt}>
                               {formatDateTime(
                                 message.createdAt,
+                                language,
                               )}
-                            </span>
+                            </time>
                           </div>
                           <p>{message.text}</p>
                         </div>
@@ -521,7 +626,7 @@ export default function AdultSupervisionPage() {
                   {messageState !== "loading" &&
                     messages.length === 0 && (
                       <p>
-                        No messages yet.
+                        {t.noMessages}
                       </p>
                     )}
 
@@ -529,27 +634,30 @@ export default function AdultSupervisionPage() {
                     className="message-label"
                     htmlFor="parent-message"
                   >
-                    Message
+                    {t.message}
                   </label>
 
                   <textarea
                     id="parent-message"
                     value={messageText}
-                    onChange={(event) =>
+                    onChange={(event) => {
                       setMessageText(
                         event.target.value,
-                      )
-                    }
+                      );
+                      if (messageState === "sent") setMessageState("idle");
+                    }}
                     rows={4}
-                    placeholder="Share something that may help the teacher support this learner."
+                    maxLength={2000}
+                    placeholder={t.placeholder}
                   />
 
-                  {messageState === "error" && (
-                    <p className="error-text">
-                      The message service isn&apos;t
-                      available right now.
-                    </p>
-                  )}
+                  <p className="message-status" role="status" aria-live="polite">
+                    {messageState === "error"
+                      ? t.messageError
+                      : messageState === "sent"
+                        ? t.sent
+                        : ""}
+                  </p>
 
                   <button
                     type="button"
@@ -563,8 +671,8 @@ export default function AdultSupervisionPage() {
                     }
                   >
                     {messageState === "sending"
-                      ? "Sending..."
-                      : "Send message"}
+                      ? t.sending
+                      : t.send}
                   </button>
                 </section>
               )}
@@ -572,6 +680,26 @@ export default function AdultSupervisionPage() {
           )}
       </div>
 
+      <style jsx>{`
+        /* Overhaul: real headings keep the card look; message status */
+        h2.section-heading {
+          margin-top: 0;
+        }
+
+        h3.section-label {
+          line-height: 1.3;
+        }
+
+        .message-status {
+          margin: 8px 0 0;
+          color: #1c6b3a;
+          font-weight: 700;
+        }
+
+        .message-status:empty {
+          margin: 0;
+        }
+      `}</style>
       <style jsx>{`
         .adultFooter {
           margin-top: auto;

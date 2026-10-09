@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { LearnerBottomNav } from "../../components/filumire/LearnerBottomNav";
+import { LanguageToggle } from "../../components/filumire/LanguageToggle";
+import { useLanguage } from "../../components/filumire/language";
 
 function ArrowRight() {
   return (
@@ -29,20 +31,84 @@ const CREATE_ACCOUNT_PENDING =
 const PASSWORD_RECOVERY_PENDING =
   "Password recovery is not available yet. It will be provided by the FILUMIRE identity service.";
 
+const PENDING_FR: Record<string, string> = {
+  [SIGN_IN_PENDING]:
+    "La connexion n'est pas encore activée. Les comptes FILUMIRE seront fournis par un service d'identité sécurisé qui n'est pas encore installé dans cette version : aucun identifiant ni mot de passe ne peut donc être vérifié.",
+  [CREATE_ACCOUNT_PENDING]:
+    "La création de compte n'est pas encore disponible. Elle ouvrira lorsque le service d'identité FILUMIRE sera connecté.",
+  [PASSWORD_RECOVERY_PENDING]:
+    "La récupération du mot de passe n'est pas encore disponible. Elle sera assurée par le service d'identité FILUMIRE.",
+};
+
 const LOCAL_TESTING = process.env.NODE_ENV !== "production";
+
+const TEXT = {
+  en: {
+    back: "Back",
+    backLabel: "Back to FILUMIRE home",
+    home: "FILUMIRE home",
+    adult: ["Parent / Teacher", "Login"],
+    welcome: "Welcome",
+    welcomeAccent: "back",
+    greeting: "Great to see you again!",
+    intro: ["Sign in to continue your learning", "journey with FILUMIRE."],
+    signIn: "Sign In",
+    cardIntro: "Enter your details to continue.",
+    identity: "Email or username",
+    identityPlaceholder: "Email or Username",
+    password: "Password",
+    showPassword: "Show password",
+    hidePassword: "Hide password",
+    forgot: "Forgot your password?",
+    newTitle: "New to FILUMIRE?",
+    newBody: "Create an account and start your learning journey today.",
+    create: "Create Account",
+    localTitle: "Local testing",
+    localBody:
+      "Development build only. Opens FILUMIRE as the built-in test learner (in-memory data, reset when the server restarts). This is not a real sign-in and never appears in production.",
+    setup: "Set up learner",
+    continueTest: "Continue as test learner",
+    landscape: "A brighter tomorrow for every learner.",
+    skip: "Skip to sign in",
+  },
+  fr: {
+    back: "Retour",
+    backLabel: "Retour à l'accueil FILUMIRE",
+    home: "Accueil FILUMIRE",
+    adult: ["Parents /", "enseignants"],
+    welcome: "Bon",
+    welcomeAccent: "retour",
+    greeting: "Ravi de te revoir !",
+    intro: ["Connecte-toi pour continuer ton parcours", "d'apprentissage avec FILUMIRE."],
+    signIn: "Connexion",
+    cardIntro: "Saisis tes informations pour continuer.",
+    identity: "E-mail ou identifiant",
+    identityPlaceholder: "E-mail ou identifiant",
+    password: "Mot de passe",
+    showPassword: "Afficher le mot de passe",
+    hidePassword: "Masquer le mot de passe",
+    forgot: "Mot de passe oublié ?",
+    newTitle: "Nouveau sur FILUMIRE ?",
+    newBody: "Crée un compte et commence ton parcours dès aujourd'hui.",
+    create: "Créer un compte",
+    localTitle: "Test local",
+    localBody:
+      "Version de développement uniquement. Ouvre FILUMIRE avec l'apprenant de test intégré (données en mémoire, effacées au redémarrage du serveur). Ce n'est pas une vraie connexion et cela n'apparaît jamais en production.",
+    setup: "Configurer l'apprenant",
+    continueTest: "Continuer avec l'apprenant de test",
+    landscape: "Un avenir plus brillant pour chaque apprenant.",
+    skip: "Aller à la connexion",
+  },
+} as const;
 
 export default function LoginPage() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [message, setMessage] = useState("");
-  const [language, setLanguage] = useState<"en" | "fr">("en");
-
-  useEffect(() => {
-    setLanguage(
-      new URLSearchParams(window.location.search).get("lang") === "fr"
-        ? "fr"
-        : "en",
-    );
-  }, []);
+  const [createMessage, setCreateMessage] = useState("");
+  const [language, setLanguage] = useLanguage();
+  const t = TEXT[language];
+  const localise = (text: string) =>
+    language === "fr" ? (PENDING_FR[text] ?? text) : text;
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -50,41 +116,49 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="loginPage">
+    <main className="loginPage" lang={language}>
+      <a className="filumireSkipLink" href="#sign-in">
+        {t.skip}
+      </a>
+
       <header className="topbar">
-        <Link href="/" className="back" aria-label="Back to FILUMIRE home">
+        <Link href={`/?lang=${language}`} className="back" aria-label={t.backLabel}>
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M20 12H5M11 5l-7 7 7 7" />
           </svg>
-          Back
+          {t.back}
         </Link>
 
-        <img className="logo" src="/filumire-logo-white.svg" alt="FILUMIRE" />
+        <Link href={`/?lang=${language}`} className="logoLink" aria-label={t.home}>
+          <img className="logo" src="/filumire-logo-white.svg" alt="FILUMIRE" />
+        </Link>
 
-        <Link href="/adult" className="adultLink">
+        <LanguageToggle language={language} onChange={setLanguage} variant="compact" />
+
+        <Link href={`/adult?lang=${language}`} className="adultLink">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="8.5" cy="7.5" r="3.6" />
             <circle cx="16.5" cy="8.5" r="3" />
             <path d="M1.5 20c0-3.9 3-6.4 7-6.4s7 2.5 7 6.4z" />
             <path d="M16 14.2c3.4 0 6.5 1.9 6.5 5.3V20H17c0-2.3-.4-4.3-1-5.8z" />
           </svg>
-          <span>Parent / Teacher<br />Login</span>
+          <span>{t.adult[0]}<br />{t.adult[1]}</span>
         </Link>
       </header>
 
       <section className="hero">
         <img className="heroArt" src="/images/login/page02-hero-art.jpg" alt="" />
-        <h1 className="heroTitle">Welcome <span>back</span></h1>
-        <p className="heroGreeting">Great to see you again!</p>
-        <p className="heroIntro">Sign in to continue your learning<br />journey with FILUMIRE.</p>
+        <h1 className="heroTitle">{t.welcome} <span>{t.welcomeAccent}</span></h1>
+        <p className="heroGreeting">{t.greeting}</p>
+        <p className="heroIntro">{t.intro[0]}<br />{t.intro[1]}</p>
       </section>
 
-      <section className="signInCard">
-        <h2>Sign In</h2>
-        <p className="cardIntro">Enter your details to continue.</p>
+      <section className="signInCard" id="sign-in" aria-labelledby="sign-in-title">
+        <h2 id="sign-in-title">{t.signIn}</h2>
+        <p className="cardIntro">{t.cardIntro}</p>
 
         <form onSubmit={handleSubmit}>
-          <label htmlFor="filumire-identity">Email or username</label>
+          <label htmlFor="filumire-identity">{t.identity}</label>
           <div className="field">
             <svg className="fieldIcon" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="8" r="4.2" />
@@ -95,11 +169,11 @@ export default function LoginPage() {
               name="identity"
               type="text"
               autoComplete="username"
-              placeholder="Email or Username"
+              placeholder={t.identityPlaceholder}
             />
           </div>
 
-          <label htmlFor="filumire-password">Password</label>
+          <label htmlFor="filumire-password">{t.password}</label>
           <div className="field">
             <svg className="fieldIcon" viewBox="0 0 24 24" aria-hidden="true">
               <rect x="5" y="11" width="14" height="10" rx="2.4" />
@@ -110,13 +184,14 @@ export default function LoginPage() {
               name="password"
               type={passwordVisible ? "text" : "password"}
               autoComplete="current-password"
-              placeholder="Password"
+              placeholder={t.password}
             />
             <button
               type="button"
               className="showPassword"
               onClick={() => setPasswordVisible((visible) => !visible)}
-              aria-label={passwordVisible ? "Hide password" : "Show password"}
+              aria-label={passwordVisible ? t.hidePassword : t.showPassword}
+              aria-pressed={passwordVisible}
             >
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M2 12s3.7-7 10-7 10 7 10 7-3.7 7-10 7S2 12 2 12z" />
@@ -131,47 +206,45 @@ export default function LoginPage() {
             className="forgot"
             onClick={() => setMessage(PASSWORD_RECOVERY_PENDING)}
           >
-            Forgot your password?
+            {t.forgot}
           </button>
 
           <button type="submit" className="signInButton">
-            Sign In <ArrowRight />
+            {t.signIn} <ArrowRight />
           </button>
 
-          {message ? (
-            <p className="authMessage" role="status">
-              {message}
-            </p>
-          ) : null}
+          {/* Always mounted so screen readers announce each message. */}
+          <p className="authMessage" role="status" aria-live="polite">
+            {localise(message)}
+          </p>
         </form>
       </section>
 
       <section className="newAccount">
-        <h2>New to FILUMIRE?</h2>
-        <p>Create an account and start your learning journey today.</p>
+        <h2>{t.newTitle}</h2>
+        <p>{t.newBody}</p>
         <button
           type="button"
           className="createButton"
-          onClick={() => setMessage(CREATE_ACCOUNT_PENDING)}
+          onClick={() => setCreateMessage(CREATE_ACCOUNT_PENDING)}
         >
-          Create Account <ArrowRight />
+          {t.create} <ArrowRight />
         </button>
+        <p className="authMessage" role="status" aria-live="polite">
+          {localise(createMessage)}
+        </p>
       </section>
 
       {LOCAL_TESTING ? (
-        <section className="localTesting" aria-label="Local testing">
-          <h2>Local testing</h2>
-          <p>
-            Development build only. Opens FILUMIRE as the built-in test
-            learner (in-memory data, reset when the server restarts). This
-            is not a real sign-in and never appears in production.
-          </p>
+        <section className="localTesting" aria-label={t.localTitle}>
+          <h2>{t.localTitle}</h2>
+          <p>{t.localBody}</p>
           <div className="localTestingLinks">
             <Link href={`/dashboard?lang=${language}&view=setup`}>
-              Set up learner
+              {t.setup}
             </Link>
             <Link href={`/dashboard?lang=${language}`}>
-              Continue as test learner
+              {t.continueTest}
             </Link>
           </div>
         </section>
@@ -179,10 +252,11 @@ export default function LoginPage() {
 
       <section className="landscape">
         <img src="/images/home/landscape%20footer.png" alt="" />
-        <p>A brighter tomorrow for every learner.</p>
+        <p>{t.landscape}</p>
       </section>
 
       <LearnerBottomNav active="home" language={language} variant="inline" />
+
 
       <style>{`
         .loginPage { width: 100%; max-width: 390px; min-height: 844px; margin: 0 auto; background: #ffffff; color: var(--ui-ink); font-family: inherit; }
@@ -291,6 +365,19 @@ export default function LoginPage() {
           .landscape p { top: 16px; font-size: 15px; }
           .loginPage .filumireBottomNav { grid-area: nav; padding: 0 max(40px, calc((100% - 1200px) / 2)); }
           .loginPage .filumireNavItem { flex-direction: row; gap: 10px; font-size: 14px; }
+        }
+        /* Overhaul: logo link, language switch, quiet empty messages */
+        .topbar { gap: 12px; }
+        .logoLink { display: flex; align-items: center; }
+        .loginPage .filumireLangSwitch { margin-left: auto; }
+        .loginPage .adultLink { margin-left: 0; }
+        .authMessage:empty { margin: 0; }
+        .loginPage[lang="fr"] .heroTitle { font-size: 24px; }
+        @media (min-width: 768px) {
+          .loginPage[lang="fr"] .heroTitle { font-size: 38px; }
+        }
+        @media (min-width: 1024px) {
+          .loginPage[lang="fr"] .heroTitle { font-size: 44px; }
         }
       `}</style>
     </main>

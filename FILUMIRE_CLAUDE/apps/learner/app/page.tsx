@@ -1,8 +1,76 @@
+"use client";
+
 import Link from "next/link";
+import { LanguageToggle } from "../components/filumire/LanguageToggle";
+import { saveLanguage, useLanguage, type Language } from "../components/filumire/language";
+
+/*
+ * The public home page is where a learner chooses a language. The
+ * page itself follows the saved (or ?lang=) language, the EN | FR
+ * switch changes it in place, and choosing a language card saves
+ * the choice before opening sign-in.
+ */
+const TEXT = {
+  en: {
+    adult: "Parent / Teacher Login",
+    welcome: "Welcome to",
+    tagline: "Your intelligent learning partner.",
+    learnersAlt: "FILUMIRE learners",
+    intro: ["FILUMIRE adapts to how you learn, helping you", "build real understanding at your own pace."],
+    choose: "Choose your language to get started.",
+    features: [
+      ["Safe & Secure", "A trusted", "learning space."],
+      ["Personalised", "Adapts to", "how you learn."],
+      ["Effective", "Build real", "understanding."],
+      ["Made for Africa", "Our learners.", "Our future."],
+    ],
+    future: "Same learners. Brighter futures.",
+    rights: "All rights reserved.",
+    tag: "LEARN • GROW • CREATE",
+    home: "FILUMIRE home",
+    skip: "Skip to content",
+  },
+  fr: {
+    adult: "Espace parents / enseignants",
+    welcome: "Bienvenue sur",
+    tagline: "Ton partenaire d’apprentissage intelligent.",
+    learnersAlt: "Apprenants FILUMIRE",
+    intro: ["FILUMIRE s’adapte à ta façon d’apprendre et t’aide", "à vraiment comprendre, à ton rythme."],
+    choose: "Choisis ta langue pour commencer.",
+    features: [
+      ["Sûr et sécurisé", "Un espace", "de confiance."],
+      ["Personnalisé", "S’adapte à", "ta façon d’apprendre."],
+      ["Efficace", "Pour vraiment", "comprendre."],
+      ["Fait pour l’Afrique", "Nos apprenants.", "Notre avenir."],
+    ],
+    future: "Mêmes apprenants. Des avenirs plus brillants.",
+    rights: "Tous droits réservés.",
+    tag: "APPRENDRE • GRANDIR • CRÉER",
+    home: "Accueil FILUMIRE",
+    skip: "Aller au contenu",
+  },
+} as const;
+
+const FEATURE_ICONS = [
+  "/images/home/safe%20and%20secure%20icon.svg",
+  "/images/home/Personalised.svg",
+  "/images/home/Effective.svg",
+  "/images/home/Made%20for%20Africa.svg",
+];
 
 export default function HomePage() {
+  const [language, setLanguage] = useLanguage();
+  const t = TEXT[language];
+
+  function chooseLanguage(value: Language) {
+    saveLanguage(value);
+  }
+
   return (
-    <main className="home">
+    <main className="home" lang={language}>
+      <a className="filumireSkipLink" href="#home-content">
+        {t.skip}
+      </a>
 
       <header className="topbar">
         <img
@@ -10,57 +78,69 @@ export default function HomePage() {
           alt="FILUMIRE"
         />
         <Link
-          href="/adult"
+          href={`/adult?lang=${language}`}
           className="parentTeacherHotspot"
-          aria-label="Parent / Teacher Login"
+          aria-label={t.adult}
         />
       </header>
 
       {/* Tablet and up: a real header bar replaces the 390px artwork. */}
       <header className="wideTopbar">
-        <Link href="/" className="wideLogo" aria-label="FILUMIRE home">
+        <Link href={`/?lang=${language}`} className="wideLogo" aria-label={t.home}>
           <img src="/filumire-logo-white.svg" alt="FILUMIRE" />
         </Link>
-        <Link href="/adult" className="wideAdultLink">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="8.5" cy="7.5" r="3.6" />
-            <circle cx="16.5" cy="8.5" r="3" />
-            <path d="M1.5 20c0-3.9 3-6.4 7-6.4s7 2.5 7 6.4z" />
-            <path d="M16 14.2c3.4 0 6.5 1.9 6.5 5.3V20H17c0-2.3-.4-4.3-1-5.8z" />
-          </svg>
-          Parent / Teacher Login
-        </Link>
+        <div className="wideActions">
+          <LanguageToggle language={language} onChange={setLanguage} />
+          <Link href={`/adult?lang=${language}`} className="wideAdultLink">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="8.5" cy="7.5" r="3.6" />
+              <circle cx="16.5" cy="8.5" r="3" />
+              <path d="M1.5 20c0-3.9 3-6.4 7-6.4s7 2.5 7 6.4z" />
+              <path d="M16 14.2c3.4 0 6.5 1.9 6.5 5.3V20H17c0-2.3-.4-4.3-1-5.8z" />
+            </svg>
+            {t.adult}
+          </Link>
+        </div>
       </header>
 
-      <section className="content">
+      <section className="content" id="home-content">
+
+        <div className="homeLangMobile">
+          <LanguageToggle language={language} onChange={setLanguage} tone="light" />
+        </div>
 
         <h1>
-          Welcome to <strong>FILUMIRE</strong>
+          {t.welcome} <strong>FILUMIRE</strong>
         </h1>
 
         <p className="tagline">
-          Your intelligent learning partner.
+          {t.tagline}
         </p>
 
         <img
           className="learners"
           src="/images/home/learners.svg"
-          alt="FILUMIRE learners"
+          alt={t.learnersAlt}
         />
 
         <p className="intro">
-          FILUMIRE adapts to how you learn, helping you
+          {t.intro[0]}
           <br />
-          build real understanding at your own pace.
+          {t.intro[1]}
         </p>
 
-        <p className="choose">
-          Choose your language to get started.
+        <p className="choose" id="choose-language">
+          {t.choose}
         </p>
 
-        <div className="languages">
+        <div className="languages" role="group" aria-labelledby="choose-language">
 
-          <Link href="/login?lang=en" className="language">
+          <Link
+            href="/login?lang=en"
+            className="language"
+            lang="en"
+            onClick={() => chooseLanguage("en")}
+          >
             <img
               src="/images/home/english%20main.svg"
               alt=""
@@ -71,7 +151,12 @@ export default function HomePage() {
             </span>
           </Link>
 
-          <Link href="/login?lang=fr" className="language">
+          <Link
+            href="/login?lang=fr"
+            className="language"
+            lang="fr"
+            onClick={() => chooseLanguage("fr")}
+          >
             <img
               src="/images/home/french%20main.svg"
               alt=""
@@ -84,45 +169,15 @@ export default function HomePage() {
 
         </div>
 
-        <div className="features">
-
-          <div className="feature">
-            <img
-              src="/images/home/safe%20and%20secure%20icon.svg"
-              alt=""
-            />
-            <strong>Safe &amp; Secure</strong>
-            <span>A trusted<br />learning space.</span>
-          </div>
-
-          <div className="feature">
-            <img
-              src="/images/home/Personalised.svg"
-              alt=""
-            />
-            <strong>Personalised</strong>
-            <span>Adapts to<br />how you learn.</span>
-          </div>
-
-          <div className="feature">
-            <img
-              src="/images/home/Effective.svg"
-              alt=""
-            />
-            <strong>Effective</strong>
-            <span>Build real<br />understanding.</span>
-          </div>
-
-          <div className="feature">
-            <img
-              src="/images/home/Made%20for%20Africa.svg"
-              alt=""
-            />
-            <strong>Made for Africa</strong>
-            <span>Our learners.<br />Our future.</span>
-          </div>
-
-        </div>
+        <ul className="features">
+          {t.features.map(([title, lineA, lineB], index) => (
+            <li className="feature" key={title}>
+              <img src={FEATURE_ICONS[index]} alt="" />
+              <strong>{title}</strong>
+              <span>{lineA}<br />{lineB}</span>
+            </li>
+          ))}
+        </ul>
 
       </section>
 
@@ -131,14 +186,14 @@ export default function HomePage() {
           src="/images/home/landscape%20footer.png"
           alt=""
         />
-        <p className="future">Same learners. Brighter futures.</p>
+        <p className="future">{t.future}</p>
 
         <span className="copyright">
-          &copy; 2026 FILUMIRE. All rights reserved.
+          &copy; 2026 FILUMIRE. {t.rights}
         </span>
 
         <span className="footerTag">
-          LEARN &bull; GROW &bull; CREATE
+          {t.tag}
         </span>
       </footer>
 
@@ -234,6 +289,15 @@ export default function HomePage() {
           .home .feature { display: grid; grid-template-columns: 56px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 14px; align-content: center; padding: 18px 20px; text-align: left; }
           .home .feature img { grid-row: span 2; width: 56px; height: 56px; margin: 0; }
           .home .feature span { margin-top: 3px; }
+        }
+
+        /* Overhaul: language switch, list resets, French wrapping */
+        .homeLangMobile { display: flex; justify-content: flex-end; padding: 6px 16px 4px; }
+        .features { padding: 0; list-style: none; }
+        .home[lang="fr"] .feature strong { white-space: normal; }
+        .wideActions { display: flex; align-items: center; gap: 14px; }
+        @media (min-width: 768px) {
+          .homeLangMobile { display: none; }
         }
       `}</style>
     </main>
