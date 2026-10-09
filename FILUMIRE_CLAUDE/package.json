@@ -1,0 +1,34 @@
+{
+    "name":  "filumire-core",
+    "version":  "0.1.0",
+    "private":  true,
+    "type":  "module",
+    "description":  "FILUMIRE EduTutor adaptive learning infrastructure for African children",
+    "workspaces":  [
+                       "apps/*",
+                       "services/*",
+                       "packages/*"
+                   ],
+    "scripts":  {
+                    "test":  "npm run test:adaptive \u0026\u0026 npm run test:progression \u0026\u0026 npm run test:security \u0026\u0026 npm run test:identity \u0026\u0026 npm run test:intervention \u0026\u0026 npm run test:language",
+                    "test:adaptive":  "tsx --env-file=.env.local ./tests/adaptive-learning-loop.test.ts",
+                    "test:progression":  "tsx --env-file=.env.local ./tests/competency-003-adaptive-loop.test.ts",
+                    "test:security":  "tsx --env-file=.env.local ./tests/api-assessment-security.test.ts",
+                    "test:identity":  "tsx --env-file=.env.local ./tests/api-identity-security.test.ts",
+                    "test:intervention":  "tsx --env-file=.env.local ./tests/intervention-lifecycle.test.ts",
+                    "test:language":  "tsx --env-file=.env.local ./tests/content-language-selection.test.ts",
+                    "build:learner":  "npm run build --workspace=@filumire/learner",
+                    "validate:all":  "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/validate-all.ps1"
+                },
+    "devDependencies":  {
+                            "@types/pg":  "^8.23.1",
+                            "drizzle-kit":  "^0.31.10",
+                            "tsx":  "^4.23.12",
+                            "typescript":  "^5.7.2"
+                        },
+    "dependencies":  {
+                         "drizzle-orm":  "^0.45.2",
+                         "jose":  "^6.2.10",
+                         "pg":  "^8.23.0"
+                     }
+}

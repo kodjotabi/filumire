@@ -1,0 +1,474 @@
+"use client";
+
+import { useState } from "react";
+import { subjectLabel } from "./subjects";
+import { useLearnerAvatar } from "./avatars";
+
+type Element = { type: string; text: string };
+
+type Props = {
+  language: "en" | "fr";
+  subjectName: string;
+  topic: string;
+  done: number;
+  total: number;
+  elements: Element[];
+};
+
+type Mode = "explain" | "hint" | "understand";
+
+const text = {
+  en: {
+    title: "Ask FILU",
+    intro: "Your learning buddy, always here to help.",
+    note: "Curious minds grow!",
+    current: "Current topic",
+    goals: "goals completed",
+    of: "of",
+    how: "How can I help?",
+    choose: "Choose a quick action or ask your own question.",
+    explain: "Explain this",
+    explainSub: "Give a clearer explanation",
+    hint: "Give me a hint",
+    hintSub: "A helpful clue",
+    understand: "Help me understand",
+    understandSub: "In a different way",
+    tryThis: "Try this",
+    none: "There is no help for this step yet. Keep going and FILU will be here.",
+    typing: "Typing your own question is coming soon",
+    send: "Send",
+  },
+  fr: {
+    title: "Parle à FILU",
+    intro: "Ton ami d'apprentissage, toujours là pour t'aider.",
+    note: "Les esprits curieux grandissent !",
+    current: "Sujet actuel",
+    goals: "objectifs terminés",
+    of: "sur",
+    how: "Comment puis-je aider ?",
+    choose: "Choisis une action rapide ou pose ta question.",
+    explain: "Explique-moi",
+    explainSub: "Une explication plus claire",
+    hint: "Donne-moi un indice",
+    hintSub: "Un petit coup de pouce",
+    understand: "Aide-moi à comprendre",
+    understandSub: "D'une autre façon",
+    tryThis: "Essaie",
+    none: "Il n'y a pas encore d'aide pour cette étape. Continue, FILU sera là.",
+    typing: "Poser ta propre question sera bientôt possible",
+    send: "Envoyer",
+  },
+};
+
+function pick(mode: Mode, elements: Element[]): Element[] {
+  if (mode === "hint") {
+    return elements.filter(
+      (e) => e.type === "hint" || e.type === "corrective_feedback",
+    );
+  }
+
+  if (mode === "understand") {
+    return elements.filter(
+      (e) => e.type === "worked_example" || e.type === "learner_task",
+    );
+  }
+
+  return elements.filter((e) => e.type !== "hint");
+}
+
+export function AskFiluPage({
+  language,
+  subjectName,
+  topic,
+  done,
+  total,
+  elements,
+}: Props) {
+  const t = text[language];
+  const avatarSrc = useLearnerAvatar();
+  const [mode, setMode] = useState<Mode>("explain");
+  const shown = pick(mode, elements);
+  const percent = total > 0 ? Math.round((done / total) * 100) : 0;
+
+  const choices: { key: Mode; label: string; sub: string }[] = [
+    { key: "explain", label: t.explain, sub: t.explainSub },
+    { key: "hint", label: t.hint, sub: t.hintSub },
+    { key: "understand", label: t.understand, sub: t.understandSub },
+  ];
+
+  const chosen = choices.find((c) => c.key === mode)?.label ?? "";
+
+  return (
+    <div className="askPage">
+      <section className="fHero">
+        <div className="fHeroText">
+          <h1>{t.title}</h1>
+          <p>{t.intro}</p>
+        </div>
+        <div className="fHeroArt">
+          <span className="fNote">{t.note}</span>
+          <img src="/images/home/boy-continue.png" alt="" />
+        </div>
+      </section>
+
+      <section className="fTopic">
+        <span className="fTopicIcon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z" />
+            <path d="M4 5.5v16" />
+          </svg>
+        </span>
+        <div className="fTopicText">
+          <small>{t.current}</small>
+          <strong>{subjectLabel(subjectName, language)}</strong>
+          <span>{topic}</span>
+        </div>
+        <div className="fTopicGoals">
+          <b>
+            {done} {t.of} {total} {t.goals}
+          </b>
+          <span className="fTrack">
+            <span style={{ width: `${percent}%` }} />
+          </span>
+        </div>
+      </section>
+
+      <section className="fHelp">
+        <h2>{t.how}</h2>
+        <p>{t.choose}</p>
+        <div className="fModes">
+          {choices.map((c) => (
+            <button
+              key={c.key}
+              type="button"
+              className={`fMode ${c.key}${mode === c.key ? " on" : ""}`}
+              onClick={() => setMode(c.key)}
+            >
+              <b>{c.label}</b>
+              <span>{c.sub}</span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="fChat">
+        <div className="fUser">
+          <span className="fUserBubble">{chosen}</span>
+          <img src={avatarSrc} alt="" />
+        </div>
+
+        {shown.length === 0 && (
+          <div className="fFilu">
+            <img src="/images/avatars/avatar-kofi.png" alt="" />
+            <div className="fBubble">
+              <small>FILU</small>
+              <p>{t.none}</p>
+            </div>
+          </div>
+        )}
+
+        {shown.map((e, index) => (
+          <div className="fFilu" key={`${e.type}-${index}`}>
+            <img src="/images/avatars/avatar-kofi.png" alt="" />
+            <div className="fBubble">
+              <small>{e.type === "worked_example" ? t.tryThis : "FILU"}</small>
+              <p>{e.text}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <section className="fInput">
+        <input type="text" disabled placeholder={t.typing} aria-label={t.typing} />
+        <button type="button" disabled aria-label={t.send}>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="#fff" aria-hidden="true">
+            <path d="M3 11.5 21 3l-8.5 18-2.2-7.3z" />
+          </svg>
+        </button>
+      </section>
+
+      <section className="homeFooter">
+        <img src="/images/home/landscape%20footer.png" alt="" />
+      </section>
+
+      <style jsx>{`
+        .askPage {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .fHero {
+          display: flex;
+          min-height: 96px;
+          justify-content: space-between;
+          padding: 10px 4px 0;
+        }
+
+        .fHeroText h1 {
+          margin: 0;
+          color: #0f2a6b;
+          font-size: 34px;
+          font-weight: 800;
+          line-height: 1.05;
+        }
+
+        .fHeroText p {
+          max-width: 190px;
+          margin: 6px 0 0;
+          color: #3d5a80;
+          font-size: 14px;
+        }
+
+        .fHeroArt {
+          position: relative;
+          width: 130px;
+        }
+
+        .fHeroArt img {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          width: auto;
+          height: 86px;
+        }
+
+        .fNote {
+          position: absolute;
+          top: 6px; left: 0; width: 84px;
+          padding: 8px;
+          border-radius: 50%;
+          background: #fdf0cf;
+          color: #1677ff;
+          font-family: var(--font-hand);
+          font-size: 12px;
+          line-height: 1.1;
+          text-align: center;
+        }
+
+        .fTopic {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 10px 12px;
+          border-radius: 16px;
+          background: #eaf3fc;
+        }
+
+        .fTopicIcon {
+          display: flex;
+          width: 44px;
+          height: 44px;
+          flex: none;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          background: #f5a00f;
+        }
+
+        .fTopicText {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          min-width: 0;
+        }
+
+        .fTopicText small {
+          color: #5b7aa3;
+          font-size: 11px;
+        }
+
+        .fTopicText strong {
+          color: #0f2a6b;
+          font-size: 17px;
+          font-weight: 800;
+        }
+
+        .fTopicText span {
+          color: #3d5a80;
+          font-size: 12px;
+        }
+
+        .fTopicGoals {
+          display: flex;
+          width: 110px;
+          flex: none;
+          flex-direction: column;
+          gap: 6px;
+        }
+
+        .fTopicGoals b {
+          color: #0f2a6b;
+          font-size: 12px;
+        }
+
+        .fTrack {
+          display: block;
+          height: 7px;
+          overflow: hidden;
+          border-radius: 999px;
+          background: #d6e2ee;
+        }
+
+        .fTrack span {
+          display: block;
+          height: 100%;
+          background: #3fb34f;
+        }
+
+        .fHelp h2 {
+          margin: 0;
+          color: #0f2a6b;
+          font-size: 20px;
+          font-weight: 800;
+        }
+
+        .fHelp p {
+          margin: 2px 0 8px;
+          color: #3d5a80;
+          font-size: 12px;
+        }
+
+        .fModes {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 8px;
+        }
+
+        .fMode {
+          display: flex;
+          min-height: 58px;
+          flex-direction: column;
+          justify-content: center;
+          padding: 6px 10px;
+          border: 2px solid transparent;
+          border-radius: 14px;
+          color: #0f2a6b;
+          text-align: left;
+        }
+
+        .fMode.explain {
+          background: #fdf0cf;
+        }
+
+        .fMode.hint {
+          background: #dbeafe;
+        }
+
+        .fMode.understand {
+          background: #dcf1e2;
+        }
+
+        .fMode.on {
+          border-color: #0f2a6b;
+        }
+
+        .fMode b {
+          font-size: 13px;
+          font-weight: 800;
+          line-height: 1.1;
+        }
+
+        .fMode span {
+          margin-top: 2px;
+          color: #3d5a80;
+          font-size: 10px;
+        }
+
+        .fChat {
+          display: flex;
+          max-height: 238px;
+          flex-direction: column;
+          gap: 8px;
+          overflow-y: auto;
+          padding: 10px;
+          border-radius: 16px;
+          background: #eef5fd;
+        }
+
+        .fUser {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 6px;
+        }
+
+        .fUser img,
+        .fFilu img {
+          width: 28px;
+          height: 28px;
+          flex: none;
+          border-radius: 50%;
+          background: #fff;
+          object-fit: cover;
+        }
+
+        .fUserBubble {
+          padding: 6px 12px;
+          border-radius: 14px;
+          background: #dbeafe;
+          color: #0f2a6b;
+          font-size: 13px;
+        }
+
+        .fFilu {
+          display: flex;
+          align-items: flex-start;
+          gap: 6px;
+        }
+
+        .fBubble {
+          flex: 1;
+          padding: 6px 12px;
+          border-radius: 14px;
+          background: #fff;
+        }
+
+        .fBubble small {
+          color: #1677ff;
+          font-size: 10px;
+          font-weight: 800;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+        }
+
+        .fBubble p {
+          margin: 2px 0 0;
+          color: #0f2a6b;
+          font-size: 13px;
+          line-height: 1.35;
+        }
+
+        .fInput {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .fInput input {
+          flex: 1;
+          min-width: 0;
+          height: 40px;
+          padding: 0 14px;
+          border: 2px solid #cfe2f7;
+          border-radius: 999px;
+          background: #fff;
+          font-size: 13px;
+        }
+
+        .fInput button {
+          display: flex;
+          width: 40px;
+          height: 40px;
+          flex: none;
+          align-items: center;
+          justify-content: center;
+          border: 0;
+          border-radius: 50%;
+          background: #7fb2ff;
+        }
+      `}</style>
+    </div>
+  );
+}

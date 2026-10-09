@@ -1,0 +1,339 @@
+export const DEVELOPMENT_LEARNER_ID =
+  "learner-runtime-feedback-001";
+
+export const SESSION_ID =
+  `session-${DEVELOPMENT_LEARNER_ID}`;
+
+export const IS_PRODUCTION =
+  process.env.NODE_ENV === "production";
+
+export type LearningContent = {
+  id: string;
+  competencyId: string;
+  type: string;
+  title: string;
+  body: string;
+  assessmentItemId?: string;
+  metadata?: {
+    options?: string;
+    expectedResponse?: string;
+    evaluationMethod?: string;
+  };
+};
+
+export type LearningResponse = {
+  learnerState: {
+    learnerId: string;
+    competencies: Array<{
+      competencyId: string;
+      masteryEstimate: number;
+      confidence: number;
+      evidenceCount: number;
+    }>;
+  };
+
+  decision: {
+    id: string;
+    interventionId?: string;
+    sessionId: string;
+    action: string;
+    competencyId: string;
+    reasonCode: string;
+    instructionalStrategy?: string;
+    responseMode?: string;
+  };
+
+  progress: {
+    learnerId: string;
+    activeCompetencyId?: string;
+    competencyCount: number;
+    completedCompetencies: number;
+    masteryEstimate: number;
+    confidence: number;
+    evidenceCount: number;
+    readiness: boolean;
+    percent: number;
+    subjectId?: string;
+    subjectName?: string;
+    competencyTitle?: string;
+  };
+
+  content?: LearningContent;
+
+  instruction: {
+    content: string;
+    structured?: {
+      elements: Array<{
+        type: string;
+        text: string;
+      }>;
+    };
+  };
+
+  assessment?: {
+    result: {
+      correct: boolean;
+      duplicate?: boolean;
+    };
+  };
+};
+
+export type PendingTeacherReviewResponse = {
+  id: string;
+  status: "pending" | "reviewed";
+  duplicate: boolean;
+};
+export function isPendingTeacherReviewResponse(
+  value: LearningResponse | {
+    pendingTeacherReview: PendingTeacherReviewResponse;
+  },
+): value is {
+  pendingTeacherReview: PendingTeacherReviewResponse;
+} {
+  return "pendingTeacherReview" in value;
+}
+export class LearningRequestError extends Error {
+  status: number;
+
+  constructor(message: string, status: number) {
+    super(message);
+    this.status = status;
+  }
+}
+
+/*
+ * Thrown when the request itself could not reach the server
+ * (a connectivity-type failure), as opposed to a real server
+ * response such as an authorization or validation error.
+ */
+export class LearningNetworkError extends Error {}
+
+export function getApiHeaders(): Record<string, string> {
+  if (IS_PRODUCTION) {
+    return {
+      "Content-Type": "application/json",
+    };
+  }
+
+  return {
+    "Content-Type": "application/json",
+    "x-filumire-learner-id":
+      DEVELOPMENT_LEARNER_ID,
+  };
+}
+
+export function getLearningUrl(
+  subjectId?: string,
+): string {
+  const params = new URLSearchParams();
+
+  if (!IS_PRODUCTION) {
+    params.set("sessionId", SESSION_ID);
+  }
+
+  if (subjectId) {
+    params.set("subjectId", subjectId);
+  }
+
+  const query = params.toString();
+
+  return query
+    ? `/api/learning?${query}`
+    : "/api/learning";
+}
+
+export function getSessionId(
+  data: LearningResponse,
+): string {
+  return IS_PRODUCTION
+    ? data.decision.sessionId
+    : SESSION_ID;
+}
+
+export async function fetchLearningSession(
+  subjectId?: string,
+): Promise<LearningResponse> {
+  let response: Response;
+
+  /*
+   * With the development header and no subjectId the route falls
+   * back to the validation test subject (one "Number Sequences"
+   * topic), so Home and /learn showed test content during local
+   * testing. Use the learner's active subject from the overview
+   * instead. Production resolves the stored learning context on
+   * the server and is unchanged.
+   */
+  if (!subjectId && !IS_PRODUCTION) {
+    const overview = await fetchLearningOverview();
+    subjectId = overview?.activeSubjectId || undefined;
+  }
+
+  try {
+    response = await fetch(
+      getLearningUrl(subjectId),
+      {
+        headers: getApiHeaders(),
+      },
+    );
+  } catch {
+    throw new LearningNetworkError(
+      "Unable to reach the server.",
+    );
+  }
+
+  if (!response.ok) {
+    const result =
+      await response
+        .json()
+        .catch(() => null);
+
+    throw new LearningRequestError(
+      result?.error ??
+        "Unable to load the learning session.",
+      response.status,
+    );
+  }
+
+  return (await response.json()) as LearningResponse;
+}
+
+export interface AssessmentSubmissionBody {
+  learnerId: string;
+  sessionId: string;
+  interventionId?: string;
+  assessmentItemId: string;
+  competencyId: string;
+  response: string;
+  clientRequestId: string;
+}
+
+/*
+ * Submits a trusted assessment response through the existing
+ * learning API. Never resolves as success unless the server
+ * actually accepted and evaluated the submission.
+ */
+export async function submitAssessmentResponse(
+  body: AssessmentSubmissionBody,
+): Promise<LearningResponse | { pendingTeacherReview: PendingTeacherReviewResponse }> {
+  let response: Response;
+
+  try {
+    response = await fetch("/api/learning", {
+      method: "POST",
+      headers: getApiHeaders(),
+      body: JSON.stringify({
+        ...body,
+        interactionType: "assessment",
+      }),
+    });
+  } catch {
+    throw new LearningNetworkError(
+      "Unable to reach the server.",
+    );
+  }
+
+  if (!response.ok) {
+    const result =
+      await response
+        .json()
+        .catch(() => null);
+
+    throw new LearningRequestError(
+      result?.error ??
+        "Unable to submit your answer.",
+      response.status,
+    );
+  }
+
+  return (await response.json()) as LearningResponse;
+}
+
+/*
+ * Tranche 4B: the learner pressed Next on a teaching card. The
+ * server marks that step delivered (no evidence, no mastery
+ * change) and returns the next learning step.
+ */
+export async function acknowledgeLearningStep(body: {
+  sessionId: string;
+  interventionId: string;
+  competencyId: string;
+}): Promise<LearningResponse> {
+  let response: Response;
+
+  try {
+    response = await fetch("/api/learning", {
+      method: "POST",
+      headers: getApiHeaders(),
+      body: JSON.stringify({
+        ...body,
+        interactionType: "acknowledge",
+      }),
+    });
+  } catch {
+    throw new LearningNetworkError(
+      "Unable to reach the server.",
+    );
+  }
+
+  if (!response.ok) {
+    const result =
+      await response
+        .json()
+        .catch(() => null);
+
+    throw new LearningRequestError(
+      result?.error ??
+        "Unable to continue.",
+      response.status,
+    );
+  }
+
+  return (await response.json()) as LearningResponse;
+}
+
+/*
+ * A subject the server says is available for the learner's
+ * grade. discipline is the stable subject-type key used for
+ * presentation; id is used for every data relationship.
+ */
+export type AvailableSubject = {
+  id: string;
+  name: string;
+  code: string;
+  discipline: string;
+};
+
+export type LearningOverview = {
+  gradeId: string;
+  gradeName: string;
+  activeSubjectId: string;
+  availableSubjects: AvailableSubject[];
+  subjects: Record<
+    string,
+    { total: number; tracked: number; completed: number; started: boolean }
+  >;
+  areasSubjectId: string;
+  areas: Array<{
+    id: string;
+    title: string;
+    description: string;
+    status: "completed" | "inprogress" | "new";
+  }>;
+};
+
+export async function fetchLearningOverview(
+  subjectId?: string,
+): Promise<LearningOverview | null> {
+  try {
+    const query = subjectId
+      ? `&subjectId=${encodeURIComponent(subjectId)}`
+      : "";
+    const response = await fetch(`/api/learning?overview=1${query}`, {
+      headers: getApiHeaders(),
+    });
+    if (!response.ok) return null;
+    return (await response.json()) as LearningOverview;
+  } catch {
+    return null;
+  }
+}

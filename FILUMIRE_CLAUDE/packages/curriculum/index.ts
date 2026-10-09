@@ -1,0 +1,1215 @@
+import {
+  GHANA_B5_SCIENCE_COMPETENCIES,
+  GHANA_B5_SCIENCE_INDICATORS,
+  GHANA_B5_SCIENCE_STANDARDS,
+  GHANA_B5_SCIENCE_STRANDS,
+  GHANA_B5_SCIENCE_SUBSTRANDS,
+} from "./ghana-b5-science-runtime";
+import {
+  GHANA_B6_SCIENCE_COMPETENCIES,
+  GHANA_B6_SCIENCE_INDICATORS,
+  GHANA_B6_SCIENCE_STANDARDS,
+  GHANA_B6_SCIENCE_STRANDS,
+  GHANA_B6_SCIENCE_SUBSTRANDS,
+} from "./ghana-b6-science-runtime";
+import {
+  GHANA_B5_COMPUTING_COMPETENCIES,
+  GHANA_B5_COMPUTING_INDICATORS,
+  GHANA_B5_COMPUTING_STANDARDS,
+  GHANA_B5_COMPUTING_STRANDS,
+  GHANA_B5_COMPUTING_SUBSTRANDS,
+} from "./ghana-b5-computing-runtime";
+import {
+  GHANA_B6_COMPUTING_COMPETENCIES,
+  GHANA_B6_COMPUTING_INDICATORS,
+  GHANA_B6_COMPUTING_STANDARDS,
+  GHANA_B6_COMPUTING_STRANDS,
+  GHANA_B6_COMPUTING_SUBSTRANDS,
+} from "./ghana-b6-computing-runtime";
+import {
+  GHANA_B5_MATHEMATICS_COMPETENCIES,
+  GHANA_B5_MATHEMATICS_INDICATORS,
+  GHANA_B5_MATHEMATICS_STANDARDS,
+  GHANA_B5_MATHEMATICS_STRANDS,
+  GHANA_B5_MATHEMATICS_SUBSTRANDS,
+} from "./ghana-b5-mathematics-runtime";
+import {
+  GHANA_B6_MATHEMATICS_COMPETENCIES,
+  GHANA_B6_MATHEMATICS_INDICATORS,
+  GHANA_B6_MATHEMATICS_STANDARDS,
+  GHANA_B6_MATHEMATICS_STRANDS,
+  GHANA_B6_MATHEMATICS_SUBSTRANDS,
+} from "./ghana-b6-mathematics-runtime";
+import {
+  GHANA_B5_ENGLISH_COMPETENCIES,
+  GHANA_B5_ENGLISH_INDICATORS,
+  GHANA_B5_ENGLISH_STANDARDS,
+  GHANA_B5_ENGLISH_STRANDS,
+  GHANA_B5_ENGLISH_SUBSTRANDS,
+} from "./ghana-b5-english-runtime";
+import {
+  GHANA_B6_ENGLISH_COMPETENCIES,
+  GHANA_B6_ENGLISH_INDICATORS,
+  GHANA_B6_ENGLISH_STANDARDS,
+  GHANA_B6_ENGLISH_STRANDS,
+  GHANA_B6_ENGLISH_SUBSTRANDS,
+} from "./ghana-b6-english-runtime";
+import {
+  GHANA_B4_COMPUTING_COMPETENCIES,
+  GHANA_B4_COMPUTING_INDICATORS,
+  GHANA_B4_COMPUTING_STANDARDS,
+  GHANA_B4_COMPUTING_STRANDS,
+  GHANA_B4_COMPUTING_SUBSTRANDS,
+} from "./ghana-b4-computing-runtime";
+import {
+  GHANA_B4_MATHEMATICS_COMPETENCIES,
+  GHANA_B4_MATHEMATICS_INDICATORS,
+  GHANA_B4_MATHEMATICS_STANDARDS,
+  GHANA_B4_MATHEMATICS_STRANDS,
+  GHANA_B4_MATHEMATICS_SUBSTRANDS,
+} from "./ghana-b4-mathematics-runtime";
+import {
+  GHANA_B4_SCIENCE_ADDITIONAL_COMPETENCIES,
+  GHANA_B4_SCIENCE_ADDITIONAL_INDICATORS,
+  GHANA_B4_SCIENCE_ADDITIONAL_STANDARDS,
+  GHANA_B4_SCIENCE_ADDITIONAL_STRANDS,
+  GHANA_B4_SCIENCE_ADDITIONAL_SUBSTRANDS,
+} from "./ghana-b4-science-runtime";
+
+import {
+  GHANA_B4_ENGLISH_STRAND1_COMPETENCIES,
+  GHANA_B4_ENGLISH_STRAND1_INDICATORS,
+  GHANA_B4_ENGLISH_STRAND1_STANDARDS,
+  GHANA_B4_ENGLISH_STRAND1_STRANDS,
+  GHANA_B4_ENGLISH_STRAND1_SUBSTRANDS,
+} from "./ghana-b4-english-runtime";
+export type CurriculumFrameworkId = string;
+export type EducationSystemId = string;
+export type LearningLevelId = string;
+export type SubjectId = string;
+export type StrandId = string;
+export type SubStrandId = string;
+export type ContentStandardId = string;
+export type LearningIndicatorId = string;
+export type CompetencyId = string;
+
+export const GHANA_MATH_PILOT_CURRICULUM_ID =
+  "curriculum-gh-math-pilot";
+
+export const GHANA_MATH_PILOT_LEVEL_ID =
+  "level-gh-basic-4-pilot";
+
+export const GHANA_MATH_PILOT_SUBJECT_ID =
+  "subject-gh-basic-4-mathematics-pilot";
+
+export const GHANA_SCIENCE_PILOT_SUBJECT_ID =
+  "subject-gh-basic4-science-pilot";
+export const GHANA_B5_PILOT_LEVEL_ID =
+  "level-gh-basic-5-pilot";
+
+export const GHANA_B5_SCIENCE_PILOT_SUBJECT_ID =
+  "subject-gh-basic5-science-pilot";
+
+export const GHANA_B6_PILOT_LEVEL_ID =
+  "level-gh-basic-6-pilot";
+
+export const GHANA_B6_SCIENCE_PILOT_SUBJECT_ID =
+  "subject-gh-basic6-science-pilot";
+
+export const GHANA_B5_COMPUTING_PILOT_SUBJECT_ID =
+  "subject-gh-basic5-computing-pilot";
+
+export const GHANA_B6_COMPUTING_PILOT_SUBJECT_ID =
+  "subject-gh-basic6-computing-pilot";
+
+export const GHANA_B5_MATHEMATICS_PILOT_SUBJECT_ID =
+  "subject-gh-basic5-mathematics-pilot";
+
+export const GHANA_B6_MATHEMATICS_PILOT_SUBJECT_ID =
+  "subject-gh-basic6-mathematics-pilot";
+
+export const GHANA_B5_ENGLISH_PILOT_SUBJECT_ID =
+  "subject-gh-basic5-english-pilot";
+
+export const GHANA_B6_ENGLISH_PILOT_SUBJECT_ID =
+  "subject-gh-basic6-english-pilot";
+
+export const GHANA_COMPUTING_PILOT_SUBJECT_ID =
+  "subject-gh-basic4-computing-pilot";
+export const GHANA_ENGLISH_PILOT_SUBJECT_ID =
+  "subject-gh-basic4-english-pilot";
+
+export const GHANA_SCIENCE_B4_ANIMAL_CLASSIFICATION_COMPETENCY_ID =
+  "competency-gh-science-b4-animal-classification-001";
+
+export const GHANA_MATH_PILOT_INITIAL_COMPETENCY_ID =
+  "competency-gh-math-b4-number-patterns-001";
+
+export const VALIDATION_INITIAL_COMPETENCY_ID =
+  "competency-test-001";
+
+export interface CurriculumFramework {
+  id: CurriculumFrameworkId;
+  name: string;
+  countryOrRegion: string;
+  version: string;
+}
+
+export interface EducationSystem {
+  id: EducationSystemId;
+  curriculumFrameworkId: CurriculumFrameworkId;
+  name: string;
+  description?: string;
+}
+
+export interface LearningLevel {
+  id: LearningLevelId;
+  educationSystemId: EducationSystemId;
+  name: string;
+  order: number;
+}
+
+export interface Subject {
+  id: SubjectId;
+  learningLevelId: LearningLevelId;
+  name: string;
+  code: string;
+}
+
+export interface Strand {
+  id: StrandId;
+  subjectId: SubjectId;
+  name: string;
+  code: string;
+  order: number;
+}
+
+export interface SubStrand {
+  id: SubStrandId;
+  strandId: StrandId;
+  name: string;
+  code: string;
+  order: number;
+}
+
+export interface ContentStandard {
+  id: ContentStandardId;
+  subStrandId: SubStrandId;
+  title: string;
+  description: string;
+}
+
+export interface LearningIndicator {
+  id: LearningIndicatorId;
+  contentStandardId: ContentStandardId;
+  statement: string;
+  order: number;
+}
+
+export interface CompetencyDefinition {
+  id: CompetencyId;
+
+  curriculumFrameworkId: CurriculumFrameworkId;
+  educationSystemId: EducationSystemId;
+  learningLevelId: LearningLevelId;
+  subjectId: SubjectId;
+  strandId: StrandId;
+  subStrandId: SubStrandId;
+  contentStandardId: ContentStandardId;
+  learningIndicatorId: LearningIndicatorId;
+
+  title: string;
+  description: string;
+
+  prerequisiteCompetencyIds: CompetencyId[];
+  successorCompetencyIds: CompetencyId[];
+  relatedCompetencyIds: CompetencyId[];
+
+  subskills: string[];
+  misconceptions: string[];
+
+  difficulty: number;
+
+  masteryRequirements: {
+    masteryThreshold: number;
+    confidenceThreshold: number;
+  };
+
+  retentionRequirements: {
+    required: boolean;
+    confidenceThreshold: number;
+  };
+
+  transferRequirements: {
+    required: boolean;
+    confidenceThreshold: number;
+  };
+}
+
+const curriculumFrameworks: CurriculumFramework[] = [
+  {
+    id: GHANA_MATH_PILOT_CURRICULUM_ID,
+    name: "FILUMIRE Ghana Mathematics Pilot Curriculum",
+    countryOrRegion: "Ghana",
+    version: "pilot-0.1",
+  },
+  {
+    id: "framework-test",
+    name: "FILUMIRE Validation Curriculum",
+    countryOrRegion: "TEST",
+    version: "0.1",
+  },
+];
+
+const educationSystems: EducationSystem[] = [
+  {
+    id: "education-system-gh-basic-pilot",
+    curriculumFrameworkId: GHANA_MATH_PILOT_CURRICULUM_ID,
+    name: "Ghana Basic Education Pilot Pathway",
+    description:
+      "FILUMIRE pilot structure for Ghana Mathematics. Content is not official curriculum alignment until authoritative curriculum source material is loaded.",
+  },
+  {
+    id: "education-system-test",
+    curriculumFrameworkId: "framework-test",
+    name: "FILUMIRE Validation Education System",
+  },
+];
+
+const learningLevels: LearningLevel[] = [
+  {
+    id: GHANA_MATH_PILOT_LEVEL_ID,
+    educationSystemId: "education-system-gh-basic-pilot",
+    name: "Basic 4 Pilot",
+    order: 4,
+  },
+  {
+    id: GHANA_B5_PILOT_LEVEL_ID,
+    educationSystemId: "education-system-gh-basic-pilot",
+    name: "Basic 5 Pilot",
+    order: 5,
+  },
+  {
+    id: GHANA_B6_PILOT_LEVEL_ID,
+    educationSystemId: "education-system-gh-basic-pilot",
+    name: "Basic 6 Pilot",
+    order: 6,
+  },
+  {
+    id: "level-test",
+    educationSystemId: "education-system-test",
+    name: "Validation Level",
+    order: 1,
+  },
+];
+
+const subjects: Subject[] = [
+  {
+    id: GHANA_MATH_PILOT_SUBJECT_ID,
+    learningLevelId: GHANA_MATH_PILOT_LEVEL_ID,
+    name: "Mathematics",
+    code: "GH-B4-MATH-PILOT",
+  },
+  {
+    id: GHANA_SCIENCE_PILOT_SUBJECT_ID,
+    learningLevelId: GHANA_MATH_PILOT_LEVEL_ID,
+    name: "Science",
+    code: "GH-B4-SCI",
+  },  {
+    id: GHANA_COMPUTING_PILOT_SUBJECT_ID,
+    learningLevelId: GHANA_MATH_PILOT_LEVEL_ID,
+    name: "Computing",
+    code: "GH-B4-COMP",
+  },
+  {
+    id: GHANA_ENGLISH_PILOT_SUBJECT_ID,
+    learningLevelId: GHANA_MATH_PILOT_LEVEL_ID,
+    name: "English Language",
+    code: "GH-B4-ENG",
+  },
+  {
+    id: GHANA_B5_SCIENCE_PILOT_SUBJECT_ID,
+    learningLevelId: GHANA_B5_PILOT_LEVEL_ID,
+    name: "Science",
+    code: "GH-B5-SCI",
+  },
+  {
+    id: GHANA_B6_SCIENCE_PILOT_SUBJECT_ID,
+    learningLevelId: GHANA_B6_PILOT_LEVEL_ID,
+    name: "Science",
+    code: "GH-B6-SCI",
+  },
+  {
+    id: GHANA_B5_COMPUTING_PILOT_SUBJECT_ID,
+    learningLevelId: GHANA_B5_PILOT_LEVEL_ID,
+    name: "Computing",
+    code: "GH-B5-COMP",
+  },
+  {
+    id: GHANA_B6_COMPUTING_PILOT_SUBJECT_ID,
+    learningLevelId: GHANA_B6_PILOT_LEVEL_ID,
+    name: "Computing",
+    code: "GH-B6-COMP",
+  },
+  {
+    id: GHANA_B5_MATHEMATICS_PILOT_SUBJECT_ID,
+    learningLevelId: GHANA_B5_PILOT_LEVEL_ID,
+    name: "Mathematics",
+    code: "GH-B5-MATH",
+  },
+  {
+    id: GHANA_B6_MATHEMATICS_PILOT_SUBJECT_ID,
+    learningLevelId: GHANA_B6_PILOT_LEVEL_ID,
+    name: "Mathematics",
+    code: "GH-B6-MATH",
+  },
+  {
+    id: GHANA_B5_ENGLISH_PILOT_SUBJECT_ID,
+    learningLevelId: GHANA_B5_PILOT_LEVEL_ID,
+    name: "English Language",
+    code: "GH-B5-ENG",
+  },
+  {
+    id: GHANA_B6_ENGLISH_PILOT_SUBJECT_ID,
+    learningLevelId: GHANA_B6_PILOT_LEVEL_ID,
+    name: "English Language",
+    code: "GH-B6-ENG",
+  },
+  {
+    id: "subject-test-mathematics",
+    learningLevelId: "level-test",
+    name: "Mathematics",
+    code: "MATH",
+  },
+];
+
+const strands: Strand[] = [
+  {
+    id: "strand-gh-b4-number-pilot",
+    subjectId: GHANA_MATH_PILOT_SUBJECT_ID,
+    name: "Number",
+    code: "GH-B4-NUM-PILOT",
+    order: 1,
+  },
+  {
+    id: "strand-gh-b4-science-diversity-of-matter",
+    subjectId: GHANA_SCIENCE_PILOT_SUBJECT_ID,
+    name: "Diversity of Matter",
+    code: "B4.1",
+    order: 1,
+  },
+  ...GHANA_B4_SCIENCE_ADDITIONAL_STRANDS,
+  ...GHANA_B5_SCIENCE_STRANDS,
+  ...GHANA_B6_SCIENCE_STRANDS,
+  ...GHANA_B5_COMPUTING_STRANDS,
+  ...GHANA_B6_COMPUTING_STRANDS,
+  ...GHANA_B5_MATHEMATICS_STRANDS,
+  ...GHANA_B6_MATHEMATICS_STRANDS,
+  ...GHANA_B5_ENGLISH_STRANDS,
+  ...GHANA_B6_ENGLISH_STRANDS,
+  ...GHANA_B4_COMPUTING_STRANDS,
+  ...GHANA_B4_MATHEMATICS_STRANDS,
+  ...GHANA_B4_ENGLISH_STRAND1_STRANDS,
+  {
+    id: "strand-test-number-patterns",
+    subjectId: "subject-test-mathematics",
+    name: "Number Patterns",
+    code: "NP",
+    order: 1,
+  },
+];
+
+const subStrands: SubStrand[] = [
+  {
+    id: "substrand-gh-b4-number-patterns-pilot",
+    strandId: "strand-gh-b4-number-pilot",
+    name: "Number Patterns",
+    code: "GH-B4-NP-PILOT",
+    order: 1,
+  },
+  {
+    id: "substrand-gh-b4-science-living-nonliving-things",
+    strandId: "strand-gh-b4-science-diversity-of-matter",
+    name: "Living and Non-Living Things",
+    code: "B4.1.1",
+    order: 1,
+  },
+  ...GHANA_B4_SCIENCE_ADDITIONAL_SUBSTRANDS,
+  ...GHANA_B5_SCIENCE_SUBSTRANDS,
+  ...GHANA_B6_SCIENCE_SUBSTRANDS,
+  ...GHANA_B5_COMPUTING_SUBSTRANDS,
+  ...GHANA_B6_COMPUTING_SUBSTRANDS,
+  ...GHANA_B5_MATHEMATICS_SUBSTRANDS,
+  ...GHANA_B6_MATHEMATICS_SUBSTRANDS,
+  ...GHANA_B5_ENGLISH_SUBSTRANDS,
+  ...GHANA_B6_ENGLISH_SUBSTRANDS,
+  ...GHANA_B4_COMPUTING_SUBSTRANDS,
+  ...GHANA_B4_MATHEMATICS_SUBSTRANDS,
+  ...GHANA_B4_ENGLISH_STRAND1_SUBSTRANDS,
+  {
+    id: "substrand-test-number-sequences",
+    strandId: "strand-test-number-patterns",
+    name: "Number Sequences",
+    code: "NS",
+    order: 1,
+  },
+];
+
+const contentStandards: ContentStandard[] = [
+  {
+    id: "standard-gh-b4-number-patterns-pilot",
+    subStrandId: "substrand-gh-b4-number-patterns-pilot",
+    title: "Number Pattern Reasoning",
+    description:
+      "Pilot content standard for recognising, extending and explaining simple number patterns in a Ghana Basic 4 Mathematics learner journey.",
+  },
+  {
+    id: "standard-gh-b4-science-b4.1.1.1",
+    subStrandId: "substrand-gh-b4-science-living-nonliving-things",
+    title: "Animal Characteristics and Classification",
+    description:
+      "Adaptive competency registration for classifying animals using observable defining features.",
+  },
+  ...GHANA_B4_SCIENCE_ADDITIONAL_STANDARDS,
+  ...GHANA_B5_SCIENCE_STANDARDS,
+  ...GHANA_B6_SCIENCE_STANDARDS,
+  ...GHANA_B5_COMPUTING_STANDARDS,
+  ...GHANA_B6_COMPUTING_STANDARDS,
+  ...GHANA_B5_MATHEMATICS_STANDARDS,
+  ...GHANA_B6_MATHEMATICS_STANDARDS,
+  ...GHANA_B5_ENGLISH_STANDARDS,
+  ...GHANA_B6_ENGLISH_STANDARDS,
+  ...GHANA_B4_COMPUTING_STANDARDS,
+  ...GHANA_B4_MATHEMATICS_STANDARDS,
+  ...GHANA_B4_ENGLISH_STRAND1_STANDARDS,
+  {
+    id: "standard-test-number-sequences",
+    subStrandId: "substrand-test-number-sequences",
+    title: "Number Sequence Patterns",
+    description:
+      "Recognise, describe and apply simple number sequence rules.",
+  },
+];
+
+const learningIndicators: LearningIndicator[] = [
+  {
+    id: "indicator-gh-b4-number-patterns-pilot",
+    contentStandardId: "standard-gh-b4-number-patterns-pilot",
+    statement:
+      "Recognise, continue and explain simple number patterns using addition or subtraction rules.",
+    order: 1,
+  },
+  {
+    id: "indicator-gh-b4-science-b4.1.1.1.1",
+    contentStandardId: "standard-gh-b4-science-b4.1.1.1",
+    statement:
+      "Classify animals as insects, birds, mammals or reptiles using defining features.",
+    order: 1,
+  },
+  ...GHANA_B4_SCIENCE_ADDITIONAL_INDICATORS,
+  ...GHANA_B5_SCIENCE_INDICATORS,
+  ...GHANA_B6_SCIENCE_INDICATORS,
+  ...GHANA_B5_COMPUTING_INDICATORS,
+  ...GHANA_B6_COMPUTING_INDICATORS,
+  ...GHANA_B5_MATHEMATICS_INDICATORS,
+  ...GHANA_B6_MATHEMATICS_INDICATORS,
+  ...GHANA_B5_ENGLISH_INDICATORS,
+  ...GHANA_B6_ENGLISH_INDICATORS,
+  ...GHANA_B4_COMPUTING_INDICATORS,
+  ...GHANA_B4_MATHEMATICS_INDICATORS,
+  ...GHANA_B4_ENGLISH_STRAND1_INDICATORS,
+  {
+    id: "indicator-test-number-sequences",
+    contentStandardId: "standard-test-number-sequences",
+    statement:
+      "Recognise, continue and apply simple number sequence rules.",
+    order: 1,
+  },
+];
+
+const curriculum: CompetencyDefinition[] = [
+  {
+    id: GHANA_MATH_PILOT_INITIAL_COMPETENCY_ID,
+
+    curriculumFrameworkId: GHANA_MATH_PILOT_CURRICULUM_ID,
+    educationSystemId: "education-system-gh-basic-pilot",
+    learningLevelId: GHANA_MATH_PILOT_LEVEL_ID,
+    subjectId: GHANA_MATH_PILOT_SUBJECT_ID,
+    strandId: "strand-gh-b4-number-pilot",
+    subStrandId: "substrand-gh-b4-number-patterns-pilot",
+    contentStandardId: "standard-gh-b4-number-patterns-pilot",
+    learningIndicatorId: "indicator-gh-b4-number-patterns-pilot",
+
+    title: "Continue Simple Number Patterns",
+
+    description:
+      "Continue simple increasing and decreasing number patterns by identifying the repeated change.",
+
+    prerequisiteCompetencyIds: [],
+
+    successorCompetencyIds: [
+      "competency-gh-math-b4-number-patterns-002",
+    ],
+
+    relatedCompetencyIds: [],
+
+    subskills: [
+      "compare_consecutive_terms",
+      "identify_repeated_change",
+      "continue_pattern",
+    ],
+
+    misconceptions: [
+      "chooses_next_number_without_checking_rule",
+      "confuses_addition_and_subtraction_pattern",
+    ],
+
+    difficulty: 1,
+
+    masteryRequirements: {
+      masteryThreshold: 0.8,
+      confidenceThreshold: 0.8,
+    },
+
+    retentionRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+
+    transferRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+  },
+
+  {
+    id: "competency-gh-math-b4-number-patterns-002",
+
+    curriculumFrameworkId: GHANA_MATH_PILOT_CURRICULUM_ID,
+    educationSystemId: "education-system-gh-basic-pilot",
+    learningLevelId: GHANA_MATH_PILOT_LEVEL_ID,
+    subjectId: GHANA_MATH_PILOT_SUBJECT_ID,
+    strandId: "strand-gh-b4-number-pilot",
+    subStrandId: "substrand-gh-b4-number-patterns-pilot",
+    contentStandardId: "standard-gh-b4-number-patterns-pilot",
+    learningIndicatorId: "indicator-gh-b4-number-patterns-pilot",
+
+    title: "Describe Number Pattern Rules",
+
+    description:
+      "Describe the rule used in a number pattern and use it to predict the next term.",
+
+    prerequisiteCompetencyIds: [
+      GHANA_MATH_PILOT_INITIAL_COMPETENCY_ID,
+    ],
+
+    successorCompetencyIds: [
+      "competency-gh-math-b4-number-patterns-003",
+    ],
+
+    relatedCompetencyIds: [
+      GHANA_MATH_PILOT_INITIAL_COMPETENCY_ID,
+    ],
+
+    subskills: [
+      "state_pattern_rule",
+      "apply_rule_to_next_term",
+    ],
+
+    misconceptions: [
+      "states_observed_number_instead_of_rule",
+    ],
+
+    difficulty: 2,
+
+    masteryRequirements: {
+      masteryThreshold: 0.8,
+      confidenceThreshold: 0.8,
+    },
+
+    retentionRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+
+    transferRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+  },
+
+  {
+    id: "competency-gh-math-b4-number-patterns-003",
+
+    curriculumFrameworkId: GHANA_MATH_PILOT_CURRICULUM_ID,
+    educationSystemId: "education-system-gh-basic-pilot",
+    learningLevelId: GHANA_MATH_PILOT_LEVEL_ID,
+    subjectId: GHANA_MATH_PILOT_SUBJECT_ID,
+    strandId: "strand-gh-b4-number-pilot",
+    subStrandId: "substrand-gh-b4-number-patterns-pilot",
+    contentStandardId: "standard-gh-b4-number-patterns-pilot",
+    learningIndicatorId: "indicator-gh-b4-number-patterns-pilot",
+
+    title: "Apply Number Patterns in Context",
+
+    description:
+      "Use a number pattern rule to solve a simple everyday quantity problem.",
+
+    prerequisiteCompetencyIds: [
+      "competency-gh-math-b4-number-patterns-002",
+    ],
+
+    successorCompetencyIds: [],
+    relatedCompetencyIds: [
+      GHANA_MATH_PILOT_INITIAL_COMPETENCY_ID,
+      "competency-gh-math-b4-number-patterns-002",
+    ],
+
+    subskills: [
+      "connect_pattern_to_context",
+      "apply_rule_to_quantity",
+      "explain_pattern_reasoning",
+    ],
+
+    misconceptions: [
+      "applies_pattern_without_context_units",
+    ],
+
+    difficulty: 3,
+
+    masteryRequirements: {
+      masteryThreshold: 0.8,
+      confidenceThreshold: 0.8,
+    },
+
+    retentionRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+
+    transferRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+  },
+
+  {
+    id: GHANA_SCIENCE_B4_ANIMAL_CLASSIFICATION_COMPETENCY_ID,
+
+    curriculumFrameworkId: GHANA_MATH_PILOT_CURRICULUM_ID,
+    educationSystemId: "education-system-gh-basic-pilot",
+    learningLevelId: GHANA_MATH_PILOT_LEVEL_ID,
+    subjectId: GHANA_SCIENCE_PILOT_SUBJECT_ID,
+    strandId: "strand-gh-b4-science-diversity-of-matter",
+    subStrandId: "substrand-gh-b4-science-living-nonliving-things",
+    contentStandardId: "standard-gh-b4-science-b4.1.1.1",
+    learningIndicatorId: "indicator-gh-b4-science-b4.1.1.1.1",
+
+    title: "Classify Animals by Defining Features",
+
+    description:
+      "Classify familiar animals as insects, birds, mammals or reptiles by using defining physical and life-process features rather than habitat or movement alone.",
+
+    prerequisiteCompetencyIds: [],
+    successorCompetencyIds: [],
+    relatedCompetencyIds: [],
+
+    subskills: [
+      "observe_relevant_animal_features",
+      "distinguish_animal_group_features",
+      "classify_animal_by_features",
+      "justify_animal_classification",
+    ],
+
+    misconceptions: [
+      "classifies_flying_animals_as_birds",
+      "classifies_by_habitat_instead_of_features",
+      "treats_all_small_animals_as_insects",
+      "ignores_defining_body_features",
+    ],
+
+    difficulty: 1,
+
+    masteryRequirements: {
+      masteryThreshold: 0.8,
+      confidenceThreshold: 0.8,
+    },
+
+    retentionRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+
+    transferRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+  },
+
+  ...GHANA_B4_SCIENCE_ADDITIONAL_COMPETENCIES,
+  ...GHANA_B5_SCIENCE_COMPETENCIES,
+  ...GHANA_B6_SCIENCE_COMPETENCIES,
+  ...GHANA_B5_COMPUTING_COMPETENCIES,
+  ...GHANA_B6_COMPUTING_COMPETENCIES,
+  ...GHANA_B5_MATHEMATICS_COMPETENCIES,
+  ...GHANA_B6_MATHEMATICS_COMPETENCIES,
+  ...GHANA_B5_ENGLISH_COMPETENCIES,
+  ...GHANA_B6_ENGLISH_COMPETENCIES,
+  ...GHANA_B4_COMPUTING_COMPETENCIES,
+  ...GHANA_B4_MATHEMATICS_COMPETENCIES,
+  ...GHANA_B4_ENGLISH_STRAND1_COMPETENCIES,
+
+  {
+    id: "competency-test-001",
+
+    curriculumFrameworkId: "framework-test",
+    educationSystemId: "education-system-test",
+    learningLevelId: "level-test",
+    subjectId: "subject-test-mathematics",
+    strandId: "strand-test-number-patterns",
+    subStrandId: "substrand-test-number-sequences",
+    contentStandardId: "standard-test-number-sequences",
+    learningIndicatorId: "indicator-test-number-sequences",
+
+    title: "Number Sequences",
+
+    description:
+      "Recognise and continue simple number sequences.",
+
+    prerequisiteCompetencyIds: [],
+
+    successorCompetencyIds: [
+      "competency-test-002",
+    ],
+
+    relatedCompetencyIds: [],
+
+    subskills: [
+      "recognise_sequence",
+      "continue_sequence",
+    ],
+
+    misconceptions: [],
+
+    difficulty: 1,
+
+    masteryRequirements: {
+      masteryThreshold: 0.8,
+      confidenceThreshold: 0.8,
+    },
+
+    retentionRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+
+    transferRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+  },
+
+  {
+    id: "competency-test-002",
+
+    curriculumFrameworkId: "framework-test",
+    educationSystemId: "education-system-test",
+    learningLevelId: "level-test",
+    subjectId: "subject-test-mathematics",
+    strandId: "strand-test-number-patterns",
+    subStrandId: "substrand-test-number-sequences",
+    contentStandardId: "standard-test-number-sequences",
+    learningIndicatorId: "indicator-test-number-sequences",
+
+    title: "Number Sequence Patterns",
+
+    description:
+      "Identify the rule governing a number sequence.",
+
+    prerequisiteCompetencyIds: [
+      "competency-test-001",
+    ],
+
+    successorCompetencyIds: [
+      "competency-test-003",
+    ],
+
+    relatedCompetencyIds: [
+      "competency-test-001",
+    ],
+
+    subskills: [
+      "identify_sequence_rule",
+      "describe_sequence_rule",
+    ],
+
+    misconceptions: [],
+
+    difficulty: 2,
+
+    masteryRequirements: {
+      masteryThreshold: 0.8,
+      confidenceThreshold: 0.8,
+    },
+
+    retentionRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+
+    transferRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+  },
+
+  {
+    id: "competency-test-003",
+
+    curriculumFrameworkId: "framework-test",
+    educationSystemId: "education-system-test",
+    learningLevelId: "level-test",
+    subjectId: "subject-test-mathematics",
+    strandId: "strand-test-number-patterns",
+    subStrandId: "substrand-test-number-sequences",
+    contentStandardId: "standard-test-number-sequences",
+    learningIndicatorId: "indicator-test-number-sequences",
+
+    title: "Next Curriculum Competency",
+
+    description:
+      "Test progression to the next defined competency.",
+
+    prerequisiteCompetencyIds: [
+      "competency-test-002",
+    ],
+
+    successorCompetencyIds: [
+      "competency-test-004",
+    ],
+
+    relatedCompetencyIds: [],
+
+    subskills: [
+      "apply_sequence_reasoning",
+    ],
+
+    misconceptions: [],
+
+    difficulty: 3,
+
+    masteryRequirements: {
+      masteryThreshold: 0.8,
+      confidenceThreshold: 0.8,
+    },
+
+    retentionRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+
+    transferRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+  },
+
+  {
+    id: "competency-test-004",
+
+    curriculumFrameworkId: "framework-test",
+    educationSystemId: "education-system-test",
+    learningLevelId: "level-test",
+    subjectId: "subject-test-mathematics",
+    strandId: "strand-test-number-patterns",
+    subStrandId: "substrand-test-number-sequences",
+    contentStandardId: "standard-test-number-sequences",
+    learningIndicatorId: "indicator-test-number-sequences",
+
+    title: "Following Number Patterns",
+
+    description:
+      "Continue number patterns using an identified rule.",
+
+    prerequisiteCompetencyIds: [
+      "competency-test-003",
+    ],
+
+    successorCompetencyIds: [
+      "competency-test-005",
+    ],
+
+    relatedCompetencyIds: [
+      "competency-test-002",
+    ],
+
+    subskills: [
+      "apply_pattern_rule",
+      "continue_pattern",
+    ],
+
+    misconceptions: [],
+
+    difficulty: 4,
+
+    masteryRequirements: {
+      masteryThreshold: 0.8,
+      confidenceThreshold: 0.8,
+    },
+
+    retentionRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+
+    transferRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+  },
+
+  {
+    id: "competency-test-005",
+
+    curriculumFrameworkId: "framework-test",
+    educationSystemId: "education-system-test",
+    learningLevelId: "level-test",
+    subjectId: "subject-test-mathematics",
+    strandId: "strand-test-number-patterns",
+    subStrandId: "substrand-test-number-sequences",
+    contentStandardId: "standard-test-number-sequences",
+    learningIndicatorId: "indicator-test-number-sequences",
+
+    title: "Applying Number Pattern Rules",
+
+    description:
+      "Apply a number pattern rule to continue and explain a sequence.",
+
+    prerequisiteCompetencyIds: [
+      "competency-test-004",
+    ],
+
+    successorCompetencyIds: [],
+
+    relatedCompetencyIds: [
+      "competency-test-002",
+      "competency-test-004",
+    ],
+
+    subskills: [
+      "apply_pattern_rule",
+      "explain_pattern_rule",
+      "transfer_pattern_reasoning",
+    ],
+
+    misconceptions: [],
+
+    difficulty: 5,
+
+    masteryRequirements: {
+      masteryThreshold: 0.8,
+      confidenceThreshold: 0.8,
+    },
+
+    retentionRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+
+    transferRequirements: {
+      required: true,
+      confidenceThreshold: 0.8,
+    },
+  },
+];
+
+export function getCompetency(
+  competencyId: CompetencyId,
+): CompetencyDefinition | undefined {
+  return curriculum.find(
+    (competency) =>
+      competency.id === competencyId,
+  );
+}
+
+export function getNextCompetency(
+  competencyId: CompetencyId,
+): CompetencyDefinition | undefined {
+  const competency =
+    getCompetency(competencyId);
+
+  if (!competency) {
+    return undefined;
+  }
+
+  if (
+    competency.successorCompetencyIds.length ===
+    0
+  ) {
+    return undefined;
+  }
+
+  return getCompetency(
+    competency.successorCompetencyIds[0],
+  );
+}
+
+export function prerequisitesSatisfied(
+  competencyId: CompetencyId,
+  completedCompetencyIds: CompetencyId[],
+): boolean {
+  const competency =
+    getCompetency(competencyId);
+
+  if (!competency) {
+    return false;
+  }
+
+  return competency.prerequisiteCompetencyIds.every(
+    (prerequisiteId) =>
+      completedCompetencyIds.includes(
+        prerequisiteId,
+      ),
+  );
+}
+
+export function getAllCompetencies(): CompetencyDefinition[] {
+  return [...curriculum];
+}
+
+export function getCurriculumFramework(
+  frameworkId: CurriculumFrameworkId,
+): CurriculumFramework | undefined {
+  return curriculumFrameworks.find(
+    (framework) =>
+      framework.id === frameworkId,
+  );
+}
+
+export function getEducationSystem(
+  educationSystemId: EducationSystemId,
+): EducationSystem | undefined {
+  return educationSystems.find(
+    (system) =>
+      system.id === educationSystemId,
+  );
+}
+
+export function getLearningLevel(
+  levelId: LearningLevelId,
+): LearningLevel | undefined {
+  return learningLevels.find(
+    (level) =>
+      level.id === levelId,
+  );
+}
+
+export function getSubject(
+  subjectId: SubjectId,
+): Subject | undefined {
+  return subjects.find(
+    (subject) =>
+      subject.id === subjectId,
+  );
+}
+
+export function getStrand(
+  strandId: StrandId,
+): Strand | undefined {
+  return strands.find(
+    (strand) =>
+      strand.id === strandId,
+  );
+}
+
+export function getSubStrand(
+  subStrandId: SubStrandId,
+): SubStrand | undefined {
+  return subStrands.find(
+    (subStrand) =>
+      subStrand.id === subStrandId,
+  );
+}
+
+export function getContentStandard(
+  contentStandardId: ContentStandardId,
+): ContentStandard | undefined {
+  return contentStandards.find(
+    (standard) =>
+      standard.id === contentStandardId,
+  );
+}
+
+export function getLearningIndicator(
+  learningIndicatorId: LearningIndicatorId,
+): LearningIndicator | undefined {
+  return learningIndicators.find(
+    (indicator) =>
+      indicator.id === learningIndicatorId,
+  );
+}
+
+export function getCompetenciesForSubject(
+  subjectId: SubjectId,
+): CompetencyDefinition[] {
+  return curriculum.filter(
+    (competency) =>
+      competency.subjectId === subjectId,
+  );
+}
+
+export function getCompetenciesForLevel(
+  learningLevelId: LearningLevelId,
+): CompetencyDefinition[] {
+  return curriculum.filter(
+    (competency) =>
+      competency.learningLevelId ===
+      learningLevelId,
+  );
+}
+
+export function getCompetenciesForCurriculumSubjectLevel(
+  curriculumFrameworkId: CurriculumFrameworkId,
+  subjectId: SubjectId,
+  learningLevelId: LearningLevelId,
+): CompetencyDefinition[] {
+  return curriculum.filter(
+    (competency) =>
+      competency.curriculumFrameworkId ===
+        curriculumFrameworkId &&
+      competency.subjectId === subjectId &&
+      competency.learningLevelId ===
+        learningLevelId,
+  );
+}
+
+export function getInitialCompetencyForCurriculumSubjectLevel(
+  curriculumFrameworkId: CurriculumFrameworkId,
+  subjectId: SubjectId,
+  learningLevelId: LearningLevelId,
+): CompetencyDefinition | undefined {
+  return getCompetenciesForCurriculumSubjectLevel(
+    curriculumFrameworkId,
+    subjectId,
+    learningLevelId,
+  ).find(
+    (competency) =>
+      competency.prerequisiteCompetencyIds.length === 0,
+  );
+}
+
+export function getAllSubjects(): Subject[] {
+  return [...subjects];
+}
+
+export function getAllLearningLevels(): LearningLevel[] {
+  return [...learningLevels];
+}
+
+export function getAllCurriculumFrameworks(): CurriculumFramework[] {
+  return [...curriculumFrameworks];
+}
+
+
+
+
