@@ -79,7 +79,7 @@ const TEXT = {
     welcome: "Bon",
     welcomeAccent: "retour",
     greeting: "Ravi de te revoir !",
-    intro: ["Connecte-toi pour continuer ton parcours", "d'apprentissage avec FILUMIRE."],
+    intro: ["Connecte-toi pour continuer", "ton parcours avec FILUMIRE."],
     signIn: "Connexion",
     cardIntro: "Saisis tes informations pour continuer.",
     identity: "E-mail ou identifiant",

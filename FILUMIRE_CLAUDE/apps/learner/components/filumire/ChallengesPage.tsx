@@ -793,6 +793,10 @@ export function ChallengesPage({
             align-items: start;
           }
 
+          .challengesPage > .fState {
+            grid-column: 1 / -1;
+          }
+
           .cHead {
             grid-area: head;
             padding-top: 0;

@@ -1800,7 +1800,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
         .approvedSetup .setupNote {
           position: absolute;
           top: -8px;
-          right: -18px;
+          right: -14px;
           width: 82px;
           padding: 12px 8px 14px;
           border-radius: 3px;

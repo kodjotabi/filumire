@@ -1042,11 +1042,12 @@ export function ProgressPage({
             grid-template-areas:
               "hero hero"
               "overall overall"
+              "mastery mastery"
               "subjects growing"
               "subjects lists"
               "quote quote"
               "footer footer";
-            grid-template-rows: auto auto auto auto auto 1fr;
+            grid-template-rows: auto auto auto auto auto auto 1fr;
             gap: 20px 24px;
             align-items: start;
           }
@@ -1054,6 +1055,14 @@ export function ProgressPage({
           .pHero {
             grid-area: hero;
             padding-top: 0;
+          }
+
+          .pMastery {
+            grid-area: mastery;
+          }
+
+          .progressPage > .fState {
+            grid-column: 1 / -1;
           }
 
           .pHero h1 {

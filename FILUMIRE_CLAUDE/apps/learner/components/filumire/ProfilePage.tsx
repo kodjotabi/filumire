@@ -281,6 +281,12 @@ export default function ProfilePage({
       </section>
 
       <style jsx>{`
+        @media (min-width: 1024px) {
+          .prNameForm {
+            grid-area: name;
+          }
+        }
+
         .prGrade {
           margin: 0 0 8px;
           color: #3d5a80;
@@ -628,10 +634,11 @@ export default function ProfilePage({
             grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
             grid-template-areas:
               "top settings"
+              "name settings"
               "stats settings"
               "quote settings"
               "footer footer";
-            grid-template-rows: auto auto 1fr auto;
+            grid-template-rows: auto auto auto 1fr auto;
             gap: 20px 24px;
             align-items: start;
           }

@@ -298,6 +298,7 @@ export default function HomePage() {
         .wideActions { display: flex; align-items: center; gap: 14px; }
         @media (min-width: 768px) {
           .homeLangMobile { display: none; }
+          .home .intro br { display: none; }
         }
       `}</style>
     </main>

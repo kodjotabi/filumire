@@ -644,9 +644,16 @@ export function AskFiluPage({
               "topic chat"
               "help chat"
               "help input"
+              "help back"
               "footer footer";
-            grid-template-rows: auto auto auto auto 1fr;
+            grid-template-rows: auto auto auto auto auto 1fr;
             gap: 20px 24px;
+          }
+
+          .askPage > :global(.fBackToLesson) {
+            grid-area: back;
+            justify-self: start;
+            margin: 0;
           }
 
           .fHero {
