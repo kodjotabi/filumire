@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import {
+  getSignedInMarkerClearCookie,
   getProductionSessionClearCookie,
   resolveSignedInSession,
 } from "../../../../../../services/identity";
@@ -30,7 +31,7 @@ export async function POST(
       identity.principalId,
     );
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       { revoked: true },
       {
         headers: {
@@ -38,6 +39,13 @@ export async function POST(
         },
       },
     );
+
+    response.headers.append(
+      "set-cookie",
+      getSignedInMarkerClearCookie(),
+    );
+
+    return response;
   } catch (error) {
     if (
       error instanceof Error &&

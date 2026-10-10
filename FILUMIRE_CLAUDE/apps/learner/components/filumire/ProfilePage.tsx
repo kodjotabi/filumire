@@ -13,6 +13,12 @@ type Props = {
   onRename: (value: string) => void;
   overview: { subjects: Record<string, Stat> } | null;
   gradeName?: string;
+  /* A real FILUMIRE sign-in: details save to the account. */
+  signedIn?: boolean;
+  /* A parent or guardian learning as their child on this device. */
+  guardianSession?: boolean;
+  onAvatar?: (avatarId: string) => void;
+  onSignOut?: () => Promise<void>;
 };
 
 const text = {
@@ -41,6 +47,8 @@ const text = {
     out: "Log Out",
     soon: "Coming soon",
     device: "Your name and avatar are saved on this device only.",
+    account: "Your name, avatar and language are saved to your FILUMIRE account.",
+    family: "Back to the family page",
   },
   fr: {
     edit: "Modifier le prénom",
@@ -67,6 +75,8 @@ const text = {
     out: "Se déconnecter",
     soon: "Bientôt",
     device: "Ton prénom et ton avatar sont enregistrés seulement sur cet appareil.",
+    account: "Ton prénom, ton avatar et ta langue sont enregistrés dans ton compte FILUMIRE.",
+    family: "Retour à la page famille",
   },
 };
 
@@ -77,6 +87,10 @@ export default function ProfilePage({
   onRename,
   overview,
   gradeName,
+  signedIn,
+  guardianSession,
+  onAvatar,
+  onSignOut,
 }: Props) {
   const t = text[language];
   const avatarSrc = useLearnerAvatar();
@@ -116,9 +130,15 @@ export default function ProfilePage({
       /* storage unavailable */
     }
     window.dispatchEvent(new Event("filumire-avatar"));
+    onAvatar?.(id);
   }
 
   async function logOut() {
+    if (onSignOut) {
+      await onSignOut();
+      return;
+    }
+
     // Ends the server session (production cookie). Development
     // builds have no session, so a 401 here is expected.
     try {
@@ -269,7 +289,13 @@ export default function ProfilePage({
           <em>{t.soon}</em>
         </div>
 
-        <p className="prDevice">{t.device}</p>
+        <p className="prDevice">{signedIn ? t.account : t.device}</p>
+
+        {guardianSession ? (
+          <a className="prRow" href={`/family?lang=${language}`}>
+            <span>{t.family}</span>
+          </a>
+        ) : null}
 
         <button type="button" className="prRow out" onClick={logOut}>
           <span>{t.out}</span>

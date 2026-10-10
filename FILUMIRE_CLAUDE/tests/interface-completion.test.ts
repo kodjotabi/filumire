@@ -227,7 +227,10 @@ function sourceChecks(): void {
   );
 
   const login = read("apps/learner/app/login/page.tsx");
-  assert.match(login, /Sign-in is not connected yet/);
+  // Built-in accounts: the form signs in for real and links to registration.
+  assert.ok(login.includes("await signIn(login, password)"), "sign-in form calls the account API");
+  assert.ok(login.includes("href={`/register?lang=${language}`}"), "create account links to registration");
+  assert.doesNotMatch(login, /Sign-in is not connected yet/);
   assert.match(login, /const LOCAL_TESTING = process\.env\.NODE_ENV !== "production"/);
   assert.match(login, /\.loginPage \.filumireBottomNav \{ position: static;/);
 

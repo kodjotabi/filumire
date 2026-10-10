@@ -1,10 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { FormEvent, useEffect, useState } from "react";
 import { LearnerBottomNav } from "../../components/filumire/LearnerBottomNav";
 import { LanguageToggle } from "../../components/filumire/LanguageToggle";
 import { useLanguage } from "../../components/filumire/language";
+import {
+  accountErrorMessage,
+  activeLearner,
+  applyLearnerProfileToDevice,
+  fetchAccount,
+  destinationFor,
+  hasAccountSession,
+  signIn,
+} from "../../services/account-client";
 
 function ArrowRight() {
   return (
@@ -15,31 +25,13 @@ function ArrowRight() {
 }
 
 /*
- * Sign-in status: the server issues sessions only from an external
- * identity provider token (services/identity issueProductionSession,
- * POST /api/session/issue). No provider is connected and there is no
- * username/password check, so this form cannot sign anyone in yet and
- * says so. Local development builds offer a clearly labelled way into
- * the app as the development test learner instead.
+ * Built-in FILUMIRE sign-in (services/account): parents and
+ * guardians sign in with their email address, learners with the
+ * username their parent chose. After sign-in a learner goes to
+ * their learning (or first-time setup), a guardian to the family
+ * page. Local development builds also keep a clearly labelled way
+ * in as the built-in test learner.
  */
-const SIGN_IN_PENDING =
-  "Sign-in is not connected yet. FILUMIRE accounts will be issued through a secure identity service that has not been set up in this version, so no username or password can be checked.";
-
-const CREATE_ACCOUNT_PENDING =
-  "Account creation is not available yet. It will open when the FILUMIRE identity service is connected.";
-
-const PASSWORD_RECOVERY_PENDING =
-  "Password recovery is not available yet. It will be provided by the FILUMIRE identity service.";
-
-const PENDING_FR: Record<string, string> = {
-  [SIGN_IN_PENDING]:
-    "La connexion n'est pas encore activée. Les comptes FILUMIRE seront fournis par un service d'identité sécurisé qui n'est pas encore installé dans cette version : aucun identifiant ni mot de passe ne peut donc être vérifié.",
-  [CREATE_ACCOUNT_PENDING]:
-    "La création de compte n'est pas encore disponible. Elle ouvrira lorsque le service d'identité FILUMIRE sera connecté.",
-  [PASSWORD_RECOVERY_PENDING]:
-    "La récupération du mot de passe n'est pas encore disponible. Elle sera assurée par le service d'identité FILUMIRE.",
-};
-
 const LOCAL_TESTING = process.env.NODE_ENV !== "production";
 
 const TEXT = {
@@ -54,14 +46,18 @@ const TEXT = {
     intro: ["Sign in to continue your learning", "journey with FILUMIRE."],
     signIn: "Sign In",
     cardIntro: "Enter your details to continue.",
-    identity: "Email or username",
-    identityPlaceholder: "Email or Username",
+    identity: "Email (parents) or username (learners)",
+    identityPlaceholder: "Email or username",
+    signingIn: "Signing in…",
+    missing: "Enter your email or username and your password.",
+    forgot:
+      "Learners: ask your parent or guardian to set a new password from their family page. Parents: password reset by email is not available in this test version yet.",
     password: "Password",
     showPassword: "Show password",
     hidePassword: "Hide password",
-    forgot: "Forgot your password?",
+    forgotLink: "Forgot your password?",
     newTitle: "New to FILUMIRE?",
-    newBody: "Create an account and start your learning journey today.",
+    newBody: "Parents and guardians create the family account, then add each learner.",
     create: "Create Account",
     localTitle: "Local testing",
     localBody:
@@ -82,14 +78,18 @@ const TEXT = {
     intro: ["Connecte-toi pour continuer", "ton parcours avec FILUMIRE."],
     signIn: "Connexion",
     cardIntro: "Saisis tes informations pour continuer.",
-    identity: "E-mail ou identifiant",
+    identity: "E-mail (parents) ou identifiant (apprenants)",
     identityPlaceholder: "E-mail ou identifiant",
+    signingIn: "Connexion…",
+    missing: "Saisis ton e-mail ou ton identifiant et ton mot de passe.",
+    forgot:
+      "Apprenants : demande à ton parent ou tuteur de choisir un nouveau mot de passe depuis sa page famille. Parents : la réinitialisation par e-mail n'est pas encore disponible dans cette version de test.",
     password: "Mot de passe",
     showPassword: "Afficher le mot de passe",
     hidePassword: "Masquer le mot de passe",
-    forgot: "Mot de passe oublié ?",
+    forgotLink: "Mot de passe oublié ?",
     newTitle: "Nouveau sur FILUMIRE ?",
-    newBody: "Crée un compte et commence ton parcours dès aujourd'hui.",
+    newBody: "Les parents et tuteurs créent le compte famille, puis ajoutent chaque apprenant.",
     create: "Créer un compte",
     localTitle: "Test local",
     localBody:
@@ -102,17 +102,64 @@ const TEXT = {
 } as const;
 
 export default function LoginPage() {
+  const router = useRouter();
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
-  const [createMessage, setCreateMessage] = useState("");
   const [language, setLanguage] = useLanguage();
   const t = TEXT[language];
-  const localise = (text: string) =>
-    language === "fr" ? (PENDING_FR[text] ?? text) : text;
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  // Already signed in on this browser: go straight on.
+  useEffect(() => {
+    if (!hasAccountSession()) return;
+
+    let active = true;
+    fetchAccount()
+      .then((account) => {
+        if (active && account) {
+          router.replace(destinationFor(account, language));
+        }
+      })
+      .catch(() => undefined);
+
+    return () => {
+      active = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setMessage(SIGN_IN_PENDING);
+
+    if (!login.trim() || !password) {
+      setMessage(t.missing);
+      return;
+    }
+
+    setBusy(true);
+    setMessage("");
+
+    try {
+      await signIn(login, password);
+      const account = await fetchAccount();
+
+      if (!account) {
+        throw new Error("Session not established.");
+      }
+
+      const learner = activeLearner(account);
+      if (learner) {
+        applyLearnerProfileToDevice(learner);
+      }
+
+      setPassword("");
+      router.push(destinationFor(account, learner?.preferredLanguage ?? language));
+    } catch (error) {
+      setMessage(accountErrorMessage(error, language));
+      setBusy(false);
+    }
   }
 
   return (
@@ -169,7 +216,12 @@ export default function LoginPage() {
               name="identity"
               type="text"
               autoComplete="username"
+              autoCapitalize="none"
+              spellCheck={false}
               placeholder={t.identityPlaceholder}
+              value={login}
+              onChange={(event) => setLogin(event.target.value)}
+              required
             />
           </div>
 
@@ -185,6 +237,9 @@ export default function LoginPage() {
               type={passwordVisible ? "text" : "password"}
               autoComplete="current-password"
               placeholder={t.password}
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
             />
             <button
               type="button"
@@ -204,18 +259,18 @@ export default function LoginPage() {
           <button
             type="button"
             className="forgot"
-            onClick={() => setMessage(PASSWORD_RECOVERY_PENDING)}
+            onClick={() => setMessage(t.forgot)}
           >
-            {t.forgot}
+            {t.forgotLink}
           </button>
 
-          <button type="submit" className="signInButton">
-            {t.signIn} <ArrowRight />
+          <button type="submit" className="signInButton" disabled={busy} aria-busy={busy}>
+            {busy ? t.signingIn : t.signIn} {busy ? null : <ArrowRight />}
           </button>
 
           {/* Always mounted so screen readers announce each message. */}
           <p className="authMessage" role="status" aria-live="polite">
-            {localise(message)}
+            {message}
           </p>
         </form>
       </section>
@@ -223,16 +278,9 @@ export default function LoginPage() {
       <section className="newAccount">
         <h2>{t.newTitle}</h2>
         <p>{t.newBody}</p>
-        <button
-          type="button"
-          className="createButton"
-          onClick={() => setCreateMessage(CREATE_ACCOUNT_PENDING)}
-        >
+        <Link href={`/register?lang=${language}`} className="createButton">
           {t.create} <ArrowRight />
-        </button>
-        <p className="authMessage" role="status" aria-live="polite">
-          {localise(createMessage)}
-        </p>
+        </Link>
       </section>
 
       {LOCAL_TESTING ? (
@@ -287,6 +335,8 @@ export default function LoginPage() {
         .forgot { display: block; margin: 5px 0 6px auto; border: 0; padding: 0; background: transparent; color: var(--ui-ink); font-family: inherit; font-size: 11px; font-weight: 600; cursor: pointer; }
         .signInButton, .createButton { width: 100%; height: 36px; display: flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 9px; color: #ffffff; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; }
         .signInButton { background: var(--ui-blue); }
+        .signInButton[disabled] { opacity: 0.7; cursor: progress; }
+        .createButton { text-decoration: none; box-sizing: border-box; }
         .createButton { background: var(--ui-green); }
         .btnArrow { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
         .authMessage { margin: 8px 0 0; color: var(--ui-ink-soft); font-size: 11px; line-height: 1.35; text-align: center; }

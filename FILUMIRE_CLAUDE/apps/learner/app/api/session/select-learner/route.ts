@@ -1,13 +1,17 @@
 import { AccountForbiddenError } from "../../../../../../services/account";
 import { revokePrincipalAuthSession } from "../../../../../../services/auth-session";
 import {
-  getProductionSessionCookie,
   issueSessionForPrincipal,
   resolveSignedInSession,
 } from "../../../../../../services/identity";
 import { listAuthorizedLearnersForPrincipal } from "../../../../../../services/principal";
 
-import { errorResponse, json, readJsonBody } from "../../account/http";
+import {
+  errorResponse,
+  json,
+  readJsonBody,
+  withSessionCookies,
+} from "../../account/http";
 
 /*
  * Switches the signed-in session to learn as one of the
@@ -62,13 +66,9 @@ export async function POST(request: Request) {
       learnerId,
     );
 
-    return json(
-      { activeLearnerId: learnerId ?? null },
-      {
-        headers: {
-          "set-cookie": getProductionSessionCookie(issued.token),
-        },
-      },
+    return withSessionCookies(
+      json({ activeLearnerId: learnerId ?? null }),
+      issued.token,
     );
   } catch (error) {
     return errorResponse(error, "learner selection");

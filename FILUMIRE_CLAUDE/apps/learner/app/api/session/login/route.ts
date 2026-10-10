@@ -4,7 +4,6 @@ import {
 } from "../../../../../../services/account";
 import { revokePrincipalAuthSession } from "../../../../../../services/auth-session";
 import {
-  getProductionSessionCookie,
   issueSessionForPrincipal,
   resolveSignedInSession,
 } from "../../../../../../services/identity";
@@ -15,6 +14,7 @@ import {
   errorResponse,
   json,
   readJsonBody,
+  withSessionCookies,
 } from "../../account/http";
 
 /*
@@ -68,17 +68,13 @@ export async function POST(request: Request) {
       learnerId,
     );
 
-    return json(
-      {
+    return withSessionCookies(
+      json({
         signedIn: true,
         accountKind: account.accountKind,
         learnerId: learnerId ?? null,
-      },
-      {
-        headers: {
-          "set-cookie": getProductionSessionCookie(session.token),
-        },
-      },
+      }),
+      session.token,
     );
   } catch (error) {
     return errorResponse(error, "sign-in");

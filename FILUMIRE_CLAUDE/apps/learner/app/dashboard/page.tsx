@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import Link from "next/link";
 import {
@@ -33,6 +33,17 @@ import { AVATAR_KEY, LEARNER_AVATARS, useLearnerAvatar } from "../../components/
 import { findFilumireSubject, subjectLabel, toFilumireSubjects } from "../../components/filumire/subjects";
 import { SubjectIcon } from "../../components/filumire/SubjectIcon";
 import { useLanguage, withLang } from "../../components/filumire/language";
+import { LEARNER_GRADES } from "../../components/filumire/grades";
+import {
+  activeLearner,
+  applyLearnerProfileToDevice,
+  fetchAccount,
+  hasAccountSession,
+  saveSignedInLearnerProfile,
+  signOut,
+  updateLearnerProfile,
+  type Account,
+} from "../../services/account-client";
 
 type ViewState =
   | "loading"
@@ -146,6 +157,9 @@ const SETUP_TEXT = {
     level: "Your class",
     levelHelp: "Your class is set by your school. FILUMIRE uses it to choose learning that is right for you.",
     levelUnknown: "Set by your school",
+    levelChoose: "Choose your class. FILUMIRE uses it to choose learning that is right for you.",
+    saving: "Saving…",
+    saveFailed: "Your details could not be saved. Check your connection and try again.",
     avatar: "Choose your avatar",
     avatarHelp: "Pick the FILUMIRE learner you would like to represent you.",
     chooseAvatar: "Choose avatar",
@@ -165,6 +179,9 @@ const SETUP_TEXT = {
     level: "Ta classe",
     levelHelp: "Ta classe est définie par ton école. FILUMIRE s’en sert pour choisir ce qui te convient.",
     levelUnknown: "Définie par ton école",
+    levelChoose: "Choisis ta classe. FILUMIRE s’en sert pour choisir ce qui te convient.",
+    saving: "Enregistrement…",
+    saveFailed: "Tes informations n’ont pas pu être enregistrées. Vérifie ta connexion et réessaie.",
     avatar: "Choisis ton avatar",
     avatarHelp: "Choisis l’apprenant FILUMIRE qui te représente.",
     chooseAvatar: "Choisir l’avatar",
@@ -175,7 +192,14 @@ const SETUP_TEXT = {
 } as const;
 
 function LearnerDashboardView() {
+  const router = useRouter();
   const searchKey = useSearchParams().toString();
+  // The signed-in FILUMIRE account, when there is one. Without it
+  // (local development) the dashboard runs as the test learner.
+  const [account, setAccount] = useState<Account | null>(null);
+  const [setupGrade, setSetupGrade] = useState("");
+  const [setupSaving, setSetupSaving] = useState(false);
+  const [setupError, setSetupError] = useState("");
   const [language, setLanguage] = useLanguage(searchKey);
   const [view, setView] =
     useState<DashboardView>("home");
@@ -207,6 +231,52 @@ function LearnerDashboardView() {
       setLearnerName("");
     }
   }, []);
+
+  useEffect(() => {
+    if (!hasAccountSession()) return;
+
+    let alive = true;
+    fetchAccount()
+      .then((current) => {
+        if (!alive || !current) return;
+
+        const learner = activeLearner(current);
+
+        if (!learner) {
+          // A guardian who has not chosen a learner belongs on the
+          // family page, not in a learner's dashboard.
+          if (current.accountKind === "guardian") {
+            router.replace(`/family?lang=${language}`);
+          }
+          return;
+        }
+
+        setAccount(current);
+        applyLearnerProfileToDevice(learner);
+        setLearnerName(learner.displayName);
+        setSetupName(learner.displayName);
+        if (learner.avatarId) setSetupAvatar(learner.avatarId);
+
+        if (
+          !learner.onboardingComplete &&
+          getDashboardView() !== "setup"
+        ) {
+          router.replace(`/dashboard?lang=${language}&view=setup`);
+        }
+      })
+      .catch(() => undefined);
+
+    return () => {
+      alive = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const signedInLearner = activeLearner(account);
+
+  useEffect(() => {
+    if (overview?.gradeId && !setupGrade) setSetupGrade(overview.gradeId);
+  }, [overview?.gradeId, setupGrade]);
 
   useEffect(() => {
     const params =
@@ -373,6 +443,35 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
       }
     } catch {
       /* storage unavailable: the greeting falls back to a plain hello */
+    }
+  }
+
+  /*
+   * Finishing first-time setup. A signed-in learner's name, avatar
+   * and class are saved to their account (and onboarding marked
+   * done) before moving on; the reload picks up the new class's
+   * subjects. The local test learner keeps the device-only save.
+   */
+  async function finishSetup(event: { preventDefault(): void }) {
+    saveLearnerProfile();
+
+    if (!signedInLearner) return;
+
+    event.preventDefault();
+    setSetupSaving(true);
+    setSetupError("");
+
+    try {
+      await updateLearnerProfile(signedInLearner.learnerId, {
+        ...(setupName.trim() ? { displayName: setupName.trim() } : {}),
+        avatarId: setupAvatar,
+        ...(setupGrade && setupGrade !== overview?.gradeId ? { gradeId: setupGrade } : {}),
+        completeOnboarding: true,
+      });
+      window.location.assign(`/dashboard?lang=${language}`);
+    } catch {
+      setSetupError(SETUP_TEXT[language].saveFailed);
+      setSetupSaving(false);
     }
   }
 
@@ -591,15 +690,40 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                     <div className="setupFieldBody">
                       {/* The grade is stored on the server and decides which
                           curriculum the learner sees; it is shown, not edited. */}
-                      <span className="setupFieldLabel" id="setupLevelLabel">
-                        {setupText.level}
-                      </span>
-                      <output className="setupInput setupReadonly" aria-labelledby="setupLevelLabel">
-                        {overview?.gradeName || setupText.levelUnknown}
-                      </output>
-                      <p className="setupFieldHelp">
-                        {setupText.levelHelp}
-                      </p>
+                      {signedInLearner ? (
+                        <>
+                          <label className="setupFieldLabel" htmlFor="setupLevel">
+                            {setupText.level}
+                          </label>
+                          <select
+                            id="setupLevel"
+                            className="setupInput"
+                            value={setupGrade}
+                            onChange={(event) => setSetupGrade(event.target.value)}
+                          >
+                            {LEARNER_GRADES.map((grade) => (
+                              <option key={grade.id} value={grade.id}>
+                                {grade.name[language]}
+                              </option>
+                            ))}
+                          </select>
+                          <p className="setupFieldHelp">
+                            {setupText.levelChoose}
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <span className="setupFieldLabel" id="setupLevelLabel">
+                            {setupText.level}
+                          </span>
+                          <output className="setupInput setupReadonly" aria-labelledby="setupLevelLabel">
+                            {overview?.gradeName || setupText.levelUnknown}
+                          </output>
+                          <p className="setupFieldHelp">
+                            {setupText.levelHelp}
+                          </p>
+                        </>
+                      )}
                     </div>
                   </div>
                 </section>
@@ -671,6 +795,9 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                   </div>
                 </section>
 
+                {setupError ? (
+                  <p className="fState inline" role="alert">{setupError}</p>
+                ) : null}
                 <div className="setupFooterScene">
                   <svg className="setupScene" viewBox="0 0 390 56" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
                     <path d="M0 14C30 2 70-2 110 8C150 18 200 4 260 10C320 16 360 6 390 16V56H0Z" fill="#cfe6fa" />
@@ -686,9 +813,10 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                   <Link
                     href={`/dashboard?lang=${language}`}
                     className="approvedSetupContinue"
-                    onClick={saveLearnerProfile}
+                    onClick={finishSetup}
+                    aria-disabled={setupSaving}
                   >
-                    <span>{setupText.continue}</span>
+                    <span>{setupSaving ? setupText.saving : setupText.continue}</span>
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                       <path d="M5 12h14M13 6l6 6-6 6" />
                     </svg>
@@ -1013,9 +1141,22 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
         <div className="learnerContent homeScreen">
           <ProfilePage
             language={language}
-            onLanguage={setLanguage}
+            onLanguage={(value) => {
+              setLanguage(value);
+              saveSignedInLearnerProfile({ preferredLanguage: value }).catch(() => undefined);
+            }}
+            signedIn={Boolean(signedInLearner)}
+            guardianSession={account?.accountKind === "guardian"}
+            onSignOut={async () => {
+              await signOut();
+              window.location.assign(`/login?lang=${language}`);
+            }}
+            onAvatar={(avatarId: string) => {
+              saveSignedInLearnerProfile({ avatarId }).catch(() => undefined);
+            }}
             name={learnerName}
             onRename={(value: string) => {
+              saveSignedInLearnerProfile({ displayName: value }).catch(() => undefined);
               try {
                 window.localStorage.setItem("filumire.learnerName", value);
               } catch {

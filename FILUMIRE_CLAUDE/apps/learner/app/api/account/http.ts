@@ -13,6 +13,13 @@ import {
   getClientAddress,
 } from "../../../../../services/account/rate-limit";
 
+import {
+  getProductionSessionClearCookie,
+  getProductionSessionCookie,
+  getSignedInMarkerClearCookie,
+  getSignedInMarkerCookie,
+} from "../../../../../services/identity";
+
 import { LearnerContextValidationError } from "../../../../../services/learner-context";
 
 /*
@@ -67,6 +74,25 @@ export function json(
     status: init.status ?? 200,
     headers: { ...NO_STORE, ...init.headers },
   });
+}
+
+/*
+ * Sets (token) or clears (null) the HttpOnly session cookie and
+ * the readable signed-in marker together.
+ */
+export function withSessionCookies(
+  response: NextResponse,
+  token: string | null,
+): NextResponse {
+  if (token) {
+    response.headers.append("set-cookie", getProductionSessionCookie(token));
+    response.headers.append("set-cookie", getSignedInMarkerCookie());
+  } else {
+    response.headers.append("set-cookie", getProductionSessionClearCookie());
+    response.headers.append("set-cookie", getSignedInMarkerClearCookie());
+  }
+
+  return response;
 }
 
 export function rateLimited(retryAfterSeconds: number): NextResponse {

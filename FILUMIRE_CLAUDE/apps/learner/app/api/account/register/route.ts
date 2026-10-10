@@ -1,14 +1,12 @@
 import { registerGuardian } from "../../../../../../services/account";
-import {
-  getProductionSessionCookie,
-  issueSessionForPrincipal,
-} from "../../../../../../services/identity";
+import { issueSessionForPrincipal } from "../../../../../../services/identity";
 
 import {
   checkRateLimits,
   errorResponse,
   json,
   readJsonBody,
+  withSessionCookies,
 } from "../http";
 
 /*
@@ -38,14 +36,9 @@ export async function POST(request: Request) {
     });
     const session = await issueSessionForPrincipal(principalId);
 
-    return json(
-      { registered: true, accountKind: "guardian" },
-      {
-        status: 201,
-        headers: {
-          "set-cookie": getProductionSessionCookie(session.token),
-        },
-      },
+    return withSessionCookies(
+      json({ registered: true, accountKind: "guardian" }, { status: 201 }),
+      session.token,
     );
   } catch (error) {
     return errorResponse(error, "registration");

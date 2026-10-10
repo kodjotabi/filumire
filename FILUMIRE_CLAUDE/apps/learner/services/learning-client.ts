@@ -1,3 +1,5 @@
+import { usesDevelopmentIdentity } from "./session-marker";
+
 export const DEVELOPMENT_LEARNER_ID =
   "learner-runtime-feedback-001";
 
@@ -109,7 +111,7 @@ export class LearningRequestError extends Error {
 export class LearningNetworkError extends Error {}
 
 export function getApiHeaders(): Record<string, string> {
-  if (IS_PRODUCTION) {
+  if (!usesDevelopmentIdentity()) {
     return {
       "Content-Type": "application/json",
     };
@@ -127,7 +129,7 @@ export function getLearningUrl(
 ): string {
   const params = new URLSearchParams();
 
-  if (!IS_PRODUCTION) {
+  if (usesDevelopmentIdentity()) {
     params.set("sessionId", SESSION_ID);
   }
 
@@ -145,7 +147,7 @@ export function getLearningUrl(
 export function getSessionId(
   data: LearningResponse,
 ): string {
-  return IS_PRODUCTION
+  return !usesDevelopmentIdentity()
     ? data.decision.sessionId
     : SESSION_ID;
 }
@@ -163,7 +165,7 @@ export async function fetchLearningSession(
    * instead. Production resolves the stored learning context on
    * the server and is unchanged.
    */
-  if (!subjectId && !IS_PRODUCTION) {
+  if (!subjectId && usesDevelopmentIdentity()) {
     const overview = await fetchLearningOverview();
     subjectId = overview?.activeSubjectId || undefined;
   }

@@ -1,6 +1,4 @@
-import {
-  IS_PRODUCTION,
-} from "./learning-client";
+import { usesDevelopmentIdentity } from "./session-marker";
 
 const DEVELOPMENT_PRINCIPAL_ID =
   "principal-runtime-feedback-001";
@@ -122,7 +120,7 @@ export class TeacherRequestError extends Error {
 }
 
 function getTeacherApiHeaders(): Record<string, string> {
-  if (IS_PRODUCTION) {
+  if (!usesDevelopmentIdentity()) {
     return {
       "Content-Type": "application/json",
     };

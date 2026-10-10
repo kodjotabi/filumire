@@ -581,3 +581,19 @@ export function getProductionSessionCookie(
 export function getProductionSessionClearCookie(): string {
   return `${PRODUCTION_SESSION_COOKIE}=; HttpOnly; Max-Age=0; Path=/; SameSite=Strict; Secure`;
 }
+
+/*
+ * A readable marker that a built-in sign-in session exists, so
+ * browser code can stop sending the development identity headers.
+ * It carries no identity and grants nothing: the HttpOnly session
+ * cookie above is what the server checks.
+ */
+export const SIGNED_IN_MARKER_COOKIE = "filumire_signed_in";
+
+export function getSignedInMarkerCookie(): string {
+  return `${SIGNED_IN_MARKER_COOKIE}=1; Max-Age=${PRODUCTION_SESSION_LIFETIME_SECONDS}; Path=/; SameSite=Strict; Secure`;
+}
+
+export function getSignedInMarkerClearCookie(): string {
+  return `${SIGNED_IN_MARKER_COOKIE}=; Max-Age=0; Path=/; SameSite=Strict; Secure`;
+}
