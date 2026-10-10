@@ -3,21 +3,24 @@
 import { useState, type FormEvent } from "react";
 import { AVATAR_KEY, LEARNER_AVATARS, useLearnerAvatar } from "./avatars";
 import { computeAchievements } from "./achievements";
+import { AccountSecurity } from "./AccountSecurity";
 
 type Stat = { total: number; completed: number; tracked: number };
 
 type Props = {
   language: "en" | "fr";
-  onLanguage: (value: "en" | "fr") => void;
+  // Handlers that save to the account return a promise, so the
+  // page can say whether the change was saved.
+  onLanguage: (value: "en" | "fr") => void | Promise<void>;
   name: string;
-  onRename: (value: string) => void;
+  onRename: (value: string) => void | Promise<void>;
   overview: { subjects: Record<string, Stat> } | null;
   gradeName?: string;
   /* A real FILUMIRE sign-in: details save to the account. */
   signedIn?: boolean;
   /* A parent or guardian learning as their child on this device. */
   guardianSession?: boolean;
-  onAvatar?: (avatarId: string) => void;
+  onAvatar?: (avatarId: string) => void | Promise<void>;
   onSignOut?: () => Promise<void>;
 };
 
@@ -35,6 +38,7 @@ const text = {
     save: "Save",
     cancel: "Cancel",
     saved: "Saved.",
+    saveFailed: "That change could not be saved to your account. Check your connection and try again.",
     grade: "My Class",
     gradeUnknown: "Set by your school",
     avatar: "My Avatar",
@@ -63,6 +67,7 @@ const text = {
     save: "Enregistrer",
     cancel: "Annuler",
     saved: "Enregistré.",
+    saveFailed: "Ce changement n’a pas pu être enregistré dans ton compte. Vérifie ta connexion et réessaie.",
     grade: "Ma classe",
     gradeUnknown: "Définie par ton école",
     avatar: "Mon avatar",
@@ -97,6 +102,19 @@ export default function ProfilePage({
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(name);
   const [status, setStatus] = useState("");
+  const [statusFailed, setStatusFailed] = useState(false);
+
+  async function report(change: void | Promise<void>) {
+    setStatus("");
+    try {
+      await change;
+      setStatusFailed(false);
+      setStatus(t.saved);
+    } catch {
+      setStatusFailed(true);
+      setStatus(t.saveFailed);
+    }
+  }
   // The overview lists exactly the subjects of the learner's grade.
   const rows: Array<Stat | undefined> = Object.values(overview?.subjects ?? {});
   const total = rows.reduce((n, r) => n + (r?.total ?? 0), 0);
@@ -117,8 +135,7 @@ export default function ProfilePage({
     event.preventDefault();
     const value = draft.trim();
     if (value) {
-      onRename(value);
-      setStatus(t.saved);
+      void report(onRename(value));
     }
     setEditing(false);
   }
@@ -130,7 +147,7 @@ export default function ProfilePage({
       /* storage unavailable */
     }
     window.dispatchEvent(new Event("filumire-avatar"));
-    onAvatar?.(id);
+    if (onAvatar) void report(onAvatar(id));
   }
 
   async function logOut() {
@@ -189,7 +206,7 @@ export default function ProfilePage({
         </form>
       ) : null}
 
-      <p className="visuallyHidden" role="status">
+      <p className={`prStatus${statusFailed ? " failed" : ""}`} role="status">
         {status}
       </p>
 
@@ -252,7 +269,7 @@ export default function ProfilePage({
               lang="en"
               className={language === "en" ? "on" : ""}
               aria-pressed={language === "en"}
-              onClick={() => onLanguage("en")}
+              onClick={() => void report(onLanguage("en"))}
             >
               English
             </button>
@@ -261,7 +278,7 @@ export default function ProfilePage({
               lang="fr"
               className={language === "fr" ? "on" : ""}
               aria-pressed={language === "fr"}
-              onClick={() => onLanguage("fr")}
+              onClick={() => void report(onLanguage("fr"))}
             >
               Français
             </button>
@@ -280,16 +297,24 @@ export default function ProfilePage({
           <span>{t.look}</span>
           <em>{t.soon}</em>
         </div>
-        <div className="prRow dim">
-          <span>{t.privacy}</span>
-          <em>{t.soon}</em>
-        </div>
+        {signedIn && !guardianSession ? null : (
+          <div className="prRow dim">
+            <span>{t.privacy}</span>
+            <em>{t.soon}</em>
+          </div>
+        )}
         <div className="prRow dim">
           <span>{t.help}</span>
           <em>{t.soon}</em>
         </div>
 
         <p className="prDevice">{signedIn ? t.account : t.device}</p>
+
+        {/* A learner manages their own password here; a guardian
+            does so on the family page. */}
+        {signedIn && !guardianSession ? (
+          <AccountSecurity language={language} minLength={6} />
+        ) : null}
 
         {guardianSession ? (
           <a className="prRow" href={`/family?lang=${language}`}>
@@ -516,6 +541,21 @@ export default function ProfilePage({
 
         .prRow.dim {
           opacity: 0.7;
+        }
+
+        .prStatus {
+          margin: 0 0 8px;
+          font-size: 14px;
+          font-weight: 600;
+          color: #1a7f37;
+        }
+
+        .prStatus.failed {
+          color: #b42318;
+        }
+
+        .prStatus:empty {
+          display: none;
         }
 
         .prRow.out {

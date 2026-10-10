@@ -241,6 +241,24 @@ export async function setLearnerPassword(
   );
 }
 
+/*
+ * Changes the signed-in account's own password. The server signs
+ * out every other device; this one stays signed in.
+ */
+export async function changeOwnPassword(
+  currentPassword: string,
+  newPassword: string,
+): Promise<{ otherSessionsEnded: number }> {
+  return request("/api/account/password", {
+    body: { currentPassword, newPassword },
+  });
+}
+
+/* Signs out every other device using this account. */
+export async function signOutOtherDevices(): Promise<{ ended: number }> {
+  return request("/api/session/sign-out-others", { body: {} });
+}
+
 export async function selectLearner(learnerId: string | null): Promise<void> {
   await request("/api/session/select-learner", { body: { learnerId } });
 }
@@ -255,8 +273,12 @@ const MESSAGES: Record<string, { en: string; fr: string }> = {
     fr: "L'identifiant contient 3 à 24 lettres ou chiffres, avec éventuellement . _ ou -.",
   },
   invalid_password: {
-    en: "That password is too short.",
-    fr: "Ce mot de passe est trop court.",
+    en: "That password is too short, or the same as your current one.",
+    fr: "Ce mot de passe est trop court, ou identique à l'actuel.",
+  },
+  invalid_currentPassword: {
+    en: "Your current password is not correct.",
+    fr: "Ton mot de passe actuel n'est pas correct.",
   },
   invalid_displayName: {
     en: "Enter a name of 1 to 40 characters.",

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useCallback, useEffect, useState } from "react";
+import { AccountSecurity } from "../../components/filumire/AccountSecurity";
 import { AccountShell } from "../../components/filumire/AccountShell";
 import { LEARNER_AVATARS } from "../../components/filumire/avatars";
 import { LEARNER_GRADES } from "../../components/filumire/grades";
@@ -502,6 +503,8 @@ export default function FamilyPage() {
               </button>
             </form>
           </section>
+
+          <AccountSecurity language={language} minLength={8} />
 
           <div className="acActions">
             <Link href={`/adult?lang=${language}`} className="acButton secondary">

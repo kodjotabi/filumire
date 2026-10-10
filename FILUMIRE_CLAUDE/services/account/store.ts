@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 
-import { db } from "../database";
+import { db, pool } from "../database";
 import {
   accountCredentials,
   accountProfiles,
@@ -105,6 +105,12 @@ export class LoginIdentifierTakenError extends Error {
   }
 }
 
+export interface FailedSignInPolicy {
+  threshold: number;
+  lockMs: number;
+  now: number;
+}
+
 export interface AccountStore {
   createGuardianAccount(account: NewGuardianAccount): Promise<void>;
   createLearnerAccount(account: NewLearnerAccount): Promise<void>;
@@ -122,6 +128,15 @@ export interface AccountStore {
       lastSignInAt?: string;
     },
   ): Promise<void>;
+  /*
+   * Counts one failed sign-in atomically, so parallel guesses can
+   * never lose a count. A lock that has run out starts a fresh
+   * count; reaching the threshold locks until now + lockMs.
+   */
+  recordFailedSignIn(
+    credentialId: string,
+    policy: FailedSignInPolicy,
+  ): Promise<{ lockedUntil?: string }>;
   updatePasswordHash(
     principalId: string,
     passwordHash: string,
@@ -257,6 +272,32 @@ class MemoryAccountStore implements AccountStore {
       credential.lastSignInAt =
         state.lastSignInAt ?? credential.lastSignInAt;
     }
+  }
+
+  async recordFailedSignIn(credentialId: string, policy: FailedSignInPolicy) {
+    const credential = this.credentials.get(credentialId);
+
+    if (!credential) {
+      return {};
+    }
+
+    const lockedUntil = credential.lockedUntil ? Date.parse(credential.lockedUntil) : 0;
+
+    if (lockedUntil > policy.now) {
+      return { lockedUntil: credential.lockedUntil };
+    }
+
+    const next = (lockedUntil > 0 ? 0 : credential.failedAttemptCount) + 1;
+
+    if (next >= policy.threshold) {
+      credential.failedAttemptCount = 0;
+      credential.lockedUntil = new Date(policy.now + policy.lockMs).toISOString();
+    } else {
+      credential.failedAttemptCount = next;
+      credential.lockedUntil = undefined;
+    }
+
+    return credential.lockedUntil ? { lockedUntil: credential.lockedUntil } : {};
   }
 
   async updatePasswordHash(principalId: string, passwordHash: string) {
@@ -479,6 +520,33 @@ class PostgresAccountStore implements AccountStore {
         updatedAt: new Date(),
       })
       .where(eq(accountCredentials.id, credentialId));
+  }
+
+  async recordFailedSignIn(credentialId: string, policy: FailedSignInPolicy) {
+    // $1 now, $2 threshold, $3 lock end, $4 credential. A row still
+    // locked is left alone; a non-null locked_until past the first
+    // branch has expired, so the count starts again from zero.
+    const result = await pool.query<{ locked_until: Date | null }>(
+      `UPDATE account_credentials AS c SET
+         failed_attempt_count = CASE
+           WHEN c.locked_until > $1 THEN c.failed_attempt_count
+           WHEN (CASE WHEN c.locked_until IS NOT NULL THEN 0 ELSE c.failed_attempt_count END) + 1 >= $2 THEN 0
+           ELSE (CASE WHEN c.locked_until IS NOT NULL THEN 0 ELSE c.failed_attempt_count END) + 1
+         END,
+         locked_until = CASE
+           WHEN c.locked_until > $1 THEN c.locked_until
+           WHEN (CASE WHEN c.locked_until IS NOT NULL THEN 0 ELSE c.failed_attempt_count END) + 1 >= $2 THEN $3
+           ELSE NULL
+         END,
+         updated_at = $1
+       WHERE c.id = $4
+       RETURNING c.locked_until`,
+      [new Date(policy.now), policy.threshold, new Date(policy.now + policy.lockMs), credentialId],
+    );
+
+    const lockedUntil = result.rows[0]?.locked_until;
+
+    return lockedUntil ? { lockedUntil: lockedUntil.toISOString() } : {};
   }
 
   async updatePasswordHash(principalId: string, passwordHash: string) {

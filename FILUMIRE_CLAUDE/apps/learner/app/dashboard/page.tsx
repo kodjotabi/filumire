@@ -1167,7 +1167,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
             language={language}
             onLanguage={(value) => {
               setLanguage(value);
-              saveSignedInLearnerProfile({ preferredLanguage: value }).catch(() => undefined);
+              return saveSignedInLearnerProfile({ preferredLanguage: value });
             }}
             signedIn={Boolean(signedInLearner)}
             guardianSession={account?.accountKind === "guardian"}
@@ -1175,18 +1175,17 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
               await signOut();
               window.location.assign(`/login?lang=${language}`);
             }}
-            onAvatar={(avatarId: string) => {
-              saveSignedInLearnerProfile({ avatarId }).catch(() => undefined);
-            }}
+            onAvatar={(avatarId: string) => saveSignedInLearnerProfile({ avatarId })}
             name={learnerName}
             onRename={(value: string) => {
-              saveSignedInLearnerProfile({ displayName: value }).catch(() => undefined);
+              const saved = saveSignedInLearnerProfile({ displayName: value });
               try {
                 window.localStorage.setItem("filumire.learnerName", value);
               } catch {
                 /* storage unavailable: the name lasts for this visit */
               }
               setLearnerName(value);
+              return saved;
             }}
             overview={overview}
             gradeName={overview?.gradeName ?? ""}

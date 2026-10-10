@@ -17,6 +17,8 @@ import { POST as login } from "../apps/learner/app/api/session/login/route";
 import { POST as logout } from "../apps/learner/app/api/session/logout/route";
 import { GET as me } from "../apps/learner/app/api/session/me/route";
 import { POST as selectLearner } from "../apps/learner/app/api/session/select-learner/route";
+import { POST as changePassword } from "../apps/learner/app/api/account/password/route";
+import { POST as signOutOthers } from "../apps/learner/app/api/session/sign-out-others/route";
 import { listGuardianConsentRecords } from "../services/account";
 import { accountStore } from "../services/account/store";
 import { resetRateLimits } from "../services/account/rate-limit";
@@ -359,7 +361,26 @@ async function main(): Promise<void> {
   await resetRateLimits();
   assert((await login(post("/api/session/login", { login: learnerUsername, password: "ama-pass" }))).status === 401, "old password no longer works");
   assert((await login(post("/api/session/login", { login: learnerUsername, password: "ama-new-pass" }))).status === 200, "new password works");
-  pass("guardian resets a learner's password");
+  assert((await me(get("/api/session/me", againCookie))).status === 401, "reset ends the learner's existing sessions");
+  pass("guardian resets a learner's password; learner's old sessions end");
+
+  // 11b. Guardian changes own password; other devices are signed out.
+  await resetRateLimits();
+  const otherDevice = cookieFrom(await login(post("/api/session/login", { login: guardianEmail, password: "family-test-pass-1" })));
+  const wrongCurrent = await changePassword(post("/api/account/password", { currentPassword: "not-it-at-all", newPassword: "family-test-pass-2" }, familyCookie));
+  assert(wrongCurrent.status === 400 && (await code(wrongCurrent)) === "invalid_currentPassword", "wrong current password refused");
+  const tooShort = await changePassword(post("/api/account/password", { currentPassword: "family-test-pass-1", newPassword: "short" }, familyCookie));
+  assert(tooShort.status === 400 && (await code(tooShort)) === "invalid_password", "short new password refused");
+  const changed = await changePassword(post("/api/account/password", { currentPassword: "family-test-pass-1", newPassword: "family-test-pass-2" }, familyCookie));
+  assert(changed.status === 200, `password change returned ${changed.status}`);
+  assert((await me(get("/api/session/me", familyCookie))).status === 200, "this browser stays signed in");
+  assert((await me(get("/api/session/me", otherDevice))).status === 401, "other devices are signed out");
+  assert((await login(post("/api/session/login", { login: guardianEmail, password: "family-test-pass-1" }))).status === 401, "old guardian password no longer works");
+  const thirdDevice = cookieFrom(await login(post("/api/session/login", { login: guardianEmail, password: "family-test-pass-2" })));
+  const ended = await signOutOthers(post("/api/session/sign-out-others", {}, familyCookie));
+  assert(ended.status === 200 && ((await ended.json()) as { ended: number }).ended >= 1, "sign out other devices ends them");
+  assert((await me(get("/api/session/me", thirdDevice))).status === 401 && (await me(get("/api/session/me", familyCookie))).status === 200, "only the other devices end");
+  pass("guardian changes own password and signs out other devices");
 
   // 12. Lockout after repeated failures.
   await resetRateLimits();
@@ -368,9 +389,20 @@ async function main(): Promise<void> {
     last = await login(post("/api/session/login", { login: guardianEmail, password: `wrong-${attempt}-pass` }));
   }
   assert(last?.status === 429 && (await code(last)) === "locked", "fifth failure locks the account");
-  const whileLocked = await login(post("/api/session/login", { login: guardianEmail, password: "family-test-pass-1" }));
+  const whileLocked = await login(post("/api/session/login", { login: guardianEmail, password: "family-test-pass-2" }));
   assert(whileLocked.status === 429, "correct password refused while locked");
   pass("account locks after five failed attempts");
+
+  // 12b. Parallel wrong guesses cannot dodge the lockout.
+  await resetRateLimits();
+  const parallel = await Promise.all(
+    Array.from({ length: 8 }, (_, attempt) =>
+      login(post("/api/session/login", { login: learnerUsername, password: `parallel-${attempt}-guess` }))),
+  );
+  const learnerCredential = await accountStore.getCredentialByLogin(learnerUsername);
+  assert(learnerCredential?.lockedUntil && Date.parse(learnerCredential.lockedUntil) > Date.now(), "parallel failures lock the account");
+  assert(parallel.some((response) => response.status === 429), "at least one parallel attempt reports the lock");
+  pass("parallel wrong guesses still lock the account");
 
   // 13. Per-address rate limit.
   await resetRateLimits();

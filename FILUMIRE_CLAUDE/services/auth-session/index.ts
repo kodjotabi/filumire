@@ -81,6 +81,22 @@ export async function renewPrincipalAuthSession(
   );
 }
 
+/*
+ * Ends every session of the Principal except exceptSessionId:
+ * after a password change, or "sign out other devices".
+ */
+export async function revokeOtherPrincipalAuthSessions(
+  principalId: string,
+  exceptSessionId?: string,
+  revokedAt = new Date().toISOString(),
+): Promise<number> {
+  return persistenceStore.revokeOtherPrincipalAuthSessions(
+    principalId,
+    exceptSessionId,
+    revokedAt,
+  );
+}
+
 export async function revokePrincipalAuthSession(
   sessionId: string,
   principalId: string,

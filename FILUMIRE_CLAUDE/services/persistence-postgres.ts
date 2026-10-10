@@ -50,6 +50,7 @@ import {
   eq,
   gt,
   isNull,
+  ne,
   sql,
 } from "drizzle-orm";
 
@@ -752,6 +753,32 @@ export class PostgresPersistenceStore
           ),
         ),
       );
+  }
+
+  async revokeOtherPrincipalAuthSessions(
+    principalId: string,
+    exceptSessionId: string | undefined,
+    revokedAt: string,
+  ): Promise<number> {
+    const revokedDate = new Date(revokedAt);
+
+    const rows = await db
+      .update(authSessions)
+      .set({
+        status: "revoked",
+        revokedAt: revokedDate,
+        updatedAt: revokedDate,
+      })
+      .where(
+        and(
+          eq(authSessions.principalId, principalId),
+          eq(authSessions.status, "active"),
+          ...(exceptSessionId ? [ne(authSessions.id, exceptSessionId)] : []),
+        ),
+      )
+      .returning({ id: authSessions.id });
+
+    return rows.length;
   }
 
   async ensureLearnerExists(

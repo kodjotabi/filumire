@@ -521,6 +521,29 @@ export class MemoryPersistenceStore
     record.updatedAt = revokedAt;
   }
 
+  async revokeOtherPrincipalAuthSessions(
+    principalId: string,
+    exceptSessionId: string | undefined,
+    revokedAt: string,
+  ): Promise<number> {
+    let revoked = 0;
+
+    for (const record of authSessions.values()) {
+      if (
+        record.principalId === principalId &&
+        record.id !== exceptSessionId &&
+        record.status === "active"
+      ) {
+        record.status = "revoked";
+        record.revokedAt = revokedAt;
+        record.updatedAt = revokedAt;
+        revoked += 1;
+      }
+    }
+
+    return revoked;
+  }
+
   async ensureLearnerExists(
     learnerId: string,
   ): Promise<void> {

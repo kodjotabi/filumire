@@ -1,3 +1,5 @@
+import { revokeOtherPrincipalAuthSessions } from "../auth-session";
+
 import {
   getPrincipalLearnerAccess,
   isPrincipalAuthorizedForLearner,
@@ -63,6 +65,7 @@ export type AccountErrorField =
   | "email"
   | "username"
   | "password"
+  | "currentPassword"
   | "displayName"
   | "consent"
   | "learner"
@@ -402,20 +405,15 @@ export async function authenticateWithPassword(
   const valid = await verifyPassword(candidate, credential.passwordHash);
 
   if (!valid) {
-    // A lock that has run out starts a fresh count.
-    const previous = lockedUntil > 0 ? 0 : credential.failedAttemptCount;
-    const failedAttemptCount = previous + 1;
-    const lock = failedAttemptCount >= LOCKOUT_THRESHOLD;
+    const { lockedUntil: lockEnd } = await accountStore.recordFailedSignIn(
+      credential.id,
+      { threshold: LOCKOUT_THRESHOLD, lockMs: LOCKOUT_MINUTES * 60_000, now },
+    );
 
-    await accountStore.setSignInAttemptState(credential.id, {
-      failedAttemptCount: lock ? 0 : failedAttemptCount,
-      lockedUntil: lock
-        ? new Date(now + LOCKOUT_MINUTES * 60_000).toISOString()
-        : undefined,
-    });
-
-    if (lock) {
-      throw new AccountLockedError(LOCKOUT_MINUTES * 60);
+    if (lockEnd) {
+      throw new AccountLockedError(
+        Math.max(1, Math.ceil((Date.parse(lockEnd) - now) / 1000)),
+      );
     }
 
     throw new InvalidCredentialsError();
@@ -614,6 +612,70 @@ export async function resetLearnerPassword(
       validatePassword(password, LEARNER_PASSWORD_MIN_LENGTH),
     ),
   );
+
+  // Whoever knew the old password is signed out everywhere.
+  await revokeOtherPrincipalAuthSessions(profile.signInPrincipalId);
+}
+
+/*
+ * A signed-in guardian or learner changes their own password. The
+ * current password is required and a wrong one counts towards the
+ * account lockout, so this cannot be used to guess it. The caller
+ * ends the account's other sessions afterwards.
+ */
+export async function changeOwnPassword(
+  principalId: string,
+  currentPassword: unknown,
+  newPassword: unknown,
+): Promise<void> {
+  const credential = await accountStore.getCredentialByPrincipal(principalId);
+
+  if (!credential || credential.status !== "active") {
+    throw new AccountForbiddenError("This account has no FILUMIRE password.");
+  }
+
+  const now = Date.now();
+  const lockedUntil = credential.lockedUntil ? Date.parse(credential.lockedUntil) : 0;
+
+  if (lockedUntil > now) {
+    throw new AccountLockedError(Math.ceil((lockedUntil - now) / 1000));
+  }
+
+  const current = typeof currentPassword === "string" ? currentPassword : "";
+
+  if (!(await verifyPassword(current, credential.passwordHash))) {
+    const { lockedUntil: lockEnd } = await accountStore.recordFailedSignIn(
+      credential.id,
+      { threshold: LOCKOUT_THRESHOLD, lockMs: LOCKOUT_MINUTES * 60_000, now },
+    );
+
+    if (lockEnd) {
+      throw new AccountLockedError(
+        Math.max(1, Math.ceil((Date.parse(lockEnd) - now) / 1000)),
+      );
+    }
+
+    throw new AccountValidationError(
+      "currentPassword",
+      "Your current password is not correct.",
+    );
+  }
+
+  const next = validatePassword(
+    newPassword,
+    credential.accountKind === "guardian"
+      ? GUARDIAN_PASSWORD_MIN_LENGTH
+      : LEARNER_PASSWORD_MIN_LENGTH,
+  );
+
+  if (next === current) {
+    throw new AccountValidationError(
+      "password",
+      "Choose a new password that is different from the current one.",
+    );
+  }
+
+  await accountStore.updatePasswordHash(principalId, await hashPassword(next));
 }
 
 export async function listGuardianConsentRecords(

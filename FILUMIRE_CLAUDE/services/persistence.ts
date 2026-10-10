@@ -247,6 +247,16 @@ export interface PersistenceStore {
     revokedAt: string,
   ): Promise<void>;
 
+  /*
+   * Revokes every active session of the Principal, except the one
+   * named (the device making the change). Returns how many ended.
+   */
+  revokeOtherPrincipalAuthSessions(
+    principalId: string,
+    exceptSessionId: string | undefined,
+    revokedAt: string,
+  ): Promise<number>;
+
   ensureLearnerExists(
     learnerId: string,
   ): Promise<void>;
