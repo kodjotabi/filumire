@@ -4,6 +4,9 @@ import {
   getPrincipalAuthSession,
   isPrincipalAuthSessionValid,
   revokePrincipalAuthSession,
+  renewPrincipalAuthSession,
+  SESSION_IDLE_SECONDS,
+  SESSION_MAX_LIFETIME_SECONDS,
   updatePrincipalAuthSessionLastActivity,
 } from "../services/auth-session";
 
@@ -355,6 +358,60 @@ async function runPrincipalAuthSessionTests(): Promise<void> {
 
     console.log({
       test: "M: existing learner-bound sessions remain unaffected",
+      result: "PASS",
+    });
+
+    // N: activity slides the expiry to eight idle hours, capped at
+    // seven days from sign-in; revoked sessions never slide.
+    const HOUR_MS = 60 * 60 * 1000;
+    const principalN = await createPrincipal();
+    const sessionN = `auth-session-${crypto.randomUUID()}`;
+
+    await createPrincipalAuthSession(sessionN, principalN, isoFromNow(HOUR_MS));
+    const activityN = isoFromNow(30 * 60 * 1000);
+
+    await renewPrincipalAuthSession(sessionN, principalN, activityN);
+
+    const renewedN = (await getPrincipalAuthSession(sessionN))!;
+    const expectedN = new Date(activityN).getTime() + SESSION_IDLE_SECONDS * 1000;
+    assert(
+      Math.abs(new Date(renewedN.expiresAt).getTime() - expectedN) < 1000,
+      "activity must slide expiry to eight hours after the activity",
+    );
+    assert(
+      await isPrincipalAuthSessionValid(sessionN, principalN, isoFromNow(7 * HOUR_MS)),
+      "renewed session must still be valid seven hours later",
+    );
+    assert(
+      !(await isPrincipalAuthSessionValid(sessionN, principalN, isoFromNow(9 * HOUR_MS))),
+      "renewed session must expire after eight idle hours",
+    );
+
+    const principalO = await createPrincipal();
+    const sessionO = `auth-session-${crypto.randomUUID()}`;
+    await createPrincipalAuthSession(sessionO, principalO, isoFromNow(SESSION_MAX_LIFETIME_SECONDS * 1000));
+    const createdO = new Date((await getPrincipalAuthSession(sessionO))!.createdAt).getTime();
+    const lateActivityO = new Date(createdO + SESSION_MAX_LIFETIME_SECONDS * 1000 - HOUR_MS).toISOString();
+
+    await renewPrincipalAuthSession(sessionO, principalO, lateActivityO);
+
+    const cappedO = (await getPrincipalAuthSession(sessionO))!;
+    assert(
+      Math.abs(new Date(cappedO.expiresAt).getTime() - (createdO + SESSION_MAX_LIFETIME_SECONDS * 1000)) < 1000,
+      "sliding expiry must never pass seven days after sign-in",
+    );
+
+    await revokePrincipalAuthSession(sessionO, principalO, isoFromNow(1000));
+    const revokedExpiryO = (await getPrincipalAuthSession(sessionO))!.expiresAt;
+    await renewPrincipalAuthSession(sessionO, principalO, isoFromNow(2000));
+    assert(
+      (await getPrincipalAuthSession(sessionO))!.expiresAt === revokedExpiryO &&
+        !(await isPrincipalAuthSessionValid(sessionO, principalO)),
+      "revoked sessions must not be renewed",
+    );
+
+    console.log({
+      test: "N: eight-hour sliding sessions with a seven-day cap",
       result: "PASS",
     });
 

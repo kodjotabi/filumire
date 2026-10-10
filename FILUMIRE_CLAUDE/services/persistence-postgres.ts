@@ -12,6 +12,7 @@ import type {
   PrincipalLearnerRelationshipType,
   PrincipalLearnerAccessRecord,
   PrincipalAuthSessionRecord,
+  PrincipalAuthSessionRenewal,
   PrincipalAuthSessionStatus,
   LearnerLearningContextRecord,
   PendingTeacherReviewRecord,
@@ -49,6 +50,7 @@ import {
   eq,
   gt,
   isNull,
+  sql,
 } from "drizzle-orm";
 
 function mapPrincipalAuthSession(
@@ -680,14 +682,24 @@ export class PostgresPersistenceStore
     sessionId: string,
     principalId: string,
     lastActivityAt: string,
+    renewal?: PrincipalAuthSessionRenewal,
   ): Promise<void> {
     const activityDate = new Date(lastActivityAt);
+    const slidingExpiry = renewal
+      ? {
+          expiresAt: sql`least(
+            ${new Date(activityDate.getTime() + renewal.idleSeconds * 1000).toISOString()}::timestamptz,
+            ${authSessions.createdAt} + make_interval(secs => ${renewal.maxLifetimeSeconds})
+          )`,
+        }
+      : {};
 
     await db
       .update(authSessions)
       .set({
         lastActivityAt: activityDate,
         updatedAt: activityDate,
+        ...slidingExpiry,
       })
       .where(
         and(

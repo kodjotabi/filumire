@@ -253,7 +253,7 @@ async function testStage5SuccessfulCutover(): Promise<void> {
     assert(setCookie.includes("Secure"), "Issued cookie is not Secure.");
     assert(setCookie.includes("SameSite=Strict"), "Issued cookie is not SameSite=Strict.");
     assert(setCookie.includes("Path=/"), "Issued cookie has no root path.");
-    assert(setCookie.includes("Max-Age=3600"), "Issued cookie has unexpected lifetime.");
+    assert(setCookie.includes("Max-Age=604800"), "Issued cookie has unexpected lifetime.");
 
     const token = extractSessionToken(issueResponse);
     const body = (await issueResponse.json()) as {

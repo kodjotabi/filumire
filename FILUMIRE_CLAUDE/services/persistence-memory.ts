@@ -13,6 +13,7 @@ import type {
   PrincipalLearnerRelationshipType,
   PrincipalLearnerAccessRecord,
   PrincipalAuthSessionRecord,
+  PrincipalAuthSessionRenewal,
   LearnerLearningContextRecord,
   PendingTeacherReviewRecord,
   TeacherProfessionalNoteRecord,
@@ -475,22 +476,33 @@ export class MemoryPersistenceStore
     sessionId: string,
     principalId: string,
     lastActivityAt: string,
+    renewal?: PrincipalAuthSessionRenewal,
   ): Promise<void> {
     const record = authSessions.get(sessionId);
+    const activityTime = new Date(lastActivityAt).getTime();
 
     if (
       !record ||
       record.principalId !== principalId ||
       record.status !== "active" ||
       record.revokedAt !== undefined ||
-      new Date(record.expiresAt).getTime() <=
-        new Date(lastActivityAt).getTime()
+      new Date(record.expiresAt).getTime() <= activityTime
     ) {
       return;
     }
 
     record.lastActivityAt = lastActivityAt;
     record.updatedAt = lastActivityAt;
+
+    if (renewal) {
+      record.expiresAt = new Date(
+        Math.min(
+          activityTime + renewal.idleSeconds * 1000,
+          new Date(record.createdAt).getTime() +
+            renewal.maxLifetimeSeconds * 1000,
+        ),
+      ).toISOString();
+    }
   }
 
   async revokePrincipalAuthSession(

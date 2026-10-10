@@ -32,6 +32,11 @@ export type PrincipalAuthSessionStatus =
   | "active"
   | "revoked";
 
+export interface PrincipalAuthSessionRenewal {
+  idleSeconds: number;
+  maxLifetimeSeconds: number;
+}
+
 export interface PrincipalAuthSessionRecord {
   id: string;
   principalId: string;
@@ -224,10 +229,16 @@ export interface PersistenceStore {
     at?: string,
   ): Promise<boolean>;
 
+  /*
+   * Records activity on a still-valid session. With a renewal
+   * policy the expiry also slides to the earlier of
+   * lastActivityAt + idleSeconds and createdAt + maxLifetimeSeconds.
+   */
   updatePrincipalAuthSessionLastActivity(
     sessionId: string,
     principalId: string,
     lastActivityAt: string,
+    renewal?: PrincipalAuthSessionRenewal,
   ): Promise<void>;
 
   revokePrincipalAuthSession(

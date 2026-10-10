@@ -1,7 +1,23 @@
 import { persistenceStore } from "../persistence-provider";
 import type {
   PrincipalAuthSessionRecord,
+  PrincipalAuthSessionRenewal,
 } from "../persistence";
+
+/*
+ * Signed-in sessions last eight hours from the most recent
+ * authenticated request, and never more than seven days from
+ * sign-in. The server row is the authority: logout and revocation
+ * end a session at once whatever the cookie says.
+ */
+export const SESSION_IDLE_SECONDS = 8 * 60 * 60;
+
+export const SESSION_MAX_LIFETIME_SECONDS = 7 * 24 * 60 * 60;
+
+export const SESSION_RENEWAL: PrincipalAuthSessionRenewal = {
+  idleSeconds: SESSION_IDLE_SECONDS,
+  maxLifetimeSeconds: SESSION_MAX_LIFETIME_SECONDS,
+};
 
 export async function createPrincipalAuthSession(
   sessionId: string,
@@ -39,11 +55,29 @@ export async function updatePrincipalAuthSessionLastActivity(
   sessionId: string,
   principalId: string,
   lastActivityAt = new Date().toISOString(),
+  renewal?: PrincipalAuthSessionRenewal,
 ): Promise<void> {
   await persistenceStore.updatePrincipalAuthSessionLastActivity(
     sessionId,
     principalId,
     lastActivityAt,
+    renewal,
+  );
+}
+
+/*
+ * Records activity and slides the session's expiry forward.
+ */
+export async function renewPrincipalAuthSession(
+  sessionId: string,
+  principalId: string,
+  at = new Date().toISOString(),
+): Promise<void> {
+  await updatePrincipalAuthSessionLastActivity(
+    sessionId,
+    principalId,
+    at,
+    SESSION_RENEWAL,
   );
 }
 

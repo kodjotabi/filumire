@@ -7,7 +7,9 @@ import {
 import {
   createPrincipalAuthSession,
   isPrincipalAuthSessionValid,
-  updatePrincipalAuthSessionLastActivity,
+  renewPrincipalAuthSession,
+  SESSION_IDLE_SECONDS,
+  SESSION_MAX_LIFETIME_SECONDS,
 } from "../auth-session";
 
 import {
@@ -39,9 +41,11 @@ const PRODUCTION_JWT_ISSUER =
 const PRODUCTION_JWT_AUDIENCE =
   "filumire-learner-api";
 
-const PRODUCTION_SESSION_LIFETIME_SECONDS =
-  60 * 60;
-
+/*
+ * The token and cookie live as long as the longest possible
+ * session; the server row decides whether the session is still
+ * open (eight idle hours, see auth-session).
+ */
 const PRINCIPAL_SCOPE = "principal";
 
 type CreatePrincipalAuthSession = (
@@ -190,7 +194,7 @@ async function verifyProductionSessionToken(
       throw new Error("Invalid server session.");
     }
 
-    await updatePrincipalAuthSessionLastActivity(
+    await renewPrincipalAuthSession(
       sessionId,
       principalId,
     );
@@ -452,7 +456,7 @@ export async function issueSessionForPrincipal(
   const sessionId = crypto.randomUUID();
   const expiresAt = new Date(
     Date.now() +
-      PRODUCTION_SESSION_LIFETIME_SECONDS * 1000,
+      SESSION_IDLE_SECONDS * 1000,
   ).toISOString();
 
   await createServerSession(
@@ -469,7 +473,7 @@ export async function issueSessionForPrincipal(
     .setProtectedHeader({ alg: "HS256", typ: "JWT" })
     .setAudience(PRODUCTION_JWT_AUDIENCE)
     .setExpirationTime(
-      `${PRODUCTION_SESSION_LIFETIME_SECONDS}s`,
+      `${SESSION_MAX_LIFETIME_SECONDS}s`,
     )
     .setIssuedAt()
     .setIssuer(PRODUCTION_JWT_ISSUER)
@@ -575,7 +579,7 @@ export async function issueProductionSession(
 export function getProductionSessionCookie(
   token: string,
 ): string {
-  return `${PRODUCTION_SESSION_COOKIE}=${encodeURIComponent(token)}; HttpOnly; Max-Age=${PRODUCTION_SESSION_LIFETIME_SECONDS}; Path=/; SameSite=Strict; Secure`;
+  return `${PRODUCTION_SESSION_COOKIE}=${encodeURIComponent(token)}; HttpOnly; Max-Age=${SESSION_MAX_LIFETIME_SECONDS}; Path=/; SameSite=Strict; Secure`;
 }
 
 export function getProductionSessionClearCookie(): string {
@@ -591,7 +595,7 @@ export function getProductionSessionClearCookie(): string {
 export const SIGNED_IN_MARKER_COOKIE = "filumire_signed_in";
 
 export function getSignedInMarkerCookie(): string {
-  return `${SIGNED_IN_MARKER_COOKIE}=1; Max-Age=${PRODUCTION_SESSION_LIFETIME_SECONDS}; Path=/; SameSite=Strict; Secure`;
+  return `${SIGNED_IN_MARKER_COOKIE}=1; Max-Age=${SESSION_MAX_LIFETIME_SECONDS}; Path=/; SameSite=Strict; Secure`;
 }
 
 export function getSignedInMarkerClearCookie(): string {
