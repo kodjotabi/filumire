@@ -2,20 +2,23 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { AccountShell } from "../../components/filumire/AccountShell";
 import { useLanguage } from "../../components/filumire/language";
 import {
   accountErrorMessage,
   AccountRequestError,
   registerGuardian,
+  registerTeacher,
 } from "../../services/account-client";
 
 /*
  * Parent / guardian registration: the first step of the family
  * journey. The guardian creates the family account and records
  * consent; learners are added on the family page that follows.
- * Nothing about a child is collected here.
+ * Nothing about a child is collected here. Teachers register here
+ * too (?role=teacher) and are linked to learners later, by a code
+ * from each learner's guardian.
  */
 const TEXT = {
   en: {
@@ -40,6 +43,14 @@ const TEXT = {
     creating: "Creating account…",
     haveAccount: "Already have an account?",
     signIn: "Sign in",
+    roleLabel: "I am",
+    roleParent: "A parent or guardian",
+    roleTeacher: "A teacher",
+    teacherTitle: ["Create your", "teacher account"],
+    teacherLead: "Teachers create their own account. To see a learner, ask the learner's parent or guardian for a link code from their family page.",
+    teacherDeclaration: "I am a teacher, and I will use FILUMIRE only to support learners whose parents or guardians link me to them.",
+    teacherNotice: ["I have read the ", "FILUMIRE privacy notice", " and agree to FILUMIRE keeping my account details as it describes."],
+    teacherCreate: "Create teacher account",
   },
   fr: {
     backLabel: "Retour à la connexion",
@@ -63,6 +74,14 @@ const TEXT = {
     creating: "Création du compte…",
     haveAccount: "Tu as déjà un compte ?",
     signIn: "Se connecter",
+    roleLabel: "Je suis",
+    roleParent: "Parent ou tuteur",
+    roleTeacher: "Enseignant ou enseignante",
+    teacherTitle: ["Créez votre", "compte enseignant"],
+    teacherLead: "Les enseignants créent leur propre compte. Pour voir un apprenant, demandez à son parent ou tuteur un code de liaison depuis sa page famille.",
+    teacherDeclaration: "Je suis enseignant ou enseignante, et j'utiliserai FILUMIRE uniquement pour accompagner les apprenants dont les parents ou tuteurs m'ont donné l'accès.",
+    teacherNotice: ["J'ai lu la ", "notice de confidentialité FILUMIRE", " et j'accepte que FILUMIRE conserve les informations de mon compte comme elle le décrit."],
+    teacherCreate: "Créer le compte enseignant",
   },
 } as const;
 
@@ -75,11 +94,25 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [preferredLanguage, setPreferredLanguage] = useState<"en" | "fr" | "">("");
+  const [role, setRole] = useState<"guardian" | "teacher">("guardian");
+  const teacher = role === "teacher";
   const [confirmsGuardian, setConfirmsGuardian] = useState(false);
   const [acceptsNotice, setAcceptsNotice] = useState(false);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [invalidField, setInvalidField] = useState<string | undefined>();
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("role") === "teacher") {
+      setRole("teacher");
+    }
+  }, []);
+
+  function chooseRole(next: "guardian" | "teacher") {
+    setRole(next);
+    setConfirmsGuardian(false);
+    setMessage("");
+  }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -88,16 +121,26 @@ export default function RegisterPage() {
     setInvalidField(undefined);
 
     try {
-      await registerGuardian({
+      const details = {
         displayName,
         email,
         password,
         preferredLanguage: preferredLanguage || language,
-        confirmsGuardian,
         acceptsNotice,
-      });
+      };
+
+      if (teacher) {
+        await registerTeacher({ ...details, confirmsTeacher: confirmsGuardian });
+      } else {
+        await registerGuardian({ ...details, confirmsGuardian });
+      }
+
       setPassword("");
-      router.push(`/family?lang=${preferredLanguage || language}&welcome=1`);
+      router.push(
+        teacher
+          ? `/teacher?lang=${preferredLanguage || language}`
+          : `/family?lang=${preferredLanguage || language}&welcome=1`,
+      );
     } catch (error) {
       setMessage(accountErrorMessage(error, language));
       setInvalidField(
@@ -117,9 +160,29 @@ export default function RegisterPage() {
       backLabel={t.backLabel}
     >
       <h1>
-        {t.title[0]} <span>{t.title[1]}</span>
+        {(teacher ? t.teacherTitle : t.title)[0]}{" "}
+        <span>{(teacher ? t.teacherTitle : t.title)[1]}</span>
       </h1>
-      <p className="acLead">{t.lead}</p>
+      <p className="acLead">{teacher ? t.teacherLead : t.lead}</p>
+
+      <div className="acRole" role="group" aria-label={t.roleLabel}>
+        <button
+          type="button"
+          className={`acButton ${teacher ? "secondary" : ""}`}
+          aria-pressed={!teacher}
+          onClick={() => chooseRole("guardian")}
+        >
+          {t.roleParent}
+        </button>
+        <button
+          type="button"
+          className={`acButton ${teacher ? "" : "secondary"}`}
+          aria-pressed={teacher}
+          onClick={() => chooseRole("teacher")}
+        >
+          {t.roleTeacher}
+        </button>
+      </div>
 
       <div className="acNotice" role="note">
         <strong>{t.testTitle}</strong>
@@ -128,7 +191,7 @@ export default function RegisterPage() {
 
       <section className="acCard" aria-labelledby="register-form-title">
         <h2 id="register-form-title" className="visuallyHidden">
-          {t.create}
+          {teacher ? t.teacherCreate : t.create}
         </h2>
         <form className="acForm" onSubmit={submit} noValidate>
           <div className="acField" data-invalid={invalidField === "displayName"}>
@@ -211,7 +274,7 @@ export default function RegisterPage() {
               checked={confirmsGuardian}
               onChange={(event) => setConfirmsGuardian(event.target.checked)}
             />
-            <span>{t.guardian}</span>
+            <span>{teacher ? t.teacherDeclaration : t.guardian}</span>
           </label>
 
           <label className="acCheck">
@@ -221,11 +284,11 @@ export default function RegisterPage() {
               onChange={(event) => setAcceptsNotice(event.target.checked)}
             />
             <span>
-              {t.notice[0]}
+              {(teacher ? t.teacherNotice : t.notice)[0]}
               <Link href={`/privacy?lang=${language}`} target="_blank" rel="noopener">
-                {t.notice[1]}
+                {(teacher ? t.teacherNotice : t.notice)[1]}
               </Link>
-              {t.notice[2]}
+              {(teacher ? t.teacherNotice : t.notice)[2]}
             </span>
           </label>
           <p className="acHelp">{t.consentNote}</p>
@@ -235,10 +298,15 @@ export default function RegisterPage() {
           </p>
 
           <button type="submit" className="acButton green" disabled={busy} aria-busy={busy}>
-            {busy ? t.creating : t.create}
+            {busy ? t.creating : teacher ? t.teacherCreate : t.create}
           </button>
         </form>
       </section>
+
+      <style>{`
+        .acRole { display: flex; flex-wrap: wrap; gap: 8px; }
+        .acRole .acButton { flex: 1 1 160px; }
+      `}</style>
 
       <p className="acSmall">
         {t.haveAccount} <Link href={`/login?lang=${language}`}>{t.signIn}</Link>

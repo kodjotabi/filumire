@@ -18,7 +18,7 @@ export { hasAccountSession };
 
 const NAME_KEY = "filumire.learnerName";
 
-export type AccountKind = "guardian" | "learner" | "external";
+export type AccountKind = "guardian" | "learner" | "teacher" | "external";
 
 export interface AccountLearner {
   learnerId: string;
@@ -180,6 +180,66 @@ export async function registerGuardian(
   await request("/api/account/register", { body: registration });
 }
 
+export interface TeacherRegistration {
+  displayName: string;
+  email: string;
+  password: string;
+  preferredLanguage: Language;
+  confirmsTeacher: boolean;
+  acceptsNotice: boolean;
+}
+
+export async function registerTeacher(
+  registration: TeacherRegistration,
+): Promise<void> {
+  await request("/api/account/register", {
+    body: { ...registration, accountType: "teacher" },
+  });
+}
+
+export interface LinkedTeacher {
+  principalId: string;
+  displayName: string;
+  email: string;
+  linkedAt: string;
+}
+
+/* Guardian: a one-time code (valid seven days) for a teacher. */
+export async function createTeacherCode(
+  learnerId: string,
+): Promise<{ code: string; expiresAt: string }> {
+  return request(
+    `/api/account/learners/${encodeURIComponent(learnerId)}/teachers`,
+    { body: {} },
+  );
+}
+
+export async function listLearnerTeachers(
+  learnerId: string,
+): Promise<LinkedTeacher[]> {
+  const result = await request<{ teachers: LinkedTeacher[] }>(
+    `/api/account/learners/${encodeURIComponent(learnerId)}/teachers`,
+  );
+  return result.teachers;
+}
+
+export async function removeLearnerTeacher(
+  learnerId: string,
+  teacherPrincipalId: string,
+): Promise<void> {
+  await request(
+    `/api/account/learners/${encodeURIComponent(learnerId)}/teachers/${encodeURIComponent(teacherPrincipalId)}`,
+    { method: "DELETE" },
+  );
+}
+
+/* Teacher: link to a learner with the code their guardian gave. */
+export async function linkTeacherToLearner(
+  code: string,
+): Promise<{ learnerId: string; displayName: string }> {
+  return request("/api/account/teacher-links", { body: { code } });
+}
+
 export interface NewLearner {
   displayName: string;
   username: string;
@@ -276,6 +336,10 @@ const MESSAGES: Record<string, { en: string; fr: string }> = {
     en: "That password is too short, or the same as your current one.",
     fr: "Ce mot de passe est trop court, ou identique à l'actuel.",
   },
+  invalid_linkCode: {
+    en: "That code cannot be used. Check it with the parent: codes work once and last seven days.",
+    fr: "Ce code ne peut pas être utilisé. Vérifiez-le avec le parent : un code ne sert qu'une fois et reste valable sept jours.",
+  },
   invalid_currentPassword: {
     en: "Your current password is not correct.",
     fr: "Ton mot de passe actuel n'est pas correct.",
@@ -351,6 +415,10 @@ export function accountErrorMessage(error: unknown, language: Language): string 
  * setup until it is done, otherwise to their learning home.
  */
 export function destinationFor(account: Account, language: Language): string {
+  if (account.accountKind === "teacher") {
+    return `/teacher?lang=${language}`;
+  }
+
   if (account.accountKind === "guardian" && !account.activeLearnerId) {
     return `/family?lang=${language}`;
   }

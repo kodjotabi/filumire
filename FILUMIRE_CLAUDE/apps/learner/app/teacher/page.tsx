@@ -2,6 +2,9 @@
 import Link from "next/link";
 import { AdultHeader, AdultRoleSwitch } from "../../components/filumire/AdultRoleSwitch";
 import { useLanguage, type Language } from "../../components/filumire/language";
+import { TeacherLinkLearner } from "../../components/filumire/TeacherLinkLearner";
+import { AccountSecurity } from "../../components/filumire/AccountSecurity";
+import { fetchAccount, signOut, type Account } from "../../services/account-client";
 
 import {
   useCallback,
@@ -81,6 +84,8 @@ const TEACHER_FR: Record<string, string> = {
   "The teacher workspace could not be loaded.": "L'espace enseignant n'a pas pu être chargé.",
   "Try again": "Réessayer",
   "No learners assigned": "Aucun apprenant attribué",
+  "Sign out": "Se déconnecter",
+  "Enter a code from a learner's parent or guardian below to link your first learner.": "Saisissez ci-dessous le code donné par le parent ou le tuteur d'un apprenant pour associer votre premier apprenant.",
   "No active teacher-learner relationships are available.": "Aucune relation enseignant-apprenant active n'est disponible.",
   "Learner": "Apprenant",
   "Select a learner": "Choisir un apprenant",
@@ -273,6 +278,9 @@ export default function TeacherPage() {
     language === "fr" ? (TEACHER_FR[text] ?? text) : text;
   const [viewState, setViewState] =
     useState<ViewState>("loading");
+  // A built-in teacher account (names its learners and may link
+  // more); null for development identities.
+  const [account, setAccount] = useState<Account | null>(null);
   const [data, setData] =
     useState<TeacherSummaryResponse | null>(null);
   const [selectedCompetencyId, setSelectedCompetencyId] =
@@ -359,7 +367,25 @@ export default function TeacherPage() {
 
   useEffect(() => {
     void load();
+    fetchAccount()
+      .then((value) => setAccount(value))
+      .catch(() => setAccount(null));
   }, [load]);
+
+  const teacherAccount = account?.accountKind === "teacher";
+
+  function learnerName(learnerId: string, index: number): string {
+    return (
+      account?.learners.find((learner) => learner.learnerId === learnerId)
+        ?.displayName || `${t("Learner")} ${index + 1}`
+    );
+  }
+
+  async function afterLink(learnerId: string) {
+    setAccount(await fetchAccount().catch(() => account));
+    // In the background, so the link form and its message stay.
+    await load(learnerId, null, true);
+  }
 
   const selectedCompetency = useMemo(() => {
     if (!data?.summary || !selectedCompetencyId) {
@@ -661,10 +687,19 @@ export default function TeacherPage() {
             <section className="card status-card">
               <h1>{t("No learners assigned")}</h1>
               <p>
-                {t("No active teacher-learner relationships are available.")}
+                {teacherAccount
+                  ? t("Enter a code from a learner's parent or guardian below to link your first learner.")
+                  : t("No active teacher-learner relationships are available.")}
               </p>
             </section>
           )}
+
+        {viewState === "ready" && teacherAccount && data?.learners.length === 0 && (
+          <TeacherLinkLearner
+            language={language}
+            onLinked={(learnerId) => void afterLink(learnerId)}
+          />
+        )}
 
         {viewState === "ready" &&
           data &&
@@ -691,7 +726,7 @@ export default function TeacherPage() {
                         )
                       }
                     >
-                      {t("Learner")} {index + 1}
+                      {learnerName(learner.learnerId, index)}
                     </button>
                   ),
                 )}
@@ -1761,9 +1796,43 @@ export default function TeacherPage() {
               )}
             </>
           )}
+
+        {teacherAccount && (
+          <div className="teacherAccount">
+            {data && data.learners.length > 0 ? (
+              <TeacherLinkLearner
+                language={language}
+                onLinked={(learnerId) => void afterLink(learnerId)}
+              />
+            ) : null}
+            <AccountSecurity language={language} minLength={8} />
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={async () => {
+                await signOut();
+                window.location.assign(`/login?lang=${language}`);
+              }}
+            >
+              {t("Sign out")}
+            </button>
+          </div>
+        )}
       </div>
 
       <style jsx>{`
+        .teacherAccount {
+          display: grid;
+          gap: 12px;
+          justify-items: start;
+          margin-top: 16px;
+        }
+
+        .teacherAccount :global(.secPanel),
+        .teacherAccount :global(.tlCard) {
+          justify-self: stretch;
+        }
+
         .thread-intro {
           margin: 0 0 12px;
         }

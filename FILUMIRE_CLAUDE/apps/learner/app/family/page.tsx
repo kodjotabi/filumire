@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { AccountSecurity } from "../../components/filumire/AccountSecurity";
 import { AccountShell } from "../../components/filumire/AccountShell";
+import { TeacherAccess } from "../../components/filumire/TeacherAccess";
 import { LEARNER_AVATARS } from "../../components/filumire/avatars";
 import { LEARNER_GRADES } from "../../components/filumire/grades";
 import { useLanguage, type Language } from "../../components/filumire/language";
@@ -231,6 +232,11 @@ function LearnerCard({
       <p className={`acMessage${ok ? " ok" : ""}`} role="status">
         {message}
       </p>
+      <TeacherAccess
+        learnerId={learner.learnerId}
+        learnerName={learner.displayName}
+        language={language}
+      />
     </li>
   );
 }
