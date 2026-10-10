@@ -14,6 +14,10 @@ import { getLearnerState } from "../learner-state-store";
 import { getEvidence } from "../evidence-store";
 import { getLearnerInterventions } from "../intervention-store";
 import { getLearnerLearningContext } from "../learner-context";
+import {
+  buildLearnerProgress,
+  type LearnerProgress,
+} from "../learner-progress";
 
 export const PARENT_HOME_EXPERIENCE_VERSION =
   "parent-home-v1";
@@ -103,6 +107,10 @@ export interface AdultLearnerSummary {
   hasActivity: boolean;
   subjectName?: string;
   competencyTitle?: string;
+  /*
+   * FILUMIRE's current estimate for the one competency being
+   * learned now. It is not overall progress: see progress below.
+   */
   masteryPercent: number;
   confidencePercent: number;
   evidenceCount: number;
@@ -118,6 +126,12 @@ export interface AdultLearnerSummary {
   supportAreas?: string[];
   homeSupport?: HomeSupportGuidance[];
   alerts?: ParentAlert[];
+
+  /*
+   * Activity, mastery and curriculum progress across the learner's
+   * class, kept separate. Absent until the learner has a class.
+   */
+  progress?: LearnerProgress;
 }
 
 function friendlyRetentionStatus(
@@ -382,6 +396,10 @@ export async function buildAdultLearnerSummary(
   const context =
     await getLearnerLearningContext(learnerId);
 
+  const progress = context
+    ? await buildLearnerProgress(learnerId, context)
+    : undefined;
+
   if (context?.activeCompetencyId) {
     learnerState = await getLearnerState(
       learnerId,
@@ -409,7 +427,7 @@ export async function buildAdultLearnerSummary(
     !learnerState ||
     learnerState.competencies.length === 0
   ) {
-    return emptySummary();
+    return { ...emptySummary(), progress };
   }
 
   const activeCompetency =
@@ -553,6 +571,7 @@ export async function buildAdultLearnerSummary(
         latestIntervention?.type,
       supportMessage,
     }),
+    progress,
   };
 }
 

@@ -7,9 +7,8 @@ import {
   getAvailableSubjectsForContext,
   getOrCreateLearnerLearningContext,
 } from "../../../../../services/learner-context";
-import { getLearnerStates } from "../../../../../services/learner-state-store";
+import { getCompetencyProgressRows } from "../../../../../services/learner-progress";
 
-type Row = { evidenceCount: number; ready: boolean };
 type SubjectSummary = {
   total: number;
   tracked: number;
@@ -31,19 +30,7 @@ export async function buildLearningOverview(
   const availableSubjects = getAvailableSubjectsForContext(context);
   const grade = getFrameworkGrade(context.gradeId);
 
-  const states = await getLearnerStates(learnerId);
-  const latest = new Map<string, Row>();
-
-  for (const state of states) {
-    for (const competency of state.competencies) {
-      const known = latest.get(competency.competencyId);
-      const evidenceCount = competency.evidenceCount ?? 0;
-      const ready = Boolean(competency.readinessState?.readyForAdvancement);
-      if (!known || evidenceCount > known.evidenceCount || (ready && !known.ready)) {
-        latest.set(competency.competencyId, { evidenceCount, ready });
-      }
-    }
-  }
+  const { rows: latest } = await getCompetencyProgressRows(learnerId);
 
   const subjects: Record<string, SubjectSummary> = {};
   availableSubjects.forEach((subject) => {
@@ -60,14 +47,14 @@ export async function buildLearningOverview(
     const row = subjectId ? subjects[subjectId] : undefined;
     if (!row) return;
     row.tracked += 1;
-    if (entry.ready) row.completed += 1;
+    if (entry.mastered) row.completed += 1;
     if (entry.evidenceCount > 0) row.started = true;
   });
 
   const areas = areasSubjectId && subjects[areasSubjectId]
     ? getCompetenciesForSubject(areasSubjectId).map((competency) => {
         const row = latest.get(competency.id);
-        const status = row?.ready
+        const status = row?.mastered
           ? "completed"
           : row && row.evidenceCount > 0
             ? "inprogress"

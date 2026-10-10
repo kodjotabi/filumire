@@ -2,6 +2,8 @@
 import Link from "next/link";
 import { AdultHeader, AdultRoleSwitch } from "../../components/filumire/AdultRoleSwitch";
 import { useLanguage, type Language } from "../../components/filumire/language";
+import { LEARNER_GRADES } from "../../components/filumire/grades";
+import { ParentProgress } from "../../components/filumire/ParentProgress";
 
 import {
   useCallback,
@@ -48,8 +50,10 @@ const TEXT = {
     overview: "Learning overview",
     current: "Current learning",
     ready: "Ready when they are",
-    progress: "progress",
-    progressLabel: "Learning progress",
+    progress: "this topic",
+    progressLabel: "FILUMIRE's mastery estimate for the current topic",
+    estimateNote:
+      "The circle is FILUMIRE's current estimate for this one topic, not overall progress. Overall progress is shown below.",
     next: "What comes next",
     notStarted:
       "Once learning begins, you will see progress, current learning and useful ways to support the learner here.",
@@ -96,8 +100,10 @@ const TEXT = {
     overview: "Aperçu de l'apprentissage",
     current: "Apprentissage en cours",
     ready: "Prêt quand il le sera",
-    progress: "progression",
-    progressLabel: "Progression",
+    progress: "ce thème",
+    progressLabel: "Estimation de maîtrise de FILUMIRE pour le thème en cours",
+    estimateNote:
+      "Le cercle indique l'estimation actuelle de FILUMIRE pour ce seul thème, pas la progression globale. La progression globale est présentée plus bas.",
     next: "La suite",
     notStarted:
       "Dès que l'apprentissage commence, vous verrez ici la progression, le thème en cours et des idées pour aider l'apprenant.",
@@ -416,27 +422,9 @@ export default function AdultSupervisionPage() {
 
                 {data.summary.hasActivity ? (
                   <>
-                    <div
-                      className="parent-progress-track"
-                      role="progressbar"
-                      aria-label={t.progressLabel}
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                      aria-valuenow={Math.max(0, Math.min(100, data.summary.masteryPercent))}
-                    >
-                      <div
-                        className="parent-progress-fill"
-                        style={{
-                          width: `${Math.max(
-                            0,
-                            Math.min(
-                              100,
-                              data.summary.masteryPercent,
-                            ),
-                          )}%`,
-                        }}
-                      />
-                    </div>
+                    <p className="section-text">
+                      {t.estimateNote}
+                    </p>
 
                     {data.summary.nextFocus && (
                       <div className="parent-focus">
@@ -453,6 +441,18 @@ export default function AdultSupervisionPage() {
                   </p>
                 )}
               </section>
+
+              {data.summary.progress && (
+                <ParentProgress
+                  progress={data.summary.progress}
+                  gradeLabel={
+                    LEARNER_GRADES.find(
+                      (grade) => grade.id === data.summary?.progress?.gradeId,
+                    )?.name[language] ?? data.summary.progress.gradeName
+                  }
+                  language={language}
+                />
+              )}
 
               {data.summary.alerts &&
                 data.summary.alerts.length > 0 && (

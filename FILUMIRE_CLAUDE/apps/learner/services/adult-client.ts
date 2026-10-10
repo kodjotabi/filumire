@@ -64,6 +64,26 @@ export interface AdultLearnerSummary {
   supportAreas?: string[];
   homeSupport?: HomeSupportGuidance[];
   alerts?: ParentAlert[];
+  progress?: LearnerProgress;
+}
+
+/* Mirrors services/learner-progress: three separate measures. */
+export interface LearnerProgress {
+  gradeId: string;
+  gradeName: string;
+  lastActiveAt?: string;
+  activity: { answersRecorded: number };
+  mastery: { masteredCompetencies: number; inProgressCompetencies: number };
+  curriculum: { masteredCompetencies: number; totalCompetencies: number; percent: number };
+  subjects: Array<{
+    subjectId: string;
+    name: string;
+    discipline: string;
+    totalCompetencies: number;
+    masteredCompetencies: number;
+    inProgressCompetencies: number;
+    answersRecorded: number;
+  }>;
 }
 
 export interface AdultSummaryResponse {
