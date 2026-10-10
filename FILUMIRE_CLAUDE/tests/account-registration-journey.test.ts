@@ -189,6 +189,18 @@ async function main(): Promise<void> {
   );
   assert(noLearnerConsent.status === 400, "adding a learner requires consent");
 
+  const badGrade = await addLearner(
+    post("/api/account/learners", {
+      displayName: "Esi",
+      username: `esi.${run}`.slice(0, 24),
+      password: "esi-pass",
+      gradeId: "grade-that-does-not-exist",
+      consentsToLearnerData: true,
+    }, guardianCookie),
+  );
+  assert(badGrade.status === 400 && (await code(badGrade)) === "invalid_grade", "unsupported grade rejected when adding a learner");
+  assert(!(await accountStore.getCredentialByLogin(`esi.${run}`.slice(0, 24))), "no learner is created when the grade is invalid");
+
   const added = await addLearner(
     post("/api/account/learners", {
       displayName: "Ama",
@@ -246,6 +258,25 @@ async function main(): Promise<void> {
   pass("learner signs in with own username and lands on own learner");
 
   // 5. Onboarding: grade, avatar, onboarding complete.
+  const noGrade = await patchLearner(
+    patch(`/api/account/learners/${learnerId}`, { avatarId: "3", completeOnboarding: true }, learnerCookie),
+    params(learnerId),
+  );
+  const blankGrade = await patchLearner(
+    patch(`/api/account/learners/${learnerId}`, { avatarId: "3", gradeId: "", completeOnboarding: true }, learnerCookie),
+    params(learnerId),
+  );
+  const wrongGrade = await patchLearner(
+    patch(`/api/account/learners/${learnerId}`, { avatarId: "3", gradeId: "grade-that-does-not-exist", completeOnboarding: true }, learnerCookie),
+    params(learnerId),
+  );
+  for (const rejected of [noGrade, blankGrade, wrongGrade]) {
+    assert(rejected.status === 400 && (await code(rejected)) === "invalid_grade", `onboarding without a valid grade returned ${rejected.status}`);
+  }
+  const stillNew = await accountStore.getLearnerProfile(learnerId);
+  assert(!stillNew?.onboardingCompletedAt && stillNew?.avatarId !== "3", "rejected onboarding changes nothing");
+  pass("onboarding rejects a missing or unsupported grade and writes nothing");
+
   const onboarded = await patchLearner(
     patch(`/api/account/learners/${learnerId}`, { avatarId: "3", gradeId: GRADE_GHANA_BASIC_5_ID, completeOnboarding: true }, learnerCookie),
     params(learnerId),

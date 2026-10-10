@@ -1,6 +1,6 @@
 import { addLearnerForGuardian } from "../../../../../../services/account";
 import { resolveSignedInSession } from "../../../../../../services/identity";
-import { setLearnerGrade } from "../../../../../../services/learner-context";
+import { requireSupportedGrade, setLearnerGrade } from "../../../../../../services/learner-context";
 
 import {
   checkRateLimits,
@@ -27,6 +27,15 @@ export async function POST(request: Request) {
     }
 
     const body = await readJsonBody(request);
+
+    // The class is optional here (the learner can choose it during
+    // onboarding), but one that is sent must be valid before the
+    // learner is created.
+    const gradeId =
+      body.gradeId === undefined || body.gradeId === ""
+        ? undefined
+        : await requireSupportedGrade(undefined, body.gradeId);
+
     const learner = await addLearnerForGuardian(session.principalId, {
       displayName: body.displayName,
       username: body.username,
@@ -36,8 +45,8 @@ export async function POST(request: Request) {
       consentsToLearnerData: body.consentsToLearnerData,
     });
 
-    if (typeof body.gradeId === "string" && body.gradeId) {
-      await setLearnerGrade(learner.learnerId, body.gradeId);
+    if (gradeId) {
+      await setLearnerGrade(learner.learnerId, gradeId);
     }
 
     return json(learner, { status: 201 });

@@ -18,6 +18,34 @@ export type { LearnerLearningContextRecord };
  */
 export class LearnerContextValidationError extends Error {}
 
+/*
+ * Checks a requested grade without changing anything, so callers
+ * can reject a missing or unsupported grade before they write.
+ * Uses the learner's curriculum version when a context exists,
+ * otherwise the default one a new context would receive.
+ */
+export async function requireSupportedGrade(
+  learnerId: string | undefined,
+  gradeId: unknown,
+): Promise<string> {
+  if (typeof gradeId !== "string" || !gradeId.trim()) {
+    throw new LearnerContextValidationError("Choose a class.");
+  }
+
+  const context = learnerId
+    ? await getLearnerLearningContext(learnerId)
+    : undefined;
+  const curriculumVersionId =
+    context?.curriculumVersionId ??
+    getDefaultLearnerLearningContext().curriculumVersionId;
+
+  if (!isSupportedGrade(curriculumVersionId, gradeId)) {
+    throw new LearnerContextValidationError("Unsupported grade.");
+  }
+
+  return gradeId;
+}
+
 export async function getLearnerLearningContext(
   learnerId: string,
 ): Promise<LearnerLearningContextRecord | undefined> {

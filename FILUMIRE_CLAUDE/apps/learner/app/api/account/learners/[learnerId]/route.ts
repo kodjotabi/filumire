@@ -1,6 +1,10 @@
 import { updateLearnerProfileFor } from "../../../../../../../services/account";
 import { resolveSignedInSession } from "../../../../../../../services/identity";
-import { setLearnerGrade } from "../../../../../../../services/learner-context";
+import {
+  LearnerContextValidationError,
+  requireSupportedGrade,
+  setLearnerGrade,
+} from "../../../../../../../services/learner-context";
 
 import { errorResponse, json, readJsonBody } from "../../http";
 
@@ -8,6 +12,10 @@ import { errorResponse, json, readJsonBody } from "../../http";
  * Updates a learner's profile (name, avatar, language), grade and
  * onboarding state. Allowed for the learner themselves and their
  * guardian. Learner passwords change through ./password.
+ *
+ * Nothing is written unless the whole request is valid. Finishing
+ * onboarding requires the class the learner chose, sent in the
+ * same request, so no learner starts on a grade nobody picked.
  */
 export async function PATCH(
   request: Request,
@@ -18,8 +26,6 @@ export async function PATCH(
     const { learnerId } = await params;
     const body = await readJsonBody(request);
 
-    // Checks the caller is the learner or their guardian, and
-    // applies the profile part of the change.
     const learner = await updateLearnerProfileFor(
       session.principalId,
       learnerId,
@@ -29,11 +35,23 @@ export async function PATCH(
         preferredLanguage: body.preferredLanguage,
         completeOnboarding: body.completeOnboarding,
       },
-    );
+      async (existing) => {
+        if (
+          body.completeOnboarding === true &&
+          !existing.onboardingComplete &&
+          body.gradeId === undefined
+        ) {
+          throw new LearnerContextValidationError("Choose a class.");
+        }
 
-    if (typeof body.gradeId === "string" && body.gradeId) {
-      await setLearnerGrade(learnerId, body.gradeId);
-    }
+        if (body.gradeId !== undefined) {
+          await setLearnerGrade(
+            learnerId,
+            await requireSupportedGrade(learnerId, body.gradeId),
+          );
+        }
+      },
+    );
 
     return json(learner);
   } catch (error) {

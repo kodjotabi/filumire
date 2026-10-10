@@ -548,6 +548,9 @@ export async function updateLearnerProfileFor(
   principalId: string,
   learnerId: string,
   input: LearnerProfileUpdateInput,
+  // Runs once the caller is authorised and the input is valid,
+  // before the profile is written; throwing here changes nothing.
+  beforeWrite?: (existing: { onboardingComplete: boolean }) => Promise<void>,
 ): Promise<AccountLearnerSummary> {
   if (!(await isPrincipalAuthorizedForLearner(principalId, learnerId))) {
     throw new AccountForbiddenError("This learner is not linked to you.");
@@ -570,7 +573,7 @@ export async function updateLearnerProfileFor(
     throw new AccountForbiddenError("This learner has no FILUMIRE profile.");
   }
 
-  await accountStore.updateLearnerProfile(learnerId, {
+  const changes = {
     ...(input.displayName !== undefined
       ? { displayName: normaliseDisplayName(input.displayName) }
       : {}),
@@ -583,7 +586,11 @@ export async function updateLearnerProfileFor(
     ...(input.completeOnboarding === true && !existing.onboardingCompletedAt
       ? { onboardingCompletedAt: new Date().toISOString() }
       : {}),
-  });
+  };
+
+  await beforeWrite?.({ onboardingComplete: Boolean(existing.onboardingCompletedAt) });
+
+  await accountStore.updateLearnerProfile(learnerId, changes);
 
   return summariseLearner(learnerId, guardian?.status === "active");
 }

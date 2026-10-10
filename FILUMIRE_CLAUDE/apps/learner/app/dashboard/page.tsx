@@ -35,6 +35,8 @@ import { SubjectIcon } from "../../components/filumire/SubjectIcon";
 import { useLanguage, withLang } from "../../components/filumire/language";
 import { LEARNER_GRADES } from "../../components/filumire/grades";
 import {
+  AccountRequestError,
+  accountErrorMessage,
   activeLearner,
   applyLearnerProfileToDevice,
   fetchAccount,
@@ -158,6 +160,8 @@ const SETUP_TEXT = {
     levelHelp: "Your class is set by your school. FILUMIRE uses it to choose learning that is right for you.",
     levelUnknown: "Set by your school",
     levelChoose: "Choose your class. FILUMIRE uses it to choose learning that is right for you.",
+    levelPlaceholder: "Choose your class",
+    levelRequired: "Choose your class to continue.",
     saving: "Saving…",
     saveFailed: "Your details could not be saved. Check your connection and try again.",
     avatar: "Choose your avatar",
@@ -180,6 +184,8 @@ const SETUP_TEXT = {
     levelHelp: "Ta classe est définie par ton école. FILUMIRE s’en sert pour choisir ce qui te convient.",
     levelUnknown: "Définie par ton école",
     levelChoose: "Choisis ta classe. FILUMIRE s’en sert pour choisir ce qui te convient.",
+    levelPlaceholder: "Choisis ta classe",
+    levelRequired: "Choisis ta classe pour continuer.",
     saving: "Enregistrement…",
     saveFailed: "Tes informations n’ont pas pu être enregistrées. Vérifie ta connexion et réessaie.",
     avatar: "Choisis ton avatar",
@@ -275,8 +281,12 @@ function LearnerDashboardView() {
   const signedInLearner = activeLearner(account);
 
   useEffect(() => {
-    if (overview?.gradeId && !setupGrade) setSetupGrade(overview.gradeId);
-  }, [overview?.gradeId, setupGrade]);
+    // Only a learner who has already chosen a class sees it
+    // preselected; a new learner must pick one.
+    if (overview?.gradeId && !setupGrade && signedInLearner?.onboardingComplete) {
+      setSetupGrade(overview.gradeId);
+    }
+  }, [overview?.gradeId, setupGrade, signedInLearner?.onboardingComplete]);
 
   useEffect(() => {
     const params =
@@ -458,6 +468,12 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
     if (!signedInLearner) return;
 
     event.preventDefault();
+
+    if (!setupGrade) {
+      setSetupError(SETUP_TEXT[language].levelRequired);
+      return;
+    }
+
     setSetupSaving(true);
     setSetupError("");
 
@@ -465,12 +481,16 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
       await updateLearnerProfile(signedInLearner.learnerId, {
         ...(setupName.trim() ? { displayName: setupName.trim() } : {}),
         avatarId: setupAvatar,
-        ...(setupGrade && setupGrade !== overview?.gradeId ? { gradeId: setupGrade } : {}),
+        gradeId: setupGrade,
         completeOnboarding: true,
       });
       window.location.assign(`/dashboard?lang=${language}`);
-    } catch {
-      setSetupError(SETUP_TEXT[language].saveFailed);
+    } catch (error) {
+      setSetupError(
+        error instanceof AccountRequestError
+          ? accountErrorMessage(error, language)
+          : SETUP_TEXT[language].saveFailed,
+      );
       setSetupSaving(false);
     }
   }
@@ -699,8 +719,12 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                             id="setupLevel"
                             className="setupInput"
                             value={setupGrade}
+                            required
                             onChange={(event) => setSetupGrade(event.target.value)}
                           >
+                            <option value="" disabled>
+                              {setupText.levelPlaceholder}
+                            </option>
                             {LEARNER_GRADES.map((grade) => (
                               <option key={grade.id} value={grade.id}>
                                 {grade.name[language]}
