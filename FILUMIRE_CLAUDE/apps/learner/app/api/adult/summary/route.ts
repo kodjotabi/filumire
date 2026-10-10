@@ -74,6 +74,7 @@ export async function GET(
     const summary = selectedLearnerId
       ? await buildAdultLearnerSummary(
           selectedLearnerId,
+          request.headers.get("x-filumire-language") === "fr" ? "fr" : "en",
         )
       : null;
 

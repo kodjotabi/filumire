@@ -1,3 +1,4 @@
+import { GHANA_MATH_PILOT_INITIAL_COMPETENCY_ID } from "../packages/curriculum";
 ﻿import assert from "node:assert/strict";
 
 import {
@@ -25,7 +26,7 @@ async function run(): Promise<void> {
     `parent-experience-${stamp}`;
 
   const competencyId =
-    "B4-PARENT-EXPERIENCE-V1";
+    GHANA_MATH_PILOT_INITIAL_COMPETENCY_ID;
 
   await persistenceStore.ensureLearnerExists(
     learnerId,

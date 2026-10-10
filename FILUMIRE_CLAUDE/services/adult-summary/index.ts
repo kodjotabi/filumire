@@ -19,6 +19,8 @@ import {
   type LearnerProgress,
 } from "../learner-progress";
 
+import { SUMMARY_MESSAGES, type SummaryLanguage, type SummaryMessages } from "./messages";
+
 export const PARENT_HOME_EXPERIENCE_VERSION =
   "parent-home-v1";
 
@@ -26,49 +28,6 @@ const LEGACY_CANDIDATE_COMPETENCY_IDS = [
   GHANA_MATH_PILOT_INITIAL_COMPETENCY_ID,
   VALIDATION_INITIAL_COMPETENCY_ID,
 ];
-
-const DIAGNOSTIC_SUPPORT_MESSAGES: Partial<
-  Record<DiagnosticState, string>
-> = {
-  prerequisite_gap:
-    "An earlier skill needs some more attention.",
-  conceptual_misunderstanding:
-    "The main idea needs some more explanation.",
-  procedural_error:
-    "The steps of the method need some more practice.",
-  misconception:
-    "There is a misunderstanding that needs to be cleared up.",
-  forgotten_knowledge:
-    "A refresher on this learning would help.",
-  transfer_failure:
-    "More practice using this learning in different situations would help.",
-  persistent_difficulty:
-    "This learning needs continued support and practice.",
-};
-
-const INTERVENTION_FOCUS_MESSAGES: Record<
-  InterventionType,
-  string
-> = {
-  diagnose:
-    "FILUMIRE is checking what the learner already understands.",
-  teach:
-    "The learner is working on understanding this topic.",
-  practice:
-    "The learner is practising this skill.",
-  scaffold:
-    "The learner is working through this step by step.",
-  remediate:
-    "The learner is reviewing the idea in another way.",
-  reassess:
-    "FILUMIRE is checking understanding again.",
-  retention_check:
-    "FILUMIRE is checking what the learner still remembers.",
-  transfer_check:
-    "FILUMIRE is checking whether the learner can use this skill in a new situation.",
-  teacher_review:
-    "A teacher review is needed before this learning can be fully evaluated.",
-};
 
 export type ParentAlertLevel =
   | "attention"
@@ -135,17 +94,18 @@ export interface AdultLearnerSummary {
 }
 
 function friendlyRetentionStatus(
+  messages: SummaryMessages,
   status?: string,
 ): string | undefined {
   switch (status) {
     case "retained":
-      return "This learning is being remembered well.";
+      return messages.retention.retained;
 
     case "not_retained":
-      return "This learning needs more practice to help it stay remembered.";
+      return messages.retention.not_retained;
 
     case "pending":
-      return "FILUMIRE is checking how well this learning is being remembered.";
+      return messages.retention.pending;
 
     default:
       return undefined;
@@ -153,17 +113,18 @@ function friendlyRetentionStatus(
 }
 
 function friendlyTransferStatus(
+  messages: SummaryMessages,
   status?: string,
 ): string | undefined {
   switch (status) {
     case "demonstrated":
-      return "The learner can use this learning in a new situation.";
+      return messages.transfer.demonstrated;
 
     case "not_demonstrated":
-      return "The learner needs more practice using this learning in different situations.";
+      return messages.transfer.not_demonstrated;
 
     case "pending":
-      return "FILUMIRE is checking whether this learning can be used in a new situation.";
+      return messages.transfer.pending;
 
     default:
       return undefined;
@@ -188,6 +149,7 @@ function emptySummary(): AdultLearnerSummary {
 }
 
 function buildHomeSupport(
+  messages: SummaryMessages,
   input: {
     diagnosticState: DiagnosticState;
     retentionStatus?: string;
@@ -198,17 +160,13 @@ function buildHomeSupport(
   const guidance: HomeSupportGuidance[] = [];
 
   const topic =
-    input.competencyTitle ?? "this learning";
+    input.competencyTitle ? messages.quote(input.competencyTitle) : messages.topicFallback;
 
   switch (input.diagnosticState) {
     case "prerequisite_gap":
       guidance.push({
         id: "review-earlier-learning",
-        title: "Review the foundation",
-        guidance:
-          `Ask the learner to explain an earlier idea connected to ${topic}. Keep it relaxed and let them show what they remember.`,
-        boundary:
-          "You do not need to teach or score the learner. FILUMIRE will decide what learning should come next.",
+        ...messages.home.reviewEarlier(topic),
       });
       break;
 
@@ -216,66 +174,42 @@ function buildHomeSupport(
     case "misconception":
       guidance.push({
         id: "explain-in-own-words",
-        title: "Talk about the idea",
-        guidance:
-          `Ask the learner to explain ${topic} in their own words. Listen for their reasoning rather than giving them the answer immediately.`,
-        boundary:
-          "This conversation supports learning but does not determine mastery or progression.",
+        ...messages.home.explainOwnWords(topic),
       });
       break;
 
     case "procedural_error":
       guidance.push({
         id: "talk-through-steps",
-        title: "Talk through the steps",
-        guidance:
-          "Ask the learner to describe the steps they would use. Encourage them to slow down and explain one step at a time.",
-        boundary:
-          "FILUMIRE remains responsible for evaluating whether the skill has been mastered.",
+        ...messages.home.talkThroughSteps,
       });
       break;
 
     case "forgotten_knowledge":
       guidance.push({
         id: "short-refresh",
-        title: "Try a short refresher",
-        guidance:
-          `Have a brief conversation about ${topic} and ask what the learner remembers without turning it into a test.`,
-        boundary:
-          "Home support is practice, not formal evidence of mastery.",
+        ...messages.home.shortRefresh(topic),
       });
       break;
 
     case "transfer_failure":
       guidance.push({
         id: "everyday-example",
-        title: "Find an everyday example",
-        guidance:
-          `Look for a simple everyday situation where ${topic} could be used and ask the learner how they might apply it.`,
-        boundary:
-          "FILUMIRE will separately evaluate whether the learner can transfer the skill.",
+        ...messages.home.everydayExample(topic),
       });
       break;
 
     case "persistent_difficulty":
       guidance.push({
         id: "encourage-small-step",
-        title: "Keep support light",
-        guidance:
-          "Encourage one short attempt at a time. Avoid long practice sessions or pressure when the learner is already struggling.",
-        boundary:
-          "Persistent difficulty should be handled by FILUMIRE's adaptive system and, where needed, the teacher.",
+        ...messages.home.keepSupportLight,
       });
       break;
 
     default:
       guidance.push({
         id: "ask-what-learned",
-        title: "Ask what they learned",
-        guidance:
-          `Invite the learner to tell you something they learned about ${topic}. Let them explain it in their own way.`,
-        boundary:
-          "There is no need to grade the answer. FILUMIRE handles formal learning decisions.",
+        ...messages.home.askWhatLearned(topic),
       });
       break;
   }
@@ -283,22 +217,14 @@ function buildHomeSupport(
   if (input.retentionStatus === "not_retained") {
     guidance.push({
       id: "retention-revisit",
-      title: "Revisit it briefly",
-      guidance:
-        "Return to this learning for a few minutes on another day rather than doing one long practice session.",
-      boundary:
-        "FILUMIRE will perform the formal retention check.",
+      ...messages.home.retentionRevisit,
     });
   }
 
   if (input.transferStatus === "not_demonstrated") {
     guidance.push({
       id: "transfer-example",
-      title: "Use another example",
-      guidance:
-        "Ask where this skill might appear outside the original lesson. A familiar home or community example is enough.",
-      boundary:
-        "This activity supports transfer but does not itself prove transfer.",
+      ...messages.home.transferExample,
     });
   }
 
@@ -306,6 +232,7 @@ function buildHomeSupport(
 }
 
 function buildAlerts(
+  messages: SummaryMessages,
   input: {
     diagnosticState: DiagnosticState;
     readyForAdvancement: boolean;
@@ -322,9 +249,7 @@ function buildAlerts(
       id: "ready-to-advance",
       type: "ready_to_advance",
       level: "positive",
-      title: "Good progress",
-      message:
-        "FILUMIRE currently considers this learning ready to move forward.",
+      ...messages.alerts.ready,
     });
   }
 
@@ -333,9 +258,7 @@ function buildAlerts(
       id: "retention-support",
       type: "retention_support",
       level: "attention",
-      title: "A little revision would help",
-      message:
-        "The learner understood this before, but needs help keeping it remembered.",
+      ...messages.alerts.retention,
     });
   }
 
@@ -344,9 +267,7 @@ function buildAlerts(
       id: "transfer-support",
       type: "transfer_support",
       level: "attention",
-      title: "More real-world practice would help",
-      message:
-        "The learner needs more practice using this learning in a different situation.",
+      ...messages.alerts.transfer,
     });
   }
 
@@ -358,7 +279,7 @@ function buildAlerts(
       id: "learning-support",
       type: "support_needed",
       level: "attention",
-      title: "Support is useful here",
+      title: messages.alerts.support.title,
       message: input.supportMessage,
     });
   }
@@ -371,9 +292,7 @@ function buildAlerts(
       id: "teacher-review",
       type: "teacher_review",
       level: "information",
-      title: "Teacher review",
-      message:
-        "A teacher review is needed for this learning. No parent action is required.",
+      ...messages.alerts.teacherReview,
     });
   }
 
@@ -390,7 +309,9 @@ function buildAlerts(
  */
 export async function buildAdultLearnerSummary(
   learnerId: string,
+  language: SummaryLanguage = "en",
 ): Promise<AdultLearnerSummary> {
+  const messages = SUMMARY_MESSAGES[language];
   let learnerState;
 
   const context =
@@ -479,7 +400,7 @@ export async function buildAdultLearnerSummary(
     activeCompetency.transferState?.status;
 
   const supportMessage =
-    DIAGNOSTIC_SUPPORT_MESSAGES[
+    messages.diagnosticSupport[
       activeCompetency.diagnosticState
     ];
 
@@ -487,29 +408,29 @@ export async function buildAdultLearnerSummary(
 
   if (activeCompetency.readinessState?.readyForAdvancement) {
     strengths.push(
-      "Current learning is ready to progress.",
+      messages.strengths.ready,
     );
   }
 
   if (retentionStatus === "retained") {
     strengths.push(
-      "The learner is remembering this learning well.",
+      messages.strengths.retained,
     );
   }
 
   if (transferStatus === "demonstrated") {
     strengths.push(
-      "The learner can use this learning in a new situation.",
+      messages.strengths.transferred,
     );
   }
 
   const supportAreas = [
     supportMessage,
     retentionStatus === "not_retained"
-      ? "Remembering the learning over time."
+      ? messages.supportAreas.retention
       : undefined,
     transferStatus === "not_demonstrated"
-      ? "Using the learning in different situations."
+      ? messages.supportAreas.transfer
       : undefined,
   ].filter(
     (value): value is string => Boolean(value),
@@ -533,15 +454,17 @@ export async function buildAdultLearnerSummary(
         ?.readyForAdvancement ?? false,
     retentionStatus:
       friendlyRetentionStatus(
+        messages,
         retentionStatus,
       ),
     transferStatus:
       friendlyTransferStatus(
+        messages,
         transferStatus,
       ),
     needsSupport: supportMessage,
     nextFocus: latestIntervention
-      ? INTERVENTION_FOCUS_MESSAGES[
+      ? messages.interventionFocus[
           latestIntervention.type
         ]
       : undefined,
@@ -551,7 +474,7 @@ export async function buildAdultLearnerSummary(
       PARENT_HOME_EXPERIENCE_VERSION,
     strengths,
     supportAreas,
-    homeSupport: buildHomeSupport({
+    homeSupport: buildHomeSupport(messages, {
       diagnosticState:
         activeCompetency.diagnosticState,
       retentionStatus,
@@ -559,7 +482,7 @@ export async function buildAdultLearnerSummary(
       competencyTitle:
         competencyDefinition?.title,
     }),
-    alerts: buildAlerts({
+    alerts: buildAlerts(messages, {
       diagnosticState:
         activeCompetency.diagnosticState,
       readyForAdvancement:

@@ -1,3 +1,4 @@
+import { readLanguage } from "../components/filumire/language";
 ﻿import { usesDevelopmentIdentity } from "./session-marker";
 
 const DEVELOPMENT_PRINCIPAL_ID =
@@ -163,7 +164,10 @@ export async function fetchAdultSummary(
     : "/api/adult/summary";
 
   const response = await fetch(url, {
-    headers: getAdultApiHeaders(),
+    headers: {
+      ...getAdultApiHeaders(),
+      ...(typeof window === "undefined" ? {} : { "x-filumire-language": readLanguage() }),
+    },
   });
 
   if (!response.ok) {

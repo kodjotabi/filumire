@@ -9,6 +9,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
@@ -176,8 +177,13 @@ export default function AdultSupervisionPage() {
       "idle" | "loading" | "sending" | "sent" | "error"
     >("idle");
 
+  const selectedLearnerId = useRef<string | undefined>(undefined);
+  const loadSequence = useRef(0);
+
   const load = useCallback(
     async (learnerId?: string) => {
+      const sequence = ++loadSequence.current;
+      selectedLearnerId.current = learnerId;
       setViewState("loading");
       setMessages([]);
       setMessageState("idle");
@@ -186,6 +192,8 @@ export default function AdultSupervisionPage() {
         const result =
           await fetchAdultSummary(learnerId);
 
+        if (sequence !== loadSequence.current) return;
+        selectedLearnerId.current = result.selectedLearnerId;
         setData(result);
         setViewState("ready");
 
@@ -208,13 +216,16 @@ export default function AdultSupervisionPage() {
                 result.selectedLearnerId,
               );
 
+            if (sequence !== loadSequence.current) return;
             setMessages(messageResult.messages);
             setMessageState("idle");
           } catch {
+            if (sequence !== loadSequence.current) return;
             setMessageState("error");
           }
         }
       } catch (err) {
+        if (sequence !== loadSequence.current) return;
         setData(null);
 
         setViewState(
@@ -229,8 +240,9 @@ export default function AdultSupervisionPage() {
   );
 
   useEffect(() => {
-    void load();
-  }, [load]);
+    void load(selectedLearnerId.current);
+    return () => { loadSequence.current += 1; };
+  }, [load, language]);
 
   const selectedLearner = useMemo(
     () =>
