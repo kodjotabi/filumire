@@ -48,6 +48,7 @@ export async function generateInstruction(
     new DeterministicGovernedInstructionalEngine();
 
   return engine.generate({
+    language: request.learnerState.language === "fr" ? "fr" : "en",
     learnerId: request.decision.learnerId,
     sessionId: request.decision.sessionId,
     competency: {

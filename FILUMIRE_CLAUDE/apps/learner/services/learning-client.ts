@@ -1,4 +1,5 @@
 import { usesDevelopmentIdentity } from "./session-marker";
+import { readLanguage } from "../components/filumire/language";
 
 export const DEVELOPMENT_LEARNER_ID =
   "learner-runtime-feedback-001";
@@ -111,14 +112,22 @@ export class LearningRequestError extends Error {
 export class LearningNetworkError extends Error {}
 
 export function getApiHeaders(): Record<string, string> {
+  // The interface language also chooses the lesson language.
+  const language: Record<string, string> =
+    typeof window === "undefined"
+      ? {}
+      : { "x-filumire-language": readLanguage() };
+
   if (!usesDevelopmentIdentity()) {
     return {
       "Content-Type": "application/json",
+      ...language,
     };
   }
 
   return {
     "Content-Type": "application/json",
+    ...language,
     "x-filumire-learner-id":
       DEVELOPMENT_LEARNER_ID,
   };

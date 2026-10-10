@@ -10,7 +10,7 @@
                        "packages/*"
                    ],
     "scripts":  {
-                    "test":  "npm run test:adaptive \u0026\u0026 npm run test:progression \u0026\u0026 npm run test:security \u0026\u0026 npm run test:identity \u0026\u0026 npm run test:intervention \u0026\u0026 npm run test:language && npm run test:accounts && npm run test:ratelimit && npm run test:progress && npm run test:teacher-links",
+                    "test":  "npm run test:adaptive \u0026\u0026 npm run test:progression \u0026\u0026 npm run test:security \u0026\u0026 npm run test:identity \u0026\u0026 npm run test:intervention \u0026\u0026 npm run test:language && npm run test:accounts && npm run test:ratelimit && npm run test:progress && npm run test:teacher-links && npm run test:learning-language",
                     "test:adaptive":  "tsx --env-file=.env.local ./tests/adaptive-learning-loop.test.ts",
                     "test:progression":  "tsx --env-file=.env.local ./tests/competency-003-adaptive-loop.test.ts",
                     "test:security":  "tsx --env-file=.env.local ./tests/api-assessment-security.test.ts",
@@ -21,6 +21,7 @@
                     "test:ratelimit":  "tsx --env-file=.env.local ./tests/auth-rate-limit.test.ts",
                     "test:progress":  "tsx --env-file=.env.local ./tests/learner-progress.test.ts",
                     "test:teacher-links":  "tsx --env-file=.env.local ./tests/teacher-linking.test.ts",
+                    "test:learning-language":  "tsx --env-file=.env.local ./tests/learning-language.test.ts",
                     "build:learner":  "npm run build --workspace=@filumire/learner",
                     "validate:all":  "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/validate-all.ps1"
                 },

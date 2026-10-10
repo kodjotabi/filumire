@@ -59,6 +59,7 @@ import {
 } from "../../../../../services/content-store";
 
 import { seedContent } from "../../../../../services/content-store/seed";
+import { accountStore } from "../../../../../services/account/store";
 
 import {
   resolveRequestIdentity,
@@ -502,13 +503,46 @@ function sanitizeLearnerContent<T extends { id?: string; assessmentItemId?: stri
   return prepareLearnerContent(content, learnerId);
 }
 
+type LearningLanguage = "en" | "fr";
+
+/*
+ * The lesson language: the interface language the browser sends,
+ * otherwise the learner's saved account language. Undefined keeps
+ * whatever the learner state already has.
+ */
+async function resolveLearningLanguage(
+  request: Request,
+  learnerId: string,
+): Promise<LearningLanguage | undefined> {
+  const requested = request.headers.get("x-filumire-language");
+
+  if (requested === "en" || requested === "fr") {
+    return requested;
+  }
+
+  return (await accountStore.getLearnerProfile(learnerId))?.preferredLanguage;
+}
+
 async function buildLearningResponse(
   learnerId: string,
   sessionId: string,
-  learnerState: Awaited<
+  initialLearnerState: Awaited<
     ReturnType<typeof createInitialLearnerState>
   >,
+  language?: LearningLanguage,
 ) {
+  /*
+   * Content is chosen in the learner state's language, so a change
+   * of interface language is stored before the decision. Only the
+   * language changes; mastery, evidence and progress do not.
+   */
+  let learnerState = initialLearnerState;
+
+  if (language && learnerState.language !== language) {
+    learnerState = { ...learnerState, language };
+    await saveLearnerState(learnerState);
+  }
+
   const adaptiveDecision =
     await makeAdaptiveDecision({
       learnerId,
@@ -674,6 +708,7 @@ export async function GET(
         learnerId,
         sessionId,
         learnerState,
+        await resolveLearningLanguage(request, learnerId),
       );
 
     if (identity.source === "production-session") {
@@ -930,6 +965,7 @@ export async function POST(
           authenticatedLearnerId,
           body.sessionId,
           acknowledgedState,
+          await resolveLearningLanguage(request, authenticatedLearnerId),
         );
 
       if (identity.source === "production-session") {
@@ -1167,6 +1203,7 @@ export async function POST(
         authenticatedLearnerId,
         body.sessionId,
         learnerState,
+        await resolveLearningLanguage(request, authenticatedLearnerId),
       );
 
     if (identity.source === "production-session") {
