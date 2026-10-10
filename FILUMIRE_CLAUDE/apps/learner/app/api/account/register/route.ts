@@ -1,4 +1,4 @@
-import { registerGuardian } from "../../../../../../services/account";
+import { registerGuardian, registerTeacher } from "../../../../../../services/account";
 import { issueSessionForPrincipal } from "../../../../../../services/identity";
 
 import {
@@ -10,10 +10,11 @@ import {
 } from "../http";
 
 /*
- * Parent / guardian registration. Creates the guardian account,
- * records the guardian's declaration and acceptance of the notice,
- * and signs them in with a principal-only session so they can add
- * their first learner.
+ * Parent / guardian registration, or teacher registration when
+ * accountType is "teacher". Records the declaration and acceptance
+ * of the notice, and signs the new account in with a principal-only
+ * session: a guardian goes on to add a learner, a teacher to enter
+ * a parent's link code.
  */
 export async function POST(request: Request) {
   try {
@@ -26,18 +27,31 @@ export async function POST(request: Request) {
     }
 
     const body = await readJsonBody(request);
-    const { principalId } = await registerGuardian({
-      email: body.email,
-      password: body.password,
-      displayName: body.displayName,
-      preferredLanguage: body.preferredLanguage,
-      confirmsGuardian: body.confirmsGuardian,
-      acceptsNotice: body.acceptsNotice,
-    });
+    const teacher = body.accountType === "teacher";
+    const { principalId } = teacher
+      ? await registerTeacher({
+          email: body.email,
+          password: body.password,
+          displayName: body.displayName,
+          preferredLanguage: body.preferredLanguage,
+          confirmsTeacher: body.confirmsTeacher,
+          acceptsNotice: body.acceptsNotice,
+        })
+      : await registerGuardian({
+          email: body.email,
+          password: body.password,
+          displayName: body.displayName,
+          preferredLanguage: body.preferredLanguage,
+          confirmsGuardian: body.confirmsGuardian,
+          acceptsNotice: body.acceptsNotice,
+        });
     const session = await issueSessionForPrincipal(principalId);
 
     return withSessionCookies(
-      json({ registered: true, accountKind: "guardian" }, { status: 201 }),
+      json(
+        { registered: true, accountKind: teacher ? "teacher" : "guardian" },
+        { status: 201 },
+      ),
       session.token,
     );
   } catch (error) {

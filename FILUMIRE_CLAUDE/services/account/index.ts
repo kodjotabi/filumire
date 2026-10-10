@@ -1,9 +1,12 @@
 import { revokeOtherPrincipalAuthSessions } from "../auth-session";
 
+import { createHash, randomInt } from "node:crypto";
+
 import {
   getPrincipalLearnerAccess,
   isPrincipalAuthorizedForLearner,
   listAuthorizedLearnersForPrincipal,
+  revokePrincipalLearnerAccess,
 } from "../principal";
 
 import {
@@ -20,6 +23,7 @@ import {
   type AccountLanguage,
   type GuardianConsentRecord,
   type LearnerProfileRecord,
+  type LinkedTeacher,
 } from "./store";
 
 export {
@@ -71,6 +75,7 @@ export type AccountErrorField =
   | "learner"
   | "avatarId"
   | "preferredLanguage"
+  | "linkCode"
   | "registration";
 
 export class AccountValidationError extends Error {
@@ -267,6 +272,191 @@ export async function registerGuardian(
   });
 
   return { principalId };
+}
+
+export interface TeacherRegistrationInput {
+  email: unknown;
+  password: unknown;
+  displayName: unknown;
+  preferredLanguage?: unknown;
+  confirmsTeacher: unknown;
+  acceptsNotice: unknown;
+}
+
+/*
+ * A teacher account starts with no learners. A teacher only ever
+ * sees a learner after that learner's guardian gives them a link
+ * code (createTeacherLinkCodeFor). Registration is gated exactly
+ * like guardian registration.
+ */
+export async function registerTeacher(
+  input: TeacherRegistrationInput,
+): Promise<{ principalId: string }> {
+  if (!isRegistrationOpen()) {
+    throw new AccountValidationError(
+      "registration",
+      "New accounts are not open yet.",
+    );
+  }
+
+  const email = normaliseEmail(input.email);
+  const password = validatePassword(
+    input.password,
+    GUARDIAN_PASSWORD_MIN_LENGTH,
+  );
+  const displayName = normaliseDisplayName(input.displayName);
+  const preferredLanguage = normaliseLanguage(input.preferredLanguage);
+
+  if (input.confirmsTeacher !== true || input.acceptsNotice !== true) {
+    throw new AccountValidationError(
+      "consent",
+      "Please confirm you are a teacher and accept the privacy notice.",
+    );
+  }
+
+  const principalId = crypto.randomUUID();
+
+  await accountStore.createGuardianAccount({
+    accountKind: "teacher",
+    principalId,
+    credential: {
+      id: crypto.randomUUID(),
+      loginIdentifier: email,
+      passwordHash: await hashPassword(password),
+    },
+    profile: { displayName, preferredLanguage },
+    consents: [
+      consentRecord(principalId, "teacher_declaration"),
+      consentRecord(principalId, "privacy_notice_and_terms"),
+    ],
+  });
+
+  return { principalId };
+}
+
+async function requireTeacher(principalId: string): Promise<void> {
+  const credential = await accountStore.getCredentialByPrincipal(principalId);
+
+  if (credential?.accountKind !== "teacher") {
+    throw new AccountForbiddenError("Only a teacher account can do this.");
+  }
+}
+
+const TEACHER_LINK_CODE_DAYS = 7;
+
+// No 0/O, 1/I/L or U, so a code read aloud or copied by hand
+// survives. Ten characters from 30 is about 49 bits.
+const LINK_CODE_ALPHABET = "ABCDEFGHJKMNPQRSTVWXYZ23456789";
+const LINK_CODE_LENGTH = 10;
+
+export function hashLinkCode(code: string): string {
+  return createHash("sha256").update(`teacher-link:${code}`).digest("hex");
+}
+
+function normaliseLinkCode(value: unknown): string {
+  const code =
+    typeof value === "string"
+      ? value.toUpperCase().replace(/[^A-Z0-9]/g, "")
+      : "";
+
+  if (
+    code.length !== LINK_CODE_LENGTH ||
+    [...code].some((char) => !LINK_CODE_ALPHABET.includes(char))
+  ) {
+    throw new AccountValidationError(
+      "linkCode",
+      "Enter the code exactly as the parent gave it.",
+    );
+  }
+
+  return code;
+}
+
+/*
+ * A guardian creates a one-time code for a teacher to link to one
+ * of their learners. Only the code's hash is stored; the plain code
+ * is returned once, to be passed on by the guardian. Creating a new
+ * code cancels any unused earlier one for the same learner.
+ */
+export async function createTeacherLinkCodeFor(
+  guardianPrincipalId: string,
+  learnerId: string,
+): Promise<{ code: string; expiresAt: string }> {
+  await requireGuardianOf(guardianPrincipalId, learnerId);
+
+  const code = Array.from(
+    { length: LINK_CODE_LENGTH },
+    () => LINK_CODE_ALPHABET[randomInt(LINK_CODE_ALPHABET.length)],
+  ).join("");
+  const expiresAt = new Date(
+    Date.now() + TEACHER_LINK_CODE_DAYS * 24 * 60 * 60_000,
+  ).toISOString();
+
+  await accountStore.createTeacherLinkCode({
+    id: crypto.randomUUID(),
+    codeHash: hashLinkCode(code),
+    learnerId,
+    createdByPrincipalId: guardianPrincipalId,
+    expiresAt,
+  });
+
+  return { code: `${code.slice(0, 5)}-${code.slice(5)}`, expiresAt };
+}
+
+/*
+ * A teacher uses a guardian's code. The same message covers every
+ * reason a code fails, so codes cannot be probed.
+ */
+export async function linkTeacherWithCode(
+  teacherPrincipalId: string,
+  code: unknown,
+): Promise<AccountLearnerSummary> {
+  await requireTeacher(teacherPrincipalId);
+
+  const learnerId = await accountStore.redeemTeacherLinkCode(
+    hashLinkCode(normaliseLinkCode(code)),
+    teacherPrincipalId,
+    crypto.randomUUID(),
+    new Date().toISOString(),
+  );
+
+  if (!learnerId) {
+    throw new AccountValidationError(
+      "linkCode",
+      "That code cannot be used. It may have expired or already been used.",
+    );
+  }
+
+  return summariseLearner(learnerId, false);
+}
+
+export async function listTeachersForLearner(
+  guardianPrincipalId: string,
+  learnerId: string,
+): Promise<LinkedTeacher[]> {
+  await requireGuardianOf(guardianPrincipalId, learnerId);
+  return accountStore.listLinkedTeachers(learnerId);
+}
+
+/* A guardian ends a teacher's access to their learner at once. */
+export async function removeTeacherFromLearner(
+  guardianPrincipalId: string,
+  learnerId: string,
+  teacherPrincipalId: string,
+): Promise<void> {
+  await requireGuardianOf(guardianPrincipalId, learnerId);
+
+  const access = await getPrincipalLearnerAccess(
+    teacherPrincipalId,
+    learnerId,
+    "teacher",
+  );
+
+  if (access?.status !== "active") {
+    throw new AccountForbiddenError("That teacher is not linked to this learner.");
+  }
+
+  await revokePrincipalLearnerAccess(teacherPrincipalId, learnerId, "teacher");
 }
 
 async function requireGuardian(principalId: string): Promise<void> {
@@ -501,6 +691,22 @@ export async function describeAccount(
       preferredLanguage: profile?.preferredLanguage ?? "en",
       learners: await Promise.all(
         learnerIds.map((learnerId) => summariseLearner(learnerId, true)),
+      ),
+    };
+  }
+
+  if (credential?.accountKind === "teacher") {
+    const profile = await accountStore.getAccountProfile(principalId);
+
+    return {
+      principalId,
+      accountKind: "teacher",
+      displayName: profile?.displayName,
+      preferredLanguage: profile?.preferredLanguage ?? "en",
+      learners: await Promise.all(
+        access
+          .filter((entry) => entry.relationshipType === "teacher")
+          .map((entry) => summariseLearner(entry.learnerId, false)),
       ),
     };
   }

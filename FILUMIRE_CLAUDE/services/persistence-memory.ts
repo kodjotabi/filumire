@@ -301,6 +301,35 @@ export class MemoryPersistenceStore
     );
   }
 
+  async activatePrincipalLearnerAccess(
+    accessId: string,
+    principalId: string,
+    learnerId: string,
+    relationshipType: PrincipalLearnerRelationshipType,
+  ): Promise<boolean> {
+    const existing = principalLearnerAccessRecords.get(
+      getPrincipalLearnerAccessKey(principalId, learnerId, relationshipType),
+    );
+
+    if (!existing) {
+      await this.createPrincipalLearnerAccess(
+        accessId,
+        principalId,
+        learnerId,
+        relationshipType,
+      );
+      return true;
+    }
+
+    if (existing.status === "active") {
+      return false;
+    }
+
+    existing.status = "active";
+    existing.updatedAt = new Date().toISOString();
+    return true;
+  }
+
   async createPrincipalLearnerAccess(
     accessId: string,
     principalId: string,

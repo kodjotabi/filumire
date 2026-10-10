@@ -456,6 +456,30 @@ export class PostgresPersistenceStore
     }
   }
 
+  async activatePrincipalLearnerAccess(
+    accessId: string,
+    principalId: string,
+    learnerId: string,
+    relationshipType: PrincipalLearnerRelationshipType,
+  ): Promise<boolean> {
+    const now = new Date();
+    const rows = await db
+      .insert(principalLearnerAccess)
+      .values({ id: accessId, principalId, learnerId, relationshipType })
+      .onConflictDoUpdate({
+        target: [
+          principalLearnerAccess.principalId,
+          principalLearnerAccess.learnerId,
+          principalLearnerAccess.relationshipType,
+        ],
+        set: { status: "active", updatedAt: now },
+        setWhere: ne(principalLearnerAccess.status, "active"),
+      })
+      .returning({ id: principalLearnerAccess.id });
+
+    return rows.length > 0;
+  }
+
   async createPrincipalLearnerAccess(
     accessId: string,
     principalId: string,

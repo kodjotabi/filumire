@@ -265,7 +265,7 @@ export const accountCredentials = pgTable(
     unique("account_credentials_login_identifier_unique").on(table.loginIdentifier),
     check(
       "account_credentials_account_kind_check",
-      sql`${table.accountKind} in ('guardian', 'learner')`,
+      sql`${table.accountKind} in ('guardian', 'learner', 'teacher')`,
     ),
   ],
 );
@@ -332,6 +332,35 @@ export const guardianConsentRecords = pgTable(
   (table) => [
     index("guardian_consent_records_guardian_idx").on(table.guardianPrincipalId),
     index("guardian_consent_records_learner_idx").on(table.learnerId),
+  ],
+);
+
+/*
+ * One-time codes a guardian creates so a teacher can link to one
+ * of their learners. Only a SHA-256 of the code is stored; a code
+ * works once, before expires_at, unless revoked.
+ */
+export const teacherLinkCodes = pgTable(
+  "teacher_link_codes",
+  {
+    id: text("id").primaryKey(),
+    codeHash: text("code_hash").notNull(),
+    learnerId: text("learner_id")
+      .notNull()
+      .references(() => learners.id, { onDelete: "restrict" }),
+    createdByPrincipalId: text("created_by_principal_id")
+      .notNull()
+      .references(() => principals.id, { onDelete: "restrict" }),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    usedAt: timestamp("used_at", { withTimezone: true }),
+    usedByPrincipalId: text("used_by_principal_id")
+      .references(() => principals.id, { onDelete: "restrict" }),
+    revokedAt: timestamp("revoked_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    unique("teacher_link_codes_code_hash_unique").on(table.codeHash),
+    index("teacher_link_codes_learner_idx").on(table.learnerId),
   ],
 );
 

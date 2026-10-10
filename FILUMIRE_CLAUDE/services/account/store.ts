@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq, gt, isNull, TransactionRollbackError } from "drizzle-orm";
 
 import { db, pool } from "../database";
 import {
@@ -9,10 +9,11 @@ import {
   learners,
   principalLearnerAccess,
   principals,
+  teacherLinkCodes,
 } from "../database-schema";
 import { persistenceStore } from "../persistence-provider";
 
-export type AccountKind = "guardian" | "learner";
+export type AccountKind = "guardian" | "learner" | "teacher";
 
 export type AccountLanguage = "en" | "fr";
 
@@ -64,7 +65,12 @@ export interface NewCredential {
   passwordHash: string;
 }
 
+/*
+ * An adult account: a guardian (the default) or a teacher. Both
+ * sign in with an email address and have a display profile.
+ */
 export interface NewGuardianAccount {
+  accountKind?: "guardian" | "teacher";
   principalId: string;
   credential: NewCredential;
   profile: {
@@ -103,6 +109,21 @@ export class LoginIdentifierTakenError extends Error {
   constructor() {
     super("That sign-in name is already in use.");
   }
+}
+
+export interface NewTeacherLinkCode {
+  id: string;
+  codeHash: string;
+  learnerId: string;
+  createdByPrincipalId: string;
+  expiresAt: string;
+}
+
+export interface LinkedTeacher {
+  principalId: string;
+  displayName: string;
+  email: string;
+  linkedAt: string;
 }
 
 export interface FailedSignInPolicy {
@@ -154,6 +175,24 @@ export interface AccountStore {
   listConsentRecords(
     guardianPrincipalId: string,
   ): Promise<GuardianConsentRecord[]>;
+  /*
+   * Stores a new teacher link code for the learner and revokes any
+   * unused earlier code for the same learner.
+   */
+  createTeacherLinkCode(code: NewTeacherLinkCode): Promise<void>;
+  /*
+   * Uses a code once: it must be unused, unrevoked and unexpired,
+   * and its creator must still be an active guardian of the
+   * learner. On success the teacher relationship is created (or
+   * re-activated) and the learner id is returned.
+   */
+  redeemTeacherLinkCode(
+    codeHash: string,
+    teacherPrincipalId: string,
+    accessId: string,
+    now: string,
+  ): Promise<string | undefined>;
+  listLinkedTeachers(learnerId: string): Promise<LinkedTeacher[]>;
 }
 
 /*
@@ -166,6 +205,82 @@ class MemoryAccountStore implements AccountStore {
   private profiles = new Map<string, AccountProfileRecord>();
   private learnerProfiles = new Map<string, LearnerProfileRecord>();
   private consents: GuardianConsentRecord[] = [];
+  private linkCodes = new Map<
+    string,
+    NewTeacherLinkCode & { usedAt?: string; usedByPrincipalId?: string; revokedAt?: string }
+  >();
+
+  async createTeacherLinkCode(code: NewTeacherLinkCode) {
+    const now = new Date().toISOString();
+
+    for (const existing of this.linkCodes.values()) {
+      if (existing.learnerId === code.learnerId && !existing.usedAt && !existing.revokedAt) {
+        existing.revokedAt = now;
+      }
+    }
+
+    this.linkCodes.set(code.codeHash, { ...code });
+  }
+
+  async redeemTeacherLinkCode(
+    codeHash: string,
+    teacherPrincipalId: string,
+    accessId: string,
+    now: string,
+  ) {
+    const code = this.linkCodes.get(codeHash);
+
+    if (!code || code.usedAt || code.revokedAt || code.expiresAt <= now) {
+      return undefined;
+    }
+
+    const guardian = await persistenceStore.getPrincipalLearnerAccess(
+      code.createdByPrincipalId,
+      code.learnerId,
+      "guardian",
+    );
+
+    if (guardian?.status !== "active") {
+      return undefined;
+    }
+
+    code.usedAt = now;
+    code.usedByPrincipalId = teacherPrincipalId;
+
+    await persistenceStore.activatePrincipalLearnerAccess(
+      accessId,
+      teacherPrincipalId,
+      code.learnerId,
+      "teacher",
+    );
+
+    return code.learnerId;
+  }
+
+  async listLinkedTeachers(learnerId: string) {
+    const teachers: LinkedTeacher[] = [];
+
+    for (const credential of this.credentials.values()) {
+      if (credential.accountKind !== "teacher") continue;
+
+      const access = await persistenceStore.getPrincipalLearnerAccess(
+        credential.principalId,
+        learnerId,
+        "teacher",
+      );
+
+      if (access?.status === "active") {
+        teachers.push({
+          principalId: credential.principalId,
+          displayName: this.profiles.get(credential.principalId)?.displayName ?? "",
+          email: credential.loginIdentifier,
+          linkedAt: access.updatedAt,
+        });
+      }
+    }
+
+    return teachers;
+  }
 
   private assertLoginFree(loginIdentifier: string): void {
     for (const credential of this.credentials.values()) {
@@ -193,7 +308,11 @@ class MemoryAccountStore implements AccountStore {
     this.assertLoginFree(account.credential.loginIdentifier);
 
     await persistenceStore.createPrincipal(account.principalId);
-    this.addCredential(account.principalId, "guardian", account.credential);
+    this.addCredential(
+      account.principalId,
+      account.accountKind ?? "guardian",
+      account.credential,
+    );
     this.profiles.set(account.principalId, {
       principalId: account.principalId,
       ...account.profile,
@@ -417,7 +536,7 @@ class PostgresAccountStore implements AccountStore {
         await tx.insert(accountCredentials).values({
           ...account.credential,
           principalId: account.principalId,
-          accountKind: "guardian",
+          accountKind: account.accountKind ?? "guardian",
         });
         await tx.insert(accountProfiles).values({
           principalId: account.principalId,
@@ -611,6 +730,131 @@ class PostgresAccountStore implements AccountStore {
       .returning();
 
     return rows[0] ? mapLearnerProfile(rows[0]) : undefined;
+  }
+
+  async createTeacherLinkCode(code: NewTeacherLinkCode) {
+    await db.transaction(async (tx) => {
+      await tx
+        .update(teacherLinkCodes)
+        .set({ revokedAt: new Date() })
+        .where(
+          and(
+            eq(teacherLinkCodes.learnerId, code.learnerId),
+            isNull(teacherLinkCodes.usedAt),
+            isNull(teacherLinkCodes.revokedAt),
+          ),
+        );
+      await tx.insert(teacherLinkCodes).values({
+        ...code,
+        expiresAt: new Date(code.expiresAt),
+      });
+    });
+  }
+
+  async redeemTeacherLinkCode(
+    codeHash: string,
+    teacherPrincipalId: string,
+    accessId: string,
+    now: string,
+  ) {
+    const at = new Date(now);
+
+    return db.transaction(async (tx) => {
+      // Claiming the code and checking its guardian happen in one
+      // transaction, so a code can never be used twice.
+      const [claimed] = await tx
+        .update(teacherLinkCodes)
+        .set({ usedAt: at, usedByPrincipalId: teacherPrincipalId })
+        .where(
+          and(
+            eq(teacherLinkCodes.codeHash, codeHash),
+            isNull(teacherLinkCodes.usedAt),
+            isNull(teacherLinkCodes.revokedAt),
+            gt(teacherLinkCodes.expiresAt, at),
+          ),
+        )
+        .returning({
+          learnerId: teacherLinkCodes.learnerId,
+          createdBy: teacherLinkCodes.createdByPrincipalId,
+        });
+
+      if (!claimed) {
+        return undefined;
+      }
+
+      const [guardian] = await tx
+        .select({ status: principalLearnerAccess.status })
+        .from(principalLearnerAccess)
+        .where(
+          and(
+            eq(principalLearnerAccess.principalId, claimed.createdBy),
+            eq(principalLearnerAccess.learnerId, claimed.learnerId),
+            eq(principalLearnerAccess.relationshipType, "guardian"),
+          ),
+        );
+
+      if (guardian?.status !== "active") {
+        tx.rollback();
+      }
+
+      await tx
+        .insert(principalLearnerAccess)
+        .values({
+          id: accessId,
+          principalId: teacherPrincipalId,
+          learnerId: claimed.learnerId,
+          relationshipType: "teacher",
+        })
+        .onConflictDoUpdate({
+          target: [
+            principalLearnerAccess.principalId,
+            principalLearnerAccess.learnerId,
+            principalLearnerAccess.relationshipType,
+          ],
+          set: { status: "active", updatedAt: at },
+        });
+
+      return claimed.learnerId;
+    }).catch((error: unknown) => {
+      if (error instanceof TransactionRollbackError) {
+        return undefined;
+      }
+      throw error;
+    });
+  }
+
+  async listLinkedTeachers(learnerId: string) {
+    const rows = await db
+      .select({
+        principalId: principalLearnerAccess.principalId,
+        linkedAt: principalLearnerAccess.updatedAt,
+        displayName: accountProfiles.displayName,
+        email: accountCredentials.loginIdentifier,
+      })
+      .from(principalLearnerAccess)
+      .innerJoin(
+        accountCredentials,
+        eq(accountCredentials.principalId, principalLearnerAccess.principalId),
+      )
+      .leftJoin(
+        accountProfiles,
+        eq(accountProfiles.principalId, principalLearnerAccess.principalId),
+      )
+      .where(
+        and(
+          eq(principalLearnerAccess.learnerId, learnerId),
+          eq(principalLearnerAccess.relationshipType, "teacher"),
+          eq(principalLearnerAccess.status, "active"),
+          eq(accountCredentials.accountKind, "teacher"),
+        ),
+      );
+
+    return rows.map((row) => ({
+      principalId: row.principalId,
+      displayName: row.displayName ?? "",
+      email: row.email,
+      linkedAt: row.linkedAt.toISOString(),
+    }));
   }
 
   async listConsentRecords(guardianPrincipalId: string) {

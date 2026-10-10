@@ -213,6 +213,18 @@ export interface PersistenceStore {
     relationshipType: PrincipalLearnerRelationshipType,
   ): Promise<void>;
 
+  /*
+   * Creates the relationship, or makes a revoked one active again
+   * (used when a teacher is re-linked). Returns false when it was
+   * already active.
+   */
+  activatePrincipalLearnerAccess(
+    accessId: string,
+    principalId: string,
+    learnerId: string,
+    relationshipType: PrincipalLearnerRelationshipType,
+  ): Promise<boolean>;
+
   createPrincipalAuthSession(
     sessionId: string,
     principalId: string,
