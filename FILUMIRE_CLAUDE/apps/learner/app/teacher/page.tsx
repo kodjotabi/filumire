@@ -4,7 +4,7 @@ import { AdultHeader, AdultRoleSwitch } from "../../components/filumire/AdultRol
 import { useLanguage, type Language } from "../../components/filumire/language";
 import { TeacherLinkLearner } from "../../components/filumire/TeacherLinkLearner";
 import { AccountSecurity } from "../../components/filumire/AccountSecurity";
-import { fetchAccount, signOut, type Account } from "../../services/account-client";
+import { accountErrorMessage, fetchAccount, signOut, type Account } from "../../services/account-client";
 
 import {
   useCallback,
@@ -1810,12 +1810,17 @@ export default function TeacherPage() {
               type="button"
               className="secondary-button"
               onClick={async () => {
-                await signOut();
-                window.location.assign(`/login?lang=${language}`);
+                try {
+                  await signOut();
+                  window.location.assign(`/login?lang=${language}`);
+                } catch (error) {
+                  setSubmissionError(accountErrorMessage(error, language));
+                }
               }}
             >
               {t("Sign out")}
             </button>
+            {submissionError ? <p role="alert">{submissionError}</p> : null}
           </div>
         )}
       </div>

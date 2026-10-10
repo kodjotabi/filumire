@@ -1,4 +1,4 @@
-import { and, eq, gt, isNull, TransactionRollbackError } from "drizzle-orm";
+import { and, eq, gt, isNull, sql, TransactionRollbackError } from "drizzle-orm";
 
 import { db, pool } from "../database";
 import {
@@ -180,6 +180,7 @@ export interface AccountStore {
    * unused earlier code for the same learner.
    */
   createTeacherLinkCode(code: NewTeacherLinkCode): Promise<void>;
+  revokeTeacherLinkCodes(learnerId: string): Promise<void>;
   /*
    * Uses a code once: it must be unused, unrevoked and unexpired,
    * and its creator must still be an active guardian of the
@@ -222,6 +223,15 @@ class MemoryAccountStore implements AccountStore {
     this.linkCodes.set(code.codeHash, { ...code });
   }
 
+  async revokeTeacherLinkCodes(learnerId: string) {
+    const now = new Date().toISOString();
+    for (const code of this.linkCodes.values()) {
+      if (code.learnerId === learnerId && !code.usedAt && !code.revokedAt) {
+        code.revokedAt = now;
+      }
+    }
+  }
+
   async redeemTeacherLinkCode(
     codeHash: string,
     teacherPrincipalId: string,
@@ -244,6 +254,9 @@ class MemoryAccountStore implements AccountStore {
       return undefined;
     }
 
+    // Recheck after the asynchronous guardian lookup: another request
+    // may have claimed or cancelled the code while it was in flight.
+    if (code.usedAt || code.revokedAt) return undefined;
     code.usedAt = now;
     code.usedByPrincipalId = teacherPrincipalId;
 
@@ -734,6 +747,8 @@ class PostgresAccountStore implements AccountStore {
 
   async createTeacherLinkCode(code: NewTeacherLinkCode) {
     await db.transaction(async (tx) => {
+      // Serialize replacement/cancellation even when no code exists yet.
+      await tx.execute(sql`SELECT id FROM learners WHERE id = ${code.learnerId} FOR NO KEY UPDATE`);
       await tx
         .update(teacherLinkCodes)
         .set({ revokedAt: new Date() })
@@ -748,6 +763,19 @@ class PostgresAccountStore implements AccountStore {
         ...code,
         expiresAt: new Date(code.expiresAt),
       });
+    });
+  }
+
+  async revokeTeacherLinkCodes(learnerId: string) {
+    await db.transaction(async (tx) => {
+      await tx.execute(sql`SELECT id FROM learners WHERE id = ${learnerId} FOR NO KEY UPDATE`);
+      await tx.update(teacherLinkCodes).set({ revokedAt: new Date() }).where(
+        and(
+          eq(teacherLinkCodes.learnerId, learnerId),
+          isNull(teacherLinkCodes.usedAt),
+          isNull(teacherLinkCodes.revokedAt),
+        ),
+      );
     });
   }
 

@@ -18,6 +18,7 @@ type Queryable = {
 
 /* Every table with a learner_id foreign key to learners (drizzle migrations 0000-0015, 0019). */
 const LEARNER_CHILD_TABLES = [
+  "teacher_link_codes",
   "controlled_teacher_actions",
   "guardian_consent_records",
   "interventions",

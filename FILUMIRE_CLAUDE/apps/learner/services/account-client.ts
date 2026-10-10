@@ -151,15 +151,17 @@ export function clearLearnerProfileFromDevice(): void {
 export async function signIn(
   login: string,
   password: string,
-): Promise<{ accountKind: "guardian" | "learner"; learnerId: string | null }> {
+): Promise<{ accountKind: "guardian" | "learner" | "teacher"; learnerId: string | null }> {
   return request("/api/session/login", { body: { login, password } });
 }
 
 export async function signOut(): Promise<void> {
   try {
     await request("/api/session/logout", { body: {} });
-  } catch {
-    /* already signed out */
+  } catch (error) {
+    // An expired session is already signed out. Network/server failures
+    // must remain visible because the HttpOnly cookie may still be active.
+    if (!(error instanceof AccountRequestError && error.status === 401)) throw error;
   }
   clearSignedInMarker();
   clearLearnerProfileFromDevice();
@@ -221,6 +223,12 @@ export async function listLearnerTeachers(
     `/api/account/learners/${encodeURIComponent(learnerId)}/teachers`,
   );
   return result.teachers;
+}
+
+export async function cancelTeacherCode(learnerId: string): Promise<void> {
+  await request(`/api/account/learners/${encodeURIComponent(learnerId)}/teachers`, {
+    method: "DELETE",
+  });
 }
 
 export async function removeLearnerTeacher(

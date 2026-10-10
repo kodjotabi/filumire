@@ -438,6 +438,14 @@ export async function listTeachersForLearner(
   return accountStore.listLinkedTeachers(learnerId);
 }
 
+export async function cancelTeacherLinkCodesFor(
+  guardianPrincipalId: string,
+  learnerId: string,
+): Promise<void> {
+  await requireGuardianOf(guardianPrincipalId, learnerId);
+  await accountStore.revokeTeacherLinkCodes(learnerId);
+}
+
 /* A guardian ends a teacher's access to their learner at once. */
 export async function removeTeacherFromLearner(
   guardianPrincipalId: string,

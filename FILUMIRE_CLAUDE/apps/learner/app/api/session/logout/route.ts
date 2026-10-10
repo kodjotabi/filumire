@@ -53,10 +53,12 @@ export async function POST(
         "Unauthenticated request",
       )
     ) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { error: error.message },
-        { status: 401 },
+        { status: 401, headers: { "cache-control": "no-store", "set-cookie": getProductionSessionClearCookie() } },
       );
+      response.headers.append("set-cookie", getSignedInMarkerClearCookie());
+      return response;
     }
 
     console.error(

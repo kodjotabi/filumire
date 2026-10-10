@@ -343,8 +343,17 @@ export default function FamilyPage() {
   }
 
   async function leave() {
-    await signOut();
-    router.push(`/login?lang=${language}`);
+    setBusy(true);
+    setMessage("");
+    try {
+      await signOut();
+      router.push(`/login?lang=${language}`);
+    } catch (error) {
+      setOk(false);
+      setMessage(accountErrorMessage(error, language));
+    } finally {
+      setBusy(false);
+    }
   }
 
   return (
@@ -516,7 +525,7 @@ export default function FamilyPage() {
             <Link href={`/adult?lang=${language}`} className="acButton secondary">
               {t.progress}
             </Link>
-            <button type="button" className="acButton quiet" onClick={leave}>
+            <button type="button" className="acButton quiet" onClick={leave} disabled={busy} aria-busy={busy}>
               {t.signOut}
             </button>
           </div>

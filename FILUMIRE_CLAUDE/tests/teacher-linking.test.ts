@@ -5,10 +5,12 @@ import { POST as setLearnerPassword } from "../apps/learner/app/api/account/lear
 import {
   GET as listTeachers,
   POST as createCode,
+  DELETE as cancelCode,
 } from "../apps/learner/app/api/account/learners/[learnerId]/teachers/route";
 import { DELETE as removeTeacher } from "../apps/learner/app/api/account/learners/[learnerId]/teachers/[teacherId]/route";
 import { POST as linkTeacher } from "../apps/learner/app/api/account/teacher-links/route";
 import { GET as me } from "../apps/learner/app/api/session/me/route";
+import { POST as logout } from "../apps/learner/app/api/session/logout/route";
 import { POST as selectLearner } from "../apps/learner/app/api/session/select-learner/route";
 import { GET as teacherSummary } from "../apps/learner/app/api/teacher/summary/route";
 import { hashLinkCode } from "../services/account";
@@ -176,6 +178,32 @@ async function main(): Promise<void> {
   );
   assert(expired === undefined, "a code is refused after seven days");
   pass("codes expire, are single-use, and a new code cancels the old");
+
+  await resetRateLimits();
+  const invitation = (await (await createCode(request("POST", `/api/account/learners/${learnerId}/teachers`, guardian), learnerParams(learnerId))).json()).code as string;
+  for (const unauthorized of [undefined, otherGuardian, teacher]) {
+    const response = await cancelCode(request("DELETE", `/api/account/learners/${learnerId}/teachers`, unauthorized), learnerParams(learnerId));
+    assert(response.status === (unauthorized ? 403 : 401), "only this learner's guardian can cancel invitations");
+  }
+  assert((await cancelCode(request("DELETE", `/api/account/learners/${learnerId}/teachers`, guardian), learnerParams(learnerId))).status === 200, "guardian cancels an invitation");
+  assert((await linkTeacher(request("POST", "/api/account/teacher-links", otherTeacher, { code: invitation }))).status === 400, "cancelled invitation cannot grant access");
+  assert((await teacherSummary(request("GET", `/api/teacher/summary?learnerId=${learnerId}`, teacher))).status === 200, "cancelling invitations keeps existing teacher access");
+  assert((await cancelCode(request("DELETE", `/api/account/learners/${learnerId}/teachers`, guardian), learnerParams(learnerId))).status === 200, "cancellation is idempotent");
+  pass("guardians cancel unused invitations without removing linked teachers");
+
+  const concurrent = (await (await createCode(request("POST", `/api/account/learners/${learnerId}/teachers`, guardian), learnerParams(learnerId))).json()).code as string;
+  const claims = await Promise.all([teacher, otherTeacher].map((cookie) => linkTeacher(request("POST", "/api/account/teacher-links", cookie, { code: concurrent }))));
+  assert(claims.filter((response) => response.status === 201).length === 1, "a concurrent claim grants access exactly once");
+  assert(claims.filter((response) => response.status === 400).length === 1, "the competing claim is refused");
+  pass("simultaneous code redemption is single-use");
+
+  assert((await logout(request("POST", "/api/session/logout", teacher))).status === 200, "teacher signs out");
+  assert((await me(request("GET", "/api/session/me", teacher))).status === 401, "teacher session is revoked on the server");
+  const expiredLogout = await logout(request("POST", "/api/session/logout", teacher));
+  assert(expiredLogout.status === 401, "already-revoked logout reports no active session");
+  const cleared = expiredLogout.headers.get("set-cookie") ?? "";
+  assert(cleared.includes("filumire_auth_session=") && cleared.includes("filumire_signed_in=") && cleared.includes("Max-Age=0"), "expired logout clears both cookies");
+  pass("teacher logout revokes access and expired logout clears stale cookies");
 
   await resetRateLimits();
   console.log({ teacherLinkingTest: "PASS", persistence: process.env.FILUMIRE_PERSISTENCE ?? "memory" });

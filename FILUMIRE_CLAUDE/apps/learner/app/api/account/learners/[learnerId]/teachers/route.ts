@@ -1,4 +1,5 @@
 import {
+  cancelTeacherLinkCodesFor,
   createTeacherLinkCodeFor,
   listTeachersForLearner,
 } from "../../../../../../../../services/account";
@@ -7,6 +8,17 @@ import { resolveSignedInSession } from "../../../../../../../../services/identit
 import { checkRateLimits, errorResponse, json } from "../../../http";
 
 type Params = { params: Promise<{ learnerId: string }> };
+
+export async function DELETE(request: Request, { params }: Params) {
+  try {
+    const session = await resolveSignedInSession(request);
+    const { learnerId } = await params;
+    await cancelTeacherLinkCodesFor(session.principalId, learnerId);
+    return json({ cancelled: true });
+  } catch (error) {
+    return errorResponse(error, "cancel teacher code");
+  }
+}
 
 /*
  * The learner's guardian sees which teachers are linked to the

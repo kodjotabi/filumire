@@ -22,6 +22,8 @@
                     "test:progress":  "tsx --env-file=.env.local ./tests/learner-progress.test.ts",
                     "test:teacher-links":  "tsx --env-file=.env.local ./tests/teacher-linking.test.ts",
                     "test:learning-language":  "tsx --env-file=.env.local ./tests/learning-language.test.ts",
+                    "test:section7":  "node scripts/test-section7.mjs",
+                    "check:section7-readiness":  "node scripts/check-section7-readiness.mjs",
                     "build:learner":  "npm run build --workspace=@filumire/learner",
                     "validate:all":  "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/validate-all.ps1"
                 },

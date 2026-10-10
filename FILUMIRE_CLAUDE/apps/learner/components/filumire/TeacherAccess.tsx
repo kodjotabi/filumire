@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import {
   accountErrorMessage,
+  cancelTeacherCode,
   createTeacherCode,
   listLearnerTeachers,
   removeLearnerTeacher,
@@ -24,6 +25,9 @@ const TEXT = {
     linkedSince: (date: string) => `Linked ${date}`,
     create: "Create a code for a teacher",
     creating: "Creating…",
+    cancelCode: "Cancel unused invitation",
+    cancelled: "Unused invitations cancelled. Linked teachers keep their access.",
+    retry: "Reload teachers",
     codeTitle: "Code for the teacher",
     codeHelp: (date: string) =>
       `Give this code to the teacher. It works once, until ${date}. Creating a new code cancels this one.`,
@@ -40,6 +44,9 @@ const TEXT = {
     linkedSince: (date: string) => `Associé le ${date}`,
     create: "Créer un code pour un enseignant",
     creating: "Création…",
+    cancelCode: "Annuler l’invitation inutilisée",
+    cancelled: "Les invitations inutilisées sont annulées. Les enseignants associés gardent leur accès.",
+    retry: "Recharger les enseignants",
     codeTitle: "Code pour l’enseignant",
     codeHelp: (date: string) =>
       `Donne ce code à l’enseignant. Il ne sert qu’une fois, jusqu’au ${date}. Créer un nouveau code annule celui-ci.`,
@@ -73,11 +80,14 @@ export function TeacherAccess({
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [ok, setOk] = useState(false);
+  const [loadFailed, setLoadFailed] = useState(false);
 
   async function load() {
+    setLoadFailed(false);
     try {
       setTeachers(await listLearnerTeachers(learnerId));
     } catch (error) {
+      setLoadFailed(true);
       setOk(false);
       setMessage(accountErrorMessage(error, language));
     }
@@ -117,6 +127,22 @@ export function TeacherAccess({
     setBusy(false);
   }
 
+  async function cancelCode() {
+    setBusy(true);
+    setMessage("");
+    try {
+      await cancelTeacherCode(learnerId);
+      setCode(null);
+      setOk(true);
+      setMessage(t.cancelled);
+    } catch (error) {
+      setOk(false);
+      setMessage(accountErrorMessage(error, language));
+    } finally {
+      setBusy(false);
+    }
+  }
+
   return (
     <div className="taBox">
       <button type="button" className="acButton quiet" aria-expanded={open} onClick={toggle}>
@@ -127,7 +153,9 @@ export function TeacherAccess({
         <div className="taBody">
           <p className="acSmall">{t.intro(learnerName)}</p>
 
-          {teachers === null ? (
+          {loadFailed ? (
+            <button type="button" className="acButton secondary" disabled={busy} onClick={() => void load()}>{t.retry}</button>
+          ) : teachers === null ? (
             <p className="acSmall">{t.loading}</p>
           ) : teachers.length === 0 ? (
             <p className="acSmall">{t.none}</p>
@@ -163,6 +191,9 @@ export function TeacherAccess({
 
           <button type="button" className="acButton" disabled={busy} aria-busy={busy} onClick={newCode}>
             {busy ? t.creating : t.create}
+          </button>
+          <button type="button" className="acButton secondary" disabled={busy} onClick={cancelCode}>
+            {t.cancelCode}
           </button>
         </div>
       ) : null}

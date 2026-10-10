@@ -49,6 +49,7 @@ const text = {
     privacy: "Privacy & Safety",
     help: "Help & Support",
     out: "Log Out",
+    logoutFailed: "Sign-out failed. You are still signed in. Check your connection and try again.",
     soon: "Coming soon",
     device: "Your name and avatar are saved on this device only.",
     account: "Your name, avatar and language are saved to your FILUMIRE account.",
@@ -78,6 +79,7 @@ const text = {
     privacy: "Confidentialité et sécurité",
     help: "Aide et assistance",
     out: "Se déconnecter",
+    logoutFailed: "La déconnexion a échoué. Tu es toujours connecté. Vérifie ta connexion et réessaie.",
     soon: "Bientôt",
     device: "Ton prénom et ton avatar sont enregistrés seulement sur cet appareil.",
     account: "Ton prénom, ton avatar et ta langue sont enregistrés dans ton compte FILUMIRE.",
@@ -152,7 +154,12 @@ export default function ProfilePage({
 
   async function logOut() {
     if (onSignOut) {
-      await onSignOut();
+      try {
+        await onSignOut();
+      } catch {
+        setStatusFailed(true);
+        setStatus(t.logoutFailed);
+      }
       return;
     }
 
