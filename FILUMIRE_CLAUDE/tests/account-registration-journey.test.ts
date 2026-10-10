@@ -240,7 +240,7 @@ async function main(): Promise<void> {
   pass("passwords are stored as salted scrypt hashes");
 
   // 4. Learner sign-in.
-  resetRateLimits();
+  await resetRateLimits();
   const wrong = await login(post("/api/session/login", { login: learnerUsername, password: "nope-nope" }));
   const unknown = await login(post("/api/session/login", { login: `nobody.${run}`, password: "nope-nope" }));
   assert(wrong.status === 401 && unknown.status === 401, "wrong and unknown logins both 401");
@@ -356,13 +356,13 @@ async function main(): Promise<void> {
   // 11. Guardian resets learner password.
   const reset = await setLearnerPassword(post(`/api/account/learners/${learnerId}/password`, { password: "ama-new-pass" }, familyCookie), params(learnerId));
   assert(reset.status === 200, `guardian reset returned ${reset.status}`);
-  resetRateLimits();
+  await resetRateLimits();
   assert((await login(post("/api/session/login", { login: learnerUsername, password: "ama-pass" }))).status === 401, "old password no longer works");
   assert((await login(post("/api/session/login", { login: learnerUsername, password: "ama-new-pass" }))).status === 200, "new password works");
   pass("guardian resets a learner's password");
 
   // 12. Lockout after repeated failures.
-  resetRateLimits();
+  await resetRateLimits();
   let last: Response | undefined;
   for (let attempt = 0; attempt < 5; attempt += 1) {
     last = await login(post("/api/session/login", { login: guardianEmail, password: `wrong-${attempt}-pass` }));
@@ -373,13 +373,13 @@ async function main(): Promise<void> {
   pass("account locks after five failed attempts");
 
   // 13. Per-address rate limit.
-  resetRateLimits();
+  await resetRateLimits();
   let limited: Response | undefined;
   for (let attempt = 0; attempt < 31; attempt += 1) {
     limited = await login(post("/api/session/login", { login: `spray${attempt}.${run}`, password: "nope-nope" }));
   }
   assert(limited?.status === 429 && (await code(limited)) === "rate_limited", "sign-in is rate limited per address");
-  resetRateLimits();
+  await resetRateLimits();
   pass("sign-in attempts are rate limited per address");
 
   console.log({ accountJourneyTest: "PASS", checks: results.length, persistence: process.env.FILUMIRE_PERSISTENCE ?? "memory" });

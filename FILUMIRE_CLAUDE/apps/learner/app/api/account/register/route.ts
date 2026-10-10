@@ -16,15 +16,15 @@ import {
  * their first learner.
  */
 export async function POST(request: Request) {
-  const limited = checkRateLimits(request, "register", [
-    { limit: 10, windowMs: 60 * 60_000 },
-  ]);
-
-  if (limited) {
-    return limited;
-  }
-
   try {
+    const limited = await checkRateLimits(request, "register", [
+      { limit: 10, windowMs: 60 * 60_000 },
+    ]);
+
+    if (limited) {
+      return limited;
+    }
+
     const body = await readJsonBody(request);
     const { principalId } = await registerGuardian({
       email: body.email,

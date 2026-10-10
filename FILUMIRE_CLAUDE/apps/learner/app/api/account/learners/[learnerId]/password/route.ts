@@ -20,7 +20,7 @@ export async function POST(
     const session = await resolveSignedInSession(request);
     const { learnerId } = await params;
 
-    const limited = checkRateLimits(request, "learner-password", [
+    const limited = await checkRateLimits(request, "learner-password", [
       { key: `principal:${session.principalId}`, limit: 20, windowMs: 60 * 60_000 },
     ]);
 

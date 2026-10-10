@@ -335,6 +335,23 @@ export const guardianConsentRecords = pgTable(
   ],
 );
 
+/*
+ * Shared fixed-window counters for sign-in and account endpoints
+ * (services/account/rate-limit). key_hash is a SHA-256 of the
+ * limit's key, so no address or login name is stored.
+ */
+export const authRateLimits = pgTable(
+  "auth_rate_limits",
+  {
+    keyHash: text("key_hash").primaryKey(),
+    requestCount: integer("request_count").notNull(),
+    windowEndsAt: timestamp("window_ends_at", { withTimezone: true }).notNull(),
+  },
+  (table) => [
+    index("auth_rate_limits_window_ends_at_idx").on(table.windowEndsAt),
+  ],
+);
+
 export const sessions = pgTable("sessions", {
   id: text("id").primaryKey(),
 

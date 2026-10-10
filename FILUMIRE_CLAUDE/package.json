@@ -10,7 +10,7 @@
                        "packages/*"
                    ],
     "scripts":  {
-                    "test":  "npm run test:adaptive \u0026\u0026 npm run test:progression \u0026\u0026 npm run test:security \u0026\u0026 npm run test:identity \u0026\u0026 npm run test:intervention \u0026\u0026 npm run test:language && npm run test:accounts",
+                    "test":  "npm run test:adaptive \u0026\u0026 npm run test:progression \u0026\u0026 npm run test:security \u0026\u0026 npm run test:identity \u0026\u0026 npm run test:intervention \u0026\u0026 npm run test:language && npm run test:accounts && npm run test:ratelimit",
                     "test:adaptive":  "tsx --env-file=.env.local ./tests/adaptive-learning-loop.test.ts",
                     "test:progression":  "tsx --env-file=.env.local ./tests/competency-003-adaptive-loop.test.ts",
                     "test:security":  "tsx --env-file=.env.local ./tests/api-assessment-security.test.ts",
@@ -18,6 +18,7 @@
                     "test:intervention":  "tsx --env-file=.env.local ./tests/intervention-lifecycle.test.ts",
                     "test:language":  "tsx --env-file=.env.local ./tests/content-language-selection.test.ts",
                     "test:accounts":  "tsx --env-file=.env.local ./tests/account-registration-journey.test.ts",
+                    "test:ratelimit":  "tsx --env-file=.env.local ./tests/auth-rate-limit.test.ts",
                     "build:learner":  "npm run build --workspace=@filumire/learner",
                     "validate:all":  "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/validate-all.ps1"
                 },

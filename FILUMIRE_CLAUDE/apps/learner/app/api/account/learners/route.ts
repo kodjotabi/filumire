@@ -18,7 +18,7 @@ export async function POST(request: Request) {
   try {
     const session = await resolveSignedInSession(request);
 
-    const limited = checkRateLimits(request, "add-learner", [
+    const limited = await checkRateLimits(request, "add-learner", [
       { key: `principal:${session.principalId}`, limit: 20, windowMs: 60 * 60_000 },
     ]);
 

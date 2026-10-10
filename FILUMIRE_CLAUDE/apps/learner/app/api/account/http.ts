@@ -112,15 +112,15 @@ export function rateLimited(retryAfterSeconds: number): NextResponse {
  * Applies each limit in turn; returns a 429 response for the
  * first exceeded one, or undefined when the request may proceed.
  */
-export function checkRateLimits(
+export async function checkRateLimits(
   request: Request,
   scope: string,
   limits: Array<{ key?: string; limit: number; windowMs: number }>,
-): NextResponse | undefined {
+): Promise<NextResponse | undefined> {
   const address = getClientAddress(request);
 
   for (const entry of limits) {
-    const result = consumeRateLimit(
+    const result = await consumeRateLimit(
       `${scope}:${entry.key ?? `ip:${address}`}`,
       entry.limit,
       entry.windowMs,

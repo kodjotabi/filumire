@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     const body = await readJsonBody(request);
     const login = normaliseLoginIdentifier(body.login) ?? "";
 
-    const limited = checkRateLimits(request, "login", [
+    const limited = await checkRateLimits(request, "login", [
       { limit: 30, windowMs: 15 * 60_000 },
       { key: `login:${login}`, limit: 10, windowMs: 15 * 60_000 },
     ]);
