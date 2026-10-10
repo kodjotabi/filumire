@@ -42,6 +42,8 @@ const PRODUCTION_JWT_AUDIENCE =
 const PRODUCTION_SESSION_LIFETIME_SECONDS =
   60 * 60;
 
+const PRINCIPAL_SCOPE = "principal";
+
 type CreatePrincipalAuthSession = (
   sessionId: string,
   principalId: string,
@@ -97,12 +99,31 @@ function getCookieValue(
   }
 }
 
+/*
+ * A real signed-in session always wins. Outside production the
+ * development identity headers remain the fallback for local
+ * testing when no one has signed in.
+ */
+function hasProductionSessionCookie(
+  request: Request,
+): boolean {
+  return Boolean(
+    getCookieValue(request, PRODUCTION_SESSION_COOKIE),
+  );
+}
+
+/*
+ * A session token always names its Principal (sub) and server
+ * session (sid). Learner sessions also carry learner_id; a parent
+ * or guardian session that has not chosen a learner instead
+ * carries scope "principal" and can reach only adult endpoints.
+ */
 async function verifyProductionSessionToken(
   request: Request,
 ): Promise<{
   principalId: string;
   sessionId: string;
-  learnerId: string;
+  learnerId?: string;
 }> {
   const token = getCookieValue(
     request,
@@ -132,24 +153,32 @@ async function verifyProductionSessionToken(
         algorithms: ["HS256"],
         audience: PRODUCTION_JWT_AUDIENCE,
         issuer: PRODUCTION_JWT_ISSUER,
-        requiredClaims: ["exp", "sid", "sub", "learner_id"],
+        requiredClaims: ["exp", "sid", "sub"],
       },
     );
+
+    const learnerBound =
+      typeof payload.learner_id === "string" &&
+      isValidIdentity(payload.learner_id);
+    const principalScoped =
+      payload.learner_id === undefined &&
+      payload.scope === PRINCIPAL_SCOPE;
 
     if (
       typeof payload.sub !== "string" ||
       !isValidIdentity(payload.sub) ||
       typeof payload.sid !== "string" ||
       !isValidIdentity(payload.sid) ||
-      typeof payload.learner_id !== "string" ||
-      !isValidIdentity(payload.learner_id)
+      !(learnerBound || principalScoped)
     ) {
       throw new Error("Invalid claims.");
     }
 
     const principalId = payload.sub;
     const sessionId = payload.sid;
-    const learnerId = payload.learner_id;
+    const learnerId = learnerBound
+      ? (payload.learner_id as string)
+      : undefined;
 
     const validAuthSession =
       await isPrincipalAuthSessionValid(
@@ -179,6 +208,12 @@ async function resolveProductionIdentity(
 ): Promise<RequestIdentity> {
   const { principalId, sessionId, learnerId } =
     await verifyProductionSessionToken(request);
+
+  if (!learnerId) {
+    throw new Error(
+      "Unauthenticated request: choose a learner to continue.",
+    );
+  }
 
   const authorized =
     await isPrincipalAuthorizedForLearner(
@@ -219,7 +254,8 @@ export async function resolvePrincipalIdentity(
 ): Promise<PrincipalRequestIdentity> {
   if (
     process.env.NODE_ENV ===
-    "production"
+      "production" ||
+    hasProductionSessionCookie(request)
   ) {
     const { principalId, sessionId } =
       await verifyProductionSessionToken(request);
@@ -248,7 +284,8 @@ export async function resolveRequestIdentity(
 ): Promise<RequestIdentity> {
   if (
     process.env.NODE_ENV ===
-    "production"
+      "production" ||
+    hasProductionSessionCookie(request)
   ) {
     return resolveProductionIdentity(request);
   }
@@ -381,6 +418,102 @@ async function resolveExternalIdentity(
   }
 }
 
+export interface IssuedSession {
+  learnerId?: LearnerId;
+  principalId: string;
+  sessionId: string;
+  token: string;
+}
+
+/*
+ * Creates the server session row and signs the cookie token for
+ * an already-authenticated Principal. With a learnerId the session
+ * is bound to that learner (the caller must already have checked
+ * the Principal is authorised for it); without one it is a
+ * principal-only session for adult pages.
+ */
+export async function issueSessionForPrincipal(
+  principalId: string,
+  learnerId?: string,
+  createServerSession: CreatePrincipalAuthSession =
+    createPrincipalAuthSession,
+): Promise<IssuedSession> {
+  const secret =
+    getRequiredEnvironmentVariable(
+      "FILUMIRE_AUTH_JWT_SECRET",
+    );
+
+  if (secret.length < 32) {
+    throw new Error(
+      "Production authentication is unavailable.",
+    );
+  }
+
+  const sessionId = crypto.randomUUID();
+  const expiresAt = new Date(
+    Date.now() +
+      PRODUCTION_SESSION_LIFETIME_SECONDS * 1000,
+  ).toISOString();
+
+  await createServerSession(
+    sessionId,
+    principalId,
+    expiresAt,
+  );
+
+  const token = await new SignJWT(
+    learnerId
+      ? { sid: sessionId, learner_id: learnerId }
+      : { sid: sessionId, scope: PRINCIPAL_SCOPE },
+  )
+    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+    .setAudience(PRODUCTION_JWT_AUDIENCE)
+    .setExpirationTime(
+      `${PRODUCTION_SESSION_LIFETIME_SECONDS}s`,
+    )
+    .setIssuedAt()
+    .setIssuer(PRODUCTION_JWT_ISSUER)
+    .setSubject(principalId)
+    .sign(new TextEncoder().encode(secret));
+
+  return {
+    learnerId: learnerId as LearnerId | undefined,
+    principalId,
+    sessionId,
+    token,
+  };
+}
+
+/*
+ * Reads the current session cookie with no development-header
+ * fallback. Account endpoints use this: they only ever act for a
+ * Principal who really signed in.
+ */
+export async function resolveSignedInSession(
+  request: Request,
+): Promise<{
+  principalId: string;
+  sessionId: string;
+  learnerId?: string;
+}> {
+  const session =
+    await verifyProductionSessionToken(request);
+
+  if (
+    session.learnerId &&
+    !(await isPrincipalAuthorizedForLearner(
+      session.principalId,
+      session.learnerId,
+    ))
+  ) {
+    throw new Error(
+      "Unauthenticated request: invalid production session.",
+    );
+  }
+
+  return session;
+}
+
 export async function issueProductionSession(
   request: Request,
   createServerSession: CreatePrincipalAuthSession =
@@ -405,6 +538,8 @@ export async function issueProductionSession(
   const learnerIds =
     await listLearnersForPrincipal(principalId);
 
+  let learnerId: string;
+
   if (requestedLearnerId) {
     if (!learnerIds.includes(requestedLearnerId)) {
       throw new Error(
@@ -412,107 +547,28 @@ export async function issueProductionSession(
       );
     }
 
-    const learnerId = requestedLearnerId as LearnerId;
-    const sessionId = crypto.randomUUID();
-    const expiresAt = new Date(
-      Date.now() +
-        PRODUCTION_SESSION_LIFETIME_SECONDS * 1000,
-    ).toISOString();
-
-    await createServerSession(
-      sessionId,
-      principalId,
-      expiresAt,
-    );
-
-    const secret =
-      getRequiredEnvironmentVariable(
-        "FILUMIRE_AUTH_JWT_SECRET",
-      );
-
-    if (secret.length < 32) {
-      throw new Error(
-        "Production authentication is unavailable.",
-      );
-    }
-
-    const token = await new SignJWT({
-      sid: sessionId,
-      learner_id: learnerId,
-    })
-      .setProtectedHeader({ alg: "HS256", typ: "JWT" })
-      .setAudience(PRODUCTION_JWT_AUDIENCE)
-      .setExpirationTime(
-        `${PRODUCTION_SESSION_LIFETIME_SECONDS}s`,
-      )
-      .setIssuedAt()
-      .setIssuer(PRODUCTION_JWT_ISSUER)
-      .setSubject(principalId)
-      .sign(new TextEncoder().encode(secret));
-
-    return {
-      learnerId,
-      principalId,
-      sessionId,
-      token,
-    };
-  }
-
-  if (learnerIds.length === 0) {
+    learnerId = requestedLearnerId;
+  } else if (learnerIds.length === 0) {
     throw new Error(
       "No authorised learner is available for this principal.",
     );
-  }
-
-  if (learnerIds.length > 1) {
+  } else if (learnerIds.length > 1) {
     throw new Error(
       "Explicit learner selection is required for this principal.",
     );
+  } else {
+    learnerId = learnerIds[0];
   }
 
-  const learnerId = learnerIds[0] as LearnerId;
-  const sessionId = crypto.randomUUID();
-  const expiresAt = new Date(
-    Date.now() +
-      PRODUCTION_SESSION_LIFETIME_SECONDS * 1000,
-  ).toISOString();
-
-  await createServerSession(
-    sessionId,
+  const session = await issueSessionForPrincipal(
     principalId,
-    expiresAt,
+    learnerId,
+    createServerSession,
   );
 
-  const secret =
-    getRequiredEnvironmentVariable(
-      "FILUMIRE_AUTH_JWT_SECRET",
-    );
-
-  if (secret.length < 32) {
-    throw new Error(
-      "Production authentication is unavailable.",
-    );
-  }
-
-  const token = await new SignJWT({
-    sid: sessionId,
-    learner_id: learnerId,
-  })
-    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
-    .setAudience(PRODUCTION_JWT_AUDIENCE)
-    .setExpirationTime(
-      `${PRODUCTION_SESSION_LIFETIME_SECONDS}s`,
-    )
-    .setIssuedAt()
-    .setIssuer(PRODUCTION_JWT_ISSUER)
-    .setSubject(principalId)
-    .sign(new TextEncoder().encode(secret));
-
   return {
-    learnerId,
-    principalId,
-    sessionId,
-    token,
+    ...session,
+    learnerId: learnerId as LearnerId,
   };
 }
 

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import {
   getProductionSessionClearCookie,
-  resolveRequestIdentity,
+  resolveSignedInSession,
 } from "../../../../../../services/identity";
 
 import {
@@ -13,8 +13,10 @@ export async function POST(
   request: Request,
 ) {
   try {
+    // Learner-bound and principal-only (parent) sessions both
+    // sign out here; development headers never count as a session.
     const identity =
-      await resolveRequestIdentity(request);
+      await resolveSignedInSession(request);
 
     if (!identity.sessionId || !identity.principalId) {
       return NextResponse.json(

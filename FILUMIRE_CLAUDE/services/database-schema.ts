@@ -235,6 +235,106 @@ export const authSessions = pgTable("auth_sessions", {
     .defaultNow(),
 });
 
+/*
+ * Built-in FILUMIRE sign-in. One credential per Principal:
+ * guardians sign in with an email address, learners with a
+ * username their guardian chose. Only a salted scrypt hash of
+ * the password is stored. failed_attempt_count / locked_until
+ * back the per-account lockout (services/account).
+ */
+export const accountCredentials = pgTable(
+  "account_credentials",
+  {
+    id: text("id").primaryKey(),
+    principalId: text("principal_id")
+      .notNull()
+      .references(() => principals.id, { onDelete: "restrict" }),
+    accountKind: text("account_kind").notNull(),
+    loginIdentifier: text("login_identifier").notNull(),
+    passwordHash: text("password_hash").notNull(),
+    passwordUpdatedAt: timestamp("password_updated_at", { withTimezone: true }).notNull().defaultNow(),
+    failedAttemptCount: integer("failed_attempt_count").notNull().default(0),
+    lockedUntil: timestamp("locked_until", { withTimezone: true }),
+    lastSignInAt: timestamp("last_sign_in_at", { withTimezone: true }),
+    status: text("status").notNull().default("active"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    unique("account_credentials_principal_id_unique").on(table.principalId),
+    unique("account_credentials_login_identifier_unique").on(table.loginIdentifier),
+    check(
+      "account_credentials_account_kind_check",
+      sql`${table.accountKind} in ('guardian', 'learner')`,
+    ),
+  ],
+);
+
+/*
+ * Display details for an adult account. The email address is
+ * the guardian's login identifier and is not repeated here.
+ */
+export const accountProfiles = pgTable("account_profiles", {
+  principalId: text("principal_id")
+    .primaryKey()
+    .references(() => principals.id, { onDelete: "restrict" }),
+  displayName: text("display_name").notNull(),
+  preferredLanguage: text("preferred_language").notNull().default("en"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+/*
+ * What a learner is called inside FILUMIRE and how their app is
+ * set up. Deliberately minimal: a first name or nickname, an
+ * avatar and a language. No date of birth, email, school or
+ * contact details are collected for children.
+ */
+export const learnerProfiles = pgTable("learner_profiles", {
+  learnerId: text("learner_id")
+    .primaryKey()
+    .references(() => learners.id, { onDelete: "restrict" }),
+  displayName: text("display_name").notNull(),
+  avatarId: text("avatar_id"),
+  preferredLanguage: text("preferred_language").notNull().default("en"),
+  onboardingCompletedAt: timestamp("onboarding_completed_at", { withTimezone: true }),
+  // The learner's own sign-in Principal (relationship 'self').
+  signInPrincipalId: text("sign_in_principal_id")
+    .references(() => principals.id, { onDelete: "restrict" }),
+  createdByPrincipalId: text("created_by_principal_id")
+    .notNull()
+    .references(() => principals.id, { onDelete: "restrict" }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+/*
+ * An append-only record of what a guardian agreed to, against
+ * which notice version, and how. verification_status stays
+ * 'unverified' for a self-declared checkbox: it records the
+ * declaration, it does not prove parental identity.
+ */
+export const guardianConsentRecords = pgTable(
+  "guardian_consent_records",
+  {
+    id: text("id").primaryKey(),
+    guardianPrincipalId: text("guardian_principal_id")
+      .notNull()
+      .references(() => principals.id, { onDelete: "restrict" }),
+    learnerId: text("learner_id").references(() => learners.id, { onDelete: "restrict" }),
+    consentType: text("consent_type").notNull(),
+    noticeVersion: text("notice_version").notNull(),
+    method: text("method").notNull(),
+    verificationStatus: text("verification_status").notNull().default("unverified"),
+    recordedAt: timestamp("recorded_at", { withTimezone: true }).notNull().defaultNow(),
+    withdrawnAt: timestamp("withdrawn_at", { withTimezone: true }),
+  },
+  (table) => [
+    index("guardian_consent_records_guardian_idx").on(table.guardianPrincipalId),
+    index("guardian_consent_records_learner_idx").on(table.learnerId),
+  ],
+);
+
 export const sessions = pgTable("sessions", {
   id: text("id").primaryKey(),
 
