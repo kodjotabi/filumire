@@ -1,25 +1,34 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import type { CSSProperties } from "react";
+import { LearnerSignOut } from "../../components/filumire/LearnerSignOut";
+import { LearningNotices } from "../../components/filumire/LearningNotices";
+import { useLearnerAppearance } from "../../services/interface-preferences";
 import { LearnerHeader } from "../../components/filumire/LearnerHeader";
 import { useLearnerAvatar } from "../../components/filumire/avatars";
 import { fetchLearningOverview, type LearningOverview } from "../../services/learning-client";
 import { findFilumireSubject, subjectLabel, toFilumireSubjects } from "../../components/filumire/subjects";
 import { LearnerBottomNav } from "../../components/filumire/LearnerBottomNav";
+import { askFiluHref } from "../../services/dashboard-navigation";
 import { SubjectIcon } from "../../components/filumire/SubjectIcon";
 import { useLanguage, withLang, type Language } from "../../components/filumire/language";
 
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { LearningRequestOrder, restoreLearningActivity, submitPendingAnswer, acknowledgeCurrentActivity } from "../../services/learning-continuity";
+import { completionPercent, stageIndicators, evaluatedFeedback, type ActivityFeedback } from "../../services/learning-presentation";
+import { useLessonClosure } from "../../services/use-lesson-closure";
+import { LessonClosureCard } from "../../components/filumire/LessonClosureCard";
+import { ReadAloudControls } from "../../components/filumire/ReadAloudControls";
+import { LearnerLoadingState } from "../../components/filumire/LearnerLoadingState";
+import { learnerErrorText, translateLearnerError, lessonLanguageNotice } from "../../services/learner-interface";
 
 import {
-  fetchLearningSession,
   getSessionId,
   isPendingTeacherReviewResponse,
-  acknowledgeLearningStep,
   LearningNetworkError,
   LearningRequestError,
-  submitAssessmentResponse,
   type LearningResponse,
 } from "../../services/learning-client";
 
@@ -35,7 +44,6 @@ import {
 
 import {
   clearPendingSubmission,
-  readPendingSubmission,
   writePendingSubmission,
   type PendingAssessmentSubmission,
 } from "../../services/pending-submission";
@@ -146,6 +154,19 @@ const FR_TEXT: Record<string, string> = {
   "Updating your learning session...": "Mise à jour de ta séance...",
   "Learning progress": "Progression",
   "Learning stages": "Étapes d'apprentissage",
+  "Subject goals mastered": "Objectifs maîtrisés dans cette matière",
+  "Progress unavailable": "Progression indisponible",
+  "Current recommendation. These stages are not a completion checklist.": "Étape recommandée. Ces étapes ne sont pas une liste de réalisations.",
+  "FILUMIRE may revisit an earlier stage to strengthen your understanding. Your recorded work is kept.": "FILUMIRE peut revenir à une étape précédente pour renforcer ta compréhension. Ton travail enregistré est conservé.",
+  "Feedback on your submitted activity": "Résultat de ton activité envoyée",
+  "The following activity is your next learning step.": "L'activité suivante est ta prochaine étape d'apprentissage.",
+  "Your submitted answer": "Ta réponse envoyée",
+  "Your answer is waiting to synchronise. No result has been confirmed on this device.": "Ta réponse attend d'être synchronisée. Aucun résultat n'a été confirmé sur cet appareil.",
+  "Correct answer to the submitted question": "Réponse correcte à la question envoyée",
+  "Incorrect answer to the submitted question": "Réponse incorrecte à la question envoyée",
+  "Partly correct answer to the submitted question": "Réponse partiellement correcte à la question envoyée",
+  "Activity reviewed by your teacher": "Activité relue par ton enseignant",
+  "Your teacher has reviewed the submitted activity. This message does not indicate its score.": "Ton enseignant a relu l'activité envoyée. Ce message n'indique pas son résultat.",
   "Your learning session": "Ta séance d'apprentissage",
   Learning: "Apprentissage",
   "Think about it": "Réfléchis",
@@ -155,7 +176,7 @@ const FR_TEXT: Record<string, string> = {
 };
 
 function tr(language: Language, text: string): string {
-  return language === "fr" ? (FR_TEXT[text] ?? text) : text;
+  return translateLearnerError(text, language) ?? (language === "fr" ? (FR_TEXT[text] ?? text) : text);
 }
 
 function actionLabel(
@@ -238,13 +259,16 @@ function feedbackTitle(
 ): string {
   switch (outcome) {
     case "correct":
-      return "Correct";
+      return "Correct answer to the submitted question";
 
     case "incorrect":
-      return "Not quite";
+      return "Incorrect answer to the submitted question";
 
     case "partial":
-      return "Partly correct";
+      return "Partly correct answer to the submitted question";
+
+    case "reviewed":
+      return "Activity reviewed by your teacher";
 
     case "pending-review":
       return "Sent to your teacher";
@@ -258,6 +282,8 @@ function feedbackMessage(
   outcome: string,
 ): string {
   switch (outcome) {
+    case "reviewed":
+      return "Your teacher has reviewed the submitted activity. This message does not indicate its score.";
     case "correct":
       return "Well done. FILUMIRE has recorded this as successful evidence.";
 
@@ -312,7 +338,7 @@ function BulbIcon() {
   );
 }
 
-function LessonVisual({ topic }: { topic: string }) {
+function LessonVisual({ topic, language }: { topic: string; language: Language }) {
   if (!/equivalent fraction/i.test(topic)) {
     return null;
   }
@@ -322,7 +348,7 @@ function LessonVisual({ topic }: { topic: string }) {
       className="lessonVisual" style={{ display: "block", width: "auto", height: 92, margin: "4px auto 2px" }}
       viewBox="0 0 260 150"
       role="img"
-      aria-label="One half is equal to two quarters"
+      aria-label={language === "fr" ? "Une moitié est égale à deux quarts" : "One half is equal to two quarters"}
     >
       <circle cx="55" cy="42" r="38" fill="#e8f2fd" stroke="#0f2a6b" strokeWidth="2.5" />
       <path d="M55 4 A38 38 0 0 0 55 80 Z" fill="#2f8cf0" />
@@ -346,26 +372,44 @@ function LessonVisual({ topic }: { topic: string }) {
 }
 
 export default function LearnPage() {
+  return <Suspense fallback={<main className="page learnerUi"><LearnerLoadingState /></main>}><LearnRoute /></Suspense>;
+}
+
+function LearnRoute() {
+  const params = useSearchParams();
+  // A subject navigation starts a new screen lifecycle. Outstanding mutations
+  // are reconciled by the shared restoration coordinator before it loads.
+  return <LearnPageContent key={params.get("subjectId") ?? "current"} />;
+}
+
+function LearnPageContent() {
+  const requestOrder = useRef(new LearningRequestOrder());
+  const operationBusy = useRef(false);
+  const closureContinueBusy = useRef(false);
   const [learnOverview, setLearnOverview] = useState<LearningOverview | null>(null);
   const [language] = useLanguage();
   const [subjectId, setSubjectId] = useState<string | null>(null);
   const learnerAvatar = useLearnerAvatar();
   const feedbackRef = useRef<HTMLDivElement | null>(null);
 
+  const [data, setData] =
+    useState<LearningResponse | null>(null);
+  const lessonClosure = useLessonClosure(data, language);
+  const appearance = useLearnerAppearance(data?.learnerState.learnerId);
+
   useEffect(() => {
     const id = new URLSearchParams(window.location.search).get("subjectId");
     setSubjectId(id);
+    if (!data) return;
     let alive = true;
-    fetchLearningOverview(id || undefined).then((r) => {
+    setLearnOverview(null);
+    // Refresh the read-only roll-up after reconciliation or evaluation, never
+    // publish a subject total fetched before an in-flight answer committed.
+    fetchLearningOverview(data.progress.subjectId || id || undefined).then((r) => {
       if (alive) setLearnOverview(r);
     });
-    return () => {
-      alive = false;
-    };
-  }, []);
-
-  const [data, setData] =
-    useState<LearningResponse | null>(null);
+    return () => { alive = false; };
+  }, [data, language]);
 
   const [selectedResponse, setSelectedResponse] =
     useState("");
@@ -383,7 +427,7 @@ export default function LearnPage() {
     useState<LoadFailure | null>(null);
 
   const [assessmentFeedback, setAssessmentFeedback] =
-    useState<string | null>(null);
+    useState<ActivityFeedback | null>(null);
 
   const [connectivity, setConnectivity] =
     useState<ConnectivityStatus>(
@@ -402,21 +446,33 @@ export default function LearnPage() {
     useState("");
 
   async function loadLearning() {
+    if (operationBusy.current) return;
+    const ticket = requestOrder.current.begin();
     setLoading(true);
     setError("");
+    setSyncError("");
     setLoadFailure(null);
     setAssessmentFeedback(null);
 
     try {
       const result =
-        await fetchLearningSession(
+        await restoreLearningActivity(
           new URLSearchParams(window.location.search)
             .get("subjectId") ?? undefined,
         );
 
-      setData(result);
+      if (!requestOrder.current.accepts(ticket)) return;
+      setData(result.data);
+      setPending(result.pending ?? null);
+      if (result.submission && result.submittedAnswer) {
+        setAssessmentFeedback(evaluatedFeedback(result.submission, result.submittedAnswer));
+      }
+      if (result.syncError) {
+        setSyncError(learnerErrorText(result.syncError, "en"));
+      }
       setSelectedResponse("");
     } catch (err) {
+      if (!requestOrder.current.accepts(ticket)) return;
       setData(null);
       setLoadFailure(
         err instanceof LearningRequestError && err.status === 401
@@ -426,7 +482,7 @@ export default function LearnPage() {
             : "unavailable",
       );
     } finally {
-      setLoading(false);
+      if (requestOrder.current.accepts(ticket)) setLoading(false);
     }
   }
 
@@ -436,6 +492,7 @@ export default function LearnPage() {
    * or refreshing the page never does.
    */
   async function continueLearning() {
+    if (operationBusy.current || pending) return;
     const interventionId =
       data?.decision.interventionId;
 
@@ -448,101 +505,103 @@ export default function LearnPage() {
       return;
     }
 
+    operationBusy.current = true;
+    const ticket = requestOrder.current.begin();
     setSubmitting(true);
     setError("");
     setAssessmentFeedback(null);
+    // Save only the server's delivery receipt, before an acknowledgement could
+    // commit and lose its response. Completion is checked read-only afterwards.
+    lessonClosure.prepare(data.lessonReceipt);
 
     try {
       const result =
-        await acknowledgeLearningStep({
+        await acknowledgeCurrentActivity({
           sessionId: getSessionId(data),
           interventionId,
           competencyId:
             data.decision.competencyId,
         });
 
+      if (!requestOrder.current.accepts(ticket)) return;
       setData(result);
       setSelectedResponse("");
     } catch (err) {
+      if (!requestOrder.current.accepts(ticket)) return;
       if (
         err instanceof LearningRequestError &&
         err.status === 409
       ) {
+        operationBusy.current = false;
+        setSubmitting(false);
         await loadLearning();
         return;
       }
 
-      setError(
-        err instanceof LearningNetworkError
-          ? "FILUMIRE can't reach the server. Check your connection and try again."
-          : err instanceof Error
-            ? err.message
-            : "Unable to continue.",
-      );
-    } finally {
-      setSubmitting(false);
-    }
-  }
-
-  async function attemptSync(
-    item: PendingAssessmentSubmission,
-  ) {
-    setSyncing(true);
-    setSyncError("");
-    markReconnecting();
-
-    try {
-      const result =
-        await submitAssessmentResponse({
-          learnerId: item.learnerId,
-          sessionId: item.sessionId,
-          interventionId: item.interventionId,
-          assessmentItemId: item.assessmentItemId,
-          competencyId: item.competencyId,
-          response: item.response,
-          clientRequestId: item.clientRequestId,
-        });
-
-      clearPendingSubmission();
-      setPending(null);
-      markConnected();
-
-      if (isPendingTeacherReviewResponse(result)) {
-        setAssessmentFeedback("pending-review");
-        setSelectedResponse("");
+      if (data.lessonReceipt && (err instanceof LearningNetworkError || (err instanceof LearningRequestError && err.status >= 500))) {
+        operationBusy.current = false;
+        setSubmitting(false);
+        // Reconcile delivery via the authoritative activity and the saved
+        // receipt, without automatically sending another acknowledgement.
+        await loadLearning();
         return;
       }
 
-      setAssessmentFeedback(
-        result.assessment
-          ? result.assessment.result.correct
-            ? "correct"
-            : "incorrect"
-          : null,
-      );
+      lessonClosure.dismiss();
 
-      setData(result);
-      setSelectedResponse("");
-    } catch (err) {
-      if (err instanceof LearningNetworkError) {
-        markOffline();
-        setSyncError(
-          "Still unable to reach the server. Your answer is safely waiting and will be sent automatically when you're back online.",
-        );
-      } else {
-        markConnected();
-        setSyncError(
-          err instanceof Error
-            ? err.message
-            : "Unable to send your waiting answer yet.",
-        );
-      }
+      setError(learnerErrorText(err, "en"));
     } finally {
-      setSyncing(false);
+      operationBusy.current = false;
+      if (requestOrder.current.accepts(ticket)) setSubmitting(false);
+    }
+  }
+
+  async function startRecommendedActivity() {
+    if (operationBusy.current || closureContinueBusy.current || pending) return;
+    // Viewing closure never mutates progress. On leaving it, restore the
+    // current server activity in case another tab or teacher changed it.
+    closureContinueBusy.current = true;
+    lessonClosure.dismiss();
+    try { await loadLearning(); } finally { closureContinueBusy.current = false; }
+  }
+
+  async function attemptSync() {
+    if (operationBusy.current) return;
+    operationBusy.current = true;
+    const ticket = requestOrder.current.begin();
+    setSyncing(true);
+    setSyncError("");
+    markReconnecting();
+    try {
+      const restored = await restoreLearningActivity(
+        new URLSearchParams(window.location.search).get("subjectId") ?? undefined,
+        undefined, pending ?? undefined,
+      );
+      if (!requestOrder.current.accepts(ticket)) return;
+      setData(restored.data);
+      setPending(restored.pending ?? null);
+      if (restored.submission && restored.submittedAnswer) {
+        setAssessmentFeedback(evaluatedFeedback(restored.submission, restored.submittedAnswer));
+        setSelectedResponse("");
+      }
+      if (restored.syncError) throw restored.syncError;
+      markConnected();
+    } catch (err) {
+      if (!requestOrder.current.accepts(ticket)) return;
+      if (err instanceof LearningNetworkError) markOffline();
+      else markConnected();
+      setSyncError(learnerErrorText(err, "en"));
+    } finally {
+      operationBusy.current = false;
+      if (requestOrder.current.accepts(ticket)) {
+        setSyncing(false);
+        setLoading(false);
+      }
     }
   }
 
   async function submitAssessment() {
+    if (operationBusy.current || pending) return;
     if (
       !data?.content?.assessmentItemId ||
       !selectedResponse
@@ -553,6 +612,9 @@ export default function LearnPage() {
     setSubmitting(true);
     setError("");
 
+    operationBusy.current = true;
+    setAssessmentFeedback(null);
+    const ticket = requestOrder.current.begin();
     const submissionBody = {
       learnerId: data.learnerState.learnerId,
       sessionId: getSessionId(data),
@@ -567,13 +629,20 @@ export default function LearnPage() {
           : `${Date.now()}-${Math.random()}`,
     };
 
+    const queued: PendingAssessmentSubmission = { ...submissionBody, queuedAt: new Date().toISOString() };
+    writePendingSubmission(queued);
+    setPending(queued);
     try {
-      const result =
-        await submitAssessmentResponse(
-          submissionBody,
-        );
+      const result = await submitPendingAnswer(queued);
+      clearPendingSubmission(queued.clientRequestId);
+      if (!requestOrder.current.accepts(ticket)) return;
+      setPending(null);
 
       markConnected();
+      setAssessmentFeedback(evaluatedFeedback(result, {
+        assessmentItemId: submissionBody.assessmentItemId,
+        title: data.content.title,
+      }));
 
       /*
        * Preserve the assessment result while
@@ -587,24 +656,14 @@ export default function LearnPage() {
        * alongside the next decision/content.
        */
       if (isPendingTeacherReviewResponse(result)) {
-        setAssessmentFeedback("pending-review");
         setSelectedResponse("");
         return;
-      }
-
-      if (result.assessment) {
-        setAssessmentFeedback(
-          result.assessment.result.correct
-            ? "correct"
-            : "incorrect",
-        );
-      } else {
-        setAssessmentFeedback(null);
       }
 
       setData(result);
       setSelectedResponse("");
     } catch (err) {
+      if (!requestOrder.current.accepts(ticket)) return;
       if (err instanceof LearningNetworkError) {
         // A connectivity failure never marks correctness,
         // updates mastery, or creates evidence locally. The
@@ -618,28 +677,22 @@ export default function LearnPage() {
         setPending(queued);
         markOffline();
       } else {
-        setError(
-          err instanceof Error
-            ? err.message
-            : "Unable to submit your answer.",
-        );
+        // A server failure can follow a committed assessment. Keep its retry
+        // key until reconciliation establishes whether it was accepted.
+        if (err instanceof LearningRequestError && err.status >= 400 && err.status < 500 && err.status !== 401 && err.status !== 429) {
+          clearPendingSubmission(queued.clientRequestId);
+          setPending(null);
+        }
+        setError(learnerErrorText(err, "en"));
       }
     } finally {
-      setSubmitting(false);
+      operationBusy.current = false;
+      if (requestOrder.current.accepts(ticket)) setSubmitting(false);
     }
   }
 
   useEffect(() => {
     loadLearning();
-
-    const storedPending = readPendingSubmission();
-    if (storedPending) {
-      setPending(storedPending);
-
-      if (getConnectivityStatus() !== "offline") {
-        attemptSync(storedPending);
-      }
-    }
 
     const unsubscribe = subscribeConnectivity(
       setConnectivity,
@@ -650,6 +703,7 @@ export default function LearnPage() {
     setConnectivity(getConnectivityStatus());
 
     return () => {
+      requestOrder.current.invalidate();
       removeConnectivityListeners();
       unsubscribe();
     };
@@ -661,7 +715,7 @@ export default function LearnPage() {
       pending &&
       !syncing
     ) {
-      attemptSync(pending);
+      attemptSync();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connectivity]);
@@ -679,18 +733,19 @@ export default function LearnPage() {
     : "/dashboard";
   const learningHref = withLang("/dashboard?view=learning", language);
   const progressHref = withLang("/dashboard?view=progress", language);
-  const askHref = withLang("/dashboard?view=ask-filu", language);
+  const askSubjectId = subjectId ?? data?.progress.subjectId;
+  const askHref = askFiluHref(language, askSubjectId);
 
   /* Loading and failure screens keep the learner's header and
      navigation so there is always a way back. */
   if (loading || !data) {
     return (
-      <main className="page">
+      <main className="page learnerUi" lang={language} data-appearance={appearance}>
         <a className="filumireSkipLink" href="#learn-main">
           {language === "fr" ? "Aller au contenu" : "Skip to content"}
         </a>
         <div className="shell learnerShell">
-          <LearnerHeader backHref={backHref} setupHeader language={language} />
+          <LearnerHeader backHref={backHref} setupHeader language={language} subjectId={askSubjectId} />
 
           <div id="learn-main" className="learnBody" tabIndex={-1}>
             {loading ? (
@@ -735,7 +790,7 @@ export default function LearnPage() {
             )}
           </div>
 
-          <LearnerBottomNav active="learning" language={language} />
+          <LearnerBottomNav active="learning" language={language} subjectId={askSubjectId} />
         </div>
 
         <style jsx>{`
@@ -791,7 +846,7 @@ export default function LearnPage() {
     );
   const learnStat = learnOverview?.subjects[data?.progress.subjectId ?? ""];
   const learnSubject = findFilumireSubject(toFilumireSubjects(learnOverview?.availableSubjects), data?.progress.subjectId);
-  const progressPercent = learnStat && learnStat.total > 0 ? Math.round((learnStat.completed / learnStat.total) * 100) : data ? Math.max(0, Math.min(100, data.progress.percent)) : 0;
+  const progressPercent = completionPercent(learnStat);
   const tint = SUBJECT_TINTS[learnSubject?.key ?? "mathematics"];
 
   const action =
@@ -822,7 +877,8 @@ export default function LearnPage() {
    * learner moves on, the same activity is not offered again.
    */
   const awaitingReview =
-    assessmentFeedback === "pending-review";
+    assessmentFeedback?.assessmentItemId === data.content?.assessmentItemId &&
+    (assessmentFeedback?.outcome === "pending-review" || assessmentFeedback?.outcome === "reviewed");
 
   const hasAssessment =
     Boolean(data.content?.assessmentItemId) &&
@@ -835,35 +891,15 @@ export default function LearnPage() {
     !requiresTrustedEvaluation &&
     !isComplete;
 
-  const learningStages = [
-    "Understand",
-    "Practise",
-    "Apply",
-    "Check",
-    "Reflect",
-  ] as const;
+  const learningStages = stageIndicators(action);
 
   const teachView = showContinue && action !== "diagnose";
 
-  const currentStage =
-    action === "practice" ||
-    action === "scaffold" ||
-    action === "remediate"
-      ? 1
-      : action === "transfer_check"
-        ? 2
-        : action === "reassess" ||
-            action === "retention_check"
-          ? 3
-          : action === "advance" ||
-              action === "complete"
-            ? 4
-            : 0;
-
-  const stageLabel = tr(language, "Let’s " + learningStages[currentStage].toLowerCase());
+  const currentStage = learningStages.findIndex((stage) => stage.current);
+  const stageLabel = currentStage >= 0 ? tr(language, "Let’s " + learningStages[currentStage].label.toLowerCase()) : tr(language, "Your learning session");
 
   return (
-    <main className="page">
+    <main className="page learnerUi" lang={language} data-appearance={appearance}>
       <a className="filumireSkipLink" href="#learn-main">
         {language === "fr" ? "Aller au contenu" : "Skip to content"}
       </a>
@@ -871,6 +907,7 @@ export default function LearnPage() {
         <LearnerHeader
           backHref={backHref}
           showAskFilu={true} setupHeader language={language}
+            subjectId={askSubjectId}
         />
 
         <div className="learnBody">
@@ -896,44 +933,45 @@ export default function LearnPage() {
                   tr(language, "Your learning session")}
               </p>
             </div>
-            <strong>{progressPercent}%</strong>
+            <strong>{progressPercent === null ? "—" : `${progressPercent}%`}</strong>
+            <small>{tr(language, progressPercent === null ? "Progress unavailable" : "Subject goals mastered")}</small>
             <div
               className="progress-track"
-              role="progressbar"
-              aria-label={tr(language, "Learning progress")}
+              role={progressPercent === null ? undefined : "progressbar"}
+              aria-label={tr(language, "Subject goals mastered")}
               aria-valuemin={0}
               aria-valuemax={100}
-              aria-valuenow={progressPercent}
+              aria-valuenow={progressPercent ?? undefined}
             >
               <div
                 className="progress-fill"
-                style={{ width: `${progressPercent}%` }}
+                style={{ width: `${progressPercent ?? 0}%` }}
               />
             </div>
           </section>
 
           <nav aria-label={tr(language, "Learning stages")}>
+          <p className="stageExplanation">{tr(language, "Current recommendation. These stages are not a completion checklist.")}</p>
           <ol className="learningStages">
             {learningStages.map((stage, index) => (
               <li
-                key={stage}
+                key={stage.label}
                 className={`learningStage ${
                   index === currentStage
                     ? "active"
-                    : index < currentStage
-                      ? "complete"
-                      : ""
+                    : ""
                 }`}
                 aria-current={index === currentStage ? "step" : undefined}
               >
                 <span className="stageDot" aria-hidden="true">
-                  {index < currentStage ? "✓" : index + 1}
+                  {index + 1}
                 </span>
-                <span className="stageName">{tr(language, stage)}</span>
+                <span className="stageName">{tr(language, stage.label)}</span>
               </li>
             ))}
           </ol>
           </nav>
+          <p className="stageExplanation">{tr(language, "FILUMIRE may revisit an earlier stage to strengthen your understanding. Your recorded work is kept.")}</p>
           </div>
 
           <div id="learn-main" className="learnMain" tabIndex={-1}>
@@ -957,13 +995,13 @@ export default function LearnPage() {
             <div>
               {syncing
                 ? tr(language, "Sending your waiting answer...")
-                : tr(language, "Your answer is waiting to be sent. It hasn't been checked yet.")}
+                : tr(language, "Your answer is waiting to synchronise. No result has been confirmed on this device.")}
             </div>
 
             {!syncing && (
               <button
                 type="button"
-                onClick={() => attemptSync(pending)}
+                onClick={() => attemptSync()}
                 className="secondary-button"
               >
                 {tr(language, "Retry now")}
@@ -978,11 +1016,31 @@ export default function LearnPage() {
           </div>
         )}
 
-        <section className={`lessonPanel${teachView ? " teach" : ""}`}>
+          {assessmentFeedback && (
+            <div ref={feedbackRef} tabIndex={-1} className={`assessment-feedback ${assessmentFeedback.outcome}`} role="status" aria-live="polite">
+              <div className="feedback-icon" aria-hidden="true">{feedbackIcon(assessmentFeedback.outcome)}</div>
+              <div className="feedback-content">
+                <small>{tr(language, "Feedback on your submitted activity")}: {assessmentFeedback.title || tr(language, "Your submitted answer")}</small>
+                <div className="feedback-title">{tr(language, feedbackTitle(assessmentFeedback.outcome))}</div>
+                <div className="feedback-message">{tr(language, feedbackMessage(assessmentFeedback.outcome))}</div>
+                {assessmentFeedback.assessmentItemId !== data.content?.assessmentItemId && <small>{tr(language, "The following activity is your next learning step.")}</small>}
+              </div>
+            </div>
+          )}
+        {lessonClosure.loading && <section className="fState inline" aria-busy="true"><p role="status">{language === "fr" ? "Préparation de ton résumé…" : "Preparing your lesson summary…"}</p></section>}
+        {lessonClosure.error && <section className="fState inline" role="alert">
+          <p>{language === "fr" ? "Le résumé n’est pas disponible pour le moment. Ton travail enregistré est conservé." : "Your summary is unavailable just now. Your recorded work is kept."}</p>
+          <button type="button" className="fButton" onClick={lessonClosure.retry}>{tr(language, "Try again")}</button>
+          <button type="button" className="fButton secondary" onClick={lessonClosure.dismiss}>{tr(language, "Continue learning")}</button>
+        </section>}
+        {lessonClosure.closure && <LessonClosureCard closure={lessonClosure.closure} decision={data.decision} phase={lessonClosure.phase}
+          learnerId={data.learnerState.learnerId}
+          onPhase={lessonClosure.changePhase} onContinue={startRecommendedActivity} busy={submitting || syncing || Boolean(pending)} />}
+        {!lessonClosure.loading && !lessonClosure.closure && <section className={`lessonPanel${teachView ? " teach" : ""}`}>
           {!teachView && (
             <div className="lessonHero">
               <small>{stageLabel}</small>
-              <h1>{tr(language, needsSupportPause ? "You have done all you can here for now." : actionLabel(action))}</h1>
+              <h2>{tr(language, needsSupportPause ? "You have done all you can here for now." : actionLabel(action))}</h2>
               <img
                 src={learnerAvatar}
                 alt=""
@@ -997,35 +1055,6 @@ export default function LearnPage() {
             </span>
           )}
 
-          {assessmentFeedback && (
-            <div
-              ref={feedbackRef}
-              tabIndex={-1}
-              className={`assessment-feedback ${assessmentFeedback}`}
-              role="status"
-              aria-live="polite"
-            >
-              <div
-                className="feedback-icon"
-                aria-hidden="true"
-              >
-                {feedbackIcon(
-                  assessmentFeedback,
-                )}
-              </div>
-
-              <div className="feedback-content">
-                <div className="feedback-title">
-                  {tr(language, feedbackTitle(assessmentFeedback))}
-                </div>
-
-                <div className="feedback-message">
-                  {tr(language, feedbackMessage(assessmentFeedback))}
-                </div>
-              </div>
-            </div>
-          )}
-
           {error && (
             <div className="assessment-feedback incorrect" role="alert">
               <div className="feedback-icon" aria-hidden="true">!</div>
@@ -1037,16 +1066,19 @@ export default function LearnPage() {
 
           {data.content && (
             <>
-              <h2>
+              {lessonLanguageNotice(data.content.language, language) && <p className="contentLanguageNotice" role="note">{lessonLanguageNotice(data.content.language, language)}</p>}
+              <h2 lang={data.content.language}>
                 {data.content.title}
               </h2>
 
-              <div className="lesson-body">
+              <div className="lesson-body" lang={data.content.language}>
                 {data.content.body}
               </div>
+              {data.content.language && <ReadAloudControls learnerId={data.learnerState.learnerId} text={data.content.body} language={data.content.language} surface={hasAssessment ? "question" : "lesson"} />}
 
               {teachView && (
                 <LessonVisual
+                  language={language}
                   topic={`${data.progress.competencyTitle ?? ""} ${data.content.title}`}
                 />
               )}
@@ -1103,19 +1135,20 @@ export default function LearnPage() {
                 id="learner-response"
                 className="rich-response"
                 value={selectedResponse}
-                onChange={(event) =>
-                  setSelectedResponse(event.target.value)
-                }
+                onChange={(event) => {
+                  setAssessmentFeedback(null);
+                  setSelectedResponse(event.target.value);
+                }}
                 placeholder={tr(language, "Write your response here...")}
                 rows={6}
-                disabled={submitting}
+                disabled={submitting || syncing || Boolean(pending)}
               />
 
               <button
                 type="button"
                 className="primary-button"
                 onClick={submitAssessment}
-                disabled={submitting || !selectedResponse.trim()}
+                disabled={submitting || syncing || Boolean(pending) || !selectedResponse.trim()}
               >
                 {tr(language, submitting ? "Sending..." : "Send for review")}
               </button>
@@ -1152,13 +1185,12 @@ export default function LearnPage() {
                           selectedResponse ===
                           option
                         }
-                        onChange={() =>
-                          setSelectedResponse(
-                            option,
-                          )
-                        }
+                        onChange={() => {
+                          setAssessmentFeedback(null);
+                          setSelectedResponse(option);
+                        }}
                         disabled={
-                          submitting
+                          submitting || syncing || Boolean(pending)
                         }
                       />
 
@@ -1177,7 +1209,7 @@ export default function LearnPage() {
                 }
                 disabled={
                   !selectedResponse ||
-                  submitting
+                  submitting || syncing || Boolean(pending)
                 }
                 className="primary-button"
               >
@@ -1192,7 +1224,7 @@ export default function LearnPage() {
             <button
               type="button"
               onClick={continueLearning}
-              disabled={submitting}
+              disabled={submitting || syncing || Boolean(pending)}
               className="primary-button"
             >
               {tr(language, buttonLabel(action))}
@@ -1216,7 +1248,7 @@ export default function LearnPage() {
           {isComplete && (
             <div className="complete-card">
               <div className="complete-mark" aria-hidden="true">
-                {"✓"}
+                {needsSupportPause ? "!" : "✓"}
               </div>
 
               <h2>
@@ -1239,7 +1271,7 @@ export default function LearnPage() {
             </div>
           )}
 
-          {currentStage === 4 && (
+          {(currentStage === 4 || (isComplete && !needsSupportPause)) && (
             <div className="reflectCard">
               <strong>{tr(language, "Think about it")}</strong>
               <ul>
@@ -1267,16 +1299,16 @@ export default function LearnPage() {
             </div>
           )}
         </section>
-        </section>
+        </section>}
 
-        {teachView && (
+        {teachView && !lessonClosure.loading && !lessonClosure.closure && (
           <button
             type="button"
             onClick={continueLearning}
-            disabled={submitting}
+            disabled={submitting || syncing || Boolean(pending)}
             className="primary-button nextButton"
           >
-            {tr(language, "Next:") + " " + tr(language, learningStages[Math.min(currentStage + 1, 4)])}
+            {tr(language, "Continue learning")}
             <span className="arrow" aria-hidden="true">
               {"→"}
             </span>
@@ -1291,11 +1323,13 @@ export default function LearnPage() {
           </div>
         </div>
 
+        <LearningNotices learnerId={data.learnerState.learnerId} completed={data.progress.completedCompetencies} language={language} />
         <footer className="learnFooter">
           <img src="/images/home/landscape%20footer.png" alt="" />
         </footer>
 
-        <LearnerBottomNav active="learning" language={language} />
+        <LearnerSignOut language={language} />
+        <LearnerBottomNav active="learning" language={language} subjectId={askSubjectId} />
       </div>
 
       <style jsx>{`
@@ -1463,6 +1497,19 @@ export default function LearnPage() {
           line-height: 1.1;
         }
 
+        .learnBanner > small {
+          grid-column: 1 / -1;
+          margin-top: 6px;
+          line-height: 1.4;
+        }
+
+        .stageExplanation {
+          margin: 8px 0;
+          color: var(--filumire-navy);
+          font-size: 0.8rem;
+          line-height: 1.5;
+        }
+
         .progress-track {
           grid-column: 1 / -1;
           height: 8px;
@@ -1492,7 +1539,7 @@ export default function LearnPage() {
           flex-direction: column;
           align-items: center;
           gap: 5px;
-          color: #7c8c9b;
+          color: #526575;
           text-align: center;
           font-size: 0.7rem;
           font-weight: 700;
@@ -1527,20 +1574,19 @@ export default function LearnPage() {
 
         .learningStage.active,
         .learningStage.complete {
-          color: #f08a00;
+          color: #855000;
         }
 
         .learningStage.active .stageDot,
         .learningStage.complete .stageDot {
           background: #f5a00f;
-          color: #ffffff;
+          color: #12304a;
         }
 
         .stageName {
-          overflow: hidden;
           max-width: 100%;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+          overflow-wrap: anywhere;
+          white-space: normal;
         }
 
         .offline,
@@ -1588,7 +1634,7 @@ export default function LearnPage() {
           font-size: 14px;
         }
 
-        .lessonHero h1 {
+        .lessonHero h2 {
           position: relative;
           z-index: 1;
           max-width: 68%;
@@ -2004,7 +2050,7 @@ export default function LearnPage() {
             font-size: 15px;
           }
 
-          .lessonHero h1 {
+          .lessonHero h2 {
             font-size: 26px;
           }
 

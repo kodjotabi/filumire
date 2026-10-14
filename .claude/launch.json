@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "filumire-learner",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--workspace=@filumire/learner", "--prefix", "FILUMIRE_CLAUDE", "--", "-p", "3100"],
+      "port": 3100
+    }
+  ]
+}

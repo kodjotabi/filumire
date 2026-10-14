@@ -35,6 +35,7 @@ import {
 import {
   getEvidence,
 } from "../evidence-store";
+import { readAssessmentRecovery } from "../edututor/assessment-recovery";
 
 import {
   INSTRUCTIONAL_INTERVENTION_TYPES,
@@ -203,6 +204,10 @@ export async function makeAdaptiveDecision(
       request.learnerId,
       competency.competencyId,
     );
+  // Guardian-recovered attempts remain historical records. Do not reuse,
+  // cancel or evaluate them when selecting the next real learning activity.
+  const recoveredHistory = await readAssessmentRecovery(request.learnerId);
+  storedInterventions = storedInterventions.filter(item => !recoveredHistory.recovered(item));
 
   /*
    * Answers name the intervention they were given under, but only
@@ -243,6 +248,7 @@ export async function makeAdaptiveDecision(
         request.learnerId,
         competency.competencyId,
       );
+    storedInterventions = storedInterventions.filter(item => !recoveredHistory.recovered(item));
   }
 
   const answeredInterventionIds =

@@ -1,5 +1,7 @@
 import { registerGuardian, registerTeacher } from "../../../../../../services/account";
 import { issueSessionForPrincipal } from "../../../../../../services/identity";
+import { localFamilyServices } from "../../../../../../services/family-access";
+import { localFamilyAccessEnabled } from "../../../../../../services/family-access/otp";
 
 import {
   checkRateLimits,
@@ -28,6 +30,7 @@ export async function POST(request: Request) {
 
     const body = await readJsonBody(request);
     const teacher = body.accountType === "teacher";
+    if (!teacher && localFamilyAccessEnabled()) localFamilyServices().subscriptions.assertRegistrationCapacity();
     const { principalId } = teacher
       ? await registerTeacher({
           email: body.email,
@@ -45,6 +48,9 @@ export async function POST(request: Request) {
           confirmsGuardian: body.confirmsGuardian,
           acceptsNotice: body.acceptsNotice,
         });
+    if (!teacher && localFamilyAccessEnabled()) {
+      localFamilyServices().subscriptions.registerNewFamily(principalId);
+    }
     const session = await issueSessionForPrincipal(principalId);
 
     return withSessionCookies(

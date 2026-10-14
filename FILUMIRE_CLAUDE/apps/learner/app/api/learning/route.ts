@@ -1,6 +1,8 @@
 ﻿import { NextResponse } from "next/server";
 import { getCompetenciesForSubject as getSubjectCompetencies } from "../../../../../packages/curriculum";
 import { buildLearningOverview } from "./overview-data";
+import { recordAssessmentDelivery, recoveredAssessmentDelivery } from "../../../../../services/edututor/assessment-recovery";
+import { assertSameOrigin, BadRequestError, errorResponse, readJsonBody } from "../account/http";
 
 import type {
   AssessmentSubmission,
@@ -38,9 +40,11 @@ import {
 
 import { makeAdaptiveDecision } from "../../../../../services/adaptive-engine";
 import { generateInstruction } from "../../../../../services/edututor";
+import { issueLessonReceipt } from "../../../../../services/lesson-closure";
 
 import {
   getLearnerState,
+  getLearnerStates,
   saveLearnerState,
 } from "../../../../../services/learner-state-store";
 
@@ -563,6 +567,8 @@ async function buildLearningResponse(
     clientRequestId:
       `adaptive:${sessionId}:${adaptiveDecision.decision.competencyId}:${learnerState.updatedAt}:${adaptiveDecision.decision.action}`,
     metadata: {
+      source: "assessment-aware-decision-v1",
+      interventionId: adaptiveDecision.decision.interventionId ?? null,
       action:
         adaptiveDecision.decision.action,
     },
@@ -607,9 +613,15 @@ async function buildLearningResponse(
         "FILUMIRE learner-facing adaptive-learning session.",
     });
 
+  // Unlike best-effort analytics, this is an assessment integrity boundary:
+  // never return a resumed assessment without recording its actual delivery.
+  await recordAssessmentDelivery(learnerId, sessionId, adaptiveDecision.decision.interventionId,
+    adaptiveDecision.decision.competencyId, adaptiveDecision.content);
+
   return {
     learnerState:
       updatedLearnerState,
+    lessonReceipt: await issueLessonReceipt(learnerId, adaptiveDecision.decision.interventionId, adaptiveDecision.content),
     decision:
       adaptiveDecision.decision,
     content: sanitizeLearnerContent(adaptiveDecision.content, learnerId),
@@ -640,6 +652,27 @@ export async function GET(
       );
     }
 
+    if (url.searchParams.get("dashboard") === "1") {
+      // Displaying Home must not deliver questions, replay submissions or
+      // activate an adaptive intervention. Existing evidence remains untouched.
+      const context = await getOrCreateLearnerLearningContext(identity.learnerId);
+      const states = await getLearnerStates(identity.learnerId);
+      const state = states.find(item => item.competencies.some(c => c.competencyId === context.activeCompetencyId));
+      const empty = { learnerId: identity.learnerId, competencies: [] };
+      const learnerState = state ?? empty;
+      const progress = state ? buildProgress(state) : {
+        learnerId: identity.learnerId, competencyCount: 0, completedCompetencies: 0,
+        masteryEstimate: 0, confidence: 0, evidenceCount: 0, readiness: false, percent: 0,
+        subjectId: context.activeSubjectId,
+        subjectName: getSubject(context.activeSubjectId)?.name,
+      };
+      return NextResponse.json({ learnerState, progress,
+        decision: { id: "dashboard-display", sessionId: identity.sessionId ?? "", action: "display",
+          competencyId: context.activeCompetencyId ?? "", reasonCode: "READ_ONLY_DASHBOARD" },
+        instruction: { content: "" } }, { headers: { "cache-control": "no-store" } });
+    }
+
+    assertSameOrigin(request);
     const requestedSessionId =
       url.searchParams.get(
         "sessionId",
@@ -722,6 +755,7 @@ export async function GET(
       response,
     );
   } catch (error) {
+    if (error instanceof BadRequestError) return errorResponse(error, "learning request");
     if (
       error instanceof Error &&
       (
@@ -775,11 +809,12 @@ export async function POST(
   request: Request,
 ) {
   try {
+    assertSameOrigin(request);
     const identity =
       await resolveRequestIdentity(request);
 
     const body =
-      (await request.json()) as {
+      (await readJsonBody(request)) as unknown as {
         learnerId?: string;
         sessionId: string;
         interventionId?: string;
@@ -1043,6 +1078,14 @@ export async function POST(
         body.clientRequestId,
     };
 
+    const recoveredDelivery = await recoveredAssessmentDelivery(authenticatedLearnerId, body.sessionId,
+      body.competencyId, body.assessmentItemId, body.interventionId);
+    if (!recoveredDelivery.allowed) {
+      return NextResponse.json({error: "Reopen the lesson before submitting this recovered assessment.",
+        code: "assessment_delivery_required"}, {status:409,headers:{"cache-control":"no-store"}});
+    }
+    if (recoveredDelivery.required) submission.interventionId = recoveredDelivery.interventionId;
+
     const assessmentContent =
       getContentForCompetency(
         body.competencyId,
@@ -1224,6 +1267,7 @@ export async function POST(
       ...response,
     });
   } catch (error) {
+    if (error instanceof BadRequestError) return errorResponse(error, "learning submission");
     if (
       error instanceof Error &&
       (

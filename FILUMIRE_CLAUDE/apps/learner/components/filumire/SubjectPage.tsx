@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, type ReactNode } from "react";
 
 import type { LearningOverview } from "../../services/learning-client";
+import { completionPercent } from "../../services/learning-presentation";
 import { subjectLabel, type FilumireSubject, type FilumireSubjectKey } from "./subjects";
 
 type AreaStatus = "completed" | "inprogress" | "new";
@@ -42,9 +43,9 @@ const TEXT: Record<
   }
 > = {
   en: {
-    overall: "Overall Progress",
+    overall: "Subject goals mastered",
     of: "of",
-    topics: "topics completed",
+    topics: "goals mastered",
     current: "Current Topic",
     areas: "Learning Areas",
     viewAll: "View All",
@@ -55,7 +56,7 @@ const TEXT: Record<
     keep: "Keep going!",
     great: "You're making great progress in",
     practice: "Practice today, progress tomorrow!",
-    status: { completed: "Completed", inprogress: "In Progress", new: "Not Started" },
+    status: { completed: "Mastered", inprogress: "In Progress", new: "Not Started" },
     tagline: {
       english: "Read. Think. Express.",
       mathematics: "Solve. Reason. Grow.",
@@ -70,9 +71,9 @@ const TEXT: Record<
     },
   },
   fr: {
-    overall: "Progression globale",
+    overall: "Objectifs maîtrisés dans cette matière",
     of: "sur",
-    topics: "thèmes terminés",
+    topics: "objectifs maîtrisés",
     current: "Thème actuel",
     areas: "Domaines d'apprentissage",
     viewAll: "Tout voir",
@@ -83,7 +84,7 @@ const TEXT: Record<
     keep: "Continue !",
     great: "Tu progresses bien en",
     practice: "Pratique aujourd'hui, progresse demain !",
-    status: { completed: "Terminé", inprogress: "En cours", new: "Pas commencé" },
+    status: { completed: "Maîtrisé", inprogress: "En cours", new: "Pas commencé" },
     tagline: {
       english: "Lire. Penser. Exprimer.",
       mathematics: "Résoudre. Raisonner. Grandir.",
@@ -117,14 +118,6 @@ const AREA_ICONS: Record<AreaStatus, ReactNode> = {
   ),
 };
 
-function markCurrent(list: LearningOverview["areas"], title: string) {
-  if (!title) return list;
-  const live = list.findIndex((a) => a.status === "inprogress");
-  const at = live >= 0 ? live : list.findIndex((a) => a.status === "new");
-  if (at < 0) return list;
-  return list.map((a, i) => (i === at ? { ...a, title, status: "inprogress" as const } : a));
-}
-
 export function SubjectPage({
   subject,
   language,
@@ -138,10 +131,10 @@ export function SubjectPage({
   const [showAll, setShowAll] = useState(false);
   const stats = overview?.subjects[subject.subjectId];
   const areas =
-    overview && overview.areasSubjectId === subject.subjectId ? markCurrent(overview.areas, currentTitle) : [];
+    overview && overview.areasSubjectId === subject.subjectId ? overview.areas : [];
   const total = stats ? stats.total : areas.length;
   const done = stats ? stats.completed : 0;
-  const percent = total > 0 ? Math.round((done / total) * 100) : 0;
+  const percent = completionPercent(stats);
   const inProgress = areas.findIndex((area) => area.status === "inprogress");
   const nextNew = areas.findIndex((area) => area.status === "new");
   const titledIndex = currentTitle ? areas.findIndex((area) => area.title === currentTitle) : -1;
@@ -176,18 +169,18 @@ export function SubjectPage({
         <div className="subjectProgressRow">
           <span
             className="homeMiniTrack"
-            role="progressbar"
+            role={percent === null ? undefined : "progressbar"}
             aria-label={t.overall}
             aria-valuemin={0}
             aria-valuemax={100}
-            aria-valuenow={percent}
+            aria-valuenow={percent ?? undefined}
           >
-            <span style={{ width: `${percent}%` }} />
+            <span style={{ width: `${percent ?? 0}%` }} />
           </span>
-          <b>{percent}%</b>
+          <b>{percent === null ? "—" : `${percent}%`}</b>
         </div>
         <small>
-          {done} {t.of} {total} {t.topics}
+          {stats ? `${done} ${t.of} ${total} ${t.topics}` : language === "fr" ? "Progression indisponible" : "Progress unavailable"}
         </small>
       </section>
 

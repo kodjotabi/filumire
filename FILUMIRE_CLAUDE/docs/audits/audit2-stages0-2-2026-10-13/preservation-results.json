@@ -1,0 +1,23 @@
+{
+  "archivedFilesChecked": 10743,
+  "changedExistingFiles": [
+    "FILUMIRE_CLAUDE/apps/learner/components/filumire/FiluConversation.tsx",
+    "FILUMIRE_CLAUDE/apps/learner/components/filumire/LearnerHeader.tsx",
+    "FILUMIRE_CLAUDE/apps/learner/components/filumire/ProfilePage.tsx",
+    "FILUMIRE_CLAUDE/apps/learner/components/filumire/VoiceSelection.tsx",
+    "FILUMIRE_CLAUDE/apps/learner/app/learner-interface.css",
+    "FILUMIRE_CLAUDE/apps/learner/app/login/page.tsx",
+    "FILUMIRE_CLAUDE/apps/learner/app/learn/page.tsx",
+    "FILUMIRE_CLAUDE/apps/learner/app/dashboard/page.tsx"
+  ],
+  "missingExistingFiles": [
+    "FILUMIRE_CLAUDE/scripts/preserve-audit2.py"
+  ],
+  "snapshotVerifiedBeforeEdits": true,
+  "generatedCachesExcluded": [
+    "node_modules",
+    ".next",
+    ".turbo"
+  ],
+  "noDatabaseOrDeploymentOperations": true
+}

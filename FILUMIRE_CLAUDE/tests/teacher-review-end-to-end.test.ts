@@ -1,3 +1,4 @@
+import { seedTrustedRubricContent } from "./fixtures/trusted-rubric-content";
 import { NextRequest } from "next/server";
 import { POST as learningPOST } from "../apps/learner/app/api/learning/route";
 import { GET as teacherSummaryGET } from "../apps/learner/app/api/teacher/summary/route";
@@ -23,9 +24,10 @@ const COMPETENCY_ID =
   "competency-gh-english-b4-1-1-1-1";
 
 const ASSESSMENT_ITEM_ID =
-  "item-gh-b4-english-b4-1-1-1-1-diagnostic-en";
+  "item-test-trusted-oral-review";
 
 async function run(): Promise<void> {
+  seedTrustedRubricContent();
   seedContent();
 
   const stamp = crypto.randomUUID();

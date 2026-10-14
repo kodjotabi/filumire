@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 
 import type { LearningOverview } from "../../services/learning-client";
+import { completionPercent } from "../../services/learning-presentation";
 import { subjectLabel, toFilumireSubjects } from "./subjects";
 import { computeAchievements } from "./achievements";
 
@@ -39,8 +40,8 @@ const TEXT = {
     of: "of",
     start: "Start Challenge",
     more: "More Learning Challenges",
-    viewAll: "View all",
-    rowSub: "Learning goals completed",
+    viewAll: "See all subjects",
+    rowSub: "Subject goals mastered",
     achievements: "Your Achievements",
     earned: "Earned",
     locked: "Not yet earned",
@@ -57,8 +58,8 @@ const TEXT = {
     of: "sur",
     start: "Commencer le d\u00e9fi",
     more: "Autres d\u00e9fis d\u2019apprentissage",
-    viewAll: "Tout voir",
-    rowSub: "Objectifs termin\u00e9s",
+    viewAll: "Voir toutes les matières",
+    rowSub: "Objectifs ma\u00eetris\u00e9s dans cette mati\u00e8re",
     achievements: "Tes r\u00e9ussites",
     earned: "Obtenu",
     locked: "Pas encore obtenu",
@@ -79,7 +80,7 @@ export function ChallengesPage({
 }: ChallengesPageProps) {
   const t = TEXT[language];
 
-  if (!overview && overviewState !== "ready") {
+  if (!overview) {
     return (
       <div className="challengesPage">
         {overviewState === "loading" ? (
@@ -110,7 +111,7 @@ export function ChallengesPage({
     const total = stats?.total ?? 0;
     const done = stats?.completed ?? 0;
     const started = (stats?.tracked ?? 0) > 0 || done > 0;
-    const percent = total > 0 ? Math.round((done / total) * 100) : 0;
+    const percent = completionPercent(stats);
     return { subject, total, done, started, percent };
   });
 
@@ -121,10 +122,8 @@ export function ChallengesPage({
     language,
   );
 
-  const currentPercent =
-    current.total > 0
-      ? Math.round((current.done / current.total) * 100)
-      : 0;
+  const currentStats = overview.subjects[current.subjectId];
+  const currentPercent = completionPercent(currentStats);
 
   const others = rows
     .filter((row) => row.subject.subjectId !== current.subjectId)
@@ -157,16 +156,16 @@ export function ChallengesPage({
         <div className="cTodayBar">
           <div
             className="cTrack"
-            role="progressbar"
-            aria-label={t.today}
+            role={currentPercent === null ? undefined : "progressbar"}
+            aria-label={t.rowSub}
             aria-valuemin={0}
             aria-valuemax={100}
-            aria-valuenow={currentPercent}
+            aria-valuenow={currentPercent ?? undefined}
           >
-            <span style={{ width: `${currentPercent}%` }} />
+            <span style={{ width: `${currentPercent ?? 0}%` }} />
           </div>
           <b>
-            {current.done} {t.of} {current.total}
+            {currentStats ? `${currentStats.completed} ${t.of} ${currentStats.total} ${t.rowSub}` : "—"}
           </b>
         </div>
         <Link href={current.startHref} className="cStart">
@@ -196,13 +195,13 @@ export function ChallengesPage({
                 <small>{t.rowSub}</small>
                 <span
                   className="cTrack small"
-                  role="progressbar"
-                  aria-label={subjectLabel(subject.name, language)}
+                  role={percent === null ? undefined : "progressbar"}
+                  aria-label={`${subjectLabel(subject.name, language)}: ${t.rowSub}`}
                   aria-valuemin={0}
                   aria-valuemax={100}
-                  aria-valuenow={percent}
+                  aria-valuenow={percent ?? undefined}
                 >
-                  <span style={{ width: `${percent}%` }} />
+                  <span style={{ width: `${percent ?? 0}%` }} />
                 </span>
               </span>
               <b>

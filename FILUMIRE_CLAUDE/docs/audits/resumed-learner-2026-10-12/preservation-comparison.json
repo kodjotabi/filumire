@@ -1,0 +1,75 @@
+{
+    "changed":  [
+                    {
+                        "path":  "FILUMIRE_CLAUDE\\apps\\learner\\app\\learner-interface.css",
+                        "before":  "03F4FE99D70CDCA1C67D5442D962A36D05F85B7396B75EEB7366961F0B43817B",
+                        "after":  "40A42326676061482785F7D127995533F417D24E502387EDE28F1095B5158A9C"
+                    },
+                    {
+                        "path":  "FILUMIRE_CLAUDE\\apps\\learner\\app\\dashboard\\page.tsx",
+                        "before":  "31D6CEF5849705498E7F2BCA98F2E62BB4308DEE8BF0311FD60FA3D38EB61E77",
+                        "after":  "262B2AA3A870357C34BFA2221C9D10EA7AA0090E01C8789953BF644FF5C4AF36"
+                    },
+                    {
+                        "path":  "FILUMIRE_CLAUDE\\apps\\learner\\app\\learn\\page.tsx",
+                        "before":  "9252D5CCA5143975F160C846524EEC034334B1C07561F25F9BA34605FC7CB8D6",
+                        "after":  "4942870F796A45E414AA4412531BBE7AE23B4599FD0306AD0AAF9B38F9578F17"
+                    },
+                    {
+                        "path":  "FILUMIRE_CLAUDE\\apps\\learner\\app\\login\\page.tsx",
+                        "before":  "18CF46A41FF7041D55C9D2EEDD15D396D07F6DA92BFD7732946B79B4E26FE214",
+                        "after":  "4910D584E5A5510F4A7B2487E9D07DEE32779A0D05099F7A81269794DF17D0F8"
+                    },
+                    {
+                        "path":  "FILUMIRE_CLAUDE\\apps\\learner\\components\\filumire\\AskFiluPage.tsx",
+                        "before":  "33349DDFFC426421E29D74DAC68B271F975B8E009782CD14C436698E7F81087C",
+                        "after":  "FE81FB7F04823AD4D7D9045F67F6250629979D5DFC3D01690F85A02700950127"
+                    },
+                    {
+                        "path":  "FILUMIRE_CLAUDE\\apps\\learner\\components\\filumire\\ChallengesPage.tsx",
+                        "before":  "FCA41E16840CE79ECFB89273D4341FB24DE6424809277F0FB7D58D7D30E20C5A",
+                        "after":  "B8C79A412C5BDD9B856C837A4FBBD01DDA361416BE65ED88A528DFF8EA466922"
+                    },
+                    {
+                        "path":  "FILUMIRE_CLAUDE\\apps\\learner\\components\\filumire\\FiluConversation.tsx",
+                        "before":  "43C7869D06D9A4C5EBB3C0808AA1A87816C1E90596BF50FB5D3039D9A811C8C1",
+                        "after":  "21C46E48C288ADB548EADA8A936BD43FE416E9277C55610ED276908BFBBBCF50"
+                    },
+                    {
+                        "path":  "FILUMIRE_CLAUDE\\apps\\learner\\components\\filumire\\LearnerBottomNav.tsx",
+                        "before":  "7A171B518ACEC3411D1AF43250B31BA5A0E6583B3E9F3DD6A8CFD8BBDFABCA69",
+                        "after":  "E4EE800EC9A963B2F736E7158594F6848D143A0454B0A4826D3E6E806289F25B"
+                    },
+                    {
+                        "path":  "FILUMIRE_CLAUDE\\apps\\learner\\components\\filumire\\LearnerHeader.tsx",
+                        "before":  "C8954C38B64D76C642B1F5569589F4E0E05BC37F33E51EEBDB4D8E69BB70FB94",
+                        "after":  "93BD4398878C23DDE5556B17C9194138CF63C78350F4A3C396EA4F1C8AC40A85"
+                    },
+                    {
+                        "path":  "FILUMIRE_CLAUDE\\apps\\learner\\components\\filumire\\ProfilePage.tsx",
+                        "before":  "1758E52492CCD7DC2784AB5396C7242DDC8AFF7840EA4FA02603053A19899FA0",
+                        "after":  "C52D816A6F3953B0ED40AFFEC6FBD3A1FD648C5B3D21FE98B2E6B4298945C2EB"
+                    },
+                    {
+                        "path":  "FILUMIRE_CLAUDE\\apps\\learner\\components\\filumire\\ReadAloudControls.tsx",
+                        "before":  "42E55790421A88BD1B0D2AD2B56A6B1DC4A506668CB59E011C10B10C963DA9D0",
+                        "after":  "AE09D8D456B130432C75D3CB56E3DD5E2DAAC526033EB4E8036B47D2BCB57BF6"
+                    },
+                    {
+                        "path":  "FILUMIRE_CLAUDE\\apps\\learner\\components\\filumire\\VoiceSelection.tsx",
+                        "before":  "2B738124DE41573A392272D8B73D61494BC2D5CC61954A6359CC9EE7BEAE54BF",
+                        "after":  "D55E1A274060D941274B3F4F77B754527DF9CD87BF2937EB6C51C372DAB45EB6"
+                    },
+                    {
+                        "path":  "FILUMIRE_CLAUDE\\tests\\ask-filu-navigation.test.ts",
+                        "before":  "278ED7B36CE022B0084704521C631B1993FFA23C3B628EAD5391CBA67E935723",
+                        "after":  "F8A7F8383595E4B27552FD1AB68FA2197522F77EA96E3FE0C2BF715BE387AABB"
+                    },
+                    {
+                        "path":  "FILUMIRE_CLAUDE\\tests\\interface-completion.test.ts",
+                        "before":  "4D7ABA461FAD09C2E0DFA73C2B136CE8DA4611194BECA4FFAD5BF1D2E673C0C4",
+                        "after":  "D4D0E672E52C826A3D8B3368A0C43F3B9EC5E8B5CCC81876F1B6C2ED26B1D7C0"
+                    }
+                ],
+    "checked":  9542
+}

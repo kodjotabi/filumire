@@ -1,0 +1,48 @@
+{
+  "recordedDecision": {
+    "commit": "f07f6e01450a30d0b34ecf83db264635abb36d39",
+    "path": "FILUMIRE_CLAUDE/docs/handoff/4B_CHATGPT_MASTERY_MESSAGE.txt",
+    "decision": "Tabi, 7 October: preserve 0.8 thresholds, independent evidence and retention/transfer gates"
+  },
+  "historicalPolicy": {
+    "commit": "f07f6e01",
+    "files": [
+      "handoff/backup-before-tranche4b/services_adaptive-policy_index.ts.bak",
+      "handoff/backup-before-tranche4b/services_assessment_index.ts.bak"
+    ],
+    "failedTransfer": "TRANSFER_FAILURE_PRACTICE",
+    "assessmentVersion": "assessment-0.9"
+  },
+  "regressionChecks": [
+    {
+      "suite": "mastery-v1",
+      "ok": true,
+      "output": "Mastery V1 invariant tests: PASS\n"
+    },
+    {
+      "suite": "mastery-reuse-4b",
+      "ok": true,
+      "output": "PASS mastery-reuse-4b (66 checks)\n"
+    },
+    {
+      "suite": "pedagogical-policy-transition",
+      "ok": true,
+      "output": "{\n  test: 'initial state',\n  action: 'diagnose',\n  reasonCode: 'INSUFFICIENT_EVIDENCE'\n}\n{\n  test: 'conceptual misunderstanding',\n  action: 'teach',\n  reasonCode: 'CONCEPTUAL_MISUNDERSTANDING'\n}\n{\n  test: 'procedural error',\n  action: 'scaffold',\n  reasonCode: 'PROCEDURAL_ERROR'\n}\n{\n  test: 'misconception',\n  action: 'remediate',\n  reasonCode: 'MISCONCEPTION'\n}\n{\n  test: 'persistent failure',\n  action: 'remediate',\n  reasonCode: 'PERSISTENT_FAILURE'\n}\n{\n  test: 'prerequisite not satisfied',\n  action: 'scaffold',\n  reasonCode: 'PREREQUISITE_NOT_SATISFIED'\n}\n{\n  test: 'practice required',\n  action: 'practice',\n  reasonCode: 'PRACTICE_REQUIRED'\n}\n{\n  test: 'retention required after mastery',\n  action: 'retention_check',\n  reasonCode: 'RETENTION_REQUIRED'\n}\n{\n  test: 'transfer required after retention',\n  action: 'transfer_check',\n  reasonCode: 'TRANSFER_REQUIRED'\n}\n{\n  test: 'advancement',\n  action: 'advance',\n  reasonCode: 'MASTERY_RETENTION_TRANSFER_CONFIRMED'\n}\n{\n  test: 'completion',\n  action: 'complete',\n  reasonCode: 'LEARNING_PATH_COMPLETE'\n}\n{\n  test: 'ineffective intervention overrides normal progression',\n  action: 'reassess',\n  reasonCode: 'INEFFECTIVE_INTERVENTION'\n}\n{ pedagogicalPolicyTransitionTest: 'PASS' }\n"
+    },
+    {
+      "suite": "evidence-context-v1",
+      "ok": true,
+      "output": "5 independent authored-style answers: 1.00 0.85 STRONG_MASTERY_EVIDENCE\n8 worked-example-supported answers: 0.84 0.53 LIMITED_DISTINCT_EVIDENCE\nSTEP A TESTS PASS\n"
+    },
+    {
+      "suite": "no-premature-advancement",
+      "ok": true,
+      "output": "{\n  noPrematureAdvancementTest: 'PASS',\n  failedRetentionAction: 'practice',\n  retentionChecksAfterFailure: 4,\n  recoveredRetentionAction: 'transfer_check'\n}\n"
+    }
+  ],
+  "curriculumFixture": {
+    "commit": "f07f6e01",
+    "status": "blocked",
+    "reason": "Historical extraction/review text exists, but accompanying source README documents Mathematics, not English. No verified English PDF identity/checksum/extraction provenance available; code/spec agreement alone is not independent authority."
+  }
+}

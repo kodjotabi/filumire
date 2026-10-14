@@ -1,0 +1,1 @@
+Archived 9542 existing files, including hidden/ignored configurations and all modified/untracked work; history.bundle preserves Git history. Generated dependencies/build caches excluded. Restore privately: archive contains local secrets.

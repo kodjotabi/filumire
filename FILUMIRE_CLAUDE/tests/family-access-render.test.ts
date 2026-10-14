@@ -1,0 +1,17 @@
+import assert from "node:assert/strict";
+import React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { readFileSync } from "node:fs";
+Object.assign(globalThis, { React });
+const { FamilyAccessPrototype } = await import("../apps/learner/components/filumire/FamilyAccessPrototype");
+const html = renderToStaticMarkup(React.createElement(FamilyAccessPrototype));
+assert.match(html, /Family access/); assert.match(html, /Fictional fixtures only/);
+assert.match(html, /type="tel"/); assert.match(html, /inputMode="tel"/);
+assert.match(html, /for="family-phone"/); assert.match(html, /role="status"/);
+assert.match(html, /Request test code/); assert.match(html, /No payments are processed/);
+assert.doesNotMatch(html, /scrypt\$|trialIdentityClaims|passwordHash/);
+const source = readFileSync(new URL("../apps/learner/components/filumire/FamilyAccessPrototype.tsx", import.meta.url), "utf8");
+assert.match(source, /Accès familial/); assert.match(source, /Fin de l’essai/); assert.match(source, /Aucun prélèvement automatique/);
+assert.match(source, /busyRef\.current/); assert.match(source, /AbortController/); assert.match(source, /clearLearnerProfileFromDevice/);
+assert.doesNotMatch(source, /localStorage|sessionStorage/);
+console.log("PASS: prototype SSR labels, mock disclosure, accessible phone input/status, bilingual copy contracts, request guards, no browser persistence of phone or OTP (not real-browser validation)");

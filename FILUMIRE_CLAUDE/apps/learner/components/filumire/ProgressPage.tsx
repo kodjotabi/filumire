@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 
 import type { LearningOverview } from "../../services/learning-client";
+import { completionPercent, estimatePercent } from "../../services/learning-presentation";
 import { subjectLabel, toFilumireSubjects } from "./subjects";
 
 type ProgressPageProps = {
@@ -16,6 +17,7 @@ type ProgressPageProps = {
     subjectName: string;
     title: string;
     mastery: number;
+    confidence: number;
     evidenceCount: number;
     readiness: boolean;
     learnHref: string;
@@ -35,16 +37,18 @@ const TEXT = {
     title: "My Progress",
     intro: "You’re learning and making great progress!",
     note: ["Small steps", "make big", "progress!"],
-    overall: "Overall Progress",
+    overall: "Curriculum goals mastered",
     across: "Across all subjects",
     onTrack: "You’re on track. Keep going!",
     notStarted: "Start a subject to see your progress grow.",
     loading: "Loading your progress...",
     unavailable: "Your progress couldn’t be loaded right now.",
     retry: "Try again",
-    mastery: "Current topic mastery",
+    mastery: "Estimated current topic mastery",
+    confidence: "Confidence in this estimate",
+    mastered: "goals mastered",
     masteryHelp:
-      "FILUMIRE confirms mastery only after you show your understanding more than once.",
+      "This is an estimate of understanding, not lesson completion. Confidence describes how certain FILUMIRE is. Moving on also requires the engine's readiness checks.",
     answers: "answers checked",
     ready: "Ready to move on",
     building: "Still building",
@@ -73,16 +77,18 @@ const TEXT = {
     title: "Mes progrès",
     intro: "Tu apprends et tu progresses bien !",
     note: ["Petits pas,", "grands", "progrès !"],
-    overall: "Progression globale",
+    overall: "Objectifs du programme maîtrisés",
     across: "Dans toutes les matières",
     onTrack: "Tu es sur la bonne voie. Continue !",
     notStarted: "Commence une matière pour voir ta progression.",
     loading: "Chargement de ta progression...",
     unavailable: "Ta progression n’a pas pu être chargée pour le moment.",
     retry: "Réessayer",
-    mastery: "Maîtrise du thème actuel",
+    mastery: "Estimation de la maîtrise du thème actuel",
+    confidence: "Confiance dans cette estimation",
+    mastered: "objectifs maîtrisés",
     masteryHelp:
-      "FILUMIRE confirme la maîtrise seulement quand tu as montré ta compréhension plusieurs fois.",
+      "C'est une estimation de ta compréhension, pas de l'achèvement d'une leçon. La confiance indique la certitude de FILUMIRE. La suite dépend aussi des vérifications du moteur adaptatif.",
     answers: "réponses vérifiées",
     ready: "Prêt pour la suite",
     building: "En construction",
@@ -119,7 +125,7 @@ export function ProgressPage({
 }: ProgressPageProps) {
   const t = TEXT[language];
 
-  if (!overview && overviewState !== "ready") {
+  if (!overview) {
     return (
       <div className="progressPage">
         {overviewState === "loading" ? (
@@ -145,17 +151,16 @@ export function ProgressPage({
     );
   }
 
-  const masteryPercent = current
-    ? Math.round(Math.max(0, Math.min(1, current.mastery)) * 100)
-    : 0;
+  const masteryPercent = current ? estimatePercent(current.mastery) : null;
+  const confidencePercent = current ? estimatePercent(current.confidence) : null;
 
   const rows = toFilumireSubjects(overview?.availableSubjects).map((subject) => {
     const stats = overview?.subjects[subject.subjectId];
     const total = stats?.total ?? 0;
     const done = stats?.completed ?? 0;
     const started = (stats?.tracked ?? 0) > 0 || done > 0;
-    const percent = total > 0 ? Math.round((done / total) * 100) : 0;
-    const tone = (percent >= 60 ? "good" : started ? "learning" : "fresh") as
+    const percent = completionPercent(stats);
+    const tone = ((percent ?? 0) >= 60 ? "good" : started ? "learning" : "fresh") as
       | "good"
       | "learning"
       | "fresh";
@@ -164,13 +169,13 @@ export function ProgressPage({
 
   const totalAll = rows.reduce((sum, row) => sum + row.total, 0);
   const doneAll = rows.reduce((sum, row) => sum + row.done, 0);
-  const overall = totalAll > 0 ? Math.round((doneAll / totalAll) * 100) : 0;
+  const overall = completionPercent({ total: totalAll, completed: doneAll });
 
   // Only real evidence: a strength needs a completed goal, a focus area
   // needs a started subject. Untouched subjects at 0% are neither.
   const strengths = rows
     .filter((row) => row.done > 0)
-    .sort((a, b) => b.percent - a.percent)
+    .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))
     .slice(0, 2);
   const focus = rows
     .filter(
@@ -178,7 +183,7 @@ export function ProgressPage({
         row.tone === "learning" &&
         !strengths.some((s) => s.subject.key === row.subject.key),
     )
-    .sort((a, b) => a.percent - b.percent)
+    .sort((a, b) => (a.percent ?? 0) - (b.percent ?? 0))
     .slice(0, 2);
 
   return (
@@ -207,19 +212,19 @@ export function ProgressPage({
           <small>{t.across}</small>
         </div>
         <div className="pOverallBar">
-          <b>{overall}%</b>
+          <b>{overall === null ? "—" : `${overall}%`}</b>
           <div
             className="pTrack"
-            role="progressbar"
+            role={overall === null ? undefined : "progressbar"}
             aria-label={t.overall}
             aria-valuemin={0}
             aria-valuemax={100}
-            aria-valuenow={overall}
+            aria-valuenow={overall ?? undefined}
           >
-            <span style={{ width: `${overall}%` }} />
+            <span style={{ width: `${overall ?? 0}%` }} />
           </div>
           <small>
-            {rows.some((row) => row.tone !== "fresh") ? t.onTrack : t.notStarted}
+            {doneAll} / {totalAll} {t.mastered}
           </small>
         </div>
       </section>
@@ -233,19 +238,20 @@ export function ProgressPage({
                 {current.subjectName} · {current.title}
               </small>
             </div>
-            <b>{masteryPercent}%</b>
+            <b>{masteryPercent === null ? "—" : `${masteryPercent}%`}</b>
           </div>
           <div
             className="pTrack"
-            role="progressbar"
+            role={masteryPercent === null ? undefined : "progressbar"}
             aria-labelledby="p-mastery-title"
             aria-valuemin={0}
             aria-valuemax={100}
-            aria-valuenow={masteryPercent}
+            aria-valuenow={masteryPercent ?? undefined}
           >
-            <span style={{ width: `${masteryPercent}%` }} />
+            <span style={{ width: `${masteryPercent ?? 0}%` }} />
           </div>
           <div className="pMasteryMeta">
+            <span>{t.confidence}: {confidencePercent === null ? "—" : `${confidencePercent}%`}</span>
             <span className={`pChip ${current.readiness ? "good" : "learning"}`}>
               {current.readiness ? t.ready : t.building}
             </span>
@@ -268,7 +274,7 @@ export function ProgressPage({
           </Link>
         </div>
         <div className="pGrid">
-          {rows.map(({ subject, percent, tone }) => (
+          {rows.map(({ subject, percent, tone, done, total }) => (
             <Link
               key={subject.key}
               href={`/dashboard?lang=${language}&view=learning&subjectId=${subject.subjectId}`}
@@ -282,19 +288,20 @@ export function ProgressPage({
               </span>
               <span className="pCardName">
                 <strong>{subjectLabel(subject.name, language, true)}</strong>
-                <b>{percent}%</b>
+                <b>{percent === null ? "—" : `${percent}%`}</b>
               </span>
               <span
                 className="pTrack small"
-                role="progressbar"
-                aria-label={subjectLabel(subject.name, language)}
+                role={percent === null ? undefined : "progressbar"}
+                aria-label={`${subjectLabel(subject.name, language)}: ${t.mastered}`}
                 aria-valuemin={0}
                 aria-valuemax={100}
-                aria-valuenow={percent}
+                aria-valuenow={percent ?? undefined}
               >
-                <span style={{ width: `${percent}%` }} />
+                <span style={{ width: `${percent ?? 0}%` }} />
               </span>
               <span className={`pChip ${tone}`}>{t[tone]}</span>
+              <small>{done} / {total} {t.mastered}</small>
               <span className="pArrow" aria-hidden="true">
                 {"›"}
               </span>
@@ -331,7 +338,7 @@ export function ProgressPage({
               <li key={row.subject.key}>
                 <i>{index + 1}</i>
                 <span>{subjectLabel(row.subject.name, language)}</span>
-                <b>{row.percent}%</b>
+                <b>{row.done} / {row.total} {t.mastered}</b>
               </li>
             ))}
             <li>
@@ -348,7 +355,7 @@ export function ProgressPage({
               <li key={row.subject.key}>
                 <i>{index + 1}</i>
                 <span>{subjectLabel(row.subject.name, language)}</span>
-                <b>{row.percent}%</b>
+                <b>{row.done} / {row.total} {t.mastered}</b>
               </li>
             ))}
             <li>

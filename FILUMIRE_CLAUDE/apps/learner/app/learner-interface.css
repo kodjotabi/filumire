@@ -1,0 +1,149 @@
+/* Phase 6: learner-only refinements. Established navy/blue/green identity retained. */
+.learnerUi {
+  --learner-action: var(--ui-brand);
+  --learner-focus: #0f2a6b;
+  --learner-touch: 44px;
+  --learner-reading-width: 68ch;
+  --learner-control-radius: 12px;
+  --learner-space: 12px;
+  --ui-blue: var(--learner-action);
+  min-width: 0;
+  overflow-wrap: anywhere;
+  scroll-padding-block: 24px 112px;
+}
+.learnerUi :where(button, input, select, textarea) { font-family: inherit; }
+.learnerUi .learnerSignOut { min-width: 0; max-width: 100%; }
+.learnerUi .learnerSignOutButton { padding: 8px 12px; border: 1px solid currentColor; border-radius: 12px; background: transparent; color: white; font: inherit; cursor: pointer; }
+.learnerUi .learnerSignOut p { max-width: 30ch; margin: 8px 0; color: white; line-height: 1.5; }
+.learnerUi .learnerBottomSignOut { grid-column: 1 / -1; text-align: center; padding: 12px 16px 24px; margin-bottom: calc(var(--filumire-nav-height, 72px) + env(safe-area-inset-bottom)); }
+.learnerUi .learnerBottomSignOut .learnerSignOutButton { color: var(--filumire-navy, #0f2a6b); min-height: 44px; }
+.learnerUi .learnerBottomSignOut p { margin-inline: auto; color: #b42318; }
+.learnerUi .profileSettings { grid-area: settings; min-width: 0; }
+.learnerUi .profileSettingsTitle { grid-area: heading; margin: 0; color: var(--filumire-navy, #0f2a6b); font-size: clamp(26px, 4vw, 34px); }
+.learnerUi .additionalSettings { border: 1px solid var(--filumire-border, #bcd8ef); border-radius: 16px; padding: 16px; background: var(--filumire-surface, white); }
+.learnerUi .additionalSettings h2 { margin-top: 0; }
+.learnerUi .additionalSettings details { padding: 8px 0; border-bottom: 1px solid var(--filumire-border, #bcd8ef); }
+.learnerUi .additionalSettings summary { min-height: 44px; font-weight: 700; cursor: pointer; padding: 10px 0; }
+.learnerUi .additionalSettings label { display: flex; align-items: center; gap: 12px; min-height: 44px; }
+.learnerUi .additionalSettings input { width: 20px; height: 20px; flex: none; }
+.learnerUi .additionalSettings fieldset { min-width: 0; border: 0; padding: 0; }
+.learnerUi .additionalSettings a { display: inline-block; padding-block: 12px; color: var(--filumire-blue, #1677ff); text-decoration: underline; }
+.learnerUi .additionalSettings p { line-height: 1.6; }
+.learnerUi .filuQuestion { padding: 16px; margin: 16px 0; border: 2px solid var(--filumire-blue, #1677ff); border-radius: 16px; background: var(--filumire-surface, white); }
+.learnerUi .filuQuestion > label { display: block; font-size: clamp(19px, 3vw, 24px); font-weight: 800; margin-bottom: 12px; }
+.learnerUi .filuQuestion textarea { min-height: 100px; font-size: 16px; }
+.learnerUi .learningNotice { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 12px; padding: 12px 16px; border: 1px solid var(--filumire-border, #bcd8ef); border-radius: 12px; background: var(--filumire-surface, white); color: var(--filumire-navy, #0f2a6b); }
+.learnerUi .learningNotice p { flex: 1; margin: 0; }
+.learnerUi .learningNotice button { min-height: 44px; padding: 8px 12px; color: inherit; background: transparent; border: 1px solid currentColor; border-radius: 8px; }
+/* Scope appearance to authenticated learning screens; welcome/sign-in stay unchanged. */
+.learnerUi[data-appearance="dark"] {
+  color-scheme: dark;
+  --filumire-surface: #16263c;
+  --filumire-border: #58718e;
+  --filumire-navy: #e5efff;
+  --filumire-blue: #9ac8ff;
+  --filumire-blue-soft: #203752;
+  --filumire-bg: #0e1a2b;
+  --filumire-text: #e5efff;
+  --filumire-muted: #bdcee4;
+  --ui-ink: #e5efff;
+  --ui-ink-soft: #bdcee4;
+  --ui-line: #58718e;
+  --ui-blue-tint: #203752;
+  --ui-amber-tint: #203752;
+  --ui-green-tint: #203752;
+  --ui-violet-tint: #203752;
+  --learner-focus: #a8d4ff;
+  background: #0e1a2b; color: #e5efff;
+}
+.learnerUi[data-appearance="dark"] .learnerShell :is(.learnerShell, .shell, .homeScreen, .learnMain, .learnBody, .prList, .voiceSettings, .readAloud, .closureCard, .fTopic, .fChat, .fBubble, .filuConversation, .subjectCurrent, .progressCard, .challengeCard, .fState, .additionalSettings, .prRow, .prStats div, .prQuote, .homeSubject, .homeTile, .lesson-body, .assessment-body, .lesson-card, .assessment-card, .learnBanner) { background: #16263c; color: #e5efff; border-color: #58718e; }
+.learnerUi[data-appearance="dark"] .learnerShell :is(h1, h2, h3, p, label, legend, strong, b, small, em, .prGrade, .prDevice, .fTopicText span, .prStats span, .prRow span, .fUserBubble, .filuQuestion, .mockNotice, .subjectTitle, .progressLabel) { color: #e5efff; }
+.learnerUi[data-appearance="dark"] .learnerShell :is(input:not([type="radio"]):not([type="checkbox"]), textarea, select, .fUserBubble) { background: #203752; color: #f4f8ff; border-color: #839fbe; }
+.learnerUi[data-appearance="dark"] .learnerShell :is(input, textarea)::placeholder { color: #bdcee4; opacity: 1; }
+.learnerUi[data-appearance="dark"] .learnerShell :is(.prLang button, .prNameActions button.secondary) { background: #203752; color: #e5efff; }
+.learnerUi[data-appearance="dark"] .learnerShell :is(a:not([class]), .additionalSettings a, .pMasteryLink, .homeSeeAll, .clearChat, .readAloud button, .voiceSettings button) { color: #9ac8ff; }
+.learnerUi[data-appearance="dark"] .learnerShell :is(.card, .lessonHero, .tutor-message, .mockNotice, .transcript, .message > div, .clearChat, .subjectProgress, .subjectArea, .subjectKeep, .pOverall, .pMastery, .pCard, .pGrowing, .pList, .cToday, .cRow, .cAchievement, .homeContinue, .homeHero, .homeNote, .pBubble, .learnTopic, .learnStage, .assessment-feedback, .assessment-options label, .readAloud button, .voiceSettings button) { background: #203752; color: #e5efff; border-color: #839fbe; }
+.learnerUi :where(input, select, textarea) { max-width: 100%; min-width: 0; font-size: 1rem; }
+.learnerUi :where(button, a.fButton, .homeCta, .learningStart, .subjectCta, .homeSeeAll, .filumireBack, .filumireAskFilu, .filumireSetupAskFilu, .filumireLangSwitch, .filumireLangToggle button) {
+  min-height: var(--learner-touch);
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.learnerUi :where(.homeCta, .learningStart, .subjectCta) { height: auto; padding: 10px 12px; line-height: 1.5; }
+.learnerUi :where(button, a, input, select, textarea, summary):focus-visible { outline: 3px solid var(--learner-focus); outline-offset: 3px; }
+.learnerUi header :where(button, a):focus-visible, .learnerUi .filumireBottomNav a:focus-visible { outline-color: #fff; outline-offset: -4px; }
+.learnerUi :where(.filumireAvatar, .filumireSetupAvatar, .filumireLangSwitch) { min-width: var(--learner-touch); min-height: var(--learner-touch); }
+.learnerUi .filumireLearnerHeader { height: auto; min-height: 72px; display: flex; flex-wrap: wrap; gap: var(--learner-space); padding: 12px 16px; }
+.learnerUi :where(.filumireHeaderSide, .filumireSetupHeaderLeft, .filumireHeaderActions, .filumireSetupHeaderRight) { min-width: 0; flex-wrap: wrap; gap: 8px; }
+.learnerUi :where(.filumireHeaderActions, .filumireSetupHeaderRight) { margin-left: auto; }
+.learnerUi .filumireHeaderLogoCentered { position: static; transform: none; }
+.learnerUi .filumireNavItem { min-height: 64px; font-size: .75rem; line-height: 1.4; padding: 8px 4px; overflow-wrap: anywhere; }
+.learnerUi .filumireBottomNav { grid-template-columns: repeat(5, minmax(0, 1fr)); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.learnerUi :where(.learnerContent, .learnBody, .learnMain, .learnSide, .fTopicText, .fTopicGoals, .homeSubjectText, .subjectCurrentBody > div) { min-width: 0; }
+.learnerUi :where(.homeSubjectText strong, .homeSubjectText small, .homeMiniMeta, .homeTrackMeta) { font-size: .875rem; line-height: 1.5; }
+.learnerUi :where(.homeSectionHead, .homeMiniMeta, .homeTrackMeta, .subjectProgressRow) { flex-wrap: wrap; gap: 8px; }
+.learnerUi .homeSubjects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.learnerUi :where(.subjectCurrentBody p, .fTopicText span) { -webkit-line-clamp: unset; white-space: normal; overflow: visible; }
+.learnerUi .homeScreen .subjectCurrentBody p { display: block; -webkit-line-clamp: unset; overflow: visible; line-height: 1.6; }
+.learnerUi .homeScreen .subjectCta { background: var(--learner-action); }
+.learnerUi .homeScreen .subjectTag { background: var(--tint); color: var(--filumire-navy); }
+.learnerUi :where(.filumireBack, .filumireSetupAskFilu, .filumireAskFilu) { font-size: .875rem; line-height: 1.5; }
+.learnerUi .profilePage > .voiceSettings { grid-column: 1 / -1; }
+.learnerUi :where(.lesson-body, .instruction-element p, .tutor-message p, .message p, .closureCard p, .closureCard li) { max-width: var(--learner-reading-width); overflow-wrap: anywhere; line-height: 1.65; }
+.learnerUi :where(.lessonVisual, .lesson-body img) { max-width: 100%; }
+.learnerUi :where(.readAloud, .voiceSettings, .closureCard) { max-width: 100%; min-width: 0; }
+.learnerUi .readAloud { padding: 12px; border: 1px solid var(--filumire-border); border-radius: var(--learner-control-radius); background: var(--filumire-surface); }
+.learnerUi .readAloud summary { min-height: var(--learner-touch); display: flex; align-items: center; cursor: pointer; font-weight: 700; }
+.learnerUi .readAloud details { flex-basis: 100%; }
+.learnerUi .readAloud .audioOptions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.learnerUi .readAloud label { flex-wrap: wrap; min-width: 0; max-width: 100%; }
+.learnerUi .readAloud label select { min-width: 0; max-width: 100%; }
+.learnerUi .readAloud button { border-radius: var(--learner-control-radius); }
+.learnerUi .readAloud button:first-child { font-weight: 700; }
+.learnerUi .contentLanguageNotice { padding: 12px; border: 1px solid var(--filumire-border); border-radius: var(--learner-control-radius); background: var(--filumire-blue-soft); color: var(--filumire-navy); line-height: 1.6; }
+.learnerUi :where(.fState, .connectivity-banner, .assessment-feedback) { overflow-wrap: anywhere; }
+.learnerUi :where(.filumireNavItem, .fButton, .homeCta, .subjectCta, .primary-button, .secondary-button, textarea, input) { scroll-margin-block: 24px 112px; }
+@media (max-width: 359px) {
+  .learnerUi .homeSubjects { grid-template-columns: minmax(0, 1fr); }
+  .learnerUi .homeNote { display: none; } /* Decorative copy only. */
+}
+@media (max-width: 767px) {
+  .learnerUi .homeSubject { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .learnerUi .subjectCurrentBody, .learnerUi .fTopic { flex-wrap: wrap; }
+}
+@media (max-width: 1023px) {
+  /* Keep navigation in flow while a text field or voice selector has focus. */
+  .learnerUi:has(textarea:focus, input:focus, select:focus) .filumireBottomNav { position: relative; bottom: auto; }
+}
+@media (min-width: 768px) {
+  .learnerUi .homeSubjects { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .learnerUi .learnerBottomSignOut { margin-bottom: 0; }
+  .learnerUi .filumireNavItem { flex-shrink: 0; font-size: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .learnerUi *, .learnerUi *::before, .learnerUi *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+.learnerUi[data-appearance="dark"] .learnerShell { background: #0e1a2b; color: #e5efff; }
+.learnerUi .cTodayBar { flex-wrap: wrap; min-width: 0; }
+.learnerUi .challengesPage .cTodayBar b { white-space: normal; overflow-wrap: anywhere; }
+.learnerUi[data-appearance="dark"] .learnerShell :is(.cBadge, .cQuote, .pQuote, .pChip, .pGrowing, .pGrowNote) { background: #203752; color: #e5efff; }
+.learnerUi[data-appearance="dark"] .learnerShell .cBadge.on em { color: #a3e5bb; }
+.learnerUi[data-appearance="dark"] .learnerShell :is(.cStart, .subjectCta, .fButton, .homeCta) { background: #0357c3; color: white; }
+.learnerUi[data-appearance="dark"] .learnerShell .assessment-feedback.correct { background: #12352c; border-color: #86d993; }
+.learnerUi[data-appearance="dark"] .learnerShell .assessment-feedback.incorrect { background: #432032; border-color: #ffa4b6; }
+.learnerUi[data-appearance="dark"] .learnerShell :is(.assessment-feedback.partial, .assessment-feedback.pending-review) { background: #3b3220; border-color: #f0d29c; }
+/* The existing subject banner uses an important subject tint. */
+.learnerUi[data-appearance="dark"] .learnerShell .learnBanner { background: #203752 !important; }
+.learnerUi[data-appearance="dark"] .learnerShell .learnMain .lessonPanel.teach .tutor-message { background: #203752; color: #e5efff; }
+.learnerUi[data-appearance="dark"] .learnerShell :is(.lessonPanel, .lessonPill, .complete-card, .reflectCard, .connectivity-banner) { background: #203752; color: #e5efff; }
+.learnerUi[data-appearance="dark"] .learnerShell .progressPage .pMasteryMeta span { color: #bdcee4; }
+.learnerUi[data-appearance="dark"] .learnerShell .learningStage .stageName { color: #bdcee4; }
+.learnerUi[data-appearance="dark"] .learnerShell .learningStage.active .stageName { color: #ffcb79; }
+.learnerUi[data-appearance="dark"] .learnerShell .askFiluLink { color: #9ac8ff; }
+
+.filumirePublicHome { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex:0 0 44px; background:#fff; border-radius:50%; }
+.filumirePublicHome img { width:28px; height:28px; object-fit:contain; }
+.filumirePublicHome:focus-visible { outline:3px solid #fea102; outline-offset:3px; }

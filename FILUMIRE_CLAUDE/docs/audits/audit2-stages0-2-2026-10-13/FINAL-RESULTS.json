@@ -1,0 +1,95 @@
+{
+  "approvedStages": [
+    0,
+    1,
+    2
+  ],
+  "regression": {
+    "runnable": 156,
+    "passed": 156,
+    "failed": [],
+    "initialFailuresResolved": [
+      "learner-interface-layout.test.ts"
+    ],
+    "blocked": [
+      {
+        "file": "api-auth-postgres-lifecycle.test.ts",
+        "reason": "Requires approved isolated PostgreSQL test database"
+      },
+      {
+        "file": "b4-english-adaptive-coverage.test.ts",
+        "reason": "Unverified authoritative English fixture provenance"
+      },
+      {
+        "file": "evidence-postgres-roundtrip.test.ts",
+        "reason": "Requires approved isolated PostgreSQL test database"
+      },
+      {
+        "file": "evidence-v1-postgres-atomic-persistence.test.ts",
+        "reason": "Requires approved isolated PostgreSQL test database"
+      },
+      {
+        "file": "evidence-v1-postgres-persistence.test.ts",
+        "reason": "Requires approved isolated PostgreSQL test database"
+      },
+      {
+        "file": "learner-state-postgres-concurrency.test.ts",
+        "reason": "Requires approved isolated PostgreSQL test database"
+      },
+      {
+        "file": "learner-state-postgres-semantic-concurrency.test.ts",
+        "reason": "Requires approved isolated PostgreSQL test database"
+      },
+      {
+        "file": "pilot-measurement-v1.test.ts",
+        "reason": "Requires approved isolated PostgreSQL test database"
+      },
+      {
+        "file": "teacher-observation.test.ts",
+        "reason": "Requires approved isolated PostgreSQL test database"
+      },
+      {
+        "file": "teacher-pending-review-postgres.test.ts",
+        "reason": "Requires approved isolated PostgreSQL test database"
+      }
+    ]
+  },
+  "focused": {
+    "passed": 7,
+    "failed": []
+  },
+  "build": {
+    "node": "22.23.3",
+    "rootTypes": "PASS",
+    "learnerTypes": "PASS",
+    "productionBuild": "PASS",
+    "staticPages": 33
+  },
+  "browser": {
+    "cases": 8,
+    "passed": 8,
+    "widths": [
+      320,
+      390,
+      768,
+      1280
+    ],
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "interceptedApis": true,
+    "navigationAccessChecksPassed": 36
+  },
+  "realLocalHttpChecks": 17,
+  "externalDatabaseWrites": false,
+  "deployments": false,
+  "infrastructureChanges": false,
+  "limitations": [
+    "PostgreSQL suites need an approved isolated database.",
+    "One authoritative English fixture remains unverified.",
+    "Headless Chromium cannot establish physical-device voice playback.",
+    "External contact delivery and live billing were not exercised.",
+    "Preferences are learner-specific on this device, not synced between devices."
+  ]
+}

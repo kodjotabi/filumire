@@ -1,17 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { FiluConversation } from "./FiluConversation";
+import type { ConversationContextResponse } from "../../../../packages/ai/conversation";
 import { subjectLabel } from "./subjects";
-import { useLearnerAvatar } from "./avatars";
-import { FiluAvatar } from "./SubjectIcon";
+import { completionPercent } from "../../services/learning-presentation";
 
 type Element = { type: string; text: string };
 
 /*
- * FILU answers from the instruction the adaptive engine prepared for
- * the learner's current step (explanation, hints, worked examples).
- * It never invents content and never records evidence.
+ * The conversation API reloads trusted tutoring context on each turn.
+ * Replies use the curriculum provider and never record assessment evidence.
  */
 type Props = {
   language: "en" | "fr";
@@ -19,19 +19,21 @@ type Props = {
   topic: string;
   done: number;
   total: number;
+  subjectProgress?: { total: number; completed: number };
   elements: Element[];
   lessonHref?: string;
+  conversationScope?: string;
+  conversationContext?: string;
 };
 
-type Mode = "explain" | "hint" | "understand";
 
 const text = {
   en: {
     title: "Ask FILU",
-    intro: "Your learning buddy, always here to help.",
+    intro: "Ask for help with your current lesson.",
     note: "Curious minds grow!",
     current: "Current topic",
-    goals: "goals completed",
+    goals: "subject goals mastered",
     of: "of",
     how: "How can I help?",
     choose: "Choose a quick action or ask your own question.",
@@ -50,10 +52,10 @@ const text = {
   },
   fr: {
     title: "Parle à FILU",
-    intro: "Ton ami d'apprentissage, toujours là pour t'aider.",
+    intro: "Demande de l'aide sur ta leçon actuelle.",
     note: "Les esprits curieux grandissent !",
     current: "Sujet actuel",
-    goals: "objectifs terminés",
+    goals: "objectifs maîtrisés dans cette matière",
     of: "sur",
     how: "Comment puis-je aider ?",
     choose: "Choisis une action rapide ou pose ta question.",
@@ -72,44 +74,22 @@ const text = {
   },
 };
 
-function pick(mode: Mode, elements: Element[]): Element[] {
-  if (mode === "hint") {
-    return elements.filter(
-      (e) => e.type === "hint" || e.type === "corrective_feedback",
-    );
-  }
-
-  if (mode === "understand") {
-    return elements.filter(
-      (e) => e.type === "worked_example" || e.type === "learner_task",
-    );
-  }
-
-  return elements.filter((e) => e.type !== "hint");
-}
-
 export function AskFiluPage({
   language,
   subjectName,
   topic,
-  done,
-  total,
-  elements,
+  subjectProgress,
   lessonHref,
+  conversationScope,
+  conversationContext,
 }: Props) {
   const t = text[language];
-  const avatarSrc = useLearnerAvatar();
-  const [mode, setMode] = useState<Mode>("explain");
-  const shown = pick(mode, elements);
-  const percent = total > 0 ? Math.round((done / total) * 100) : 0;
-
-  const choices: { key: Mode; label: string; sub: string }[] = [
-    { key: "explain", label: t.explain, sub: t.explainSub },
-    { key: "hint", label: t.hint, sub: t.hintSub },
-    { key: "understand", label: t.understand, sub: t.understandSub },
-  ];
-
-  const chosen = choices.find((c) => c.key === mode)?.label ?? "";
+  const percent = completionPercent(subjectProgress);
+  const contextKey = conversationContext ?? `${subjectName}:${topic}`;
+  const [filuContext, setFiluContext] = useState<{ key: string; value: ConversationContextResponse } | null>(null);
+  const updateContext = useCallback((value: ConversationContextResponse) => setFiluContext({ key: contextKey, value }), [contextKey]);
+  const topicLabel = filuContext?.key === contextKey && filuContext.value.language === language && filuContext.value.topicTitle
+    ? filuContext.value.topicTitle : language === "fr" ? "Ta leçon actuelle" : topic;
 
   return (
     <div className="askPage">
@@ -134,87 +114,26 @@ export function AskFiluPage({
         <div className="fTopicText">
           <small>{t.current}</small>
           <strong>{subjectLabel(subjectName, language)}</strong>
-          <span>{topic}</span>
+          <span>{topicLabel}</span>
         </div>
         <div className="fTopicGoals">
           <b>
-            {done} {t.of} {total} {t.goals}
+            {subjectProgress ? `${subjectProgress.completed} ${t.of} ${subjectProgress.total} ${t.goals}` : language === "fr" ? "Progression indisponible" : "Progress unavailable"}
           </b>
           <span
             className="fTrack"
-            role="progressbar"
+            role={percent === null ? undefined : "progressbar"}
             aria-label={t.goals}
             aria-valuemin={0}
             aria-valuemax={100}
-            aria-valuenow={percent}
+            aria-valuenow={percent ?? undefined}
           >
-            <span style={{ width: `${percent}%` }} />
+            <span style={{ width: `${percent ?? 0}%` }} />
           </span>
         </div>
       </section>
 
-      <section className="fHelp">
-        <h2 id="filu-help-title">{t.how}</h2>
-        <p>{t.choose}</p>
-        <div className="fModes" role="group" aria-labelledby="filu-help-title">
-          {choices.map((c) => (
-            <button
-              key={c.key}
-              type="button"
-              className={`fMode ${c.key}${mode === c.key ? " on" : ""}`}
-              aria-pressed={mode === c.key}
-              aria-controls="filu-chat"
-              onClick={() => setMode(c.key)}
-            >
-              <b>{c.label}</b>
-              <span>{c.sub}</span>
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section
-        id="filu-chat"
-        className="fChat"
-        role="log"
-        aria-live="polite"
-        aria-label={t.chat}
-        tabIndex={0}
-      >
-        <div className="fUser">
-          <span className="fUserBubble">{chosen}</span>
-          <img src={avatarSrc} alt="" />
-        </div>
-
-        {shown.length === 0 && (
-          <div className="fFilu">
-            <FiluAvatar className="fFiluAvatar" />
-            <div className="fBubble">
-              <small>FILU</small>
-              <p>{t.none}</p>
-            </div>
-          </div>
-        )}
-
-        {shown.map((e, index) => (
-          <div className="fFilu" key={`${mode}-${e.type}-${index}`}>
-            <FiluAvatar className="fFiluAvatar" />
-            <div className="fBubble">
-              <small>{e.type === "worked_example" ? t.tryThis : "FILU"}</small>
-              <p>{e.text}</p>
-            </div>
-          </div>
-        ))}
-      </section>
-
-      <section className="fInput">
-        <input type="text" disabled placeholder={t.typing} aria-label={t.typing} />
-        <button type="button" disabled aria-label={t.send}>
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="#fff" aria-hidden="true">
-            <path d="M3 11.5 21 3l-8.5 18-2.2-7.3z" />
-          </svg>
-        </button>
-      </section>
+      <FiluConversation language={language} scope={conversationScope} contextKey={contextKey} onContext={updateContext} />
 
       {lessonHref ? (
         <Link href={lessonHref} className="fButton fBackToLesson">
@@ -642,17 +561,21 @@ export function AskFiluPage({
             grid-template-areas:
               "hero chat"
               "topic chat"
-              "help chat"
-              "help input"
-              "help back"
+              "back chat"
               "footer footer";
-            grid-template-rows: auto auto auto auto auto 1fr;
+            grid-template-rows: auto auto 1fr auto;
             gap: 20px 24px;
           }
 
           .askPage > :global(.fBackToLesson) {
             grid-area: back;
             justify-self: start;
+            margin: 0;
+          }
+
+          .askPage > :global(.filuConversation) {
+            grid-area: chat;
+            min-width: 0;
             margin: 0;
           }
 

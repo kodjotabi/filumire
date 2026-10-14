@@ -1,0 +1,24 @@
+{
+  "source": "C:/Users/tabi/Desktop/filumire-responsive",
+  "destination": "C:/Users/tabi/Desktop/filumire-backups/filumire-responsive-2026-10-12T05-34-55-550Z",
+  "algorithm": "SHA-256",
+  "phase": "complete",
+  "sourceFiles": 23053,
+  "verified": 23053,
+  "bytes": 3342898171,
+  "links": [
+    {
+      "path": ".vercel/forensic-audit-20261011-103551/head-source/FILUMIRE_CLAUDE/node_modules",
+      "target": "C:\\Users\\tabi\\Desktop\\filumire-responsive\\FILUMIRE_CLAUDE\\node_modules"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/node_modules/@filumire/learner",
+      "target": "C:\\Users\\tabi\\Desktop\\filumire-responsive\\FILUMIRE_CLAUDE\\apps\\learner"
+    }
+  ],
+  "mismatches": [],
+  "backupFileCount": 23053,
+  "backupDirectories": 2386,
+  "headMatches": true,
+  "workingTreeMatches": true
+}

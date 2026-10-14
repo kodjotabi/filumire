@@ -6,6 +6,9 @@ import {
   type Language,
 } from "../components/filumire/language";
 import { clearSignedInMarker, hasAccountSession } from "./session-marker";
+import { clearConversation } from "./conversation-client";
+import { clearLessonClosure } from "./lesson-closure-client";
+import { learningVoicePlayback } from "./voice-playback";
 
 export { hasAccountSession };
 
@@ -81,7 +84,10 @@ async function request<T>(
 
   if (!response.ok) {
     if (response.status === 401) {
+      learningVoicePlayback.stop();
       clearSignedInMarker();
+      clearConversation();
+      clearLessonClosure();
     }
 
     throw new AccountRequestError(
@@ -120,6 +126,7 @@ export function activeLearner(account: Account | null): AccountLearner | undefin
  * learner who is signed in.
  */
 export function applyLearnerProfileToDevice(learner: AccountLearner): void {
+  learningVoicePlayback.stop();
   try {
     if (learner.displayName) {
       window.localStorage.setItem(NAME_KEY, learner.displayName);
@@ -139,6 +146,9 @@ export function applyLearnerProfileToDevice(learner: AccountLearner): void {
 }
 
 export function clearLearnerProfileFromDevice(): void {
+  learningVoicePlayback.stop();
+  clearConversation();
+  clearLessonClosure();
   try {
     window.localStorage.removeItem(NAME_KEY);
     window.localStorage.removeItem(AVATAR_KEY);
@@ -152,7 +162,11 @@ export async function signIn(
   login: string,
   password: string,
 ): Promise<{ accountKind: "guardian" | "learner" | "teacher"; learnerId: string | null }> {
-  return request("/api/session/login", { body: { login, password } });
+  const result = await request<{ accountKind: "guardian" | "learner" | "teacher"; learnerId: string | null }>("/api/session/login", { body: { login, password } });
+  learningVoicePlayback.stop();
+  clearConversation();
+  clearLessonClosure();
+  return result;
 }
 
 export async function signOut(): Promise<void> {
@@ -329,6 +343,16 @@ export async function signOutOtherDevices(): Promise<{ ended: number }> {
 
 export async function selectLearner(learnerId: string | null): Promise<void> {
   await request("/api/session/select-learner", { body: { learnerId } });
+  learningVoicePlayback.stop();
+  clearConversation();
+  clearLessonClosure();
+}
+
+export function recoverTutoringContext(learnerId: string, requestId: string) {
+  return request<{ recovered: number; alreadyRecorded: boolean }>(
+    `/api/account/learners/${encodeURIComponent(learnerId)}/tutoring-recovery`,
+    { body: { confirmPreserveHistory: true, requestId } },
+  );
 }
 
 const MESSAGES: Record<string, { en: string; fr: string }> = {
@@ -422,7 +446,11 @@ export function accountErrorMessage(error: unknown, language: Language): string 
  * a chosen learner to the family page, a learner to first-time
  * setup until it is done, otherwise to their learning home.
  */
-export function destinationFor(account: Account, language: Language): string {
+export function destinationFor(account: Account, language: Language, requested?: string | null): string {
+  // Only role-appropriate internal destinations may survive sign-in.
+  if (requested === "family" && account.accountKind === "guardian") {
+    return `/family?lang=${language}`;
+  }
   if (account.accountKind === "teacher") {
     return `/teacher?lang=${language}`;
   }

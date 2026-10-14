@@ -61,8 +61,8 @@ assert(
 
 assert(
   oralEvidence.evidence.policyVersion ===
-    "assessment-0.8",
-  "trusted evidence must use assessment policy 0.8",
+    "assessment-0.9",
+  "trusted evidence must use assessment policy 0.9",
 );
 
 const trustedWritingEvaluation:

@@ -1,0 +1,53 @@
+
+=== african-voice-render.test.ts: 0 ===
+PASS: bilingual browser-voice interface, honest gender/accent labels, disabled unavailable playback and accessible controls
+Received `true` for a non-boolean attribute `jsx`.
+
+If you want to write it to the DOM, pass a string instead: jsx="true" or jsx={value.toString()}.
+
+=== african-voice.test.ts: 0 ===
+PASS: African catalogue, unavailable playback, metadata limits, local preference isolation/privacy, shared surfaces, language/style failures and cancellation (fictional adapter only)
+
+=== ask-filu-navigation.test.ts: 0 ===
+PASS: Ask FILU destinations, subject/language preservation, setup return, safe return targets and exclusive navigation active state (EN/FR)
+Received `true` for a non-boolean attribute `jsx`.
+
+If you want to write it to the DOM, pass a string instead: jsx="true" or jsx={value.toString()}.
+
+=== audit2-settings.test.ts: 0 ===
+PASS: learner preference isolation, corrupt/blocked storage, bilingual functional settings, guardian boundaries, profile order and question prominence
+Received `true` for a non-boolean attribute `jsx`.
+
+If you want to write it to the DOM, pass a string instead: jsx="true" or jsx={value.toString()}.
+
+=== filu-functional.test.ts: 0 ===
+PASS: mathematics: actual auth → stored bilingual curriculum → question-specific responses → practice feedback → assessment guard; no mastery/evidence writes
+PASS: science: actual auth → stored bilingual curriculum → question-specific responses → practice feedback → assessment guard; no mastery/evidence writes
+PASS: computing: actual auth → stored bilingual curriculum → question-specific responses → practice feedback → assessment guard; no mastery/evidence writes
+PASS: english: actual auth → stored bilingual curriculum → question-specific responses → practice feedback → assessment guard; no mastery/evidence writes
+PASS: 48 real conversation requests across four subjects, adaptive scaffolding, bilingual safeguards and bounded missing-language handling
+
+=== learner-interface-render.test.ts: 0 ===
+PASS: bilingual navigation/back context, accessible loading/audio/forms, long topic text, authoritative progress and unavailable states (SSR)
+Received `true` for a non-boolean attribute `jsx`.
+
+If you want to write it to the DOM, pass a string instead: jsx="true" or jsx={value.toString()}.
+
+=== tutoring-conversation-api.test.ts: 0 ===
+PASS: trusted context, bilingual follow-ups, signed history, isolation, validation and duplicate identity
+PASS: bilingual assessment prompts and repeated/paraphrased requests bypass the provider entirely
+PASS: safe provider failures, timeouts, authentication and throttling
+PASS: concurrent duplicate submissions and delayed context changes cannot publish stale teaching
+PASS: bounded session transcript and 30-minute expiry
+
+=== tutoring-conversation-client.test.ts: 0 ===
+PASS: session-only refresh/navigation continuity, isolation, expiry, network/retry errors and bilingual accessible composition
+Received `true` for a non-boolean attribute `jsx`.
+
+If you want to write it to the DOM, pass a string instead: jsx="true" or jsx={value.toString()}.
+
+=== tutoring-conversation-context.test.ts: 0 ===
+PASS: real persisted context, read-only tutoring, assessment sanitization, teaching and fail-closed ambiguity (memory fixtures only)
+
+=== tutoring-conversation-identity.test.ts: 0 ===
+PASS: actual production cookie authentication, French teaching context, cross-learner rejection, logout, returning sessions and real rate limiting (memory only)

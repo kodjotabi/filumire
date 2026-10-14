@@ -1,0 +1,1 @@
+const os=require('node:os');const original=os.userInfo;os.userInfo=function(...args){try{return original.apply(os,args)}catch(error){if(error.code!=='ERR_SYSTEM_ERROR'||error.info?.syscall!=='uv_os_get_passwd')throw error;return {uid:-1,gid:-1,username:process.env.USERNAME||'CodexSandboxOffline',homedir:process.env.USERPROFILE,shell:null};}};

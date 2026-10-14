@@ -7,11 +7,14 @@ import Link from "next/link";
 import {
   useCallback,
   useEffect,
+  useRef,
   useState,
 } from "react";
+import { LearningRequestOrder } from "../../services/learning-continuity";
+import { fetchDashboardSnapshot } from "../../services/learning-client";
+import { completionPercent } from "../../services/learning-presentation";
 
 import {
-  fetchLearningSession,
   LearningNetworkError,
   LearningRequestError,
   type LearningResponse,
@@ -19,15 +22,20 @@ import {
 
 import {
   LearnerBottomNav,
-  type LearnerNavItem,
 } from "../../components/filumire/LearnerBottomNav";
+import { askFiluHref, dashboardView, navItemForView, setupDestination, setupRedirect } from "../../services/dashboard-navigation";
 import { LearnerHeader } from "../../components/filumire/LearnerHeader";
+import { LearnerLoadingState } from "../../components/filumire/LearnerLoadingState";
 import { SubjectGrid } from "../../components/filumire/SubjectGrid";
 import { fetchLearningOverview, type LearningOverview } from "../../services/learning-client";
 import { SubjectPage } from "../../components/filumire/SubjectPage";
 import { ProgressPage } from "../../components/filumire/ProgressPage";
 import { ChallengesPage } from "../../components/filumire/ChallengesPage";
 import { AskFiluPage } from "../../components/filumire/AskFiluPage";
+import { LearnerSignOut } from "../../components/filumire/LearnerSignOut";
+import { LearningNotices } from "../../components/filumire/LearningNotices";
+import { computeAchievements } from "../../components/filumire/achievements";
+import { useLearnerAppearance } from "../../services/interface-preferences";
 import ProfilePage from "../../components/filumire/ProfilePage";
 import { AVATAR_KEY, LEARNER_AVATARS, useLearnerAvatar } from "../../components/filumire/avatars";
 import { findFilumireSubject, subjectLabel, toFilumireSubjects } from "../../components/filumire/subjects";
@@ -56,49 +64,6 @@ type ViewState =
 
 /* The subject overview loads separately from the learning session. */
 type OverviewState = "loading" | "ready" | "unavailable";
-
-type DashboardView =
-  | "setup"
-  | "home"
-  | "learning"
-  | "progress"
-  | "challenges"
-  | "ask-filu"
-  | "profile";
-
-function getDashboardView(): DashboardView {
-  const view =
-    new URLSearchParams(window.location.search).get("view");
-
-  switch (view) {
-    case "setup":
-    case "learning":
-    case "progress":
-    case "challenges":
-    case "ask-filu":
-    case "profile":
-      return view;
-    default:
-      return "home";
-  }
-}
-
-function navItemForView(
-  view: DashboardView,
-): LearnerNavItem {
-  switch (view) {
-    case "learning":
-      return "learning";
-    case "progress":
-      return "progress";
-    case "challenges":
-      return "challenges";
-    case "ask-filu":
-      return "filu";
-    default:
-      return "home";
-  }
-}
 
 function Chevron({ className }: { className?: string }) {
   return (
@@ -200,17 +165,19 @@ const SETUP_TEXT = {
 function LearnerDashboardView() {
   const router = useRouter();
   const searchKey = useSearchParams().toString();
+  const requestOrder = useRef(new LearningRequestOrder());
   // The signed-in FILUMIRE account, when there is one. Without it
   // (local development) the dashboard runs as the test learner.
   const [account, setAccount] = useState<Account | null>(null);
+  const [accountChecked, setAccountChecked] = useState(false);
   const [setupGrade, setSetupGrade] = useState("");
   const [setupSaving, setSetupSaving] = useState(false);
   const [setupError, setSetupError] = useState("");
   const [language, setLanguage] = useLanguage(searchKey);
-  const [view, setView] =
-    useState<DashboardView>("home");
-  const [selectedSubjectId, setSelectedSubjectId] =
-    useState<string | null>(null);
+  const requestedView = dashboardView(searchKey);
+  const view = activeLearner(account)?.onboardingComplete === false ? "setup" : requestedView;
+  const selectedSubjectId = new URLSearchParams(searchKey).get("subjectId");
+  const afterSetupHref = setupDestination(searchKey, language);
 
   const [setupName, setSetupName] = useState("");
   const [setupAvatar, setSetupAvatar] = useState("1");
@@ -239,7 +206,10 @@ function LearnerDashboardView() {
   }, []);
 
   useEffect(() => {
-    if (!hasAccountSession()) return;
+    if (!hasAccountSession()) {
+      setAccountChecked(true);
+      return;
+    }
 
     let alive = true;
     fetchAccount()
@@ -263,14 +233,9 @@ function LearnerDashboardView() {
         setSetupName(learner.displayName);
         if (learner.avatarId) setSetupAvatar(learner.avatarId);
 
-        if (
-          !learner.onboardingComplete &&
-          getDashboardView() !== "setup"
-        ) {
-          router.replace(`/dashboard?lang=${language}&view=setup`);
-        }
       })
-      .catch(() => undefined);
+      .catch(() => undefined)
+      .finally(() => { if (alive) setAccountChecked(true); });
 
     return () => {
       alive = false;
@@ -279,6 +244,7 @@ function LearnerDashboardView() {
   }, []);
 
   const signedInLearner = activeLearner(account);
+  const appearance = useLearnerAppearance(signedInLearner?.learnerId);
 
   useEffect(() => {
     // Only a learner who has already chosen a class sees it
@@ -289,23 +255,43 @@ function LearnerDashboardView() {
   }, [overview?.gradeId, setupGrade, signedInLearner?.onboardingComplete]);
 
   useEffect(() => {
-    const params =
-      new URLSearchParams(window.location.search);
+    if (signedInLearner?.onboardingComplete !== false) return;
+    const destination = setupRedirect(searchKey, language);
+    if (destination) router.replace(destination);
+  }, [signedInLearner?.onboardingComplete, searchKey, language, router]);
 
-    setView(getDashboardView());
-    setSelectedSubjectId(params.get("subjectId"));
-  }, [searchKey]);
-
+  const tutoringView = view === "ask-filu";
+  const tutorAccountReady = !tutoringView || accountChecked;
+  const tutorLearnerId = tutoringView ? signedInLearner?.learnerId : undefined;
   const load = useCallback(async () => {
+    if (!tutorAccountReady) return;
+    const ticket = requestOrder.current.begin();
     setViewState("loading");
 
     try {
-      const result = await fetchLearningSession(
+      if (tutoringView) {
+        // Viewing the tutor must not deliver a new scored learning activity.
+        // Its own API reads the existing authoritative lesson/assessment state.
+        const summary = await fetchLearningOverview(selectedSubjectId ?? undefined);
+        if (!requestOrder.current.accepts(ticket)) return;
+        if (!summary) {
+          if (!tutorLearnerId && process.env.NODE_ENV === "production") throw new LearningRequestError("Sign in required", 401);
+          throw new Error("Learning overview unavailable");
+        }
+        setData(null);
+        setOverview(summary);
+        setOverviewState("ready");
+        setViewState("ready");
+        return;
+      }
+      const result = await fetchDashboardSnapshot(
         selectedSubjectId ?? undefined,
       );
+      if (!requestOrder.current.accepts(ticket)) return;
       setData(result);
       setViewState("ready");
     } catch (err) {
+      if (!requestOrder.current.accepts(ticket)) return;
       setData(null);
       setViewState(
         err instanceof LearningRequestError &&
@@ -316,16 +302,18 @@ function LearnerDashboardView() {
             : "unavailable",
       );
     }
-  }, [selectedSubjectId]);
+  }, [selectedSubjectId, searchKey, tutoringView, tutorAccountReady, tutorLearnerId]);
 
   useEffect(() => {
     load();
+    return () => requestOrder.current.invalidate();
   }, [load]);
 
   useEffect(() => {
-    if (view === "ask-filu") return;
+    if (!data || viewState !== "ready") return;
     let alive = true;
     setOverviewState("loading");
+    setOverview(null);
     fetchLearningOverview(selectedSubjectId || undefined).then((result) => {
       if (!alive) return;
       setOverview(result);
@@ -334,7 +322,7 @@ function LearnerDashboardView() {
     return () => {
       alive = false;
     };
-  }, [view, selectedSubjectId, overviewAttempt]);
+  }, [view, selectedSubjectId, overviewAttempt, data, viewState, language]);
 
   const retryOverview = () => setOverviewAttempt((n) => n + 1);
 
@@ -342,12 +330,10 @@ function LearnerDashboardView() {
   const subjects = toFilumireSubjects(overview?.availableSubjects);
   const currentSubject = findFilumireSubject(subjects, data?.progress.subjectId);
 
-const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
-  const progressPercent = homeStat && homeStat.total > 0
-    ? Math.round((homeStat.completed / homeStat.total) * 100)
-    : data
-      ? Math.max(0, Math.min(100, data.progress.percent))
-      : 0;
+  const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
+  const progressPercent = completionPercent(homeStat);
+  const subjectProgressLabel = language === "fr" ? "Objectifs maîtrisés dans cette matière" : "Subject goals mastered";
+  const progressUnavailable = language === "fr" ? "Progression indisponible" : "Progress unavailable";
 
   const copy =
     language === "fr"
@@ -379,7 +365,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
           noSubjects: "Aucune matière n'est encore prête pour ta classe. Ton enseignant peut t'aider.",
           retry: "Réessayer",
           continue: "Continuer",
-          completed: "objectifs terminés",
+          completed: "objectifs maîtrisés",
           recommended: "Recommandé ensuite",
           backHome: "Retour à l'accueil",
           learningFallback: "Apprentissage",
@@ -413,7 +399,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
           noSubjects: "No subjects are ready for your class yet. Your teacher can help.",
           retry: "Try again",
           continue: "Continue",
-          completed: "learning goals completed",
+          completed: "learning goals mastered",
           recommended: "Recommended Next",
           backHome: "Back to Home",
           learningFallback: "Learning",
@@ -441,6 +427,10 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
 
   const learnHref =
     `/learn?lang=${language}`;
+  const assistantSubjectId = selectedSubjectId ?? data?.progress.subjectId;
+  const assistantLessonHref = assistantSubjectId
+    ? `${learnHref}&subjectId=${encodeURIComponent(assistantSubjectId)}`
+    : learnHref;
 
   function saveLearnerProfile() {
     try {
@@ -463,6 +453,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
    * subjects. The local test learner keeps the device-only save.
    */
   async function finishSetup(event: { preventDefault(): void }) {
+    if (setupSaving) { event.preventDefault(); return; }
     saveLearnerProfile();
 
     if (!signedInLearner) return;
@@ -484,7 +475,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
         gradeId: setupGrade,
         completeOnboarding: true,
       });
-      window.location.assign(`/dashboard?lang=${language}`);
+      window.location.assign(afterSetupHref);
     } catch (error) {
       setSetupError(
         error instanceof AccountRequestError
@@ -503,7 +494,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
           greetingB: "Continuons à apprendre !",
           note: ["Progresser", "aujourd’hui,", "demain sera", "plus beau !"],
           of: "sur",
-          goalsShort: "objectifs",
+          goalsShort: "objectifs maîtrisés",
           today: "Apprentissage du jour",
           seeAll: "Tout voir",
           tileProgress: "Vois où tu en es.",
@@ -524,7 +515,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
           greetingB: "Let’s keep learning!",
           note: ["Progress", "today", "brighter", "tomorrow!"],
           of: "of",
-          goalsShort: "goals",
+          goalsShort: "goals mastered",
           today: "Today’s Learning",
           seeAll: "See All",
           tileProgress: "See how you’re doing.",
@@ -577,16 +568,18 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
   }
 
   return (
-    <main className="learnerPage">
+    <main className="learnerPage learnerUi" lang={language} data-appearance={appearance}>
       <a className="filumireSkipLink" href="#learner-main">
         {language === "fr" ? "Aller au contenu" : "Skip to content"}
       </a>
       <div className="learnerShell">
+        <LearningNotices learnerId={signedInLearner?.learnerId} language={language} completed={overview ? Object.values(overview.subjects).reduce((n, item) => n + item.completed, 0) : undefined} achievements={overview ? computeAchievements(Object.values(overview.subjects), language).filter(item => item.earned).map(item => item.id).join(",") : ""} />
         {(
           <LearnerHeader
                     language={language}
+                    subjectId={assistantSubjectId}
                     setupHeader={view === "setup" || view === "progress" || view === "challenges" || view === "ask-filu" || view === "profile"}
-                    showAskFilu={view !== "ask-filu" && view !== "home" && view !== "learning"}
+                    showAskFilu={view !== "ask-filu"}
                     backHref={
                       view === "home" || (view === "learning" && !selectedSubjectId)
                         ? undefined
@@ -598,14 +591,14 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
         )}
 
         <div id="learner-main" className="learnerMainRegion" tabIndex={-1}>
-        {viewState === "loading" && (
+        {(!accountChecked || viewState === "loading") && (
           <section className="fState" aria-busy="true">
             <div className="fSpinner" />
             <p role="status">{copy.preparing}</p>
           </section>
         )}
 
-        {viewState === "unauthenticated" && (
+        {accountChecked && viewState === "unauthenticated" && (
           <section className="fState">
             <span className="fStateIcon" aria-hidden="true">?</span>
             <h1>{copy.signIn}</h1>
@@ -621,7 +614,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
           </section>
         )}
 
-        {(viewState === "unavailable" || viewState === "offline") && (
+        {accountChecked && (viewState === "unavailable" || viewState === "offline") && (
           <section className="fState" role="alert">
             <span className="fStateIcon warn" aria-hidden="true">!</span>
             <h1>{viewState === "offline" ? copy.offline : copy.unavailable}</h1>
@@ -638,10 +631,34 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
           </section>
         )}
 
-        {viewState === "ready" && data && (
+        {accountChecked && viewState === "ready" && view === "ask-filu" && overview && (
+          <div className="learnerContent homeScreen">
+            <AskFiluPage
+              conversationScope={signedInLearner?.learnerId}
+              conversationContext={overview.activeSubjectId}
+              language={language}
+              subjectName={overview.availableSubjects.find(subject => subject.id === overview.activeSubjectId)?.name ?? subjectName}
+              topic={language === "fr" ? "Ta leçon actuelle" : "Your current lesson"}
+              done={overview.subjects[overview.activeSubjectId]?.completed ?? 0}
+              total={overview.subjects[overview.activeSubjectId]?.total ?? 0}
+              subjectProgress={overview.subjects[overview.activeSubjectId]}
+              lessonHref={`${learnHref}&subjectId=${encodeURIComponent(overview.activeSubjectId)}`}
+              elements={[]}
+            />
+          </div>
+        )}
+
+        {accountChecked && viewState === "ready" && data && (
           <>
             {view === "setup" && (
               <div className="learnerContent approvedSetup">
+                {new URLSearchParams(searchKey).get("returnTo") === "ask-filu" && (
+                  <p role="status" className="fState inline">
+                    {language === "fr"
+                      ? "Termine la configuration de ton profil pour ouvrir FILU."
+                      : "Finish learner setup to open Ask FILU."}
+                  </p>
+                )}
                 <ol className="setupSteps" aria-label={setupText.stepsLabel}>
                   {setupText.steps.map((step, index) => (
                     <li
@@ -835,10 +852,11 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                     <path d="M371 24L369 56H376L374 24Z" fill="#1f78d6" />
                   </svg>
                   <Link
-                    href={`/dashboard?lang=${language}`}
+                    href={afterSetupHref}
                     className="approvedSetupContinue"
                     onClick={finishSetup}
                     aria-disabled={setupSaving}
+                    aria-busy={setupSaving}
                   >
                     <span>{setupSaving ? setupText.saving : setupText.continue}</span>
                     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -879,20 +897,19 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
 
                   <div
                     className="homeTrack"
-                    role="progressbar"
-                    aria-label={copy.progress}
+                    role={progressPercent === null ? undefined : "progressbar"}
+                    aria-label={subjectProgressLabel}
                     aria-valuemin={0}
                     aria-valuemax={100}
-                    aria-valuenow={progressPercent}
+                    aria-valuenow={progressPercent ?? undefined}
                   >
-                    <div className="homeTrackFill" style={{ width: `${progressPercent}%` }} />
+                    <div className="homeTrackFill" style={{ width: `${progressPercent ?? 0}%` }} />
                   </div>
                   <div className="homeTrackMeta">
                     <span>
-                      {homeStat ? homeStat.completed : data.progress.completedCompetencies} {homeText.of}{" "}
-                      {homeStat ? homeStat.total : data.progress.competencyCount} {copy.completed}
+                      {homeStat ? `${homeStat.completed} ${homeText.of} ${homeStat.total} ${copy.completed}` : progressUnavailable}
                     </span>
-                    <strong>{progressPercent}%</strong>
+                    <strong>{progressPercent === null ? "—" : `${progressPercent}%`}</strong>
                   </div>
 
                   <Link href={learnHref} className="homeCta">
@@ -934,14 +951,13 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                           {isCurrent ? (
                             <span className="homeSubjectProgress">
                               <span className="homeMiniTrack">
-                                <span style={{ width: `${progressPercent}%` }} />
+                                <span style={{ width: `${progressPercent ?? 0}%` }} />
                               </span>
                               <span className="homeMiniMeta">
                                 <span>
-                                  {homeStat ? homeStat.completed : data.progress.completedCompetencies} {homeText.of}{" "}
-                                  {homeStat ? homeStat.total : data.progress.competencyCount} {homeText.goalsShort}
+                                  {homeStat ? `${homeStat.completed} ${homeText.of} ${homeStat.total} ${homeText.goalsShort}` : progressUnavailable}
                                 </span>
-                                <strong>{progressPercent}%</strong>
+                                <strong>{progressPercent === null ? "—" : `${progressPercent}%`}</strong>
                               </span>
                             </span>
                           ) : null}
@@ -964,7 +980,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                     <small>{homeText.tileChallenge}</small>
                     <Chevron className="homeChevron" />
                   </Link>
-                  <Link href={`/dashboard?lang=${language}&view=ask-filu`} className="homeTile ask">
+                  <Link href={askFiluHref(language, data?.progress.subjectId)} className="homeTile ask">
                     <span className="homeTileIcon"><TileIcon name="ask" /></span>
                     <strong>{copy.askFilu}</strong>
                     <small>{homeText.tileAsk}</small>
@@ -1031,11 +1047,11 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                       {subjects.map((subject) => {
                         const isCurrent = currentSubject?.key === subject.key;
                         const st = overview?.subjects[subject.subjectId];
-                        const total = st ? st.total : isCurrent ? data.progress.competencyCount : 0;
-                        const done = st ? st.completed : isCurrent ? data.progress.completedCompetencies : 0;
-                        const started = st ? st.tracked > 0 : isCurrent;
-                        const percent = total > 0 ? Math.round((done / total) * 100) : 0;
-                        const tone = isCurrent ? "current" : !started ? "new" : done >= total ? "done" : done > 0 ? "good" : "going";
+                        const total = st?.total ?? 0;
+                        const done = st?.completed ?? 0;
+                        const started = st ? st.tracked > 0 || done > 0 : false;
+                        const percent = completionPercent(st);
+                        const tone = isCurrent ? "current" : !started ? "new" : total > 0 && done >= total ? "done" : done > 0 ? "good" : "going";
                         return (
                           <Link
                             key={subject.key}
@@ -1055,15 +1071,15 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                                   <>
                                     <span
                                       className="homeMiniTrack"
-                                      role="progressbar"
-                                      aria-label={subjectLabel(subject.name, language)}
+                                      role={percent === null ? undefined : "progressbar"}
+                                      aria-label={`${subjectLabel(subject.name, language)}: ${subjectProgressLabel}`}
                                       aria-valuemin={0}
                                       aria-valuemax={100}
-                                      aria-valuenow={percent}
-                                    ><span style={{ width: `${percent}%` }} /></span>
+                                      aria-valuenow={percent ?? undefined}
+                                    ><span style={{ width: `${percent ?? 0}%` }} /></span>
                                     <span className="homeMiniMeta">
                                       <span>{done} {homeText.of} {total} {homeText.goalsShort}</span>
-                                      <strong>{percent}%</strong>
+                                      <strong>{percent === null ? "—" : `${percent}%`}</strong>
                                     </span>
                                   </>
                                 ) : null}
@@ -1130,6 +1146,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
                     subjectName: subjectLabel(subjectName, language),
                     title: competencyTitle,
                     mastery: data.progress.masteryEstimate,
+                    confidence: data.progress.confidence,
                     evidenceCount: data.progress.evidenceCount,
                     readiness: data.progress.readiness,
                     learnHref,
@@ -1141,29 +1158,10 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
 
             {view === "challenges" && (<div className="learnerContent homeScreen"><ChallengesPage language={language} overview={overview} overviewState={overviewState} onRetry={retryOverview} renderIcon={(key) => <SubjectIcon name={key} />} current={{ subjectId: data?.progress.subjectId ?? "", subjectName, title: competencyTitle, done: completedCompetencies, total: competencyCount, startHref: learnHref }} /></div>)}
 
-            {view === "ask-filu" && (
-        <div className="learnerContent homeScreen">
-          <AskFiluPage
-            language={language}
-            subjectName={subjectName}
-            topic={competencyTitle}
-            done={completedCompetencies}
-            total={competencyCount}
-            lessonHref={learnHref}
-            elements={
-              data?.instruction.structured?.elements?.length
-                ? data.instruction.structured.elements
-                : data?.instruction.content
-                  ? [{ type: "explanation", text: data.instruction.content }]
-                  : []
-            }
-          />
-        </div>
-      )}
-
       {view === "profile" && (
         <div className="learnerContent homeScreen">
           <ProfilePage
+            learnerId={signedInLearner?.learnerId}
             language={language}
             onLanguage={(value) => {
               setLanguage(value);
@@ -1196,7 +1194,8 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
         )}
         </div>
 
-        <LearnerBottomNav active={view === "setup" ? "home" : navItemForView(view)} language={language} />
+        {account && view !== "profile" && <LearnerSignOut language={language} />}
+        <LearnerBottomNav active={navItemForView(view)} language={language} subjectId={assistantSubjectId} />
       </div>
 
       <style jsx>{`
@@ -2504,7 +2503,7 @@ const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
 
 export default function LearnerDashboard() {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<main className="learnerUi"><LearnerLoadingState /></main>}>
       <LearnerDashboardView />
     </Suspense>
   );

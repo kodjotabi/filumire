@@ -1,0 +1,8 @@
+docs/audits/filu-display-2026-10-13/FiluConversation-before.tsx(5,28): error TS2307: Cannot find module './SubjectIcon' or its corresponding type declarations.
+docs/audits/filu-display-2026-10-13/FiluConversation-before.tsx(6,35): error TS2307: Cannot find module './ReadAloudControls' or its corresponding type declarations.
+docs/audits/filu-display-2026-10-13/FiluConversation-before.tsx(10,8): error TS2307: Cannot find module '../../services/conversation-client' or its corresponding type declarations.
+docs/audits/filu-display-2026-10-13/FiluConversation-before.tsx(11,118): error TS2307: Cannot find module '../../../../packages/ai/conversation' or its corresponding type declarations.
+docs/audits/filu-display-2026-10-13/FiluConversation-before.tsx(12,58): error TS2307: Cannot find module '../../../../packages/ai/conversation-safety' or its corresponding type declarations.
+docs/audits/filu-display-2026-10-13/FiluConversation-before.tsx(64,64): error TS7006: Parameter 'value' implicitly has an 'any' type.
+docs/audits/filu-display-2026-10-13/FiluConversation-before.tsx(160,42): error TS7006: Parameter 'message' implicitly has an 'any' type.
+docs/audits/filu-display-2026-10-13/FiluConversation-before.tsx(160,51): error TS7006: Parameter 'index' implicitly has an 'any' type.

@@ -1,0 +1,40 @@
+
+=== account-client-signout.test.ts: 0 ===
+{ accountClientSignout: 'PASS', checks: 4 }
+
+=== african-voice-render.test.ts: 0 ===
+PASS: bilingual browser-voice interface, honest gender/accent labels, disabled unavailable playback and accessible controls
+Received `true` for a non-boolean attribute `jsx`.
+
+If you want to write it to the DOM, pass a string instead: jsx="true" or jsx={value.toString()}.
+
+=== ask-filu-navigation.test.ts: 0 ===
+PASS: Ask FILU destinations, subject/language preservation, setup return, safe return targets and exclusive navigation active state (EN/FR)
+Received `true` for a non-boolean attribute `jsx`.
+
+If you want to write it to the DOM, pass a string instead: jsx="true" or jsx={value.toString()}.
+
+=== browser-speech.test.ts: 0 ===
+PASS: dynamic library, locale honesty, bilingual preference isolation, exact voice/rate, pause/resume/replay/stop, stale events, mute, missing/remote voice failures and safe errors (mock browser only)
+
+=== interface-completion.test.ts: 0 ===
+interface completion test passed
+
+=== learner-interface-copy.test.ts: 0 ===
+PASS: safe bilingual errors, switching after errors, honest curriculum fallback and language-preserving subject navigation
+
+=== learner-interface-layout.test.ts: 0 ===
+PASS: learner-scoped responsive rules, touch/focus/keyboard/reduced-motion contracts and selected contrast pairs; real layout remains unverified
+
+=== learner-interface-render.test.ts: 0 ===
+PASS: bilingual navigation/back context, accessible loading/audio/forms, long topic text, authoritative progress and unavailable states (SSR)
+Received `true` for a non-boolean attribute `jsx`.
+
+If you want to write it to the DOM, pass a string instead: jsx="true" or jsx={value.toString()}.
+
+=== learning-progress-render.test.ts: 0 ===
+PASS: en authoritative progress, mastery/confidence labels, remediation and unavailable states
+PASS: fr authoritative progress, mastery/confidence labels, remediation and unavailable states
+Received `true` for a non-boolean attribute `jsx`.
+
+If you want to write it to the DOM, pass a string instead: jsx="true" or jsx={value.toString()}.

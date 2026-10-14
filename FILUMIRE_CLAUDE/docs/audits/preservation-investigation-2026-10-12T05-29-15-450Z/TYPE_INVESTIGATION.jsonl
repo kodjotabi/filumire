@@ -1,0 +1,2 @@
+{"mode":"baseline","errors":[{"code":2769,"file":"C:/Users/tabi/Desktop/filumire-responsive/FILUMIRE_CLAUDE/tests/learner-interface-render.test.ts","message":"No overload matches this call.   The last overload gave the following error.     Object literal may only specify known properties, and 'language' does not exist in type 'Attributes'."}]}
+{"mode":"explicit-test-generic","errors":[]}

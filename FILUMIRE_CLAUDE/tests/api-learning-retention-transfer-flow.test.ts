@@ -1,3 +1,4 @@
+import { seedContent } from "../services/content-store/seed";
 import {
   createInitialLearnerState,
   applyEvidence,
@@ -50,6 +51,7 @@ function evidence(
 }
 
 async function testRetentionTransferFlow(): Promise<void> {
+  seedContent();
   let state =
     createInitialLearnerState(
       learnerId,

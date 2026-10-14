@@ -1,0 +1,19 @@
+{
+  "checkpoint": "a59b9fdf12380bc261f364fbafe1b03d41a02741",
+  "method": "local Git history, tracked handoff, handwritten SQL comments and previously captured read-only catalog",
+  "files": [
+    { "file": "0019_learner_accounts.sql", "introducedCommit": "ffa03d2c84e3e8ddc54340f75b8c16a0dd637dcf", "sha256": "a7b49b2749c53f681432ee74f3b075f9d3eb5a9ca239af1d6059218a13e614a7" },
+    { "file": "0020_auth_rate_limits.sql", "introducedCommit": "e4977b6bfd1eb5dc11f09acf3f0351593a20b74b", "sha256": "f3c77a33a20759cc7ff22f90699b3a0b639169a14b7e6e37cf1c618d5f80a74e" },
+    { "file": "0021_teacher_accounts.sql", "introducedCommit": "97a4b8679eeedf48c1b93e972b699342136649f7", "sha256": "f4276c21c24d034e86acdec99ac124284b5f2adb375d5282e352021294e0ddeb" }
+  ],
+  "journalAbsenceExplainedBy": ["0019 SQL header: handwritten continuation after 0018; regenerate journal when branches combine", "docs/SECTION7_PREVIEW_HANDOFF.md: no journal; do not assume drizzle-kit migrate registered handwritten files"],
+  "earlierMigrationFiles0018AndBelowPresent": false,
+  "databaseBaseline": "PRIVATE_PREVIEW_READ_ONLY_BASELINE.json",
+  "baselineCapturedAt": "2026-10-10T11:49:28.928Z",
+  "baselineSchemaSha256": "5af0c142d62c5add0b72e476947631baa05ed89c7bf9275383fee2c27564ef3a",
+  "observedHistoryTables": [],
+  "observed0020And0021State": "wholly absent in frozen catalog",
+  "authoritativeDatabaseExecutionHistoryVerified": false,
+  "ownerReconciliationRequired": true,
+  "databaseMutations": 0
+}

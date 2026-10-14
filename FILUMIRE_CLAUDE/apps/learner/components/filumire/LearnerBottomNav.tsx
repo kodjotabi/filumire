@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { askFiluHref } from "../../services/dashboard-navigation";
 
 export type LearnerNavItem =
   | "home"
@@ -10,6 +11,7 @@ export type LearnerNavItem =
 type LearnerBottomNavProps = {
   active: LearnerNavItem;
   language?: "en" | "fr";
+  subjectId?: string | null;
   /*
    * "app" (default) is the bottom bar on mobile and tablet and becomes
    * a fixed sidebar from 1024px. "inline" stays a bar in the page flow
@@ -62,7 +64,9 @@ export function LearnerBottomNav({
   active,
   language = "en",
   variant = "app",
+  subjectId,
 }: LearnerBottomNavProps) {
+  const subjectQuery = subjectId ? `&subjectId=${encodeURIComponent(subjectId)}` : "";
   const items = [
     {
       key: "home" as const,
@@ -76,7 +80,7 @@ export function LearnerBottomNav({
         language === "fr"
           ? "Apprentissage"
           : "My Learning",
-      href: `/dashboard?lang=${language}&view=learning`,
+      href: `/dashboard?lang=${language}&view=learning${subjectQuery}`,
       icon: "learning",
     },
     {
@@ -85,7 +89,7 @@ export function LearnerBottomNav({
         language === "fr"
           ? "Progression"
           : "Progress",
-      href: `/dashboard?lang=${language}&view=progress`,
+      href: `/dashboard?lang=${language}&view=progress${subjectQuery}`,
       icon: "progress",
     },
     {
@@ -94,13 +98,13 @@ export function LearnerBottomNav({
         language === "fr"
           ? "Défis"
           : "Challenges",
-      href: `/dashboard?lang=${language}&view=challenges`,
+      href: `/dashboard?lang=${language}&view=challenges${subjectQuery}`,
       icon: "challenges",
     },
     {
       key: "filu" as const,
       label: language === "fr" ? "FILU" : "Ask FILU",
-      href: `/dashboard?lang=${language}&view=ask-filu`,
+      href: askFiluHref(language, subjectId),
       icon: "filu",
     },
   ];
@@ -112,13 +116,13 @@ export function LearnerBottomNav({
           ? "filumireBottomNav filumireBottomNavInline"
           : "filumireBottomNav"
       }
-      aria-label="Learner navigation"
+      aria-label={language === "fr" ? "Navigation de l’apprenant" : "Learner navigation"}
     >
       {/* Hidden on mobile and tablet; the sidebar's logo row from 1024px. */}
       <Link
         href={`/dashboard?lang=${language}`}
         className="filumireNavBrand"
-        aria-label="FILUMIRE learner home"
+        aria-label={language === "fr" ? "Accueil apprenant FILUMIRE" : "FILUMIRE learner home"}
       >
         <img src="/filumire-logo-white.svg" alt="FILUMIRE" />
       </Link>

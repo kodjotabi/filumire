@@ -1,0 +1,40 @@
+{
+  "reviewedAt": null,
+  "preview": {
+    "projectId": "proud-term-61114809",
+    "endpoint": "ep-cold-bird-b8j437np.c-14.us-east-1.aws.neon.tech",
+    "database": "neondb",
+    "branchId": null,
+    "branchType": null,
+    "mappingEvidenceReference": null,
+    "controlPlaneMappingReviewed": false
+  },
+  "production": {
+    "projectId": null,
+    "branchId": null,
+    "database": null,
+    "endpoint": null,
+    "mappingEvidenceReference": null,
+    "effectiveTargetEvidenceReference": null,
+    "effectiveTargetReviewed": false,
+    "controlPlaneMappingReviewed": false
+  },
+  "recovery": {
+    "projectId": "proud-term-61114809",
+    "branchId": null,
+    "mechanism": null,
+    "reference": null,
+    "capturedAt": null,
+    "expiresAt": null,
+    "retentionSeconds": null,
+    "reviewed": false,
+    "restorePermissionVerified": false,
+    "procedureReviewed": false,
+    "sourceUsabilityVerified": false,
+    "availabilityEvidenceReference": null,
+    "permissionEvidenceReference": null,
+    "procedureEvidenceReference": null
+  },
+  "historyReconciliationReviewed": false,
+  "historyEvidenceReference": null
+}

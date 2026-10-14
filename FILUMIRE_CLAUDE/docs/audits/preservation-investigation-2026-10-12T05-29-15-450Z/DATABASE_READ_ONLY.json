@@ -1,0 +1,36 @@
+{
+  "configuration": {
+    "sameHost": true,
+    "sameDatabase": false,
+    "sameUsername": false,
+    "samePassword": false,
+    "root": {
+      "persistence": "memory",
+      "signingSecretConfigured": false,
+      "registration": "unset"
+    },
+    "learner": {
+      "persistence": "postgres",
+      "signingSecretAtLeast32": true,
+      "registration": "unset"
+    }
+  },
+  "checks": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "name": ".env.local",
+        "exitCode": 1,
+        "output": "{\"errorCode\":\"28P01\"}\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "name": "apps/learner/.env.local",
+        "exitCode": 0,
+        "output": "[{\"database\":\"filumire_test\",\"read_only\":\"on\",\"search_path\":\"\\\"$user\\\", public\",\"rate_table\":\"auth_rate_limits\",\"teacher_table\":\"teacher_link_codes\"}]\n[{\"tablename\":\"auth_rate_limits\",\"indexname\":\"auth_rate_limits_pkey\",\"indexdef\":\"CREATE UNIQUE INDEX auth_rate_limits_pkey ON public.auth_rate_limits USING btree (key_hash)\"},{\"tablename\":\"auth_rate_limits\",\"indexname\":\"auth_rate_limits_window_ends_at_idx\",\"indexdef\":\"CREATE INDEX auth_rate_limits_window_ends_at_idx ON public.auth_rate_limits USING btree (window_ends_at)\"},{\"tablename\":\"teacher_link_codes\",\"indexname\":\"teacher_link_codes_code_hash_unique\",\"indexdef\":\"CREATE UNIQUE INDEX teacher_link_codes_code_hash_unique ON public.teacher_link_codes USING btree (code_hash)\"},{\"tablename\":\"teacher_link_codes\",\"indexname\":\"teacher_link_codes_learner_idx\",\"indexdef\":\"CREATE INDEX teacher_link_codes_learner_idx ON public.teacher_link_codes USING btree (learner_id)\"},{\"tablename\":\"teacher_link_codes\",\"indexname\":\"teacher_link_codes_pkey\",\"indexdef\":\"CREATE UNIQUE INDEX teacher_link_codes_pkey ON public.teacher_link_codes USING btree (id)\"}]\n[{\"can_select\":true,\"can_insert\":true,\"can_update\":true,\"can_delete\":true}]\n"
+      }
+    }
+  ]
+}

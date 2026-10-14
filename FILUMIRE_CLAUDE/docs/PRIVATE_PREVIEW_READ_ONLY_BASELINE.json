@@ -1,0 +1,5316 @@
+{
+  "identity": {
+    "neonProjectFromConfiguration": "proud-term-61114809",
+    "endpoint": "ep-cold-bird-b8j437np.c-14.us-east-1.aws.neon.tech",
+    "database": "neondb",
+    "role": "neondb_owner",
+    "superuser": false,
+    "read_only": "on",
+    "postgres": "18.6 (c021049)",
+    "search_path": "\"$user\", public",
+    "captured_at": "2026-10-10T11:49:28.928Z"
+  },
+  "schema": {
+    "columns": [
+      {
+        "table_schema": "public",
+        "table_name": "account_credentials",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "account_credentials",
+        "column_name": "principal_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "account_credentials",
+        "column_name": "account_kind",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "account_credentials",
+        "column_name": "login_identifier",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "account_credentials",
+        "column_name": "password_hash",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "account_credentials",
+        "column_name": "password_updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "account_credentials",
+        "column_name": "failed_attempt_count",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "is_nullable": "NO",
+        "column_default": "0",
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "account_credentials",
+        "column_name": "locked_until",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 8
+      },
+      {
+        "table_schema": "public",
+        "table_name": "account_credentials",
+        "column_name": "last_sign_in_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 9
+      },
+      {
+        "table_schema": "public",
+        "table_name": "account_credentials",
+        "column_name": "status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": "'active'::text",
+        "ordinal_position": 10
+      },
+      {
+        "table_schema": "public",
+        "table_name": "account_credentials",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 11
+      },
+      {
+        "table_schema": "public",
+        "table_name": "account_credentials",
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 12
+      },
+      {
+        "table_schema": "public",
+        "table_name": "account_profiles",
+        "column_name": "principal_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "account_profiles",
+        "column_name": "display_name",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "account_profiles",
+        "column_name": "preferred_language",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": "'en'::text",
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "account_profiles",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "account_profiles",
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "auth_sessions",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "auth_sessions",
+        "column_name": "principal_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "auth_sessions",
+        "column_name": "status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": "'active'::text",
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "auth_sessions",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "auth_sessions",
+        "column_name": "expires_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "auth_sessions",
+        "column_name": "last_activity_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "auth_sessions",
+        "column_name": "revoked_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "auth_sessions",
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 8
+      },
+      {
+        "table_schema": "public",
+        "table_name": "controlled_teacher_actions",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "controlled_teacher_actions",
+        "column_name": "learner_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "controlled_teacher_actions",
+        "column_name": "competency_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "controlled_teacher_actions",
+        "column_name": "teacher_principal_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "controlled_teacher_actions",
+        "column_name": "action_type",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "controlled_teacher_actions",
+        "column_name": "reason",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "controlled_teacher_actions",
+        "column_name": "status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "controlled_teacher_actions",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 8
+      },
+      {
+        "table_schema": "public",
+        "table_name": "controlled_teacher_actions",
+        "column_name": "resolved_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 9
+      },
+      {
+        "table_schema": "public",
+        "table_name": "external_identities",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "external_identities",
+        "column_name": "principal_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "external_identities",
+        "column_name": "provider_namespace",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "external_identities",
+        "column_name": "provider_subject",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "external_identities",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "external_identities",
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "guardian_consent_records",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "guardian_consent_records",
+        "column_name": "guardian_principal_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "guardian_consent_records",
+        "column_name": "learner_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "guardian_consent_records",
+        "column_name": "consent_type",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "guardian_consent_records",
+        "column_name": "notice_version",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "guardian_consent_records",
+        "column_name": "method",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "guardian_consent_records",
+        "column_name": "verification_status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": "'unverified'::text",
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "guardian_consent_records",
+        "column_name": "recorded_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 8
+      },
+      {
+        "table_schema": "public",
+        "table_name": "guardian_consent_records",
+        "column_name": "withdrawn_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 9
+      },
+      {
+        "table_schema": "public",
+        "table_name": "interventions",
+        "column_name": "intervention_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "interventions",
+        "column_name": "learner_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "interventions",
+        "column_name": "competency_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "interventions",
+        "column_name": "session_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "interventions",
+        "column_name": "decision_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "interventions",
+        "column_name": "type",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "interventions",
+        "column_name": "status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "interventions",
+        "column_name": "started_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 8
+      },
+      {
+        "table_schema": "public",
+        "table_name": "interventions",
+        "column_name": "completed_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 9
+      },
+      {
+        "table_schema": "public",
+        "table_name": "interventions",
+        "column_name": "outcome",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 10
+      },
+      {
+        "table_schema": "public",
+        "table_name": "interventions",
+        "column_name": "evidence_ids",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 11
+      },
+      {
+        "table_schema": "public",
+        "table_name": "interventions",
+        "column_name": "policy_version",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 12
+      },
+      {
+        "table_schema": "public",
+        "table_name": "interventions",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 13
+      },
+      {
+        "table_schema": "public",
+        "table_name": "interventions",
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 14
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_learning_context",
+        "column_name": "learner_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_learning_context",
+        "column_name": "curriculum_version_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_learning_context",
+        "column_name": "grade_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_learning_context",
+        "column_name": "active_subject_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_learning_context",
+        "column_name": "active_competency_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_learning_context",
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_profiles",
+        "column_name": "learner_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_profiles",
+        "column_name": "display_name",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_profiles",
+        "column_name": "avatar_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_profiles",
+        "column_name": "preferred_language",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": "'en'::text",
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_profiles",
+        "column_name": "onboarding_completed_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_profiles",
+        "column_name": "sign_in_principal_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_profiles",
+        "column_name": "created_by_principal_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_profiles",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 8
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_profiles",
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 9
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_states",
+        "column_name": "learner_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_states",
+        "column_name": "competency_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_states",
+        "column_name": "state",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_states",
+        "column_name": "evidence_count",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_states",
+        "column_name": "mastery_estimate",
+        "data_type": "real",
+        "udt_name": "float4",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_states",
+        "column_name": "confidence",
+        "data_type": "real",
+        "udt_name": "float4",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learner_states",
+        "column_name": "last_updated",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learners",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learners",
+        "column_name": "status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": "'active'::text",
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learners",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learners",
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "learner_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "competency_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "source",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "outcome",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "timestamp",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "assessment_item_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "session_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 8
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "content_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 9
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "policy_version",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 10
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "error_pattern",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 11
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "diagnostic_state",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 12
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "diagnostic_confidence",
+        "data_type": "real",
+        "udt_name": "float4",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 13
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "intervention_type",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 14
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "intervention_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 15
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "instructional_strategy",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 16
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "response_mode",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 17
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "purpose",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 18
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "independence",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 19
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "support_level",
+        "data_type": "real",
+        "udt_name": "float4",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 20
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "difficulty",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 21
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "representation",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 22
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "strength",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 23
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "error_class",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 24
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "prerequisite_competency_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 25
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "misconception_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 26
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "exposure_count",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 27
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "attempt_count",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 28
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "context_tags",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 29
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "evaluator_type",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 30
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "evaluator_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 31
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "evaluation_policy_version",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 32
+      },
+      {
+        "table_schema": "public",
+        "table_name": "learning_evidence",
+        "column_name": "interpretation_version",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 33
+      },
+      {
+        "table_schema": "public",
+        "table_name": "parent_teacher_messages",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "parent_teacher_messages",
+        "column_name": "learner_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "parent_teacher_messages",
+        "column_name": "author_principal_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "parent_teacher_messages",
+        "column_name": "sender_role",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "parent_teacher_messages",
+        "column_name": "text",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "parent_teacher_messages",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempt_events",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempt_events",
+        "column_name": "attempt_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempt_events",
+        "column_name": "sequence",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempt_events",
+        "column_name": "event_type",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempt_events",
+        "column_name": "from_status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempt_events",
+        "column_name": "to_status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempt_events",
+        "column_name": "detail",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempt_events",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 8
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "idempotency_key",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "obligation_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "our_reference",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "request_fingerprint",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "provider",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "mode",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "provider_reference",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 8
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "payer_principal_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 9
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "billing_account_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 10
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "amount_minor",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 11
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "currency",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 12
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 13
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "observed_status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 14
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "observed_amount_minor",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 15
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "observed_currency",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 16
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "verification_failures",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 17
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "last_error_code",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 18
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "verify_count",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "is_nullable": "NO",
+        "column_default": "0",
+        "ordinal_position": 19
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "confirmed_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 20
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 21
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_attempts",
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 22
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_exceptions",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_exceptions",
+        "column_name": "obligation_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_exceptions",
+        "column_name": "attempt_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_exceptions",
+        "column_name": "receipt_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_exceptions",
+        "column_name": "kind",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_exceptions",
+        "column_name": "blocks_fulfilment",
+        "data_type": "boolean",
+        "udt_name": "bool",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_exceptions",
+        "column_name": "dedupe_key",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_exceptions",
+        "column_name": "status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 8
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_exceptions",
+        "column_name": "opened_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 9
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_exceptions",
+        "column_name": "opened_by",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 10
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_exceptions",
+        "column_name": "resolution_code",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 11
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_exceptions",
+        "column_name": "resolved_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 12
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_exceptions",
+        "column_name": "resolved_by_principal_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 13
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligation_beneficiaries",
+        "column_name": "obligation_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligation_beneficiaries",
+        "column_name": "learner_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligation_beneficiaries",
+        "column_name": "access_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligation_beneficiaries",
+        "column_name": "policy_code",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligation_beneficiaries",
+        "column_name": "relationship_type",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligation_beneficiaries",
+        "column_name": "authorized_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligation_events",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligation_events",
+        "column_name": "obligation_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligation_events",
+        "column_name": "sequence",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligation_events",
+        "column_name": "event_type",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligation_events",
+        "column_name": "from_status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligation_events",
+        "column_name": "to_status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligation_events",
+        "column_name": "actor_type",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligation_events",
+        "column_name": "actor_principal_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 8
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligation_events",
+        "column_name": "detail",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 9
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligation_events",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 10
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "payer_principal_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "creation_key",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "product_code",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "product_version",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "product_label",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "product_terms",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "amount_minor",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 8
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "currency",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 9
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "mode",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 10
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "beneficiary_count",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 11
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "snapshot_hash",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 12
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 13
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "sealed_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 14
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "expires_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 15
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "settled_receipt_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 16
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "settled_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 17
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 18
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_obligations",
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 19
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_receipts",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_receipts",
+        "column_name": "attempt_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_receipts",
+        "column_name": "obligation_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_receipts",
+        "column_name": "provider",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_receipts",
+        "column_name": "mode",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_receipts",
+        "column_name": "merchant_context",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_receipts",
+        "column_name": "provider_reference",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_receipts",
+        "column_name": "amount_minor",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 8
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_receipts",
+        "column_name": "currency",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 9
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_receipts",
+        "column_name": "verified_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 10
+      },
+      {
+        "table_schema": "public",
+        "table_name": "payment_receipts",
+        "column_name": "recorded_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 11
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pending_teacher_reviews",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pending_teacher_reviews",
+        "column_name": "learner_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pending_teacher_reviews",
+        "column_name": "competency_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pending_teacher_reviews",
+        "column_name": "assessment_item_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pending_teacher_reviews",
+        "column_name": "content_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pending_teacher_reviews",
+        "column_name": "session_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pending_teacher_reviews",
+        "column_name": "response",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pending_teacher_reviews",
+        "column_name": "status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 8
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pending_teacher_reviews",
+        "column_name": "submitted_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 9
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pending_teacher_reviews",
+        "column_name": "reviewed_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 10
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pending_teacher_reviews",
+        "column_name": "reviewed_by_principal_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 11
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pending_teacher_reviews",
+        "column_name": "evidence_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 12
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pilot_measurement_events",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pilot_measurement_events",
+        "column_name": "learner_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pilot_measurement_events",
+        "column_name": "competency_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pilot_measurement_events",
+        "column_name": "session_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pilot_measurement_events",
+        "column_name": "subject_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pilot_measurement_events",
+        "column_name": "event_type",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pilot_measurement_events",
+        "column_name": "metadata",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pilot_measurement_events",
+        "column_name": "measurement_version",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 8
+      },
+      {
+        "table_schema": "public",
+        "table_name": "pilot_measurement_events",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 9
+      },
+      {
+        "table_schema": "public",
+        "table_name": "principal_learner_access",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "principal_learner_access",
+        "column_name": "principal_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "principal_learner_access",
+        "column_name": "learner_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "principal_learner_access",
+        "column_name": "relationship_type",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "principal_learner_access",
+        "column_name": "status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": "'active'::text",
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "principal_learner_access",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "principal_learner_access",
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 7
+      },
+      {
+        "table_schema": "public",
+        "table_name": "principals",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "principals",
+        "column_name": "status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": "'active'::text",
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "principals",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "principals",
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": "now()",
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "sessions",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "sessions",
+        "column_name": "learner_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "sessions",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "sessions",
+        "column_name": "last_activity_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "sessions",
+        "column_name": "status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "teacher_professional_notes",
+        "column_name": "id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "table_schema": "public",
+        "table_name": "teacher_professional_notes",
+        "column_name": "learner_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "table_schema": "public",
+        "table_name": "teacher_professional_notes",
+        "column_name": "competency_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "table_schema": "public",
+        "table_name": "teacher_professional_notes",
+        "column_name": "author_principal_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "table_schema": "public",
+        "table_name": "teacher_professional_notes",
+        "column_name": "note_type",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "table_schema": "public",
+        "table_name": "teacher_professional_notes",
+        "column_name": "text",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "table_schema": "public",
+        "table_name": "teacher_professional_notes",
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 7
+      }
+    ],
+    "constraints": [
+      {
+        "table_name": "account_credentials",
+        "conname": "account_credentials_account_kind_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((account_kind = ANY (ARRAY['guardian'::text, 'learner'::text])))"
+      },
+      {
+        "table_name": "account_credentials",
+        "conname": "account_credentials_account_kind_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL account_kind"
+      },
+      {
+        "table_name": "account_credentials",
+        "conname": "account_credentials_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "account_credentials",
+        "conname": "account_credentials_failed_attempt_count_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL failed_attempt_count"
+      },
+      {
+        "table_name": "account_credentials",
+        "conname": "account_credentials_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "account_credentials",
+        "conname": "account_credentials_login_identifier_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL login_identifier"
+      },
+      {
+        "table_name": "account_credentials",
+        "conname": "account_credentials_login_identifier_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (login_identifier)"
+      },
+      {
+        "table_name": "account_credentials",
+        "conname": "account_credentials_password_hash_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL password_hash"
+      },
+      {
+        "table_name": "account_credentials",
+        "conname": "account_credentials_password_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL password_updated_at"
+      },
+      {
+        "table_name": "account_credentials",
+        "conname": "account_credentials_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "account_credentials",
+        "conname": "account_credentials_principal_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL principal_id"
+      },
+      {
+        "table_name": "account_credentials",
+        "conname": "account_credentials_principal_id_principals_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (principal_id) REFERENCES principals(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "account_credentials",
+        "conname": "account_credentials_principal_id_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (principal_id)"
+      },
+      {
+        "table_name": "account_credentials",
+        "conname": "account_credentials_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status"
+      },
+      {
+        "table_name": "account_credentials",
+        "conname": "account_credentials_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "table_name": "account_profiles",
+        "conname": "account_profiles_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "account_profiles",
+        "conname": "account_profiles_display_name_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL display_name"
+      },
+      {
+        "table_name": "account_profiles",
+        "conname": "account_profiles_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (principal_id)"
+      },
+      {
+        "table_name": "account_profiles",
+        "conname": "account_profiles_preferred_language_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL preferred_language"
+      },
+      {
+        "table_name": "account_profiles",
+        "conname": "account_profiles_principal_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL principal_id"
+      },
+      {
+        "table_name": "account_profiles",
+        "conname": "account_profiles_principal_id_principals_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (principal_id) REFERENCES principals(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "account_profiles",
+        "conname": "account_profiles_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "table_name": "auth_sessions",
+        "conname": "auth_sessions_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "auth_sessions",
+        "conname": "auth_sessions_expires_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL expires_at"
+      },
+      {
+        "table_name": "auth_sessions",
+        "conname": "auth_sessions_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "auth_sessions",
+        "conname": "auth_sessions_last_activity_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL last_activity_at"
+      },
+      {
+        "table_name": "auth_sessions",
+        "conname": "auth_sessions_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "auth_sessions",
+        "conname": "auth_sessions_principal_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL principal_id"
+      },
+      {
+        "table_name": "auth_sessions",
+        "conname": "auth_sessions_principal_id_principals_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (principal_id) REFERENCES principals(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "auth_sessions",
+        "conname": "auth_sessions_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status"
+      },
+      {
+        "table_name": "auth_sessions",
+        "conname": "auth_sessions_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "table_name": "controlled_teacher_actions",
+        "conname": "controlled_teacher_actions_action_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL action_type"
+      },
+      {
+        "table_name": "controlled_teacher_actions",
+        "conname": "controlled_teacher_actions_competency_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL competency_id"
+      },
+      {
+        "table_name": "controlled_teacher_actions",
+        "conname": "controlled_teacher_actions_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "controlled_teacher_actions",
+        "conname": "controlled_teacher_actions_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "controlled_teacher_actions",
+        "conname": "controlled_teacher_actions_learner_id_learners_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (learner_id) REFERENCES learners(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "controlled_teacher_actions",
+        "conname": "controlled_teacher_actions_learner_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL learner_id"
+      },
+      {
+        "table_name": "controlled_teacher_actions",
+        "conname": "controlled_teacher_actions_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "controlled_teacher_actions",
+        "conname": "controlled_teacher_actions_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status"
+      },
+      {
+        "table_name": "controlled_teacher_actions",
+        "conname": "controlled_teacher_actions_teacher_principal_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL teacher_principal_id"
+      },
+      {
+        "table_name": "external_identities",
+        "conname": "external_identities_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "external_identities",
+        "conname": "external_identities_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "external_identities",
+        "conname": "external_identities_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "external_identities",
+        "conname": "external_identities_principal_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL principal_id"
+      },
+      {
+        "table_name": "external_identities",
+        "conname": "external_identities_principal_id_principals_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (principal_id) REFERENCES principals(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "external_identities",
+        "conname": "external_identities_provider_namespace_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL provider_namespace"
+      },
+      {
+        "table_name": "external_identities",
+        "conname": "external_identities_provider_namespace_provider_subject_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (provider_namespace, provider_subject)"
+      },
+      {
+        "table_name": "external_identities",
+        "conname": "external_identities_provider_subject_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL provider_subject"
+      },
+      {
+        "table_name": "external_identities",
+        "conname": "external_identities_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "table_name": "guardian_consent_records",
+        "conname": "guardian_consent_records_consent_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL consent_type"
+      },
+      {
+        "table_name": "guardian_consent_records",
+        "conname": "guardian_consent_records_guardian_principal_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL guardian_principal_id"
+      },
+      {
+        "table_name": "guardian_consent_records",
+        "conname": "guardian_consent_records_guardian_principal_id_principals_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (guardian_principal_id) REFERENCES principals(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "guardian_consent_records",
+        "conname": "guardian_consent_records_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "guardian_consent_records",
+        "conname": "guardian_consent_records_learner_id_learners_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (learner_id) REFERENCES learners(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "guardian_consent_records",
+        "conname": "guardian_consent_records_method_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL method"
+      },
+      {
+        "table_name": "guardian_consent_records",
+        "conname": "guardian_consent_records_notice_version_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL notice_version"
+      },
+      {
+        "table_name": "guardian_consent_records",
+        "conname": "guardian_consent_records_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "guardian_consent_records",
+        "conname": "guardian_consent_records_recorded_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL recorded_at"
+      },
+      {
+        "table_name": "guardian_consent_records",
+        "conname": "guardian_consent_records_verification_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL verification_status"
+      },
+      {
+        "table_name": "interventions",
+        "conname": "interventions_competency_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL competency_id"
+      },
+      {
+        "table_name": "interventions",
+        "conname": "interventions_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "interventions",
+        "conname": "interventions_decision_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL decision_id"
+      },
+      {
+        "table_name": "interventions",
+        "conname": "interventions_evidence_ids_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL evidence_ids"
+      },
+      {
+        "table_name": "interventions",
+        "conname": "interventions_intervention_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL intervention_id"
+      },
+      {
+        "table_name": "interventions",
+        "conname": "interventions_learner_id_learners_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (learner_id) REFERENCES learners(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "interventions",
+        "conname": "interventions_learner_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL learner_id"
+      },
+      {
+        "table_name": "interventions",
+        "conname": "interventions_outcome_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL outcome"
+      },
+      {
+        "table_name": "interventions",
+        "conname": "interventions_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (intervention_id)"
+      },
+      {
+        "table_name": "interventions",
+        "conname": "interventions_policy_version_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL policy_version"
+      },
+      {
+        "table_name": "interventions",
+        "conname": "interventions_session_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL session_id"
+      },
+      {
+        "table_name": "interventions",
+        "conname": "interventions_started_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL started_at"
+      },
+      {
+        "table_name": "interventions",
+        "conname": "interventions_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status"
+      },
+      {
+        "table_name": "interventions",
+        "conname": "interventions_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL type"
+      },
+      {
+        "table_name": "interventions",
+        "conname": "interventions_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "table_name": "learner_learning_context",
+        "conname": "learner_learning_context_active_subject_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL active_subject_id"
+      },
+      {
+        "table_name": "learner_learning_context",
+        "conname": "learner_learning_context_curriculum_version_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL curriculum_version_id"
+      },
+      {
+        "table_name": "learner_learning_context",
+        "conname": "learner_learning_context_grade_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL grade_id"
+      },
+      {
+        "table_name": "learner_learning_context",
+        "conname": "learner_learning_context_learner_id_learners_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (learner_id) REFERENCES learners(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "learner_learning_context",
+        "conname": "learner_learning_context_learner_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL learner_id"
+      },
+      {
+        "table_name": "learner_learning_context",
+        "conname": "learner_learning_context_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (learner_id)"
+      },
+      {
+        "table_name": "learner_learning_context",
+        "conname": "learner_learning_context_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "table_name": "learner_profiles",
+        "conname": "learner_profiles_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "learner_profiles",
+        "conname": "learner_profiles_created_by_principal_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_by_principal_id"
+      },
+      {
+        "table_name": "learner_profiles",
+        "conname": "learner_profiles_created_by_principal_id_principals_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (created_by_principal_id) REFERENCES principals(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "learner_profiles",
+        "conname": "learner_profiles_display_name_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL display_name"
+      },
+      {
+        "table_name": "learner_profiles",
+        "conname": "learner_profiles_learner_id_learners_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (learner_id) REFERENCES learners(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "learner_profiles",
+        "conname": "learner_profiles_learner_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL learner_id"
+      },
+      {
+        "table_name": "learner_profiles",
+        "conname": "learner_profiles_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (learner_id)"
+      },
+      {
+        "table_name": "learner_profiles",
+        "conname": "learner_profiles_preferred_language_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL preferred_language"
+      },
+      {
+        "table_name": "learner_profiles",
+        "conname": "learner_profiles_sign_in_principal_id_principals_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (sign_in_principal_id) REFERENCES principals(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "learner_profiles",
+        "conname": "learner_profiles_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "table_name": "learner_states",
+        "conname": "learner_states_competency_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL competency_id"
+      },
+      {
+        "table_name": "learner_states",
+        "conname": "learner_states_confidence_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL confidence"
+      },
+      {
+        "table_name": "learner_states",
+        "conname": "learner_states_evidence_count_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL evidence_count"
+      },
+      {
+        "table_name": "learner_states",
+        "conname": "learner_states_last_updated_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL last_updated"
+      },
+      {
+        "table_name": "learner_states",
+        "conname": "learner_states_learner_competency_pk",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (learner_id, competency_id)"
+      },
+      {
+        "table_name": "learner_states",
+        "conname": "learner_states_learner_id_learners_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (learner_id) REFERENCES learners(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "learner_states",
+        "conname": "learner_states_learner_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL learner_id"
+      },
+      {
+        "table_name": "learner_states",
+        "conname": "learner_states_mastery_estimate_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL mastery_estimate"
+      },
+      {
+        "table_name": "learner_states",
+        "conname": "learner_states_state_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL state"
+      },
+      {
+        "table_name": "learners",
+        "conname": "learners_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "learners",
+        "conname": "learners_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "learners",
+        "conname": "learners_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "learners",
+        "conname": "learners_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status"
+      },
+      {
+        "table_name": "learners",
+        "conname": "learners_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "table_name": "learning_evidence",
+        "conname": "learning_evidence_competency_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL competency_id"
+      },
+      {
+        "table_name": "learning_evidence",
+        "conname": "learning_evidence_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "learning_evidence",
+        "conname": "learning_evidence_learner_id_learners_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (learner_id) REFERENCES learners(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "learning_evidence",
+        "conname": "learning_evidence_learner_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL learner_id"
+      },
+      {
+        "table_name": "learning_evidence",
+        "conname": "learning_evidence_outcome_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL outcome"
+      },
+      {
+        "table_name": "learning_evidence",
+        "conname": "learning_evidence_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "learning_evidence",
+        "conname": "learning_evidence_policy_version_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL policy_version"
+      },
+      {
+        "table_name": "learning_evidence",
+        "conname": "learning_evidence_source_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL source"
+      },
+      {
+        "table_name": "learning_evidence",
+        "conname": "learning_evidence_timestamp_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL \"timestamp\""
+      },
+      {
+        "table_name": "parent_teacher_messages",
+        "conname": "parent_teacher_messages_author_principal_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL author_principal_id"
+      },
+      {
+        "table_name": "parent_teacher_messages",
+        "conname": "parent_teacher_messages_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "parent_teacher_messages",
+        "conname": "parent_teacher_messages_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "parent_teacher_messages",
+        "conname": "parent_teacher_messages_learner_id_learners_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (learner_id) REFERENCES learners(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "parent_teacher_messages",
+        "conname": "parent_teacher_messages_learner_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL learner_id"
+      },
+      {
+        "table_name": "parent_teacher_messages",
+        "conname": "parent_teacher_messages_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "parent_teacher_messages",
+        "conname": "parent_teacher_messages_sender_role_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL sender_role"
+      },
+      {
+        "table_name": "parent_teacher_messages",
+        "conname": "parent_teacher_messages_text_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL text"
+      },
+      {
+        "table_name": "payment_attempt_events",
+        "conname": "payment_attempt_events_attempt_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL attempt_id"
+      },
+      {
+        "table_name": "payment_attempt_events",
+        "conname": "payment_attempt_events_attempt_id_payment_attempts_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (attempt_id) REFERENCES payment_attempts(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "payment_attempt_events",
+        "conname": "payment_attempt_events_attempt_sequence_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (attempt_id, sequence)"
+      },
+      {
+        "table_name": "payment_attempt_events",
+        "conname": "payment_attempt_events_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "payment_attempt_events",
+        "conname": "payment_attempt_events_detail_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL detail"
+      },
+      {
+        "table_name": "payment_attempt_events",
+        "conname": "payment_attempt_events_event_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL event_type"
+      },
+      {
+        "table_name": "payment_attempt_events",
+        "conname": "payment_attempt_events_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "payment_attempt_events",
+        "conname": "payment_attempt_events_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "payment_attempt_events",
+        "conname": "payment_attempt_events_sequence_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((sequence >= 1))"
+      },
+      {
+        "table_name": "payment_attempt_events",
+        "conname": "payment_attempt_events_sequence_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL sequence"
+      },
+      {
+        "table_name": "payment_attempt_events",
+        "conname": "payment_attempt_events_type_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((event_type ~ '^[a-z][a-z_]{2,48}$'::text))"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_amount_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((amount_minor > 0))"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_amount_minor_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL amount_minor"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_currency_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((currency ~ '^[A-Z]{3}$'::text))"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_currency_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL currency"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_idempotency_key_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL idempotency_key"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_idempotency_key_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (idempotency_key)"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_mode_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((mode = ANY (ARRAY['sandbox'::text, 'live'::text])))"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_mode_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL mode"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_obligation_binding_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (id, obligation_id, provider, mode)"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_obligation_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (((length(obligation_id) >= 1) AND (length(obligation_id) <= 200)))"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_obligation_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (obligation_id, payer_principal_id, amount_minor, currency, mode) REFERENCES payment_obligations(id, payer_principal_id, amount_minor, currency, mode) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_obligation_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL obligation_id"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_our_reference_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL our_reference"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_our_reference_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (our_reference)"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_payer_principal_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL payer_principal_id"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_payer_principal_id_principals_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (payer_principal_id) REFERENCES principals(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_provider_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((provider ~ '^[a-z][a-z0-9_]{1,31}$'::text))"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_provider_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL provider"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_provider_reference_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (provider, provider_reference)"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_request_fingerprint_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL request_fingerprint"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_status_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((status = ANY (ARRAY['created'::text, 'pending'::text, 'unknown'::text, 'succeeded'::text, 'failed'::text, 'needs_review'::text])))"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_succeeded_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (((status <> 'succeeded'::text) OR ((observed_status = 'successful'::text) AND (observed_amount_minor = amount_minor) AND (observed_currency = currency) AND (confirmed_at IS NOT NULL) AND (provider_reference IS NOT NULL))))"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_verify_count_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((verify_count >= 0))"
+      },
+      {
+        "table_name": "payment_attempts",
+        "conname": "payment_attempts_verify_count_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL verify_count"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_attempt_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (attempt_id) REFERENCES payment_attempts(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_blocking_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((blocks_fulfilment = (kind <> 'duplicate_charge'::text)))"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_blocks_fulfilment_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL blocks_fulfilment"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_dedupe_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (((length(dedupe_key) >= 1) AND (length(dedupe_key) <= 200)))"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_dedupe_key_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL dedupe_key"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_dedupe_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (obligation_id, kind, dedupe_key)"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_kind_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((kind = ANY (ARRAY['amount_mismatch'::text, 'currency_mismatch'::text, 'identity_mismatch'::text, 'attempt_needs_review'::text, 'duplicate_charge'::text, 'success_after_failed'::text, 'success_after_cancel'::text, 'success_after_expiry'::text, 'success_during_review'::text, 'beneficiary_authorization_revoked'::text, 'provider_record_missing'::text, 'initiated_after_resolution'::text, 'reversal_reported'::text, 'post_settlement_status_change'::text])))"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_kind_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL kind"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_obligation_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (obligation_id) REFERENCES payment_obligations(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_obligation_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL obligation_id"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_opened_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL opened_at"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_opened_by_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((opened_by = 'system'::text))"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_opened_by_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL opened_by"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_receipt_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (receipt_id) REFERENCES payment_receipts(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_resolution_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((((status = 'open'::text) AND (resolution_code IS NULL) AND (resolved_at IS NULL) AND (resolved_by_principal_id IS NULL)) OR ((status = 'resolved'::text) AND (resolution_code IS NOT NULL) AND (resolved_at IS NOT NULL) AND (resolved_by_principal_id IS NOT NULL))))"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_resolver_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (resolved_by_principal_id) REFERENCES principals(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_status_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((status = ANY (ARRAY['open'::text, 'resolved'::text])))"
+      },
+      {
+        "table_name": "payment_exceptions",
+        "conname": "payment_exceptions_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status"
+      },
+      {
+        "table_name": "payment_obligation_beneficiaries",
+        "conname": "payment_obligation_beneficiaries_access_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (access_id) REFERENCES principal_learner_access(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "payment_obligation_beneficiaries",
+        "conname": "payment_obligation_beneficiaries_access_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL access_id"
+      },
+      {
+        "table_name": "payment_obligation_beneficiaries",
+        "conname": "payment_obligation_beneficiaries_authorized_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL authorized_at"
+      },
+      {
+        "table_name": "payment_obligation_beneficiaries",
+        "conname": "payment_obligation_beneficiaries_learner_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((learner_id ~ '^[A-Za-z0-9._:-]{1,200}$'::text))"
+      },
+      {
+        "table_name": "payment_obligation_beneficiaries",
+        "conname": "payment_obligation_beneficiaries_learner_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (learner_id) REFERENCES learners(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "payment_obligation_beneficiaries",
+        "conname": "payment_obligation_beneficiaries_learner_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL learner_id"
+      },
+      {
+        "table_name": "payment_obligation_beneficiaries",
+        "conname": "payment_obligation_beneficiaries_obligation_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (obligation_id) REFERENCES payment_obligations(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "payment_obligation_beneficiaries",
+        "conname": "payment_obligation_beneficiaries_obligation_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL obligation_id"
+      },
+      {
+        "table_name": "payment_obligation_beneficiaries",
+        "conname": "payment_obligation_beneficiaries_pk",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (obligation_id, learner_id)"
+      },
+      {
+        "table_name": "payment_obligation_beneficiaries",
+        "conname": "payment_obligation_beneficiaries_policy_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((policy_code = 'guardian_v1'::text))"
+      },
+      {
+        "table_name": "payment_obligation_beneficiaries",
+        "conname": "payment_obligation_beneficiaries_policy_code_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL policy_code"
+      },
+      {
+        "table_name": "payment_obligation_beneficiaries",
+        "conname": "payment_obligation_beneficiaries_relationship_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((relationship_type = 'guardian'::text))"
+      },
+      {
+        "table_name": "payment_obligation_beneficiaries",
+        "conname": "payment_obligation_beneficiaries_relationship_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL relationship_type"
+      },
+      {
+        "table_name": "payment_obligation_events",
+        "conname": "payment_obligation_events_actor_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((((actor_type = 'system'::text) AND (actor_principal_id IS NULL)) OR ((actor_type = 'payer'::text) AND (actor_principal_id IS NOT NULL))))"
+      },
+      {
+        "table_name": "payment_obligation_events",
+        "conname": "payment_obligation_events_actor_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (actor_principal_id) REFERENCES principals(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "payment_obligation_events",
+        "conname": "payment_obligation_events_actor_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL actor_type"
+      },
+      {
+        "table_name": "payment_obligation_events",
+        "conname": "payment_obligation_events_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "payment_obligation_events",
+        "conname": "payment_obligation_events_detail_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL detail"
+      },
+      {
+        "table_name": "payment_obligation_events",
+        "conname": "payment_obligation_events_event_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL event_type"
+      },
+      {
+        "table_name": "payment_obligation_events",
+        "conname": "payment_obligation_events_from_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (((from_status IS NULL) OR (from_status = ANY (ARRAY['open'::text, 'settled'::text, 'cancelled'::text, 'expired'::text, 'review'::text]))))"
+      },
+      {
+        "table_name": "payment_obligation_events",
+        "conname": "payment_obligation_events_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "payment_obligation_events",
+        "conname": "payment_obligation_events_obligation_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (obligation_id) REFERENCES payment_obligations(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "payment_obligation_events",
+        "conname": "payment_obligation_events_obligation_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL obligation_id"
+      },
+      {
+        "table_name": "payment_obligation_events",
+        "conname": "payment_obligation_events_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "payment_obligation_events",
+        "conname": "payment_obligation_events_sequence_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((sequence >= 1))"
+      },
+      {
+        "table_name": "payment_obligation_events",
+        "conname": "payment_obligation_events_sequence_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL sequence"
+      },
+      {
+        "table_name": "payment_obligation_events",
+        "conname": "payment_obligation_events_sequence_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (obligation_id, sequence)"
+      },
+      {
+        "table_name": "payment_obligation_events",
+        "conname": "payment_obligation_events_to_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (((to_status IS NULL) OR (to_status = ANY (ARRAY['open'::text, 'settled'::text, 'cancelled'::text, 'expired'::text, 'review'::text]))))"
+      },
+      {
+        "table_name": "payment_obligation_events",
+        "conname": "payment_obligation_events_type_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((event_type ~ '^[a-z][a-z_]{2,48}$'::text))"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_amount_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((amount_minor > 0))"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_amount_minor_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL amount_minor"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_beneficiary_count_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (((beneficiary_count >= 1) AND (beneficiary_count <= 20)))"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_beneficiary_count_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL beneficiary_count"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_binding_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (id, payer_principal_id, amount_minor, currency, mode)"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_creation_key_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((creation_key ~ '^[A-Za-z0-9._:-]{8,200}$'::text))"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_creation_key_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL creation_key"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_currency_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((currency = 'GHS'::text))"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_currency_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL currency"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_expires_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL expires_at"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_expiry_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((expires_at > created_at))"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_id_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((id ~ '^[A-Za-z0-9._:-]{1,200}$'::text))"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_mode_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL mode"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_payer_creation_key_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (payer_principal_id, creation_key)"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_payer_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (payer_principal_id) REFERENCES principals(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_payer_principal_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL payer_principal_id"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_product_code_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((product_code ~ '^[a-z][a-z0-9_]{2,63}$'::text))"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_product_code_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL product_code"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_product_label_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((((length(product_label) >= 1) AND (length(product_label) <= 120)) AND (product_label !~ '^[ \\t\\n\\v\\f\\r\\u00a0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000\\ufeff]*$'::text)))"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_product_label_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL product_label"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_product_terms_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL product_terms"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_product_version_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((product_version ~ '^[A-Za-z0-9._-]{1,32}$'::text))"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_product_version_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL product_version"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_sandbox_only_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((mode = 'sandbox'::text))"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_settled_at_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (((settled_receipt_id IS NULL) = (settled_at IS NULL)))"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_settled_receipt_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (((status = 'settled'::text) = (settled_receipt_id IS NOT NULL)))"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_settled_receipt_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (settled_receipt_id)"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_snapshot_hash_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((snapshot_hash ~ '^[0-9a-f]{64}$'::text))"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_snapshot_hash_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL snapshot_hash"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_status_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((status = ANY (ARRAY['open'::text, 'settled'::text, 'cancelled'::text, 'expired'::text, 'review'::text])))"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_terms_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((jsonb_typeof(product_terms) = 'object'::text))"
+      },
+      {
+        "table_name": "payment_obligations",
+        "conname": "payment_obligations_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_amount_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((amount_minor > 0))"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_amount_minor_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL amount_minor"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_attempt_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (attempt_id, obligation_id, provider, mode) REFERENCES payment_attempts(id, obligation_id, provider, mode) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_attempt_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL attempt_id"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_attempt_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (attempt_id)"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_currency_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((currency ~ '^[A-Z]{3}$'::text))"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_currency_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL currency"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_merchant_context_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((merchant_context ~ '^[a-z0-9][a-z0-9:._-]{2,63}$'::text))"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_merchant_context_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL merchant_context"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_mode_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((mode = ANY (ARRAY['sandbox'::text, 'live'::text])))"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_mode_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL mode"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_obligation_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (obligation_id) REFERENCES payment_obligations(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_obligation_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL obligation_id"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_provider_charge_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (provider, mode, merchant_context, provider_reference)"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_provider_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK ((provider ~ '^[a-z][a-z0-9_]{1,31}$'::text))"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_provider_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL provider"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_provider_reference_check",
+        "contype": "c",
+        "convalidated": true,
+        "definition": "CHECK (((length(provider_reference) >= 1) AND (length(provider_reference) <= 200)))"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_provider_reference_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL provider_reference"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_recorded_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL recorded_at"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_settlement_binding_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (id, obligation_id, amount_minor, currency, mode)"
+      },
+      {
+        "table_name": "payment_receipts",
+        "conname": "payment_receipts_verified_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL verified_at"
+      },
+      {
+        "table_name": "pending_teacher_reviews",
+        "conname": "pending_teacher_reviews_assessment_item_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL assessment_item_id"
+      },
+      {
+        "table_name": "pending_teacher_reviews",
+        "conname": "pending_teacher_reviews_competency_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL competency_id"
+      },
+      {
+        "table_name": "pending_teacher_reviews",
+        "conname": "pending_teacher_reviews_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "pending_teacher_reviews",
+        "conname": "pending_teacher_reviews_learner_id_learners_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (learner_id) REFERENCES learners(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "pending_teacher_reviews",
+        "conname": "pending_teacher_reviews_learner_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL learner_id"
+      },
+      {
+        "table_name": "pending_teacher_reviews",
+        "conname": "pending_teacher_reviews_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "pending_teacher_reviews",
+        "conname": "pending_teacher_reviews_response_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL response"
+      },
+      {
+        "table_name": "pending_teacher_reviews",
+        "conname": "pending_teacher_reviews_session_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL session_id"
+      },
+      {
+        "table_name": "pending_teacher_reviews",
+        "conname": "pending_teacher_reviews_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status"
+      },
+      {
+        "table_name": "pending_teacher_reviews",
+        "conname": "pending_teacher_reviews_submitted_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL submitted_at"
+      },
+      {
+        "table_name": "pilot_measurement_events",
+        "conname": "pilot_measurement_events_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "pilot_measurement_events",
+        "conname": "pilot_measurement_events_event_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL event_type"
+      },
+      {
+        "table_name": "pilot_measurement_events",
+        "conname": "pilot_measurement_events_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "pilot_measurement_events",
+        "conname": "pilot_measurement_events_learner_id_learners_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (learner_id) REFERENCES learners(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "pilot_measurement_events",
+        "conname": "pilot_measurement_events_learner_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL learner_id"
+      },
+      {
+        "table_name": "pilot_measurement_events",
+        "conname": "pilot_measurement_events_measurement_version_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL measurement_version"
+      },
+      {
+        "table_name": "pilot_measurement_events",
+        "conname": "pilot_measurement_events_metadata_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL metadata"
+      },
+      {
+        "table_name": "pilot_measurement_events",
+        "conname": "pilot_measurement_events_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "principal_learner_access",
+        "conname": "principal_learner_access_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "principal_learner_access",
+        "conname": "principal_learner_access_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "principal_learner_access",
+        "conname": "principal_learner_access_learner_id_learners_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (learner_id) REFERENCES learners(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "principal_learner_access",
+        "conname": "principal_learner_access_learner_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL learner_id"
+      },
+      {
+        "table_name": "principal_learner_access",
+        "conname": "principal_learner_access_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "principal_learner_access",
+        "conname": "principal_learner_access_principal_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL principal_id"
+      },
+      {
+        "table_name": "principal_learner_access",
+        "conname": "principal_learner_access_principal_id_principals_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (principal_id) REFERENCES principals(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "principal_learner_access",
+        "conname": "principal_learner_access_principal_learner_relationship_unique",
+        "contype": "u",
+        "convalidated": true,
+        "definition": "UNIQUE (principal_id, learner_id, relationship_type)"
+      },
+      {
+        "table_name": "principal_learner_access",
+        "conname": "principal_learner_access_relationship_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL relationship_type"
+      },
+      {
+        "table_name": "principal_learner_access",
+        "conname": "principal_learner_access_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status"
+      },
+      {
+        "table_name": "principal_learner_access",
+        "conname": "principal_learner_access_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "table_name": "principals",
+        "conname": "principals_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "principals",
+        "conname": "principals_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "principals",
+        "conname": "principals_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "principals",
+        "conname": "principals_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status"
+      },
+      {
+        "table_name": "principals",
+        "conname": "principals_updated_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL updated_at"
+      },
+      {
+        "table_name": "sessions",
+        "conname": "sessions_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "sessions",
+        "conname": "sessions_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "sessions",
+        "conname": "sessions_last_activity_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL last_activity_at"
+      },
+      {
+        "table_name": "sessions",
+        "conname": "sessions_learner_id_learners_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (learner_id) REFERENCES learners(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "sessions",
+        "conname": "sessions_learner_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL learner_id"
+      },
+      {
+        "table_name": "sessions",
+        "conname": "sessions_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "sessions",
+        "conname": "sessions_status_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL status"
+      },
+      {
+        "table_name": "teacher_professional_notes",
+        "conname": "teacher_professional_notes_author_principal_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL author_principal_id"
+      },
+      {
+        "table_name": "teacher_professional_notes",
+        "conname": "teacher_professional_notes_created_at_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL created_at"
+      },
+      {
+        "table_name": "teacher_professional_notes",
+        "conname": "teacher_professional_notes_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL id"
+      },
+      {
+        "table_name": "teacher_professional_notes",
+        "conname": "teacher_professional_notes_learner_id_learners_id_fk",
+        "contype": "f",
+        "convalidated": true,
+        "definition": "FOREIGN KEY (learner_id) REFERENCES learners(id) ON DELETE RESTRICT"
+      },
+      {
+        "table_name": "teacher_professional_notes",
+        "conname": "teacher_professional_notes_learner_id_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL learner_id"
+      },
+      {
+        "table_name": "teacher_professional_notes",
+        "conname": "teacher_professional_notes_note_type_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL note_type"
+      },
+      {
+        "table_name": "teacher_professional_notes",
+        "conname": "teacher_professional_notes_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "table_name": "teacher_professional_notes",
+        "conname": "teacher_professional_notes_text_not_null",
+        "contype": "n",
+        "convalidated": true,
+        "definition": "NOT NULL text"
+      }
+    ],
+    "indexes": [
+      {
+        "tablename": "account_credentials",
+        "indexname": "account_credentials_login_identifier_unique",
+        "indexdef": "CREATE UNIQUE INDEX account_credentials_login_identifier_unique ON public.account_credentials USING btree (login_identifier)"
+      },
+      {
+        "tablename": "account_credentials",
+        "indexname": "account_credentials_pkey",
+        "indexdef": "CREATE UNIQUE INDEX account_credentials_pkey ON public.account_credentials USING btree (id)"
+      },
+      {
+        "tablename": "account_credentials",
+        "indexname": "account_credentials_principal_id_unique",
+        "indexdef": "CREATE UNIQUE INDEX account_credentials_principal_id_unique ON public.account_credentials USING btree (principal_id)"
+      },
+      {
+        "tablename": "account_profiles",
+        "indexname": "account_profiles_pkey",
+        "indexdef": "CREATE UNIQUE INDEX account_profiles_pkey ON public.account_profiles USING btree (principal_id)"
+      },
+      {
+        "tablename": "auth_sessions",
+        "indexname": "auth_sessions_pkey",
+        "indexdef": "CREATE UNIQUE INDEX auth_sessions_pkey ON public.auth_sessions USING btree (id)"
+      },
+      {
+        "tablename": "controlled_teacher_actions",
+        "indexname": "controlled_teacher_actions_pkey",
+        "indexdef": "CREATE UNIQUE INDEX controlled_teacher_actions_pkey ON public.controlled_teacher_actions USING btree (id)"
+      },
+      {
+        "tablename": "external_identities",
+        "indexname": "external_identities_pkey",
+        "indexdef": "CREATE UNIQUE INDEX external_identities_pkey ON public.external_identities USING btree (id)"
+      },
+      {
+        "tablename": "external_identities",
+        "indexname": "external_identities_provider_namespace_provider_subject_unique",
+        "indexdef": "CREATE UNIQUE INDEX external_identities_provider_namespace_provider_subject_unique ON public.external_identities USING btree (provider_namespace, provider_subject)"
+      },
+      {
+        "tablename": "guardian_consent_records",
+        "indexname": "guardian_consent_records_guardian_idx",
+        "indexdef": "CREATE INDEX guardian_consent_records_guardian_idx ON public.guardian_consent_records USING btree (guardian_principal_id)"
+      },
+      {
+        "tablename": "guardian_consent_records",
+        "indexname": "guardian_consent_records_learner_idx",
+        "indexdef": "CREATE INDEX guardian_consent_records_learner_idx ON public.guardian_consent_records USING btree (learner_id)"
+      },
+      {
+        "tablename": "guardian_consent_records",
+        "indexname": "guardian_consent_records_pkey",
+        "indexdef": "CREATE UNIQUE INDEX guardian_consent_records_pkey ON public.guardian_consent_records USING btree (id)"
+      },
+      {
+        "tablename": "interventions",
+        "indexname": "interventions_pkey",
+        "indexdef": "CREATE UNIQUE INDEX interventions_pkey ON public.interventions USING btree (intervention_id)"
+      },
+      {
+        "tablename": "learner_learning_context",
+        "indexname": "learner_learning_context_pkey",
+        "indexdef": "CREATE UNIQUE INDEX learner_learning_context_pkey ON public.learner_learning_context USING btree (learner_id)"
+      },
+      {
+        "tablename": "learner_profiles",
+        "indexname": "learner_profiles_pkey",
+        "indexdef": "CREATE UNIQUE INDEX learner_profiles_pkey ON public.learner_profiles USING btree (learner_id)"
+      },
+      {
+        "tablename": "learner_states",
+        "indexname": "learner_states_learner_competency_pk",
+        "indexdef": "CREATE UNIQUE INDEX learner_states_learner_competency_pk ON public.learner_states USING btree (learner_id, competency_id)"
+      },
+      {
+        "tablename": "learners",
+        "indexname": "learners_pkey",
+        "indexdef": "CREATE UNIQUE INDEX learners_pkey ON public.learners USING btree (id)"
+      },
+      {
+        "tablename": "learning_evidence",
+        "indexname": "learning_evidence_pkey",
+        "indexdef": "CREATE UNIQUE INDEX learning_evidence_pkey ON public.learning_evidence USING btree (id)"
+      },
+      {
+        "tablename": "parent_teacher_messages",
+        "indexname": "parent_teacher_messages_pkey",
+        "indexdef": "CREATE UNIQUE INDEX parent_teacher_messages_pkey ON public.parent_teacher_messages USING btree (id)"
+      },
+      {
+        "tablename": "payment_attempt_events",
+        "indexname": "payment_attempt_events_attempt_sequence_unique",
+        "indexdef": "CREATE UNIQUE INDEX payment_attempt_events_attempt_sequence_unique ON public.payment_attempt_events USING btree (attempt_id, sequence)"
+      },
+      {
+        "tablename": "payment_attempt_events",
+        "indexname": "payment_attempt_events_one_success_per_attempt",
+        "indexdef": "CREATE UNIQUE INDEX payment_attempt_events_one_success_per_attempt ON public.payment_attempt_events USING btree (attempt_id) WHERE (to_status = 'succeeded'::text)"
+      },
+      {
+        "tablename": "payment_attempt_events",
+        "indexname": "payment_attempt_events_pkey",
+        "indexdef": "CREATE UNIQUE INDEX payment_attempt_events_pkey ON public.payment_attempt_events USING btree (id)"
+      },
+      {
+        "tablename": "payment_attempts",
+        "indexname": "payment_attempts_idempotency_key_unique",
+        "indexdef": "CREATE UNIQUE INDEX payment_attempts_idempotency_key_unique ON public.payment_attempts USING btree (idempotency_key)"
+      },
+      {
+        "tablename": "payment_attempts",
+        "indexname": "payment_attempts_obligation_binding_unique",
+        "indexdef": "CREATE UNIQUE INDEX payment_attempts_obligation_binding_unique ON public.payment_attempts USING btree (id, obligation_id, provider, mode)"
+      },
+      {
+        "tablename": "payment_attempts",
+        "indexname": "payment_attempts_one_active_per_obligation",
+        "indexdef": "CREATE UNIQUE INDEX payment_attempts_one_active_per_obligation ON public.payment_attempts USING btree (obligation_id) WHERE (status = ANY (ARRAY['created'::text, 'pending'::text, 'unknown'::text]))"
+      },
+      {
+        "tablename": "payment_attempts",
+        "indexname": "payment_attempts_one_success_per_obligation",
+        "indexdef": "CREATE UNIQUE INDEX payment_attempts_one_success_per_obligation ON public.payment_attempts USING btree (obligation_id) WHERE (status = 'succeeded'::text)"
+      },
+      {
+        "tablename": "payment_attempts",
+        "indexname": "payment_attempts_our_reference_unique",
+        "indexdef": "CREATE UNIQUE INDEX payment_attempts_our_reference_unique ON public.payment_attempts USING btree (our_reference)"
+      },
+      {
+        "tablename": "payment_attempts",
+        "indexname": "payment_attempts_payer_idx",
+        "indexdef": "CREATE INDEX payment_attempts_payer_idx ON public.payment_attempts USING btree (payer_principal_id)"
+      },
+      {
+        "tablename": "payment_attempts",
+        "indexname": "payment_attempts_pkey",
+        "indexdef": "CREATE UNIQUE INDEX payment_attempts_pkey ON public.payment_attempts USING btree (id)"
+      },
+      {
+        "tablename": "payment_attempts",
+        "indexname": "payment_attempts_provider_reference_unique",
+        "indexdef": "CREATE UNIQUE INDEX payment_attempts_provider_reference_unique ON public.payment_attempts USING btree (provider, provider_reference)"
+      },
+      {
+        "tablename": "payment_attempts",
+        "indexname": "payment_attempts_status_updated_idx",
+        "indexdef": "CREATE INDEX payment_attempts_status_updated_idx ON public.payment_attempts USING btree (status, updated_at)"
+      },
+      {
+        "tablename": "payment_exceptions",
+        "indexname": "payment_exceptions_attempt_idx",
+        "indexdef": "CREATE INDEX payment_exceptions_attempt_idx ON public.payment_exceptions USING btree (attempt_id)"
+      },
+      {
+        "tablename": "payment_exceptions",
+        "indexname": "payment_exceptions_dedupe_unique",
+        "indexdef": "CREATE UNIQUE INDEX payment_exceptions_dedupe_unique ON public.payment_exceptions USING btree (obligation_id, kind, dedupe_key)"
+      },
+      {
+        "tablename": "payment_exceptions",
+        "indexname": "payment_exceptions_open_idx",
+        "indexdef": "CREATE INDEX payment_exceptions_open_idx ON public.payment_exceptions USING btree (obligation_id) WHERE (status = 'open'::text)"
+      },
+      {
+        "tablename": "payment_exceptions",
+        "indexname": "payment_exceptions_pkey",
+        "indexdef": "CREATE UNIQUE INDEX payment_exceptions_pkey ON public.payment_exceptions USING btree (id)"
+      },
+      {
+        "tablename": "payment_exceptions",
+        "indexname": "payment_exceptions_receipt_idx",
+        "indexdef": "CREATE INDEX payment_exceptions_receipt_idx ON public.payment_exceptions USING btree (receipt_id)"
+      },
+      {
+        "tablename": "payment_obligation_beneficiaries",
+        "indexname": "payment_obligation_beneficiaries_access_idx",
+        "indexdef": "CREATE INDEX payment_obligation_beneficiaries_access_idx ON public.payment_obligation_beneficiaries USING btree (access_id)"
+      },
+      {
+        "tablename": "payment_obligation_beneficiaries",
+        "indexname": "payment_obligation_beneficiaries_learner_idx",
+        "indexdef": "CREATE INDEX payment_obligation_beneficiaries_learner_idx ON public.payment_obligation_beneficiaries USING btree (learner_id)"
+      },
+      {
+        "tablename": "payment_obligation_beneficiaries",
+        "indexname": "payment_obligation_beneficiaries_pk",
+        "indexdef": "CREATE UNIQUE INDEX payment_obligation_beneficiaries_pk ON public.payment_obligation_beneficiaries USING btree (obligation_id, learner_id)"
+      },
+      {
+        "tablename": "payment_obligation_events",
+        "indexname": "payment_obligation_events_one_settlement",
+        "indexdef": "CREATE UNIQUE INDEX payment_obligation_events_one_settlement ON public.payment_obligation_events USING btree (obligation_id) WHERE (to_status = 'settled'::text)"
+      },
+      {
+        "tablename": "payment_obligation_events",
+        "indexname": "payment_obligation_events_pkey",
+        "indexdef": "CREATE UNIQUE INDEX payment_obligation_events_pkey ON public.payment_obligation_events USING btree (id)"
+      },
+      {
+        "tablename": "payment_obligation_events",
+        "indexname": "payment_obligation_events_sequence_unique",
+        "indexdef": "CREATE UNIQUE INDEX payment_obligation_events_sequence_unique ON public.payment_obligation_events USING btree (obligation_id, sequence)"
+      },
+      {
+        "tablename": "payment_obligations",
+        "indexname": "payment_obligations_binding_unique",
+        "indexdef": "CREATE UNIQUE INDEX payment_obligations_binding_unique ON public.payment_obligations USING btree (id, payer_principal_id, amount_minor, currency, mode)"
+      },
+      {
+        "tablename": "payment_obligations",
+        "indexname": "payment_obligations_open_expiry_idx",
+        "indexdef": "CREATE INDEX payment_obligations_open_expiry_idx ON public.payment_obligations USING btree (expires_at) WHERE (status = 'open'::text)"
+      },
+      {
+        "tablename": "payment_obligations",
+        "indexname": "payment_obligations_payer_created_idx",
+        "indexdef": "CREATE INDEX payment_obligations_payer_created_idx ON public.payment_obligations USING btree (payer_principal_id, created_at)"
+      },
+      {
+        "tablename": "payment_obligations",
+        "indexname": "payment_obligations_payer_creation_key_unique",
+        "indexdef": "CREATE UNIQUE INDEX payment_obligations_payer_creation_key_unique ON public.payment_obligations USING btree (payer_principal_id, creation_key)"
+      },
+      {
+        "tablename": "payment_obligations",
+        "indexname": "payment_obligations_pkey",
+        "indexdef": "CREATE UNIQUE INDEX payment_obligations_pkey ON public.payment_obligations USING btree (id)"
+      },
+      {
+        "tablename": "payment_obligations",
+        "indexname": "payment_obligations_settled_receipt_unique",
+        "indexdef": "CREATE UNIQUE INDEX payment_obligations_settled_receipt_unique ON public.payment_obligations USING btree (settled_receipt_id)"
+      },
+      {
+        "tablename": "payment_receipts",
+        "indexname": "payment_receipts_attempt_unique",
+        "indexdef": "CREATE UNIQUE INDEX payment_receipts_attempt_unique ON public.payment_receipts USING btree (attempt_id)"
+      },
+      {
+        "tablename": "payment_receipts",
+        "indexname": "payment_receipts_obligation_idx",
+        "indexdef": "CREATE INDEX payment_receipts_obligation_idx ON public.payment_receipts USING btree (obligation_id)"
+      },
+      {
+        "tablename": "payment_receipts",
+        "indexname": "payment_receipts_pkey",
+        "indexdef": "CREATE UNIQUE INDEX payment_receipts_pkey ON public.payment_receipts USING btree (id)"
+      },
+      {
+        "tablename": "payment_receipts",
+        "indexname": "payment_receipts_provider_charge_unique",
+        "indexdef": "CREATE UNIQUE INDEX payment_receipts_provider_charge_unique ON public.payment_receipts USING btree (provider, mode, merchant_context, provider_reference)"
+      },
+      {
+        "tablename": "payment_receipts",
+        "indexname": "payment_receipts_settlement_binding_unique",
+        "indexdef": "CREATE UNIQUE INDEX payment_receipts_settlement_binding_unique ON public.payment_receipts USING btree (id, obligation_id, amount_minor, currency, mode)"
+      },
+      {
+        "tablename": "pending_teacher_reviews",
+        "indexname": "pending_teacher_reviews_pkey",
+        "indexdef": "CREATE UNIQUE INDEX pending_teacher_reviews_pkey ON public.pending_teacher_reviews USING btree (id)"
+      },
+      {
+        "tablename": "pilot_measurement_events",
+        "indexname": "pilot_measurement_events_pkey",
+        "indexdef": "CREATE UNIQUE INDEX pilot_measurement_events_pkey ON public.pilot_measurement_events USING btree (id)"
+      },
+      {
+        "tablename": "principal_learner_access",
+        "indexname": "principal_learner_access_pkey",
+        "indexdef": "CREATE UNIQUE INDEX principal_learner_access_pkey ON public.principal_learner_access USING btree (id)"
+      },
+      {
+        "tablename": "principal_learner_access",
+        "indexname": "principal_learner_access_principal_learner_relationship_unique",
+        "indexdef": "CREATE UNIQUE INDEX principal_learner_access_principal_learner_relationship_unique ON public.principal_learner_access USING btree (principal_id, learner_id, relationship_type)"
+      },
+      {
+        "tablename": "principals",
+        "indexname": "principals_pkey",
+        "indexdef": "CREATE UNIQUE INDEX principals_pkey ON public.principals USING btree (id)"
+      },
+      {
+        "tablename": "sessions",
+        "indexname": "sessions_pkey",
+        "indexdef": "CREATE UNIQUE INDEX sessions_pkey ON public.sessions USING btree (id)"
+      },
+      {
+        "tablename": "teacher_professional_notes",
+        "indexname": "teacher_professional_notes_pkey",
+        "indexdef": "CREATE UNIQUE INDEX teacher_professional_notes_pkey ON public.teacher_professional_notes USING btree (id)"
+      }
+    ]
+  },
+  "baseline": [
+    {
+      "table": "account_credentials",
+      "records": "5",
+      "content_fingerprint": "e6349de8a8eec5d323cbfa8196ff76f7"
+    },
+    {
+      "table": "account_profiles",
+      "records": "2",
+      "content_fingerprint": "9bb58f9cb53304b210171572f4fa73bc"
+    },
+    {
+      "table": "auth_sessions",
+      "records": "6",
+      "content_fingerprint": "ce0f233dada8df6cfd772651aea27c59"
+    },
+    {
+      "table": "controlled_teacher_actions",
+      "records": "0",
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table": "external_identities",
+      "records": "0",
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table": "guardian_consent_records",
+      "records": "7",
+      "content_fingerprint": "96257101e125139789b6dccb34f653db"
+    },
+    {
+      "table": "interventions",
+      "records": "8",
+      "content_fingerprint": "41956bebd1b86dcfa4ed8442d2ef7b31"
+    },
+    {
+      "table": "learner_learning_context",
+      "records": "2",
+      "content_fingerprint": "4efc6353b801786f3aca9eb966275027"
+    },
+    {
+      "table": "learner_profiles",
+      "records": "3",
+      "content_fingerprint": "14d3b218abe39b03dc1b4f5f690e722d"
+    },
+    {
+      "table": "learner_states",
+      "records": "2",
+      "content_fingerprint": "0b2c35fb90996a6be00c2e58cbd43c6e"
+    },
+    {
+      "table": "learners",
+      "records": "3",
+      "content_fingerprint": "0e3ddee22640b649c53ba805593aae91"
+    },
+    {
+      "table": "learning_evidence",
+      "records": "6",
+      "content_fingerprint": "be82d6cc7678ee2a9dc14a318e9bd476"
+    },
+    {
+      "table": "parent_teacher_messages",
+      "records": "0",
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table": "payment_attempt_events",
+      "records": "0",
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table": "payment_attempts",
+      "records": "0",
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table": "payment_exceptions",
+      "records": "0",
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table": "payment_obligation_beneficiaries",
+      "records": "0",
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table": "payment_obligation_events",
+      "records": "0",
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table": "payment_obligations",
+      "records": "0",
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table": "payment_receipts",
+      "records": "0",
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table": "pending_teacher_reviews",
+      "records": "0",
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table": "pilot_measurement_events",
+      "records": "16",
+      "content_fingerprint": "bc83a3bb747e80c46631ddf4a02635c5"
+    },
+    {
+      "table": "principal_learner_access",
+      "records": "6",
+      "content_fingerprint": "f7a3417cb74893c3cb62a1476d1b48e5"
+    },
+    {
+      "table": "principals",
+      "records": "5",
+      "content_fingerprint": "50a8f4c7c86b8ac663ed8715457aa68b"
+    },
+    {
+      "table": "sessions",
+      "records": "0",
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table": "teacher_professional_notes",
+      "records": "0",
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    }
+  ],
+  "migrationHistory": [],
+  "accountKinds": [
+    {
+      "account_kind": "guardian",
+      "records": 2
+    },
+    {
+      "account_kind": "learner",
+      "records": 3
+    }
+  ],
+  "activity": [],
+  "locks": [],
+  "migrationFiles": [
+    {
+      "file": "0020_auth_rate_limits.sql",
+      "sha256": "f3c77a33a20759cc7ff22f90699b3a0b639169a14b7e6e37cf1c618d5f80a74e"
+    },
+    {
+      "file": "0021_teacher_accounts.sql",
+      "sha256": "f4276c21c24d034e86acdec99ac124284b5f2adb375d5282e352021294e0ddeb"
+    }
+  ],
+  "recoveryVerified": false,
+  "productionIsolationVerified": false
+}

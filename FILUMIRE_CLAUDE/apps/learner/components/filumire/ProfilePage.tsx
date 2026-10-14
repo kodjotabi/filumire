@@ -3,11 +3,15 @@
 import { useState, type FormEvent } from "react";
 import { AVATAR_KEY, LEARNER_AVATARS, useLearnerAvatar } from "./avatars";
 import { computeAchievements } from "./achievements";
-import { AccountSecurity } from "./AccountSecurity";
+import { AdditionalSettings } from "./AdditionalSettings";
+import { VoiceSelection } from "./VoiceSelection";
+import { completionPercent } from "../../services/learning-presentation";
+import { signOut } from "../../services/account-client";
 
 type Stat = { total: number; completed: number; tracked: number };
 
 type Props = {
+  learnerId?: string;
   language: "en" | "fr";
   // Handlers that save to the account return a promise, so the
   // page can say whether the change was saved.
@@ -29,7 +33,7 @@ const text = {
     edit: "Edit name",
     learner: "Learner",
     ach: "Achievements",
-    prog: "Progress",
+    prog: "Curriculum goals mastered",
     active: "Active Subjects",
     quote: "Every step you take makes you stronger. Keep going!",
     settings: "My Settings",
@@ -48,7 +52,7 @@ const text = {
     look: "App Appearance",
     privacy: "Privacy & Safety",
     help: "Help & Support",
-    out: "Log Out",
+    out: "Sign out",
     logoutFailed: "Sign-out failed. You are still signed in. Check your connection and try again.",
     soon: "Coming soon",
     device: "Your name and avatar are saved on this device only.",
@@ -59,7 +63,7 @@ const text = {
     edit: "Modifier le prénom",
     learner: "Apprenant",
     ach: "Réussites",
-    prog: "Progrès",
+    prog: "Objectifs du programme maîtrisés",
     active: "Matières actives",
     quote: "Chaque pas te rend plus fort !",
     settings: "Mes paramètres",
@@ -88,6 +92,7 @@ const text = {
 };
 
 export default function ProfilePage({
+  learnerId,
   language,
   onLanguage,
   name,
@@ -124,7 +129,7 @@ export default function ProfilePage({
   const activeCount = rows.filter(
     (r) => (r?.tracked ?? 0) > 0 && (r?.completed ?? 0) < (r?.total ?? 0)
   ).length;
-  const percent = total > 0 ? Math.round((doneAll / total) * 100) : 0;
+  const percent = completionPercent(overview ? { total, completed: doneAll } : undefined);
   const badges = computeAchievements(rows, language).filter((a) => a.earned).length;
 
   function startEditing() {
@@ -163,30 +168,23 @@ export default function ProfilePage({
       return;
     }
 
-    // Ends the server session (production cookie). Development
-    // builds have no session, so a 401 here is expected.
     try {
-      await fetch("/api/session/logout", { method: "POST" });
-    } catch {}
-    try {
-      window.localStorage.removeItem("filumire.learnerName");
-      window.localStorage.removeItem(AVATAR_KEY);
-    } catch {}
-    window.location.href = `/?lang=${language}`;
+      await signOut();
+      window.location.assign(`/login?lang=${language}`);
+    } catch {
+      setStatusFailed(true);
+      setStatus(t.logoutFailed);
+    }
   }
 
   return (
     <div className="profilePage">
+      <h1 className="profileSettingsTitle">{t.settings}</h1>
       <section className="prTop">
         <img className="prAvatar" src={avatarSrc} alt="" />
         <div className="prWho">
-          <h1>{name || t.learner}</h1>
+          <h2>{name || t.learner}</h2>
           {gradeName ? <p className="prGrade">{gradeName}</p> : null}
-          {!editing ? (
-            <button type="button" className="prEdit" onClick={startEditing}>
-              {t.edit}
-            </button>
-          ) : null}
         </div>
       </section>
 
@@ -223,7 +221,7 @@ export default function ProfilePage({
           <span>{t.ach}</span>
         </div>
         <div>
-          <b>{percent}%</b>
+          <b>{percent === null ? "—" : `${percent}%`}</b>
           <span>{t.prog}</span>
         </div>
         <div>
@@ -237,8 +235,8 @@ export default function ProfilePage({
         <p>{t.quote}</p>
       </section>
 
-      <section className="prList">
-        <h2>{t.settings}</h2>
+      <div className="profileSettings">
+      <section className="prList" aria-label={t.settings}>
 
         <button type="button" className="prRow" onClick={startEditing}>
           <span>{t.name}</span>
@@ -292,36 +290,11 @@ export default function ProfilePage({
           </div>
         </div>
 
-        {/* No notification, theme, privacy or help service exists yet,
-            so these rows say so instead of offering controls that do
-            nothing. */}
-        <div className="prRow dim">
-          <span>{t.notif}</span>
-          <em>{t.soon}</em>
-        </div>
-
-        <div className="prRow dim">
-          <span>{t.look}</span>
-          <em>{t.soon}</em>
-        </div>
-        {signedIn && !guardianSession ? null : (
-          <div className="prRow dim">
-            <span>{t.privacy}</span>
-            <em>{t.soon}</em>
-          </div>
-        )}
-        <div className="prRow dim">
-          <span>{t.help}</span>
-          <em>{t.soon}</em>
-        </div>
-
         <p className="prDevice">{signedIn ? t.account : t.device}</p>
-
-        {/* A learner manages their own password here; a guardian
-            does so on the family page. */}
-        {signedIn && !guardianSession ? (
-          <AccountSecurity language={language} minLength={6} />
-        ) : null}
+      </section>
+      <VoiceSelection learnerId={learnerId} language={language} />
+      <AdditionalSettings learnerId={learnerId} language={language} signedIn={signedIn} guardianSession={guardianSession} />
+      <section className="prList">
 
         {guardianSession ? (
           <a className="prRow" href={`/family?lang=${language}`}>
@@ -334,6 +307,7 @@ export default function ProfilePage({
         </button>
       </section>
 
+      </div>
       <section className="homeFooter">
         <img src="/images/home/landscape%20footer.png" alt="" />
       </section>
@@ -374,7 +348,7 @@ export default function ProfilePage({
           background: #fff;
           color: #0f2a6b;
           font: inherit;
-          font-size: 15px;
+          font-size: 16px;
         }
 
         .prNameActions {
@@ -449,7 +423,7 @@ export default function ProfilePage({
           object-fit: cover;
         }
 
-        .prWho h1 {
+        .prWho h2 {
           margin: 0 0 6px;
           color: #0f2a6b;
           font-size: 30px;
@@ -635,7 +609,7 @@ export default function ProfilePage({
             min-width: 0;
           }
 
-          .prWho h1 {
+          .prWho h2 {
             margin-bottom: 10px;
             font-size: 36px;
             overflow-wrap: anywhere;
@@ -706,6 +680,7 @@ export default function ProfilePage({
             display: grid;
             grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
             grid-template-areas:
+              "heading heading"
               "top settings"
               "name settings"
               "stats settings"
@@ -727,7 +702,7 @@ export default function ProfilePage({
             height: 88px;
           }
 
-          .prWho h1 {
+          .prWho h2 {
             font-size: 30px;
           }
 
@@ -766,7 +741,7 @@ export default function ProfilePage({
             height: 104px;
           }
 
-          .prWho h1 {
+          .prWho h2 {
             font-size: 36px;
           }
         }

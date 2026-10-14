@@ -1,0 +1,58 @@
+{
+  "status": "prepared_for_review_not_applied",
+  "source": "current_local_source_with_uncommitted_changes",
+  "teamId": "team_ZGp9TfdK3M45ks3ViQZ9WgSW",
+  "applications": {
+    "learner": {
+      "projectId": "prj_jozdDNN1pW1q5Ez66e32RvXhbYwC",
+      "projectName": "filumire-learner",
+      "rootDirectory": "FILUMIRE_CLAUDE/apps/learner",
+      "nodeVersion": "22.x",
+      "installCommand": "cd ../.. && npm ci",
+      "buildCommand": "next build",
+      "intendedOrigin": "https://learn.filumire.com",
+      "publicBuildVariables": {
+        "NEXT_PUBLIC_FILUMIRE_PUBLIC_SITE_URL": "https://filumire.com"
+      },
+      "requiredSecretNamesOnly": ["DATABASE_URL", "FILUMIRE_AUTH_JWT_SECRET"],
+      "preserveExistingSessionIssuerAudienceAndSigningKey": true,
+      "registration": "preserve_existing_policy"
+    },
+    "website": {
+      "projectId": "prj_wgK6IrwedlpjD7Wm8HBaHmdIdDQc",
+      "projectName": "filumire-website",
+      "rootDirectory": null,
+      "nodeVersion": "24.x",
+      "installCommand": "npm ci",
+      "buildCommand": "npm run build",
+      "intendedOrigin": "https://filumire.com",
+      "publicBuildVariables": {
+        "NEXT_PUBLIC_FILUMIRE_LEARNER_APP_URL": "https://learn.filumire.com",
+        "NEXT_PUBLIC_FILUMIRE_LEARNER_PUBLIC_APPROVED": "false"
+      },
+      "enableLearnerLinkOnlyAfterApprovedDomainAndDeploymentVerification": true
+    }
+  },
+  "deploymentProtection": "preserve_all_except_custom_domains",
+  "billing": {"mode": "test", "activatePayments": false, "entitlementEnforcement": false},
+  "sms": {"activate": false},
+  "migrations": [],
+  "approvalRequired": [
+    "Assign learn.filumire.com and any necessary DNS changes",
+    "Enable approved public learner links in production build configuration",
+    "Promote the exact verified learner and website builds to production",
+    "Provision a hosted billing adapter and verified guardian-to-billing identity mapping",
+    "Approve subscription access policy before enforcing entitlements"
+  ],
+  "verificationRequiredBeforeProduction": [
+    "Deploy and validate the exact reviewed source in protected Previews",
+    "Verify direct sidebar tutoring with the authorised affected existing account",
+    "Confirm production database isolation, registration policy and authentication settings without changing them"
+  ],
+  "releaseBlockers": [
+    "Guardian-confirmed recovery locally verified but not deployed or applied to the affected account; protected Preview and affected-session verification required",
+    "learn.filumire.com is not assigned to the existing learner project",
+    "Production currently serves a different, older learner build",
+    "Hosted billing and the verified entitlement bridge are not configured"
+  ]
+}

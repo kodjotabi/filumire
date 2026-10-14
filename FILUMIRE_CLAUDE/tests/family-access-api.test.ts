@@ -1,0 +1,128 @@
+import assert from "node:assert/strict";
+import { POST as phonePost } from "../apps/learner/app/api/account/phone/route";
+import { GET as subscriptionGet, POST as subscriptionPost } from "../apps/learner/app/api/account/subscription/route";
+import { POST as registerPost } from "../apps/learner/app/api/account/register/route";
+import { GET as me } from "../apps/learner/app/api/session/me/route";
+import { GET as learningGet, POST as learningPost } from "../apps/learner/app/api/learning/route";
+import { authenticateWithPassword, addLearnerForGuardian, registerTeacher, createTeacherLinkCodeFor, linkTeacherWithCode } from "../services/account";
+import { accountStore } from "../services/account/store";
+import { getLearnerEntitlement, localFamilyServices } from "../services/family-access";
+import { FICTIONAL_PHONES } from "../services/family-access/otp";
+import { isPrincipalAuthSessionValid } from "../services/auth-session";
+import { issueSessionForPrincipal, resolveSignedInSession } from "../services/identity";
+import { persistenceStore } from "../services/persistence-provider";
+import { resetRateLimits } from "../services/account/rate-limit";
+process.env.FILUMIRE_LOCAL_FAMILY_ACCESS = "mock";
+process.env.FILUMIRE_ACCOUNT_REGISTRATION = "open";
+process.env.FILUMIRE_AUTH_JWT_SECRET = "fictional-local-test-secret-with-more-than-32-characters";
+assert.equal(process.env.FILUMIRE_PERSISTENCE, "memory");
+Object.defineProperty(process.env, "NODE_ENV", { value: "test", writable: true, configurable: true, enumerable: true });
+const actualNow = Date.now; let now = actualNow(); Date.now = () => now;
+function request(path: string, body?: unknown, cookie?: string, origin = "http://localhost") {
+  return new Request(`http://localhost${path}`, { method: body ? "POST" : "GET", headers: { ...(body ? { "content-type": "application/json" } : {}), ...(cookie ? { cookie } : {}), origin }, body: body ? JSON.stringify(body) : undefined });
+}
+function cookie(response: Response): string { const token = response.headers.get("set-cookie")?.match(/filumire_auth_session=([^;]+)/)?.[1]; assert.ok(token); return `filumire_auth_session=${token}`; }
+const services = localFamilyServices();
+async function start(purpose: string, phone: string, session?: string) {
+  const response = await phonePost(request("/api/account/phone", { action: "start", purpose, phone }, session));
+  assert.equal(response.status, 200);
+  const data = await response.json(); assert.equal("code" in data, false); assert.equal("exists" in data, false);
+  return { challengeId: data.challengeId, code: services.sms.takeCode(data.challengeId) };
+}
+const regCode = await start("register", FICTIONAL_PHONES[0]);
+const registrationBody = { action: "verify", purpose: "register", ...regCode, displayName: "Fictional guardian", language: "fr", confirmsGuardian: true, acceptsNotice: true };
+const duplicates = await Promise.all([phonePost(request("/api/account/phone", registrationBody)), phonePost(request("/api/account/phone", registrationBody))]);
+assert.deepEqual(duplicates.map(response => response.status).sort(), [200, 400], "parallel OTP submission creates one account/session only");
+const registration = duplicates.find(response => response.status === 200)!;
+assert.equal(registration.status, 200); const phoneCookie = cookie(registration);
+const parentSession = await resolveSignedInSession(request("/api/session/me", undefined, phoneCookie));
+const parentId = parentSession.principalId;
+assert.equal((await accountStore.getCredentialByPrincipal(parentId))?.accountKind, "guardian");
+assert.equal((await accountStore.getAccountProfile(parentId))?.preferredLanguage, "fr");
+assert.equal((await subscriptionGet(request("/api/account/subscription", undefined, phoneCookie))).status, 200);
+assert.equal((await (await subscriptionGet(request("/api/account/subscription", undefined, phoneCookie))).json()).status, "TRIAL_PLUS");
+assert.equal((await phonePost(request("/api/account/phone", { action: "verify", purpose: "register", ...regCode, displayName: "Duplicate", language: "en", confirmsGuardian: true, acceptsNotice: true }))).status, 400);
+const child = await addLearnerForGuardian(parentId, { displayName: "Fictional learner", username: "fixturechild78", password: "fictional-child-pass", preferredLanguage: "en", consentsToLearnerData: true });
+const childAuth = await authenticateWithPassword("fixturechild78", "fictional-child-pass");
+const childSession = await issueSessionForPrincipal(childAuth.principalId, child.learnerId); const childCookie = `filumire_auth_session=${childSession.token}`;
+assert.equal((await subscriptionGet(request("/api/account/subscription", undefined, childCookie))).status, 403);
+assert.equal((await phonePost(request("/api/account/phone", { action: "start", purpose: "link", phone: FICTIONAL_PHONES[1] }, childCookie))).status, 403);
+assert.equal((await getLearnerEntitlement(childAuth.principalId, child.learnerId, services.subscriptions)).status, "TRIAL_PLUS");
+assert.equal("trialExpiresAt" in await getLearnerEntitlement(childAuth.principalId, child.learnerId, services.subscriptions), false, "adult billing dates are not exposed to learner entitlement consumers");
+// Generate evidence through the existing authorised learning API, never a subscription shortcut.
+const learningHeaders = { "content-type": "application/json", "x-filumire-learner-id": child.learnerId };
+const initialResponse = await learningGet(new Request("http://localhost/api/learning?sessionId=fixture-learning-session", { headers: learningHeaders })); assert.equal(initialResponse.status, 200);
+const initial = await initialResponse.json();
+if (initial.content?.assessmentItemId) {
+  const answer = await learningPost(new Request("http://localhost/api/learning", { method: "POST", headers: learningHeaders, body: JSON.stringify({ learnerId: child.learnerId, sessionId: "fixture-learning-session", competencyId: initial.decision.competencyId, assessmentItemId: initial.content.assessmentItemId, response: "fictional wrong answer", clientRequestId: crypto.randomUUID() }) }));
+  assert.equal(answer.status, 200);
+}
+const baseline = JSON.stringify({ states: await persistenceStore.getLearnerStates(child.learnerId), evidence: await persistenceStore.getEvidenceForLearner(child.learnerId), profile: await accountStore.getLearnerProfile(child.learnerId) });
+assert.ok((await persistenceStore.getEvidenceForLearner(child.learnerId)).length > 0, "preservation test has real fixture evidence");
+assert.equal((await subscriptionPost(request("/api/account/subscription", { action: "checkout", plan: "PLUS", interval: "monthly", authorised: true, requestId: "request-fixture1" }, phoneCookie))).status, 503, "no unapproved prices");
+assert.equal((await subscriptionPost(request("/api/account/subscription", { action: "cancel" }, phoneCookie))).status, 200);
+assert.equal(JSON.stringify({ states: await persistenceStore.getLearnerStates(child.learnerId), evidence: await persistenceStore.getEvidenceForLearner(child.learnerId), profile: await accountStore.getLearnerProfile(child.learnerId) }), baseline);
+// Email registration still uses the original principal and receives local-only new-family eligibility.
+const emailReg = await registerPost(request("/api/account/register", { email: "fictional-adult@example.invalid", password: "fictional-parent-pass", displayName: "Other adult", preferredLanguage: "en", confirmsGuardian: true, acceptsNotice: true }));
+assert.equal(emailReg.status, 201); const emailCookie = cookie(emailReg);
+const emailSession = await resolveSignedInSession(request("/api/session/me", undefined, emailCookie));
+assert.equal(services.subscriptions.snapshot(emailSession.principalId).status, "FREE", "unverified email alone cannot start a trial");
+assert.equal((await authenticateWithPassword("fictional-adult@example.invalid", "fictional-parent-pass")).principalId, emailSession.principalId);
+await assert.rejects(getLearnerEntitlement(emailSession.principalId, child.learnerId, services.subscriptions), /forbidden/);
+assert.equal((await subscriptionPost(request("/api/account/subscription", { action: "cancel", principalId: parentId }, emailCookie))).status, 400);
+const linked = await start("link", FICTIONAL_PHONES[1], emailCookie);
+const otherEmailSession = await issueSessionForPrincipal(emailSession.principalId);
+assert.equal((await phonePost(request("/api/account/phone", { action: "verify", purpose: "link", ...linked, currentPassword: "fictional-parent-pass" }, `filumire_auth_session=${otherEmailSession.token}`))).status, 400, "OTP cannot cross sessions even for the same adult");
+const linkedResult = await phonePost(request("/api/account/phone", { action: "verify", purpose: "link", ...linked, currentPassword: "fictional-parent-pass" }, emailCookie)); assert.equal(linkedResult.status, 200);
+assert.equal(await services.phones.loginVerified(FICTIONAL_PHONES[1]), emailSession.principalId, "alias preserves same identity");
+assert.equal(services.subscriptions.snapshot(emailSession.principalId).status, "TRIAL_PLUS");
+const beforeLinkExpiry = services.subscriptions.snapshot(emailSession.principalId).trialExpiresAt;
+assert.equal(services.subscriptions.enrolNewFamily(emailSession.principalId, `phone:${FICTIONAL_PHONES[1]}`).trialExpiresAt, beforeLinkExpiry);
+await assert.rejects(services.phones.linkVerified(FICTIONAL_PHONES[1], parentId, "wrong-password"));
+// OTP authentication creates a return session while preserving all child records.
+const loginCode = await start("login", FICTIONAL_PHONES[2]);
+const noAccount = await phonePost(request("/api/account/phone", { action: "verify", purpose: "login", ...loginCode })); assert.equal(noAccount.status, 400); assert.deepEqual(await noAccount.json(), { code: "verification_failed" });
+await resetRateLimits();
+const teacher = await registerTeacher({ email: "fictional-teacher@example.invalid", password: "fictional-teacher-pass", displayName: "Teacher", confirmsTeacher: true, acceptsNotice: true });
+const teacherIssued = await issueSessionForPrincipal(teacher.principalId); const teacherCookie = `filumire_auth_session=${teacherIssued.token}`;
+assert.equal((await subscriptionGet(request("/api/account/subscription", undefined, teacherCookie))).status, 403);
+services.subscriptions.provisionSchoolFixture(teacher.principalId, "fictional-school", Date.now() + 60_000);
+await assert.rejects(getLearnerEntitlement(teacher.principalId, child.learnerId, services.subscriptions), /forbidden/, "school grant does not invent learner membership");
+const teachingInvitation = await createTeacherLinkCodeFor(parentId, child.learnerId);
+await linkTeacherWithCode(teacher.principalId, teachingInvitation.code);
+assert.equal((await getLearnerEntitlement(teacher.principalId, child.learnerId, services.subscriptions)).status, "TRIAL_PLUS", "a teacher link alone does not add a learner to a licensed institution");
+services.subscriptions.provisionSchoolFixture(teacher.principalId, "fictional-school", now + 60_000, [child.learnerId]);
+assert.equal((await getLearnerEntitlement(teacher.principalId, child.learnerId, services.subscriptions)).status, "SCHOOL_LICENSE");
+assert.equal((await phonePost(request("/api/account/phone", { action: "start", purpose: "login", phone: FICTIONAL_PHONES[3] }, undefined, "https://evil.example.invalid"))).status, 403);
+assert.equal((await subscriptionPost(request("/api/account/subscription", { action: "cancel" }, phoneCookie, "https://evil.example.invalid"))).status, 403);
+assert.equal((await subscriptionGet(request("/api/account/subscription"))).status, 403);
+// A wrong password consumes the ownership proof without linking an arbitrary number.
+const recoveryLink = await start("link", FICTIONAL_PHONES[3], emailCookie);
+assert.equal((await phonePost(request("/api/account/phone", { action: "verify", purpose: "link", ...recoveryLink, currentPassword: "wrong-password" }, emailCookie))).status, 400);
+now += 61_000;
+const recoverCode = await start("recover", FICTIONAL_PHONES[1]);
+const recovered = await phonePost(request("/api/account/phone", { action: "verify", purpose: "recover", ...recoverCode, newPassword: "new-fictional-parent-pass" }));
+assert.equal(recovered.status, 200); assert.match(recovered.headers.get("set-cookie") ?? "", /Max-Age=0/);
+assert.equal(await isPrincipalAuthSessionValid(emailSession.sessionId, emailSession.principalId), false);
+assert.equal((await authenticateWithPassword("fictional-adult@example.invalid", "new-fictional-parent-pass")).principalId, emailSession.principalId);
+await assert.rejects(services.phones.linkVerified(FICTIONAL_PHONES[0], emailSession.principalId, "new-fictional-parent-pass"), /verification_failed/, "verified aliases cannot be transferred into another family");
+assert.equal((await me(request("/api/session/me", undefined, phoneCookie))).status, 200);
+const returningCode = await start("login", FICTIONAL_PHONES[0]);
+const returned = await phonePost(request("/api/account/phone", { action: "verify", purpose: "login", ...returningCode }));
+assert.equal(returned.status, 200);
+assert.equal((await resolveSignedInSession(request("/api/session/me", undefined, cookie(returned)))).principalId, parentId);
+assert.equal(JSON.stringify({ states: await persistenceStore.getLearnerStates(child.learnerId), evidence: await persistenceStore.getEvidenceForLearner(child.learnerId), profile: await accountStore.getLearnerProfile(child.learnerId) }), baseline);
+const concurrent = await registerPost(request("/api/account/register", { email: "fictional-concurrent@example.invalid", password: "fictional-concurrent-pass", displayName: "Concurrent adult", confirmsGuardian: true, acceptsNotice: true })); assert.equal(concurrent.status, 201);
+const concurrentId = (await resolveSignedInSession(request("/api/session/me", undefined, cookie(concurrent)))).principalId;
+const links = await Promise.allSettled([services.phones.linkVerified(FICTIONAL_PHONES[2], concurrentId, "fictional-concurrent-pass"), services.phones.linkVerified(FICTIONAL_PHONES[3], concurrentId, "fictional-concurrent-pass")]);
+assert.equal(links.filter(result => result.status === "fulfilled").length, 1, "concurrent different phones cannot both bind to one adult");
+now += 14 * 86_400_000;
+assert.equal(services.subscriptions.snapshot(parentId).status, "FREE");
+assert.equal(JSON.stringify({ states: await persistenceStore.getLearnerStates(child.learnerId), evidence: await persistenceStore.getEvidenceForLearner(child.learnerId), profile: await accountStore.getLearnerProfile(child.learnerId) }), baseline, "expiry does not interrupt or rewrite the existing activity/evidence");
+const securityAudit = JSON.stringify(services.phones.securityHistoryFor(emailSession.principalId));
+assert.match(securityAudit, /phone_recovery_sessions_revoked/); assert.doesNotMatch(securityAudit, /\+233|password|challengeId|code/);
+Object.defineProperty(process.env, "NODE_ENV", { value: "production", writable: true, configurable: true, enumerable: true });
+Date.now = actualNow;
+assert.equal((await phonePost(request("/api/account/phone", { action: "start", purpose: "login", phone: FICTIONAL_PHONES[0] }))).status, 503);
+assert.equal((await subscriptionGet(request("/api/account/subscription", undefined, phoneCookie))).status, 503);
+console.log("PASS: guardian OTP registration/session, existing email identity, alias linking/reauthentication, replay, child/teacher/isolation/CSRF guards, recovery revocation, trial enrolment, unchanged learning state/evidence and production fail-closed");

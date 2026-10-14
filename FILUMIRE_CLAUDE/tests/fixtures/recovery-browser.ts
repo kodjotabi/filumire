@@ -1,0 +1,35 @@
+import assert from 'node:assert/strict';
+import {randomUUID} from 'node:crypto';
+import {POST as register} from '../../apps/learner/app/api/account/register/route';
+import {POST as addLearner} from '../../apps/learner/app/api/account/learners/route';
+import {POST as login} from '../../apps/learner/app/api/session/login/route';
+import {PATCH as profile} from '../../apps/learner/app/api/account/learners/[learnerId]/route';
+import {resolveSignedInSession} from '../../services/identity';
+import {createPrincipalAuthSession,revokePrincipalAuthSession} from '../../services/auth-session';
+import {createInitialLearnerState} from '../../services/learner-state';
+import {saveLearnerState} from '../../services/learner-state-store';
+import {saveLearnerLearningContext} from '../../services/learner-context';
+import {createIntervention} from '../../services/intervention-store';
+import {getDefaultLearnerLearningContext} from '../../packages/curriculum-framework';
+import {getCompetenciesForSubject} from '../../packages/curriculum';
+assert.equal(process.env.FILUMIRE_PERSISTENCE,'memory');
+Object.defineProperty(process.env,'NODE_ENV',{value:'production',configurable:true,writable:true,enumerable:true});
+const request=(path:string,body:unknown,cookie='',method='POST')=>new Request('http://localhost'+path,{method,headers:{'content-type':'application/json',cookie},body:JSON.stringify(body)});
+const cookie=(r:Response)=>r.headers.get('set-cookie')!.split(';')[0];
+export const recoveryFixtures:Array<{width:number;language:'en'|'fr';guardianEmail:string;username:string;password:string;learnerId:string}>=[];
+for(const width of [320,768,1280])for(const language of ['en','fr'] as const){
+ const id=randomUUID().slice(0,8),password='fictional-recovery-browser-password',guardianEmail=`recovery-ui-${id}@example.test`,username=`recoveryui.${id}`;
+ const registered=await register(request('/api/account/register',{email:guardianEmail,password,displayName:'Fictional Guardian',preferredLanguage:language,confirmsGuardian:true,acceptsNotice:true}));assert.equal(registered.status,201);
+ const added=await addLearner(request('/api/account/learners',{displayName:'Fictional Learner',username,password,preferredLanguage:language,consentsToLearnerData:true},cookie(registered)));assert.equal(added.status,201);const {learnerId}=await added.json();
+ const defaults=getDefaultLearnerLearningContext();
+ const updated=await profile(request('/api/account/learners/'+learnerId,{gradeId:defaults.gradeId,completeOnboarding:true},cookie(registered),'PATCH'),{params:Promise.resolve({learnerId})});assert.equal(updated.status,200);
+ const signed=await login(request('/api/session/login',{login:username,password}));assert.equal(signed.status,200);
+ const identity=await resolveSignedInSession(new Request('http://localhost/api/session/me',{headers:{cookie:cookie(signed)}}));
+ const math=getCompetenciesForSubject(defaults.activeSubjectId)[0],computing=getCompetenciesForSubject('subject-gh-basic4-computing-pilot')[0];assert(math&&computing);
+ for(const competency of [math,computing])await saveLearnerState(createInitialLearnerState(learnerId,competency.id));
+ await saveLearnerLearningContext({learnerId,...defaults,activeSubjectId:computing.subjectId,activeCompetencyId:computing.id,updatedAt:new Date().toISOString()});
+ const expired=randomUUID(),revoked=randomUUID();
+ await createPrincipalAuthSession(expired,identity.principalId,new Date(Date.now()-86400000).toISOString());await createPrincipalAuthSession(revoked,identity.principalId,new Date(Date.now()+3600000).toISOString());await revokePrincipalAuthSession(revoked,identity.principalId);
+ for(const [sessionId,competencyId] of [[expired,math.id],[revoked,computing.id]])await createIntervention({learnerId,competencyId,sessionId,decisionId:randomUUID(),type:'diagnose'});
+ recoveryFixtures.push({width,language,guardianEmail,username,password,learnerId});
+}

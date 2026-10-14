@@ -1,0 +1,677 @@
+{
+  "passed": 155,
+  "failed": [
+    {
+      "file": "learner-interface-layout.test.ts",
+      "exitCode": 1
+    }
+  ],
+  "blocked": [
+    {
+      "file": "api-auth-postgres-lifecycle.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    },
+    {
+      "file": "b4-english-adaptive-coverage.test.ts",
+      "reason": "Unverified authoritative English fixture provenance"
+    },
+    {
+      "file": "evidence-postgres-roundtrip.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    },
+    {
+      "file": "evidence-v1-postgres-atomic-persistence.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    },
+    {
+      "file": "evidence-v1-postgres-persistence.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    },
+    {
+      "file": "learner-state-postgres-concurrency.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    },
+    {
+      "file": "learner-state-postgres-semantic-concurrency.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    },
+    {
+      "file": "pilot-measurement-v1.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    },
+    {
+      "file": "teacher-observation.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    },
+    {
+      "file": "teacher-pending-review-postgres.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    }
+  ],
+  "results": [
+    {
+      "file": "account-client-signout.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "account-registration-journey.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "adaptive-content-intervention-integration.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "adaptive-gate-response.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "adaptive-learner-intelligence.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "adaptive-learning-loop.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "adaptive-policy-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "adaptive-selection-4b.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "adult-supervision.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "african-voice-render.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "african-voice.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "api-assessment-security.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "api-evidence-integrity.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "api-identity-security.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "api-learning-client-side-forgery-comprehensive.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "api-learning-error-handling.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "api-learning-get-initialization.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "api-learning-post-assessment-flow.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "api-learning-retention-transfer-flow.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "api-learning-session-persistence.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "ask-filu-navigation.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "assessment-evidence-hardening.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "assessment-external-evidence.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "audit2-settings.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "auth-rate-limit.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b4-computing-adaptive-coverage.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b4-computing-curriculum-integrity.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b4-curriculum-integrity.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b4-english-strand2-adaptive-integrity.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b4-english-strand3-adaptive-integrity.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b4-english-strand4-adaptive-integrity.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b4-english-strand5-adaptive-integrity.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b4-english-strand6-adaptive-integrity.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b4-mathematics-adaptive-coverage.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b4-mathematics-evidence-integrity.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b4-number-patterns-content-4c.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b4-science-adaptive-coverage.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b4-science-adaptive-slice.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b4-science-curriculum-integrity.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b5-b6-english-adaptive-loop.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b5-b6-english-runtime.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b5-computing-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b5-english-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b5-mathematics-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b5-science-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b6-computing-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b6-english-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b6-mathematics-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "b6-science-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "browser-speech.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "card-acknowledgement-4b.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "cluster5c-safeguarding.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "competency-003-adaptive-loop.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "complete-intervention-loop.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "content-integrity-4e.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "content-language-selection.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "content-selection.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "controlled-teacher-actions-api.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "controlled-teacher-actions.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "curriculum-framework.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "diagnosis-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "evidence-context-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "family-access-api.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "family-access-render.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "family-phone-otp.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "family-subscriptions.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "filu-functional.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "four-subject-adaptive-intelligence.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "four-subject-filu-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "full-adaptive-progression.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "ghana-pilot-context.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "governed-instructional-engine.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "grade-aware-subject-selection.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "interface-completion.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "intervention-adaptive-integration.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "intervention-lifecycle.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "intervention-persistence.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "intervention-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learner-intelligence-policy.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learner-interface-copy.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learner-interface-layout.test.ts",
+      "exitCode": 1
+    },
+    {
+      "file": "learner-interface-render.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learner-journey-route-4h.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learner-learning-context-persistence.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learner-path-curriculum-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learner-path-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learner-pending-teacher-review.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learner-progress.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learner-state-hardening.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learner-ui-runtime-integrity.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learning-continuity-api.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learning-continuity-client.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learning-language.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learning-presentation.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learning-progress-render.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "lesson-closure-api.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "lesson-closure-client.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "lesson-closure-presentation.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "lesson-closure-production.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "low-connectivity-sync.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "mastery-reuse-4b.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "mastery-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "misconception-evidence-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "needs-support-4c.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "no-premature-advancement.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "offline-shell-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "option-order-4e.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "parent-experience-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "parent-summary-language.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "parent-teacher-communication-api.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "pedagogical-policy-transition.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "pending-submission-client.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "pilot-concurrency-hardening.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "pilot-measures-4c.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "pilot-session-hardening.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "pilot-smoke-journey.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "pilot-storage-hardening.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "prerequisite-repair-4d.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "principal-auth-session.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "principal-identity.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "principal-learner-access.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "principal-resolution.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "private-preview-guards.test.mjs",
+      "exitCode": 0
+    },
+    {
+      "file": "production-curriculum-foundation.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "production-curriculum-resolution.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "production-learner-journey.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "production-learner-product-experience.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "red-team-01-identity-auth.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "red-team-02-trusted-evidence.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "red-team-03-json-parsing.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "red-team-04-session-competency.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "red-team-05-progression-integrity.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "red-team-06-concurrency.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "response-mode-adaptation.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "retention-transfer-advancement.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "retention-transfer-negative-gate.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "retention-transfer-policy.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "retention-transfer-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "retention-transfer.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "route-advance-4g.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "strategy-adaptation.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "teacher-authorization.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "teacher-linking.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "teacher-pending-review.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "teacher-professional-notes.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "teacher-review-end-to-end.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "teacher-summary-api.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "teacher-summary.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "teacher-trusted-review.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "time-aware-retention-engine-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "time-aware-retention-v1.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "tutoring-conversation-api.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "tutoring-conversation-client.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "tutoring-conversation-context.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "tutoring-conversation-identity.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "whole-subject-progression-4b.test.ts",
+      "exitCode": 0
+    }
+  ]
+}

@@ -4,12 +4,15 @@ import Link from "next/link";
 import { useLearnerAvatar } from "./avatars";
 import { withLang, type Language } from "./language";
 import { LanguageToggle } from "./LanguageToggle";
+import { askFiluHref } from "../../services/dashboard-navigation";
+import { PublicHomeLink } from "./PublicHomeLink";
 
 type LearnerHeaderProps = {
   backHref?: string;
   showAskFilu?: boolean;
   language?: Language;
   setupHeader?: boolean;
+  subjectId?: string | null;
 };
 
 const TEXT = {
@@ -21,7 +24,7 @@ const TEXT = {
   },
   fr: {
     back: "Retour",
-    ask: "Aide FILU",
+    ask: "Parle à FILU",
     home: "Accueil apprenant FILUMIRE",
     profile: "Mon profil",
   },
@@ -37,11 +40,12 @@ export function LearnerHeader({
   showAskFilu = true,
   language = "en",
   setupHeader = false,
+  subjectId,
 }: LearnerHeaderProps) {
   const avatarSrc = useLearnerAvatar();
   const t = TEXT[language];
   const homeHref = withLang("/dashboard", language);
-  const askHref = withLang("/dashboard?view=ask-filu", language);
+  const askHref = askFiluHref(language, subjectId);
   const profileHref = withLang("/dashboard?view=profile", language);
   const back = backHref ? withLang(backHref, language) : undefined;
 
@@ -67,6 +71,7 @@ export function LearnerHeader({
         </div>
 
         <div className="filumireSetupHeaderRight">
+          <PublicHomeLink language={language} />
           <LanguageToggle language={language} variant="compact" />
 
           {showAskFilu && (
@@ -122,6 +127,7 @@ export function LearnerHeader({
       )}
 
       <div className="filumireHeaderActions">
+        <PublicHomeLink language={language} />
         <LanguageToggle language={language} variant="compact" />
 
         {showAskFilu && (

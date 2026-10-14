@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { LanguageToggle } from "./LanguageToggle";
 import type { Language } from "./language";
+import { PublicHomeLink } from "./PublicHomeLink";
 
 /*
  * Page frame for the account pages (registration, family, privacy
@@ -51,6 +52,7 @@ export function AccountShell({
           <img src="/filumire-logo-white.svg" alt="FILUMIRE" />
         </Link>
         <LanguageToggle language={language} onChange={onLanguage} variant="compact" />
+        <PublicHomeLink language={language} />
       </header>
 
       <main id="account-content" className="acMain">

@@ -1,0 +1,265 @@
+{"file":"tests/account-client-signout.test.ts","ok":true,"exitCode":0}
+{"file":"tests/account-registration-journey.test.ts","ok":true,"exitCode":0}
+{"file":"tests/adaptive-content-intervention-integration.test.ts","ok":true,"exitCode":0}
+{"file":"tests/adaptive-gate-response.test.ts","ok":false,"exitCode":1}
+{
+  action: 'complete',
+  reasonCode: 'CONTENT_EXHAUSTED_NEEDS_SUPPORT',
+  interventionId: undefined
+}
+Error: FAIL: failed transfer must trigger another transfer check
+    at assert (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\adaptive-gate-response.test.ts:11:25)
+    at main (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\adaptive-gate-response.test.ts:72:3)
+
+{"file":"tests/adaptive-learner-intelligence.test.ts","ok":true,"exitCode":0}
+{"file":"tests/adaptive-learning-loop.test.ts","ok":true,"exitCode":0}
+{"file":"tests/adaptive-policy-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/adaptive-selection-4b.test.ts","ok":true,"exitCode":0}
+{"file":"tests/adult-supervision.test.ts","ok":true,"exitCode":0}
+{"file":"tests/african-voice-render.test.ts","ok":true,"exitCode":0}
+{"file":"tests/african-voice.test.ts","ok":true,"exitCode":0}
+{"file":"tests/api-assessment-security.test.ts","ok":true,"exitCode":0}
+{"file":"tests/api-evidence-integrity.test.ts","ok":true,"exitCode":0}
+{"file":"tests/api-identity-security.test.ts","ok":true,"exitCode":0}
+{"file":"tests/api-learning-client-side-forgery-comprehensive.test.ts","ok":true,"exitCode":0}
+{"file":"tests/api-learning-error-handling.test.ts","ok":true,"exitCode":0}
+{"file":"tests/api-learning-get-initialization.test.ts","ok":true,"exitCode":0}
+{"file":"tests/api-learning-post-assessment-flow.test.ts","ok":true,"exitCode":0}
+{"file":"tests/api-learning-retention-transfer-flow.test.ts","ok":false,"exitCode":1}
+{
+  test: 'Full retention-transfer-advancement flow',
+  learnerId: 'learner-retention-transfer-flow-1791781950323',
+  competencyId: 'competency-test-001'
+}
+Error: FAIL: Expected retention_check after mastery, got complete
+    at assert (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\api-learning-retention-transfer-flow.test.ts:15:25)
+    at testRetentionTransferFlow (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\api-learning-retention-transfer-flow.test.ts:99:3)
+
+{"file":"tests/api-learning-session-persistence.test.ts","ok":true,"exitCode":0}
+{"file":"tests/ask-filu-navigation.test.ts","ok":true,"exitCode":0}
+{"file":"tests/assessment-evidence-hardening.test.ts","ok":false,"exitCode":1}
+C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\assessment-evidence-hardening.test.ts:8
+    throw new Error(`FAIL: ${message}`);
+          ^
+
+Error: FAIL: assessment policy must be 0.8
+    at assert (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\assessment-evidence-hardening.test.ts:8:11)
+    at <anonymous> (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\assessment-evidence-hardening.test.ts:56:1)
+
+Node.js v24.19.0
+
+{"file":"tests/assessment-external-evidence.test.ts","ok":false,"exitCode":1}
+C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\assessment-external-evidence.test.ts:11
+    throw new Error(`FAIL: ${message}`);
+          ^
+
+Error: FAIL: trusted evidence must use assessment policy 0.8
+    at assert (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\assessment-external-evidence.test.ts:11:11)
+    at <anonymous> (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\assessment-external-evidence.test.ts:62:1)
+
+Node.js v24.19.0
+
+{"file":"tests/auth-rate-limit.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b4-computing-adaptive-coverage.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b4-computing-curriculum-integrity.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b4-curriculum-integrity.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b4-english-adaptive-coverage.test.ts","ok":false,"exitCode":1}
+node:fs:484
+    return binding.readFileUtf8(path, stringToFlags(options.flag));
+                   ^
+
+Error: ENOENT: no such file or directory, open 'C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\docs\curriculum-sources\ghana\2019\ENGLISH-B4-indicators-authoritative.txt'
+    at Object.readFileSync (node:fs:484:20)
+    at <anonymous> (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\b4-english-adaptive-coverage.test.ts:7:4)
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\tabi\\Desktop\\filumire-responsive\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\2019\\ENGLISH-B4-indicators-authoritative.txt'
+}
+
+Node.js v24.19.0
+
+{"file":"tests/b4-english-strand2-adaptive-integrity.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b4-english-strand3-adaptive-integrity.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b4-english-strand4-adaptive-integrity.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b4-english-strand5-adaptive-integrity.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b4-english-strand6-adaptive-integrity.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b4-mathematics-adaptive-coverage.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b4-mathematics-evidence-integrity.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b4-number-patterns-content-4c.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b4-science-adaptive-coverage.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b4-science-adaptive-slice.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b4-science-curriculum-integrity.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b5-b6-english-adaptive-loop.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b5-b6-english-runtime.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b5-computing-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b5-english-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b5-mathematics-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b5-science-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b6-computing-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b6-english-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b6-mathematics-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/b6-science-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/browser-speech.test.ts","ok":true,"exitCode":0}
+{"file":"tests/card-acknowledgement-4b.test.ts","ok":true,"exitCode":0}
+{"file":"tests/cluster5c-safeguarding.test.ts","ok":true,"exitCode":0}
+{"file":"tests/competency-003-adaptive-loop.test.ts","ok":true,"exitCode":0}
+{"file":"tests/complete-intervention-loop.test.ts","ok":true,"exitCode":0}
+{"file":"tests/content-integrity-4e.test.ts","ok":true,"exitCode":0}
+{"file":"tests/content-language-selection.test.ts","ok":true,"exitCode":0}
+{"file":"tests/content-selection.test.ts","ok":true,"exitCode":0}
+{"file":"tests/controlled-teacher-actions-api.test.ts","ok":true,"exitCode":0}
+{"file":"tests/controlled-teacher-actions.test.ts","ok":true,"exitCode":0}
+{"file":"tests/curriculum-framework.test.ts","ok":true,"exitCode":0}
+{"file":"tests/diagnosis-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/evidence-context-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/family-access-api.test.ts","ok":true,"exitCode":0}
+{"file":"tests/family-access-render.test.ts","ok":true,"exitCode":0}
+{"file":"tests/family-phone-otp.test.ts","ok":true,"exitCode":0}
+{"file":"tests/family-subscriptions.test.ts","ok":true,"exitCode":0}
+{"file":"tests/filu-functional.test.ts","ok":true,"exitCode":0}
+{"file":"tests/four-subject-adaptive-intelligence.test.ts","ok":true,"exitCode":0}
+{"file":"tests/four-subject-filu-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/full-adaptive-progression.test.ts","ok":true,"exitCode":0}
+{"file":"tests/ghana-pilot-context.test.ts","ok":true,"exitCode":0}
+{"file":"tests/governed-instructional-engine.test.ts","ok":true,"exitCode":0}
+{"file":"tests/grade-aware-subject-selection.test.ts","ok":true,"exitCode":0}
+{"file":"tests/interface-completion.test.ts","ok":true,"exitCode":0}
+{"file":"tests/intervention-adaptive-integration.test.ts","ok":true,"exitCode":0}
+{"file":"tests/intervention-lifecycle.test.ts","ok":true,"exitCode":0}
+{"file":"tests/intervention-persistence.test.ts","ok":true,"exitCode":0}
+{"file":"tests/intervention-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/learner-intelligence-policy.test.ts","ok":true,"exitCode":0}
+{"file":"tests/learner-interface-copy.test.ts","ok":true,"exitCode":0}
+{"file":"tests/learner-interface-layout.test.ts","ok":true,"exitCode":0}
+{"file":"tests/learner-interface-render.test.ts","ok":true,"exitCode":0}
+{"file":"tests/learner-journey-route-4h.test.ts","ok":true,"exitCode":0}
+{"file":"tests/learner-learning-context-persistence.test.ts","ok":true,"exitCode":0}
+{"file":"tests/learner-path-curriculum-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/learner-path-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/learner-pending-teacher-review.test.ts","ok":false,"exitCode":1}
+FILUMIRE learning: assessment processing failure {
+  reason: 'content not found',
+  competencyId: 'competency-gh-english-b4-1-1-1-1',
+  assessmentItemId: 'item-gh-b4-english-b4-1-1-1-1-diagnostic-en'
+}
+Error: FAIL: trusted-rubric learner submission must succeed, got 404
+    at assert (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\learner-pending-teacher-review.test.ts:15:11)
+    at run (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\learner-pending-teacher-review.test.ts:84:3)
+
+{"file":"tests/learner-progress.test.ts","ok":true,"exitCode":0}
+{"file":"tests/learner-state-hardening.test.ts","ok":false,"exitCode":1}
+C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\learner-state-hardening.test.ts:11
+    throw new Error(`FAIL: ${message}`);
+          ^
+
+Error: FAIL: correct evidence must produce mastery estimate of 1 from an empty state
+    at assert (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\learner-state-hardening.test.ts:11:11)
+    at <anonymous> (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\learner-state-hardening.test.ts:62:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0
+
+{"file":"tests/learner-ui-runtime-integrity.test.ts","ok":true,"exitCode":0}
+{"file":"tests/learning-continuity-api.test.ts","ok":true,"exitCode":0}
+{"file":"tests/learning-continuity-client.test.ts","ok":true,"exitCode":0}
+{"file":"tests/learning-language.test.ts","ok":true,"exitCode":0}
+{"file":"tests/learning-presentation.test.ts","ok":true,"exitCode":0}
+{"file":"tests/learning-progress-render.test.ts","ok":true,"exitCode":0}
+{"file":"tests/lesson-closure-api.test.ts","ok":true,"exitCode":0}
+{"file":"tests/lesson-closure-client.test.ts","ok":true,"exitCode":0}
+{"file":"tests/lesson-closure-presentation.test.ts","ok":true,"exitCode":0}
+{"file":"tests/lesson-closure-production.test.ts","ok":true,"exitCode":0}
+{"file":"tests/low-connectivity-sync.test.ts","ok":true,"exitCode":0}
+{"file":"tests/mastery-reuse-4b.test.ts","ok":true,"exitCode":0}
+{"file":"tests/mastery-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/misconception-evidence-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/needs-support-4c.test.ts","ok":true,"exitCode":0}
+{"file":"tests/no-premature-advancement.test.ts","ok":true,"exitCode":0}
+{"file":"tests/offline-shell-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/option-order-4e.test.ts","ok":true,"exitCode":0}
+{"file":"tests/parent-experience-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/parent-summary-language.test.ts","ok":true,"exitCode":0}
+{"file":"tests/parent-teacher-communication-api.test.ts","ok":true,"exitCode":0}
+{"file":"tests/pedagogical-policy-transition.test.ts","ok":true,"exitCode":0}
+{"file":"tests/pending-submission-client.test.ts","ok":true,"exitCode":0}
+{"file":"tests/pilot-concurrency-hardening.test.ts","ok":true,"exitCode":0}
+{"file":"tests/pilot-measurement-v1.test.ts","ok":false,"exitCode":1}
+Error: FAIL: This test requires PostgreSQL persistence.
+    at assert (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\pilot-measurement-v1.test.ts:19:11)
+    at run (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\pilot-measurement-v1.test.ts:24:3)
+    at <anonymous> (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\pilot-measurement-v1.test.ts:166:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+{"file":"tests/pilot-measures-4c.test.ts","ok":true,"exitCode":0}
+{"file":"tests/pilot-session-hardening.test.ts","ok":true,"exitCode":0}
+{"file":"tests/pilot-smoke-journey.test.ts","ok":true,"exitCode":0}
+{"file":"tests/pilot-storage-hardening.test.ts","ok":true,"exitCode":0}
+{"file":"tests/prerequisite-repair-4d.test.ts","ok":true,"exitCode":0}
+{"file":"tests/principal-auth-session.test.ts","ok":true,"exitCode":0}
+{"file":"tests/principal-identity.test.ts","ok":true,"exitCode":0}
+{"file":"tests/principal-learner-access.test.ts","ok":true,"exitCode":0}
+{"file":"tests/principal-resolution.test.ts","ok":true,"exitCode":0}
+{"file":"tests/production-curriculum-foundation.test.ts","ok":true,"exitCode":0}
+{"file":"tests/production-curriculum-resolution.test.ts","ok":true,"exitCode":0}
+{"file":"tests/production-learner-journey.test.ts","ok":true,"exitCode":0}
+{"file":"tests/production-learner-product-experience.test.ts","ok":true,"exitCode":0}
+{"file":"tests/red-team-01-identity-auth.test.ts","ok":true,"exitCode":0}
+{"file":"tests/red-team-02-trusted-evidence.test.ts","ok":true,"exitCode":0}
+{"file":"tests/red-team-03-json-parsing.test.ts","ok":true,"exitCode":0}
+{"file":"tests/red-team-04-session-competency.test.ts","ok":true,"exitCode":0}
+{"file":"tests/red-team-05-progression-integrity.test.ts","ok":true,"exitCode":0}
+{"file":"tests/red-team-06-concurrency.test.ts","ok":true,"exitCode":0}
+{"file":"tests/response-mode-adaptation.test.ts","ok":true,"exitCode":0}
+{"file":"tests/retention-transfer-advancement.test.ts","ok":true,"exitCode":0}
+{"file":"tests/retention-transfer-negative-gate.test.ts","ok":true,"exitCode":0}
+{"file":"tests/retention-transfer-policy.test.ts","ok":true,"exitCode":0}
+{"file":"tests/retention-transfer-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/retention-transfer.test.ts","ok":true,"exitCode":0}
+{"file":"tests/route-advance-4g.test.ts","ok":true,"exitCode":0}
+{"file":"tests/strategy-adaptation.test.ts","ok":true,"exitCode":0}
+{"file":"tests/teacher-authorization.test.ts","ok":true,"exitCode":0}
+{"file":"tests/teacher-linking.test.ts","ok":true,"exitCode":0}
+{"file":"tests/teacher-observation.test.ts","ok":false,"exitCode":1}
+Error: FAIL: This test requires PostgreSQL persistence.
+    at assert (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\teacher-observation.test.ts:15:11)
+    at run (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\teacher-observation.test.ts:20:3)
+    at <anonymous> (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\teacher-observation.test.ts:103:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+{"file":"tests/teacher-pending-review.test.ts","ok":true,"exitCode":0}
+{"file":"tests/teacher-professional-notes.test.ts","ok":true,"exitCode":0}
+{"file":"tests/teacher-review-end-to-end.test.ts","ok":false,"exitCode":1}
+FILUMIRE learning: assessment processing failure {
+  reason: 'content not found',
+  competencyId: 'competency-gh-english-b4-1-1-1-1',
+  assessmentItemId: 'item-gh-b4-english-b4-1-1-1-1-diagnostic-en'
+}
+Error: FAIL: learner submission failed with 404
+    at assert (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\teacher-review-end-to-end.test.ts:18:11)
+    at run (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\teacher-review-end-to-end.test.ts:95:3)
+
+{"file":"tests/teacher-summary-api.test.ts","ok":true,"exitCode":0}
+{"file":"tests/teacher-summary.test.ts","ok":true,"exitCode":0}
+{"file":"tests/teacher-trusted-review.test.ts","ok":false,"exitCode":1}
+Error: FAIL: authorized teacher review must succeed, got 404
+    at assert (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\teacher-trusted-review.test.ts:18:11)
+    at run (C:\Users\tabi\Desktop\filumire-responsive\FILUMIRE_CLAUDE\tests\teacher-trusted-review.test.ts:130:3)
+
+{"file":"tests/time-aware-retention-engine-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/time-aware-retention-v1.test.ts","ok":true,"exitCode":0}
+{"file":"tests/tutoring-conversation-api.test.ts","ok":true,"exitCode":0}
+{"file":"tests/tutoring-conversation-client.test.ts","ok":true,"exitCode":0}
+{"file":"tests/tutoring-conversation-context.test.ts","ok":true,"exitCode":0}
+{"file":"tests/tutoring-conversation-identity.test.ts","ok":true,"exitCode":0}
+{"file":"tests/whole-subject-progression-4b.test.ts","ok":true,"exitCode":0}
+AUDIT_RESULTS=[{"file":"tests/account-client-signout.test.ts","ok":true,"exitCode":0},{"file":"tests/account-registration-journey.test.ts","ok":true,"exitCode":0},{"file":"tests/adaptive-content-intervention-integration.test.ts","ok":true,"exitCode":0},{"file":"tests/adaptive-gate-response.test.ts","ok":false,"exitCode":1},{"file":"tests/adaptive-learner-intelligence.test.ts","ok":true,"exitCode":0},{"file":"tests/adaptive-learning-loop.test.ts","ok":true,"exitCode":0},{"file":"tests/adaptive-policy-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/adaptive-selection-4b.test.ts","ok":true,"exitCode":0},{"file":"tests/adult-supervision.test.ts","ok":true,"exitCode":0},{"file":"tests/african-voice-render.test.ts","ok":true,"exitCode":0},{"file":"tests/african-voice.test.ts","ok":true,"exitCode":0},{"file":"tests/api-assessment-security.test.ts","ok":true,"exitCode":0},{"file":"tests/api-evidence-integrity.test.ts","ok":true,"exitCode":0},{"file":"tests/api-identity-security.test.ts","ok":true,"exitCode":0},{"file":"tests/api-learning-client-side-forgery-comprehensive.test.ts","ok":true,"exitCode":0},{"file":"tests/api-learning-error-handling.test.ts","ok":true,"exitCode":0},{"file":"tests/api-learning-get-initialization.test.ts","ok":true,"exitCode":0},{"file":"tests/api-learning-post-assessment-flow.test.ts","ok":true,"exitCode":0},{"file":"tests/api-learning-retention-transfer-flow.test.ts","ok":false,"exitCode":1},{"file":"tests/api-learning-session-persistence.test.ts","ok":true,"exitCode":0},{"file":"tests/ask-filu-navigation.test.ts","ok":true,"exitCode":0},{"file":"tests/assessment-evidence-hardening.test.ts","ok":false,"exitCode":1},{"file":"tests/assessment-external-evidence.test.ts","ok":false,"exitCode":1},{"file":"tests/auth-rate-limit.test.ts","ok":true,"exitCode":0},{"file":"tests/b4-computing-adaptive-coverage.test.ts","ok":true,"exitCode":0},{"file":"tests/b4-computing-curriculum-integrity.test.ts","ok":true,"exitCode":0},{"file":"tests/b4-curriculum-integrity.test.ts","ok":true,"exitCode":0},{"file":"tests/b4-english-adaptive-coverage.test.ts","ok":false,"exitCode":1},{"file":"tests/b4-english-strand2-adaptive-integrity.test.ts","ok":true,"exitCode":0},{"file":"tests/b4-english-strand3-adaptive-integrity.test.ts","ok":true,"exitCode":0},{"file":"tests/b4-english-strand4-adaptive-integrity.test.ts","ok":true,"exitCode":0},{"file":"tests/b4-english-strand5-adaptive-integrity.test.ts","ok":true,"exitCode":0},{"file":"tests/b4-english-strand6-adaptive-integrity.test.ts","ok":true,"exitCode":0},{"file":"tests/b4-mathematics-adaptive-coverage.test.ts","ok":true,"exitCode":0},{"file":"tests/b4-mathematics-evidence-integrity.test.ts","ok":true,"exitCode":0},{"file":"tests/b4-number-patterns-content-4c.test.ts","ok":true,"exitCode":0},{"file":"tests/b4-science-adaptive-coverage.test.ts","ok":true,"exitCode":0},{"file":"tests/b4-science-adaptive-slice.test.ts","ok":true,"exitCode":0},{"file":"tests/b4-science-curriculum-integrity.test.ts","ok":true,"exitCode":0},{"file":"tests/b5-b6-english-adaptive-loop.test.ts","ok":true,"exitCode":0},{"file":"tests/b5-b6-english-runtime.test.ts","ok":true,"exitCode":0},{"file":"tests/b5-computing-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/b5-english-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/b5-mathematics-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/b5-science-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/b6-computing-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/b6-english-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/b6-mathematics-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/b6-science-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/browser-speech.test.ts","ok":true,"exitCode":0},{"file":"tests/card-acknowledgement-4b.test.ts","ok":true,"exitCode":0},{"file":"tests/cluster5c-safeguarding.test.ts","ok":true,"exitCode":0},{"file":"tests/competency-003-adaptive-loop.test.ts","ok":true,"exitCode":0},{"file":"tests/complete-intervention-loop.test.ts","ok":true,"exitCode":0},{"file":"tests/content-integrity-4e.test.ts","ok":true,"exitCode":0},{"file":"tests/content-language-selection.test.ts","ok":true,"exitCode":0},{"file":"tests/content-selection.test.ts","ok":true,"exitCode":0},{"file":"tests/controlled-teacher-actions-api.test.ts","ok":true,"exitCode":0},{"file":"tests/controlled-teacher-actions.test.ts","ok":true,"exitCode":0},{"file":"tests/curriculum-framework.test.ts","ok":true,"exitCode":0},{"file":"tests/diagnosis-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/evidence-context-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/family-access-api.test.ts","ok":true,"exitCode":0},{"file":"tests/family-access-render.test.ts","ok":true,"exitCode":0},{"file":"tests/family-phone-otp.test.ts","ok":true,"exitCode":0},{"file":"tests/family-subscriptions.test.ts","ok":true,"exitCode":0},{"file":"tests/filu-functional.test.ts","ok":true,"exitCode":0},{"file":"tests/four-subject-adaptive-intelligence.test.ts","ok":true,"exitCode":0},{"file":"tests/four-subject-filu-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/full-adaptive-progression.test.ts","ok":true,"exitCode":0},{"file":"tests/ghana-pilot-context.test.ts","ok":true,"exitCode":0},{"file":"tests/governed-instructional-engine.test.ts","ok":true,"exitCode":0},{"file":"tests/grade-aware-subject-selection.test.ts","ok":true,"exitCode":0},{"file":"tests/interface-completion.test.ts","ok":true,"exitCode":0},{"file":"tests/intervention-adaptive-integration.test.ts","ok":true,"exitCode":0},{"file":"tests/intervention-lifecycle.test.ts","ok":true,"exitCode":0},{"file":"tests/intervention-persistence.test.ts","ok":true,"exitCode":0},{"file":"tests/intervention-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/learner-intelligence-policy.test.ts","ok":true,"exitCode":0},{"file":"tests/learner-interface-copy.test.ts","ok":true,"exitCode":0},{"file":"tests/learner-interface-layout.test.ts","ok":true,"exitCode":0},{"file":"tests/learner-interface-render.test.ts","ok":true,"exitCode":0},{"file":"tests/learner-journey-route-4h.test.ts","ok":true,"exitCode":0},{"file":"tests/learner-learning-context-persistence.test.ts","ok":true,"exitCode":0},{"file":"tests/learner-path-curriculum-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/learner-path-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/learner-pending-teacher-review.test.ts","ok":false,"exitCode":1},{"file":"tests/learner-progress.test.ts","ok":true,"exitCode":0},{"file":"tests/learner-state-hardening.test.ts","ok":false,"exitCode":1},{"file":"tests/learner-ui-runtime-integrity.test.ts","ok":true,"exitCode":0},{"file":"tests/learning-continuity-api.test.ts","ok":true,"exitCode":0},{"file":"tests/learning-continuity-client.test.ts","ok":true,"exitCode":0},{"file":"tests/learning-language.test.ts","ok":true,"exitCode":0},{"file":"tests/learning-presentation.test.ts","ok":true,"exitCode":0},{"file":"tests/learning-progress-render.test.ts","ok":true,"exitCode":0},{"file":"tests/lesson-closure-api.test.ts","ok":true,"exitCode":0},{"file":"tests/lesson-closure-client.test.ts","ok":true,"exitCode":0},{"file":"tests/lesson-closure-presentation.test.ts","ok":true,"exitCode":0},{"file":"tests/lesson-closure-production.test.ts","ok":true,"exitCode":0},{"file":"tests/low-connectivity-sync.test.ts","ok":true,"exitCode":0},{"file":"tests/mastery-reuse-4b.test.ts","ok":true,"exitCode":0},{"file":"tests/mastery-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/misconception-evidence-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/needs-support-4c.test.ts","ok":true,"exitCode":0},{"file":"tests/no-premature-advancement.test.ts","ok":true,"exitCode":0},{"file":"tests/offline-shell-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/option-order-4e.test.ts","ok":true,"exitCode":0},{"file":"tests/parent-experience-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/parent-summary-language.test.ts","ok":true,"exitCode":0},{"file":"tests/parent-teacher-communication-api.test.ts","ok":true,"exitCode":0},{"file":"tests/pedagogical-policy-transition.test.ts","ok":true,"exitCode":0},{"file":"tests/pending-submission-client.test.ts","ok":true,"exitCode":0},{"file":"tests/pilot-concurrency-hardening.test.ts","ok":true,"exitCode":0},{"file":"tests/pilot-measurement-v1.test.ts","ok":false,"exitCode":1},{"file":"tests/pilot-measures-4c.test.ts","ok":true,"exitCode":0},{"file":"tests/pilot-session-hardening.test.ts","ok":true,"exitCode":0},{"file":"tests/pilot-smoke-journey.test.ts","ok":true,"exitCode":0},{"file":"tests/pilot-storage-hardening.test.ts","ok":true,"exitCode":0},{"file":"tests/prerequisite-repair-4d.test.ts","ok":true,"exitCode":0},{"file":"tests/principal-auth-session.test.ts","ok":true,"exitCode":0},{"file":"tests/principal-identity.test.ts","ok":true,"exitCode":0},{"file":"tests/principal-learner-access.test.ts","ok":true,"exitCode":0},{"file":"tests/principal-resolution.test.ts","ok":true,"exitCode":0},{"file":"tests/production-curriculum-foundation.test.ts","ok":true,"exitCode":0},{"file":"tests/production-curriculum-resolution.test.ts","ok":true,"exitCode":0},{"file":"tests/production-learner-journey.test.ts","ok":true,"exitCode":0},{"file":"tests/production-learner-product-experience.test.ts","ok":true,"exitCode":0},{"file":"tests/red-team-01-identity-auth.test.ts","ok":true,"exitCode":0},{"file":"tests/red-team-02-trusted-evidence.test.ts","ok":true,"exitCode":0},{"file":"tests/red-team-03-json-parsing.test.ts","ok":true,"exitCode":0},{"file":"tests/red-team-04-session-competency.test.ts","ok":true,"exitCode":0},{"file":"tests/red-team-05-progression-integrity.test.ts","ok":true,"exitCode":0},{"file":"tests/red-team-06-concurrency.test.ts","ok":true,"exitCode":0},{"file":"tests/response-mode-adaptation.test.ts","ok":true,"exitCode":0},{"file":"tests/retention-transfer-advancement.test.ts","ok":true,"exitCode":0},{"file":"tests/retention-transfer-negative-gate.test.ts","ok":true,"exitCode":0},{"file":"tests/retention-transfer-policy.test.ts","ok":true,"exitCode":0},{"file":"tests/retention-transfer-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/retention-transfer.test.ts","ok":true,"exitCode":0},{"file":"tests/route-advance-4g.test.ts","ok":true,"exitCode":0},{"file":"tests/strategy-adaptation.test.ts","ok":true,"exitCode":0},{"file":"tests/teacher-authorization.test.ts","ok":true,"exitCode":0},{"file":"tests/teacher-linking.test.ts","ok":true,"exitCode":0},{"file":"tests/teacher-observation.test.ts","ok":false,"exitCode":1},{"file":"tests/teacher-pending-review.test.ts","ok":true,"exitCode":0},{"file":"tests/teacher-professional-notes.test.ts","ok":true,"exitCode":0},{"file":"tests/teacher-review-end-to-end.test.ts","ok":false,"exitCode":1},{"file":"tests/teacher-summary-api.test.ts","ok":true,"exitCode":0},{"file":"tests/teacher-summary.test.ts","ok":true,"exitCode":0},{"file":"tests/teacher-trusted-review.test.ts","ok":false,"exitCode":1},{"file":"tests/time-aware-retention-engine-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/time-aware-retention-v1.test.ts","ok":true,"exitCode":0},{"file":"tests/tutoring-conversation-api.test.ts","ok":true,"exitCode":0},{"file":"tests/tutoring-conversation-client.test.ts","ok":true,"exitCode":0},{"file":"tests/tutoring-conversation-context.test.ts","ok":true,"exitCode":0},{"file":"tests/tutoring-conversation-identity.test.ts","ok":true,"exitCode":0},{"file":"tests/whole-subject-progression-4b.test.ts","ok":true,"exitCode":0}]

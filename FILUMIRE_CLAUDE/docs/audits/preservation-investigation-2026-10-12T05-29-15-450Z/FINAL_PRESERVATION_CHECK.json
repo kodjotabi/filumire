@@ -1,0 +1,13 @@
+{
+  "filesChecked": 1436,
+  "changed": [],
+  "priorStatusEntriesRemoved": [],
+  "newStatusEntries": [
+    "?? FILUMIRE_CLAUDE/docs/audits/preservation-investigation-2026-10-12T05-29-15-450Z/DATABASE_READ_ONLY.json",
+    "?? FILUMIRE_CLAUDE/docs/audits/preservation-investigation-2026-10-12T05-29-15-450Z/PRESERVATION_AND_REPAIRS.md",
+    "?? FILUMIRE_CLAUDE/docs/audits/preservation-investigation-2026-10-12T05-29-15-450Z/PRESERVATION_MANIFEST.json",
+    "?? FILUMIRE_CLAUDE/docs/audits/preservation-investigation-2026-10-12T05-29-15-450Z/TYPE_INVESTIGATION.jsonl",
+    "?? FILUMIRE_CLAUDE/docs/audits/preservation-investigation-2026-10-12T05-29-15-450Z/WORKING_TREE.txt"
+  ],
+  "head": "a59b9fdf12380bc261f364fbafe1b03d41a02741"
+}

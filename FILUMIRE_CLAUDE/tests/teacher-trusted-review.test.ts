@@ -1,3 +1,4 @@
+import { seedTrustedRubricContent } from "./fixtures/trusted-rubric-content";
 import { POST } from "../apps/learner/app/api/teacher/review/route";
 import { persistenceStore } from "../services/persistence-provider";
 import {
@@ -23,10 +24,10 @@ const COMPETENCY_ID =
   "competency-gh-english-b4-1-1-1-1";
 
 const ASSESSMENT_ITEM_ID =
-  "item-gh-b4-english-b4-1-1-1-1-diagnostic-en";
+  "item-test-trusted-oral-review";
 
 const CONTENT_ID =
-  "content-gh-b4-english-b4-1-1-1-1-diagnostic-en";
+  "content-test-trusted-oral-review";
 
 function reviewRequest(
   principalId: string,
@@ -51,6 +52,7 @@ function reviewRequest(
 }
 
 async function run(): Promise<void> {
+  seedTrustedRubricContent();
   const teacherId =
     `principal-teacher-review-${crypto.randomUUID()}`;
 

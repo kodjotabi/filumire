@@ -11,6 +11,7 @@ export const IS_PRODUCTION =
   process.env.NODE_ENV === "production";
 
 export type LearningContent = {
+  language?: "en" | "fr";
   id: string;
   competencyId: string;
   type: string;
@@ -25,6 +26,8 @@ export type LearningContent = {
 };
 
 export type LearningResponse = {
+  /** Signed delivery identity; not proof of completion or mastery. */
+  lessonReceipt?: string;
   learnerState: {
     learnerId: string;
     competencies: Array<{
@@ -55,6 +58,7 @@ export type LearningResponse = {
     confidence: number;
     evidenceCount: number;
     readiness: boolean;
+    /** Legacy mastery/confidence aggregate; never use as lesson or subject completion. */
     percent: number;
     subjectId?: string;
     subjectName?: string;
@@ -76,8 +80,10 @@ export type LearningResponse = {
   assessment?: {
     result: {
       correct: boolean;
+      assessmentItemId?: string;
       duplicate?: boolean;
     };
+    evidence?: { outcome: string };
   };
 };
 
@@ -110,6 +116,18 @@ export class LearningRequestError extends Error {
  * response such as an authorization or validation error.
  */
 export class LearningNetworkError extends Error {}
+
+export async function fetchDashboardSnapshot(subjectId?: string): Promise<LearningResponse> {
+  const url = getLearningUrl(subjectId);
+  let response: Response;
+  try {
+    response = await fetch(`${url}${url.includes("?") ? "&" : "?"}dashboard=1`, {
+      headers: getApiHeaders(), cache: "no-store",
+    });
+  } catch { throw new LearningNetworkError("Unable to reach FILUMIRE."); }
+  if (!response.ok) throw new LearningRequestError("Unable to load dashboard.", response.status);
+  return response.json();
+}
 
 export function getApiHeaders(): Record<string, string> {
   // The interface language also chooses the lesson language.
@@ -183,6 +201,7 @@ export async function fetchLearningSession(
     response = await fetch(
       getLearningUrl(subjectId),
       {
+        cache: "no-store",
         headers: getApiHeaders(),
       },
     );
@@ -341,6 +360,7 @@ export async function fetchLearningOverview(
       : "";
     const response = await fetch(`/api/learning?overview=1${query}`, {
       headers: getApiHeaders(),
+      cache: "no-store",
     });
     if (!response.ok) return null;
     return (await response.json()) as LearningOverview;

@@ -76,7 +76,9 @@ export function useLanguage(urlKey?: string): [Language, (value: Language) => vo
     }
 
     function onPop() {
-      setLanguage(readLanguage());
+      const next = readLanguage();
+      setLanguage(next);
+      document.documentElement.lang = next;
     }
 
     window.addEventListener(LANGUAGE_EVENT, onChange);

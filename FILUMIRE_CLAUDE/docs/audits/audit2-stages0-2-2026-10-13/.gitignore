@@ -1,0 +1,7 @@
+# Local recovery material includes private configuration. Never commit or upload.
+existing-work.zip
+history.bundle
+snapshot-manifest.json
+git-status.txt
+git-diff.txt
+git-staged-diff.txt

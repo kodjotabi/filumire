@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { LearnerBottomNav } from "../../components/filumire/LearnerBottomNav";
 import { LanguageToggle } from "../../components/filumire/LanguageToggle";
-import { useLanguage } from "../../components/filumire/language";
+import { readLanguage, useLanguage } from "../../components/filumire/language";
 import {
   accountErrorMessage,
   activeLearner,
@@ -119,7 +119,7 @@ export default function LoginPage() {
     fetchAccount()
       .then((account) => {
         if (active && account) {
-          router.replace(destinationFor(account, language));
+          router.replace(destinationFor(account, readLanguage(), new URLSearchParams(window.location.search).get("returnTo")));
         }
       })
       .catch(() => undefined);
@@ -155,7 +155,7 @@ export default function LoginPage() {
       }
 
       setPassword("");
-      router.push(destinationFor(account, learner?.preferredLanguage ?? language));
+      router.push(destinationFor(account, language, new URLSearchParams(window.location.search).get("returnTo")));
     } catch (error) {
       setMessage(accountErrorMessage(error, language));
       setBusy(false);
@@ -256,13 +256,10 @@ export default function LoginPage() {
             </button>
           </div>
 
-          <button
-            type="button"
-            className="forgot"
-            onClick={() => setMessage(t.forgot)}
-          >
-            {t.forgotLink}
-          </button>
+          <details className="forgot">
+            <summary>{t.forgotLink}</summary>
+            <p>{t.forgot}</p>
+          </details>
 
           <button type="submit" className="signInButton" disabled={busy} aria-busy={busy}>
             {busy ? t.signingIn : t.signIn} {busy ? null : <ArrowRight />}
@@ -278,6 +275,8 @@ export default function LoginPage() {
       <section className="newAccount">
         <h2>{t.newTitle}</h2>
         <p>{t.newBody}</p>
+        <a className="createButton subscriptionLink" href={`https://filumire.com${language === "fr" ? "/fr" : ""}/pricing`}>{language === "fr" ? "Abonnement" : "Subscription"}</a>
+        <p className="subscriptionAvailability">{language === "fr" ? "Consulte les tarifs. Le paiement et les droits d’abonnement connectés ne sont pas disponibles dans cet aperçu." : "View pricing information. Payments and connected subscription access are not available in this preview."}</p>
         <Link href={`/register?lang=${language}`} className="createButton">
           {t.create} <ArrowRight />
         </Link>
@@ -307,6 +306,9 @@ export default function LoginPage() {
 
 
       <style>{`
+        .loginPage .subscriptionLink { margin-top: 12px; text-decoration: none; }
+        .loginPage .subscriptionAvailability { max-width: 48ch; margin: 12px auto; padding-inline: 12px; font-size: 14px; line-height: 1.5; }
+        @media (max-width: 359px) { .loginPage .topbar { gap: 8px; padding-inline: 16px; } }
         .loginPage { width: 100%; max-width: 390px; min-height: 844px; margin: 0 auto; background: #ffffff; color: var(--ui-ink); font-family: inherit; }
         .topbar { height: 72px; padding: 0 26px 0 24px; display: flex; align-items: center; gap: 17px; background: var(--ui-bar); color: #ffffff; }
         .back { width: 38px; height: 42px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border-radius: 8px; background: var(--ui-back); color: #ffffff; text-decoration: none; font-size: 10px; font-weight: 700; line-height: 1; }
@@ -315,7 +317,7 @@ export default function LoginPage() {
         .adultLink { margin-left: auto; display: flex; align-items: center; gap: 8px; color: #ffffff; text-decoration: none; font-size: 11px; font-weight: 700; line-height: 1.2; text-align: left; }
         .adultLink svg { width: 24px; height: 24px; flex: none; fill: currentColor; }
         .hero { position: relative; width: 100%; aspect-ratio: 3129 / 1806; overflow: hidden; }
-        .heroArt { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+        .heroArt { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: contain; }
         .heroTitle { position: absolute; top: 27px; left: 24px; margin: 0; color: var(--ui-ink); font-size: 26px; line-height: 1.15; font-weight: 800; letter-spacing: -0.5px; white-space: nowrap; }
         .heroTitle span { color: var(--ui-brand); }
         .heroGreeting { position: absolute; top: 57px; left: 28px; margin: 0; color: var(--ui-ink); font-size: 14px; line-height: 1.2; font-weight: 500; }
@@ -333,6 +335,14 @@ export default function LoginPage() {
         .showPassword svg { width: 20px; height: 20px; fill: none; stroke: var(--ui-ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         .showPassword svg .dot { fill: var(--ui-ink); stroke: none; }
         .forgot { display: block; margin: 5px 0 6px auto; border: 0; padding: 0; background: transparent; color: var(--ui-ink); font-family: inherit; font-size: 11px; font-weight: 600; cursor: pointer; }
+        .forgot summary { min-height: 44px; display: flex; align-items: center; font-size: 14px; }
+        .forgot p { font-size: 14px; line-height: 1.6; cursor: auto; }
+        .forgot summary:focus-visible { outline: 3px solid var(--ui-ink); outline-offset: 3px; }
+        .field { min-height: 44px; height: auto; }
+        .field input { min-height: 44px; font-size: 16px; }
+        .showPassword { min-width: 44px; min-height: 44px; }
+        .signInButton, .createButton { min-height: 44px; height: auto; padding: 10px; }
+        .field:focus-within { outline: 3px solid var(--ui-ink); outline-offset: 2px; }
         .signInButton, .createButton { width: 100%; height: 36px; display: flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 9px; color: #ffffff; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; }
         .signInButton { background: var(--ui-blue); }
         .signInButton[disabled] { opacity: 0.7; cursor: progress; }
@@ -403,7 +413,7 @@ export default function LoginPage() {
             box-shadow: none;
           }
           .topbar { grid-area: top; padding: 0 max(40px, calc((100% - 1200px) / 2)); }
-          .hero { grid-area: hero; align-self: stretch; min-height: 520px; margin-top: 40px; border-radius: 28px; aspect-ratio: auto; }
+          .hero { grid-area: hero; align-self: start; min-height: 0; margin-top: 40px; border-radius: 28px; aspect-ratio: 3129 / 1806; }
           .heroTitle { top: 48px; left: 48px; font-size: 48px; }
           .heroGreeting { top: 112px; left: 50px; font-size: 22px; }
           .heroIntro { top: 150px; left: 50px; font-size: 16px; }

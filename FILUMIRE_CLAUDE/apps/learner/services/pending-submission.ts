@@ -111,7 +111,7 @@ export function writePendingSubmission(
   }
 }
 
-export function clearPendingSubmission(): void {
+export function clearPendingSubmission(clientRequestId?: string): void {
   const storage = getStorage();
 
   if (!storage) {
@@ -119,6 +119,10 @@ export function clearPendingSubmission(): void {
   }
 
   try {
+    // A delayed acknowledgement must not remove a newer queued answer.
+    if (clientRequestId && readPendingSubmission()?.clientRequestId !== clientRequestId) {
+      return;
+    }
     storage.removeItem(STORAGE_KEY);
   } catch {
     // Nothing more we can safely do if storage is unavailable.

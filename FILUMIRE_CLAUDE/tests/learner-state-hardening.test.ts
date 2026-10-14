@@ -1,3 +1,4 @@
+import type { LearningEvidence } from "../packages/domain";
 ﻿import {
   createInitialLearnerState,
   applyEvidence,
@@ -20,6 +21,12 @@ let state = createInitialLearnerState(
   competencyId,
 );
 
+const history: LearningEvidence[] = [];
+function apply(item: LearningEvidence): void {
+  history.push(item);
+  state = applyEvidence(state, item, [...history]);
+}
+
 const initial = state.competencies[0];
 
 assert(
@@ -40,7 +47,7 @@ assert(
 /*
  * Correct evidence should update mastery.
  */
-state = applyEvidence(state, {
+apply({
   id: "evidence-hardening-001",
   learnerId,
   competencyId,
@@ -60,8 +67,8 @@ assert(
 );
 
 assert(
-  competency.masteryEstimate === 1,
-  "correct evidence must produce mastery estimate of 1 from an empty state",
+  Math.abs(competency.masteryEstimate - 0.86) < 1e-10,
+  "correct evidence with unspecified independence must produce mastery estimate 0.86",
 );
 
 /*
@@ -70,7 +77,7 @@ assert(
  */
 const beforeSkipped = competency;
 
-state = applyEvidence(state, {
+apply({
   id: "evidence-hardening-002",
   learnerId,
   competencyId,
@@ -96,7 +103,7 @@ assert(
  */
 const beforeObserved = competency;
 
-state = applyEvidence(state, {
+apply({
   id: "evidence-hardening-003",
   learnerId,
   competencyId,

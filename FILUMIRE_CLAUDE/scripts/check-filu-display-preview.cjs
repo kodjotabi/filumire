@@ -1,0 +1,31 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const { spawnSync } = require('node:child_process');
+const root = path.resolve(__dirname, '..');
+const source = JSON.parse(fs.readFileSync(path.join(root, '.vercel/filu-display-preview-source.json')));
+const url = 'https://filumire-learner-6xqmlwceo-tabicrentsil-6879s-projects.vercel.app';
+const cli = 'C:/Users/tabi/AppData/Local/npm-cache/_npx/67eb4586ca667318/node_modules/vercel/dist/vc.js';
+const checks = [];
+function get(label, route, expected, markers = []) {
+ const body = path.join(root, `.vercel/filu-display-preview-${label}.body`);
+ const r = spawnSync(process.execPath, [cli, 'curl', route, '--deployment', url, '--', '--silent', '--show-error', '--max-time', '45', '--output', body, '--write-out', '%{http_code}'], { cwd: source.destination, encoding: 'utf8', timeout: 60000 });
+ const content = fs.existsSync(body) ? fs.readFileSync(body, 'utf8') : '';
+ const status = Number(r.stdout?.trim()), missing = markers.filter(marker=>!content.includes(marker));
+ checks.push({ label, status, missing, passed: r.status === 0 && status === expected && !missing.length });
+ return content;
+}
+get('login', '/login?lang=en', 200, ['Subscription', 'https://filumire.com/pricing', 'Payments and connected subscription access are not available in this preview.']);
+get('anonymous-session', '/api/session/me', 401);
+const dashboard = get('dashboard', '/dashboard?view=profile&lang=en', 200);
+const chunk = dashboard.match(/src="([^" ]*\/app\/dashboard\/page-[^" ]*\.js)"/)?.[1];
+if (!chunk) checks.push({ label: 'audit2-dashboard-bundle', passed: false, reason: 'Dashboard chunk missing' });
+else get('audit2-dashboard-bundle', chunk.replaceAll('&amp;', '&'), 200, ['Additional Settings', 'overflow-anchor:none', 'clientTop']);
+const headers = path.join(root, '.vercel/filu-display-preview-protection.headers');
+const r = spawnSync('curl.exe', ['--silent', '--show-error', '--max-time', '30', '--dump-header', headers, '--output', path.join(root, '.vercel/filu-display-preview-unauthenticated.body'), '--write-out', '%{http_code}', `${url}/login`], { encoding: 'utf8', timeout: 40000 });
+const status = Number(r.stdout?.trim());
+const sso = fs.existsSync(headers) && /^Location: https:\/\/vercel\.com\/sso-api\?/im.test(fs.readFileSync(headers, 'utf8'));
+checks.push({ label: 'vercel-authentication', status, redirectToVercelSignIn: sso, passed: r.status === 0 && status === 302 && sso });
+const report = { url, sourceHash: source.sourceHash, readOnlyRequests: true, noDatabaseWrites: true, checks };
+fs.writeFileSync(path.join(root, '.vercel/filu-display-preview-http-results.json'), JSON.stringify(report,null,2));
+console.log(JSON.stringify(report,null,2));
+process.exitCode = checks.every(check=>check.passed) ? 0 : 1;

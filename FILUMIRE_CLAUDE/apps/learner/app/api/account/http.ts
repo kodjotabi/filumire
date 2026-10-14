@@ -30,28 +30,61 @@ import { LearnerContextValidationError } from "../../../../../services/learner-c
 
 export class BadRequestError extends Error {}
 
+export function assertSameOrigin(request: Request): void {
+  const site = request.headers.get("sec-fetch-site");
+  if (site && site !== "same-origin" && site !== "none") {
+    throw new BadRequestError("Cross-site account requests are not allowed.");
+  }
+  const origin = request.headers.get("origin");
+  const expected = new URL(request.url);
+  const host = request.headers.get("host");
+  if (host) expected.host = host;
+  const protocol = request.headers.get("x-forwarded-proto");
+  if (process.env.VERCEL && (protocol === "https" || protocol === "http")) expected.protocol = `${protocol}:`;
+  if (origin && origin !== expected.origin) {
+    throw new BadRequestError("Account requests must come from this application.");
+  }
+}
+
 const NO_STORE = { "cache-control": "no-store" };
 
 /*
- * Account endpoints accept JSON only. A cross-site HTML form
- * cannot send application/json without a CORS preflight, which
- * together with the SameSite=Strict session cookie keeps these
- * endpoints out of reach of cross-site request forgery.
+ * Account mutations require same-origin JSON and a bounded body.
+ * SameSite=Strict cookies and CORS remain additional protections.
  */
 export async function readJsonBody(
   request: Request,
 ): Promise<Record<string, unknown>> {
+  assertSameOrigin(request);
   const contentType = request.headers.get("content-type") ?? "";
 
-  if (!contentType.toLowerCase().startsWith("application/json")) {
+  if (contentType.split(";")[0].trim().toLowerCase() !== "application/json") {
     throw new BadRequestError("Expected a JSON request.");
   }
 
-  const text = await request.text();
-
-  if (text.length > 16_384) {
-    throw new BadRequestError("Request is too large.");
+  const reader = request.body?.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  if (reader) {
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        size += value.byteLength;
+        if (size > 16_384) {
+          await reader.cancel();
+          throw new BadRequestError("Request is too large.");
+        }
+        chunks.push(value);
+      }
+    } finally {
+      reader.releaseLock();
+    }
   }
+  const bytes = new Uint8Array(size);
+  let offset = 0;
+  for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
+  const text = new TextDecoder().decode(bytes);
 
   try {
     const body = JSON.parse(text) as unknown;

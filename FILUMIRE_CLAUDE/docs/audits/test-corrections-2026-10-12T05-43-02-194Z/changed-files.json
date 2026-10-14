@@ -1,0 +1,62 @@
+[
+  {
+    "path": "tests/assessment-evidence-hardening.test.ts",
+    "added": false,
+    "beforeSha256": "5e8201983163da4181f69333a8cae81e945f3061297741665914e9c990d05eb2",
+    "afterSha256": "791542e8a56adf8cbdfb2a4f732978bf6f55e5f4814fade5ae55b3488da3f601"
+  },
+  {
+    "path": "tests/assessment-external-evidence.test.ts",
+    "added": false,
+    "beforeSha256": "286a59a3d2dd786c813e5fdbcdfd28bc76e3f2a394c463d6166ee806666a7e5b",
+    "afterSha256": "fdeed1bf692e249502f4f07178f8165c0176b707186b133723d24004c3a2da70"
+  },
+  {
+    "path": "tests/api-learning-retention-transfer-flow.test.ts",
+    "added": false,
+    "beforeSha256": "262b94de0daaa915d45763c167096543c3562f678a814fde006fa5a2f6dd6240",
+    "afterSha256": "0424c8c95bbcb6fa217be47708a1246b182b072c4b16cb1fde2002b2fa88ed6b"
+  },
+  {
+    "path": "tests/learner-interface-render.test.ts",
+    "added": false,
+    "beforeSha256": "c9d156279e535fe668cb92c3b94947b12972f2e22a3dc3e878eca53bbfdf2917",
+    "afterSha256": "e97665ed99e7d14af6777ff3ebd255fe07e5bc007e53d6bf87a4b7bdbdaf3232"
+  },
+  {
+    "path": "tests/fixtures/trusted-rubric-content.ts",
+    "added": true,
+    "beforeSha256": null,
+    "afterSha256": "ba368e1f9f971a767be0be03981c1f48f85753ffcb410619f469b6d40ebdf09a"
+  },
+  {
+    "path": "tests/learner-pending-teacher-review.test.ts",
+    "added": false,
+    "beforeSha256": "344a9eff471d0d6ef032bb24865e39c8a34c3ee0136dc9b62d1b92092e0ae28f",
+    "afterSha256": "bf874e91844fcf36ce8ca0e87e371959cd06f707564b7c3182a4d8692d14ac1c"
+  },
+  {
+    "path": "tests/teacher-review-end-to-end.test.ts",
+    "added": false,
+    "beforeSha256": "37538c9313b74c54c8dfa7281a655ea47bdb266d4ab1be81f693f9cf9bb369ff",
+    "afterSha256": "fd836446f3c1fb7ca26b6c69acb1bb87f2359a52b30aafeaea66e0b443958231"
+  },
+  {
+    "path": "tests/teacher-trusted-review.test.ts",
+    "added": false,
+    "beforeSha256": "ed9b43d9e9dc21072c259f50708e999f7f863e4919c2cc0afe535fae00116286",
+    "afterSha256": "6a8fbc751052f7d8461256508e6841bbe59677b6b0114026feea68d45bf3fe38"
+  },
+  {
+    "path": "tests/learner-state-hardening.test.ts",
+    "added": false,
+    "beforeSha256": "e3338f01c83af162dd25e642984bd6416d944e3010dd494471e1e13578fa02fc",
+    "afterSha256": "d44d9ba0931480424a696e20a05c55b57615199428226af50178ad2d3f1254eb"
+  },
+  {
+    "path": "tests/adaptive-gate-response.test.ts",
+    "added": false,
+    "beforeSha256": "b75e4712b9f84bc157679024cdf5626f7719c065c609a1452f95f2165fa42e3f",
+    "afterSha256": "a06ac663a6a78b320d7693d9318e37797718ae1a0273476ee47abcc0a7a35135"
+  }
+]

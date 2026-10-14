@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Montserrat, Kalam } from "next/font/google";
 import "./globals.css";
+import "./learner-interface.css";
 import ServiceWorkerRegister from "./ServiceWorkerRegister";
 
 const montserrat = Montserrat({

@@ -1,0 +1,30 @@
+
+=== account-client-signout.test.ts: 0 ===
+{ accountClientSignout: 'PASS', checks: 4 }
+
+=== african-voice-render.test.ts: 0 ===
+PASS: bilingual browser-voice interface, honest gender/accent labels, disabled unavailable playback and accessible controls
+Received `true` for a non-boolean attribute `jsx`.
+
+If you want to write it to the DOM, pass a string instead: jsx="true" or jsx={value.toString()}.
+
+=== african-voice.test.ts: 0 ===
+PASS: African catalogue, unavailable playback, metadata limits, local preference isolation/privacy, shared surfaces, language/style failures and cancellation (fictional adapter only)
+
+=== audit2-settings.test.ts: 0 ===
+PASS: learner preference isolation, corrupt/blocked storage, bilingual functional settings, guardian boundaries, profile order and question prominence
+Received `true` for a non-boolean attribute `jsx`.
+
+If you want to write it to the DOM, pass a string instead: jsx="true" or jsx={value.toString()}.
+
+=== interface-completion.test.ts: 0 ===
+interface completion test passed
+
+=== learner-interface-layout.test.ts: 0 ===
+PASS: learner-scoped responsive rules, touch/focus/keyboard/reduced-motion contracts and selected contrast pairs; real layout remains unverified
+
+=== learner-interface-render.test.ts: 0 ===
+PASS: bilingual navigation/back context, accessible loading/audio/forms, long topic text, authoritative progress and unavailable states (SSR)
+Received `true` for a non-boolean attribute `jsx`.
+
+If you want to write it to the DOM, pass a string instead: jsx="true" or jsx={value.toString()}.

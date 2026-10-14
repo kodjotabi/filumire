@@ -1,0 +1,46 @@
+{
+  "interceptedApis": true,
+  "databaseWrites": false,
+  "results": [
+    {
+      "width": 320,
+      "language": "en",
+      "passed": true
+    },
+    {
+      "width": 320,
+      "language": "fr",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "language": "fr",
+      "passed": true
+    },
+    {
+      "width": 768,
+      "language": "en",
+      "passed": true
+    },
+    {
+      "width": 768,
+      "language": "fr",
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "language": "en",
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "language": "fr",
+      "passed": true
+    }
+  ]
+}

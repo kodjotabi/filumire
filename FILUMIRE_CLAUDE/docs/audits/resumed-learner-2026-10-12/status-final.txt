@@ -1,0 +1,127 @@
+ M FILUMIRE_CLAUDE/apps/learner/app/api/account/register/route.ts
+ M FILUMIRE_CLAUDE/apps/learner/app/api/learning/route.ts
+ M FILUMIRE_CLAUDE/apps/learner/app/dashboard/page.tsx
+ M FILUMIRE_CLAUDE/apps/learner/app/layout.tsx
+ M FILUMIRE_CLAUDE/apps/learner/app/learn/page.tsx
+ M FILUMIRE_CLAUDE/apps/learner/app/login/page.tsx
+ M FILUMIRE_CLAUDE/apps/learner/components/filumire/AskFiluPage.tsx
+ M FILUMIRE_CLAUDE/apps/learner/components/filumire/ChallengesPage.tsx
+ M FILUMIRE_CLAUDE/apps/learner/components/filumire/LearnerBottomNav.tsx
+ M FILUMIRE_CLAUDE/apps/learner/components/filumire/LearnerHeader.tsx
+ M FILUMIRE_CLAUDE/apps/learner/components/filumire/ProfilePage.tsx
+ M FILUMIRE_CLAUDE/apps/learner/components/filumire/ProgressPage.tsx
+ M FILUMIRE_CLAUDE/apps/learner/components/filumire/SubjectPage.tsx
+ M FILUMIRE_CLAUDE/apps/learner/components/filumire/language.ts
+ M FILUMIRE_CLAUDE/apps/learner/services/account-client.ts
+ M FILUMIRE_CLAUDE/apps/learner/services/learning-client.ts
+ M FILUMIRE_CLAUDE/apps/learner/services/pending-submission.ts
+ M FILUMIRE_CLAUDE/tests/adaptive-gate-response.test.ts
+ M FILUMIRE_CLAUDE/tests/api-learning-retention-transfer-flow.test.ts
+ M FILUMIRE_CLAUDE/tests/assessment-evidence-hardening.test.ts
+ M FILUMIRE_CLAUDE/tests/assessment-external-evidence.test.ts
+ M FILUMIRE_CLAUDE/tests/interface-completion.test.ts
+ M FILUMIRE_CLAUDE/tests/learner-pending-teacher-review.test.ts
+ M FILUMIRE_CLAUDE/tests/learner-state-hardening.test.ts
+ M FILUMIRE_CLAUDE/tests/teacher-review-end-to-end.test.ts
+ M FILUMIRE_CLAUDE/tests/teacher-trusted-review.test.ts
+?? .claude/
+?? FILUMIRE_CLAUDE/apps/learner/app/api/account/phone/
+?? FILUMIRE_CLAUDE/apps/learner/app/api/account/subscription/
+?? FILUMIRE_CLAUDE/apps/learner/app/api/learning/closure/
+?? FILUMIRE_CLAUDE/apps/learner/app/api/tutoring/
+?? FILUMIRE_CLAUDE/apps/learner/app/family-access/
+?? FILUMIRE_CLAUDE/apps/learner/app/learner-interface.css
+?? FILUMIRE_CLAUDE/apps/learner/components/filumire/FamilyAccessPrototype.tsx
+?? FILUMIRE_CLAUDE/apps/learner/components/filumire/FiluConversation.tsx
+?? FILUMIRE_CLAUDE/apps/learner/components/filumire/LearnerLoadingState.tsx
+?? FILUMIRE_CLAUDE/apps/learner/components/filumire/LessonClosureCard.tsx
+?? FILUMIRE_CLAUDE/apps/learner/components/filumire/ReadAloudControls.tsx
+?? FILUMIRE_CLAUDE/apps/learner/components/filumire/VoiceSelection.tsx
+?? FILUMIRE_CLAUDE/apps/learner/services/browser-speech-playback.ts
+?? FILUMIRE_CLAUDE/apps/learner/services/browser-voices.ts
+?? FILUMIRE_CLAUDE/apps/learner/services/conversation-client.ts
+?? FILUMIRE_CLAUDE/apps/learner/services/dashboard-navigation.ts
+?? FILUMIRE_CLAUDE/apps/learner/services/learner-interface.ts
+?? FILUMIRE_CLAUDE/apps/learner/services/learning-continuity.ts
+?? FILUMIRE_CLAUDE/apps/learner/services/learning-presentation.ts
+?? FILUMIRE_CLAUDE/apps/learner/services/lesson-closure-client.ts
+?? FILUMIRE_CLAUDE/apps/learner/services/lesson-closure-presentation.ts
+?? FILUMIRE_CLAUDE/apps/learner/services/use-browser-voices.ts
+?? FILUMIRE_CLAUDE/apps/learner/services/use-lesson-closure.ts
+?? FILUMIRE_CLAUDE/apps/learner/services/voice-catalogue.ts
+?? FILUMIRE_CLAUDE/apps/learner/services/voice-playback.ts
+?? FILUMIRE_CLAUDE/apps/learner/services/voice-preference.ts
+?? FILUMIRE_CLAUDE/docs/ASK_FILU_FORENSIC_20261011.md
+?? FILUMIRE_CLAUDE/docs/PHASE_3_MOCK_CONVERSATION.md
+?? FILUMIRE_CLAUDE/docs/PHASE_4_ADAPTIVE_LESSON_CLOSURE.md
+?? FILUMIRE_CLAUDE/docs/PHASE_5_AFRICAN_VOICE_FOUNDATION.md
+?? FILUMIRE_CLAUDE/docs/PHASE_5_BROWSER_VOICE_STRATEGY.md
+?? FILUMIRE_CLAUDE/docs/PHASE_6_LEARNER_INTERFACE_REFINEMENT.md
+?? FILUMIRE_CLAUDE/docs/PHASE_7_8_IDENTITY_SUBSCRIPTIONS.md
+?? FILUMIRE_CLAUDE/docs/PRIVATE_PREVIEW_0020_0021_PROPOSAL.sql
+?? FILUMIRE_CLAUDE/docs/PRIVATE_PREVIEW_MIGRATION_PROVENANCE.json
+?? FILUMIRE_CLAUDE/docs/PRIVATE_PREVIEW_MIGRATION_READINESS.md
+?? FILUMIRE_CLAUDE/docs/PRIVATE_PREVIEW_PREPARATION.md
+?? FILUMIRE_CLAUDE/docs/PRIVATE_PREVIEW_READ_ONLY_BASELINE.json
+?? FILUMIRE_CLAUDE/docs/PRIVATE_PREVIEW_REGISTRATION_PREPARATION.md
+?? FILUMIRE_CLAUDE/docs/PRIVATE_PREVIEW_SAFETY_EVIDENCE.json
+?? FILUMIRE_CLAUDE/docs/audits/
+?? FILUMIRE_CLAUDE/packages/ai/conversation-safety.ts
+?? FILUMIRE_CLAUDE/packages/ai/conversation.ts
+?? FILUMIRE_CLAUDE/packages/ai/curriculum-conversation.ts
+?? FILUMIRE_CLAUDE/packages/contracts/lesson-closure.ts
+?? FILUMIRE_CLAUDE/scripts/apply-registration-preview.sql
+?? FILUMIRE_CLAUDE/scripts/check-private-preview-secrets.mjs
+?? FILUMIRE_CLAUDE/scripts/inspect-private-preview.mjs
+?? FILUMIRE_CLAUDE/scripts/prepare-phase-1-8-preview.mjs
+?? FILUMIRE_CLAUDE/scripts/prepare-preview-migration-proposal.mjs
+?? FILUMIRE_CLAUDE/scripts/prepare-registration-preview.mjs
+?? FILUMIRE_CLAUDE/scripts/prepare-registration-sql-deliverables.mjs
+?? FILUMIRE_CLAUDE/scripts/private-preview-guards.mjs
+?? FILUMIRE_CLAUDE/scripts/private-preview-migrations.mjs
+?? FILUMIRE_CLAUDE/scripts/private-preview-safety-preflight.mjs
+?? FILUMIRE_CLAUDE/scripts/read-neon-control-metadata.mjs
+?? FILUMIRE_CLAUDE/scripts/read-production-database-identity.mjs
+?? FILUMIRE_CLAUDE/scripts/test-african-voice.mjs
+?? FILUMIRE_CLAUDE/scripts/test-family-access.mjs
+?? FILUMIRE_CLAUDE/scripts/test-learner-interface.mjs
+?? FILUMIRE_CLAUDE/scripts/test-learning-continuity.mjs
+?? FILUMIRE_CLAUDE/scripts/test-learning-presentation.mjs
+?? FILUMIRE_CLAUDE/scripts/test-lesson-closure.mjs
+?? FILUMIRE_CLAUDE/scripts/test-private-preview-postgres.mjs
+?? FILUMIRE_CLAUDE/scripts/test-tutoring-conversation.mjs
+?? FILUMIRE_CLAUDE/scripts/verify-phase-1-8-preview.cjs
+?? FILUMIRE_CLAUDE/scripts/verify-registration-preview-after.sql
+?? FILUMIRE_CLAUDE/scripts/verify-registration-preview.sql
+?? FILUMIRE_CLAUDE/services/edututor/conversation-api.ts
+?? FILUMIRE_CLAUDE/services/edututor/conversation-context.ts
+?? FILUMIRE_CLAUDE/services/family-access/
+?? FILUMIRE_CLAUDE/services/lesson-closure/
+?? FILUMIRE_CLAUDE/tests/african-voice-render.test.ts
+?? FILUMIRE_CLAUDE/tests/african-voice.test.ts
+?? FILUMIRE_CLAUDE/tests/ask-filu-navigation.browser.mjs
+?? FILUMIRE_CLAUDE/tests/ask-filu-navigation.test.ts
+?? FILUMIRE_CLAUDE/tests/browser-speech.test.ts
+?? FILUMIRE_CLAUDE/tests/family-access-api.test.ts
+?? FILUMIRE_CLAUDE/tests/family-access-render.test.ts
+?? FILUMIRE_CLAUDE/tests/family-phone-otp.test.ts
+?? FILUMIRE_CLAUDE/tests/family-subscriptions.test.ts
+?? FILUMIRE_CLAUDE/tests/filu-functional.browser.mjs
+?? FILUMIRE_CLAUDE/tests/filu-functional.test.ts
+?? FILUMIRE_CLAUDE/tests/fixtures/
+?? FILUMIRE_CLAUDE/tests/learner-interface-copy.test.ts
+?? FILUMIRE_CLAUDE/tests/learner-interface-layout.test.ts
+?? FILUMIRE_CLAUDE/tests/learner-interface-render.test.ts
+?? FILUMIRE_CLAUDE/tests/learning-continuity-api.test.ts
+?? FILUMIRE_CLAUDE/tests/learning-continuity-client.test.ts
+?? FILUMIRE_CLAUDE/tests/learning-presentation.test.ts
+?? FILUMIRE_CLAUDE/tests/learning-progress-render.test.ts
+?? FILUMIRE_CLAUDE/tests/lesson-closure-api.test.ts
+?? FILUMIRE_CLAUDE/tests/lesson-closure-client.test.ts
+?? FILUMIRE_CLAUDE/tests/lesson-closure-presentation.test.ts
+?? FILUMIRE_CLAUDE/tests/lesson-closure-production.test.ts
+?? FILUMIRE_CLAUDE/tests/private-preview-guards.test.mjs
+?? FILUMIRE_CLAUDE/tests/tutoring-conversation-api.test.ts
+?? FILUMIRE_CLAUDE/tests/tutoring-conversation-client.test.ts
+?? FILUMIRE_CLAUDE/tests/tutoring-conversation-context.test.ts
+?? FILUMIRE_CLAUDE/tests/tutoring-conversation-identity.test.ts

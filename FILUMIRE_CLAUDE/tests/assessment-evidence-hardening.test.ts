@@ -55,8 +55,8 @@ assert(
 
 assert(
   result.evidence.policyVersion ===
-    "assessment-0.8",
-  "assessment policy must be 0.8",
+    "assessment-0.9",
+  "assessment policy must be 0.9",
 );
 
 console.log({

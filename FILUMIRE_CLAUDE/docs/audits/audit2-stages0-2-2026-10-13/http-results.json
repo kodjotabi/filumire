@@ -1,0 +1,70 @@
+[
+  {
+    "name": "learner sign-in en",
+    "status": 200
+  },
+  {
+    "name": "learner sign-in fr",
+    "status": 200
+  },
+  {
+    "name": "anonymous tutoring denied",
+    "status": 401
+  },
+  {
+    "name": "fictional guardian registration",
+    "status": 201
+  },
+  {
+    "name": "fictional learner creation",
+    "status": 201
+  },
+  {
+    "name": "learner password sign-in",
+    "status": 200
+  },
+  {
+    "name": "authenticated account",
+    "status": 200
+  },
+  {
+    "name": "real learning initialization",
+    "status": 200
+  },
+  {
+    "name": "authoritative subject overview",
+    "status": 200
+  },
+  {
+    "name": "FILU metadata en",
+    "status": 200
+  },
+  {
+    "name": "FILU question en",
+    "status": 200
+  },
+  {
+    "name": "FILU metadata fr",
+    "status": 200
+  },
+  {
+    "name": "FILU question fr",
+    "status": 200
+  },
+  {
+    "name": "FILU privacy protection",
+    "status": 200
+  },
+  {
+    "name": "cross-origin request rejected",
+    "status": 403
+  },
+  {
+    "name": "server sign-out",
+    "status": 200
+  },
+  {
+    "name": "revoked cookie denied",
+    "status": 401
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "headUnchanged": true,
+  "preExistingFilesChecked": 1442,
+  "changedOriginalFiles": [
+    "tests/adaptive-gate-response.test.ts",
+    "tests/api-learning-retention-transfer-flow.test.ts",
+    "tests/assessment-evidence-hardening.test.ts",
+    "tests/assessment-external-evidence.test.ts",
+    "tests/learner-interface-render.test.ts",
+    "tests/learner-pending-teacher-review.test.ts",
+    "tests/learner-state-hardening.test.ts",
+    "tests/teacher-review-end-to-end.test.ts",
+    "tests/teacher-trusted-review.test.ts"
+  ],
+  "unexpectedChanges": [],
+  "approvedNewFixture": "tests/fixtures/trusted-rubric-content.ts"
+}

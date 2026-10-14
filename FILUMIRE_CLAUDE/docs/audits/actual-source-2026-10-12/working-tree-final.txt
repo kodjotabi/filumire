@@ -1,0 +1,116 @@
+ M apps/learner/app/api/account/register/route.ts
+ M apps/learner/app/api/learning/route.ts
+ M apps/learner/app/dashboard/page.tsx
+ M apps/learner/app/layout.tsx
+ M apps/learner/app/learn/page.tsx
+ M apps/learner/components/filumire/AskFiluPage.tsx
+ M apps/learner/components/filumire/ChallengesPage.tsx
+ M apps/learner/components/filumire/LearnerBottomNav.tsx
+ M apps/learner/components/filumire/LearnerHeader.tsx
+ M apps/learner/components/filumire/ProfilePage.tsx
+ M apps/learner/components/filumire/ProgressPage.tsx
+ M apps/learner/components/filumire/SubjectPage.tsx
+ M apps/learner/components/filumire/language.ts
+ M apps/learner/services/account-client.ts
+ M apps/learner/services/learning-client.ts
+ M apps/learner/services/pending-submission.ts
+?? ../.claude/
+?? apps/learner/app/api/account/phone/
+?? apps/learner/app/api/account/subscription/
+?? apps/learner/app/api/learning/closure/
+?? apps/learner/app/api/tutoring/
+?? apps/learner/app/family-access/
+?? apps/learner/app/learner-interface.css
+?? apps/learner/components/filumire/FamilyAccessPrototype.tsx
+?? apps/learner/components/filumire/FiluConversation.tsx
+?? apps/learner/components/filumire/LearnerLoadingState.tsx
+?? apps/learner/components/filumire/LessonClosureCard.tsx
+?? apps/learner/components/filumire/ReadAloudControls.tsx
+?? apps/learner/components/filumire/VoiceSelection.tsx
+?? apps/learner/services/browser-speech-playback.ts
+?? apps/learner/services/browser-voices.ts
+?? apps/learner/services/conversation-client.ts
+?? apps/learner/services/dashboard-navigation.ts
+?? apps/learner/services/learner-interface.ts
+?? apps/learner/services/learning-continuity.ts
+?? apps/learner/services/learning-presentation.ts
+?? apps/learner/services/lesson-closure-client.ts
+?? apps/learner/services/lesson-closure-presentation.ts
+?? apps/learner/services/use-browser-voices.ts
+?? apps/learner/services/use-lesson-closure.ts
+?? apps/learner/services/voice-catalogue.ts
+?? apps/learner/services/voice-playback.ts
+?? apps/learner/services/voice-preference.ts
+?? docs/ASK_FILU_FORENSIC_20261011.md
+?? docs/PHASE_3_MOCK_CONVERSATION.md
+?? docs/PHASE_4_ADAPTIVE_LESSON_CLOSURE.md
+?? docs/PHASE_5_AFRICAN_VOICE_FOUNDATION.md
+?? docs/PHASE_5_BROWSER_VOICE_STRATEGY.md
+?? docs/PHASE_6_LEARNER_INTERFACE_REFINEMENT.md
+?? docs/PHASE_7_8_IDENTITY_SUBSCRIPTIONS.md
+?? docs/PRIVATE_PREVIEW_0020_0021_PROPOSAL.sql
+?? docs/PRIVATE_PREVIEW_MIGRATION_PROVENANCE.json
+?? docs/PRIVATE_PREVIEW_MIGRATION_READINESS.md
+?? docs/PRIVATE_PREVIEW_PREPARATION.md
+?? docs/PRIVATE_PREVIEW_READ_ONLY_BASELINE.json
+?? docs/PRIVATE_PREVIEW_REGISTRATION_PREPARATION.md
+?? docs/PRIVATE_PREVIEW_SAFETY_EVIDENCE.json
+?? docs/audits/
+?? packages/ai/conversation-safety.ts
+?? packages/ai/conversation.ts
+?? packages/ai/curriculum-conversation.ts
+?? packages/contracts/lesson-closure.ts
+?? scripts/apply-registration-preview.sql
+?? scripts/check-private-preview-secrets.mjs
+?? scripts/inspect-private-preview.mjs
+?? scripts/prepare-phase-1-8-preview.mjs
+?? scripts/prepare-preview-migration-proposal.mjs
+?? scripts/prepare-registration-preview.mjs
+?? scripts/prepare-registration-sql-deliverables.mjs
+?? scripts/private-preview-guards.mjs
+?? scripts/private-preview-migrations.mjs
+?? scripts/private-preview-safety-preflight.mjs
+?? scripts/read-neon-control-metadata.mjs
+?? scripts/read-production-database-identity.mjs
+?? scripts/test-african-voice.mjs
+?? scripts/test-family-access.mjs
+?? scripts/test-learner-interface.mjs
+?? scripts/test-learning-continuity.mjs
+?? scripts/test-learning-presentation.mjs
+?? scripts/test-lesson-closure.mjs
+?? scripts/test-private-preview-postgres.mjs
+?? scripts/test-tutoring-conversation.mjs
+?? scripts/verify-phase-1-8-preview.cjs
+?? scripts/verify-registration-preview-after.sql
+?? scripts/verify-registration-preview.sql
+?? services/edututor/conversation-api.ts
+?? services/edututor/conversation-context.ts
+?? services/family-access/
+?? services/lesson-closure/
+?? tests/african-voice-render.test.ts
+?? tests/african-voice.test.ts
+?? tests/ask-filu-navigation.browser.mjs
+?? tests/ask-filu-navigation.test.ts
+?? tests/browser-speech.test.ts
+?? tests/family-access-api.test.ts
+?? tests/family-access-render.test.ts
+?? tests/family-phone-otp.test.ts
+?? tests/family-subscriptions.test.ts
+?? tests/filu-functional.browser.mjs
+?? tests/filu-functional.test.ts
+?? tests/learner-interface-copy.test.ts
+?? tests/learner-interface-layout.test.ts
+?? tests/learner-interface-render.test.ts
+?? tests/learning-continuity-api.test.ts
+?? tests/learning-continuity-client.test.ts
+?? tests/learning-presentation.test.ts
+?? tests/learning-progress-render.test.ts
+?? tests/lesson-closure-api.test.ts
+?? tests/lesson-closure-client.test.ts
+?? tests/lesson-closure-presentation.test.ts
+?? tests/lesson-closure-production.test.ts
+?? tests/private-preview-guards.test.mjs
+?? tests/tutoring-conversation-api.test.ts
+?? tests/tutoring-conversation-client.test.ts
+?? tests/tutoring-conversation-context.test.ts
+?? tests/tutoring-conversation-identity.test.ts

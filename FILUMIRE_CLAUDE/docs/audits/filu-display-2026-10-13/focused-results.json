@@ -1,0 +1,88 @@
+{
+  "passed": 10,
+  "failed": [],
+  "blocked": [
+    {
+      "file": "api-auth-postgres-lifecycle.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    },
+    {
+      "file": "b4-english-adaptive-coverage.test.ts",
+      "reason": "Unverified authoritative English fixture provenance"
+    },
+    {
+      "file": "evidence-postgres-roundtrip.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    },
+    {
+      "file": "evidence-v1-postgres-atomic-persistence.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    },
+    {
+      "file": "evidence-v1-postgres-persistence.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    },
+    {
+      "file": "learner-state-postgres-concurrency.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    },
+    {
+      "file": "learner-state-postgres-semantic-concurrency.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    },
+    {
+      "file": "pilot-measurement-v1.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    },
+    {
+      "file": "teacher-observation.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    },
+    {
+      "file": "teacher-pending-review-postgres.test.ts",
+      "reason": "Requires approved isolated PostgreSQL test database"
+    }
+  ],
+  "results": [
+    {
+      "file": "african-voice-render.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "african-voice.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "ask-filu-navigation.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "audit2-settings.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "filu-functional.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "learner-interface-render.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "tutoring-conversation-api.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "tutoring-conversation-client.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "tutoring-conversation-context.test.ts",
+      "exitCode": 0
+    },
+    {
+      "file": "tutoring-conversation-identity.test.ts",
+      "exitCode": 0
+    }
+  ]
+}

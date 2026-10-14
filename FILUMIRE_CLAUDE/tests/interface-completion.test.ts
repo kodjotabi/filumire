@@ -235,7 +235,8 @@ function sourceChecks(): void {
   assert.match(login, /\.loginPage \.filumireBottomNav \{ position: static;/);
 
   const profile = read("apps/learner/components/filumire/ProfilePage.tsx");
-  assert.match(profile, /\/api\/session\/logout/);
+  assert.match(profile, /await signOut\(\)/, "profile uses the shared session-revocation and device-cleanup path");
+  assert.match(read("apps/learner/services/account-client.ts"), /request\("\/api\/session\/logout"/, "shared sign-out remains connected to server revocation");
   assert.doesNotMatch(profile, /role="switch"/, "no fake notification switch");
 
   const learn = read("apps/learner/app/learn/page.tsx");

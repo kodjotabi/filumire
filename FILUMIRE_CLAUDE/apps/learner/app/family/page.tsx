@@ -6,6 +6,7 @@ import { FormEvent, useCallback, useEffect, useState } from "react";
 import { AccountSecurity } from "../../components/filumire/AccountSecurity";
 import { AccountShell } from "../../components/filumire/AccountShell";
 import { TeacherAccess } from "../../components/filumire/TeacherAccess";
+import { TutoringRecovery } from "../../components/filumire/TutoringRecovery";
 import { LEARNER_AVATARS } from "../../components/filumire/avatars";
 import { LEARNER_GRADES } from "../../components/filumire/grades";
 import { useLanguage, type Language } from "../../components/filumire/language";
@@ -237,6 +238,7 @@ function LearnerCard({
         learnerName={learner.displayName}
         language={language}
       />
+      <TutoringRecovery learnerId={learner.learnerId} language={language} />
     </li>
   );
 }
@@ -266,7 +268,7 @@ export default function FamilyPage() {
     let current = await fetchAccount();
 
     if (!current) {
-      router.replace(`/login?lang=${language}`);
+      router.replace(`/login?lang=${language}&returnTo=family`);
       return;
     }
 
