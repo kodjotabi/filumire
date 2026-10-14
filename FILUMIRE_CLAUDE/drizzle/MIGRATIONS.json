@@ -1,0 +1,15 @@
+{
+  "ledgerTable": "filumire_schema_migrations",
+  "hashRule": "SHA-256 of the file with CRLF normalised to LF",
+  "entries": [
+    {
+      "id": "baseline-0000-0018",
+      "kind": "baseline",
+      "note": "Schema as found on each database before the ledger. Files 0004-0018 exist in no repository (see docs/PRIVATE_PREVIEW_MIGRATION_PROVENANCE.json). Its hash is the read-only catalog snapshot taken when the baseline row is recorded on that database."
+    },
+    { "id": "0019_learner_accounts", "kind": "migration", "file": "0019_learner_accounts.sql", "sha256": "a7b49b2749c53f681432ee74f3b075f9d3eb5a9ca239af1d6059218a13e614a7" },
+    { "id": "0020_auth_rate_limits", "kind": "migration", "file": "0020_auth_rate_limits.sql", "sha256": "f3c77a33a20759cc7ff22f90699b3a0b639169a14b7e6e37cf1c618d5f80a74e" },
+    { "id": "0021_teacher_accounts", "kind": "migration", "file": "0021_teacher_accounts.sql", "sha256": "f4276c21c24d034e86acdec99ac124284b5f2adb375d5282e352021294e0ddeb" },
+    { "id": "0022_migration_ledger", "kind": "migration", "file": "0022_migration_ledger.sql", "sha256": "7df38ca03de3361a1692938f7b2dbf3861fd748239e08dde0ec8eb1b5507eee5" }
+  ]
+}
