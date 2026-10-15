@@ -86,10 +86,11 @@ refuses("ledger_drift:0019_learner_accounts", () => planApply(manifest, [row("ba
 refuses("ledger_out_of_order", () => planApply(manifest, [row("baseline-0000-0018"), row("0020_auth_rate_limits")]));
 refuses("ledger_has_unknown_entries:0099_x", () => planApply(manifest, [row("baseline-0000-0018"), { id: "0099_x", sha256: "a".repeat(64) }]));
 ok(() => {
-  const target = { host: testHost, database: "neondb" }, plan = planApply(manifest, []);
-  assert.match(approvalCode(target, plan), /^[0-9a-f]{12}$/);
-  assert.notEqual(approvalCode(target, plan), approvalCode({ ...target, database: "other" }, plan), "code is bound to the target");
-  assert.notEqual(approvalCode(target, plan), approvalCode(target, { ...plan, pending: plan.pending.slice(1) }), "code is bound to the plan");
+  const target = { host: testHost, database: "neondb" }, plan = planApply(manifest, []), schema = "a".repeat(64);
+  assert.match(approvalCode(target, plan, schema), /^[0-9a-f]{12}$/);
+  assert.notEqual(approvalCode(target, plan, schema), approvalCode({ ...target, database: "other" }, plan, schema), "code is bound to the target");
+  assert.notEqual(approvalCode(target, plan, schema), approvalCode(target, { ...plan, pending: plan.pending.slice(1) }, schema), "code is bound to the plan");
+  assert.notEqual(approvalCode(target, plan, schema), approvalCode(target, plan, "b".repeat(64)), "code is bound to the current schema");
 });
 
 // Errors never echo the connection string.

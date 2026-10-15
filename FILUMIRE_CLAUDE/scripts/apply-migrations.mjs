@@ -7,7 +7,7 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { loadManifest, verifyManifest, sha256 } from "./migration-ledger.mjs";
+import { loadManifest, verifyManifest, sha256, LedgerError } from "./migration-ledger.mjs";
 import { catalog, catalogHash } from "./catalog-snapshot.mjs";
 
 export class ApplyError extends Error { constructor(code) { super(code); this.code = code; } }
@@ -45,8 +45,15 @@ export function planApply(manifest, ledgerRows) {
   return { needsBaseline: !recorded.has(manifest.entries[0].id), pending: pending.map(e => e.id) };
 }
 
-export const approvalCode = (target, plan) =>
-  createHash("sha256").update(JSON.stringify([target.host, target.database, plan.needsBaseline, plan.pending])).digest("hex").slice(0, 12);
+/** Bound to the target, the plan AND the current schema: any change to the database voids an earlier code. */
+export const approvalCode = (target, plan, schemaSha256) =>
+  createHash("sha256").update(JSON.stringify([target.host, target.database, plan.needsBaseline, plan.pending, schemaSha256])).digest("hex").slice(0, 12);
+
+async function inspect(client, manifest) {
+  const present = (await client.query("select to_regclass($1) t", [`public.${manifest.ledgerTable}`])).rows[0].t !== null;
+  const rows = present ? (await client.query(`select id, kind, sha256 from "${manifest.ledgerTable}"`)).rows : [];
+  return { plan: planApply(manifest, rows), schemaSha256: catalogHash(await catalog(client)) };
+}
 
 async function run(args) {
   const get = flag => (args.includes(flag) ? args[args.indexOf(flag) + 1] : undefined);
@@ -57,48 +64,47 @@ async function run(args) {
   const client = new pg.Client({ connectionString: process.env[get("--url-env")], connectionTimeoutMillis: 10000 });
   await client.connect();
   try {
-    const ledgerPresent = async () => (await client.query("select to_regclass($1) t", [`public.${manifest.ledgerTable}`])).rows[0].t !== null;
-    const rows = (await ledgerPresent()) ? (await client.query(`select id, kind, sha256 from "${manifest.ledgerTable}"`)).rows : [];
-    const plan = planApply(manifest, rows);
-    const baselineSha256 = catalogHash(await catalog(client));
-    const code = approvalCode(target, plan);
-    if (!args.includes("--execute")) return { mode: "dry-run", target, ...plan, baselineSha256, approvalCode: code };
-    if (get("--approval") !== code) refuse("approval_code_does_not_match_plan");
-
-    const who = (await client.query("select current_user u")).rows[0].u;
-    const unrecorded = [];
-    const applied = [];
-    for (const id of plan.pending) {
-      const entry = manifest.entries.find(e => e.id === id);
-      const sql = readFileSync(resolve(manifest.folder, entry.file), "utf8");
-      if (sha256(sql) !== entry.sha256) refuse(`file_changed_after_review:${id}`);
-      await client.query("BEGIN");
-      try {
-        await client.query(sql);
-        unrecorded.push(entry);
-        if (await ledgerPresent()) {
-          if (plan.needsBaseline && !applied.includes("baseline"))
-            await client.query(`insert into "${manifest.ledgerTable}" (id, kind, sha256, applied_by, note) values ($1,'baseline',$2,$3,$4)`,
-              [manifest.entries[0].id, baselineSha256, who, "catalog snapshot taken immediately before this run"]), applied.push("baseline");
-          for (const e of unrecorded.splice(0))
-            await client.query(`insert into "${manifest.ledgerTable}" (id, kind, sha256, applied_by) values ($1,'migration',$2,$3)`, [e.id, e.sha256, who]);
-        }
-        await client.query("COMMIT");
-        applied.push(id);
-      } catch (error) {
-        await client.query("ROLLBACK");
-        return { mode: "execute", target, applied, failedAt: id, error: String(error.message).slice(0, 200) };
-      }
+    if (!args.includes("--execute")) {
+      await client.query("SET SESSION CHARACTERISTICS AS TRANSACTION READ ONLY");
+      const { plan, schemaSha256 } = await inspect(client, manifest);
+      return { mode: "dry-run", target, ...plan, schemaSha256, approvalCode: approvalCode(target, plan, schemaSha256) };
     }
-    if (unrecorded.length) return { mode: "execute", target, applied, warning: "applied_but_ledger_table_absent", unrecorded: unrecorded.map(e => e.id) };
-    return { mode: "execute", target, applied, baselineSha256 };
+    // All or nothing: plan check, every migration and every ledger row in ONE transaction,
+    // under an advisory lock, re-checked inside the transaction against the approved code.
+    await client.query("BEGIN");
+    try {
+      await client.query("select pg_advisory_xact_lock(hashtext('filumire_schema_migrations'))");
+      const { plan, schemaSha256 } = await inspect(client, manifest);
+      if (get("--approval") !== approvalCode(target, plan, schemaSha256)) refuse("approval_code_does_not_match_plan");
+      if (!plan.pending.length) refuse("nothing_to_apply");
+      const who = (await client.query("select current_user u")).rows[0].u;
+      for (const id of plan.pending) {
+        const entry = manifest.entries.find(e => e.id === id);
+        const sql = readFileSync(resolve(manifest.folder, entry.file), "utf8");
+        if (sha256(sql) !== entry.sha256) refuse(`file_changed_after_review:${id}`);
+        try { await client.query(sql); }
+        catch (error) { throw Object.assign(new Error(String(error.message).slice(0, 200)), { failedAt: id }); }
+      }
+      if ((await client.query("select to_regclass($1) t", [`public.${manifest.ledgerTable}`])).rows[0].t === null) refuse("ledger_table_missing_after_apply");
+      if (plan.needsBaseline)
+        await client.query(`insert into "${manifest.ledgerTable}" (id, kind, sha256, applied_by, applied_at, note) values ($1,'baseline',$2,$3, now() - interval '1 microsecond', $4)`,
+          [manifest.entries[0].id, schemaSha256, who, "catalog snapshot taken inside the applying transaction, before any change"]);
+      for (const id of plan.pending)
+        await client.query(`insert into "${manifest.ledgerTable}" (id, kind, sha256, applied_by) values ($1,'migration',$2,$3)`, [id, manifest.entries.find(e => e.id === id).sha256, who]);
+      await client.query("COMMIT");
+      return { mode: "execute", target, applied: plan.pending, baselineRecorded: plan.needsBaseline, schemaSha256Before: schemaSha256 };
+    } catch (error) {
+      await client.query("ROLLBACK");
+      if (error instanceof ApplyError) throw error;
+      return { mode: "execute", target, applied: [], rolledBack: true, failedAt: error.failedAt, error: error.message };
+    }
   } finally { await client.end(); }
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try { console.log(JSON.stringify(await run(process.argv.slice(2)), null, 1)); }
   catch (error) {
-    console.log(JSON.stringify({ refused: error instanceof ApplyError ? error.code : "database_error" }));
+    console.log(JSON.stringify({ refused: error instanceof ApplyError || error instanceof LedgerError ? error.code : "database_error" }));
     process.exitCode = 1;
   }
 }
