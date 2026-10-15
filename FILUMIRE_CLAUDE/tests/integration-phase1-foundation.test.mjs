@@ -65,6 +65,33 @@ refuses("production_commit_not_approved", () => checkDeployment({ ...prod, FILUM
 refuses("production_commit_not_approved", () => checkDeployment({ ...prod, FILUMIRE_APPROVED_PRODUCTION_SHA: undefined }));
 refuses("production_branch_not_approved", () => checkDeployment({ ...prod, VERCEL_GIT_COMMIT_REF: "feature-x" }));
 
+// ---- Guarded apply (test databases only)
+const { checkTarget, planApply, approvalCode, DENIED_ENDPOINTS } = await import("../scripts/apply-migrations.mjs");
+const testHost = "ep-fictional-test-a1b2c3.c-14.us-east-1.aws.neon.tech";
+const testUrl = `postgresql://neondb_owner:fictional@${testHost}/neondb?sslmode=require`;
+ok(() => assert.deepEqual(checkTarget(testUrl, testHost, "neondb"), { host: testHost, database: "neondb" }));
+ok(() => assert.equal(checkTarget("postgresql://u:p@localhost/filumire_rehearsal_test", "localhost", "filumire_rehearsal_test").host, "localhost"));
+for (const endpoint of DENIED_ENDPOINTS) {
+  const host = `${endpoint}.c-14.us-east-1.aws.neon.tech`;
+  refuses("denied_existing_endpoint", () => checkTarget(`postgresql://u:p@${host}/neondb?sslmode=require`, host, "neondb"));
+  refuses("denied_existing_endpoint", () => checkTarget(`postgresql://u:p@${endpoint}-pooler.c-14.us-east-1.aws.neon.tech/neondb?sslmode=require`, `${endpoint}-pooler.c-14.us-east-1.aws.neon.tech`, "neondb"));
+}
+refuses("host_does_not_match_expected", () => checkTarget(testUrl, "ep-other.example.neon.tech", "neondb"));
+refuses("database_does_not_match_expected", () => checkTarget(testUrl, testHost, "filumire_test"));
+refuses("pooled_connection_not_allowed_for_ddl", () => checkTarget(testUrl.replace("-a1b2c3.", "-a1b2c3-pooler."), testHost.replace("-a1b2c3.", "-a1b2c3-pooler."), "neondb"));
+refuses("tls_required", () => checkTarget(testUrl.replace("?sslmode=require", ""), testHost, "neondb"));
+ok(() => assert.deepEqual(planApply(manifest, []), { needsBaseline: true, pending: ["0019_learner_accounts", "0020_auth_rate_limits", "0021_teacher_accounts", "0022_migration_ledger"] }));
+ok(() => assert.deepEqual(planApply(manifest, manifest.entries.map(e => row(e.id))), { needsBaseline: false, pending: [] }));
+refuses("ledger_drift:0019_learner_accounts", () => planApply(manifest, [row("baseline-0000-0018"), { id: "0019_learner_accounts", sha256: "f".repeat(64) }]));
+refuses("ledger_out_of_order", () => planApply(manifest, [row("baseline-0000-0018"), row("0020_auth_rate_limits")]));
+refuses("ledger_has_unknown_entries:0099_x", () => planApply(manifest, [row("baseline-0000-0018"), { id: "0099_x", sha256: "a".repeat(64) }]));
+ok(() => {
+  const target = { host: testHost, database: "neondb" }, plan = planApply(manifest, []);
+  assert.match(approvalCode(target, plan), /^[0-9a-f]{12}$/);
+  assert.notEqual(approvalCode(target, plan), approvalCode({ ...target, database: "other" }, plan), "code is bound to the target");
+  assert.notEqual(approvalCode(target, plan), approvalCode(target, { ...plan, pending: plan.pending.slice(1) }), "code is bound to the plan");
+});
+
 // Errors never echo the connection string.
 ok(() => { try { checkDeployment({ ...prod, DATABASE_URL: `postgresql://neondb_owner:fictional-secret@${prodHost}/neondb` }); } catch (error) { assert(!String(error.message).includes("fictional-secret")); assert(error instanceof DeployGuardError); } });
 ok(() => assert(new LedgerError("x") instanceof Error));
