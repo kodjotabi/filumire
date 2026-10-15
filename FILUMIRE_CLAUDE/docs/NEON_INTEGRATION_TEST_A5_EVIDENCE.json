@@ -1,0 +1,2246 @@
+{
+ "stage": "A5",
+ "tool": {
+  "grants": "scripts/sql/app-role-grants.sql",
+  "tests": "scripts/test-app-role-permissions.mjs"
+ },
+ "preflight": {
+  "note": "Read-only pre-flight before apply (~12:15 UTC); values transcribed from its console output",
+  "endpoint": "ep-rough-water-b8fcf7pe",
+  "branch": "br-long-leaf-b8wixqz2",
+  "neonProjectId": "proud-term-61114809",
+  "database": "neondb",
+  "executedAs": "neondb_owner",
+  "schemaSha256": "20f333021d32ac58bcad97700ba6fc3ed608ce2557460127b19831fbb05deaf2",
+  "publicTables": 29,
+  "publicSequences": 0,
+  "ledger": {
+   "applied": 5,
+   "pending": 0,
+   "drift": 0,
+   "unknown": 0,
+   "consistent": true
+  },
+  "role": {
+   "rolsuper": false,
+   "rolcreaterole": false,
+   "rolcreatedb": false,
+   "rolreplication": false,
+   "rolbypassrls": false,
+   "rolcanlogin": true,
+   "rolconnlimit": 20,
+   "memberships": 0
+  },
+  "appTableGrants": 0,
+  "appDefaultAcl": 0,
+  "rows": {
+   "filumire_schema_migrations": 5,
+   "allOtherTables": 0
+  },
+  "grantsFileSha256": "8d7f8995a684becd79efbccdb7398cbde41ef877dc42d2942374acc3b8a2616e"
+ },
+ "baseline": {
+  "passed": 115,
+  "failed": 76,
+  "total": 191,
+  "results": [
+   {
+    "name": "every public table is classified",
+    "ok": true
+   },
+   {
+    "name": "catalog account_credentials = [SELECT,INSERT,UPDATE]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog account_profiles = [SELECT,INSERT]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog auth_rate_limits = [SELECT,INSERT,UPDATE,DELETE]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog auth_sessions = [SELECT,INSERT,UPDATE]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog controlled_teacher_actions = [SELECT,INSERT]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog external_identities = [SELECT,INSERT]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog filumire_schema_migrations = [none]",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "name": "catalog guardian_consent_records = [SELECT,INSERT]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog interventions = [SELECT,INSERT,UPDATE]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog learner_learning_context = [SELECT,INSERT,UPDATE]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog learner_profiles = [SELECT,INSERT,UPDATE]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog learner_states = [SELECT,INSERT,UPDATE]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog learners = [SELECT,INSERT]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog learning_evidence = [SELECT,INSERT]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog parent_teacher_messages = [SELECT,INSERT]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog payment_attempt_events = [none]",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "name": "catalog payment_attempts = [none]",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "name": "catalog payment_exceptions = [none]",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "name": "catalog payment_obligation_beneficiaries = [none]",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "name": "catalog payment_obligation_events = [none]",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "name": "catalog payment_obligations = [none]",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "name": "catalog payment_receipts = [none]",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "name": "catalog pending_teacher_reviews = [SELECT,INSERT,UPDATE]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog pilot_measurement_events = [SELECT,INSERT]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog principal_learner_access = [SELECT,INSERT,UPDATE]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog principals = [SELECT,INSERT,DELETE]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog sessions = [SELECT,INSERT,UPDATE]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog teacher_link_codes = [SELECT,INSERT,UPDATE]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "catalog teacher_professional_notes = [SELECT,INSERT]",
+    "ok": false,
+    "detail": "none"
+   },
+   {
+    "name": "role attributes restricted, limit 20",
+    "ok": true
+   },
+   {
+    "name": "no role memberships",
+    "ok": true
+   },
+   {
+    "name": "no default privileges for app",
+    "ok": true
+   },
+   {
+    "name": "connected as filumire_app, not superuser",
+    "ok": true
+   },
+   {
+    "name": "account_credentials: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "account_credentials: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "account_credentials: UPDATE",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "account_credentials: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "account_credentials: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "account_profiles: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "account_profiles: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "account_profiles: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "account_profiles: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "account_profiles: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "auth_rate_limits: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "auth_rate_limits: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "auth_rate_limits: UPDATE",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "auth_rate_limits: DELETE",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "auth_rate_limits: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "auth_sessions: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "auth_sessions: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "auth_sessions: UPDATE",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "auth_sessions: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "auth_sessions: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "controlled_teacher_actions: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "controlled_teacher_actions: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "controlled_teacher_actions: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "controlled_teacher_actions: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "controlled_teacher_actions: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "external_identities: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "external_identities: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "external_identities: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "external_identities: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "external_identities: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "filumire_schema_migrations: SELECT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "filumire_schema_migrations: INSERT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "filumire_schema_migrations: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "filumire_schema_migrations: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "filumire_schema_migrations: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "guardian_consent_records: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "guardian_consent_records: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "guardian_consent_records: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "guardian_consent_records: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "guardian_consent_records: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "interventions: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "interventions: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "interventions: UPDATE",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "interventions: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "interventions: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_learning_context: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_learning_context: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_learning_context: UPDATE",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_learning_context: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_learning_context: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_profiles: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_profiles: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_profiles: UPDATE",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_profiles: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_profiles: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_states: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_states: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_states: UPDATE",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_states: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_states: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learners: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "learners: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "learners: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learners: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learners: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learning_evidence: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "learning_evidence: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "learning_evidence: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learning_evidence: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learning_evidence: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "parent_teacher_messages: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "parent_teacher_messages: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "parent_teacher_messages: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "parent_teacher_messages: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "parent_teacher_messages: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempt_events: SELECT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempt_events: INSERT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempt_events: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempt_events: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempt_events: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempts: SELECT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempts: INSERT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempts: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempts: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempts: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_exceptions: SELECT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_exceptions: INSERT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_exceptions: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_exceptions: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_exceptions: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_beneficiaries: SELECT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_beneficiaries: INSERT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_beneficiaries: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_beneficiaries: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_beneficiaries: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_events: SELECT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_events: INSERT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_events: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_events: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_events: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligations: SELECT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligations: INSERT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligations: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligations: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligations: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_receipts: SELECT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_receipts: INSERT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_receipts: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_receipts: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_receipts: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "pending_teacher_reviews: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "pending_teacher_reviews: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "pending_teacher_reviews: UPDATE",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "pending_teacher_reviews: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "pending_teacher_reviews: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "pilot_measurement_events: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "pilot_measurement_events: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "pilot_measurement_events: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "pilot_measurement_events: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "pilot_measurement_events: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "principal_learner_access: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "principal_learner_access: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "principal_learner_access: UPDATE",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "principal_learner_access: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "principal_learner_access: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "principals: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "principals: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "principals: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "principals: DELETE",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "principals: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "sessions: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "sessions: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "sessions: UPDATE",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "sessions: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "sessions: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "teacher_link_codes: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "teacher_link_codes: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "teacher_link_codes: UPDATE",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "teacher_link_codes: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "teacher_link_codes: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "teacher_professional_notes: SELECT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "teacher_professional_notes: INSERT",
+    "ok": false,
+    "detail": "42501"
+   },
+   {
+    "name": "teacher_professional_notes: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "teacher_professional_notes: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "teacher_professional_notes: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "ledger: read history",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "ledger: forge a row",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "ledger: rewrite history",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "ledger: erase history",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "ledger: drop table",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "create table in public",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "alter an app table",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "drop an app table",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "create schema",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "create role",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "become the owner",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "read neon_auth users",
+    "ok": true,
+    "detail": "42501"
+   }
+  ]
+ },
+ "apply": {
+  "startedAt": "2026-10-15T12:19:09.588Z",
+  "target": {
+   "database": "neondb",
+   "endpoint": "ep-rough-water-b8fcf7pe",
+   "branch": "br-long-leaf-b8wixqz2",
+   "executedAs": "neondb_owner"
+  },
+  "grantsFileSha256": "8d7f8995a684becd79efbccdb7398cbde41ef877dc42d2942374acc3b8a2616e",
+  "schemaSha256Before": "20f333021d32ac58bcad97700ba6fc3ed608ce2557460127b19831fbb05deaf2",
+  "applied": true,
+  "schemaSha256After": "20f333021d32ac58bcad97700ba6fc3ed608ce2557460127b19831fbb05deaf2",
+  "grantsAfter": [
+   {
+    "table_name": "account_credentials",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "account_profiles",
+    "p": "INSERT,SELECT"
+   },
+   {
+    "table_name": "auth_rate_limits",
+    "p": "DELETE,INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "auth_sessions",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "controlled_teacher_actions",
+    "p": "INSERT,SELECT"
+   },
+   {
+    "table_name": "external_identities",
+    "p": "INSERT,SELECT"
+   },
+   {
+    "table_name": "guardian_consent_records",
+    "p": "INSERT,SELECT"
+   },
+   {
+    "table_name": "interventions",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "learner_learning_context",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "learner_profiles",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "learner_states",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "learners",
+    "p": "INSERT,SELECT"
+   },
+   {
+    "table_name": "learning_evidence",
+    "p": "INSERT,SELECT"
+   },
+   {
+    "table_name": "parent_teacher_messages",
+    "p": "INSERT,SELECT"
+   },
+   {
+    "table_name": "pending_teacher_reviews",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "pilot_measurement_events",
+    "p": "INSERT,SELECT"
+   },
+   {
+    "table_name": "principal_learner_access",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "principals",
+    "p": "DELETE,INSERT,SELECT"
+   },
+   {
+    "table_name": "sessions",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "teacher_link_codes",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "teacher_professional_notes",
+    "p": "INSERT,SELECT"
+   }
+  ],
+  "schemaAclAfter": "{pg_database_owner=UC/pg_database_owner,=U/pg_database_owner,filumire_app=U/pg_database_owner}",
+  "databaseConnectAfter": true,
+  "txStatus": "I",
+  "finishedAt": "2026-10-15T12:19:15.432Z"
+ },
+ "afterGrants": {
+  "passed": 191,
+  "failed": 0,
+  "total": 191,
+  "failures": [],
+  "results": [
+   {
+    "name": "every public table is classified",
+    "ok": true
+   },
+   {
+    "name": "catalog account_credentials = [SELECT,INSERT,UPDATE]",
+    "ok": true,
+    "detail": "SELECT,INSERT,UPDATE"
+   },
+   {
+    "name": "catalog account_profiles = [SELECT,INSERT]",
+    "ok": true,
+    "detail": "SELECT,INSERT"
+   },
+   {
+    "name": "catalog auth_rate_limits = [SELECT,INSERT,UPDATE,DELETE]",
+    "ok": true,
+    "detail": "SELECT,INSERT,UPDATE,DELETE"
+   },
+   {
+    "name": "catalog auth_sessions = [SELECT,INSERT,UPDATE]",
+    "ok": true,
+    "detail": "SELECT,INSERT,UPDATE"
+   },
+   {
+    "name": "catalog controlled_teacher_actions = [SELECT,INSERT]",
+    "ok": true,
+    "detail": "SELECT,INSERT"
+   },
+   {
+    "name": "catalog external_identities = [SELECT,INSERT]",
+    "ok": true,
+    "detail": "SELECT,INSERT"
+   },
+   {
+    "name": "catalog filumire_schema_migrations = [none]",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "name": "catalog guardian_consent_records = [SELECT,INSERT]",
+    "ok": true,
+    "detail": "SELECT,INSERT"
+   },
+   {
+    "name": "catalog interventions = [SELECT,INSERT,UPDATE]",
+    "ok": true,
+    "detail": "SELECT,INSERT,UPDATE"
+   },
+   {
+    "name": "catalog learner_learning_context = [SELECT,INSERT,UPDATE]",
+    "ok": true,
+    "detail": "SELECT,INSERT,UPDATE"
+   },
+   {
+    "name": "catalog learner_profiles = [SELECT,INSERT,UPDATE]",
+    "ok": true,
+    "detail": "SELECT,INSERT,UPDATE"
+   },
+   {
+    "name": "catalog learner_states = [SELECT,INSERT,UPDATE]",
+    "ok": true,
+    "detail": "SELECT,INSERT,UPDATE"
+   },
+   {
+    "name": "catalog learners = [SELECT,INSERT]",
+    "ok": true,
+    "detail": "SELECT,INSERT"
+   },
+   {
+    "name": "catalog learning_evidence = [SELECT,INSERT]",
+    "ok": true,
+    "detail": "SELECT,INSERT"
+   },
+   {
+    "name": "catalog parent_teacher_messages = [SELECT,INSERT]",
+    "ok": true,
+    "detail": "SELECT,INSERT"
+   },
+   {
+    "name": "catalog payment_attempt_events = [none]",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "name": "catalog payment_attempts = [none]",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "name": "catalog payment_exceptions = [none]",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "name": "catalog payment_obligation_beneficiaries = [none]",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "name": "catalog payment_obligation_events = [none]",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "name": "catalog payment_obligations = [none]",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "name": "catalog payment_receipts = [none]",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "name": "catalog pending_teacher_reviews = [SELECT,INSERT,UPDATE]",
+    "ok": true,
+    "detail": "SELECT,INSERT,UPDATE"
+   },
+   {
+    "name": "catalog pilot_measurement_events = [SELECT,INSERT]",
+    "ok": true,
+    "detail": "SELECT,INSERT"
+   },
+   {
+    "name": "catalog principal_learner_access = [SELECT,INSERT,UPDATE]",
+    "ok": true,
+    "detail": "SELECT,INSERT,UPDATE"
+   },
+   {
+    "name": "catalog principals = [SELECT,INSERT,DELETE]",
+    "ok": true,
+    "detail": "SELECT,INSERT,DELETE"
+   },
+   {
+    "name": "catalog sessions = [SELECT,INSERT,UPDATE]",
+    "ok": true,
+    "detail": "SELECT,INSERT,UPDATE"
+   },
+   {
+    "name": "catalog teacher_link_codes = [SELECT,INSERT,UPDATE]",
+    "ok": true,
+    "detail": "SELECT,INSERT,UPDATE"
+   },
+   {
+    "name": "catalog teacher_professional_notes = [SELECT,INSERT]",
+    "ok": true,
+    "detail": "SELECT,INSERT"
+   },
+   {
+    "name": "role attributes restricted, limit 20",
+    "ok": true
+   },
+   {
+    "name": "no role memberships",
+    "ok": true
+   },
+   {
+    "name": "no default privileges for app",
+    "ok": true
+   },
+   {
+    "name": "connected as filumire_app, not superuser",
+    "ok": true
+   },
+   {
+    "name": "account_credentials: SELECT",
+    "ok": true
+   },
+   {
+    "name": "account_credentials: INSERT",
+    "ok": true
+   },
+   {
+    "name": "account_credentials: UPDATE",
+    "ok": true
+   },
+   {
+    "name": "account_credentials: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "account_credentials: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "account_profiles: SELECT",
+    "ok": true
+   },
+   {
+    "name": "account_profiles: INSERT",
+    "ok": true
+   },
+   {
+    "name": "account_profiles: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "account_profiles: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "account_profiles: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "auth_rate_limits: SELECT",
+    "ok": true
+   },
+   {
+    "name": "auth_rate_limits: INSERT",
+    "ok": true
+   },
+   {
+    "name": "auth_rate_limits: UPDATE",
+    "ok": true
+   },
+   {
+    "name": "auth_rate_limits: DELETE",
+    "ok": true
+   },
+   {
+    "name": "auth_rate_limits: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "auth_sessions: SELECT",
+    "ok": true
+   },
+   {
+    "name": "auth_sessions: INSERT",
+    "ok": true
+   },
+   {
+    "name": "auth_sessions: UPDATE",
+    "ok": true
+   },
+   {
+    "name": "auth_sessions: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "auth_sessions: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "controlled_teacher_actions: SELECT",
+    "ok": true
+   },
+   {
+    "name": "controlled_teacher_actions: INSERT",
+    "ok": true
+   },
+   {
+    "name": "controlled_teacher_actions: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "controlled_teacher_actions: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "controlled_teacher_actions: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "external_identities: SELECT",
+    "ok": true
+   },
+   {
+    "name": "external_identities: INSERT",
+    "ok": true
+   },
+   {
+    "name": "external_identities: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "external_identities: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "external_identities: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "filumire_schema_migrations: SELECT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "filumire_schema_migrations: INSERT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "filumire_schema_migrations: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "filumire_schema_migrations: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "filumire_schema_migrations: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "guardian_consent_records: SELECT",
+    "ok": true
+   },
+   {
+    "name": "guardian_consent_records: INSERT",
+    "ok": true
+   },
+   {
+    "name": "guardian_consent_records: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "guardian_consent_records: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "guardian_consent_records: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "interventions: SELECT",
+    "ok": true
+   },
+   {
+    "name": "interventions: INSERT",
+    "ok": true
+   },
+   {
+    "name": "interventions: UPDATE",
+    "ok": true
+   },
+   {
+    "name": "interventions: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "interventions: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_learning_context: SELECT",
+    "ok": true
+   },
+   {
+    "name": "learner_learning_context: INSERT",
+    "ok": true
+   },
+   {
+    "name": "learner_learning_context: UPDATE",
+    "ok": true
+   },
+   {
+    "name": "learner_learning_context: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_learning_context: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_profiles: SELECT",
+    "ok": true
+   },
+   {
+    "name": "learner_profiles: INSERT",
+    "ok": true
+   },
+   {
+    "name": "learner_profiles: UPDATE",
+    "ok": true
+   },
+   {
+    "name": "learner_profiles: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_profiles: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_states: SELECT",
+    "ok": true
+   },
+   {
+    "name": "learner_states: INSERT",
+    "ok": true
+   },
+   {
+    "name": "learner_states: UPDATE",
+    "ok": true
+   },
+   {
+    "name": "learner_states: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learner_states: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learners: SELECT",
+    "ok": true
+   },
+   {
+    "name": "learners: INSERT",
+    "ok": true
+   },
+   {
+    "name": "learners: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learners: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learners: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learning_evidence: SELECT",
+    "ok": true
+   },
+   {
+    "name": "learning_evidence: INSERT",
+    "ok": true
+   },
+   {
+    "name": "learning_evidence: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learning_evidence: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "learning_evidence: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "parent_teacher_messages: SELECT",
+    "ok": true
+   },
+   {
+    "name": "parent_teacher_messages: INSERT",
+    "ok": true
+   },
+   {
+    "name": "parent_teacher_messages: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "parent_teacher_messages: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "parent_teacher_messages: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempt_events: SELECT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempt_events: INSERT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempt_events: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempt_events: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempt_events: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempts: SELECT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempts: INSERT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempts: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempts: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_attempts: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_exceptions: SELECT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_exceptions: INSERT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_exceptions: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_exceptions: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_exceptions: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_beneficiaries: SELECT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_beneficiaries: INSERT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_beneficiaries: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_beneficiaries: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_beneficiaries: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_events: SELECT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_events: INSERT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_events: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_events: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligation_events: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligations: SELECT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligations: INSERT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligations: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligations: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_obligations: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_receipts: SELECT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_receipts: INSERT",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_receipts: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_receipts: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "payment_receipts: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "pending_teacher_reviews: SELECT",
+    "ok": true
+   },
+   {
+    "name": "pending_teacher_reviews: INSERT",
+    "ok": true
+   },
+   {
+    "name": "pending_teacher_reviews: UPDATE",
+    "ok": true
+   },
+   {
+    "name": "pending_teacher_reviews: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "pending_teacher_reviews: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "pilot_measurement_events: SELECT",
+    "ok": true
+   },
+   {
+    "name": "pilot_measurement_events: INSERT",
+    "ok": true
+   },
+   {
+    "name": "pilot_measurement_events: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "pilot_measurement_events: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "pilot_measurement_events: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "principal_learner_access: SELECT",
+    "ok": true
+   },
+   {
+    "name": "principal_learner_access: INSERT",
+    "ok": true
+   },
+   {
+    "name": "principal_learner_access: UPDATE",
+    "ok": true
+   },
+   {
+    "name": "principal_learner_access: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "principal_learner_access: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "principals: SELECT",
+    "ok": true
+   },
+   {
+    "name": "principals: INSERT",
+    "ok": true
+   },
+   {
+    "name": "principals: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "principals: DELETE",
+    "ok": true
+   },
+   {
+    "name": "principals: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "sessions: SELECT",
+    "ok": true
+   },
+   {
+    "name": "sessions: INSERT",
+    "ok": true
+   },
+   {
+    "name": "sessions: UPDATE",
+    "ok": true
+   },
+   {
+    "name": "sessions: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "sessions: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "teacher_link_codes: SELECT",
+    "ok": true
+   },
+   {
+    "name": "teacher_link_codes: INSERT",
+    "ok": true
+   },
+   {
+    "name": "teacher_link_codes: UPDATE",
+    "ok": true
+   },
+   {
+    "name": "teacher_link_codes: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "teacher_link_codes: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "teacher_professional_notes: SELECT",
+    "ok": true
+   },
+   {
+    "name": "teacher_professional_notes: INSERT",
+    "ok": true
+   },
+   {
+    "name": "teacher_professional_notes: UPDATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "teacher_professional_notes: DELETE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "teacher_professional_notes: TRUNCATE",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "ledger: read history",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "ledger: forge a row",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "ledger: rewrite history",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "ledger: erase history",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "ledger: drop table",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "create table in public",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "alter an app table",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "drop an app table",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "create schema",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "create role",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "become the owner",
+    "ok": true,
+    "detail": "42501"
+   },
+   {
+    "name": "read neon_auth users",
+    "ok": true,
+    "detail": "42501"
+   }
+  ]
+ },
+ "postApplyState": {
+  "ownerHost": "ep-rough-water-b8fcf7pe.c-14.us-east-1.aws.neon.tech",
+  "appHost": "ep-rough-water-b8fcf7pe.c-14.us-east-1.aws.neon.tech",
+  "ownerDb": "neondb",
+  "appDb": "neondb",
+  "targetCheck": {
+   "host": "ep-rough-water-b8fcf7pe.c-14.us-east-1.aws.neon.tech",
+   "database": "neondb"
+  },
+  "endpointOk": true,
+  "grantsFileSha256": "8d7f8995a684becd79efbccdb7398cbde41ef877dc42d2942374acc3b8a2616e",
+  "grantsFileRawSha256": "8d7f8995a684becd79efbccdb7398cbde41ef877dc42d2942374acc3b8a2616e",
+  "session": {
+   "db": "neondb",
+   "u": "neondb_owner",
+   "v": "18.6 (c021049)",
+   "endpoint": "ep-rough-water-b8fcf7pe",
+   "branch": "br-long-leaf-b8wixqz2",
+   "project": "proud-term-61114809"
+  },
+  "databases": [
+   "filumire_test",
+   "neondb",
+   "postgres"
+  ],
+  "publicTables": [
+   "account_credentials",
+   "account_profiles",
+   "auth_rate_limits",
+   "auth_sessions",
+   "controlled_teacher_actions",
+   "external_identities",
+   "filumire_schema_migrations",
+   "guardian_consent_records",
+   "interventions",
+   "learner_learning_context",
+   "learner_profiles",
+   "learner_states",
+   "learners",
+   "learning_evidence",
+   "parent_teacher_messages",
+   "payment_attempt_events",
+   "payment_attempts",
+   "payment_exceptions",
+   "payment_obligation_beneficiaries",
+   "payment_obligation_events",
+   "payment_obligations",
+   "payment_receipts",
+   "pending_teacher_reviews",
+   "pilot_measurement_events",
+   "principal_learner_access",
+   "principals",
+   "sessions",
+   "teacher_link_codes",
+   "teacher_professional_notes"
+  ],
+  "publicSequences": [],
+  "schemaSha256": "20f333021d32ac58bcad97700ba6fc3ed608ce2557460127b19831fbb05deaf2",
+  "ledger": [
+   {
+    "id": "baseline-0000-0018",
+    "kind": "baseline",
+    "applied_at": "2026-10-15T12:01:17.255Z"
+   },
+   {
+    "id": "0019_learner_accounts",
+    "kind": "migration",
+    "applied_at": "2026-10-15T12:01:17.255Z"
+   },
+   {
+    "id": "0020_auth_rate_limits",
+    "kind": "migration",
+    "applied_at": "2026-10-15T12:01:17.255Z"
+   },
+   {
+    "id": "0021_teacher_accounts",
+    "kind": "migration",
+    "applied_at": "2026-10-15T12:01:17.255Z"
+   },
+   {
+    "id": "0022_migration_ledger",
+    "kind": "migration",
+    "applied_at": "2026-10-15T12:01:17.255Z"
+   }
+  ],
+  "manifestIds": [
+   "baseline-0000-0018",
+   "0019_learner_accounts",
+   "0020_auth_rate_limits",
+   "0021_teacher_accounts",
+   "0022_migration_ledger"
+  ],
+  "ledgerCompare": {
+   "applied": [
+    "baseline-0000-0018",
+    "0019_learner_accounts",
+    "0020_auth_rate_limits",
+    "0021_teacher_accounts",
+    "0022_migration_ledger"
+   ],
+   "pending": [],
+   "drift": [],
+   "unknown": [],
+   "outOfOrder": false,
+   "consistent": true
+  },
+  "role": {
+   "rolsuper": false,
+   "rolcreaterole": false,
+   "rolcreatedb": false,
+   "rolreplication": false,
+   "rolbypassrls": false,
+   "rolcanlogin": true,
+   "rolinherit": true,
+   "rolconnlimit": 20
+  },
+  "roleMemberships": [],
+  "appTableGrants": [
+   {
+    "table_name": "account_credentials",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "account_profiles",
+    "p": "INSERT,SELECT"
+   },
+   {
+    "table_name": "auth_rate_limits",
+    "p": "DELETE,INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "auth_sessions",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "controlled_teacher_actions",
+    "p": "INSERT,SELECT"
+   },
+   {
+    "table_name": "external_identities",
+    "p": "INSERT,SELECT"
+   },
+   {
+    "table_name": "guardian_consent_records",
+    "p": "INSERT,SELECT"
+   },
+   {
+    "table_name": "interventions",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "learner_learning_context",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "learner_profiles",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "learner_states",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "learners",
+    "p": "INSERT,SELECT"
+   },
+   {
+    "table_name": "learning_evidence",
+    "p": "INSERT,SELECT"
+   },
+   {
+    "table_name": "parent_teacher_messages",
+    "p": "INSERT,SELECT"
+   },
+   {
+    "table_name": "pending_teacher_reviews",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "pilot_measurement_events",
+    "p": "INSERT,SELECT"
+   },
+   {
+    "table_name": "principal_learner_access",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "principals",
+    "p": "DELETE,INSERT,SELECT"
+   },
+   {
+    "table_name": "sessions",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "teacher_link_codes",
+    "p": "INSERT,SELECT,UPDATE"
+   },
+   {
+    "table_name": "teacher_professional_notes",
+    "p": "INSERT,SELECT"
+   }
+  ],
+  "appDefaultAcl": 0,
+  "publicSchemaAcl": "{pg_database_owner=UC/pg_database_owner,=U/pg_database_owner,filumire_app=U/pg_database_owner}",
+  "ownerIsTableOwner": {
+   "n": 29,
+   "mine": 29
+  },
+  "rowCounts": {
+   "account_credentials": 0,
+   "account_profiles": 0,
+   "auth_rate_limits": 0,
+   "auth_sessions": 0,
+   "controlled_teacher_actions": 0,
+   "external_identities": 0,
+   "filumire_schema_migrations": 5,
+   "guardian_consent_records": 0,
+   "interventions": 0,
+   "learner_learning_context": 0,
+   "learner_profiles": 0,
+   "learner_states": 0,
+   "learners": 0,
+   "learning_evidence": 0,
+   "parent_teacher_messages": 0,
+   "payment_attempt_events": 0,
+   "payment_attempts": 0,
+   "payment_exceptions": 0,
+   "payment_obligation_beneficiaries": 0,
+   "payment_obligation_events": 0,
+   "payment_obligations": 0,
+   "payment_receipts": 0,
+   "pending_teacher_reviews": 0,
+   "pilot_measurement_events": 0,
+   "principal_learner_access": 0,
+   "principals": 0,
+   "sessions": 0,
+   "teacher_link_codes": 0,
+   "teacher_professional_notes": 0
+  }
+ }
+}

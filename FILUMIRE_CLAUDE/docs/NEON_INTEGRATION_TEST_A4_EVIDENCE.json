@@ -1,0 +1,146 @@
+{
+ "ranAt": "2026-10-15T12:01:42.488Z",
+ "host": "ep-rough-water-b8fcf7pe.c-14.us-east-1.aws.neon.tech",
+ "database": "neondb",
+ "before": {
+  "t19Sha256": "93c47eeb589defab5fb6c5f9554539819a7bfa62d49ad4a4e66ed3240f204e02",
+  "t19TableOids": [
+   {
+    "relname": "account_credentials",
+    "oid": 16681
+   },
+   {
+    "relname": "account_profiles",
+    "oid": 16702
+   },
+   {
+    "relname": "guardian_consent_records",
+    "oid": 16756
+   },
+   {
+    "relname": "learner_profiles",
+    "oid": 16799
+   }
+  ],
+  "publicTables": 26,
+  "totalPublicRows": 0,
+  "kindCheck": "CHECK ((account_kind = ANY (ARRAY['guardian'::text, 'learner'::text])))",
+  "newTables": [],
+  "filumireAppTablePrivs": 0,
+  "ledger": null
+ },
+ "apply": {
+  "mode": "execute",
+  "target": {
+   "host": "ep-rough-water-b8fcf7pe.c-14.us-east-1.aws.neon.tech",
+   "database": "neondb"
+  },
+  "applied": [
+   "0019_learner_accounts",
+   "0020_auth_rate_limits",
+   "0021_teacher_accounts",
+   "0022_migration_ledger"
+  ],
+  "baselineRecorded": true,
+  "schemaSha256Before": "66f8b396b22c10118662f35526f7c6475b2bbed61328335259f93f9661a3ac3c"
+ },
+ "after": {
+  "t19Sha256": "93c47eeb589defab5fb6c5f9554539819a7bfa62d49ad4a4e66ed3240f204e02",
+  "t19TableOids": [
+   {
+    "relname": "account_credentials",
+    "oid": 16681
+   },
+   {
+    "relname": "account_profiles",
+    "oid": 16702
+   },
+   {
+    "relname": "guardian_consent_records",
+    "oid": 16756
+   },
+   {
+    "relname": "learner_profiles",
+    "oid": 16799
+   }
+  ],
+  "publicTables": 29,
+  "totalPublicRows": 5,
+  "kindCheck": "CHECK ((account_kind = ANY (ARRAY['guardian'::text, 'learner'::text, 'teacher'::text])))",
+  "newTables": [
+   "auth_rate_limits",
+   "filumire_schema_migrations",
+   "teacher_link_codes"
+  ],
+  "filumireAppTablePrivs": 0,
+  "ledger": [
+   {
+    "id": "baseline-0000-0018",
+    "kind": "baseline",
+    "sha256": "66f8b396b22c10118662f35526f7c6475b2bbed61328335259f93f9661a3ac3c",
+    "applied_by": "neondb_owner",
+    "applied_at": "2026-10-15T12:01:17.255Z",
+    "note": "catalog snapshot taken inside the applying transaction, before any change"
+   },
+   {
+    "id": "0019_learner_accounts",
+    "kind": "migration",
+    "sha256": "a7b49b2749c53f681432ee74f3b075f9d3eb5a9ca239af1d6059218a13e614a7",
+    "applied_by": "neondb_owner",
+    "applied_at": "2026-10-15T12:01:17.255Z",
+    "note": null
+   },
+   {
+    "id": "0020_auth_rate_limits",
+    "kind": "migration",
+    "sha256": "f3c77a33a20759cc7ff22f90699b3a0b639169a14b7e6e37cf1c618d5f80a74e",
+    "applied_by": "neondb_owner",
+    "applied_at": "2026-10-15T12:01:17.255Z",
+    "note": null
+   },
+   {
+    "id": "0021_teacher_accounts",
+    "kind": "migration",
+    "sha256": "f4276c21c24d034e86acdec99ac124284b5f2adb375d5282e352021294e0ddeb",
+    "applied_by": "neondb_owner",
+    "applied_at": "2026-10-15T12:01:17.255Z",
+    "note": null
+   },
+   {
+    "id": "0022_migration_ledger",
+    "kind": "migration",
+    "sha256": "7df38ca03de3361a1692938f7b2dbf3861fd748239e08dde0ec8eb1b5507eee5",
+    "applied_by": "neondb_owner",
+    "applied_at": "2026-10-15T12:01:17.255Z",
+    "note": null
+   }
+  ]
+ },
+ "t19Unchanged": true,
+ "ledgerStatus": {
+  "ledgerTablePresent": true,
+  "applied": [
+   "baseline-0000-0018",
+   "0019_learner_accounts",
+   "0020_auth_rate_limits",
+   "0021_teacher_accounts",
+   "0022_migration_ledger"
+  ],
+  "pending": [],
+  "drift": [],
+  "unknown": [],
+  "outOfOrder": false,
+  "consistent": true
+ },
+ "postDryRun": {
+  "mode": "dry-run",
+  "target": {
+   "host": "ep-rough-water-b8fcf7pe.c-14.us-east-1.aws.neon.tech",
+   "database": "neondb"
+  },
+  "needsBaseline": false,
+  "pending": [],
+  "schemaSha256": "20f333021d32ac58bcad97700ba6fc3ed608ce2557460127b19831fbb05deaf2",
+  "approvalCode": "034c189ee619"
+ }
+}
