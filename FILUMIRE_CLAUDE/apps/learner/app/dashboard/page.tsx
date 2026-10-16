@@ -41,7 +41,12 @@ import { AVATAR_KEY, LEARNER_AVATARS, useLearnerAvatar } from "../../components/
 import { findFilumireSubject, subjectLabel, toFilumireSubjects } from "../../components/filumire/subjects";
 import { SubjectIcon } from "../../components/filumire/SubjectIcon";
 import { useLanguage, withLang } from "../../components/filumire/language";
-import { LEARNER_GRADES } from "../../components/filumire/grades";
+import {
+  SetupClassField,
+  setupClassMode,
+  setupGradeValue,
+  setupSubjectsFor,
+} from "../../components/filumire/SetupClassField";
 import {
   AccountRequestError,
   accountErrorMessage,
@@ -121,11 +126,6 @@ const SETUP_TEXT = {
     name: "Your name",
     namePlaceholder: "Enter your name",
     clear: "Clear name",
-    level: "Your class",
-    levelHelp: "Your class is set by your school. FILUMIRE uses it to choose learning that is right for you.",
-    levelUnknown: "Set by your school",
-    levelChoose: "Choose your class. FILUMIRE uses it to choose learning that is right for you.",
-    levelPlaceholder: "Choose your class",
     levelRequired: "Choose your class to continue.",
     saving: "Saving…",
     saveFailed: "Your details could not be saved. Check your connection and try again.",
@@ -145,11 +145,6 @@ const SETUP_TEXT = {
     name: "Ton prénom",
     namePlaceholder: "Écris ton prénom",
     clear: "Effacer le prénom",
-    level: "Ta classe",
-    levelHelp: "Ta classe est définie par ton école. FILUMIRE s’en sert pour choisir ce qui te convient.",
-    levelUnknown: "Définie par ton école",
-    levelChoose: "Choisis ta classe. FILUMIRE s’en sert pour choisir ce qui te convient.",
-    levelPlaceholder: "Choisis ta classe",
     levelRequired: "Choisis ta classe pour continuer.",
     saving: "Enregistrement…",
     saveFailed: "Tes informations n’ont pas pu être enregistrées. Vérifie ta connexion et réessaie.",
@@ -246,13 +241,20 @@ function LearnerDashboardView() {
   const signedInLearner = activeLearner(account);
   const appearance = useLearnerAppearance(signedInLearner?.learnerId);
 
-  useEffect(() => {
-    // Only a learner who has already chosen a class sees it
-    // preselected; a new learner must pick one.
-    if (overview?.gradeId && !setupGrade && signedInLearner?.onboardingComplete) {
-      setSetupGrade(overview.gradeId);
-    }
-  }, [overview?.gradeId, setupGrade, signedInLearner?.onboardingComplete]);
+  // The setup class field: nothing editable until the account and
+  // the stored class are known; a guardian's class is locked.
+  const setupClass = setupClassMode({
+    accountPending: !accountChecked,
+    signedIn: Boolean(signedInLearner),
+    overviewPending: overviewState === "loading" && (viewState === "loading" || viewState === "ready"),
+    overview,
+  });
+  const chosenGrade = setupGradeValue({
+    mode: setupClass,
+    picked: setupGrade,
+    overview,
+    onboardingComplete: Boolean(signedInLearner?.onboardingComplete),
+  });
 
   useEffect(() => {
     if (signedInLearner?.onboardingComplete !== false) return;
@@ -328,6 +330,8 @@ function LearnerDashboardView() {
 
   // Subjects for the learner's grade, as returned by the server.
   const subjects = toFilumireSubjects(overview?.availableSubjects);
+  // In setup, the subjects of the class being chosen.
+  const setupSubjects = toFilumireSubjects(setupSubjectsFor(overview, chosenGrade));
   const currentSubject = findFilumireSubject(subjects, data?.progress.subjectId);
 
   const homeStat = overview?.subjects[data?.progress.subjectId ?? ""];
@@ -453,14 +457,15 @@ function LearnerDashboardView() {
    * subjects. The local test learner keeps the device-only save.
    */
   async function finishSetup(event: { preventDefault(): void }) {
-    if (setupSaving) { event.preventDefault(); return; }
+    // Nothing is saved until the account and the class are known.
+    if (setupSaving || setupClass === "loading") { event.preventDefault(); return; }
     saveLearnerProfile();
 
     if (!signedInLearner) return;
 
     event.preventDefault();
 
-    if (!setupGrade) {
+    if (!chosenGrade) {
       setSetupError(SETUP_TEXT[language].levelRequired);
       return;
     }
@@ -472,7 +477,7 @@ function LearnerDashboardView() {
       await updateLearnerProfile(signedInLearner.learnerId, {
         ...(setupName.trim() ? { displayName: setupName.trim() } : {}),
         avatarId: setupAvatar,
-        gradeId: setupGrade,
+        gradeId: chosenGrade,
         completeOnboarding: true,
       });
       window.location.assign(afterSetupHref);
@@ -726,45 +731,14 @@ function LearnerDashboardView() {
                     </span>
                     <div className="setupFieldBody">
                       {/* The grade is stored on the server and decides which
-                          curriculum the learner sees; it is shown, not edited. */}
-                      {signedInLearner ? (
-                        <>
-                          <label className="setupFieldLabel" htmlFor="setupLevel">
-                            {setupText.level}
-                          </label>
-                          <select
-                            id="setupLevel"
-                            className="setupInput"
-                            value={setupGrade}
-                            required
-                            onChange={(event) => setSetupGrade(event.target.value)}
-                          >
-                            <option value="" disabled>
-                              {setupText.levelPlaceholder}
-                            </option>
-                            {LEARNER_GRADES.map((grade) => (
-                              <option key={grade.id} value={grade.id}>
-                                {grade.name[language]}
-                              </option>
-                            ))}
-                          </select>
-                          <p className="setupFieldHelp">
-                            {setupText.levelChoose}
-                          </p>
-                        </>
-                      ) : (
-                        <>
-                          <span className="setupFieldLabel" id="setupLevelLabel">
-                            {setupText.level}
-                          </span>
-                          <output className="setupInput setupReadonly" aria-labelledby="setupLevelLabel">
-                            {overview?.gradeName || setupText.levelUnknown}
-                          </output>
-                          <p className="setupFieldHelp">
-                            {setupText.levelHelp}
-                          </p>
-                        </>
-                      )}
+                          curriculum the learner sees. */}
+                      <SetupClassField
+                        mode={setupClass}
+                        language={language}
+                        value={chosenGrade}
+                        gradeName={overview?.gradeName}
+                        onChange={setSetupGrade}
+                      />
                     </div>
                   </div>
                 </section>
@@ -828,8 +802,8 @@ function LearnerDashboardView() {
                   </div>
 
                   <div className="setupSubjectGridWrap">
-                    {subjects.length > 0 ? (
-                      <SubjectGrid language={language} subjects={subjects} compact />
+                    {setupSubjects.length > 0 ? (
+                      <SubjectGrid language={language} subjects={setupSubjects} compact />
                     ) : (
                       subjectsNotice()
                     )}

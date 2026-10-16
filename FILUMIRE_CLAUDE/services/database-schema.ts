@@ -764,6 +764,12 @@ export const learnerLearningContext =
           "active_competency_id",
         ),
 
+      // 'guardian' | 'learner'; null when nobody chose the grade.
+      gradeSetBy:
+        text(
+          "grade_set_by",
+        ),
+
       updatedAt:
         timestamp(
           "updated_at",

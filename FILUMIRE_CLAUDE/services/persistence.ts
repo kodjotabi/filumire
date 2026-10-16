@@ -60,8 +60,12 @@ export interface LearnerLearningContextRecord {
   gradeId: string;
   activeSubjectId: string;
   activeCompetencyId?: string;
+  // Who chose the grade; absent for the lazily created default.
+  gradeSetBy?: GradeSetBy;
   updatedAt: string;
 }
+
+export type GradeSetBy = "guardian" | "learner";
 
 export type PendingTeacherReviewStatus =
   | "pending"

@@ -28,6 +28,8 @@ function connectionString(envName, expectHost) {
   const host = url.hostname.toLowerCase();
   if (DENIED_ENDPOINTS.some(e => host.startsWith(e))) throw new Error("denied_existing_endpoint");
   if (host !== expectHost) throw new Error("host_does_not_match_expected");
+  // A local PostgreSQL server (loopback only) has no TLS; every remote host still requires verify-full.
+  if (host === "localhost" || host === "127.0.0.1") { url.searchParams.delete("sslmode"); url.searchParams.delete("channel_binding"); return url.toString(); }
   url.searchParams.set("sslmode", "verify-full");
   url.searchParams.delete("channel_binding");
   return url.toString();

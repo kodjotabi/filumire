@@ -1,4 +1,4 @@
-import type { LearnerLearningContextRecord } from "../persistence";
+import type { GradeSetBy, LearnerLearningContextRecord } from "../persistence";
 import { persistenceStore } from "../persistence-provider";
 import {
   getAvailableSubjectsForGrade,
@@ -9,7 +9,7 @@ import {
 } from "../../packages/curriculum-framework";
 import { getCompetency } from "../../packages/curriculum";
 
-export type { LearnerLearningContextRecord };
+export type { GradeSetBy, LearnerLearningContextRecord };
 
 /*
  * Raised when a requested grade, subject or competency does not
@@ -124,10 +124,17 @@ function findAvailableSubject(
  * offers it, otherwise to the grade's first available subject;
  * the active competency is cleared so no pointer from the old
  * grade survives. Learner state and evidence are not touched.
+ * `setBy` records who chose the grade; a grade the guardian
+ * chose is locked for the learner (see the profile route). Only
+ * an explicit guardian choice (adding the learner with a class,
+ * or the guardian sending a class) records "guardian"; reads,
+ * learning activity and unattributed writes never do, so rows
+ * from before migration 0023 stay unlocked.
  */
 export async function setLearnerGrade(
   learnerId: string,
   gradeId: string,
+  setBy?: GradeSetBy,
 ): Promise<LearnerLearningContextRecord> {
   const context = await getOrCreateLearnerLearningContext(
     learnerId,
@@ -148,7 +155,21 @@ export async function setLearnerGrade(
     context.gradeId === gradeId &&
     findAvailableSubject(context, context.activeSubjectId)
   ) {
-    return context;
+    if (!setBy || context.gradeSetBy === setBy) {
+      return context;
+    }
+
+    // Same grade, newly confirmed by someone: record who, and
+    // keep the learner's subject and competency as they are.
+    const confirmed: LearnerLearningContextRecord = {
+      ...context,
+      gradeSetBy: setBy,
+      updatedAt: new Date().toISOString(),
+    };
+
+    await saveLearnerLearningContext(confirmed);
+
+    return confirmed;
   }
 
   const available = getAvailableSubjectsForGrade(
@@ -169,6 +190,9 @@ export async function setLearnerGrade(
     curriculumVersionId: context.curriculumVersionId,
     gradeId,
     activeSubjectId: activeSubject.id,
+    // Unattributed changes keep the existing attribution: they
+    // neither create nor remove a guardian's lock.
+    gradeSetBy: setBy ?? context.gradeSetBy,
     updatedAt: new Date().toISOString(),
   };
 

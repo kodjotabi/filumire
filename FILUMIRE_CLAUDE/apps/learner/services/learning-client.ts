@@ -336,8 +336,12 @@ export type AvailableSubject = {
 export type LearningOverview = {
   gradeId: string;
   gradeName: string;
+  // The guardian chose this class; the learner cannot change it.
+  gradeSetByGuardian?: boolean;
   activeSubjectId: string;
   availableSubjects: AvailableSubject[];
+  // Subjects of each supported grade, for first-time setup.
+  gradeSubjects?: Record<string, AvailableSubject[]>;
   subjects: Record<
     string,
     { total: number; tracked: number; completed: number; started: boolean }

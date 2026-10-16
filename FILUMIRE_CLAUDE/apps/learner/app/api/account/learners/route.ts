@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     });
 
     if (gradeId) {
-      await setLearnerGrade(learner.learnerId, gradeId);
+      await setLearnerGrade(learner.learnerId, gradeId, "guardian");
     }
 
     return json(learner, { status: 201 });

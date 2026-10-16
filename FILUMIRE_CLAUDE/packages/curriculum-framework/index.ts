@@ -1085,6 +1085,25 @@ export function isSupportedGrade(
   );
 }
 
+/*
+ * The supported grades of a curriculum version, in order.
+ */
+export function getSupportedGradesForCurriculumVersion(
+  curriculumVersionId: CurriculumVersionId,
+): FrameworkGrade[] {
+  const phaseIds = phases
+    .filter((phase) => phase.curriculumVersionId === curriculumVersionId)
+    .map((phase) => phase.id);
+
+  return grades
+    .filter(
+      (grade) =>
+        phaseIds.includes(grade.phaseId) &&
+        isSupportedGrade(curriculumVersionId, grade.id),
+    )
+    .sort((a, b) => a.order - b.order);
+}
+
 // ---- Layer 2 accessors ----
 
 export function getCompetencyMappingsForNode(

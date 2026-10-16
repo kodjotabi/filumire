@@ -287,6 +287,10 @@ function mapLearnerLearningContext(
     activeSubjectId: row.activeSubjectId,
     activeCompetencyId:
       row.activeCompetencyId ?? undefined,
+    gradeSetBy:
+      row.gradeSetBy === "guardian" || row.gradeSetBy === "learner"
+        ? row.gradeSetBy
+        : undefined,
     updatedAt: row.updatedAt.toISOString(),
   };
 }
@@ -2053,6 +2057,7 @@ export class PostgresPersistenceStore
       activeSubjectId: context.activeSubjectId,
       activeCompetencyId:
         context.activeCompetencyId ?? null,
+      gradeSetBy: context.gradeSetBy ?? null,
       updatedAt: new Date(context.updatedAt),
     };
 

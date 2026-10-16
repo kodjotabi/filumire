@@ -762,7 +762,8 @@ export async function updateLearnerProfileFor(
   input: LearnerProfileUpdateInput,
   // Runs once the caller is authorised and the input is valid,
   // before the profile is written; throwing here changes nothing.
-  beforeWrite?: (existing: { onboardingComplete: boolean }) => Promise<void>,
+  // byGuardian is true when the caller acts as the learner's guardian.
+  beforeWrite?: (existing: { onboardingComplete: boolean; byGuardian: boolean }) => Promise<void>,
 ): Promise<AccountLearnerSummary> {
   if (!(await isPrincipalAuthorizedForLearner(principalId, learnerId))) {
     throw new AccountForbiddenError("This learner is not linked to you.");
@@ -800,7 +801,10 @@ export async function updateLearnerProfileFor(
       : {}),
   };
 
-  await beforeWrite?.({ onboardingComplete: Boolean(existing.onboardingCompletedAt) });
+  await beforeWrite?.({
+    onboardingComplete: Boolean(existing.onboardingCompletedAt),
+    byGuardian: guardian?.status === "active",
+  });
 
   await accountStore.updateLearnerProfile(learnerId, changes);
 

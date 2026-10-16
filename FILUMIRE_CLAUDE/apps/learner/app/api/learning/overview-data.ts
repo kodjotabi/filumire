@@ -2,12 +2,25 @@ import {
   getCompetenciesForSubject,
   getCompetency,
 } from "../../../../../packages/curriculum";
-import { getFrameworkGrade } from "../../../../../packages/curriculum-framework";
+import {
+  getAvailableSubjectsForGrade,
+  getFrameworkGrade,
+  getSupportedGradesForCurriculumVersion,
+} from "../../../../../packages/curriculum-framework";
 import {
   getAvailableSubjectsForContext,
   getOrCreateLearnerLearningContext,
 } from "../../../../../services/learner-context";
 import { getCompetencyProgressRows } from "../../../../../services/learner-progress";
+
+type OverviewSubject = { id: string; name: string; code: string; discipline: string };
+
+const toOverviewSubject = (subject: OverviewSubject): OverviewSubject => ({
+  id: subject.id,
+  name: subject.name,
+  code: subject.code,
+  discipline: subject.discipline,
+});
 
 type SubjectSummary = {
   total: number;
@@ -71,13 +84,18 @@ export async function buildLearningOverview(
   return {
     gradeId: context.gradeId,
     gradeName: grade?.name ?? "",
+    gradeSetByGuardian: context.gradeSetBy === "guardian",
     activeSubjectId: context.activeSubjectId,
-    availableSubjects: availableSubjects.map((subject) => ({
-      id: subject.id,
-      name: subject.name,
-      code: subject.code,
-      discipline: subject.discipline,
-    })),
+    availableSubjects: availableSubjects.map(toOverviewSubject),
+    // Subjects of every supported grade of the learner's curriculum,
+    // so first-time setup can show the subjects of the class being
+    // chosen before it is saved. Curriculum data only, no progress.
+    gradeSubjects: Object.fromEntries(
+      getSupportedGradesForCurriculumVersion(context.curriculumVersionId).map((supported) => [
+        supported.id,
+        getAvailableSubjectsForGrade(context.curriculumVersionId, supported.id).map(toOverviewSubject),
+      ]),
+    ),
     subjects,
     areasSubjectId,
     areas,

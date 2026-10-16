@@ -194,10 +194,12 @@ export default function LoginPage() {
       </header>
 
       <section className="hero">
-        <img className="heroArt" src="/images/login/page02-hero-art.jpg" alt="" />
         <h1 className="heroTitle">{t.welcome} <span>{t.welcomeAccent}</span></h1>
         <p className="heroGreeting">{t.greeting}</p>
         <p className="heroIntro">{t.intro[0]}<br />{t.intro[1]}</p>
+        <div className="heroFrame">
+          <img className="heroArt" src="/images/login/page02-hero-art.jpg" alt="" />
+        </div>
       </section>
 
       <section className="signInCard" id="sign-in" aria-labelledby="sign-in-title">
@@ -316,12 +318,15 @@ export default function LoginPage() {
         .logo { width: 103px; height: auto; max-height: 44px; object-fit: contain; }
         .adultLink { margin-left: auto; display: flex; align-items: center; gap: 8px; color: #ffffff; text-decoration: none; font-size: 11px; font-weight: 700; line-height: 1.2; text-align: left; }
         .adultLink svg { width: 24px; height: 24px; flex: none; fill: currentColor; }
-        .hero { position: relative; width: 100%; aspect-ratio: 3129 / 1806; overflow: hidden; }
+        /* The welcome text sits in normal flow above the artwork, never on top of it: the artwork's free
+           area is too small at most widths to hold the text, so overlaying it caused collisions. */
+        .hero { width: 100%; display: flex; flex-direction: column; }
+        .heroFrame { position: relative; width: 100%; aspect-ratio: 1560 / 900; margin-top: 8px; overflow: hidden; }
         .heroArt { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: contain; }
-        .heroTitle { position: absolute; top: 27px; left: 24px; margin: 0; color: var(--ui-ink); font-size: 26px; line-height: 1.15; font-weight: 800; letter-spacing: -0.5px; white-space: nowrap; }
+        .heroTitle { margin: 20px 24px 0; color: var(--ui-ink); font-size: 26px; line-height: 1.15; font-weight: 800; letter-spacing: -0.5px; overflow-wrap: anywhere; }
         .heroTitle span { color: var(--ui-brand); }
-        .heroGreeting { position: absolute; top: 57px; left: 28px; margin: 0; color: var(--ui-ink); font-size: 14px; line-height: 1.2; font-weight: 500; }
-        .heroIntro { position: absolute; top: 83px; left: 28px; margin: 0; color: var(--ui-ink); font-size: 10.5px; line-height: 1.55; font-weight: 500; }
+        .heroGreeting { margin: 6px 24px 0; color: var(--ui-ink); font-size: 14px; line-height: 1.2; font-weight: 500; }
+        .heroIntro { margin: 8px 24px 0; color: var(--ui-ink); font-size: 10.5px; line-height: 1.55; font-weight: 500; }
         .signInCard { width: 342px; margin: 0 auto; padding: 10px; border-radius: 16px; background: var(--ui-blue-tint); box-sizing: border-box; }
         .signInCard h2, .newAccount h2 { margin: 0; color: var(--ui-ink); font-size: 20px; line-height: 1.2; font-weight: 800; }
         .cardIntro, .newAccount p { margin: 4px 0 10px; color: var(--ui-ink-soft); font-size: 12px; line-height: 1.35; font-weight: 500; }
@@ -373,9 +378,10 @@ export default function LoginPage() {
           .topbar { padding: 0 32px; }
           .logo { width: 128px; }
           .adultLink { font-size: 13px; }
-          .heroTitle { top: 44px; left: 40px; font-size: 40px; }
-          .heroGreeting { top: 96px; left: 42px; font-size: 19px; }
-          .heroIntro { top: 130px; left: 42px; font-size: 14.5px; }
+          .heroTitle { margin: 32px 40px 0; font-size: 40px; }
+          .heroGreeting { margin: 10px 40px 0; font-size: 19px; }
+          .heroIntro { margin: 10px 40px 0; font-size: 14.5px; }
+          .heroFrame { margin-top: 12px; }
           .signInCard, .newAccount, .localTesting { width: calc(100% - 64px); padding: 20px 22px; border-radius: 20px; }
           .newAccount, .localTesting { margin-top: 14px; }
           .signInCard { margin-top: 20px; }
@@ -413,10 +419,11 @@ export default function LoginPage() {
             box-shadow: none;
           }
           .topbar { grid-area: top; padding: 0 max(40px, calc((100% - 1200px) / 2)); }
-          .hero { grid-area: hero; align-self: start; min-height: 0; margin-top: 40px; border-radius: 28px; aspect-ratio: 3129 / 1806; }
-          .heroTitle { top: 48px; left: 48px; font-size: 48px; }
-          .heroGreeting { top: 112px; left: 50px; font-size: 22px; }
-          .heroIntro { top: 150px; left: 50px; font-size: 16px; }
+          .hero { grid-area: hero; align-self: start; min-width: 0; min-height: 0; margin-top: 40px; }
+          .heroTitle { margin: 0; font-size: 48px; }
+          .heroGreeting { margin: 12px 0 0; font-size: 22px; }
+          .heroIntro { margin: 12px 0 0; font-size: 16px; }
+          .heroFrame { margin-top: 20px; border-radius: 28px; }
           .signInCard, .newAccount, .localTesting { width: auto; margin-left: 48px; margin-right: 0; }
           .signInCard { grid-area: card; margin-top: 40px; }
           .newAccount { grid-area: new; }

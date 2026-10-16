@@ -421,6 +421,15 @@ async function cleanUp(): Promise<void> {
   if (process.env.FILUMIRE_PERSISTENCE !== "postgres") return;
 
   const { pool } = await import("../services/database");
+
+  // Disposable Neon branch: the runner deletes the whole branch after saving evidence, so the
+  // least-privilege app role deletes nothing here. Only scripts/test-neon-integration-journey.mjs sets this.
+  if (process.env.FILUMIRE_TEST_DATA_DISPOSAL === "neon-branch") {
+    await pool.end();
+    console.log({ testDataDisposal: "neon-branch", rowsDeleted: 0 });
+    return;
+  }
+
   const { deleteTestLearners, deleteTestPrincipals } = await import("./postgres-test-cleanup");
 
   await deleteTestLearners(pool, createdLearners);
