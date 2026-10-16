@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
-import { AdultHeader, AdultRoleSwitch } from "../../components/filumire/AdultRoleSwitch";
+import { AdultHeader, AdultRoleSwitch, adultRole } from "../../components/filumire/AdultRoleSwitch";
+import { fetchAccount, type Account } from "../../services/account-client";
 import { useLanguage, type Language } from "../../components/filumire/language";
 import { LEARNER_GRADES } from "../../components/filumire/grades";
 import { ParentProgress } from "../../components/filumire/ParentProgress";
@@ -177,6 +178,18 @@ export default function AdultSupervisionPage() {
       "idle" | "loading" | "sending" | "sent" | "error"
     >("idle");
 
+  // undefined while loading, null when nobody is signed in.
+  const [account, setAccount] =
+    useState<Account | null | undefined>(undefined);
+
+  useEffect(() => {
+    fetchAccount()
+      .then((value) => setAccount(value))
+      .catch(() => setAccount(null));
+  }, []);
+
+  const role = adultRole(account);
+
   const selectedLearnerId = useRef<string | undefined>(undefined);
   const loadSequence = useRef(0);
 
@@ -316,8 +329,8 @@ export default function AdultSupervisionPage() {
       <a className="filumireSkipLink" href="#adult-main">
         {language === "fr" ? "Aller au contenu" : "Skip to content"}
       </a>
-      <AdultHeader active="parent" language={language} onLanguage={setLanguage} />
-      <AdultRoleSwitch active="parent" language={language} />
+      <AdultHeader active="parent" role={role} language={language} onLanguage={setLanguage} />
+      <AdultRoleSwitch active="parent" role={role} language={language} />
       <div className="shell" id="adult-main">
         <div className="brand-subtitle">{t.subtitle}</div>
 

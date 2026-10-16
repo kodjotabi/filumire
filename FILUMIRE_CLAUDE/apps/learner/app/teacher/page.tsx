@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { AdultHeader, AdultRoleSwitch } from "../../components/filumire/AdultRoleSwitch";
+import { AdultHeader, AdultRoleSwitch, adultRole } from "../../components/filumire/AdultRoleSwitch";
 import { useLanguage, type Language } from "../../components/filumire/language";
 import { TeacherLinkLearner } from "../../components/filumire/TeacherLinkLearner";
 import { AccountSecurity } from "../../components/filumire/AccountSecurity";
@@ -280,7 +280,8 @@ export default function TeacherPage() {
     useState<ViewState>("loading");
   // A built-in teacher account (names its learners and may link
   // more); null for development identities.
-  const [account, setAccount] = useState<Account | null>(null);
+  // undefined while loading, null when nobody is signed in.
+  const [account, setAccount] = useState<Account | null | undefined>(undefined);
   const [data, setData] =
     useState<TeacherSummaryResponse | null>(null);
   const [selectedCompetencyId, setSelectedCompetencyId] =
@@ -632,8 +633,8 @@ export default function TeacherPage() {
       <a className="filumireSkipLink" href="#teacher-main">
         {language === "fr" ? "Aller au contenu" : "Skip to content"}
       </a>
-      <AdultHeader active="teacher" language={language} onLanguage={setLanguage} />
-      <AdultRoleSwitch active="teacher" language={language} />
+      <AdultHeader active="teacher" role={adultRole(account)} language={language} onLanguage={setLanguage} />
+      <AdultRoleSwitch active="teacher" role={adultRole(account)} language={language} />
       <div className="shell" id="teacher-main">
         <div className="teacherTitle">{t("Teacher Workspace")}</div>
         {data?.summary && (
