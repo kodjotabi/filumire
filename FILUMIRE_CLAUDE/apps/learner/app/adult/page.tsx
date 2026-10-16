@@ -332,7 +332,7 @@ export default function AdultSupervisionPage() {
           <section className="card">
             <h1>{t.signIn}</h1>
             <p>{t.signInBody}</p>
-            <Link href={`/login?lang=${language}`} className="primary-button">
+            <Link href={`/login?lang=${language}&returnTo=family`} className="primary-button">
               {t.goSignIn}
             </Link>
           </section>

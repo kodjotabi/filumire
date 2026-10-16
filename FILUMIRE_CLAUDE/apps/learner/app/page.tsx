@@ -78,7 +78,7 @@ export default function HomePage() {
           alt="FILUMIRE"
         />
         <Link
-          href={`/adult?lang=${language}`}
+          href={`/login?lang=${language}&returnTo=family`}
           className="parentTeacherHotspot"
           aria-label={t.adult}
         />
@@ -91,7 +91,7 @@ export default function HomePage() {
         </Link>
         <div className="wideActions">
           <LanguageToggle language={language} onChange={setLanguage} />
-          <Link href={`/adult?lang=${language}`} className="wideAdultLink">
+          <Link href={`/login?lang=${language}&returnTo=family`} className="wideAdultLink">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="8.5" cy="7.5" r="3.6" />
               <circle cx="16.5" cy="8.5" r="3" />

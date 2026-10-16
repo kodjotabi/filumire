@@ -46,7 +46,7 @@ const TEXT = {
     intro: ["Sign in to continue your learning", "journey with FILUMIRE."],
     signIn: "Sign In",
     cardIntro: "Enter your details to continue.",
-    identity: "Email (parents) or username (learners)",
+    identity: "Email (parents and teachers) or username (learners)",
     identityPlaceholder: "Email or username",
     signingIn: "Signing in…",
     missing: "Enter your email or username and your password.",
@@ -78,7 +78,7 @@ const TEXT = {
     intro: ["Connecte-toi pour continuer", "ton parcours avec FILUMIRE."],
     signIn: "Connexion",
     cardIntro: "Saisis tes informations pour continuer.",
-    identity: "E-mail (parents) ou identifiant (apprenants)",
+    identity: "E-mail (parents et enseignants) ou identifiant (apprenants)",
     identityPlaceholder: "E-mail ou identifiant",
     signingIn: "Connexion…",
     missing: "Saisis ton e-mail ou ton identifiant et ton mot de passe.",
@@ -182,7 +182,8 @@ export default function LoginPage() {
 
         <LanguageToggle language={language} onChange={setLanguage} variant="compact" />
 
-        <Link href={`/adult?lang=${language}`} className="adultLink">
+        {/* Parents and teachers sign in with this same form; the server routes each role. */}
+        <Link href={`/login?lang=${language}&returnTo=family#sign-in`} className="adultLink">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="8.5" cy="7.5" r="3.6" />
             <circle cx="16.5" cy="8.5" r="3" />
