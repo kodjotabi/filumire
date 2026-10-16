@@ -32,6 +32,15 @@ const DEVELOPMENT_IDENTITY_HEADER =
 const DEVELOPMENT_PRINCIPAL_HEADER =
   "x-filumire-principal-id";
 
+/*
+ * The built-in development identities exist only in the in-memory
+ * store (see development-fixtures). Against Postgres they name rows
+ * that are not there, so a signed-out request is simply unauthenticated.
+ */
+function developmentIdentityEnabled(): boolean {
+  return (process.env.FILUMIRE_PERSISTENCE ?? "memory") === "memory";
+}
+
 const PRODUCTION_SESSION_COOKIE =
   "filumire_auth_session";
 
@@ -272,7 +281,11 @@ export async function resolvePrincipalIdentity(
       DEVELOPMENT_PRINCIPAL_HEADER,
     );
 
-  if (!principalId || !isValidIdentity(principalId)) {
+  if (
+    !developmentIdentityEnabled() ||
+    !principalId ||
+    !isValidIdentity(principalId)
+  ) {
     throw new Error(
       "Unauthenticated request: principal identity is required.",
     );
@@ -299,7 +312,7 @@ export async function resolveRequestIdentity(
       DEVELOPMENT_IDENTITY_HEADER,
     );
 
-  if (!learnerId) {
+  if (!developmentIdentityEnabled() || !learnerId) {
     throw new Error(
       "Unauthenticated request: learner identity is required.",
     );
