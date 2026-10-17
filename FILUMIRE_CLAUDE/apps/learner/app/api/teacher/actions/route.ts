@@ -6,6 +6,8 @@ import {
   resolvePrincipalIdentity,
 } from "../../../../../../services/identity";
 
+import { assertSameOrigin } from "../../account/http";
+
 import {
   getPrincipalLearnerAccess,
 } from "../../../../../../services/principal";
@@ -56,6 +58,17 @@ function jsonError(
 export async function POST(
   request: Request,
 ) {
+  // Teacher writes come only from this application; SameSite=Strict
+  // cookies alone would still admit other filumire.com sites.
+  try {
+    assertSameOrigin(request);
+  } catch {
+    return NextResponse.json(
+      { error: "Cross-site teacher requests are not allowed." },
+      { status: 403 },
+    );
+  }
+
   try {
     const { principalId } =
       await resolvePrincipalIdentity(request);
