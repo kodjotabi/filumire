@@ -49,20 +49,21 @@ records evidence atomically and supports retryable submissions. Time-aware
 selection existed behind an opt-in, while Challenges only linked normal learning
 and achievements. It exposed neither due reviews nor upcoming dates.
 
-### Known offline failures outside this work
+### Earlier offline failures outside this work (since fixed)
 
-Running every offline suite through `scripts/run-offline-suites.mjs`, 168 of 170 pass.
-The same two fail identically on unchanged HEAD `6c352270` (clean worktree, same
-runner, 17 October 2026). They are not caused by spaced revision and were left
-unfixed:
+When spaced revision was extended, two offline suites already failed identically on
+HEAD `6c352270` (clean worktree, same runner, 17 October 2026). Both were then
+fixed separately, without changing application behaviour:
 
 - `b4-english-adaptive-coverage`: `ENOENT` for
-  `docs/curriculum-sources/ghana/2019/ENGLISH-B4-indicators-authoritative.txt`,
-  which is not in the repository (no tracked files under `docs/curriculum-sources`).
-- `learner-journey-route-4h`: six journeys (Basic 5 and Basic 6 English, the last
-  subjects swept) fail `session issuance 201 (429)` because the suite exceeds
-  the session-issue rate limit. Every other check passes, including the teacher
-  repair-status check, whose test now uses the engine's time-aware completion rule.
+  `docs/curriculum-sources/ghana/2019/ENGLISH-B4-indicators-authoritative.txt`.
+  The file was committed on another branch (`f07f6e01`) but never reached this
+  one. It is restored byte-for-byte from that commit (131 indicator codes for
+  the existing Basic 4 English competencies; no curriculum added).
+- `learner-journey-route-4h`: the sweep signs in 36 learners from one address
+  and the last six hit the session-issue limit (30 per 15 minutes, `429`).
+  Each simulated learner now sends its own TEST-NET-2 `x-forwarded-for`
+  address; the production limit is unchanged and its suites still pass.
 
 ## Completed behavior (original Basic 4 Mathematics slice)
 

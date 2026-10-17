@@ -104,6 +104,8 @@ function makeChecker(label: string) {
   };
 }
 
+let signIns = 0;
+
 class Learner {
   readonly learnerId: string;
   sessionId: string;
@@ -125,9 +127,13 @@ class Learner {
     const principalId = await resolveOrCreatePrincipalForExternalIdentity(ISSUER, subject);
     await persistenceStore.ensureLearnerExists(this.learnerId);
     await createPrincipalLearnerAccess(`access-journey-${crypto.randomUUID()}`, principalId, this.learnerId, "self");
+    // Each journey is a different learner on their own device: give it its own
+    // documentation-range (TEST-NET-2) address so the sweep's 36 sign-ins do
+    // not share one session-issue rate-limit bucket (30 per 15 minutes).
     const response = await issue(new Request("http://localhost/api/session/issue", {
       method: "POST",
-      headers: { authorization: `Bearer ${await signToken(subject)}`, "content-type": "application/json" },
+      headers: { authorization: `Bearer ${await signToken(subject)}`, "content-type": "application/json",
+        "x-forwarded-for": `198.51.100.${(signIns++ % 254) + 1}` },
       body: JSON.stringify({ learnerId: this.learnerId }),
     }));
     this.check(response.status === 201, `session issuance 201 (${response.status})`);
