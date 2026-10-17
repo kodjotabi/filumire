@@ -90,22 +90,24 @@ SELECT coalesce(pg_get_viewdef(to_regclass('public.filumire_deployment_migration
 
 -- Q8. Whole-schema fingerprints, comparable between branches when this same file runs on each
 -- (same Neon project, so same PostgreSQL version; confirm with Q0). Not the catalog-snapshot.mjs hash.
+-- Separator is chr(10), a newline: the Neon SQL Editor stops splitting statements at the
+-- first backslash, so this file must contain none (an escape-string newline broke R1b run 1).
 SELECT
   (SELECT count(*) FROM pg_class WHERE relnamespace = 'public'::regnamespace AND relkind IN ('r', 'p')) AS base_tables,
   (SELECT encode(sha256(convert_to(coalesce(string_agg(
             format('%s|%s|%s|%s|%s', c.relname, a.attname, format_type(a.atttypid, a.atttypmod), a.attnotnull, pg_get_expr(d.adbin, d.adrelid)),
-            E'\n' ORDER BY c.relname, a.attname), ''), 'UTF8')), 'hex')
+            chr(10) ORDER BY c.relname, a.attname), ''), 'UTF8')), 'hex')
      FROM pg_attribute a JOIN pg_class c ON c.oid = a.attrelid
      LEFT JOIN pg_attrdef d ON d.adrelid = a.attrelid AND d.adnum = a.attnum
      WHERE c.relnamespace = 'public'::regnamespace AND c.relkind IN ('r', 'p', 'v', 'm', 'f')
        AND a.attnum > 0 AND NOT a.attisdropped) AS columns_sha256,
   (SELECT encode(sha256(convert_to(coalesce(string_agg(
             format('%s|%s|%s|%s', conrelid::regclass, conname, contype, pg_get_constraintdef(oid)),
-            E'\n' ORDER BY conrelid::regclass::text, conname), ''), 'UTF8')), 'hex')
+            chr(10) ORDER BY conrelid::regclass::text, conname), ''), 'UTF8')), 'hex')
      FROM pg_constraint WHERE connamespace = 'public'::regnamespace) AS constraints_sha256,
   (SELECT encode(sha256(convert_to(coalesce(string_agg(
             format('%s|%s|%s', tablename, indexname, indexdef),
-            E'\n' ORDER BY tablename, indexname), ''), 'UTF8')), 'hex')
+            chr(10) ORDER BY tablename, indexname), ''), 'UTF8')), 'hex')
      FROM pg_indexes WHERE schemaname = 'public') AS indexes_sha256;
 
 -- Q9. Triggers and row-security policies on public relations (either could change what a migration does).

@@ -2,10 +2,14 @@
 
 **Status: PLAN ONLY — 17 October 2026.** Nothing in this document has been run.
 
-**Approval state (17 October 2026):** R0 approved (owner reads dashboards; no database
-connection). R1b and R1 are **on hold** until the review of
-`scripts/sql/preview-history-reconciliation-readonly.sql` is complete; the reviewed file's SHA-256
-will be restated with any later approval. Recommended order once released: R0 → R1b → R1. This
+**Approval state (17 October 2026):** R0 done: Neon metadata confirms both branch/endpoint
+mappings below; Vercel's Preview `DATABASE_URL` is a write-only (sensitive) value, so its endpoint
+could not be confirmed there. R1b run 1 (script SHA-256 `162da2f7…094113`, commit `2883f624`) returned
+Q0–Q7 only: the Neon SQL Editor stopped splitting statements at the first backslash (`E'\n'` in
+Q8). The script now uses `chr(10)` and contains no backslash; current SHA-256 (LF-normalised)
+`3977f9c8bb322f5626483a38c4e9f0ed8385ac9ecfe59a3ab175b2c904ab40a2`. A re-run of R1b and all of
+R1 need fresh approval naming this hash. Check that the editor shows 20 statements before trusting
+a run. Recommended order: R1b → R1. This
 safeguard exists because earlier "Preview" work read `ep-cold-bird-b8j437np`, now labelled `main`. No database,
 Neon, Vercel or GitHub system was contacted to prepare it; it is built from evidence already in
 this repository. Every step below needs its own explicit approval for the exact target, and this
