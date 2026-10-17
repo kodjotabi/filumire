@@ -16,11 +16,13 @@ export function dashboardView(search: string): DashboardView {
   }
 }
 
-export function navItemForView(view: DashboardView): LearnerNavItem {
+// Profile and setup are not menu items, so nothing is highlighted there.
+export function navItemForView(view: DashboardView): LearnerNavItem | null {
   switch (view) {
     case "learning": case "progress": case "challenges": return view;
     case "ask-filu": return "filu";
-    default: return "home";
+    case "home": return "home";
+    default: return null;
   }
 }
 

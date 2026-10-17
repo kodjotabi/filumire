@@ -12,6 +12,12 @@ type LearnerHeaderProps = {
   showAskFilu?: boolean;
   language?: Language;
   setupHeader?: boolean;
+  /*
+   * First-time setup is required, so links that would only bounce
+   * back to it (Back, logo, profile) are left out. Ask FILU stays:
+   * setup remembers it and opens the assistant afterwards.
+   */
+  onboarding?: boolean;
   subjectId?: string | null;
 };
 
@@ -40,6 +46,7 @@ export function LearnerHeader({
   showAskFilu = true,
   language = "en",
   setupHeader = false,
+  onboarding = false,
   subjectId,
 }: LearnerHeaderProps) {
   const avatarSrc = useLearnerAvatar();
@@ -53,21 +60,29 @@ export function LearnerHeader({
     return (
       <header className="filumireLearnerHeader filumireSetupHeader">
         <div className="filumireSetupHeaderLeft">
-          <Link
-            href={back ?? withLang("/login", language)}
-            className="filumireBack"
-          >
-            <span className="filumireBackArrow" aria-hidden="true">‹</span>
-            <span>{t.back}</span>
-          </Link>
+          {onboarding ? (
+            <span className="filumireHeaderLogo filumireSetupLogo">
+              <img src="/filumire-logo-white.svg" alt="FILUMIRE" />
+            </span>
+          ) : (
+            <>
+              <Link
+                href={back ?? withLang("/login", language)}
+                className="filumireBack"
+              >
+                <span className="filumireBackArrow" aria-hidden="true">‹</span>
+                <span>{t.back}</span>
+              </Link>
 
-          <Link
-            href={homeHref}
-            className="filumireHeaderLogo filumireSetupLogo"
-            aria-label={t.home}
-          >
-            <img src="/filumire-logo-white.svg" alt="FILUMIRE" />
-          </Link>
+              <Link
+                href={homeHref}
+                className="filumireHeaderLogo filumireSetupLogo"
+                aria-label={t.home}
+              >
+                <img src="/filumire-logo-white.svg" alt="FILUMIRE" />
+              </Link>
+            </>
+          )}
         </div>
 
         <div className="filumireSetupHeaderRight">
@@ -85,13 +100,15 @@ export function LearnerHeader({
             </Link>
           )}
 
-          <Link
-            href={profileHref}
-            className="filumireSetupAvatar"
-            aria-label={t.profile}
-          >
-            <img src={avatarSrc} alt="" />
-          </Link>
+          {!onboarding && (
+            <Link
+              href={profileHref}
+              className="filumireSetupAvatar"
+              aria-label={t.profile}
+            >
+              <img src={avatarSrc} alt="" />
+            </Link>
+          )}
         </div>
       </header>
     );

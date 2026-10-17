@@ -239,6 +239,9 @@ function LearnerDashboardView() {
   }, []);
 
   const signedInLearner = activeLearner(account);
+  // Required first-time setup: every other view redirects back to it,
+  // so navigation that cannot leave setup is not shown.
+  const onboarding = signedInLearner?.onboardingComplete === false;
   const appearance = useLearnerAppearance(signedInLearner?.learnerId);
 
   // The setup class field: nothing editable until the account and
@@ -573,7 +576,7 @@ function LearnerDashboardView() {
   }
 
   return (
-    <main className="learnerPage learnerUi" lang={language} data-appearance={appearance}>
+    <main className={onboarding ? "learnerPage learnerUi learnerOnboarding" : "learnerPage learnerUi"} lang={language} data-appearance={appearance}>
       <a className="filumireSkipLink" href="#learner-main">
         {language === "fr" ? "Aller au contenu" : "Skip to content"}
       </a>
@@ -585,6 +588,7 @@ function LearnerDashboardView() {
                     subjectId={assistantSubjectId}
                     setupHeader={view === "setup" || view === "progress" || view === "challenges" || view === "ask-filu" || view === "profile"}
                     showAskFilu={view !== "ask-filu"}
+                    onboarding={onboarding}
                     backHref={
                       view === "home" || (view === "learning" && !selectedSubjectId)
                         ? undefined
@@ -1169,7 +1173,7 @@ function LearnerDashboardView() {
         </div>
 
         {account && view !== "profile" && <LearnerSignOut language={language} />}
-        <LearnerBottomNav active={navItemForView(view)} language={language} subjectId={assistantSubjectId} />
+        {!onboarding && <LearnerBottomNav active={navItemForView(view)} language={language} subjectId={assistantSubjectId} />}
       </div>
 
       <style jsx>{`
@@ -1813,6 +1817,16 @@ function LearnerDashboardView() {
         @media (min-width: 1024px) {
           .learnerPage {
             padding-left: var(--filumire-sidebar-width);
+          }
+
+          /* No sidebar during first-time setup, so no gutter, and the
+             header shows the logo the sidebar would otherwise carry. */
+          .learnerPage.learnerOnboarding {
+            padding-left: 0;
+          }
+
+          .learnerOnboarding :global(.filumireSetupHeader .filumireHeaderLogo) {
+            display: flex;
           }
 
           .learnerShell {

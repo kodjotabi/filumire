@@ -9,7 +9,8 @@ export type LearnerNavItem =
   | "filu";
 
 type LearnerBottomNavProps = {
-  active: LearnerNavItem;
+  /* null on pages that are not a menu item (profile, setup). */
+  active: LearnerNavItem | null;
   language?: "en" | "fr";
   subjectId?: string | null;
   /*
@@ -67,6 +68,7 @@ export function LearnerBottomNav({
   subjectId,
 }: LearnerBottomNavProps) {
   const subjectQuery = subjectId ? `&subjectId=${encodeURIComponent(subjectId)}` : "";
+  // \u00AD soft hyphens: long one-word labels break cleanly only when a phone menu slot is too narrow.
   const items = [
     {
       key: "home" as const,
@@ -78,7 +80,7 @@ export function LearnerBottomNav({
       key: "learning" as const,
       label:
         language === "fr"
-          ? "Apprentissage"
+          ? "Appren\u00ADtissage"
           : "My Learning",
       href: `/dashboard?lang=${language}&view=learning${subjectQuery}`,
       icon: "learning",
@@ -87,7 +89,7 @@ export function LearnerBottomNav({
       key: "progress" as const,
       label:
         language === "fr"
-          ? "Progression"
+          ? "Progres\u00ADsion"
           : "Progress",
       href: `/dashboard?lang=${language}&view=progress${subjectQuery}`,
       icon: "progress",
@@ -97,7 +99,7 @@ export function LearnerBottomNav({
       label:
         language === "fr"
           ? "Défis"
-          : "Challenges",
+          : "Chal\u00ADlenges",
       href: `/dashboard?lang=${language}&view=challenges${subjectQuery}`,
       icon: "challenges",
     },

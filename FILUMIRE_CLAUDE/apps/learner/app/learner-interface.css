@@ -79,6 +79,11 @@
 .learnerUi .filumireHeaderLogoCentered { position: static; transform: none; }
 .learnerUi .filumireNavItem { min-height: 64px; font-size: .75rem; line-height: 1.4; padding: 8px 4px; overflow-wrap: anywhere; }
 .learnerUi .filumireBottomNav { grid-template-columns: repeat(5, minmax(0, 1fr)); padding-bottom: env(safe-area-inset-bottom, 0px); }
+/* Phones: fit each menu label on one line ("Challenges", "Progression") instead of
+   splitting mid-word; the one longer word ("Apprentissage") breaks at its soft hyphen. */
+@media (max-width: 400px) {
+  .learnerUi .filumireNavItem { font-size: .6875rem; padding-inline: 2px; overflow-wrap: normal; hyphens: manual; }
+}
 .learnerUi :where(.learnerContent, .learnBody, .learnMain, .learnSide, .fTopicText, .fTopicGoals, .homeSubjectText, .subjectCurrentBody > div) { min-width: 0; }
 .learnerUi :where(.homeSubjectText strong, .homeSubjectText small, .homeMiniMeta, .homeTrackMeta) { font-size: .875rem; line-height: 1.5; }
 .learnerUi :where(.homeSectionHead, .homeMiniMeta, .homeTrackMeta, .subjectProgressRow) { flex-wrap: wrap; gap: 8px; }
