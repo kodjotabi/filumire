@@ -1,9 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { LanguageToggle } from "../components/filumire/LanguageToggle";
 import { PublicHomeLink } from "../components/filumire/PublicHomeLink";
-import { saveLanguage, useLanguage, type Language } from "../components/filumire/language";
+import { readLanguage, saveLanguage, useLanguage, type Language } from "../components/filumire/language";
+import { destinationFor, fetchAccount, hasAccountSession } from "../services/account-client";
 
 /*
  * The public home page is where a learner chooses a language. The
@@ -60,8 +63,26 @@ const FEATURE_ICONS = [
 ];
 
 export default function HomePage() {
+  const router = useRouter();
   const [language, setLanguage] = useLanguage();
   const t = TEXT[language];
+
+  // Already signed in on this browser (for example, arriving from the
+  // website's Start Learning): go straight on, as the sign-in page does.
+  useEffect(() => {
+    if (!hasAccountSession()) return;
+
+    let active = true;
+    fetchAccount()
+      .then((account) => {
+        if (active && account) router.replace(destinationFor(account, readLanguage()));
+      })
+      .catch(() => undefined);
+
+    return () => {
+      active = false;
+    };
+  }, [router]);
 
   function chooseLanguage(value: Language) {
     saveLanguage(value);
@@ -73,19 +94,7 @@ export default function HomePage() {
         {t.skip}
       </a>
 
-      <header className="topbar">
-        <img
-          src="/images/home/top%20bar%20with%20logo%20and%20sign%20in.svg"
-          alt="FILUMIRE"
-        />
-        <Link
-          href={`/login?lang=${language}&returnTo=family`}
-          className="parentTeacherHotspot"
-          aria-label={t.adult}
-        />
-      </header>
-
-      {/* Tablet and up: a real header bar replaces the 390px artwork. */}
+      {/* A real, bilingual header bar at every width. */}
       <header className="wideTopbar">
         <Link href={`/?lang=${language}`} className="wideLogo" aria-label={t.home}>
           <img src="/filumire-logo-white.svg" alt="FILUMIRE" />
@@ -127,7 +136,7 @@ export default function HomePage() {
         />
 
         <p className="intro">
-          {t.intro[0]}
+          {`${t.intro[0]} `}
           <br />
           {t.intro[1]}
         </p>
@@ -202,9 +211,6 @@ export default function HomePage() {
 
       <style>{`
         .home { width: 100%; max-width: 390px; min-height: 844px; margin: 0 auto; overflow: hidden; background: #ffffff; color: #093375; font-family: inherit; }
-        .topbar { position: relative; display: block; width: 100%; height: auto; overflow: hidden; background: #123f78; }
-        .topbar img { display: block; width: 100%; height: auto; object-fit: contain; }
-        .parentTeacherHotspot { position: absolute; top: 0; right: 0; width: 37%; height: 100%; display: block; cursor: pointer; }
         .content { width: 100%; margin: 0 auto; padding-top: 5px; text-align: center; }
         h1 { margin: 0; color: #093375; font-size: 28px; line-height: 1.15; font-weight: 800; letter-spacing: -0.5px; }
         h1 strong { color: #0357c3; font-weight: 800; }
@@ -212,13 +218,13 @@ export default function HomePage() {
         .learners { display: block; width: 100%; height: auto; margin: 4px 0 3px; }
         .intro { margin: 0 auto; color: #093375; font-size: 13.5px; line-height: 1.25; font-weight: 500; }
         .choose { margin: 14px 0 9px; color: #334b81; font-size: 14px; line-height: 1.2; font-weight: 700; }
-        .languages { width: 342px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+        .languages { width: min(342px, calc(100% - 32px)); margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
         .language { position: relative; display: block; width: 100%; text-decoration: none; color: #093375; }
         .language > img { display: block; width: 100%; height: auto; }
-        .languageText { position: absolute; left: 77px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
+        .languageText { position: absolute; left: 22.5%; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
         .languageText strong { color: #093375; font-size: 14px; line-height: 1.1; font-weight: 700; }
         .languageText small { margin-top: 2px; color: #093375; font-size: 13.5px; line-height: 1.1; font-weight: 500; }
-        .features { width: 358px; margin: 13px auto 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
+        .features { width: min(358px, calc(100% - 16px)); margin: 13px auto 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
         .feature { min-width: 0; text-align: center; color: #093375; }
         .feature img { display: block; width: 48px; height: 48px; object-fit: contain; margin: 0 auto 4px; }
         .feature strong { display: block; white-space: nowrap; font-size: 9.5px; line-height: 1.15; font-weight: 700; }
@@ -231,16 +237,21 @@ export default function HomePage() {
         .copyright { left: 24px; font-size: 8.5px; }
         .footerTag { right: 23px; font-size: 6.5px; letter-spacing: .9px; }
         @media (min-width: 391px) { .home { box-shadow: 0 0 0 1px #e5e5e5; } }
-        .wideTopbar { display: none; }
+        .wideTopbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; padding: 8px 16px; background: #123f78; }
+        .wideLogo { display: inline-flex; flex: none; }
+        .wideLogo img { display: block; width: 118px; height: auto; }
+        .wideActions .filumireLangToggle, .wideActions .filumirePublicHome { display: none; }
+        .wideAdultLink { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; max-width: 168px; padding: 6px 12px; border: 1px solid rgba(255,255,255,.35); border-radius: 22px; color: #ffffff; font-size: 12px; line-height: 1.2; font-weight: 700; text-align: left; text-decoration: none; }
+        .wideAdultLink svg { width: 20px; height: 20px; flex: none; fill: currentColor; }
+        @media (max-width: 380px) { .feature strong { white-space: normal; } }
 
         /* Tablet: full-width page, real header, centred column */
         @media (min-width: 768px) {
           .home { display: flex; flex-direction: column; max-width: none; min-height: 100dvh; box-shadow: none; }
-          .home .topbar { display: none; }
-          .home .wideTopbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 76px; padding: 0 max(32px, calc((100% - 1200px) / 2)); background: #123f78; }
-          .wideLogo { display: inline-flex; }
-          .wideLogo img { display: block; width: 150px; height: auto; }
-          .wideAdultLink { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 18px; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; color: #ffffff; font-size: 14px; font-weight: 700; text-decoration: none; }
+          .home .wideTopbar { gap: 24px; min-height: 76px; padding: 0 max(32px, calc((100% - 1200px) / 2)); }
+          .wideLogo img { width: 150px; }
+          .wideActions .filumireLangToggle, .wideActions .filumirePublicHome { display: inline-flex; }
+          .wideAdultLink { gap: 10px; max-width: none; padding: 8px 18px; border-radius: 999px; font-size: 14px; }
           .wideAdultLink:hover { background: rgba(255,255,255,.1); }
           .wideAdultLink svg { width: 22px; height: 22px; flex: none; fill: currentColor; }
           .home .content { flex: 1; width: min(640px, calc(100% - 64px)); padding-top: 40px; }
