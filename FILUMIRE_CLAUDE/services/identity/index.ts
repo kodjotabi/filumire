@@ -13,8 +13,8 @@ import {
 } from "../auth-session";
 
 import {
-  isPrincipalAuthorizedForLearner,
-  listLearnersForPrincipal,
+  getPrincipalLearnerAccess,
+  listAuthorizedLearnersForPrincipal,
   resolveOrCreatePrincipalForExternalIdentity,
 } from "../principal";
 
@@ -39,6 +39,22 @@ const DEVELOPMENT_PRINCIPAL_HEADER =
  */
 function developmentIdentityEnabled(): boolean {
   return (process.env.FILUMIRE_PERSISTENCE ?? "memory") === "memory";
+}
+
+/*
+ * Only a learner's own sign-in and their guardian may learn as the
+ * learner. A teacher link grants review access through the teacher
+ * pages, never a learner-bound session.
+ */
+async function mayLearnAs(
+  principalId: string,
+  learnerId: string,
+): Promise<boolean> {
+  for (const relationshipType of ["self", "guardian"] as const) {
+    const access = await getPrincipalLearnerAccess(principalId, learnerId, relationshipType);
+    if (access?.status === "active") return true;
+  }
+  return false;
 }
 
 const PRODUCTION_SESSION_COOKIE =
@@ -229,7 +245,7 @@ async function resolveProductionIdentity(
   }
 
   const authorized =
-    await isPrincipalAuthorizedForLearner(
+    await mayLearnAs(
       principalId,
       learnerId,
     );
@@ -518,7 +534,7 @@ export async function resolveSignedInSession(
 
   if (
     session.learnerId &&
-    !(await isPrincipalAuthorizedForLearner(
+    !(await mayLearnAs(
       session.principalId,
       session.learnerId,
     ))
@@ -552,8 +568,11 @@ export async function issueProductionSession(
       externalIdentity.providerSubject,
     );
 
-  const learnerIds =
-    await listLearnersForPrincipal(principalId);
+  const learnerIds = (
+    await listAuthorizedLearnersForPrincipal(principalId)
+  )
+    .filter((entry) => entry.relationshipType !== "teacher")
+    .map((entry) => entry.learnerId);
 
   let learnerId: string;
 

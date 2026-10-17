@@ -20,7 +20,7 @@
                     "test:adaptive":  "tsx --env-file=.env.local ./tests/adaptive-learning-loop.test.ts",
                     "test:progression":  "tsx --env-file=.env.local ./tests/competency-003-adaptive-loop.test.ts",
                     "test:security":  "tsx --env-file=.env.local ./tests/api-assessment-security.test.ts",
-                    "test:identity":  "tsx --env-file=.env.local ./tests/api-identity-security.test.ts && node --import tsx ./tests/session-issue-rate-limit.test.ts",
+                    "test:identity":  "tsx --env-file=.env.local ./tests/api-identity-security.test.ts && node --import tsx ./tests/session-issue-rate-limit.test.ts && node --import tsx ./tests/teacher-learner-session-boundary.test.ts",
                     "test:intervention":  "tsx --env-file=.env.local ./tests/intervention-lifecycle.test.ts",
                     "test:language":  "tsx --env-file=.env.local ./tests/content-language-selection.test.ts",
                     "test:accounts":  "tsx --env-file=.env.local ./tests/account-registration-journey.test.ts",
