@@ -1,10 +1,12 @@
-// Positive and negative permission tests for filumire_app (A5). TEST branches only.
+// Positive and negative permission tests for filumire_app (A5). TEST branches, plus one pinned existing target (W2):
+// filumire-preview only with --pinned-target filumire-preview, its exact host and Neon timeline. Never production.
 // Everything runs as filumire_app inside ONE transaction that is always rolled back; statements use
 // WHERE false / zero-row forms, so no row is kept. The owner connection only reads the catalog.
-// Usage: node scripts/test-app-role-permissions.mjs --app-url-env <VAR> --owner-url-env <VAR> --expect-host <host>
+// Usage: node scripts/test-app-role-permissions.mjs --app-url-env <VAR> --owner-url-env <VAR> --expect-host <host> [--pinned-target <name>]
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { DENIED_ENDPOINTS } from "./apply-migrations.mjs";
+import { pinnedTarget, checkPinnedHost, observe, checkIdentity } from "./pinned-targets.mjs";
 
 const AI = ["SELECT", "INSERT"], AIU = [...AI, "UPDATE"];
 /** Must match scripts/sql/app-role-grants.sql. Absent or [] = no access at all. */
@@ -25,10 +27,11 @@ const ALL = ["SELECT", "INSERT", "UPDATE", "DELETE", "TRUNCATE", "REFERENCES", "
 /** Migration 0024's restricted view of the 0023 ledger row: SELECT only, granted by app-role-grants.sql. */
 export const EVIDENCE_VIEW = "public.filumire_deployment_migration_0023";
 
-function connectionString(envName, expectHost) {
-  const url = new URL(process.env[envName] ?? "");
+export function connectionString(urlText, expectHost, profile) {
+  const url = new URL(urlText ?? "");
   const host = url.hostname.toLowerCase();
-  if (DENIED_ENDPOINTS.some(e => host.startsWith(e))) throw new Error("denied_existing_endpoint");
+  const pinned = checkPinnedHost(host, profile);
+  if (!pinned && DENIED_ENDPOINTS.some(e => host.startsWith(e))) throw new Error("denied_existing_endpoint");
   if (host !== expectHost) throw new Error("host_does_not_match_expected");
   // A local PostgreSQL server (loopback only) has no TLS; every remote host still requires verify-full.
   if (host === "localhost" || host === "127.0.0.1") { url.searchParams.delete("sslmode"); url.searchParams.delete("channel_binding"); return url.toString(); }
@@ -39,14 +42,20 @@ function connectionString(envName, expectHost) {
 
 async function run(args) {
   const get = flag => args[args.indexOf(flag) + 1];
+  const profile = args.includes("--pinned-target") ? pinnedTarget(get("--pinned-target")) : undefined;
   const { default: pg } = await import("pg");
   const results = [];
   const record = (name, ok, detail) => results.push({ name, ok, ...(detail ? { detail } : {}) });
 
   // 1. Owner reads the catalog: exact privilege set per table, nothing else anywhere.
-  const owner = new pg.Client({ connectionString: connectionString(get("--owner-url-env"), get("--expect-host")) });
+  const owner = new pg.Client({ connectionString: connectionString(process.env[get("--owner-url-env")], get("--expect-host"), profile) });
   await owner.connect();
   await owner.query("SET SESSION CHARACTERISTICS AS TRANSACTION READ ONLY");
+  // A pinned target must be the exact database R1 inspected (same Neon timeline, owner role) before any app statement.
+  if (profile) {
+    try { checkIdentity(profile, (await observe(owner)).identity); }
+    catch (error) { await owner.end(); throw error; }
+  }
   const tables = (await owner.query("select tablename t from pg_tables where schemaname='public' order by 1")).rows.map(r => r.t);
   const unclassified = tables.filter(t => !(t in APP_ROLE_MATRIX));
   record("every public table is classified", !unclassified.length, unclassified.join(", ") || undefined);
@@ -88,7 +97,7 @@ async function run(args) {
   await owner.end();
 
   // 2. App performs real statements, each in a savepoint, all rolled back at the end.
-  const app = new pg.Client({ connectionString: connectionString(get("--app-url-env"), get("--expect-host")) });
+  const app = new pg.Client({ connectionString: connectionString(process.env[get("--app-url-env")], get("--expect-host"), profile) });
   await app.connect();
   await app.query("BEGIN");
   const attempt = async (name, sql, expectAllowed) => {
