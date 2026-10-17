@@ -399,7 +399,7 @@ export default function AdultSupervisionPage() {
                         void load(learner.learnerId)
                       }
                     >
-                      {relationshipLabel(
+                      {account?.learners.find((profile) => profile.learnerId === learner.learnerId)?.displayName || relationshipLabel(
                         learner.relationshipType,
                         index,
                       )}

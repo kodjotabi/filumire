@@ -295,9 +295,49 @@ function mapLearnerLearningContext(
   };
 }
 
+export class GradeLockSchemaRequiredError extends Error {
+  readonly code: string;
+
+  constructor(missingTable = false) {
+    super(missingTable
+      ? "Learning-context table is missing. Restore the prerequisite schema and apply migration 0023_learner_grade_set_by before enabling grade-lock functionality."
+      : "Grade-lock functionality requires migration 0023_learner_grade_set_by. Learning-context access is blocked until the database is migrated by an authorised operator.");
+    this.code = missingTable ? "grade_lock_context_table_missing" : "grade_lock_migration_0023_required";
+    this.name = "GradeLockSchemaRequiredError";
+  }
+}
+
 export class PostgresPersistenceStore
   implements PersistenceStore
 {
+  private gradeLockSchemaCheck?: Promise<void>;
+
+  private async withGradeLockSchema<T>(operation: () => Promise<T>): Promise<T> {
+    // Probe the same search-path-resolved table used by Drizzle, without reading
+    // learner data. A legacy NULL attribution is valid; an absent column is not.
+    // The singleton store uses one immutable pool/target for this process.
+    // Share successful/in-flight checks; discard failures. Actual operations
+    // still fail closed if the schema is removed after a successful check.
+    try {
+      this.gradeLockSchemaCheck ??= pool
+        .query('SELECT "grade_set_by" FROM "learner_learning_context" LIMIT 0')
+        .then(() => undefined);
+      await this.gradeLockSchemaCheck;
+      return await operation();
+    } catch (error) {
+      this.gradeLockSchemaCheck = undefined;
+      // Drizzle wraps PostgreSQL errors in `cause` during normal operations.
+      let detail = error as { code?: string; cause?: unknown } | undefined;
+      for (let depth = 0; detail && depth < 5; depth++) {
+        if (detail.code === "42703" || detail.code === "42P01") {
+          throw new GradeLockSchemaRequiredError(detail.code === "42P01");
+        }
+        detail = detail.cause as typeof detail;
+      }
+      throw error;
+    }
+  }
+
   async createPrincipal(
     principalId: string,
   ): Promise<void> {
@@ -2029,45 +2069,49 @@ export class PostgresPersistenceStore
   async getLearnerLearningContext(
     learnerId: string,
   ): Promise<LearnerLearningContextRecord | undefined> {
-    const rows = await db
-      .select()
-      .from(learnerLearningContext)
-      .where(
-        eq(
-          learnerLearningContext.learnerId,
-          learnerId,
-        ),
-      )
-      .limit(1);
+    return this.withGradeLockSchema(async () => {
+      const rows = await db
+        .select()
+        .from(learnerLearningContext)
+        .where(
+          eq(
+            learnerLearningContext.learnerId,
+            learnerId,
+          ),
+        )
+        .limit(1);
 
-    const row = rows[0];
+      const row = rows[0];
 
-    return row
-      ? mapLearnerLearningContext(row)
-      : undefined;
+      return row
+        ? mapLearnerLearningContext(row)
+        : undefined;
+    });
   }
 
   async saveLearnerLearningContext(
     context: LearnerLearningContextRecord,
   ): Promise<void> {
-    const values = {
-      learnerId: context.learnerId,
-      curriculumVersionId: context.curriculumVersionId,
-      gradeId: context.gradeId,
-      activeSubjectId: context.activeSubjectId,
-      activeCompetencyId:
-        context.activeCompetencyId ?? null,
-      gradeSetBy: context.gradeSetBy ?? null,
-      updatedAt: new Date(context.updatedAt),
-    };
+    return this.withGradeLockSchema(async () => {
+      const values = {
+        learnerId: context.learnerId,
+        curriculumVersionId: context.curriculumVersionId,
+        gradeId: context.gradeId,
+        activeSubjectId: context.activeSubjectId,
+        activeCompetencyId:
+          context.activeCompetencyId ?? null,
+        gradeSetBy: context.gradeSetBy ?? null,
+        updatedAt: new Date(context.updatedAt),
+      };
 
-    await db
-      .insert(learnerLearningContext)
-      .values(values)
-      .onConflictDoUpdate({
-        target: learnerLearningContext.learnerId,
-        set: values,
-      });
+      await db
+        .insert(learnerLearningContext)
+        .values(values)
+        .onConflictDoUpdate({
+          target: learnerLearningContext.learnerId,
+          set: values,
+        });
+    });
   }
 }
 

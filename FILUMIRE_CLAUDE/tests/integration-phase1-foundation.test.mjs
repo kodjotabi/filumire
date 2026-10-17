@@ -12,7 +12,7 @@ const refuses = (code, fn) => { assert.throws(fn, error => error.code === code, 
 
 // ---- Migration ledger
 const manifest = loadManifest();
-ok(() => assert.equal(verifyManifest(manifest), 5));
+ok(() => assert.equal(verifyManifest(manifest), 6));
 ok(() => assert.equal(sha256("a\r\nb\n"), sha256("a\nb\n"), "line endings do not change the hash"));
 {
   // A reviewed file edited afterwards is refused.
@@ -28,11 +28,11 @@ refuses("duplicate_or_missing_id:0019_learner_accounts", () => verifyManifest({ 
 const row = id => ({ id, sha256: manifest.entries.find(e => e.id === id)?.sha256 ?? "0".repeat(64) });
 ok(() => {
   const fresh = compareLedger(manifest, []);
-  assert.deepEqual(fresh.applied, []); assert.equal(fresh.pending.length, 5); assert.equal(fresh.consistent, true);
+  assert.deepEqual(fresh.applied, []); assert.equal(fresh.pending.length, 6); assert.equal(fresh.consistent, true);
 });
 ok(() => {
   const partial = compareLedger(manifest, [row("baseline-0000-0018"), row("0019_learner_accounts")]);
-  assert.deepEqual(partial.pending, ["0020_auth_rate_limits", "0021_teacher_accounts", "0022_migration_ledger"]); assert.equal(partial.consistent, true);
+  assert.deepEqual(partial.pending, ["0020_auth_rate_limits", "0021_teacher_accounts", "0022_migration_ledger", "0023_learner_grade_set_by"]); assert.equal(partial.consistent, true);
 });
 ok(() => assert.equal(compareLedger(manifest, [row("baseline-0000-0018"), row("0020_auth_rate_limits")]).outOfOrder, true, "skipped migration detected"));
 ok(() => assert.deepEqual(compareLedger(manifest, [row("baseline-0000-0018"), { id: "0019_learner_accounts", sha256: "f".repeat(64) }]).drift, ["0019_learner_accounts"]));
@@ -80,7 +80,13 @@ refuses("host_does_not_match_expected", () => checkTarget(testUrl, "ep-other.exa
 refuses("database_does_not_match_expected", () => checkTarget(testUrl, testHost, "filumire_test"));
 refuses("pooled_connection_not_allowed_for_ddl", () => checkTarget(testUrl.replace("-a1b2c3.", "-a1b2c3-pooler."), testHost.replace("-a1b2c3.", "-a1b2c3-pooler."), "neondb"));
 refuses("tls_required", () => checkTarget(testUrl.replace("?sslmode=require", ""), testHost, "neondb"));
-ok(() => assert.deepEqual(planApply(manifest, []), { needsBaseline: true, pending: ["0019_learner_accounts", "0020_auth_rate_limits", "0021_teacher_accounts", "0022_migration_ledger"] }));
+ok(() => assert.deepEqual(planApply(manifest, []), { needsBaseline: true, pending: ["0019_learner_accounts", "0020_auth_rate_limits", "0021_teacher_accounts", "0022_migration_ledger", "0023_learner_grade_set_by"] }));
+ok(() => {
+  const through0022 = manifest.entries.slice(0, -1).map(e => row(e.id));
+  assert.equal(manifest.entries.at(-1).id, "0023_learner_grade_set_by");
+  assert.deepEqual(compareLedger(manifest, through0022).pending, ["0023_learner_grade_set_by"]);
+  assert.deepEqual(planApply(manifest, through0022), { needsBaseline: false, pending: ["0023_learner_grade_set_by"] });
+});
 ok(() => assert.deepEqual(planApply(manifest, manifest.entries.map(e => row(e.id))), { needsBaseline: false, pending: [] }));
 refuses("ledger_drift:0019_learner_accounts", () => planApply(manifest, [row("baseline-0000-0018"), { id: "0019_learner_accounts", sha256: "f".repeat(64) }]));
 refuses("ledger_out_of_order", () => planApply(manifest, [row("baseline-0000-0018"), row("0020_auth_rate_limits")]));

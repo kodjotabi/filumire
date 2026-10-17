@@ -1570,6 +1570,7 @@ a {
 /* Parent and teacher header */
 .filumireAdultHeader .filumireHeaderActions {
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .filumireAdultSite {
@@ -1584,7 +1585,13 @@ a {
   text-decoration: underline;
 }
 
+/* Shared by learner headers and account pages outside .learnerUi. */
+.filumirePublicHome { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex:0 0 44px; background:#fff; border-radius:50%; }
+.filumirePublicHome img { width:28px; height:28px; object-fit:contain; }
+.filumirePublicHome:focus-visible { outline:3px solid #fea102; outline-offset:3px; }
+
 .filumireAdultSignOut {
+  min-height: 44px;
   padding: 6px 12px;
   border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 999px;
@@ -1617,5 +1624,21 @@ a {
 @media (max-width: 380px) {
   .filumireAdultSite {
     display: none;
+  }
+}
+
+/* Keep long translated account actions visible beside the adult logo. */
+@media (max-width: 600px) {
+  .filumireAdultHeader {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .filumireAdultHeader .filumireHeaderLogo {
+    justify-self: start;
+  }
+
+  .filumireAdultHeader .filumireHeaderActions {
+    min-width: 0;
   }
 }

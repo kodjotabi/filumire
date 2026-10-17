@@ -9,7 +9,7 @@ import { TeacherAccess } from "../../components/filumire/TeacherAccess";
 import { TutoringRecovery } from "../../components/filumire/TutoringRecovery";
 import { LEARNER_AVATARS } from "../../components/filumire/avatars";
 import { LEARNER_GRADES } from "../../components/filumire/grades";
-import { useLanguage, type Language } from "../../components/filumire/language";
+import { readLanguage, useLanguage, type Language } from "../../components/filumire/language";
 import {
   accountErrorMessage,
   AccountRequestError,
@@ -266,14 +266,17 @@ export default function FamilyPage() {
 
   const load = useCallback(async () => {
     let current = await fetchAccount();
+    // The mount callback runs before useLanguage's first state update. Read
+    // the current URL/device preference instead of its initial English state.
+    const currentLanguage = readLanguage();
 
     if (!current) {
-      router.replace(`/login?lang=${language}&returnTo=family`);
+      router.replace(`/login?lang=${currentLanguage}&returnTo=family`);
       return;
     }
 
     if (current.accountKind !== "guardian") {
-      router.replace(destinationFor(current, language));
+      router.replace(destinationFor(current, currentLanguage));
       return;
     }
 

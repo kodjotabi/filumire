@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { checkRateLimits, json } from "../../account/http";
 
 import {
   getProductionSessionCookie,
@@ -9,10 +9,18 @@ export async function POST(
   request: Request,
 ) {
   try {
+    // Match the password-login address budget, using a separate scope. Count
+    // every attempt before verifying a token or creating principals/sessions;
+    // unverified token claims must never control the limiter key.
+    const limited = await checkRateLimits(request, "external-session-issue", [
+      { limit: 30, windowMs: 15 * 60_000 },
+    ]);
+    if (limited) return limited;
+
     const session =
       await issueProductionSession(request);
 
-    return NextResponse.json(
+    return json(
       {
         issued: true,
         sessionId: session.sessionId,
@@ -41,7 +49,7 @@ export async function POST(
         { reason: error.message },
       );
 
-      return NextResponse.json(
+      return json(
         { error: error.message },
         { status: 401 },
       );
@@ -66,7 +74,7 @@ export async function POST(
         { reason: error.message },
       );
 
-      return NextResponse.json(
+      return json(
         { error: error.message },
         { status: 403 },
       );
@@ -77,7 +85,7 @@ export async function POST(
       error,
     );
 
-    return NextResponse.json(
+    return json(
       { error: "Unable to issue authentication session." },
       { status: 500 },
     );

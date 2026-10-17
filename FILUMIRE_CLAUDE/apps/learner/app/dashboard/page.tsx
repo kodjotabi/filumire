@@ -1937,7 +1937,7 @@ function LearnerDashboardView() {
           line-height: 1.15;
           font-weight: 800;
           letter-spacing: -0.2px;
-          white-space: nowrap;
+          white-space: normal;
         }
 
         .approvedSetupIntro p {
@@ -1951,7 +1951,7 @@ function LearnerDashboardView() {
         .approvedSetup .setupNote {
           position: absolute;
           top: -8px;
-          right: -14px;
+          right: 0;
           width: 82px;
           padding: 12px 8px 14px;
           border-radius: 3px;
@@ -2032,7 +2032,7 @@ function LearnerDashboardView() {
           gap: 5px;
         }
 
-        .approvedSetup .setupFieldLabel {
+        .approvedSetup :global(.setupFieldLabel) {
           color: #063f78;
           font-size: 12px;
           font-weight: 800;
@@ -2043,11 +2043,11 @@ function LearnerDashboardView() {
           position: relative;
         }
 
-        .approvedSetup .setupInput {
+        .approvedSetup :global(.setupInput) {
           display: block;
           width: 100%;
-          height: 32px;
-          padding: 0 34px 0 10px;
+          min-height: 44px;
+          padding: 0 44px 0 10px;
           border: 1px solid #bcd8ef;
           border-radius: 6px;
           background: #ffffff;
@@ -2057,12 +2057,12 @@ function LearnerDashboardView() {
           box-sizing: border-box;
         }
 
-        .approvedSetup .setupInput:focus {
+        .approvedSetup :global(.setupInput:focus) {
           outline: 2px solid #0b8cf0;
           outline-offset: 1px;
         }
 
-        .approvedSetup select.setupInput {
+        .approvedSetup :global(select.setupInput) {
           appearance: none;
           -webkit-appearance: none;
           background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 6l5 5 5-5' fill='none' stroke='%23567a9e' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 10px center / 14px;
@@ -2071,14 +2071,14 @@ function LearnerDashboardView() {
         .approvedSetup .setupClear {
           position: absolute;
           top: 50%;
-          right: 8px;
-          width: 17px;
-          height: 17px;
+          right: 0;
+          width: 44px;
+          height: 44px;
           padding: 0;
           border: 0;
           border-radius: 50%;
-          background: #9aa9bd;
-          color: #ffffff;
+          background: transparent;
+          color: #123f78;
           font-size: 12px;
           line-height: 17px;
           text-align: center;
@@ -2086,11 +2086,11 @@ function LearnerDashboardView() {
           transform: translateY(-50%);
         }
 
-        .approvedSetup .setupFieldHelp {
+        .approvedSetup :global(.setupFieldHelp) {
           max-width: 215px;
           margin: 0;
           color: #1f4e79;
-          font-size: 9px;
+          font-size: 12px;
           line-height: 1.3;
         }
 
@@ -2295,6 +2295,21 @@ function LearnerDashboardView() {
           stroke-linejoin: round;
         }
 
+        @media (max-width: 767px) {
+          .approvedSetup .setupAvatarChoices {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            justify-items: center;
+          }
+
+          .approvedSetup .setupAvatarChoice {
+            width: 100%;
+            max-width: 66px;
+            height: auto;
+            aspect-ratio: 1;
+          }
+        }
+
         @media (min-width: 760px) {
           .learnerContent.approvedSetup {
             padding: 8px 18px 0;
@@ -2355,16 +2370,16 @@ function LearnerDashboardView() {
             border-radius: 14px;
           }
 
-          .approvedSetup .setupFieldLabel {
+          .approvedSetup :global(.setupFieldLabel) {
             font-size: 14px;
           }
 
-          .approvedSetup .setupInput {
+          .approvedSetup :global(.setupInput) {
             height: 42px;
             font-size: 15px;
           }
 
-          .approvedSetup .setupFieldHelp {
+          .approvedSetup :global(.setupFieldHelp) {
             max-width: none;
             font-size: 12px;
           }

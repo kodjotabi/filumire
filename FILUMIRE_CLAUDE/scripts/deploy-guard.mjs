@@ -1,9 +1,11 @@
 // Deployment guard (audit S-SEC9). Run before `next build` on Vercel; refuses unsafe deployments.
-// Prints only refusal codes, never URLs or credentials. Not wired into any Vercel build yet:
-// that is a live project setting and needs owner approval.
+// Wired into the learner package build. PostgreSQL Vercel builds verify their
+// actual target read-only; running that verification requires database-access approval.
+// Prints only refusal codes, never URLs or credentials.
 // Usage: node scripts/deploy-guard.mjs
 import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
+import { loadManifest, verifyManifest } from "./migration-ledger.mjs";
 
 export class DeployGuardError extends Error { constructor(code) { super(code); this.code = code; } }
 const refuse = code => { throw new DeployGuardError(code); };
@@ -49,8 +51,68 @@ export function checkDeployment(env) {
   return { ok: true, mode: target, persistence };
 }
 
+// The caller supplies an already connected client, allowing offline regression
+// tests. This transaction never applies migrations or writes ledger rows.
+export async function checkGradeLockCompatibility(client) {
+  const manifest = loadManifest();
+  verifyManifest(manifest);
+  const required = manifest.entries.find(entry => entry.id === "0023_learner_grade_set_by");
+  if (!required) refuse("grade_lock_manifest_entry_missing");
+  await client.query("BEGIN READ ONLY");
+  try {
+    await client.query("SET LOCAL statement_timeout = 10000");
+    await client.query("SET LOCAL lock_timeout = 5000");
+    const ledger = await client.query(
+      'SELECT kind, sha256 FROM "filumire_schema_migrations" WHERE id = $1', [required.id],
+    );
+    if (ledger.rows.length !== 1 || ledger.rows[0].kind !== "migration" || ledger.rows[0].sha256 !== required.sha256) {
+      refuse("grade_lock_migration_0023_unverified");
+    }
+    // Resolve the same table as runtime, using the application role/search path.
+    await client.query('SELECT "grade_set_by" FROM "learner_learning_context" LIMIT 0');
+    const schema = await client.query(`SELECT
+      EXISTS (SELECT 1 FROM pg_attribute
+        WHERE attrelid = to_regclass('learner_learning_context')
+          AND attname = 'grade_set_by' AND NOT attisdropped
+          AND atttypid = 'text'::regtype AND NOT attnotnull) AS column_ready,
+      EXISTS (SELECT 1 FROM pg_constraint
+        WHERE conrelid = to_regclass('learner_learning_context')
+          AND conname = 'learner_learning_context_grade_set_by_check'
+          AND contype = 'c' AND convalidated) AS constraint_ready`);
+    if (schema.rows[0]?.column_ready !== true || schema.rows[0]?.constraint_ready !== true) {
+      refuse("grade_lock_schema_incompatible");
+    }
+  } catch (error) {
+    if (error instanceof DeployGuardError) throw error;
+    if (error?.code === "42P01") refuse("grade_lock_required_table_missing");
+    if (error?.code === "42703") refuse("grade_lock_required_column_missing");
+    refuse("grade_lock_database_verification_failed");
+  } finally {
+    await client.query("ROLLBACK");
+  }
+}
+
+export async function verifyDeployment(env, createClient) {
+  const result = checkDeployment(env);
+  if (result.mode === "local" || result.persistence !== "postgres") return result;
+  // No offline flag/attestation can substitute for checking this exact target.
+  const client = await createClient(env.DATABASE_URL);
+  try {
+    await client.connect();
+    await checkGradeLockCompatibility(client);
+  } finally {
+    await client.end();
+  }
+  return { ...result, gradeLockSchema: "verified" };
+}
+
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  try { console.log(JSON.stringify(checkDeployment(process.env))); }
+  try {
+    console.log(JSON.stringify(await verifyDeployment(process.env, async connectionString => {
+      const { default: pg } = await import("pg");
+      return new pg.Client({ connectionString, connectionTimeoutMillis: 5000, statement_timeout: 10000 });
+    })));
+  }
   catch (error) {
     console.error(JSON.stringify({ deployGuard: "refused", code: error instanceof DeployGuardError ? error.code : "guard_error" }));
     process.exitCode = 1;

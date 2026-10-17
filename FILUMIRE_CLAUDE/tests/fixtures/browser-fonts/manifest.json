@@ -1,0 +1,160 @@
+{
+  "source": "Original FILUMIRE Google Fonts assets, redistributed under SIL OFL 1.1 for offline browser testing. No generated build or sibling checkout is needed at runtime.",
+  "display": "swap",
+  "assets": [
+    {
+      "file": "montserrat-cyrillic-ext.woff2",
+      "family": "Montserrat",
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "subset": "cyrillic-ext",
+      "bytes": 24072,
+      "sha256": "744830a0e77dd14dd543a4230d6e3ce67ca961634074b5d536ebafc66c732301"
+    },
+    {
+      "file": "montserrat-cyrillic.woff2",
+      "family": "Montserrat",
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "subset": "cyrillic",
+      "bytes": 21492,
+      "sha256": "0b00fbd6edcc84cd5f77364bbeb06b75ed263c740061eba34511f1e2ac1a82d3"
+    },
+    {
+      "file": "montserrat-vietnamese.woff2",
+      "family": "Montserrat",
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "subset": "vietnamese",
+      "bytes": 10620,
+      "sha256": "9e2672d100bc36a37073fb250abfaa7394f5151bf5dda3f4d5fc281345eb391b"
+    },
+    {
+      "file": "montserrat-latin-ext.woff2",
+      "family": "Montserrat",
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "subset": "latin-ext",
+      "bytes": 68224,
+      "sha256": "920711de9ae96c18970fa4faca73cd302b93ac5ed57ebeb6bfec2ddeff930082"
+    },
+    {
+      "file": "montserrat-latin.woff2",
+      "family": "Montserrat",
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "subset": "latin",
+      "bytes": 35508,
+      "sha256": "6438d7b8ea9c7c3992d5e2fd2afdb1ff948570a3ef0bedae76247b51632960ba"
+    },
+    {
+      "file": "kalam-devanagari-400.woff2",
+      "family": "Kalam",
+      "weights": [
+        400
+      ],
+      "subset": "devanagari",
+      "bytes": 53104,
+      "sha256": "2e8e8d463f7877c5725d45735f52b720a2808bf3b9aebcd50b4b95a588bb763d"
+    },
+    {
+      "file": "kalam-latin-ext-400.woff2",
+      "family": "Kalam",
+      "weights": [
+        400
+      ],
+      "subset": "latin-ext",
+      "bytes": 6784,
+      "sha256": "409a1c973bba365895b897c14604383b7e3df4e400f43dfb07af64a77e973232"
+    },
+    {
+      "file": "kalam-latin-400.woff2",
+      "family": "Kalam",
+      "weights": [
+        400
+      ],
+      "subset": "latin",
+      "bytes": 14040,
+      "sha256": "257f0129d54c60cda0f8856ad1de05e760a219c9365fb19cd50b0cc8fdb2c9d1"
+    },
+    {
+      "file": "kalam-devanagari-700.woff2",
+      "family": "Kalam",
+      "weights": [
+        700
+      ],
+      "subset": "devanagari",
+      "bytes": 49552,
+      "sha256": "eb63c97e508e38e0ba40b7fb12aa4937b9d9bb3721869fb0a255854b07667f60"
+    },
+    {
+      "file": "kalam-latin-ext-700.woff2",
+      "family": "Kalam",
+      "weights": [
+        700
+      ],
+      "subset": "latin-ext",
+      "bytes": 6236,
+      "sha256": "ece1261539d395aa5e2918bb855e625e9cf42d315965bb9e321d20d7e2651cc7"
+    },
+    {
+      "file": "kalam-latin-700.woff2",
+      "family": "Kalam",
+      "weights": [
+        700
+      ],
+      "subset": "latin",
+      "bytes": 13104,
+      "sha256": "c1bc5092263cb16e72fa43621eb116966068950e1b77ffd38fd401dd43ce1120"
+    }
+  ],
+  "provenance": {
+    "delivery": "Originally emitted by the FILUMIRE Next.js Google Fonts loader; copied byte-for-byte from the already available self-hosted FILUMIRE font assets.",
+    "integrity": "The asset SHA-256 values pin the bundled versions. Upstream links identify the font projects and licences; they do not assert byte identity with the current upstream release.",
+    "families": {
+      "Montserrat": {
+        "version": "9.000",
+        "copyright": "Copyright 2011 The Montserrat Project Authors (https://github.com/JulietaUla/Montserrat)",
+        "license": "SIL Open Font License 1.1",
+        "licenseFile": "OFL-Montserrat.txt",
+        "upstream": "https://github.com/google/fonts/tree/main/ofl/montserrat",
+        "upstreamLicense": "https://raw.githubusercontent.com/google/fonts/main/ofl/montserrat/OFL.txt",
+        "originalStylesheet": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+      },
+      "Kalam": {
+        "version": "2.001",
+        "copyright": "Copyright (c) 2014 Indian Type Foundry (info@indiantypefoundry.com)",
+        "license": "SIL Open Font License 1.1",
+        "licenseFile": "OFL-Kalam.txt",
+        "upstream": "https://github.com/google/fonts/tree/main/ofl/kalam",
+        "upstreamLicense": "https://raw.githubusercontent.com/google/fonts/main/ofl/kalam/OFL.txt",
+        "originalStylesheet": "https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap"
+      }
+    }
+  }
+}
