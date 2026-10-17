@@ -22,7 +22,7 @@ DO $$ BEGIN
 END $$;
 
 -- Per-table grants, derived from what runtime code does (services/**, 15 Oct 2026, schema after
--- 0022). Default deny: every public table must appear below either as granted or as denied,
+-- 0024). Default deny: every public table must appear below either as granted or as denied,
 -- otherwise the final check fails, so a new migration's tables need an explicit decision here.
 -- Must match APP_ROLE_MATRIX in scripts/test-app-role-permissions.mjs.
 BEGIN;
@@ -48,7 +48,25 @@ BEGIN
   END IF;
 END $$;
 
--- Clean slate, so re-running converges on exactly this list.
+-- Migration 0024 first: the deployment guard's evidence view must exist, belong to the
+-- ledger's owner and keep its security barrier, or nothing below is granted.
+DO $$
+DECLARE v regclass := to_regclass('public.filumire_deployment_migration_0023');
+BEGIN
+  IF v IS NULL THEN
+    RAISE EXCEPTION 'Apply migration 0024_deployment_migration_evidence before these grants';
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_class c, pg_class l
+                 WHERE c.oid = v AND l.oid = 'public.filumire_schema_migrations'::regclass
+                   AND c.relkind = 'v' AND c.relowner = l.relowner
+                   AND 'security_barrier=true' = ANY (c.reloptions)
+                   AND NOT ('security_invoker=true' = ANY (coalesce(c.reloptions, '{}')))) THEN
+    RAISE EXCEPTION 'filumire_deployment_migration_0023 is not the reviewed 0024 view; stop and review';
+  END IF;
+END $$;
+
+-- Clean slate, so re-running converges on exactly this list. Revoking a table privilege
+-- also revokes that privilege on every column, so no column-level grant survives.
 REVOKE ALL ON ALL TABLES IN SCHEMA public FROM filumire_app;
 REVOKE ALL ON ALL SEQUENCES IN SCHEMA public FROM filumire_app;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE ALL ON TABLES FROM filumire_app;
@@ -71,6 +89,9 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON auth_rate_limits TO filumire_app;
 -- Principals: DELETE only to discard an unused candidate after losing a sign-up race
 -- (persistence-postgres.ts); foreign keys are ON DELETE RESTRICT.
 GRANT SELECT, INSERT, DELETE ON principals TO filumire_app;
+-- Restore only the restricted evidence view after the clean-slate revocations.
+-- Migration 0024 must already exist; direct ledger access stays denied.
+GRANT SELECT ON public.filumire_deployment_migration_0023 TO filumire_app;
 -- Denied, by not granting: filumire_schema_migrations (owner only) and all payment_* tables
 -- (payments are blocked; no runtime code uses them). No TRUNCATE, REFERENCES or TRIGGER anywhere.
 

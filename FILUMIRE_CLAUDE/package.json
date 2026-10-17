@@ -11,7 +11,7 @@
                    ],
     "scripts":  {
                     "test":  "npm run test:adaptive \u0026\u0026 npm run test:progression \u0026\u0026 npm run test:security \u0026\u0026 npm run test:identity \u0026\u0026 npm run test:intervention \u0026\u0026 npm run test:language && npm run test:accounts && npm run test:ratelimit && npm run test:progress && npm run test:teacher-links && npm run test:learning-language && npm run test:integration-foundation && npm run test:revision && npm run test:security-offline",
-                    "test:integration-foundation":  "node ./tests/integration-phase1-foundation.test.mjs && node ./tests/deploy-grade-lock-guard.test.mjs && npm run test:grade-lock",
+                    "test:integration-foundation":  "node ./tests/integration-phase1-foundation.test.mjs && node ./tests/deploy-grade-lock-guard.test.mjs && node ./tests/deployment-migration-evidence.test.mjs && npm run test:grade-lock",
                     "test:grade-lock":  "node ./scripts/run-offline-suites.mjs ./tests/grade-lock-schema-guard.test.ts ./tests/guardian-grade-lock.test.ts",
                     "test:security-offline": "node ./scripts/run-offline-suites.mjs",
                     "test:revision": "node ./scripts/run-offline-suites.mjs ./tests/spaced-revision.test.ts ./tests/spaced-revision-subjects.test.ts ./tests/time-aware-retention-v1.test.ts ./tests/time-aware-retention-engine-v1.test.ts",

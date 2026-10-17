@@ -62,9 +62,28 @@ export async function checkGradeLockCompatibility(client) {
   try {
     await client.query("SET LOCAL statement_timeout = 10000");
     await client.query("SET LOCAL lock_timeout = 5000");
-    const ledger = await client.query(
-      'SELECT kind, sha256 FROM "filumire_schema_migrations" WHERE id = $1', [required.id],
-    );
+    // Migration-0023 evidence comes only from the restricted view of migration 0024;
+    // the application role has no access to the ledger table itself.
+    const view = await client.query(`SELECT
+      to_regclass('public.filumire_deployment_migration_0023') IS NOT NULL AS present,
+      (SELECT v.relkind = 'v' AND v.relowner = l.relowner
+          AND COALESCE((SELECT option_value::boolean FROM pg_options_to_table(v.reloptions)
+            WHERE option_name = 'security_barrier'), false)
+          AND NOT COALESCE((SELECT option_value::boolean FROM pg_options_to_table(v.reloptions)
+            WHERE option_name = 'security_invoker'), false)
+        FROM pg_class v, pg_class l
+        WHERE v.oid = to_regclass('public.filumire_deployment_migration_0023')
+          AND l.oid = to_regclass('public.filumire_schema_migrations')) AS trusted`);
+    if (view.rows[0]?.present !== true) refuse("deployment_evidence_view_missing");
+    if (view.rows[0]?.trusted !== true) refuse("deployment_evidence_view_untrusted");
+    let ledger;
+    try {
+      ledger = await client.query("SELECT kind, sha256 FROM public.filumire_deployment_migration_0023");
+    } catch (error) {
+      if (error?.code === "42P01") refuse("deployment_evidence_view_missing");
+      if (error?.code === "42501") refuse("deployment_evidence_view_denied");
+      throw error;
+    }
     if (ledger.rows.length !== 1 || ledger.rows[0].kind !== "migration" || ledger.rows[0].sha256 !== required.sha256) {
       refuse("grade_lock_migration_0023_unverified");
     }

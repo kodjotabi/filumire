@@ -13,6 +13,7 @@ const env = {
 };
 let checks = 0;
 function fixture({ ledger = [{ kind: "migration", sha256: migration.sha256 }],
+  view = { present: true, trusted: true },
   column = true, constraint = true, failureAt, pgCode, connectFailure = false } = {}) {
   const calls = [];
   const client = {
@@ -20,11 +21,17 @@ function fixture({ ledger = [{ kind: "migration", sha256: migration.sha256 }],
     async end() { calls.push("end"); },
     async query(text, values) {
       calls.push(text);
+      // Like the real application role: catalog lookups by name work, reading the ledger does not.
+      if (/\bFROM\s+(public\.)?"?filumire_schema_migrations\b/i.test(text)) {
+        throw Object.assign(new Error("direct ledger access denied"), { code: "42501" });
+      }
       if (failureAt && text.includes(failureAt)) throw Object.assign(new Error("secret database detail"), { code: pgCode });
       if (text.startsWith("SELECT kind")) {
-        assert.deepEqual(values, [migration.id]);
+        assert.equal(text, "SELECT kind, sha256 FROM public.filumire_deployment_migration_0023");
+        assert.equal(values, undefined);
         return { rows: ledger };
       }
+      if (text.includes("pg_options_to_table")) return { rows: [view] };
       if (text.includes("pg_attribute")) return { rows: [{ column_ready: column, constraint_ready: constraint }] };
       return { rows: [] };
     },
@@ -52,15 +59,38 @@ assert.equal(success.calls.at(-1), "end");
 assert(success.calls.every(call => /^(connect|end|BEGIN READ ONLY|SET LOCAL |SELECT\b|ROLLBACK)/.test(call)));
 checks++;
 
+// The guard never reads the ledger table (the fixture denies that, as the real role does);
+// it reads the 0023 evidence through the view only.
+assert(!success.calls.some(call => /\bFROM\s+(public\.)?"?filumire_schema_migrations\b/i.test(call)));
+assert(success.calls.includes("SELECT kind, sha256 FROM public.filumire_deployment_migration_0023"));
+checks++;
+
+// The evidence view must exist and be migration 0024's owner-based, security-barrier view.
+await refuses({ view: { present: false, trusted: null } }, "deployment_evidence_view_missing");
+await refuses({ view: { present: true, trusted: false } }, "deployment_evidence_view_untrusted");
+await refuses({ view: { present: true, trusted: null } }, "deployment_evidence_view_untrusted");
+await refuses({ failureAt: "pg_options_to_table", pgCode: "42501" }, "grade_lock_database_verification_failed");
+await refuses({ failureAt: "SELECT kind", pgCode: "42P01" }, "deployment_evidence_view_missing");
+await refuses({ failureAt: "SELECT kind", pgCode: "42501" }, "deployment_evidence_view_denied");
+await refuses({ failureAt: "SELECT kind", pgCode: "57014" }, "grade_lock_database_verification_failed");
+
 await refuses({ ledger: [] }, "grade_lock_migration_0023_unverified");
+await refuses({ ledger: [
+  { kind: "migration", sha256: migration.sha256 },
+  { kind: "migration", sha256: migration.sha256 },
+] }, "grade_lock_migration_0023_unverified");
+await refuses({ ledger: [
+  { kind: "migration", sha256: migration.sha256 },
+  { kind: "migration", sha256: "f".repeat(64) },
+] }, "grade_lock_migration_0023_unverified");
+await refuses({ ledger: [{ kind: "migration" }] }, "grade_lock_migration_0023_unverified");
+await refuses({ ledger: [{ sha256: migration.sha256 }] }, "grade_lock_migration_0023_unverified");
 await refuses({ ledger: [{ kind: "migration", sha256: "f".repeat(64) }] }, "grade_lock_migration_0023_unverified");
 await refuses({ ledger: [{ kind: "baseline", sha256: migration.sha256 }] }, "grade_lock_migration_0023_unverified");
 await refuses({ column: false }, "grade_lock_schema_incompatible");
 await refuses({ constraint: false }, "grade_lock_schema_incompatible");
-await refuses({ failureAt: "SELECT kind", pgCode: "42P01" }, "grade_lock_required_table_missing");
 await refuses({ failureAt: 'SELECT "grade_set_by"', pgCode: "42P01" }, "grade_lock_required_table_missing");
 await refuses({ failureAt: 'SELECT "grade_set_by"', pgCode: "42703" }, "grade_lock_required_column_missing");
-await refuses({ failureAt: "SELECT kind", pgCode: "42501" }, "grade_lock_database_verification_failed");
 await refuses({ failureAt: "pg_attribute", pgCode: "08006" }, "grade_lock_database_verification_failed");
 
 const disconnected = fixture({ connectFailure: true });

@@ -22,6 +22,8 @@ export const APP_ROLE_MATRIX = Object.freeze({
   payment_obligation_events: [], payment_obligations: [], payment_receipts: [],
 });
 const ALL = ["SELECT", "INSERT", "UPDATE", "DELETE", "TRUNCATE", "REFERENCES", "TRIGGER"];
+/** Migration 0024's restricted view of the 0023 ledger row: SELECT only, granted by app-role-grants.sql. */
+export const EVIDENCE_VIEW = "public.filumire_deployment_migration_0023";
 
 function connectionString(envName, expectHost) {
   const url = new URL(process.env[envName] ?? "");
@@ -54,6 +56,29 @@ async function run(args) {
     const want = APP_ROLE_MATRIX[t] ?? [];
     record(`catalog ${t} = [${want.join(",") || "none"}]`, held.join(",") === want.join(","), held.join(",") || "none");
   }
+  // The evidence view (migration 0024) grants one read capability; the ledger stays inaccessible.
+  const viewExists = (await owner.query("select to_regclass($1) v", [EVIDENCE_VIEW])).rows[0].v !== null;
+  record("deployment evidence view exists", viewExists);
+  if (viewExists) {
+    const shape = (await owner.query(
+      `select c.relkind = 'v' is_view, c.relowner = l.relowner same_owner, coalesce(c.reloptions, '{}') opts
+       from pg_class c, pg_class l where c.oid = $1::regclass and l.oid = 'public.filumire_schema_migrations'::regclass`,
+      [EVIDENCE_VIEW])).rows[0];
+    record("evidence view is owned by the ledger owner", shape.is_view && shape.same_owner);
+    record("evidence view is a security barrier, not security invoker",
+      shape.opts.includes("security_barrier=true") && !shape.opts.includes("security_invoker=true"), shape.opts.join(","));
+    for (const privilege of ALL) {
+      const held = (await owner.query(
+        "select has_table_privilege('filumire_app', $1, $2) h", [EVIDENCE_VIEW, privilege],
+      )).rows[0].h;
+      record(`evidence view: ${privilege}`, held === (privilege === "SELECT"));
+    }
+  }
+  // Column-level grants would bypass the table-level denial above.
+  const ledgerColumns = (await owner.query(
+    "select has_any_column_privilege('filumire_app', 'public.filumire_schema_migrations', p) h from unnest(array['SELECT','INSERT','UPDATE','REFERENCES']) p",
+  )).rows;
+  record("ledger has no column-level privilege for app", ledgerColumns.every(row => !row.h));
   const role = (await owner.query("select rolsuper, rolcreaterole, rolcreatedb, rolreplication, rolbypassrls, rolconnlimit from pg_roles where rolname='filumire_app'")).rows[0];
   record("role attributes restricted, limit 20", !role.rolsuper && !role.rolcreaterole && !role.rolcreatedb && !role.rolreplication && !role.rolbypassrls && role.rolconnlimit === 20);
   record("no role memberships", (await owner.query("select count(*)::int n from pg_auth_members m join pg_roles r on r.oid=m.member where r.rolname='filumire_app'")).rows[0].n === 0);
@@ -88,6 +113,12 @@ async function run(args) {
     await attempt("ledger: rewrite history", "update public.filumire_schema_migrations set sha256 = sha256", false);
     await attempt("ledger: erase history", "delete from public.filumire_schema_migrations", false);
     await attempt("ledger: drop table", "drop table public.filumire_schema_migrations", false);
+    // The view is single-table and owner-based, so it is updatable: only SELECT may work.
+    await attempt("evidence view: read", `select kind, sha256 from ${EVIDENCE_VIEW}`, true);
+    await attempt("evidence view: forge a row", `insert into ${EVIDENCE_VIEW} select * from ${EVIDENCE_VIEW} where false`, false);
+    await attempt("evidence view: rewrite", `update ${EVIDENCE_VIEW} set sha256 = sha256 where false`, false);
+    await attempt("evidence view: erase", `delete from ${EVIDENCE_VIEW} where false`, false);
+    await attempt("evidence view: replace", `create or replace view ${EVIDENCE_VIEW} as select 'migration'::text kind, ''::text sha256`, false);
     // Structure and role management.
     await attempt("create table in public", "create table public.__app_probe (x int)", false);
     await attempt("alter an app table", "alter table public.learners add column __probe int", false);

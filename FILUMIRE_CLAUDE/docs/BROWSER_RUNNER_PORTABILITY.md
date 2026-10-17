@@ -78,7 +78,18 @@ accessibility names, link status and browser/network diagnostics.
 
 ## Deployment ledger permission recommendation — no infrastructure change
 
-`scripts/deploy-guard.mjs` currently connects with `DATABASE_URL`, reads
+**Status (17 Oct 2026): superseded by migration 0024.** Instead of a separate
+verifier role, the guard now reads only `kind` and `sha256` of the 0023 ledger row
+through the owner-based, security-barrier view
+`public.filumire_deployment_migration_0023`. The application role gets SELECT on
+that view alone; its ledger access stays denied. This is a deliberate, narrow
+exception to "do not broaden application-role grants": the two values are the
+reviewed public hash of a committed file, and they are readable by the runtime
+role, not only at build time. It needs security-owner sign-off before 0024 is
+applied anywhere. See `GRADE_LOCK_RELEASE_SAFETY.md` for the release order. The
+analysis below is kept as the record of why the original guard could not pass.
+
+At the time of writing, `scripts/deploy-guard.mjs` connected with `DATABASE_URL`, reads
 `filumire_schema_migrations` (`id`, `kind`, `sha256`), and probes the grade column
 and catalog constraint metadata in a read-only transaction. The grants policy in
 `scripts/sql/app-role-grants.sql` deliberately denies the application role all
