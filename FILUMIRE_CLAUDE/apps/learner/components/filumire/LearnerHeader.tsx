@@ -83,10 +83,10 @@ export function LearnerHeader({
               </Link>
             </>
           )}
+          <PublicHomeLink language={language} />
         </div>
 
         <div className="filumireSetupHeaderRight">
-          <PublicHomeLink language={language} />
           <LanguageToggle language={language} variant="compact" />
 
           {showAskFilu && (
@@ -131,6 +131,7 @@ export function LearnerHeader({
             <img src="/filumire-logo-white.svg" alt="FILUMIRE" />
           </Link>
         )}
+        <PublicHomeLink language={language} />
       </div>
 
       {back && (
@@ -144,7 +145,6 @@ export function LearnerHeader({
       )}
 
       <div className="filumireHeaderActions">
-        <PublicHomeLink language={language} />
         <LanguageToggle language={language} variant="compact" />
 
         {showAskFilu && (

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { LearnerBottomNav } from "../../components/filumire/LearnerBottomNav";
 import { LanguageToggle } from "../../components/filumire/LanguageToggle";
+import { PublicHomeLink } from "../../components/filumire/PublicHomeLink";
 import { readLanguage, useLanguage } from "../../components/filumire/language";
 import {
   accountErrorMessage,
@@ -195,6 +196,7 @@ export default function LoginPage() {
       </header>
 
       <section className="hero">
+        <PublicHomeLink language={language} className="loginPublicHome" />
         <h1 className="heroTitle">{t.welcome} <span>{t.welcomeAccent}</span></h1>
         <p className="heroGreeting">{t.greeting}</p>
         <p className="heroIntro">{t.intro[0]}<br />{t.intro[1]}</p>
@@ -310,6 +312,7 @@ export default function LoginPage() {
 
       <style>{`
         .loginPage .subscriptionLink { margin-top: 12px; text-decoration: none; }
+        .loginPage .loginPublicHome { align-self: flex-start; margin: 16px 24px 0; box-shadow: inset 0 0 0 2px #d6e2f5; }
         .loginPage .subscriptionAvailability { max-width: 48ch; margin: 12px auto; padding-inline: 12px; font-size: 14px; line-height: 1.5; }
         @media (max-width: 359px) { .loginPage .topbar { gap: 8px; padding-inline: 16px; } }
         .loginPage { width: 100%; max-width: 390px; min-height: 844px; margin: 0 auto; background: #ffffff; color: var(--ui-ink); font-family: inherit; }
@@ -380,6 +383,7 @@ export default function LoginPage() {
           .logo { width: 128px; }
           .adultLink { font-size: 13px; }
           .heroTitle { margin: 32px 40px 0; font-size: 40px; }
+          .loginPage .loginPublicHome { margin: 24px 40px 0; }
           .heroGreeting { margin: 10px 40px 0; font-size: 19px; }
           .heroIntro { margin: 10px 40px 0; font-size: 14.5px; }
           .heroFrame { margin-top: 12px; }
@@ -422,6 +426,7 @@ export default function LoginPage() {
           .topbar { grid-area: top; padding: 0 max(40px, calc((100% - 1200px) / 2)); }
           .hero { grid-area: hero; align-self: start; min-width: 0; min-height: 0; margin-top: 40px; }
           .heroTitle { margin: 0; font-size: 48px; }
+          .loginPage .loginPublicHome { margin: 0 0 20px; }
           .heroGreeting { margin: 12px 0 0; font-size: 22px; }
           .heroIntro { margin: 12px 0 0; font-size: 16px; }
           .heroFrame { margin-top: 20px; border-radius: 28px; }

@@ -1586,8 +1586,8 @@ a {
 }
 
 /* Shared by learner headers and account pages outside .learnerUi. */
-.filumirePublicHome { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex:0 0 44px; background:#fff; border-radius:50%; }
-.filumirePublicHome img { width:28px; height:28px; object-fit:contain; }
+.filumirePublicHome { display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 14px 0 8px; flex:0 0 auto; background:#fff; border-radius:999px; color:#123c8c; font-weight:800; font-size:15px; line-height:1; text-decoration:none; white-space:nowrap; }
+.filumirePublicHome img { width:24px; height:24px; object-fit:contain; }
 .filumirePublicHome:focus-visible { outline:3px solid #fea102; outline-offset:3px; }
 
 .filumireAdultSignOut {

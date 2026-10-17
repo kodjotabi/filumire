@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { LanguageToggle } from "../components/filumire/LanguageToggle";
+import { PublicHomeLink } from "../components/filumire/PublicHomeLink";
 import { saveLanguage, useLanguage, type Language } from "../components/filumire/language";
 
 /*
@@ -90,6 +91,7 @@ export default function HomePage() {
           <img src="/filumire-logo-white.svg" alt="FILUMIRE" />
         </Link>
         <div className="wideActions">
+          <PublicHomeLink language={language} />
           <LanguageToggle language={language} onChange={setLanguage} />
           <Link href={`/login?lang=${language}&returnTo=family`} className="wideAdultLink">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -106,6 +108,7 @@ export default function HomePage() {
       <section className="content" id="home-content">
 
         <div className="homeLangMobile">
+          <PublicHomeLink language={language} />
           <LanguageToggle language={language} onChange={setLanguage} tone="light" />
         </div>
 
@@ -292,7 +295,8 @@ export default function HomePage() {
         }
 
         /* Overhaul: language switch, list resets, French wrapping */
-        .homeLangMobile { display: flex; justify-content: flex-end; padding: 6px 16px 4px; }
+        .homeLangMobile { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 6px 16px 4px; }
+        .homeLangMobile .filumirePublicHome { box-shadow: inset 0 0 0 2px #d6e2f5; }
         .features { padding: 0; list-style: none; }
         .home[lang="fr"] .feature strong { white-space: normal; }
         .wideActions { display: flex; align-items: center; gap: 14px; }

@@ -67,6 +67,7 @@ export function AccountShell({
         .acPage { min-height: 100dvh; display: flex; flex-direction: column; background: #ffffff; color: var(--ui-ink); }
         .acTop { height: 64px; padding: 0 16px; display: flex; align-items: center; gap: 12px; background: var(--ui-bar); color: #fff; }
         .acTop .filumireLangSwitch { margin-left: auto; }
+        @media (max-width: 420px) { .acTop { height: auto; min-height: 64px; flex-wrap: wrap; padding-block: 10px; row-gap: 8px; } }
         .acBack { width: 38px; height: 42px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border-radius: 8px; background: var(--ui-back); color: #fff; text-decoration: none; font-size: 10px; font-weight: 700; line-height: 1; }
         .acBack svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
         .acLogo { display: flex; align-items: center; }
