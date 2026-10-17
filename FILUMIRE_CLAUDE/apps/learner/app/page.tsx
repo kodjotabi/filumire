@@ -244,6 +244,8 @@ export default function HomePage() {
         .wideAdultLink { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; max-width: 168px; padding: 6px 12px; border: 1px solid rgba(255,255,255,.35); border-radius: 22px; color: #ffffff; font-size: 12px; line-height: 1.2; font-weight: 700; text-align: left; text-decoration: none; }
         .wideAdultLink svg { width: 20px; height: 20px; flex: none; fill: currentColor; }
         @media (max-width: 380px) { .feature strong { white-space: normal; } }
+        /* The longer French copyright wraps before reaching the tagline on the narrowest phones. */
+        @media (max-width: 359px) { .home[lang="fr"] .copyright { max-width: calc(50% - 36px); line-height: 1.2; } }
 
         /* Tablet: full-width page, real header, centred column */
         @media (min-width: 768px) {
