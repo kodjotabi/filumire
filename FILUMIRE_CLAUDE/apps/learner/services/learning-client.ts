@@ -334,6 +334,7 @@ export type AvailableSubject = {
 };
 
 export type LearningOverview = {
+  revision?: { subjectId: string; due: Array<{ competencyId: string; dueAt: string }>; nextDueAt?: string; canStart: boolean };
   gradeId: string;
   gradeName: string;
   // The guardian chose this class; the learner cannot change it.

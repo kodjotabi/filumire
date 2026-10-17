@@ -12,6 +12,7 @@ import {
   getOrCreateLearnerLearningContext,
 } from "../../../../../services/learner-context";
 import { getCompetencyProgressRows } from "../../../../../services/learner-progress";
+import { buildRevisionSummary } from "../../../../../services/learner-path/revision";
 
 type OverviewSubject = { id: string; name: string; code: string; discipline: string };
 
@@ -86,6 +87,7 @@ export async function buildLearningOverview(
     gradeName: grade?.name ?? "",
     gradeSetByGuardian: context.gradeSetBy === "guardian",
     activeSubjectId: context.activeSubjectId,
+    revision: await buildRevisionSummary(learnerId, context.gradeId, context.activeCompetencyId),
     availableSubjects: availableSubjects.map(toOverviewSubject),
     // Subjects of every supported grade of the learner's curriculum,
     // so first-time setup can show the subjects of the class being

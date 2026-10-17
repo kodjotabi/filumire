@@ -130,11 +130,36 @@ export function ChallengesPage({
     .slice(0, 3);
 
   return (
-    <div className="challengesPage">
+    <div className={`challengesPage${overview.revision ? " hasRevision" : ""}`}>
       <section className="cHead">
         <h1>{t.title}</h1>
         <p>{t.intro}</p>
       </section>
+
+      {overview.revision && (
+        <section className="cToday cRevision" aria-labelledby="revision-title">
+          <div className="cTodayBody">
+            <h2 id="revision-title">{language === "fr" ? "Révision espacée · Mathématiques, Basic 4" : "Spaced revision · Mathematics, Basic 4"}</h2>
+            <p>{overview.revision.due.length > 0
+              ? (language === "fr" ? `${overview.revision.due.length} notion(s) à revoir pour entretenir ta mémoire.` : `${overview.revision.due.length} earlier topic(s) are ready for a memory check.`)
+              : overview.revision.nextDueAt
+                ? (language === "fr" ? "Ta prochaine révision est prévue le " : "Your next review is due on ") + new Date(overview.revision.nextDueAt).toLocaleDateString(language === "fr" ? "fr-FR" : "en-GB", { timeZone: "UTC" })
+                : (language === "fr" ? "Apprends d’abord : tes révisions apparaîtront ici quand le moment sera venu." : "Keep learning: your reviews will appear here when they are due.")}</p>
+            {overview.revision.due.length > 0 && !overview.revision.canStart && (
+              <p>{language === "fr" ? "Termine d’abord l’activité ou la notion en cours. Ta révision attendra." : "Finish your current activity or topic first. Your review will wait."}</p>
+            )}
+          </div>
+          {overview.revision.due.length > 0 && (
+            <Link className="cStart" href={overview.revision.canStart
+              ? `/learn?lang=${language}&subjectId=${encodeURIComponent(overview.revision.subjectId)}`
+              : current.startHref}>
+              {overview.revision.canStart
+                ? (language === "fr" ? "Commencer la révision" : "Start revision")
+                : (language === "fr" ? "Continuer mon activité" : "Continue my activity")}
+            </Link>
+          )}
+        </section>
+      )}
 
       <section className="cToday">
         <span className="cTodayIcon" aria-hidden="true">
@@ -873,6 +898,15 @@ export function ChallengesPage({
           .cTodayBody {
             margin-top: 56px;
           }
+        }
+
+        .cRevision .cTodayBody { margin-top: 0; padding-right: 0; }
+        @media (min-width: 1024px) {
+          .challengesPage.hasRevision {
+            grid-template-areas: "head head" "revision revision" "today more" "today ach" "quote quote" "footer footer";
+            grid-template-rows: auto auto auto auto auto 1fr;
+          }
+          .cToday.cRevision { grid-area: revision; }
         }
       `}</style>
     </div>

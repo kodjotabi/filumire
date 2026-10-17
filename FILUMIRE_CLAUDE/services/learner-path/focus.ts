@@ -30,7 +30,7 @@ export interface PathFocus {
   /* Competency the learner should work on. */
   competencyId: CompetencyId;
 
-  /* True when the learner is coming back to an earlier competency. */
+  /* True when a current or earlier competency is due for review. */
   reviewDue: boolean;
 
   /* Retention window of the current competency. */
@@ -81,8 +81,7 @@ export function chooseFocus(input: {
     }).find(
       (item) =>
         item.kind === "retention_review" &&
-        item.competencyId !== undefined &&
-        item.competencyId !== input.currentCompetencyId,
+        item.competencyId !== undefined,
     );
 
     if (review?.competencyId) {

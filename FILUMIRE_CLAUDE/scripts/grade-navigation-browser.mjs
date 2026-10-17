@@ -8,7 +8,7 @@ import { createServer } from "node:net";
 import { createEvidenceDirectory, launchBrowser, loopbackOrigin, offlinePreloadSource, resolvePlaywright } from "./grade-navigation-support.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-if (process.argv.slice(2).some(arg => arg !== "--build-only")) throw Error("Supported option: --build-only. Each invocation builds a fresh snapshot; --test-only is no longer supported.");
+if (process.argv.slice(2).some(arg => !["--build-only", "--revision"].includes(arg))) throw Error("Supported options: --build-only, --revision. Each invocation builds a fresh snapshot; --test-only is no longer supported.");
 const node = process.env.FILUMIRE_BROWSER_NODE ?? process.execPath;
 if (!existsSync(node)) throw Error("FILUMIRE_BROWSER_NODE must name an existing Node executable.");
 const playwright = resolvePlaywright(root);
@@ -111,7 +111,8 @@ await run(["scripts/deploy-guard.mjs"], "local-build-guard.log");
 await run(["node_modules/next/dist/bin/next", "build", "apps/learner"], "build.log");
 if (process.argv.includes("--build-only")) process.exit(0);
 
-const server = spawn(node, ["node_modules/next/dist/bin/next", "start", "apps/learner", "--hostname", "127.0.0.1", "--port", String(port)],
+const seedArgs = process.argv.includes("--revision") ? ["--import", "tsx", "--import", pathToFileURL(join(root, "tests/fixtures/spaced-revision-browser-seed.mjs")).href] : [];
+const server = spawn(node, [...seedArgs, "node_modules/next/dist/bin/next", "start", "apps/learner", "--hostname", "127.0.0.1", "--port", String(port)],
   { cwd: snapshot, env, stdio: ["ignore", "pipe", "pipe"], windowsHide: true });
 let serverLog = "";
 let serverError;
@@ -129,6 +130,7 @@ try {
   }
   if (!ready) throw new Error("Isolated server did not become ready");
   await run([join(root, "tests/grade-navigation.browser.mjs")], "browser.log", root);
+  if (process.argv.includes("--revision")) await run([join(root, "tests/spaced-revision.browser.mjs")], "revision-browser.log", root);
   if (serverLog.includes("OFFLINE_GUARD")) throw new Error("Unexpected PostgreSQL access was blocked");
 } finally {
   server.kill();

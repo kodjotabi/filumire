@@ -52,8 +52,13 @@ async function decide(
   competencies: LearnerCompetencyState[],
   options: { timeAwareRetention: boolean; now: Date },
 ) {
+  // Each scenario is independent; unanswered deliveries from another scenario
+  // must not masquerade as this learner's active assessment.
+  const isolatedId = `${learnerId}-${crypto.randomUUID()}`;
+  const isolatedState = { ...learnerStateOf(competencies), learnerId: isolatedId,
+    competencies: competencies.map(item => ({ ...item, learnerId: isolatedId })) };
   return makeAdaptiveDecision(
-    { learnerId, sessionId: "s-" + Math.random(), learnerState: learnerStateOf(competencies) },
+    { learnerId: isolatedId, sessionId: "s-" + Math.random(), learnerState: isolatedState },
     options,
   );
 }

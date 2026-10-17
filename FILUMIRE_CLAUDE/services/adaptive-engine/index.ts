@@ -36,6 +36,7 @@ import {
   getEvidence,
 } from "../evidence-store";
 import { readAssessmentRecovery } from "../edututor/assessment-recovery";
+import { reviewToResume, unansweredActivities } from "../learner-path/revision";
 
 import {
   INSTRUCTIONAL_INTERVENTION_TYPES,
@@ -116,7 +117,7 @@ export async function makeAdaptiveDecision(
   const currentDefinition =
     getCompetency(currentCompetency.competencyId);
 
-  const focus = timeAware
+  let focus = timeAware
     ? chooseFocus({
         states: allCompetencyStates,
         currentCompetencyId:
@@ -130,8 +131,20 @@ export async function makeAdaptiveDecision(
       })
     : undefined;
 
+  if (timeAware && currentDefinition) {
+    const open = await unansweredActivities(request.learnerId, currentDefinition.subjectId, currentCompetency.competencyId);
+    if (open.length) {
+      // Preserve a delivered question/instruction on the current topic; resume
+      // a delivered review on its own competency rather than starting another.
+      const review = reviewToResume(open);
+      focus = review
+        ? { competencyId: review.competencyId, reviewDue: true, retentionWindow: "open" }
+        : focus ? { ...focus, competencyId: currentCompetency.competencyId, reviewDue: false } : undefined;
+    }
+  }
+
   const reviewTarget = focus?.reviewDue
-    ? learnerState.competencies.find(
+    ? allCompetencyStates.find(
         (item) =>
           item.competencyId === focus.competencyId,
       )

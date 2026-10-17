@@ -1,5 +1,10 @@
 ﻿import { NextResponse } from "next/server";
 import { getCompetenciesForSubject as getSubjectCompetencies } from "../../../../../packages/curriculum";
+import { createHash } from "node:crypto";
+import { supportsSpacedRevision } from "../../../../../services/learner-path/revision";
+import { getIntervention } from "../../../../../services/intervention-store";
+import { getEvidence } from "../../../../../services/evidence-store";
+import { getPilotMeasurementEvents } from "../../../../../services/pilot-measurement";
 import { buildLearningOverview } from "./overview-data";
 import { recordAssessmentDelivery, recoveredAssessmentDelivery } from "../../../../../services/edututor/assessment-recovery";
 import { assertSameOrigin, BadRequestError, errorResponse, readJsonBody } from "../account/http";
@@ -123,10 +128,25 @@ type EvidenceOutcome =
   | "skipped"
   | "observed";
 
+/*
+ * Curriculum titles are English; a French topic title comes from the
+ * topic's authored French lesson, as in the FILU conversation context.
+ */
+function competencyTitleIn(
+  competencyId: string,
+  title: string,
+  language: string | undefined,
+) {
+  if (language !== "fr") return title;
+  return getContentForCompetency(competencyId, "fr")
+    .find(item => !item.assessmentItemId && item.type === "lesson")?.title ?? title;
+}
+
 function buildProgress(
   learnerState: Awaited<
     ReturnType<typeof createInitialLearnerState>
   >,
+  language: string | undefined = learnerState.language,
 ) {
   const competencies = learnerState.competencies;
   const activeCompetency = competencies[0];
@@ -167,7 +187,8 @@ function buildProgress(
     subjectId: activeSubject?.id,
     subjectName: activeSubject?.name,
     competencyTitle:
-      activeCompetencyDefinition?.title,
+      activeCompetencyDefinition &&
+      competencyTitleIn(activeCompetencyDefinition.id, activeCompetencyDefinition.title, language),
     percent: Math.round(
       Math.min(
         1,
@@ -431,6 +452,14 @@ async function assertOwnedSession(
   );
 }
 
+/*
+ * A spaced review visits an earlier topic; the learner's current topic
+ * stays active so they return to it once the review is answered.
+ */
+function keepsCurrentTopic(decision: { action: string; competencyId: string }) {
+  return decision.action === "retention_check" && supportsSpacedRevision(decision.competencyId);
+}
+
 async function ensureCompetencyState(
   learnerId: string,
   learnerState: Awaited<
@@ -552,7 +581,7 @@ async function buildLearningResponse(
       learnerId,
       sessionId,
       learnerState,
-    });
+    }, supportsSpacedRevision(learnerState.competencies[0].competencyId) ? { timeAwareRetention: true } : {});
 
   await recordPilotEventSafely({
     learnerId,
@@ -579,7 +608,7 @@ async function buildLearningResponse(
 
   if (
     adaptiveDecision.decision.action ===
-    "advance"
+    "advance" || adaptiveDecision.decision.action === "retention_check"
   ) {
     /*
      * Tranche 4G: the engine may have just written to the stored
@@ -587,11 +616,18 @@ async function buildLearningResponse(
      * not on the copy loaded before the decision, or those markers
      * would be overwritten.
      */
-    const latestLearnerState =
+    let latestLearnerState =
       (await getLearnerState(
         learnerId,
-        learnerState.competencies[0].competencyId,
+        adaptiveDecision.decision.action === "retention_check" ? adaptiveDecision.decision.competencyId : learnerState.competencies[0].competencyId,
       )) ?? learnerState;
+
+    // A reviewed topic's stored state may predate the learner's current
+    // language; guidance must follow the language requested now.
+    if (latestLearnerState.language !== learnerState.language) {
+      latestLearnerState = { ...latestLearnerState, language: learnerState.language };
+      await saveLearnerState(latestLearnerState);
+    }
 
     updatedLearnerState =
       await ensureCompetencyState(
@@ -660,7 +696,8 @@ export async function GET(
       const state = states.find(item => item.competencies.some(c => c.competencyId === context.activeCompetencyId));
       const empty = { learnerId: identity.learnerId, competencies: [] };
       const learnerState = state ?? empty;
-      const progress = state ? buildProgress(state) : {
+      // The page's language, without saving it: this view stays read-only.
+      const progress = state ? buildProgress(state, (await resolveLearningLanguage(request, identity.learnerId)) ?? state.language) : {
         learnerId: identity.learnerId, competencyCount: 0, completedCompetencies: 0,
         masteryEstimate: 0, confidence: 0, evidenceCount: 0, readiness: false, percent: 0,
         subjectId: context.activeSubjectId,
@@ -744,7 +781,7 @@ export async function GET(
         await resolveLearningLanguage(request, learnerId),
       );
 
-    if (identity.source === "production-session") {
+    if (identity.source === "production-session" && !keepsCurrentTopic(response.decision)) {
       await updateActiveCompetency(
         learnerId,
         response.decision.competencyId,
@@ -1003,7 +1040,7 @@ export async function POST(
           await resolveLearningLanguage(request, authenticatedLearnerId),
         );
 
-      if (identity.source === "production-session") {
+      if (identity.source === "production-session" && !keepsCurrentTopic(acknowledgedResponse.decision)) {
         await updateActiveCompetency(
           authenticatedLearnerId,
           acknowledgedResponse.decision.competencyId,
@@ -1153,6 +1190,21 @@ export async function POST(
       });
     }
 
+    const spacedReview = supportsSpacedRevision(body.competencyId) && assessmentContent.metadata?.assessmentPurpose === "retention";
+    if (spacedReview) {
+      const intervention = body.interventionId ? await getIntervention(body.interventionId) : undefined;
+      if (!intervention || intervention.learnerId !== authenticatedLearnerId || intervention.competencyId !== body.competencyId || intervention.type !== "retention_check") {
+        return NextResponse.json({ error: "Reopen your review before answering." }, { status: 409 });
+      }
+      const delivered = (await getPilotMeasurementEvents(authenticatedLearnerId)).some(event =>
+        event.eventType === "learning_presented" && event.competencyId === body.competencyId &&
+        event.metadata.source === "assessment-delivery-v1" && event.metadata.interventionId === intervention.interventionId &&
+        event.metadata.assessmentItemId === body.assessmentItemId);
+      if (!delivered) return NextResponse.json({ error: "Reopen your review before answering." }, { status: 409 });
+      // One score per delivered review, even with different client retry keys.
+      submission.clientRequestId = "revision-" + createHash("sha256").update(`${authenticatedLearnerId}:${intervention.interventionId}`).digest("hex").slice(0, 48);
+    }
+
     const expectedResponse =
       assessmentContent.metadata
         ?.expectedResponse;
@@ -1217,6 +1269,14 @@ export async function POST(
       );
 
 
+    if (!isNewEvidence && spacedReview) {
+      const recorded = (await getEvidence(authenticatedLearnerId, body.competencyId)).find(item => item.id === assessment.evidence.id);
+      if (recorded) {
+        assessment.evidence = recorded;
+        assessment.result.correct = recorded.outcome === "correct";
+      }
+    }
+
     if (isNewEvidence) {
       await recordPilotEventSafely({
         learnerId:
@@ -1241,15 +1301,26 @@ export async function POST(
       });
     }
 
+    // After a spaced review, continue from the learner's current topic,
+    // not from the earlier topic that was reviewed.
+    let responseState = learnerState;
+    if (spacedReview && identity.source === "production-session") {
+      const { activeCompetencyId } = await getOrCreateLearnerLearningContext(authenticatedLearnerId);
+      if (activeCompetencyId && activeCompetencyId !== body.competencyId &&
+          getCompetency(activeCompetencyId)?.subjectId === getCompetency(body.competencyId)?.subjectId) {
+        responseState = (await getLearnerState(authenticatedLearnerId, activeCompetencyId)) ?? learnerState;
+      }
+    }
+
     const response =
       await buildLearningResponse(
         authenticatedLearnerId,
         body.sessionId,
-        learnerState,
+        responseState,
         await resolveLearningLanguage(request, authenticatedLearnerId),
       );
 
-    if (identity.source === "production-session") {
+    if (identity.source === "production-session" && !keepsCurrentTopic(response.decision)) {
       await updateActiveCompetency(
         authenticatedLearnerId,
         response.decision.competencyId,
