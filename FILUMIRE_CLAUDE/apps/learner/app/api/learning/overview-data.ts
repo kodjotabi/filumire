@@ -12,7 +12,7 @@ import {
   getOrCreateLearnerLearningContext,
 } from "../../../../../services/learner-context";
 import { getCompetencyProgressRows } from "../../../../../services/learner-progress";
-import { buildRevisionSummary } from "../../../../../services/learner-path/revision";
+import { buildRevisionSummaries, primaryRevision } from "../../../../../services/learner-path/revision";
 
 type OverviewSubject = { id: string; name: string; code: string; discipline: string };
 
@@ -82,12 +82,21 @@ export async function buildLearningOverview(
       })
     : [];
 
+  const revisions = await buildRevisionSummaries(
+    learnerId,
+    context,
+    availableSubjects.map((subject) => subject.id),
+  );
+
   return {
     gradeId: context.gradeId,
     gradeName: grade?.name ?? "",
     gradeSetByGuardian: context.gradeSetBy === "guardian",
     activeSubjectId: context.activeSubjectId,
-    revision: await buildRevisionSummary(learnerId, context.gradeId, context.activeCompetencyId),
+    // Spaced revision for every subject of the stored grade that supports it;
+    // the card leads with due work in the active subject.
+    revision: primaryRevision(revisions, context.activeSubjectId),
+    revisions,
     availableSubjects: availableSubjects.map(toOverviewSubject),
     // Subjects of every supported grade of the learner's curriculum,
     // so first-time setup can show the subjects of the class being

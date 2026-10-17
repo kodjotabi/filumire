@@ -10,6 +10,7 @@ import { getEvidence } from "../services/evidence-store/index";
 import { getLearnerState } from "../services/learner-state/index";
 import { buildTeacherLearnerSummary } from "../services/teacher-summary/index";
 import { isCompetencyCompleted, CONTENT_EXHAUSTED_NEEDS_SUPPORT } from "../services/learner-path/progression";
+import { supportsSpacedRevision } from "../services/learner-path/revision";
 import {
   getAllSubjects,
   getCompetenciesForSubject,
@@ -335,7 +336,7 @@ async function placed(subjectId: string, label: string) {
   check(returned, `returned to ${target.id} after completing prerequisites (advances: ${back.advances.map((a) => a.to.replace(/^competency-gh-/, "")).join(", ")})`);
   const teacher = await buildTeacherLearnerSummary(learner.learnerId);
   const detail = teacher.subjects.flatMap((s) => s.competencies).find((entry) => entry.competencyId === target.id);
-  check(detail?.prerequisiteRepair?.competencyId === repairId && detail.prerequisiteRepair.completed === isCompetencyCompleted(await learner.state(repairId)), "teacher: repair shown with correct status");
+  check(detail?.prerequisiteRepair?.competencyId === repairId && detail.prerequisiteRepair.completed === isCompetencyCompleted(await learner.state(repairId), supportsSpacedRevision(repairId)), "teacher: repair shown with correct status");
   return `placed: ${target.id.replace(/^competency-gh-/, "")} -> repair ${repairId.replace(/^competency-gh-/, "")} -> returned`;
 }
 

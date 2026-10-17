@@ -40,6 +40,21 @@ for (const language of ["en", "fr"] as const) {
   assert(subject.includes("Current topic"), "remediation must not rename another topic or erase its status");
   const challenge = renderToStaticMarkup(React.createElement(ChallengesPage, { language, overview, renderIcon, current: { subjectId: "math", subjectName: "Mathematics", title: "Current topic", done: 1, total: 1, startHref: "/learn" } }));
   assert(challenge.includes('aria-valuenow="20"'), "challenge must use whole subject totals, not tracked 1/1 state");
+  const science = { id: "sci", name: "Science", code: "S", discipline: "science" };
+  const reviews = [
+    { subjectId: "math", due: [{ competencyId: "m1", dueAt: "2026-10-01T00:00:00.000Z" }], canStart: true },
+    { subjectId: "sci", due: [{ competencyId: "s1", dueAt: "2026-10-01T00:00:00.000Z" }, { competencyId: "s2", dueAt: "2026-10-02T00:00:00.000Z" }], canStart: true },
+  ];
+  const revisionCard = renderToStaticMarkup(React.createElement(ChallengesPage, { language, renderIcon,
+    overview: { ...overview, availableSubjects: [...overview.availableSubjects, science], subjects: { ...overview.subjects, sci: { total: 4, completed: 1, tracked: 1, started: true } }, revision: reviews[0], revisions: reviews },
+    current: { subjectId: "math", subjectName: "Mathematics", title: "Current topic", done: 1, total: 1, startHref: "/learn" } }));
+  assert(revisionCard.includes(language === "en" ? "Spaced revision · Mathematics, Basic 4" : "Révision espacée · Mathématiques, Basic 4"), "card names the subject and grade");
+  assert(revisionCard.includes(language === "en" ? "Also due: " : "Aussi à revoir : "), "other subjects with due reviews are listed");
+  assert(revisionCard.includes(`href="/learn?lang=${language}&amp;subjectId=sci"`) && revisionCard.includes(`${language === "en" ? "Science" : "Sciences"} (2)`), "and open that subject's review");
+  const nothingDue = renderToStaticMarkup(React.createElement(ChallengesPage, { language, renderIcon,
+    overview: { ...overview, revision: { subjectId: "math", due: [], canStart: true }, revisions: [{ subjectId: "math", due: [], canStart: true }] },
+    current: { subjectId: "math", subjectName: "Mathematics", title: "Current topic", done: 1, total: 1, startHref: "/learn" } }));
+  assert(!nothingDue.includes(language === "en" ? "Also due" : "Aussi à revoir") && !nothingDue.includes(language === "en" ? "Start revision" : "Commencer la révision"), "honest empty state");
   const filu = renderToStaticMarkup(React.createElement(AskFiluPage, { language, subjectName: "Mathematics", topic: "Current topic", done: 1, total: 1, subjectProgress: overview.subjects.math, elements: [] }));
   assert(filu.includes('aria-valuenow="20"'));
   const unknown = renderToStaticMarkup(React.createElement(AskFiluPage, { language, subjectName: "Mathematics", topic: "Current topic", done: 1, total: 1, elements: [] }));

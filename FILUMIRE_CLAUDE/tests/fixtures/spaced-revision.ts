@@ -10,7 +10,7 @@ import { getContentForCompetency } from "../../services/content-store";
 import { seedContent } from "../../services/content-store/seed";
 
 /** Test-only state representing a returning learner; never imported by the app. */
-export async function revisionFixture(language: "en" | "fr", suffix: string) {
+export async function revisionFixture(language: "en" | "fr", suffix: string, subjectId = GHANA_MATH_PILOT_SUBJECT_ID) {
   if (process.env.FILUMIRE_PERSISTENCE !== "memory") throw Error("Revision fixtures require memory persistence");
   seedContent();
   const password = "Fictional-revision-pass-1";
@@ -18,7 +18,7 @@ export async function revisionFixture(language: "en" | "fr", suffix: string) {
   const guardian = await registerGuardian({ email: `${username}@example.test`, password, displayName: "Revision Guardian", confirmsGuardian: true, acceptsNotice: true });
   const { learnerId } = await addLearnerForGuardian(guardian.principalId, { username, password, displayName: "Revision Learner", preferredLanguage: language, consentsToLearnerData: true });
   await accountStore.updateLearnerProfile(learnerId, { onboardingCompletedAt: new Date().toISOString() });
-  const first = getCompetenciesForSubject(GHANA_MATH_PILOT_SUBJECT_ID).find(c => !c.prerequisiteCompetencyIds.length && getNextCompetency(c.id))!;
+  const first = getCompetenciesForSubject(subjectId).find(c => !c.prerequisiteCompetencyIds.length && getNextCompetency(c.id))!;
   const next = getNextCompetency(first.id)!;
   const checkedAt = new Date(Date.now() - 8 * 86400000).toISOString();
   const old = createInitialLearnerState(learnerId, first.id);

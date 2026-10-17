@@ -10,6 +10,9 @@ const module = await import(process.env.FILUMIRE_PLAYWRIGHT_MODULE);
 const browser = await launchBrowser(module.chromium ?? module.default.chromium);
 const fixtures = JSON.parse(readFileSync(join(out, "revision-fixtures.json"), "utf8"));
 const results = [];
+// Basic 4 Mathematics keeps its original artifact names; other paths add the subject.
+const tag = f => `${f.width}-${f.language}${/basic-4-mathematics/.test(f.subjectId) ? "" : `-${f.subjectId.replace(/^subject-gh-|-pilot$/g, "")}`}`;
+const SUBJECT = { en: { mathematics: "Mathematics", science: "Science", computing: "Computing", english: "English" }, fr: { mathematics: "Mathématiques", science: "Sciences", computing: "Informatique", english: "Anglais" } };
 try {
   for (const f of fixtures) {
     const result = { width: f.width, language: f.language, errors: [], external: [], failed: [], pass: false };
@@ -36,12 +39,16 @@ try {
       const section = page.locator('section[aria-labelledby="revision-title"]');
       await section.waitFor();
       assert.equal((await overview()).revision.due.length, 1);
+      const discipline = Object.keys(SUBJECT.en).find(key => f.subjectId.includes(key));
+      const grade = `Basic ${f.gradeId.match(/basic-(\d)/)[1]}`;
+      assert.equal((await page.locator("#revision-title").innerText()).trim(),
+        `${f.language === "fr" ? "Révision espacée" : "Spaced revision"} · ${SUBJECT[f.language][discipline]}, ${grade}`, "card names the subject and grade");
       assert.match(await section.innerText(), f.language === "fr" ? /notion.*revoir/ : /earlier topic/);
       assert.equal((await page.locator(".cToday:not(.cRevision) h2").innerText()).trim(), f.nextTitle[f.language], "Daily challenge topic title in the page language");
       const revisionBox = await section.boundingBox();
       const normalBox = await page.locator(".cToday:not(.cRevision)").boundingBox();
       assert.ok(revisionBox.y + revisionBox.height <= normalBox.y, "Revision and challenge cards must not overlap");
-      await page.screenshot({ path: join(out, `revision-${f.width}-${f.language}-due.png`), fullPage: true });
+      await page.screenshot({ path: join(out, `revision-${tag(f)}-due.png`), fullPage: true });
       const [delivery] = await Promise.all([
         page.waitForResponse(response => response.url().includes("/api/learning") && !response.url().includes("overview=") && response.request().method() === "GET" && response.url().includes("subjectId=")),
         section.getByRole("link", { name: f.language === "fr" ? "Commencer la révision" : "Start revision" }).click(),
@@ -51,7 +58,7 @@ try {
       if (f.language === "fr") assert.ok(!activity.instruction.structured.elements.some(element => /Answer from memory|Give a short answer/.test(element.text)), "French review guidance must be French");
       const answer = f.answers[activity.content.assessmentItemId]; assert.ok(answer !== undefined);
       await page.locator('input[type="radio"]').first().waitFor();
-      await page.screenshot({ path: join(out, `revision-${f.width}-${f.language}-activity.png`), fullPage: true });
+      await page.screenshot({ path: join(out, `revision-${tag(f)}-activity.png`), fullPage: true });
       const options = await page.locator('input[type="radio"]').all();
       const correct = [];
       for (const option of options) if (await option.getAttribute("value") === answer) correct.push(option);
@@ -66,12 +73,12 @@ try {
       await page.goto(`${origin}/dashboard?lang=${f.language}&view=challenges`);
       await section.waitFor(); assert.equal((await overview()).revision.due.length, 0);
       assert.match(await section.innerText(), f.language === "fr" ? /prochaine révision/ : /next review/);
-      await page.screenshot({ path: join(out, `revision-${f.width}-${f.language}-rescheduled.png`), fullPage: true });
+      await page.screenshot({ path: join(out, `revision-${tag(f)}-rescheduled.png`), fullPage: true });
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), "No horizontal overflow");
       assert.equal((await overview()).gradeSetByGuardian, true);
       assert.deepEqual(result.errors, []); assert.deepEqual(result.external, []); assert.deepEqual(result.failed, []);
-      result.pass = true; console.log(`PASS revision ${f.width}/${f.language}: due → authored question → evidence → normal learning → rescheduled`);
-    } catch (error) { result.failure = error.stack; await page.screenshot({ path: join(out, `revision-${f.width}-${f.language}-FAIL.png`), fullPage: true }); throw error; }
+      result.pass = true; console.log(`PASS revision ${tag(f)}: due → authored question → evidence → normal learning → rescheduled`);
+    } catch (error) { result.failure = error.stack; await page.screenshot({ path: join(out, `revision-${tag(f)}-FAIL.png`), fullPage: true }); throw error; }
     finally { await context.close(); writeFileSync(join(out, "revision-results.json"), JSON.stringify(results, null, 2)); }
   }
 } finally { await browser.close(); }

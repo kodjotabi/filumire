@@ -31,7 +31,7 @@ for (const language of ["en", "fr"] as const) {
   assert.equal(overview.revision?.canStart, true);
   assert.equal((await getEvidence(f.learnerId, f.first)).length, 6, "listing reviews is read-only");
   const masteryBefore = (await getLearnerState(f.learnerId, f.first))!.competencies[0].masteryEstimate;
-  assert.equal(await buildRevisionSummary(f.learnerId, "level-gh-basic-5-pilot"), undefined);
+  assert.deepEqual(overview.revisions?.map(item => item.subjectId).sort(), overview.availableSubjects.map(item => item.id).sort(), "revision covers exactly the stored grade's subjects");
   // The current topic's title follows the page language on the read-only dashboard,
   // even though the stored learner state was saved in English.
   assert.ok(f.nextTitle.fr && f.nextTitle.fr !== f.nextTitle.en, "fixture topic has an authored French title");
@@ -86,14 +86,14 @@ for (const language of ["en", "fr"] as const) {
 // over an older due review, including when states live in separate records.
 const blocked = await revisionFixture("en", `busy.${Date.now().toString(36)}`);
 await createIntervention({ learnerId: blocked.learnerId, competencyId: blocked.next, sessionId: "busy-session", decisionId: "busy", type: "diagnose" });
-assert.equal((await buildRevisionSummary(blocked.learnerId, blocked.gradeId, blocked.next))?.canStart, false);
+assert.equal((await buildRevisionSummary(blocked.learnerId, blocked.gradeId, blocked.subjectId, blocked.next))?.canStart, false);
 const { makeAdaptiveDecision } = await import("../services/adaptive-engine");
 const busy = await makeAdaptiveDecision({ learnerId: blocked.learnerId, sessionId: "busy-session", learnerState: (await getLearnerState(blocked.learnerId, blocked.next))! }, { timeAwareRetention: true });
 assert.equal(busy.decision.competencyId, blocked.next); assert.notEqual(busy.decision.reasonCode, "RETENTION_REVIEW_DUE");
 // No review before the existing seven-day interval.
 const state = (await getLearnerState(blocked.learnerId, blocked.first))!;
 state.competencies[0].retentionState!.lastCheckedAt = new Date().toISOString(); await saveLearnerState(state);
-assert.equal((await buildRevisionSummary(blocked.learnerId, blocked.gradeId, blocked.next))?.due.length, 0);
+assert.equal((await buildRevisionSummary(blocked.learnerId, blocked.gradeId, blocked.subjectId, blocked.next))?.due.length, 0);
 const missed = await revisionFixture("fr", `missed.${Date.now().toString(36)}`);
 const missedLogin = await login(request("/api/session/login", "", { login: missed.username, password: missed.password }));
 const missedCookie = missedLogin.headers.get("set-cookie")!.split(";")[0];
@@ -104,7 +104,7 @@ const missedResponse = await POST(request("/api/learning", missedCookie, { learn
 assert.equal(missedResponse.status, 200); assert.equal((await missedResponse.json()).assessment.result.correct, false);
 const missedState = (await getLearnerState(missed.learnerId, missed.first))!.competencies.find(c => c.competencyId === missed.first)!;
 assert.equal(missedState.retentionState?.status, "not_retained");
-const missedSummary = await buildRevisionSummary(missed.learnerId, missed.gradeId, missed.first);
+const missedSummary = await buildRevisionSummary(missed.learnerId, missed.gradeId, missed.subjectId, missed.first);
 assert.equal(missedSummary?.due.length, 0); assert.ok(Date.parse(missedSummary!.nextDueAt!) > Date.now(), "unsuccessful review is spaced rather than scored repeatedly");
 // A learner several topics ahead (an earlier topic still unstarted) returns to
 // their own current topic after the review; an activity left open on a topic
@@ -118,7 +118,7 @@ const later = getNextCompetency(ahead.next)!.id;
 await saveLearnerState(createInitialLearnerState(ahead.learnerId, later));
 await saveLearnerLearningContext({ ...(await getLearnerLearningContext(ahead.learnerId))!, activeCompetencyId: later });
 const left = await createIntervention({ learnerId: ahead.learnerId, competencyId: ahead.next, sessionId: "left-session", decisionId: "left", type: "diagnose" });
-assert.equal((await buildRevisionSummary(ahead.learnerId, ahead.gradeId, later))?.canStart, true, "work left on another topic does not block reviews");
+assert.equal((await buildRevisionSummary(ahead.learnerId, ahead.gradeId, ahead.subjectId, later))?.canStart, true, "work left on another topic does not block reviews");
 const aheadCookie = (await login(request("/api/session/login", "", { login: ahead.username, password: ahead.password }))).headers.get("set-cookie")!.split(";")[0];
 const aheadGet = () => GET(request(`/api/learning?subjectId=${ahead.subjectId}`, aheadCookie));
 const review = await (await aheadGet()).json();

@@ -14,7 +14,7 @@
                     "test:integration-foundation":  "node ./tests/integration-phase1-foundation.test.mjs && node ./tests/deploy-grade-lock-guard.test.mjs && npm run test:grade-lock",
                     "test:grade-lock":  "node ./scripts/run-offline-suites.mjs ./tests/grade-lock-schema-guard.test.ts ./tests/guardian-grade-lock.test.ts",
                     "test:security-offline": "node ./scripts/run-offline-suites.mjs",
-                    "test:revision": "node ./scripts/run-offline-suites.mjs ./tests/spaced-revision.test.ts ./tests/time-aware-retention-v1.test.ts ./tests/time-aware-retention-engine-v1.test.ts",
+                    "test:revision": "node ./scripts/run-offline-suites.mjs ./tests/spaced-revision.test.ts ./tests/spaced-revision-subjects.test.ts ./tests/time-aware-retention-v1.test.ts ./tests/time-aware-retention-engine-v1.test.ts",
                     "test:grade-navigation:browser":  "node ./scripts/grade-navigation-browser.mjs",
                     "migrations:verify":  "node ./scripts/migration-ledger.mjs verify",
                     "deploy:guard":  "node ./scripts/deploy-guard.mjs",

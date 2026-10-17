@@ -125,6 +125,16 @@ export function ChallengesPage({
   const currentStats = overview.subjects[current.subjectId];
   const currentPercent = completionPercent(currentStats);
 
+  const revisionSubjectName = (subjectId: string) => {
+    const subject = rows.find((row) => row.subject.subjectId === subjectId)?.subject;
+    return subject ? subjectLabel(subject.name, language) : "";
+  };
+  const revisionHref = (subjectId: string) =>
+    `/learn?lang=${language}&subjectId=${encodeURIComponent(subjectId)}`;
+  const otherRevisions = (overview.revisions ?? []).filter(
+    (item) => item.subjectId !== overview.revision?.subjectId && item.due.length > 0,
+  );
+
   const others = rows
     .filter((row) => row.subject.subjectId !== current.subjectId)
     .slice(0, 3);
@@ -139,7 +149,8 @@ export function ChallengesPage({
       {overview.revision && (
         <section className="cToday cRevision" aria-labelledby="revision-title">
           <div className="cTodayBody">
-            <h2 id="revision-title">{language === "fr" ? "Révision espacée · Mathématiques, Basic 4" : "Spaced revision · Mathematics, Basic 4"}</h2>
+            <h2 id="revision-title">{(language === "fr" ? "Révision espacée · " : "Spaced revision · ") +
+              [revisionSubjectName(overview.revision.subjectId), overview.gradeName].filter(Boolean).join(", ")}</h2>
             <p>{overview.revision.due.length > 0
               ? (language === "fr" ? `${overview.revision.due.length} notion(s) à revoir pour entretenir ta mémoire.` : `${overview.revision.due.length} earlier topic(s) are ready for a memory check.`)
               : overview.revision.nextDueAt
@@ -148,10 +159,23 @@ export function ChallengesPage({
             {overview.revision.due.length > 0 && !overview.revision.canStart && (
               <p>{language === "fr" ? "Termine d’abord l’activité ou la notion en cours. Ta révision attendra." : "Finish your current activity or topic first. Your review will wait."}</p>
             )}
+            {otherRevisions.length > 0 && (
+              <p className="cRevisionOthers">
+                {language === "fr" ? "Aussi à revoir : " : "Also due: "}
+                {otherRevisions.map((item, index) => (
+                  <span key={item.subjectId}>
+                    {index > 0 ? ", " : ""}
+                    <Link href={revisionHref(item.subjectId)}>
+                      {`${revisionSubjectName(item.subjectId)} (${item.due.length})`}
+                    </Link>
+                  </span>
+                ))}
+              </p>
+            )}
           </div>
           {overview.revision.due.length > 0 && (
-            <Link className="cStart" href={overview.revision.canStart
-              ? `/learn?lang=${language}&subjectId=${encodeURIComponent(overview.revision.subjectId)}`
+            <Link className="cStart" href={overview.revision.canStart || overview.revision.subjectId !== current.subjectId
+              ? revisionHref(overview.revision.subjectId)
               : current.startHref}>
               {overview.revision.canStart
                 ? (language === "fr" ? "Commencer la révision" : "Start revision")

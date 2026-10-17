@@ -31,6 +31,7 @@ import {
 
 import {
   getAvailableSubjectsForContext,
+  getCurrentCompetencyForSubject,
   getOrCreateLearnerLearningContext,
   updateActiveCompetency,
 } from "../../../../../services/learner-context";
@@ -1305,10 +1306,14 @@ export async function POST(
     // not from the earlier topic that was reviewed.
     let responseState = learnerState;
     if (spacedReview && identity.source === "production-session") {
-      const { activeCompetencyId } = await getOrCreateLearnerLearningContext(authenticatedLearnerId);
-      if (activeCompetencyId && activeCompetencyId !== body.competencyId &&
-          getCompetency(activeCompetencyId)?.subjectId === getCompetency(body.competencyId)?.subjectId) {
-        responseState = (await getLearnerState(authenticatedLearnerId, activeCompetencyId)) ?? learnerState;
+      // The review may belong to a subject other than the active one: continue
+      // from the topic that subject's learning screen opens on.
+      const currentCompetencyId = getCurrentCompetencyForSubject(
+        await getOrCreateLearnerLearningContext(authenticatedLearnerId),
+        getCompetency(body.competencyId)?.subjectId ?? "",
+      );
+      if (currentCompetencyId && currentCompetencyId !== body.competencyId) {
+        responseState = (await getLearnerState(authenticatedLearnerId, currentCompetencyId)) ?? learnerState;
       }
     }
 

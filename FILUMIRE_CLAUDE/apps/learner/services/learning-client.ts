@@ -333,8 +333,12 @@ export type AvailableSubject = {
   discipline: string;
 };
 
+export type RevisionSummary = { subjectId: string; due: Array<{ competencyId: string; dueAt: string }>; nextDueAt?: string; canStart: boolean };
+
 export type LearningOverview = {
-  revision?: { subjectId: string; due: Array<{ competencyId: string; dueAt: string }>; nextDueAt?: string; canStart: boolean };
+  revision?: RevisionSummary;
+  // Every subject of the grade with spaced revision, in subject order.
+  revisions?: RevisionSummary[];
   gradeId: string;
   gradeName: string;
   // The guardian chose this class; the learner cannot change it.

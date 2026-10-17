@@ -18,6 +18,7 @@ import {
   mergeCompetencyStates,
   needsSupportRetryDueAt,
 } from "../learner-path/progression";
+import { supportsSpacedRevision } from "../learner-path/revision";
 import {
   computeMasteryPilotMeasures,
   type MasteryPilotMeasures,
@@ -277,8 +278,10 @@ export async function buildTeacherLearnerSummary(
             getCompetency(state.prerequisiteRepair.repairCompetencyId)
               ?.title ?? state.prerequisiteRepair.repairCompetencyId,
           startedAt: state.prerequisiteRepair.startedAt,
+          // Same completion rule the engine used to send the learner there.
           completed: isCompetencyCompleted(
             allStates.get(state.prerequisiteRepair.repairCompetencyId),
+            supportsSpacedRevision(state.prerequisiteRepair.repairCompetencyId),
           ),
         }
       : undefined;

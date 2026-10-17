@@ -4,7 +4,9 @@ import {
   getAvailableSubjectsForGrade,
   getDefaultLearnerLearningContext,
   getFrameworkSubject,
+  getInitialCompetencyIdForResolvedContext,
   isSupportedGrade,
+  resolveCurriculumContext,
   type FrameworkSubject,
 } from "../../packages/curriculum-framework";
 import { getCompetency } from "../../packages/curriculum";
@@ -106,6 +108,34 @@ export function getAvailableSubjectsForContext(
     context.curriculumVersionId,
     context.gradeId,
   );
+}
+
+/*
+ * The topic the learning screen opens for a subject of the
+ * learner's grade: the active competency when it belongs to that
+ * subject, otherwise the subject's initial competency (the engine
+ * moves on from there along the learner's path).
+ */
+export function getCurrentCompetencyForSubject(
+  context: LearnerLearningContextRecord,
+  subjectId: string,
+): string | undefined {
+  if (
+    context.activeCompetencyId &&
+    getCompetency(context.activeCompetencyId)?.subjectId === subjectId
+  ) {
+    return context.activeCompetencyId;
+  }
+
+  const resolved = resolveCurriculumContext(
+    context.curriculumVersionId,
+    context.gradeId,
+    subjectId,
+  );
+
+  return resolved
+    ? getInitialCompetencyIdForResolvedContext(resolved)
+    : undefined;
 }
 
 function findAvailableSubject(
