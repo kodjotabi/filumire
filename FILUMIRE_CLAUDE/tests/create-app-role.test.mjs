@@ -64,6 +64,12 @@ const files = () => { const f = { written: {}, removed: [] }; f.io = { random: n
 const observed = { timelineId: profile.timelineId, ledger: LEDGER.map(r => r.id), tables: 29, schemaSha256: catalogHash({ tables: [], columns: [], constraints: [], indexes: [] }) };
 const code = approvalCode(target, observed);
 ok(() => assert.equal(TABLES.length, 29));
+// Credential-policy changes invalidate pre-security-fix approval codes.
+const oldCode = createHash("sha256").update(JSON.stringify([
+  target.host, target.database, observed.timelineId, observed.ledger, observed.schemaSha256, "create filumire_app",
+])).digest("hex").slice(0, 12);
+ok(() => assert.notEqual(code, oldCode));
+await rejects("approval_code_does_not_match", () => execute(fakeClient(), manifest, target, oldCode, profile, output, files().io));
 
 // Dry run: read-only session, every pre-flight passes, no role statement.
 {

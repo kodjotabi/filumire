@@ -118,9 +118,9 @@ for (const failCommit of ["before", "after"]) {
 const dir = mkdtempSync(join(tmpdir(), "filumire-w4-offline-"));
 try {
   const path = join(dir, ".env.fictional.local"); let created = false;
-  writeCredential(path, "FICTIONAL=test-only\n", () => { created = true; });
+  await writeCredential(path, "FICTIONAL=test-only\n", () => { created = true; });
   assert(created); assert.equal(readFileSync(path, "utf8"), "FICTIONAL=test-only\n");
-  assert.throws(() => writeCredential(path, "overwrite", () => { throw new Error("must not run"); }), e => e.code === "EEXIST");
+  await assert.rejects(() => writeCredential(path, "overwrite", () => { throw new Error("must not run"); }), e => e.code === "EEXIST" || e.code === "windows_credential_protection_failed");
   assert.equal(readFileSync(path, "utf8"), "FICTIONAL=test-only\n"); checks++;
 } finally {
   assert.equal(dirname(resolve(dir)), resolve(tmpdir()));

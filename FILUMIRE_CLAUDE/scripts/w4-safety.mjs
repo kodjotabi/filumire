@@ -1,5 +1,8 @@
 // Shared W4 safety primitives. Importing this module never connects to a database.
 import { openSync, writeFileSync, fsyncSync, closeSync, unlinkSync } from "node:fs";
+import { writeWindowsCredential, WindowsCredentialError } from "./windows-credential.mjs";
+
+export const CREDENTIAL_POLICY_VERSION = "w4-owner-system-v1";
 
 // Inspect catalog ACLs directly: role_table_grants deliberately omits PUBLIC.
 // Include views, sequences and column grants; NULL relation ACLs use PostgreSQL defaults.
@@ -26,7 +29,11 @@ export class W4Error extends Error {
 
 // Exclusive creation protects existing files. Notify the caller as soon as we own the file,
 // including when a later write/fsync/close fails. Never include driver/filesystem messages.
-export function writeCredential(path, text, created) {
+export async function writeCredential(path, text, created) {
+  if (process.platform === "win32") {
+    try { return await writeWindowsCredential(path, text, created); }
+    catch (error) { throw new W4Error("windows_credential_protection_failed", error instanceof WindowsCredentialError ? error.details : {}); }
+  }
   const fd = openSync(path, "wx", 0o600);
   created();
   try { writeFileSync(fd, text); fsyncSync(fd); }
@@ -57,6 +64,7 @@ export async function transactionFailure(client, error, {
     envFileRemoved: removed, cleanupFailed,
     // Only codes created by our code are eligible for output, never error.message.
     ...(error instanceof W4Error ? { reason: error.code } : {}),
+    ...(error instanceof W4Error && error.details.fileCreationUncertain ? { fileCreationUncertain: true } : {}),
   });
 }
 

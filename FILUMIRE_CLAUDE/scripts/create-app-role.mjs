@@ -14,7 +14,7 @@ import { catalog, catalogHash } from "./catalog-snapshot.mjs";
 import { checkTarget } from "./apply-migrations.mjs";
 import { pinnedTarget, checkIdentity, IDENTITY_SQL } from "./pinned-targets.mjs";
 import { APP_ROLE_MATRIX } from "./test-app-role-permissions.mjs";
-import { checkPublicAccess, writeCredential, transactionFailure, reportCli, withClient, W4Error } from "./w4-safety.mjs";
+import { checkPublicAccess, writeCredential, transactionFailure, reportCli, withClient, W4Error, CREDENTIAL_POLICY_VERSION } from "./w4-safety.mjs";
 
 export class RoleError extends W4Error {}
 const refuse = code => { throw new RoleError(code); };
@@ -62,7 +62,7 @@ export function checkOutput(envOut, varName) {
 }
 
 export const approvalCode = (target, observed) =>
-  createHash("sha256").update(JSON.stringify([target.host, target.database, observed.timelineId, observed.ledger, observed.schemaSha256, `create ${ROLE}`]))
+  createHash("sha256").update(JSON.stringify([target.host, target.database, observed.timelineId, observed.ledger, observed.schemaSha256, `create ${ROLE}`, CREDENTIAL_POLICY_VERSION]))
     .digest("hex").slice(0, 12);
 
 /** Every pre-flight check from the W4 plan. Read-only statements only. */
@@ -125,7 +125,7 @@ export async function execute(client, manifest, target, approval, profile, outpu
     if ((await client.query("select count(*)::int n from pg_auth_members m join pg_roles r on r.oid = m.member where r.rolname = $1", [ROLE])).rows[0].n)
       refuse("role_has_memberships");
 
-    write(output.envOut, `${output.varName}=${appUrl(output.ownerUrl, password)}\n`, () => { written = true; });
+    await write(output.envOut, `${output.varName}=${appUrl(output.ownerUrl, password)}\n`, () => { written = true; });
     if (!written) refuse("credential_write_not_confirmed");
     commitAttempted = true;
     if ((await client.query("COMMIT"))?.command !== "COMMIT") refuse("commit_not_confirmed");
