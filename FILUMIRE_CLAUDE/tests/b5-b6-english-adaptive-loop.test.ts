@@ -186,6 +186,12 @@ async function progress(testCase: Case): Promise<void> {
       break;
     }
     assert(decision.decision.action !== "complete", `${testCase.name}: path does not end on a competency with a successor`);
+    // Teaching-first: the introduction's cards are acknowledged with Next.
+    if (!decision.content?.assessmentItemId && decision.decision.action === "teach") {
+      const ack = await acknowledgeIntervention({ interventionId: decision.decision.interventionId!, learnerId, competencyId: testCase.competencyId });
+      assert(ack.status === "acknowledged", `${testCase.name}: Next acknowledges the introduction (${ack.status})`);
+      continue;
+    }
     const item = decision.content!;
     assert(item.assessmentItemId, `${testCase.name}: ${decision.decision.action} serves an authored question (got ${item.type})`);
     if (decision.decision.action === "retention_check") {
@@ -217,8 +223,9 @@ async function progress(testCase: Case): Promise<void> {
     competencies: [createInitialLearnerState(learnerId, testCase.expectedNext).competencies[0], ...state.competencies],
   };
   const next = await makeAdaptiveDecision({ learnerId, sessionId: `${learnerId}-session`, learnerState: nextState });
-  assert(next.decision.competencyId === testCase.expectedNext && next.decision.action === "diagnose", `${testCase.name}: next competency starts with diagnosis`);
-  assert(next.content?.competencyId === testCase.expectedNext && next.content.metadata?.assessmentPurpose === "diagnostic", `${testCase.name}: next competency serves its own authored diagnostic question`);
+  // Teaching-first: the next competency opens with its explanation, under the hand-over's teaching intervention.
+  assert(next.decision.competencyId === testCase.expectedNext && next.decision.action === "teach" && next.decision.reasonCode === "NEW_TOPIC_INSTRUCTION", `${testCase.name}: next competency starts with its explanation (got ${next.decision.action} ${next.decision.reasonCode})`);
+  assert(next.content?.competencyId === testCase.expectedNext && !next.content.assessmentItemId && next.decision.interventionId === advanced.decision.interventionId, `${testCase.name}: next competency serves its own explanation under the hand-over intervention`);
 
   console.log(`${testCase.name} progression PASS: ${actions.join(" -> ")} -> ${advanced.nextCompetency}`);
 }

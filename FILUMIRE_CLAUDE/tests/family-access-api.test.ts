@@ -52,7 +52,12 @@ assert.equal("trialExpiresAt" in await getLearnerEntitlement(childAuth.principal
 // Generate evidence through the existing authorised learning API, never a subscription shortcut.
 const learningHeaders = { "content-type": "application/json", "x-filumire-learner-id": child.learnerId };
 const initialResponse = await learningGet(new Request("http://localhost/api/learning?sessionId=fixture-learning-session", { headers: learningHeaders })); assert.equal(initialResponse.status, 200);
-const initial = await initialResponse.json();
+let initial = await initialResponse.json();
+// Teaching-first: the topic opens with its explanation; "Check my knowledge first" reaches a scored question.
+if (!initial.content?.assessmentItemId) {
+  const checkFirst = await learningPost(new Request("http://localhost/api/learning", { method: "POST", headers: learningHeaders, body: JSON.stringify({ sessionId: "fixture-learning-session", competencyId: initial.decision.competencyId, interactionType: "check_first" }) }));
+  assert.equal(checkFirst.status, 200); initial = await checkFirst.json();
+}
 if (initial.content?.assessmentItemId) {
   const answer = await learningPost(new Request("http://localhost/api/learning", { method: "POST", headers: learningHeaders, body: JSON.stringify({ learnerId: child.learnerId, sessionId: "fixture-learning-session", competencyId: initial.decision.competencyId, assessmentItemId: initial.content.assessmentItemId, response: "fictional wrong answer", clientRequestId: crypto.randomUUID() }) }));
   assert.equal(answer.status, 200);

@@ -119,6 +119,7 @@ const VALIDATION_SUBJECT_ID =
 type InteractionType =
   | "assessment"
   | "acknowledge"
+  | "check_first"
   | "retention"
   | "transfer";
 
@@ -564,6 +565,7 @@ async function buildLearningResponse(
     ReturnType<typeof createInitialLearnerState>
   >,
   language?: LearningLanguage,
+  decisionOptions: { checkKnowledgeFirst?: boolean } = {},
 ) {
   /*
    * Content is chosen in the learner state's language, so a change
@@ -582,7 +584,7 @@ async function buildLearningResponse(
       learnerId,
       sessionId,
       learnerState,
-    }, supportsSpacedRevision(learnerState.competencies[0].competencyId) ? { timeAwareRetention: true } : {});
+    }, { ...(supportsSpacedRevision(learnerState.competencies[0].competencyId) ? { timeAwareRetention: true } : {}), ...decisionOptions });
 
   await recordPilotEventSafely({
     learnerId,
@@ -1057,6 +1059,52 @@ export async function POST(
         },
         ...acknowledgedResponse,
       });
+    }
+
+    /*
+     * Teaching-first (Phase 1): on a new topic's introduction the
+     * learner chose "Check my knowledge first". Records no evidence
+     * and changes no mastery; the engine starts the diagnostic check
+     * instead of the explanation. Has no effect once the topic has
+     * answers. Only a topic the learner has already opened.
+     */
+    if (
+      interactionType ===
+      "check_first"
+    ) {
+      const checkState =
+        await getLearnerState(
+          authenticatedLearnerId,
+          body.competencyId,
+        );
+
+      if (!checkState) {
+        return NextResponse.json(
+          {
+            error:
+              "This learning step cannot be changed.",
+          },
+          { status: 409 },
+        );
+      }
+
+      const checkResponse =
+        await buildLearningResponse(
+          authenticatedLearnerId,
+          body.sessionId,
+          checkState,
+          await resolveLearningLanguage(request, authenticatedLearnerId),
+          { checkKnowledgeFirst: true },
+        );
+
+      if (identity.source === "production-session" && !keepsCurrentTopic(checkResponse.decision)) {
+        await updateActiveCompetency(
+          authenticatedLearnerId,
+          checkResponse.decision.competencyId,
+        );
+      }
+
+      return NextResponse.json(checkResponse);
     }
 
     if (

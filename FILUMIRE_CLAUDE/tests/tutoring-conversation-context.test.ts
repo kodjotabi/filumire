@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
-import { GET } from "../apps/learner/app/api/learning/route";
+import { GET, POST as learningPost } from "../apps/learner/app/api/learning/route";
 import { POST } from "../apps/learner/app/api/tutoring/conversation/route";
 import { loadConversationContext } from "../services/edututor/conversation-context";
 import { getLearnerInterventions, createIntervention } from "../services/intervention-store";
@@ -13,7 +13,15 @@ import type { LearningResponse } from "../apps/learner/services/learning-client"
 assert.equal(process.env.FILUMIRE_PERSISTENCE, "memory");
 const learnerId = `tutor-${randomUUID()}`;
 const headers = { "Content-Type": "application/json", "x-filumire-learner-id": learnerId };
-const response = await GET(new Request("http://localhost/api/learning", { headers }));
+const introduction = await GET(new Request("http://localhost/api/learning", { headers }));
+assert.equal(introduction.status, 200);
+// Teaching-first: the topic opens with its explanation, which FILU may help with; it is not an assessment.
+const lesson = await introduction.json() as LearningResponse;
+assert.equal(lesson.content?.assessmentItemId, undefined, "a new topic opens with its explanation");
+assert.equal((await loadConversationContext(learnerId, "en", true)).assessmentProtected, false, "an explanation is not a protected assessment");
+// "Check my knowledge first" starts the diagnosis, which is protected.
+const response = await learningPost(new Request("http://localhost/api/learning", { method: "POST", headers,
+  body: JSON.stringify({ sessionId: lesson.decision.sessionId, competencyId: lesson.decision.competencyId, interactionType: "check_first" }) }));
 assert.equal(response.status, 200);
 const learning = await response.json() as LearningResponse;
 const context = await loadConversationContext(learnerId, "en", true);

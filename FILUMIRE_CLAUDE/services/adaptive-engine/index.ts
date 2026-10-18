@@ -82,9 +82,29 @@ export interface AdaptiveDecisionOptions {
    */
   timeAwareRetention?: boolean;
 
+  /*
+   * Teaching-first (Phase 1): the learner chose "Check my knowledge
+   * first" on a new topic, so its introduction is skipped and the
+   * diagnostic check starts. Ignored once the topic has evidence.
+   */
+  checkKnowledgeFirst?: boolean;
+
   /* For tests. */
   now?: Date;
 }
+
+/*
+ * Teaching-first (Phase 1) reason codes. A new topic is introduced
+ * with its explanation, then its worked example, then a guided
+ * practice question, before any diagnostic check.
+ */
+export const NEW_TOPIC_INSTRUCTION_REASON_CODE = "NEW_TOPIC_INSTRUCTION";
+export const NEW_TOPIC_WORKED_EXAMPLE_REASON_CODE = "NEW_TOPIC_WORKED_EXAMPLE";
+export const GUIDED_PRACTICE_REASON_CODE = "GUIDED_PRACTICE";
+
+/* Introductory cards: explanation, then worked example. */
+const INTRODUCTION_CARD_TYPES = ["lesson", "example"];
+const MAX_INTRODUCTION_CARDS = 2;
 
 export async function makeAdaptiveDecision(
   request: AdaptiveDecisionRequest,
@@ -220,6 +240,10 @@ export async function makeAdaptiveDecision(
   // Guardian-recovered attempts remain historical records. Do not reuse,
   // cancel or evaluate them when selecting the next real learning activity.
   const recoveredHistory = await readAssessmentRecovery(request.learnerId);
+  // Teaching-first: a recovered question was still put to the learner, so
+  // the topic is not introduced again.
+  const recoveredQuestionPut = storedInterventions.some(item =>
+    recoveredHistory.recovered(item) && QUESTION_ACTIONS.includes(item.type));
   storedInterventions = storedInterventions.filter(item => !recoveredHistory.recovered(item));
 
   /*
@@ -283,7 +307,100 @@ export async function makeAdaptiveDecision(
       "",
     );
 
-  const instructionToCheck = reviewTarget
+  /*
+   * Teaching-first (Phase 1). Interventions keep no record of the
+   * card they showed, so the cards already shown are rebuilt by
+   * replaying completed teaching through the same deterministic
+   * selection. They join usedContentIds, so corrective teaching
+   * moves on to a card the learner has not seen (the worked example
+   * after the explanation) instead of repeating it.
+   */
+  const shownCardIds =
+    replayShownCardIds(
+      focusedLearnerState,
+      storedInterventions,
+    );
+
+  usedContentIds.push(...shownCardIds);
+
+  /*
+   * A topic is introduced while it has no answers and no question
+   * was ever put to the learner on it (a delivered question, or the
+   * learner's "Check my knowledge first", keeps the check going).
+   */
+  const introductionCardCount = Math.min(
+    MAX_INTRODUCTION_CARDS,
+    getContentForCompetency(
+      competency.competencyId,
+      learnerState.language,
+    ).filter(
+      (item) =>
+        !item.assessmentItemId &&
+        INTRODUCTION_CARD_TYPES.includes(item.type),
+    ).length,
+  );
+
+  const introducing =
+    !reviewTarget &&
+    !options.checkKnowledgeFirst &&
+    evidence.length === 0 &&
+    competency.evidenceCount === 0 &&
+    competency.diagnosticState === "unknown" &&
+    introductionCardCount > 0 &&
+    !recoveredQuestionPut &&
+    !storedInterventions.some(
+      (item) =>
+        item.status !== "cancelled" &&
+        QUESTION_ACTIONS.includes(item.type),
+    );
+
+  const completedIntroductionCards =
+    storedInterventions.filter(
+      (item) =>
+        item.type === "teach" &&
+        item.status === "completed",
+    ).length;
+
+  const introductionStep:
+    | "explain"
+    | "worked_example"
+    | "guided_practice"
+    | undefined =
+    !introducing
+      ? undefined
+      : completedIntroductionCards === 0
+        ? "explain"
+        : completedIntroductionCards < introductionCardCount
+          ? "worked_example"
+          : "guided_practice";
+
+  /*
+   * Teaching shown before the topic's first answer. A wrong guided
+   * practice answer under it shows what corrective teaching is
+   * needed; it is not evidence that the teaching failed.
+   */
+  const firstEvidenceAt =
+    [...evidence]
+      .map((item) => item.timestamp)
+      .sort()[0];
+
+  const introductoryInterventionIds =
+    storedInterventions
+      .filter(
+        (item) =>
+          item.type === "teach" &&
+          item.status !== "cancelled" &&
+          (
+            !firstEvidenceAt ||
+            item.startedAt <= firstEvidenceAt
+          ),
+      )
+      .map((item) => item.interventionId);
+
+  const instructionToCheck =
+    reviewTarget ||
+    introductionStep === "explain" ||
+    introductionStep === "worked_example"
     ? undefined
     : storedInterventions
         .filter(
@@ -331,7 +448,8 @@ export async function makeAdaptiveDecision(
     instructionToCheck
       ? selectLearningContent(
           focusedLearnerState,
-          instructionToCheck.type === "practice"
+          instructionToCheck.type === "practice" ||
+            introductionStep === "guided_practice"
             ? "practice"
             : "reassess",
           usedAssessmentItemIds,
@@ -426,6 +544,23 @@ export async function makeAdaptiveDecision(
         reasonCode: "RETENTION_REVIEW_DUE",
         policyVersion: ADAPTIVE_POLICY_VERSION,
       }
+    : introductionStep === "explain" ||
+      introductionStep === "worked_example"
+    ? {
+        action: "teach" as const,
+        reasonCode:
+          introductionStep === "explain"
+            ? NEW_TOPIC_INSTRUCTION_REASON_CODE
+            : NEW_TOPIC_WORKED_EXAMPLE_REASON_CODE,
+        policyVersion: ADAPTIVE_POLICY_VERSION,
+      }
+    : instructionCheck &&
+      introductionStep === "guided_practice"
+    ? {
+        action: "practice" as const,
+        reasonCode: GUIDED_PRACTICE_REASON_CODE,
+        policyVersion: ADAPTIVE_POLICY_VERSION,
+      }
     : instructionCheck
     ? {
         action: "reassess" as const,
@@ -455,6 +590,8 @@ export async function makeAdaptiveDecision(
 
       interventionHistory:
         competency.interventionHistory,
+
+      introductoryInterventionIds,
 
       prerequisiteSatisfied,
 
@@ -527,14 +664,21 @@ export async function makeAdaptiveDecision(
   }
 
   let selectedContent =
-    instructionCheck?.content ??
-    selectLearningContent(
-      focusedLearnerState,
-      pedagogicalDecision.action,
-      usedAssessmentItemIds,
-      usedContentIds,
-      reuse,
-    );
+    introductionStep === "explain" ||
+    introductionStep === "worked_example"
+      ? selectIntroductionCard(
+          focusedLearnerState,
+          introductionStep,
+          usedContentIds,
+        )
+      : instructionCheck?.content ??
+        selectLearningContent(
+          focusedLearnerState,
+          pedagogicalDecision.action,
+          usedAssessmentItemIds,
+          usedContentIds,
+          reuse,
+        );
 
   /*
    * Tranche 4B step 3: a question is needed but no fresh or
@@ -637,6 +781,9 @@ export async function makeAdaptiveDecision(
    * decision competency differed) with a 500, so a learner who
    * finished a topic could not move on in the app.
    */
+  let nextInterventions:
+    Awaited<ReturnType<typeof getLearnerInterventions>> = [];
+
   if (
     pedagogicalDecision.action === "advance" &&
     nextCompetency
@@ -651,19 +798,35 @@ export async function makeAdaptiveDecision(
         nextId,
       ).competencies[0];
 
+    const nextLearnerState = {
+      ...learnerState,
+      competencies: [
+        nextState,
+        ...learnerState.competencies.filter(
+          (item) => item.competencyId !== nextId,
+        ),
+      ],
+    };
+
+    /*
+     * Teaching-first (Phase 1): the hand-over card is the next
+     * topic's first teaching step, delivered under a teach
+     * intervention on that topic, so it is not shown again.
+     */
+    nextInterventions =
+      (await getLearnerInterventions(
+        request.learnerId,
+        nextId,
+      )).filter((item) => !recoveredHistory.recovered(item));
+
     selectedContent = selectLearningContent(
-      {
-        ...learnerState,
-        competencies: [
-          nextState,
-          ...learnerState.competencies.filter(
-            (item) => item.competencyId !== nextId,
-          ),
-        ],
-      },
+      nextLearnerState,
       "teach",
       [],
-      [],
+      replayShownCardIds(
+        nextLearnerState,
+        nextInterventions,
+      ),
     );
   }
 
@@ -829,6 +992,50 @@ export async function makeAdaptiveDecision(
 
     decision.interventionId =
       intervention.interventionId;
+  } else if (
+    pedagogicalDecision.action === "advance" &&
+    nextCompetency &&
+    selectedContent &&
+    !selectedContent.assessmentItemId
+  ) {
+    /*
+     * Teaching-first (Phase 1): an unacknowledged hand-over card
+     * already open on the next topic is reused, not duplicated.
+     */
+    const openIntroduction =
+      nextInterventions.find(
+        (item) =>
+          item.type === "teach" &&
+          item.status === "active" &&
+          item.evidenceIds.length === 0,
+      );
+
+    const intervention =
+      openIntroduction ??
+      await createIntervention({
+        interventionId:
+          `intervention-${crypto.randomUUID()}`,
+        learnerId:
+          request.learnerId,
+        competencyId:
+          nextCompetency.id,
+        sessionId:
+          request.sessionId,
+        decisionId:
+          decision.id,
+        type: "teach",
+        instructionalStrategy:
+          strategyDecision
+            .instructionalStrategy,
+        responseMode:
+          responseModeDecision
+            .responseMode,
+        policyVersion:
+          "intervention-v1",
+      });
+
+    decision.interventionId =
+      intervention.interventionId;
   }
 
   /*
@@ -858,6 +1065,127 @@ export async function makeAdaptiveDecision(
 
 export const CONTENT_EXHAUSTED_REASON_CODE =
   "CONTENT_EXHAUSTED_NEEDS_SUPPORT";
+
+/*
+ * Teaching-first (Phase 1): the teaching cards already shown on the
+ * learner state's first competency, rebuilt by replaying its
+ * completed teaching interventions, oldest first, through the same
+ * card selection. Replay ignores strategy evidence, which grows with
+ * answers; before the first answer it matches what was shown
+ * exactly, afterwards closely. Questions are never counted.
+ */
+/*
+ * Teaching-first (Phase 1): the explanation, or the worked example
+ * (an authored "example" card the learner has not seen, when the
+ * topic has one), for a topic's introduction.
+ */
+function selectIntroductionCard(
+  learnerState: Parameters<typeof selectLearningContent>[0],
+  step: "explain" | "worked_example",
+  shownCardIds: string[],
+) {
+  const competency = learnerState.competencies[0];
+
+  if (step === "worked_example" && competency) {
+    const example = getContentForCompetency(
+      competency.competencyId,
+      learnerState.language,
+    ).find(
+      (item) =>
+        !item.assessmentItemId &&
+        item.type === "example" &&
+        !shownCardIds.includes(item.id),
+    );
+
+    if (example) {
+      return example;
+    }
+  }
+
+  return selectLearningContent(
+    learnerState,
+    "teach",
+    [],
+    shownCardIds,
+  );
+}
+
+export function replayShownCardIds(
+  learnerState: Parameters<typeof selectLearningContent>[0],
+  interventions: Awaited<ReturnType<typeof getLearnerInterventions>>,
+): string[] {
+  const competency = learnerState.competencies[0];
+
+  if (!competency) {
+    return [];
+  }
+
+  const replayState = {
+    ...learnerState,
+    competencies: [
+      { ...competency, strategyEvidence: [] },
+      ...learnerState.competencies.slice(1),
+    ],
+  };
+
+  const shown: string[] = [];
+
+  /*
+   * Teaching completed before any question was put to the learner
+   * on this topic was its introduction: explanation, then worked
+   * example.
+   */
+  const firstQuestionAt =
+    interventions
+      .filter(
+        (intervention) =>
+          intervention.competencyId === competency.competencyId &&
+          intervention.status !== "cancelled" &&
+          QUESTION_ACTIONS.includes(intervention.type),
+      )
+      .map((intervention) => intervention.startedAt)
+      .sort()[0];
+
+  let introductionCards = 0;
+
+  for (const item of [...interventions]
+    .filter(
+      (intervention) =>
+        intervention.competencyId === competency.competencyId &&
+        intervention.status === "completed" &&
+        intervention.type !== "practice" &&
+        INSTRUCTIONAL_INTERVENTION_TYPES.includes(intervention.type),
+    )
+    .sort((a, b) => a.startedAt.localeCompare(b.startedAt))) {
+    const introduction =
+      item.type === "teach" &&
+      introductionCards < MAX_INTRODUCTION_CARDS &&
+      (!firstQuestionAt || item.startedAt < firstQuestionAt);
+
+    const card = introduction
+      ? selectIntroductionCard(
+          replayState,
+          introductionCards === 0 ? "explain" : "worked_example",
+          shown,
+        )
+      : selectLearningContent(
+          replayState,
+          item.type,
+          [],
+          shown,
+        );
+
+    if (introduction) {
+      introductionCards += 1;
+    }
+
+    if (card && !card.assessmentItemId && !shown.includes(card.id)) {
+      shown.push(card.id);
+    }
+  }
+
+  return shown;
+}
 
 /*
  * Tranche 4C retry rule, the content half: an exhausted competency

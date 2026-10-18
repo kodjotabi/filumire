@@ -464,6 +464,33 @@ async function testProductionLearnerInstruction(): Promise<void> {
       "instructional output cannot override adaptive policy or mastery",
     );
 
+    /*
+     * Teaching-first (Phase 1): the topic opened with its explanation,
+     * grounded as checked above. "Check my knowledge first" reaches
+     * the question answered below.
+     */
+    const questionResponse = await POST(
+      new Request("http://localhost/api/learning", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          cookie: `filumire_auth_session=${sessionToken}`,
+        },
+        body: JSON.stringify({
+          sessionId: learningBody.decision.sessionId,
+          competencyId: learningBody.decision.competencyId,
+          interactionType: "check_first",
+        }),
+      }),
+    );
+    const questionBody =
+      await questionResponse.json() as typeof learningBody;
+
+    assert(
+      Boolean(questionBody.content?.assessmentItemId),
+      "check first serves a question",
+    );
+
     const evidenceBefore = await getEvidence(
       learnerId,
       learningBody.decision.competencyId,
@@ -480,10 +507,10 @@ async function testProductionLearnerInstruction(): Promise<void> {
           learnerId,
           sessionId: learningBody.decision.sessionId,
           interventionId:
-            learningBody.decision.interventionId,
+            questionBody.decision.interventionId,
           interactionType: "assessment",
           assessmentItemId:
-            learningBody.content?.assessmentItemId,
+            questionBody.content?.assessmentItemId,
           competencyId:
             learningBody.decision.competencyId,
           response: "48",

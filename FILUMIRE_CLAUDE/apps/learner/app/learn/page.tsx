@@ -16,7 +16,7 @@ import { SubjectIcon } from "../../components/filumire/SubjectIcon";
 import { useLanguage, withLang, type Language } from "../../components/filumire/language";
 
 import { Suspense, useEffect, useRef, useState } from "react";
-import { LearningRequestOrder, restoreLearningActivity, submitPendingAnswer, acknowledgeCurrentActivity } from "../../services/learning-continuity";
+import { LearningRequestOrder, restoreLearningActivity, submitPendingAnswer, acknowledgeCurrentActivity, checkKnowledgeFirstForActivity } from "../../services/learning-continuity";
 import { completionPercent, stageIndicators, evaluatedFeedback, type ActivityFeedback } from "../../services/learning-presentation";
 import { useLessonClosure } from "../../services/use-lesson-closure";
 import { LessonClosureCard } from "../../components/filumire/LessonClosureCard";
@@ -112,6 +112,8 @@ const FR_TEXT: Record<string, string> = {
   "Try again": "Réessayer",
   Start: "Commencer",
   "Continue to the next step": "Passer à l'étape suivante",
+  "Check my knowledge first": "Vérifier d'abord mes connaissances",
+  "Already know this topic? Answer a few questions first. If you need help, FILUMIRE will teach you.": "Tu connais déjà ce sujet ? Réponds d'abord à quelques questions. Si tu as besoin d'aide, FILUMIRE t'expliquera.",
   Correct: "Correct",
   "Not quite": "Pas tout à fait",
   "Partly correct": "En partie correct",
@@ -216,6 +218,22 @@ function actionLabel(
     default:
       return "Let's keep learning.";
   }
+}
+
+/*
+ * Teaching-first (Phase 1): a new topic's introduction, the
+ * explanation (or the hand-over card that opens the next topic) and
+ * the worked example.
+ */
+function isIntroductionStep(decision: {
+  action: string;
+  reasonCode: string;
+}): boolean {
+  return (
+    decision.action === "advance" ||
+    decision.reasonCode === "NEW_TOPIC_INSTRUCTION" ||
+    decision.reasonCode === "NEW_TOPIC_WORKED_EXAMPLE"
+  );
 }
 
 function buttonLabel(
@@ -512,7 +530,11 @@ function LearnPageContent() {
     setAssessmentFeedback(null);
     // Save only the server's delivery receipt, before an acknowledgement could
     // commit and lose its response. Completion is checked read-only afterwards.
-    lessonClosure.prepare(data.lessonReceipt);
+    // Teaching-first: a topic's introduction (explanation, worked example)
+    // runs straight on to guided practice without a summary between steps.
+    if (!isIntroductionStep(data.decision)) {
+      lessonClosure.prepare(data.lessonReceipt);
+    }
 
     try {
       const result =
@@ -549,6 +571,40 @@ function LearnPageContent() {
 
       lessonClosure.dismiss();
 
+      setError(learnerErrorText(err, "en"));
+    } finally {
+      operationBusy.current = false;
+      if (requestOrder.current.accepts(ticket)) setSubmitting(false);
+    }
+  }
+
+  /*
+   * Teaching-first (Phase 1): "Check my knowledge first" on a new
+   * topic's introduction skips to its check questions. No evidence
+   * is recorded by the press itself.
+   */
+  async function checkKnowledgeFirst() {
+    if (operationBusy.current || pending || !data) return;
+
+    operationBusy.current = true;
+    const ticket = requestOrder.current.begin();
+    setSubmitting(true);
+    setError("");
+    setAssessmentFeedback(null);
+
+    try {
+      const result =
+        await checkKnowledgeFirstForActivity({
+          sessionId: getSessionId(data),
+          competencyId:
+            data.decision.competencyId,
+        });
+
+      if (!requestOrder.current.accepts(ticket)) return;
+      setData(result);
+      setSelectedResponse("");
+    } catch (err) {
+      if (!requestOrder.current.accepts(ticket)) return;
       setError(learnerErrorText(err, "en"));
     } finally {
       operationBusy.current = false;
@@ -894,6 +950,10 @@ function LearnPageContent() {
   const learningStages = stageIndicators(action);
 
   const teachView = showContinue && action !== "diagnose";
+
+  /* Teaching-first (Phase 1): offered only on a new topic's introduction. */
+  const canCheckFirst =
+    teachView && isIntroductionStep(data.decision);
 
   const currentStage = learningStages.findIndex((stage) => stage.current);
   const stageLabel = currentStage >= 0 ? tr(language, "Let’s " + learningStages[currentStage].label.toLowerCase()) : tr(language, "Your learning session");
@@ -1315,6 +1375,23 @@ function LearnPageContent() {
           </button>
         )}
 
+        {canCheckFirst && !lessonClosure.loading && !lessonClosure.closure && (
+          <div className="checkFirst">
+            <p id="check-first-hint">
+              {tr(language, "Already know this topic? Answer a few questions first. If you need help, FILUMIRE will teach you.")}
+            </p>
+            <button
+              type="button"
+              onClick={checkKnowledgeFirst}
+              disabled={submitting || syncing || Boolean(pending)}
+              className="fButton secondary"
+              aria-describedby="check-first-hint"
+            >
+              {tr(language, "Check my knowledge first")}
+            </button>
+          </div>
+        )}
+
         {!isComplete && (
           <Link href={askHref} className="askFiluLink">
             {tr(language, "Ask FILU for help")}
@@ -1415,6 +1492,22 @@ function LearnPageContent() {
           flex-wrap: wrap;
           gap: 10px;
           margin-top: 14px;
+        }
+
+        .checkFirst {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
+          margin-top: 12px;
+          text-align: center;
+        }
+
+        .checkFirst p {
+          margin: 0;
+          max-width: 34rem;
+          font-size: 0.92rem;
+          color: var(--filumire-text);
         }
 
         .learnMain :global(.askFiluLink) {

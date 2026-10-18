@@ -24,9 +24,18 @@ export async function newLearner(tag: string, competencyId: string): Promise<{ l
   return { learnerId, state: createInitialLearnerState(learnerId, competencyId) };
 }
 
-/* What GET /api/learning does with an unchanged learner state. */
-export function decide(learnerId: string, state: LearnerState) {
-  return makeAdaptiveDecision({ learnerId, sessionId: `${learnerId}-session`, learnerState: state });
+/*
+ * What GET /api/learning does with an unchanged learner state. These
+ * suites exercise the question path, so a new topic is entered with
+ * "Check my knowledge first" (teaching-first, Phase 1); it has no
+ * effect once a question has been put. The introduction itself is
+ * covered by tests/teaching-first-journey.test.ts.
+ */
+export function decide(learnerId: string, state: LearnerState, options: { introduce?: boolean } = {}) {
+  return makeAdaptiveDecision(
+    { learnerId, sessionId: `${learnerId}-session`, learnerState: state },
+    { checkKnowledgeFirst: !options.introduce },
+  );
 }
 
 /* What POST /api/learning does with one answer. */

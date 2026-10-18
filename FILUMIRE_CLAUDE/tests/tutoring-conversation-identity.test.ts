@@ -4,7 +4,7 @@ import { POST as register } from "../apps/learner/app/api/account/register/route
 import { POST as addLearner } from "../apps/learner/app/api/account/learners/route";
 import { POST as login } from "../apps/learner/app/api/session/login/route";
 import { POST as logout } from "../apps/learner/app/api/session/logout/route";
-import { GET as learning } from "../apps/learner/app/api/learning/route";
+import { GET as learning, POST as learningPost } from "../apps/learner/app/api/learning/route";
 import { POST as tutoring } from "../apps/learner/app/api/tutoring/conversation/route";
 import { getLearnerInterventions, createIntervention } from "../services/intervention-store";
 import { persistenceStore } from "../services/persistence-provider";
@@ -41,7 +41,10 @@ async function learner(suffix: string) {
 const a = await learner("a"); const b = await learner("b");
 assert.equal((await tutoring(post("/api/tutoring/conversation", ask(), undefined, { "x-filumire-learner-id": a.learnerId }))).status, 401, "production never trusts a development header");
 const lesson = await learning(new Request("http://localhost/api/learning", { headers: { cookie: a.cookie } }));
-assert.equal(lesson.status, 200); const data = await lesson.json() as LearningResponse;
+assert.equal(lesson.status, 200); const opened = await lesson.json() as LearningResponse;
+// Teaching-first: the topic opens with its explanation; "Check my knowledge first" starts the protected diagnosis.
+const checking = await learningPost(post("/api/learning", { sessionId: opened.decision.sessionId, competencyId: opened.decision.competencyId, interactionType: "check_first" }, a.cookie));
+assert.equal(checking.status, 200); const data = await checking.json() as LearningResponse;
 const initial = await tutoring(post("/api/tutoring/conversation", ask("fr"), a.cookie));
 assert.equal(initial.status, 200); const history = await initial.json() as ConversationResponse;
 assert.equal(history.assessmentProtected, true); assert.equal(history.messages.at(-1)!.language, "fr");

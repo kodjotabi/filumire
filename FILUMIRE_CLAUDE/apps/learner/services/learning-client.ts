@@ -322,6 +322,48 @@ export async function acknowledgeLearningStep(body: {
 }
 
 /*
+ * Teaching-first (Phase 1): the learner chose "Check my knowledge
+ * first" on a new topic's introduction. The server records no
+ * evidence and returns the topic's first check question.
+ */
+export async function checkKnowledgeFirst(body: {
+  sessionId: string;
+  competencyId: string;
+}): Promise<LearningResponse> {
+  let response: Response;
+
+  try {
+    response = await fetch("/api/learning", {
+      method: "POST",
+      headers: getApiHeaders(),
+      body: JSON.stringify({
+        ...body,
+        interactionType: "check_first",
+      }),
+    });
+  } catch {
+    throw new LearningNetworkError(
+      "Unable to reach the server.",
+    );
+  }
+
+  if (!response.ok) {
+    const result =
+      await response
+        .json()
+        .catch(() => null);
+
+    throw new LearningRequestError(
+      result?.error ??
+        "Unable to continue.",
+      response.status,
+    );
+  }
+
+  return (await response.json()) as LearningResponse;
+}
+
+/*
  * A subject the server says is available for the learner's
  * grade. discipline is the stable subject-type key used for
  * presentation; id is used for every data relationship.

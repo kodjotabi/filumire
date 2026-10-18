@@ -334,8 +334,19 @@ async function runGrade(grade: Grade, provider: Provider): Promise<void> {
   }
 
   // Select English and learn through the normal runtime.
-  const english = await get(learner.cookie, `subjectId=${grade.englishId}`);
+  let english = await get(learner.cookie, `subjectId=${grade.englishId}`);
   assert(english.status === 200, `${grade.name}: English opens`);
+  // Teaching-first: English opens with its explanation; Next moves through the introduction.
+  assert((english.body.decision as { reasonCode?: string }).reasonCode === "NEW_TOPIC_INSTRUCTION", `${grade.name}: English opens with its explanation`);
+  for (let cards = 0; cards < 3 && !english.body.content?.assessmentItemId; cards += 1) {
+    english = await post(learner.cookie, {
+      interactionType: "acknowledge",
+      sessionId: english.body.decision.sessionId,
+      interventionId: english.body.decision.interventionId,
+      competencyId: english.body.decision.competencyId,
+    });
+    assert(english.status === 200, `${grade.name}: Next on the introduction, got ${english.status}`);
+  }
   const competencyId = english.body.decision.competencyId;
   assert(getCompetency(competencyId)?.learningLevelId === grade.gradeId, `${grade.name}: English competency is of the learner's grade`);
   const item = getContentForCompetency(competencyId).find((c) => c.id === english.body.content?.id);

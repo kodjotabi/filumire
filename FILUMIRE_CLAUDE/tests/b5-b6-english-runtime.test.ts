@@ -259,13 +259,25 @@ async function runLevel(level: Level, provider: { createToken: (s: string) => Pr
   const initialSpec = level.specs.find((spec) => spec.code === level.initialCode)!;
 
   // 1-7. Subject, curriculum, competency, content, lesson/activity structure, ids.
-  const first = await get(learner.cookie, query);
-  assert(first.status === 200, `${level.name}: GET /api/learning 200, got ${first.status}`);
+  const introduction = await get(learner.cookie, query);
+  assert(introduction.status === 200, `${level.name}: GET /api/learning 200, got ${introduction.status}`);
   assert(
-    first.body.decision.competencyId === initialSpec.competencyId,
-    `${level.name}: starts at ${level.initialCode}, got ${first.body.decision.competencyId}`,
+    introduction.body.decision.competencyId === initialSpec.competencyId,
+    `${level.name}: starts at ${level.initialCode}, got ${introduction.body.decision.competencyId}`,
   );
-  assert(first.body.decision.action === "diagnose", `${level.name}: a new learner is diagnosed first`);
+  // Teaching-first: a new learner is taught first; "Check my knowledge first" starts the diagnosis.
+  assert(
+    introduction.body.decision.action === "teach" && introduction.body.content?.type === "lesson",
+    `${level.name}: a new learner is taught first (got ${introduction.body.decision.action} ${introduction.body.content?.type})`,
+  );
+  assertConsistentIds(level, initialSpec.competencyId, introduction.body);
+  const first = await post(learner.cookie, {
+    interactionType: "check_first",
+    sessionId: introduction.body.decision.sessionId,
+    competencyId: introduction.body.decision.competencyId,
+  });
+  assert(first.status === 200, `${level.name}: check first 200, got ${first.status}`);
+  assert(first.body.decision.action === "diagnose", `${level.name}: check first starts the diagnosis`);
   assert(
     first.body.content?.type === "assessment" && first.body.content.metadata?.assessmentPurpose === "diagnostic",
     `${level.name}: diagnosis serves an authored diagnostic question`,

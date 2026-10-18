@@ -569,11 +569,38 @@ async function testProductionDiagnosticMetadata(): Promise<void> {
       }),
     );
     const sessionToken = extractSessionToken(issueResponse);
-    const learningResponse = await GET(
+    const introductionResponse = await GET(
       new Request("http://localhost/api/learning", {
         headers: {
           cookie: `filumire_auth_session=${sessionToken}`,
         },
+      }),
+    );
+    const introduction = await introductionResponse.json() as {
+      decision: { sessionId: string; competencyId: string; reasonCode: string };
+    };
+
+    assert(
+      introduction.decision.reasonCode === "NEW_TOPIC_INSTRUCTION",
+      "teaching-first: a new topic opens with its explanation",
+    );
+
+    /*
+     * Teaching-first (Phase 1): "Check my knowledge first" goes
+     * straight to the diagnostic check this journey exercises.
+     */
+    const learningResponse = await POST(
+      new Request("http://localhost/api/learning", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          cookie: `filumire_auth_session=${sessionToken}`,
+        },
+        body: JSON.stringify({
+          sessionId: introduction.decision.sessionId,
+          competencyId: introduction.decision.competencyId,
+          interactionType: "check_first",
+        }),
       }),
     );
     const learningBody = await learningResponse.json() as {

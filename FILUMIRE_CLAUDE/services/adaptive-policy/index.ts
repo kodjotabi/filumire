@@ -38,6 +38,13 @@ export interface AdaptivePolicyContext {
     evidenceIds: string[];
   }[];
 
+  /*
+   * Teaching-first (Phase 1): teaching shown to introduce the topic,
+   * before its first answer. Optional, so existing callers behave
+   * exactly as before.
+   */
+  introductoryInterventionIds?: string[];
+
   prerequisiteSatisfied: boolean;
   hasNextCompetency: boolean;
 
@@ -124,10 +131,14 @@ export function decideNextBestAction(
   /*
    * A wrong answer to a diagnostic question shows what teaching
    * is needed; it is not evidence that teaching failed, so it is
-   * left to the diagnostic state below (Tranche 4B).
+   * left to the diagnostic state below (Tranche 4B). The same holds
+   * for a guided practice answer after a topic's introduction.
    */
   if (
     mostRecentIntervention?.outcome === "ineffective" &&
+    !context.introductoryInterventionIds?.includes(
+      mostRecentIntervention.interventionId,
+    ) &&
     mostRecentIntervention.type !== "diagnose" &&
     mostRecentIntervention.type !== "retention_check" &&
     mostRecentIntervention.type !== "transfer_check"

@@ -24,6 +24,10 @@ async function restore() {
   assert.equal(response.status, 200); return await response.json() as LearningResponse;
 }
 let data = await restore();
+// Teaching-first: a new topic opens with its explanation, a delivered lesson; "Check my knowledge first" starts the scored check.
+assert(data.lessonReceipt && !data.content?.assessmentItemId, "a new topic's explanation is a delivered lesson");
+const checkFirst = await POST(post({ sessionId, competencyId: data.decision.competencyId, interactionType: "check_first" }));
+assert.equal(checkFirst.status, 200); data = await checkFirst.json() as LearningResponse;
 assert.equal(data.lessonReceipt, undefined, "a scored activity is not a delivered lesson");
 for (let attempt = 0; !data.lessonReceipt && attempt < 4; attempt++) {
   const content = getContent(data.content!.id)!;

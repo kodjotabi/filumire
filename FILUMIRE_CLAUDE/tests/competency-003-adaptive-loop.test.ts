@@ -577,6 +577,28 @@ async function runProgression(): Promise<void> {
       "competency-test-005",
     );
 
+  /*
+   * Teaching-first (Phase 1): a new competency opens with its
+   * explanation; "Check my knowledge first" starts the diagnostic
+   * path this stage exercises.
+   */
+  const introductionDecision =
+    await makeAdaptiveDecision({
+      learnerId,
+      sessionId:
+        `${sessionId}-005-introduction`,
+      learnerState,
+    });
+
+  if (
+    introductionDecision.decision.reasonCode !==
+    "NEW_TOPIC_INSTRUCTION"
+  ) {
+    throw new Error(
+      `Expected competency-test-005 to open with its explanation, received ${introductionDecision.decision.reasonCode}.`,
+    );
+  }
+
   const diagnosticDecision =
     await makeAdaptiveDecision({
       learnerId,
@@ -585,7 +607,7 @@ async function runProgression(): Promise<void> {
         `${sessionId}-005-diagnostic`,
 
       learnerState,
-    });
+    }, { checkKnowledgeFirst: true });
 
   console.log({
     stage:

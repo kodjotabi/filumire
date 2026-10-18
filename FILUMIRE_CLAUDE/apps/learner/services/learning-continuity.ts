@@ -1,6 +1,6 @@
 import {
   fetchLearningSession, getSessionId, submitAssessmentResponse,
-  isPendingTeacherReviewResponse, acknowledgeLearningStep, LearningRequestError, type LearningResponse,
+  isPendingTeacherReviewResponse, acknowledgeLearningStep, checkKnowledgeFirst, LearningRequestError, type LearningResponse,
 } from "./learning-client";
 import {
   readPendingSubmission, clearPendingSubmission,
@@ -27,6 +27,10 @@ function trackMutation<T>(request: Promise<T>): Promise<T> {
 
 export function acknowledgeCurrentActivity(body: Parameters<typeof acknowledgeLearningStep>[0]) {
   return trackMutation(acknowledgeLearningStep(body));
+}
+
+export function checkKnowledgeFirstForActivity(body: Parameters<typeof checkKnowledgeFirst>[0]) {
+  return trackMutation(checkKnowledgeFirst(body));
 }
 
 /** Navigation must not start a second copy of an answer still in flight. */
