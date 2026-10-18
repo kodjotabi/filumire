@@ -67,9 +67,10 @@ async function restoreActivity(
     submit: submitAssessmentResponse,
   },
   pendingInMemory?: PendingAssessmentSubmission,
+  competencyId?: string,
 ): Promise<RestoredLearningActivity> {
   await Promise.allSettled([...mutations]);
-  const current = await dependencies.fetch(subjectId);
+  const current = await dependencies.fetch(subjectId, competencyId);
   const pending = pendingInMemory ?? dependencies.readPending();
   if (!pending || pending.learnerId !== current.learnerState.learnerId) {
     return { data: current };
@@ -109,8 +110,10 @@ export function restoreLearningActivity(
   subjectId?: string,
   dependencies?: Parameters<typeof restoreActivity>[1],
   pendingInMemory?: PendingAssessmentSubmission,
+  // Phase 2: a topic the learner chose from the topic list.
+  competencyId?: string,
 ): Promise<RestoredLearningActivity> {
-  const next = restoration.then(() => restoreActivity(subjectId, dependencies, pendingInMemory));
+  const next = restoration.then(() => restoreActivity(subjectId, dependencies, pendingInMemory, competencyId));
   restoration = next.catch(() => undefined);
   return next;
 }

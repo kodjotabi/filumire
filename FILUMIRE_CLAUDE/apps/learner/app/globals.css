@@ -542,6 +542,19 @@ a {
 .homeScreen .completed .subjectAreaPill { background: color-mix(in srgb, var(--ui-green) 18%, #ffffff); }
 .homeScreen .inprogress .subjectAreaPill { background: color-mix(in srgb, var(--ui-amber) 22%, #ffffff); }
 .homeScreen .new .subjectAreaPill { background: color-mix(in srgb, var(--ui-blue) 16%, #ffffff); }
+/* Phase 2: browsable curriculum, strand -> sub-strand -> topic. */
+.homeScreen .subjectTopicsHint { margin: 6px 0 4px; color: var(--ui-ink-soft); font-size: 13px; line-height: 1.35; }
+.homeScreen .subjectStrand { margin-top: 14px; }
+.homeScreen .subjectStrand h3 { margin: 0 0 6px; color: var(--ui-ink); font-size: 15px; font-weight: 800; }
+.homeScreen .subjectSubStrand { margin-bottom: 6px; border: 1px solid var(--filumire-border); border-radius: 14px; background: var(--filumire-surface); }
+.homeScreen .subjectSubStrand > summary { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 44px; padding: 8px 14px; cursor: pointer; color: var(--ui-ink); font-size: 14px; font-weight: 700; }
+.homeScreen .subjectSubStrand > summary small { flex: none; color: var(--ui-ink-soft); font-size: 11.5px; font-weight: 600; }
+.homeScreen .subjectSubStrand > summary:focus-visible { outline: 3px solid var(--filumire-navy); outline-offset: 2px; border-radius: 14px; }
+.homeScreen .subjectSubStrand ul { margin: 0; padding: 0 8px 8px; }
+.homeScreen a.subjectArea { min-height: 44px; color: inherit; text-decoration: none; }
+.homeScreen a.subjectArea:hover strong, .homeScreen a.subjectArea:focus-visible strong { text-decoration: underline; }
+.homeScreen a.subjectArea:focus-visible { outline: 3px solid var(--filumire-navy); outline-offset: 2px; }
+.homeScreen a.subjectArea.current { box-shadow: inset 0 0 0 2px var(--filumire-navy); }
 .homeScreen .subjectKeep { position: relative; display: flex; align-items: center; gap: 12px; min-height: 76px; margin-top: auto; padding: 8px 150px 8px 14px; border-radius: 16px; background: var(--tint); overflow: hidden; }
 .homeScreen .subjectTrophy { display: grid; place-items: center; flex: none; width: 52px; height: 52px; border-radius: 50%; background: color-mix(in srgb, var(--accent) 30%, #ffffff); color: var(--accent); }
 .homeScreen .subjectTrophy svg { width: 26px; height: 26px; fill: currentColor; }

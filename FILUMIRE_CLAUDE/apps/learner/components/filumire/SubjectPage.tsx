@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import type { LearningOverview } from "../../services/learning-client";
 import { completionPercent } from "../../services/learning-presentation";
@@ -29,8 +29,9 @@ const TEXT: Record<
     topics: string;
     current: string;
     areas: string;
-    viewAll: string;
-    less: string;
+    hint: string;
+    mastered: string;
+    here: string;
     cont: string;
     start: string;
     empty: string;
@@ -47,9 +48,10 @@ const TEXT: Record<
     of: "of",
     topics: "goals mastered",
     current: "Current Topic",
-    areas: "Learning Areas",
-    viewAll: "View All",
-    less: "Show less",
+    areas: "Topics",
+    hint: "Choose any topic to start learning it now, or continue where you left off.",
+    mastered: "mastered",
+    here: "Your current topic",
     cont: "Continue Learning",
     start: "Start Learning",
     empty: "Your topics for this subject will appear here once you start learning.",
@@ -75,9 +77,10 @@ const TEXT: Record<
     of: "sur",
     topics: "objectifs maîtrisés",
     current: "Thème actuel",
-    areas: "Domaines d'apprentissage",
-    viewAll: "Tout voir",
-    less: "Voir moins",
+    areas: "Thèmes",
+    hint: "Choisis n'importe quel thème pour l'apprendre maintenant, ou reprends ton thème actuel.",
+    mastered: "maîtrisés",
+    here: "Ton thème actuel",
     cont: "Continuer l'apprentissage",
     start: "Commencer",
     empty: "Tes thèmes pour cette matière apparaîtront ici dès que tu commenceras.",
@@ -111,12 +114,59 @@ const AREA_ICONS: Record<AreaStatus, ReactNode> = {
       <path d="M8 5v14l11-7z" />
     </svg>
   ),
+  // Not started, and open to choose: a book, not a padlock.
   new: (
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M17 9h-1V7a4 4 0 0 0-8 0v2H7a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1zM10 7a2 2 0 0 1 4 0v2h-4z" />
+      <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5a.5.5 0 0 0 0 1H20v2H6.5A2.5 2.5 0 0 1 4 18.5zM8 7v2h8V7z" />
     </svg>
   ),
 };
+
+type Area = LearningOverview["areas"][number];
+
+type StrandGroup = {
+  key: string;
+  title: string;
+  language: "en" | "fr";
+  order: number;
+  subStrands: Array<{
+    key: string;
+    title: string;
+    language: "en" | "fr";
+    order: number;
+    topics: Area[];
+  }>;
+};
+
+/*
+ * Phase 2: topics grouped strand -> sub-strand in curriculum order;
+ * within a sub-strand, topics keep their learning sequence.
+ */
+function groupByCurriculum(areas: Area[]): StrandGroup[] {
+  const strands = new Map<string, StrandGroup>();
+  // A topic without a curriculum place (an older overview) is still listed, ungrouped.
+  const unplaced = { key: "", code: "", title: "", language: "en" as const, order: 0 };
+  for (const area of [...areas].sort((a, b) => (a.sequence ?? 0) - (b.sequence ?? 0))) {
+    const strandPlace = area.strand ?? unplaced;
+    const subStrandPlace = area.subStrand ?? unplaced;
+    let strand = strands.get(strandPlace.key);
+    if (!strand) {
+      strand = { ...strandPlace, subStrands: [] };
+      strands.set(strandPlace.key, strand);
+    }
+    let subStrand = strand.subStrands.find((item) => item.key === subStrandPlace.key);
+    if (!subStrand) {
+      subStrand = { ...subStrandPlace, topics: [] };
+      strand.subStrands.push(subStrand);
+    }
+    subStrand.topics.push(area);
+  }
+  const byPlace = (a: { order: number; code?: string }, b: { order: number; code?: string }) =>
+    a.order - b.order || (a.code ?? "").localeCompare(b.code ?? "", undefined, { numeric: true });
+  return [...strands.values()]
+    .sort(byPlace)
+    .map((strand) => ({ ...strand, subStrands: [...strand.subStrands].sort(byPlace) }));
+}
 
 export function SubjectPage({
   subject,
@@ -128,7 +178,6 @@ export function SubjectPage({
   footer,
 }: SubjectPageProps) {
   const t = TEXT[language];
-  const [showAll, setShowAll] = useState(false);
   const stats = overview?.subjects[subject.subjectId];
   const areas =
     overview && overview.areasSubjectId === subject.subjectId ? overview.areas : [];
@@ -145,9 +194,33 @@ export function SubjectPage({
     : undefined;
   const topic = titled ?? currentArea;
   const topicTitle = currentTitle || currentArea?.title || "";
-  const start = Math.max(0, Math.min(currentIndex - 1, areas.length - 3));
-  const shown = showAll ? areas : areas.slice(start, start + 3);
   const name = subjectLabel(subject.name, language);
+  const strands = groupByCurriculum(areas);
+  const topicHref = (competencyId: string) =>
+    `/learn?lang=${language}&subjectId=${encodeURIComponent(subject.subjectId)}&competencyId=${encodeURIComponent(competencyId)}`;
+  const topicList = (topics: Area[]) => (
+    <ul>
+      {topics.map((area) => {
+        const current = area.id === currentArea?.id;
+        return (
+          <li key={area.id}>
+            <Link
+              href={topicHref(area.id)}
+              className={`subjectArea ${area.status}${current ? " current" : ""}`}
+              aria-current={current ? "step" : undefined}
+            >
+              <span className="subjectAreaIcon">{AREA_ICONS[area.status]}</span>
+              <div>
+                <strong>{area.title}</strong>
+                {current ? <small>{t.here}</small> : null}
+              </div>
+              <span className="subjectAreaPill">{t.status[area.status]}</span>
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
 
   return (
     <div className={`subjectPage ${subject.key}`}>
@@ -215,38 +288,43 @@ export function SubjectPage({
         </section>
       ) : null}
 
-      {areas.length > 0 ? (
-        <section className="subjectAreas">
+      {strands.length > 0 ? (
+        <section className="subjectAreas subjectTopics" aria-labelledby="subject-topics-heading">
           <div className="homeSectionHead">
-            <h2>{t.areas}</h2>
-            {areas.length > 3 ? (
-              <button
-                type="button"
-                className="homeSeeAll"
-                onClick={() => setShowAll(!showAll)}
-                aria-expanded={showAll}
-              >
-                {showAll ? t.less : t.viewAll}
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M9 6l6 6-6 6" />
-                </svg>
-              </button>
-            ) : null}
+            <h2 id="subject-topics-heading">{t.areas}</h2>
           </div>
-          <ul>
-            {shown.map((area) => (
-              <li key={area.id} className={`subjectArea ${area.status}`}>
-                <span className="subjectAreaIcon">{AREA_ICONS[area.status]}</span>
-                <div>
-                  <strong>
-                    {areas.indexOf(area) + 1}. {area.title}
-                  </strong>
-                  
-                </div>
-                <span className="subjectAreaPill">{t.status[area.status]}</span>
-              </li>
-            ))}
-          </ul>
+          <p className="subjectTopicsHint">{t.hint}</p>
+          {strands.map((strand, strandIndex) => (
+            <section
+              key={strand.key || "unplaced"}
+              className="subjectStrand"
+              aria-labelledby={strand.title ? `subject-strand-${strandIndex}` : undefined}
+            >
+              {strand.title ? (
+                <h3 id={`subject-strand-${strandIndex}`} lang={strand.language}>{strand.title}</h3>
+              ) : null}
+              {strand.subStrands.map((subStrand) => {
+                if (!subStrand.title) {
+                  return <div key={subStrand.key || "unplaced"}>{topicList(subStrand.topics)}</div>;
+                }
+                const mastered = subStrand.topics.filter((area) => area.status === "completed").length;
+                const holdsCurrent = subStrand.topics.some((area) => area.id === currentArea?.id);
+                return (
+                  <details
+                    key={subStrand.key}
+                    className="subjectSubStrand"
+                    open={holdsCurrent || (!currentArea && subStrand === strands[0].subStrands[0])}
+                  >
+                    <summary>
+                      <span lang={subStrand.language}>{subStrand.title}</span>
+                      <small>{`${mastered} ${t.of} ${subStrand.topics.length} ${t.mastered}`}</small>
+                    </summary>
+                    {topicList(subStrand.topics)}
+                  </details>
+                );
+              })}
+            </section>
+          ))}
         </section>
       ) : null}
 

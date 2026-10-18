@@ -113,6 +113,12 @@ const FR_TEXT: Record<string, string> = {
   Start: "Commencer",
   "Continue to the next step": "Passer à l'étape suivante",
   "Check my knowledge first": "Vérifier d'abord mes connaissances",
+  "All topics": "Tous les thèmes",
+  "Where you are": "Où tu en es",
+  "Step 1 of 3: Explanation": "Étape 1 sur 3 : explication",
+  "Step 2 of 3: Worked example": "Étape 2 sur 3 : exemple résolu",
+  "Step 3 of 3: Guided practice": "Étape 3 sur 3 : entraînement guidé",
+  "Revisiting this topic": "Tu revois ce thème",
   "Already know this topic? Answer a few questions first. If you need help, FILUMIRE will teach you.": "Tu connais déjà ce sujet ? Réponds d'abord à quelques questions. Si tu as besoin d'aide, FILUMIRE t'expliquera.",
   Correct: "Correct",
   "Not quite": "Pas tout à fait",
@@ -218,6 +224,29 @@ function actionLabel(
     default:
       return "Let's keep learning.";
   }
+}
+
+/* Phase 2: where the learner is within a topic's introduction. */
+function introductionStepText(reasonCode: string): string | undefined {
+  switch (reasonCode) {
+    case "NEW_TOPIC_INSTRUCTION":
+      return "Step 1 of 3: Explanation";
+    case "NEW_TOPIC_WORKED_EXAMPLE":
+      return "Step 2 of 3: Worked example";
+    case "GUIDED_PRACTICE":
+      return "Step 3 of 3: Guided practice";
+    case "TOPIC_REVISIT":
+      return "Revisiting this topic";
+    default:
+      return undefined;
+  }
+}
+
+function clearSelectedTopicFromUrl() {
+  const url = new URL(window.location.href);
+  if (!url.searchParams.has("competencyId")) return;
+  url.searchParams.delete("competencyId");
+  window.history.replaceState(window.history.state, "", url.toString());
 }
 
 /*
@@ -473,13 +502,19 @@ function LearnPageContent() {
     setAssessmentFeedback(null);
 
     try {
+      const query = new URLSearchParams(window.location.search);
       const result =
         await restoreLearningActivity(
-          new URLSearchParams(window.location.search)
-            .get("subjectId") ?? undefined,
+          query.get("subjectId") ?? undefined,
+          undefined,
+          undefined,
+          query.get("competencyId") ?? undefined,
         );
 
       if (!requestOrder.current.accepts(ticket)) return;
+      // Phase 2: the chosen topic is now the learner's current topic, so
+      // a later reload continues from wherever the learner has moved on to.
+      clearSelectedTopicFromUrl();
       setData(result.data);
       setPending(result.pending ?? null);
       if (result.submission && result.submittedAnswer) {
@@ -956,7 +991,14 @@ function LearnPageContent() {
     teachView && isIntroductionStep(data.decision);
 
   const currentStage = learningStages.findIndex((stage) => stage.current);
-  const stageLabel = currentStage >= 0 ? tr(language, "Let’s " + learningStages[currentStage].label.toLowerCase()) : tr(language, "Your learning session");
+  const introductionStep = introductionStepText(data.decision.reasonCode);
+  const stageLabel = introductionStep
+    ? tr(language, introductionStep)
+    : currentStage >= 0 ? tr(language, "Let’s " + learningStages[currentStage].label.toLowerCase()) : tr(language, "Your learning session");
+
+  /* Phase 2: where the learner is in the curriculum, and the way back to the topic list. */
+  const currentTopic = learnOverview?.areas.find((area) => area.id === data.decision.competencyId);
+  const topicsHref = withLang(backHref, language);
 
   return (
     <main className="page learnerUi" lang={language} data-appearance={appearance}>
@@ -974,6 +1016,24 @@ function LearnPageContent() {
           {/* learnSide / learnMain are layout-only (display: contents on
               mobile and tablet); from 1024px they form two columns. */}
           <div className="learnSide">
+          <nav className="topicTrail" aria-label={tr(language, "Where you are")}>
+            <Link href={topicsHref} className="topicTrailBack">
+              <span aria-hidden="true">{"←"}</span> {tr(language, "All topics")}
+            </Link>
+            {currentTopic?.strand && currentTopic.subStrand && (
+              <ol>
+                <li>
+                  <Link href={topicsHref}>
+                    {subjectLabel(learnSubject?.name ?? data.progress.subjectName ?? tr(language, "Learning"), language)}
+                  </Link>
+                </li>
+                <li lang={currentTopic.strand.language}>{currentTopic.strand.title}</li>
+                <li lang={currentTopic.subStrand.language}>{currentTopic.subStrand.title}</li>
+                <li aria-current="page">{currentTopic.title}</li>
+              </ol>
+            )}
+          </nav>
+
           <section
             className="learnBanner"
             style={{
@@ -1492,6 +1552,51 @@ function LearnPageContent() {
           flex-wrap: wrap;
           gap: 10px;
           margin-top: 14px;
+        }
+
+        .topicTrail {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          margin-bottom: 10px;
+          font-size: 0.88rem;
+          color: var(--filumire-text);
+        }
+
+        .topicTrail :global(.topicTrailBack) {
+          align-self: flex-start;
+          font-weight: 700;
+          color: var(--filumire-navy);
+          text-decoration: none;
+          padding: 4px 0;
+        }
+
+        .topicTrail :global(.topicTrailBack:hover),
+        .topicTrail :global(.topicTrailBack:focus-visible) {
+          text-decoration: underline;
+        }
+
+        .topicTrail ol {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 2px 6px;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+
+        .topicTrail li + li::before {
+          content: "›";
+          margin-right: 6px;
+          opacity: 0.6;
+        }
+
+        .topicTrail li[aria-current="page"] {
+          font-weight: 700;
+        }
+
+        .topicTrail :global(a) {
+          color: var(--filumire-navy);
         }
 
         .checkFirst {

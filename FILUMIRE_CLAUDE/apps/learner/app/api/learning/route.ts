@@ -6,6 +6,7 @@ import { getIntervention } from "../../../../../services/intervention-store";
 import { getEvidence } from "../../../../../services/evidence-store";
 import { getPilotMeasurementEvents } from "../../../../../services/pilot-measurement";
 import { buildLearningOverview } from "./overview-data";
+import { localizedCompetencyTitle } from "../../../../../services/curriculum-navigation";
 import { recordAssessmentDelivery, recoveredAssessmentDelivery } from "../../../../../services/edututor/assessment-recovery";
 import { assertSameOrigin, BadRequestError, errorResponse, readJsonBody } from "../account/http";
 
@@ -130,19 +131,8 @@ type EvidenceOutcome =
   | "skipped"
   | "observed";
 
-/*
- * Curriculum titles are English; a French topic title comes from the
- * topic's authored French lesson, as in the FILU conversation context.
- */
-function competencyTitleIn(
-  competencyId: string,
-  title: string,
-  language: string | undefined,
-) {
-  if (language !== "fr") return title;
-  return getContentForCompetency(competencyId, "fr")
-    .find(item => !item.assessmentItemId && item.type === "lesson")?.title ?? title;
-}
+/* Curriculum titles are English; French comes from the topic's French lesson. */
+const competencyTitleIn = localizedCompetencyTitle;
 
 function buildProgress(
   learnerState: Awaited<
@@ -565,7 +555,7 @@ async function buildLearningResponse(
     ReturnType<typeof createInitialLearnerState>
   >,
   language?: LearningLanguage,
-  decisionOptions: { checkKnowledgeFirst?: boolean } = {},
+  decisionOptions: { checkKnowledgeFirst?: boolean; selectedTopic?: boolean } = {},
 ) {
   /*
    * Content is chosen in the learner state's language, so a change
@@ -687,6 +677,7 @@ export async function GET(
         await buildLearningOverview(
           identity.learnerId,
           url.searchParams.get("subjectId") ?? "",
+          (await resolveLearningLanguage(request, identity.learnerId)) ?? "en",
         ),
       );
     }
@@ -775,6 +766,26 @@ export async function GET(
       );
     }
 
+    /*
+     * Phase 2: a topic the learner chose from the topic list
+     * (competencyId, already validated against the learner's
+     * subject and grade above) is the one learnt, even when its
+     * stored state was saved with another topic first.
+     */
+    const selectedTopic =
+      Boolean(url.searchParams.get("competencyId"));
+
+    if (
+      selectedTopic &&
+      learnerState.competencies[0]?.competencyId !== competencyId
+    ) {
+      learnerState =
+        await ensureCompetencyState(
+          learnerId,
+          learnerState,
+          competencyId,
+        );
+    }
 
     const response =
       await buildLearningResponse(
@@ -782,6 +793,7 @@ export async function GET(
         sessionId,
         learnerState,
         await resolveLearningLanguage(request, learnerId),
+        selectedTopic ? { selectedTopic: true } : {},
       );
 
     if (identity.source === "production-session" && !keepsCurrentTopic(response.decision)) {

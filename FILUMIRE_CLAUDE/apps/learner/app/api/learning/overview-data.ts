@@ -13,6 +13,7 @@ import {
 } from "../../../../../services/learner-context";
 import { getCompetencyProgressRows } from "../../../../../services/learner-progress";
 import { buildRevisionSummaries, primaryRevision } from "../../../../../services/learner-path/revision";
+import { subjectTopics, type NavigationLanguage } from "../../../../../services/curriculum-navigation";
 
 type OverviewSubject = { id: string; name: string; code: string; discipline: string };
 
@@ -35,10 +36,14 @@ type SubjectSummary = {
  * comes from their stored learning context and the subjects
  * listed are exactly the framework's available subjects for that
  * grade; progress and topic areas are limited to those subjects.
+ * Each topic area carries its place in the curriculum (strand and
+ * sub-strand) and its learning-sequence position, in the requested
+ * language, so learners can browse and choose topics (Phase 2).
  */
 export async function buildLearningOverview(
   learnerId: string,
   areasSubjectId: string,
+  language: NavigationLanguage = "en",
 ) {
   const context = await getOrCreateLearnerLearningContext(learnerId);
   const availableSubjects = getAvailableSubjectsForContext(context);
@@ -66,18 +71,21 @@ export async function buildLearningOverview(
   });
 
   const areas = areasSubjectId && subjects[areasSubjectId]
-    ? getCompetenciesForSubject(areasSubjectId).map((competency) => {
-        const row = latest.get(competency.id);
+    ? subjectTopics(areasSubjectId, language).map((topic) => {
+        const row = latest.get(topic.id);
         const status = row?.mastered
           ? "completed"
           : row && row.evidenceCount > 0
             ? "inprogress"
             : "new";
         return {
-          id: competency.id,
-          title: competency.title,
-          description: competency.description,
+          id: topic.id,
+          title: topic.title,
+          description: getCompetency(topic.id)?.description ?? "",
           status,
+          sequence: topic.sequence,
+          strand: topic.strand,
+          subStrand: topic.subStrand,
         };
       })
     : [];

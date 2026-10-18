@@ -153,6 +153,7 @@ export function getApiHeaders(): Record<string, string> {
 
 export function getLearningUrl(
   subjectId?: string,
+  competencyId?: string,
 ): string {
   const params = new URLSearchParams();
 
@@ -162,6 +163,11 @@ export function getLearningUrl(
 
   if (subjectId) {
     params.set("subjectId", subjectId);
+  }
+
+  // Phase 2: a topic the learner chose from the topic list.
+  if (subjectId && competencyId) {
+    params.set("competencyId", competencyId);
   }
 
   const query = params.toString();
@@ -181,6 +187,7 @@ export function getSessionId(
 
 export async function fetchLearningSession(
   subjectId?: string,
+  competencyId?: string,
 ): Promise<LearningResponse> {
   let response: Response;
 
@@ -199,7 +206,7 @@ export async function fetchLearningSession(
 
   try {
     response = await fetch(
-      getLearningUrl(subjectId),
+      getLearningUrl(subjectId, competencyId),
       {
         cache: "no-store",
         headers: getApiHeaders(),
@@ -375,7 +382,10 @@ export type AvailableSubject = {
   discipline: string;
 };
 
-export type RevisionSummary = { subjectId: string; due: Array<{ competencyId: string; dueAt: string }>; nextDueAt?: string; canStart: boolean };
+/* A strand or sub-strand; language is "en" when no French title exists yet. */
+export type CurriculumPlace = { key: string; code: string; title: string; language: "en" | "fr"; order: number };
+
+export type RevisionSummary ={ subjectId: string; due: Array<{ competencyId: string; dueAt: string }>; nextDueAt?: string; canStart: boolean };
 
 export type LearningOverview = {
   revision?: RevisionSummary;
@@ -399,6 +409,10 @@ export type LearningOverview = {
     title: string;
     description: string;
     status: "completed" | "inprogress" | "new";
+    /* Phase 2: learning-sequence position and place in the curriculum (absent from older servers). */
+    sequence?: number;
+    strand?: CurriculumPlace;
+    subStrand?: CurriculumPlace;
   }>;
 };
 

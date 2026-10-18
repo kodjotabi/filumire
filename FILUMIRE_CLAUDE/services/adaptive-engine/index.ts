@@ -89,6 +89,13 @@ export interface AdaptiveDecisionOptions {
    */
   checkKnowledgeFirst?: boolean;
 
+  /*
+   * Phase 2: the learner chose this topic from the topic list. A
+   * revision due elsewhere does not replace it, and a topic already
+   * completed is revisited from its explanation.
+   */
+  selectedTopic?: boolean;
+
   /* For tests. */
   now?: Date;
 }
@@ -101,6 +108,7 @@ export interface AdaptiveDecisionOptions {
 export const NEW_TOPIC_INSTRUCTION_REASON_CODE = "NEW_TOPIC_INSTRUCTION";
 export const NEW_TOPIC_WORKED_EXAMPLE_REASON_CODE = "NEW_TOPIC_WORKED_EXAMPLE";
 export const GUIDED_PRACTICE_REASON_CODE = "GUIDED_PRACTICE";
+export const TOPIC_REVISIT_REASON_CODE = "TOPIC_REVISIT";
 
 /* Introductory cards: explanation, then worked example. */
 const INTRODUCTION_CARD_TYPES = ["lesson", "example"];
@@ -161,6 +169,11 @@ export async function makeAdaptiveDecision(
         ? { competencyId: review.competencyId, reviewDue: true, retentionWindow: "open" }
         : focus ? { ...focus, competencyId: currentCompetency.competencyId, reviewDue: false } : undefined;
     }
+  }
+
+  // Phase 2: a topic the learner chose is learnt now; due reviews wait.
+  if (options.selectedTopic && focus) {
+    focus = { ...focus, competencyId: currentCompetency.competencyId, reviewDue: false };
   }
 
   const reviewTarget = focus?.reviewDue
@@ -361,12 +374,26 @@ export async function makeAdaptiveDecision(
         item.status === "completed",
     ).length;
 
+  /*
+   * Phase 2: a completed topic the learner chose again is revisited
+   * from its explanation (then checked as usual), instead of being
+   * handed straight over to the next topic.
+   */
+  const revisiting =
+    Boolean(options.selectedTopic) &&
+    !reviewTarget &&
+    !introducing &&
+    introductionCardCount > 0 &&
+    isCompetencyCompleted(competency, timeAware);
+
   const introductionStep:
     | "explain"
     | "worked_example"
     | "guided_practice"
     | undefined =
-    !introducing
+    revisiting
+      ? "explain"
+      : !introducing
       ? undefined
       : completedIntroductionCards === 0
         ? "explain"
@@ -549,7 +576,9 @@ export async function makeAdaptiveDecision(
     ? {
         action: "teach" as const,
         reasonCode:
-          introductionStep === "explain"
+          revisiting
+            ? TOPIC_REVISIT_REASON_CODE
+            : introductionStep === "explain"
             ? NEW_TOPIC_INSTRUCTION_REASON_CODE
             : NEW_TOPIC_WORKED_EXAMPLE_REASON_CODE,
         policyVersion: ADAPTIVE_POLICY_VERSION,
@@ -669,7 +698,8 @@ export async function makeAdaptiveDecision(
       ? selectIntroductionCard(
           focusedLearnerState,
           introductionStep,
-          usedContentIds,
+          // A revisit shows the explanation again, even though it was seen.
+          revisiting ? [] : usedContentIds,
         )
       : instructionCheck?.content ??
         selectLearningContent(
@@ -1075,9 +1105,9 @@ export const CONTENT_EXHAUSTED_REASON_CODE =
  * exactly, afterwards closely. Questions are never counted.
  */
 /*
- * Teaching-first (Phase 1): the explanation, or the worked example
- * (an authored "example" card the learner has not seen, when the
- * topic has one), for a topic's introduction.
+ * Teaching-first: the explanation (the topic's first unseen "lesson"
+ * card) or the worked example (its first unseen "example" card), for
+ * a topic's introduction or revisit.
  */
 function selectIntroductionCard(
   learnerState: Parameters<typeof selectLearningContent>[0],
@@ -1086,19 +1116,19 @@ function selectIntroductionCard(
 ) {
   const competency = learnerState.competencies[0];
 
-  if (step === "worked_example" && competency) {
-    const example = getContentForCompetency(
+  if (competency) {
+    const card = getContentForCompetency(
       competency.competencyId,
       learnerState.language,
     ).find(
       (item) =>
         !item.assessmentItemId &&
-        item.type === "example" &&
+        item.type === (step === "explain" ? "lesson" : "example") &&
         !shownCardIds.includes(item.id),
     );
 
-    if (example) {
-      return example;
+    if (card) {
+      return card;
     }
   }
 
