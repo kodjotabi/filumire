@@ -40,13 +40,20 @@ export async function writeCredential(path, text, created) {
   finally { closeSync(fd); }
 }
 
+// An explicit ROLLBACK command tag is definitive; a rejected/missing COMMIT reply is not.
+export async function commitTransaction(client) {
+  const result = await client.query("COMMIT");
+  if (result?.command === "ROLLBACK") throw new W4Error("commit_rolled_back");
+  if (result?.command !== "COMMIT") throw new W4Error("commit_not_confirmed");
+}
+
 // A failed COMMIT may have committed on the server. Neither a later ROLLBACK nor
 // reconnecting and observing an absent role can resolve a still-running COMMIT safely.
 // Preserve the exclusive credential file and require operator reconciliation; never retry.
 export async function transactionFailure(client, error, {
   commitAttempted = false, credentialCreated = false, envOut, remove = unlinkSync,
 } = {}) {
-  let rolledBack = false;
+  let rolledBack = commitAttempted && error instanceof W4Error && error.code === "commit_rolled_back";
   if (!commitAttempted) {
     try { rolledBack = (await client.query("ROLLBACK"))?.command === "ROLLBACK"; }
     catch { /* Outcome remains unknown; preserve credentials. */ }

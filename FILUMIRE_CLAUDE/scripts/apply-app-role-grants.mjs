@@ -12,7 +12,7 @@ import { pinnedTarget } from "./pinned-targets.mjs";
 import { checkTarget } from "./apply-migrations.mjs";
 import { loadManifest, verifyManifest, sha256 } from "./migration-ledger.mjs";
 import { inspect, ROLE, CONNECTION_LIMIT } from "./create-app-role.mjs";
-import { W4Error, transactionFailure, reportCli, withClient } from "./w4-safety.mjs";
+import { W4Error, commitTransaction, transactionFailure, reportCli, withClient } from "./w4-safety.mjs";
 
 // Reviewed SQL SHA-256 with CRLF normalized to LF. The SQL itself stays unchanged.
 export const APPROVED_SQL_SHA256 = "541f1168dde51798c410e32302349afd3e8d7fd307b68c5ae1e0b2ee4086109e";
@@ -91,7 +91,7 @@ export async function executeGrants(client, manifest, options, read) {
     // Re-read/hash immediately before sending. One query stops at the first SQL error.
     await client.query(grantSql(options.sqlHash, read));
     commitAttempted = true;
-    if ((await client.query("COMMIT"))?.command !== "COMMIT") refuse("commit_not_confirmed");
+    await commitTransaction(client);
     return { mode: "execute", target, granted: ROLE, sqlSha256: APPROVED_SQL_SHA256 };
   } catch (error) { return transactionFailure(client, error, { commitAttempted }); }
 }

@@ -1,6 +1,7 @@
 // W4: guarded filumire_app creation. No database, network or Vercel access: runs against a scripted fake client,
 // with injected randomness and file writes.
 import assert from "node:assert/strict";
+import pg from "pg"; // Exercise installed driver's result/error handling without connecting.
 import { createHash, createHmac } from "node:crypto";
 import { loadManifest } from "../scripts/migration-ledger.mjs";
 import { checkTarget } from "../scripts/apply-migrations.mjs";
@@ -153,8 +154,57 @@ for (const failCommit of ["before", "after"]) {
 }
 {
   const client = fakeClient({ commitResult: "ROLLBACK" }), f = files();
+  const emitted = [];
+  assert.equal(await reportCli(() => execute(client, manifest, target, code, profile, output, f.io), { emit: r => emitted.push(r) }), 1);
+  assert.equal(emitted[0].refused, "w4_transaction_failed");
+  assert.equal(emitted[0].reason, "commit_rolled_back");
+  assert.equal(emitted[0].outcome, "rolled_back");
+  assert.equal(emitted[0].credentialRetained, false);
+  assert.deepEqual(f.removed, [output.envOut]);
+  assert(!client.queries.includes("ROLLBACK")); checks++;
+}
+// A missing/unrecognized acknowledgment remains unknown, never grounds for cleanup.
+for (const commitResult of [undefined, "UNEXPECTED"]) {
+  const client = fakeClient({ commitResult }), f = files();
   await rejects("transaction_outcome_unknown", () => execute(client, manifest, target, code, profile, output, f.io));
-  assert.deepEqual(f.removed, []); checks++;
+  assert.deepEqual(f.removed, []); assert(!client.queries.includes("ROLLBACK")); checks++;
+}
+// Use pg's actual Query handlers with fabricated protocol events: no socket/client/file.
+const pgCommit = ({ tag, error }) => new Promise((resolve, reject) => {
+  const query = new pg.Query("COMMIT", (err, result) => err ? reject(err) : resolve(result));
+  if (error) query.handleError(error, {});
+  else { query.handleCommandComplete({ text: tag }, {}); query.handleReadyForQuery({}); }
+});
+{
+  assert.equal((await pgCommit({ tag: "ROLLBACK" })).command, "ROLLBACK");
+  assert.equal((await pgCommit({ tag: "COMMIT" })).command, "COMMIT"); checks++;
+}
+// A server ErrorResponse and transport loss collapse to the SAME original sanitized output.
+// The saved report alone cannot identify the historical cause. Never infer rollback here.
+{
+  const serverError = new pg.DatabaseError("fictional server detail", 0, "error");
+  serverError.code = "40001";
+  const transportError = new Error("fictional connection detail");
+  const reports = [];
+  for (const error of [serverError, transportError]) {
+    const client = fakeClient(), query = client.query, f = files(), emitted = [];
+    client.query = async (sql, params) => sql === "COMMIT" ? pgCommit({ error }) : query(sql, params);
+    assert.equal(await reportCli(() => execute(client, manifest, target, code, profile, output, f.io), { emit: r => emitted.push(r) }), 1);
+    reports.push(emitted[0]);
+    assert.deepEqual(f.removed, []); assert(!client.queries.includes("ROLLBACK"));
+  }
+  assert.deepEqual(reports[0], reports[1]);
+  assert.deepEqual(reports[0], { refused: "transaction_outcome_unknown", outcome: "unknown", rolledBack: false,
+    credentialRetained: true, envFileRemoved: false, cleanupFailed: false }); checks++;
+}
+// Cleanup errors after an explicit rollback remain nonzero and retain the warning.
+{
+  const client = fakeClient({ commitResult: "ROLLBACK" }), f = files(), emitted = [];
+  f.io.remove = () => { throw new Error("fictional private cleanup detail"); };
+  assert.equal(await reportCli(() => execute(client, manifest, target, code, profile, output, f.io), { emit: r => emitted.push(r) }), 1);
+  assert.equal(emitted[0].refused, "credential_cleanup_failed");
+  assert.equal(emitted[0].rolledBack, true); assert.equal(emitted[0].credentialRetained, true);
+  assert(!JSON.stringify(emitted).includes("private cleanup")); checks++;
 }
 // The env file already exists (write refuses): rolled back, the existing file is left alone.
 {

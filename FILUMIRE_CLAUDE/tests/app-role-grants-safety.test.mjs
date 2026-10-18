@@ -103,6 +103,14 @@ for (const failCommit of ["before", "after"]) {
   assert.equal(output[0].rolledBack, false); assert(!c.sql.includes("ROLLBACK")); checks++;
 }
 {
+  const c = client({ commitResult: "ROLLBACK" }), output = [];
+  assert.equal(await reportCli(() => executeGrants(c, manifest, approved), { emit: r => output.push(r) }), 1);
+  assert.equal(output[0].refused, "w4_transaction_failed");
+  assert.equal(output[0].reason, "commit_rolled_back");
+  assert.equal(output[0].outcome, "rolled_back");
+  assert(!c.sql.includes("ROLLBACK")); checks++;
+}
+{
   const c = client({ failPolicy: true, failRollback: true }), output = [];
   assert.equal(await reportCli(() => executeGrants(c, manifest, approved), { emit: r => output.push(r) }), 1);
   assert.equal(output[0].outcome, "unknown"); checks++;
