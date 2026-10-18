@@ -8,11 +8,13 @@ import { pinnedTarget, IDENTITY_SQL } from "../scripts/pinned-targets.mjs";
 import { APP_ROLE_MATRIX } from "../scripts/test-app-role-permissions.mjs";
 import { catalogHash } from "../scripts/catalog-snapshot.mjs";
 import { scramKeys, scramVerifier, redact, appUrl, checkOutput, approvalCode, dryRun, execute, ROLE_ATTRIBUTES, RoleError } from "../scripts/create-app-role.mjs";
+import { fakeClient } from "./helpers/w4-fake-client.mjs";
+import { PUBLIC_ACCESS_SQL, reportCli, withClient, W4Error } from "../scripts/w4-safety.mjs";
 
 let checks = 0;
 const ok = fn => { fn(); checks++; };
 const refuses = (code, fn) => { assert.throws(fn, error => error.code === code, code); checks++; };
-const rejects = async (code, fn) => { await assert.rejects(fn, error => error.code === code, code); checks++; };
+const rejects = async (code, fn) => { await assert.rejects(fn, error => error.code === code || error.details?.reason === code, code); checks++; };
 
 const manifest = loadManifest();
 const profile = pinnedTarget("filumire-preview");
@@ -58,30 +60,7 @@ refuses("production_endpoint_never_allowed", () => checkTarget(OWNER_URL.replace
 refuses("denied_existing_endpoint", () => checkTarget(OWNER_URL, PREVIEW, "neondb"));
 
 // ---- Fake client: post-W3 filumire-preview
-function fakeClient(overrides = {}) {
-  const s = { queries: [], roleCreated: null, ledger: LEDGER, tables: TABLES, roleExists: false, others: null, publicGrants: 0,
-    createrole: true, identity: { db: "neondb", usr: "neondb_owner", su: false, tl: profile.timelineId },
-    role: { rolsuper: false, rolcreaterole: false, rolcreatedb: false, rolreplication: false, rolbypassrls: false, rolcanlogin: true,
-      rolinherit: false, rolconnlimit: 20, rolvaliduntil: null }, memberships: 0, failCreate: null, failCommit: false, ...overrides };
-  s.query = async (sql, params) => {
-    s.queries.push(sql.trim().split(/\s+/).slice(0, 2).join(" "));
-    if (sql === IDENTITY_SQL) return { rows: [s.identity] };
-    if (sql.startsWith("select rolcreaterole r")) return { rows: [{ r: s.createrole }] };
-    if (sql.startsWith("select to_regclass")) return { rows: [{ t: "filumire_schema_migrations" }] };
-    if (sql.startsWith("select id, kind, sha256")) return { rows: s.ledger };
-    if (sql.startsWith("select tablename t")) return { rows: s.tables.map(t => ({ t })) };
-    if (sql.startsWith("select count(*)::int n from pg_roles")) return { rows: [{ n: s.roleExists ? 1 : 0 }] };
-    if (sql.startsWith("select string_agg(rolname")) return { rows: [{ r: s.others }] };
-    if (sql.includes("role_table_grants")) return { rows: [{ n: s.publicGrants }] };
-    if (sql.startsWith("CREATE ROLE")) { if (s.failCreate) throw new Error(s.failCreate); s.roleCreated = sql; return { rows: [] }; }
-    if (sql.startsWith("select rolsuper")) return { rows: [s.role] };
-    if (sql.includes("pg_auth_members")) return { rows: [{ n: s.memberships }] };
-    if (sql === "COMMIT" && s.failCommit) throw new Error("connection terminated");
-    return { rows: [] }; // SET, BEGIN, COMMIT, ROLLBACK, catalog reads (empty snapshot)
-  };
-  return s;
-}
-const files = () => { const f = { written: {}, removed: [] }; f.io = { random: n => Buffer.alloc(n, 7), write: (p, t) => { f.written[p] = t; }, remove: p => f.removed.push(p) }; return f; };
+const files = () => { const f = { written: {}, removed: [] }; f.io = { random: n => Buffer.alloc(n, 7), write: (p, t, created) => { created(); f.written[p] = t; }, remove: p => f.removed.push(p) }; return f; };
 const observed = { timelineId: profile.timelineId, ledger: LEDGER.map(r => r.id), tables: 29, schemaSha256: catalogHash({ tables: [], columns: [], constraints: [], indexes: [] }) };
 const code = approvalCode(target, observed);
 ok(() => assert.equal(TABLES.length, 29));
@@ -102,8 +81,15 @@ await rejects("ledger_not_complete_and_consistent", () => dryRun(fakeClient({ le
 await rejects("ledger_not_complete_and_consistent", () => dryRun(fakeClient({ ledger: [...LEDGER, { id: "0099_unknown", kind: "migration", sha256: "0".repeat(64) }] }), manifest, target, profile));
 await rejects("public_tables_differ_from_grant_matrix", () => dryRun(fakeClient({ tables: [...TABLES, "new_table"].sort() }), manifest, target, profile));
 await rejects("role_already_exists", () => dryRun(fakeClient({ roleExists: true }), manifest, target, profile));
-await rejects("other_filumire_roles_present:filumire_dev_owner", () => dryRun(fakeClient({ others: "filumire_dev_owner" }), manifest, target, profile));
-await rejects("public_has_table_grants", () => dryRun(fakeClient({ publicGrants: 2 }), manifest, target, profile));
+await rejects("other_filumire_roles_present", () => dryRun(fakeClient({ others: "filumire_dev_owner" }), manifest, target, profile));
+for (const kind of ["publicTableGrants", "publicViewGrants", "publicColumnGrants", "publicSequenceGrants"]) {
+  await rejects("public_has_relation_or_column_grants", () => dryRun(fakeClient({ [kind]: 1 }), manifest, target, profile));
+}
+ok(() => {
+  assert(!PUBLIC_ACCESS_SQL.includes("role_table_grants"));
+  assert(PUBLIC_ACCESS_SQL.includes("aclexplode") && PUBLIC_ACCESS_SQL.includes("acldefault"));
+  assert(PUBLIC_ACCESS_SQL.includes("a.grantee = 0") && PUBLIC_ACCESS_SQL.includes("col.attacl"));
+});
 
 // Happy path: one transaction, verifier only, env file written before COMMIT, nothing secret returned.
 {
@@ -135,9 +121,7 @@ await rejects("public_has_table_grants", () => dryRun(fakeClient({ publicGrants:
 // Neon rejects the role (e.g. password policy): rolled back, no file, error redacted.
 {
   const client = fakeClient({ failCreate: "password rejected: SCRAM-SHA-256$4096:x$y:z" }), f = files();
-  const result = await execute(client, manifest, target, code, profile, output, f.io);
-  assert.equal(result.rolledBack, true); assert.equal(result.envFileRemoved, false);
-  assert.equal(result.error, "password rejected: <verifier>");
+  await rejects("w4_transaction_failed", () => execute(client, manifest, target, code, profile, output, f.io));
   assert.deepEqual(f.written, {}); assert.equal(client.queries.at(-1), "ROLLBACK"); checks++;
 }
 // The created role is not what was asked for: rolled back before the file is written.
@@ -151,19 +135,58 @@ await rejects("public_has_table_grants", () => dryRun(fakeClient({ publicGrants:
   await rejects("role_has_memberships", () => execute(client, manifest, target, code, profile, output, f.io));
   assert.deepEqual(f.written, {}); checks++;
 }
-// COMMIT fails after the file was written: the file is removed again.
+// Loss before OR after server COMMIT: neither is a confirmed rollback. Keep credentials.
+for (const failCommit of ["before", "after"]) {
+  const client = fakeClient({ failCommit }), f = files(), emitted = [];
+  assert.equal(await reportCli(() => execute(client, manifest, target, code, profile, output, f.io), { emit: r => emitted.push(r) }), 1);
+  assert.equal(emitted[0].refused, "transaction_outcome_unknown");
+  assert.equal(emitted[0].rolledBack, false); assert.equal(emitted[0].credentialRetained, true);
+  assert.deepEqual(f.removed, []); assert(f.written[output.envOut]);
+  assert(!client.queries.includes("ROLLBACK"));
+  assert.equal(client.serverCommitted, failCommit === "after"); checks++;
+}
 {
-  const client = fakeClient({ failCommit: true }), f = files();
-  const result = await execute(client, manifest, target, code, profile, output, f.io);
-  assert.equal(result.rolledBack, true); assert.equal(result.envFileRemoved, true);
-  assert.deepEqual(f.removed, [output.envOut]); checks++;
+  const client = fakeClient({ commitResult: "ROLLBACK" }), f = files();
+  await rejects("transaction_outcome_unknown", () => execute(client, manifest, target, code, profile, output, f.io));
+  assert.deepEqual(f.removed, []); checks++;
 }
 // The env file already exists (write refuses): rolled back, the existing file is left alone.
 {
   const client = fakeClient(), f = files();
   f.io.write = () => { throw Object.assign(new Error("EEXIST: file already exists"), { code: "EEXIST" }); };
-  const result = await execute(client, manifest, target, code, profile, output, f.io);
-  assert.equal(result.rolledBack, true); assert.equal(result.envFileRemoved, false); assert.deepEqual(f.removed, []); checks++;
+  await assert.rejects(() => execute(client, manifest, target, code, profile, output, f.io), e => e.details.rolledBack && !e.details.envFileRemoved);
+  assert.deepEqual(f.removed, []); checks++;
+}
+// Partial write, cleanup failure and rollback failure remain visible and never leak messages.
+for (const failRollback of [false, true]) {
+  const client = fakeClient({ failRollback }), f = files(), emitted = [];
+  f.io.write = (p, t, created) => { created(); f.written[p] = t; throw new Error("fictional secret write failure"); };
+  assert.equal(await reportCli(() => execute(client, manifest, target, code, profile, output, f.io), { emit: r => emitted.push(r) }), 1);
+  assert.equal(emitted[0].rolledBack, !failRollback);
+  assert.equal(emitted[0].credentialRetained, failRollback);
+  assert.equal(f.removed.length, failRollback ? 0 : 1);
+  assert(!JSON.stringify(emitted).includes("fictional secret")); checks++;
+}
+{
+  const client = fakeClient(), f = files(), emitted = [];
+  f.io.write = (p, t, created) => { created(); throw new Error("write failure"); };
+  f.io.remove = () => { throw new Error("secret filesystem details"); };
+  assert.equal(await reportCli(() => execute(client, manifest, target, code, profile, output, f.io), { emit: r => emitted.push(r) }), 1);
+  assert.equal(emitted[0].refused, "credential_cleanup_failed");
+  assert.equal(emitted[0].cleanupFailed, true); assert.equal(emitted[0].envFileRemoved, false);
+  assert.equal(emitted[0].credentialRetained, true); assert(!JSON.stringify(emitted).includes("secret filesystem")); checks++;
+}
+{
+  const client = fakeClient({ failCommit: "after" }), f = files(), emitted = [];
+  client.connect = async () => {}; client.end = async () => { throw new Error("secret teardown details"); };
+  assert.equal(await reportCli(() => withClient(client, () => execute(client, manifest, target, code, profile, output, f.io)), { emit: r => emitted.push(r) }), 1);
+  assert.equal(emitted[0].refused, "transaction_outcome_unknown");
+  assert.equal(emitted[0].connectionCleanupFailed, true); assert.equal(emitted[0].credentialRetained, true); checks++;
+}
+{
+  const emitted = [];
+  assert.equal(await reportCli(async () => { throw new Error("unredacted-secret"); }, { emit: r => emitted.push(r) }), 1);
+  assert.deepEqual(emitted, [{ refused: "w4_operation_failed" }]); checks++;
 }
 // Bad output settings are refused before BEGIN.
 {

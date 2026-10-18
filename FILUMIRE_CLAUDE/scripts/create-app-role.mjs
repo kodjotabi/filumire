@@ -7,16 +7,16 @@
 // Usage: node scripts/create-app-role.mjs --url-env <VAR> --expect-host <host> --expect-database <db>
 //          [--pinned-target <name>] [--execute --approval <code> --env-out <.env.*.local> --app-url-var <VAR>]
 import { createHash, createHmac, pbkdf2Sync, randomBytes } from "node:crypto";
-import { writeFileSync, unlinkSync } from "node:fs";
 import { basename, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { loadManifest, verifyManifest, compareLedger, LedgerError } from "./migration-ledger.mjs";
+import { loadManifest, verifyManifest, compareLedger } from "./migration-ledger.mjs";
 import { catalog, catalogHash } from "./catalog-snapshot.mjs";
-import { checkTarget, ApplyError } from "./apply-migrations.mjs";
-import { PinnedTargetError, pinnedTarget, checkIdentity, IDENTITY_SQL } from "./pinned-targets.mjs";
+import { checkTarget } from "./apply-migrations.mjs";
+import { pinnedTarget, checkIdentity, IDENTITY_SQL } from "./pinned-targets.mjs";
 import { APP_ROLE_MATRIX } from "./test-app-role-permissions.mjs";
+import { checkPublicAccess, writeCredential, transactionFailure, reportCli, withClient, W4Error } from "./w4-safety.mjs";
 
-export class RoleError extends Error { constructor(code) { super(code); this.code = code; } }
+export class RoleError extends W4Error {}
 const refuse = code => { throw new RoleError(code); };
 
 export const ROLE = "filumire_app";
@@ -66,7 +66,7 @@ export const approvalCode = (target, observed) =>
     .digest("hex").slice(0, 12);
 
 /** Every pre-flight check from the W4 plan. Read-only statements only. */
-export async function inspect(client, manifest, profile) {
+export async function inspect(client, manifest, profile, { roleExpected = "absent" } = {}) {
   const [id] = (await client.query(IDENTITY_SQL)).rows;
   const identity = { database: id.db, role: id.usr, superuser: id.su, timelineId: id.tl };
   if (profile) checkIdentity(profile, identity);
@@ -82,12 +82,11 @@ export async function inspect(client, manifest, profile) {
   const expected = Object.keys(APP_ROLE_MATRIX).sort();
   if (JSON.stringify(tables) !== JSON.stringify(expected)) refuse("public_tables_differ_from_grant_matrix");
 
-  if ((await client.query("select count(*)::int n from pg_roles where rolname = $1", [ROLE])).rows[0].n) refuse("role_already_exists");
+  const roleCount = (await client.query("select count(*)::int n from pg_roles where rolname = $1", [ROLE])).rows[0].n;
+  if (roleExpected === "present" ? roleCount !== 1 : roleCount !== 0) refuse(roleExpected === "present" ? "role_missing" : "role_already_exists");
   const others = (await client.query("select string_agg(rolname, ',') r from pg_roles where rolname like 'filumire\\_%'")).rows[0].r;
-  if (others) refuse(`other_filumire_roles_present:${others}`);
-  const publicGrants = (await client.query(
-    "select count(*)::int n from information_schema.role_table_grants where table_schema = 'public' and grantee = 'PUBLIC'")).rows[0].n;
-  if (publicGrants) refuse("public_has_table_grants");
+  if (others && !(roleExpected === "present" && others === ROLE)) refuse("other_filumire_roles_present");
+  await checkPublicAccess(client);
 
   return { timelineId: identity.timelineId, ledger: status.applied, tables: tables.length, schemaSha256: catalogHash(await catalog(client)) };
 }
@@ -101,12 +100,13 @@ export async function dryRun(client, manifest, target, profile) {
 
 /**
  * One transaction: re-check, create the role from a verifier, verify it, write the env file, COMMIT.
- * The file is written before COMMIT and removed on any failure, so a role never exists without its credential.
+ * The file is fsynced before COMMIT. Remove it only after an acknowledged rollback.
+ * Any uncertain outcome preserves credentials and stops with a nonzero CLI exit.
  */
 export async function execute(client, manifest, target, approval, profile, output, io = {}) {
-  const { random = randomBytes, write = (path, text) => writeFileSync(path, text, { flag: "wx", mode: 0o600 }), remove = unlinkSync } = io;
+  const { random = randomBytes, write = writeCredential, remove } = io;
   checkOutput(output?.envOut, output?.varName);
-  let written = false;
+  let written = false, commitAttempted = false;
   await client.query("BEGIN");
   try {
     await client.query("SET LOCAL lock_timeout = '5s'; SET LOCAL statement_timeout = '30s'");
@@ -125,17 +125,15 @@ export async function execute(client, manifest, target, approval, profile, outpu
     if ((await client.query("select count(*)::int n from pg_auth_members m join pg_roles r on r.oid = m.member where r.rolname = $1", [ROLE])).rows[0].n)
       refuse("role_has_memberships");
 
-    write(output.envOut, `${output.varName}=${appUrl(output.ownerUrl, password)}\n`);
-    written = true;
-    await client.query("COMMIT");
+    write(output.envOut, `${output.varName}=${appUrl(output.ownerUrl, password)}\n`, () => { written = true; });
+    if (!written) refuse("credential_write_not_confirmed");
+    commitAttempted = true;
+    if ((await client.query("COMMIT"))?.command !== "COMMIT") refuse("commit_not_confirmed");
     return { mode: "execute", target, created: ROLE, attributes: ROLE_ATTRIBUTES, connectionLimit: CONNECTION_LIMIT,
       passwordStoredAs: `SCRAM-SHA-256 verifier (${SCRAM_ITERATIONS} iterations)`, envFile: basename(output.envOut), envVar: output.varName,
       schemaSha256: observed.schemaSha256 };
   } catch (error) {
-    try { await client.query("ROLLBACK"); } catch { /* connection already gone: the transaction did not commit */ }
-    if (written) { try { remove(output.envOut); } catch { /* reported below */ } }
-    if (error instanceof RoleError || error instanceof PinnedTargetError || error instanceof ApplyError) throw error;
-    return { mode: "execute", target, created: null, rolledBack: true, envFileRemoved: written, error: redact(error.message) };
+    return transactionFailure(client, error, { commitAttempted, credentialCreated: written, envOut: output.envOut, remove });
   }
 }
 
@@ -150,17 +148,11 @@ async function run(args) {
   if (args.includes("--execute")) checkOutput(output.envOut, output.varName);
   const { default: pg } = await import("pg");
   const client = new pg.Client({ connectionString: ownerUrl, connectionTimeoutMillis: 10000 });
-  await client.connect();
-  try {
+  return withClient(client, async () => {
     return args.includes("--execute") ? await execute(client, manifest, target, get("--approval"), profile, output) : await dryRun(client, manifest, target, profile);
-  } finally { await client.end(); }
+  });
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  try { console.log(JSON.stringify(await run(process.argv.slice(2)), null, 1)); }
-  catch (error) {
-    const known = error instanceof RoleError || error instanceof ApplyError || error instanceof LedgerError || error instanceof PinnedTargetError;
-    console.log(JSON.stringify({ refused: known ? error.code : "database_error", ...(known ? {} : { detail: redact(error.message) }) }));
-    process.exitCode = 1;
-  }
+  process.exitCode = await reportCli(() => run(process.argv.slice(2)));
 }
