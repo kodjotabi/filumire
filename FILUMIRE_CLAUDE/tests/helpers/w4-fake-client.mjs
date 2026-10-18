@@ -41,5 +41,6 @@ export function fakeClient(overrides = {}) {
     if (/^select table_name t|^select table_name, column_name|^select conrelid::regclass|^select tablename, indexname/.test(sql)) return { rows: [] };
     throw new Error("unexpected fake query");
   };
+  s.on = () => s; // withClient installs pg's 'error' listener; a fake never emits.
   return s;
 }

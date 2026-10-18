@@ -116,7 +116,7 @@ for (const failCommit of ["before", "after"]) {
   assert.equal(output[0].outcome, "unknown"); checks++;
 }
 {
-  const c = { connect: async () => {}, end: async () => { throw new Error("private connection details"); } }, output = [];
+  const c = { on: () => c, connect: async () => {}, end: async () => { throw new Error("private connection details"); } }, output = [];
   assert.equal(await reportCli(() => withClient(c, async () => ({ mode: "execute" })), { emit: r => output.push(r) }), 1);
   assert.equal(output[0].refused, "connection_cleanup_failed"); assert.equal(output[0].outcome, "committed");
   assert(!JSON.stringify(output).includes("private connection")); checks++;

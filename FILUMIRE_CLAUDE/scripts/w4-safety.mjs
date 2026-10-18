@@ -88,8 +88,12 @@ export async function reportCli(action, io = {}) {
 }
 
 // Teardown must not hide the transaction outcome or a retained-credential warning.
+// node-postgres emits 'error' when the connection is lost, even while idle in a transaction.
+// Unhandled, Node exits with a raw stack trace before any outcome is classified. pg itself
+// rejects pending/later queries, so only record that it happened; never keep the message.
 export async function withClient(client, action) {
-  let result, failure;
+  let result, failure, connectionLost = false;
+  client.on("error", () => { connectionLost = true; });
   try { await client.connect(); result = await action(client); }
   catch (error) { failure = error; }
   try { await client.end(); }
@@ -100,6 +104,7 @@ export async function withClient(client, action) {
     );
     failure.details.connectionCleanupFailed = true;
   }
+  if (failure instanceof W4Error && connectionLost) failure.details.connectionLost = true;
   if (failure) throw failure;
   return result;
 }
