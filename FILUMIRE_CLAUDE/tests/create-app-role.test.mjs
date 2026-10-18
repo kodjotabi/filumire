@@ -2,15 +2,19 @@
 // with injected randomness and file writes.
 import assert from "node:assert/strict";
 import pg from "pg"; // Exercise installed driver's result/error handling without connecting.
-import { createHash, createHmac } from "node:crypto";
+import { createHash } from "node:crypto";
 import { loadManifest } from "../scripts/migration-ledger.mjs";
 import { checkTarget } from "../scripts/apply-migrations.mjs";
 import { pinnedTarget, IDENTITY_SQL } from "../scripts/pinned-targets.mjs";
 import { APP_ROLE_MATRIX } from "../scripts/test-app-role-permissions.mjs";
 import { catalogHash } from "../scripts/catalog-snapshot.mjs";
-import { scramKeys, scramVerifier, redact, appUrl, checkOutput, approvalCode, dryRun, execute, ROLE_ATTRIBUTES, RoleError } from "../scripts/create-app-role.mjs";
-import { fakeClient } from "./helpers/w4-fake-client.mjs";
-import { PUBLIC_ACCESS_SQL, reportCli, withClient, W4Error } from "../scripts/w4-safety.mjs";
+import pgConnectionString from "pg-connection-string";
+import { mkdtempSync, writeFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { newPassword, checkTlsConfig, checkVerifiedTls, PASSWORD_TRANSMISSION, redact, appUrl, checkOutput, approvalCode, dryRun, execute, ROLE_ATTRIBUTES, RoleError } from "../scripts/create-app-role.mjs";
+import { fakeClient, verifiedStream } from "./helpers/w4-fake-client.mjs";
+import { PUBLIC_ACCESS_SQL, reportCli, withClient, W4Error, CREDENTIAL_POLICY_VERSION } from "../scripts/w4-safety.mjs";
 
 let checks = 0;
 const ok = fn => { fn(); checks++; };
@@ -26,20 +30,46 @@ const LEDGER = manifest.entries.map(e => ({ id: e.id, kind: e.kind, sha256: e.sh
 const TABLES = Object.keys(APP_ROLE_MATRIX).sort();
 const output = { envOut: "/fictional/.env.preview-app.local", varName: "FILUMIRE_PREVIEW_APP_URL", ownerUrl: OWNER_URL };
 
-// ---- SCRAM-SHA-256 against RFC 7677's published exchange (user "user", password "pencil")
-ok(() => {
-  const { clientKey, storedKey, serverKey } = scramKeys("pencil", Buffer.from("W22ZaJ0SNY7soEsUEjb6gQ==", "base64"), 4096);
-  const nonce = "rOprNGfwEbeRWgbNEkqO%hvYDpWUa2RaTCAfuxFIlj)hNlF$k0";
-  const authMessage = `n=user,r=rOprNGfwEbeRWgbNEkqO,r=${nonce},s=W22ZaJ0SNY7soEsUEjb6gQ==,i=4096,c=biws,r=${nonce}`;
-  const signature = createHmac("sha256", storedKey).update(authMessage).digest();
-  const proof = Buffer.from(clientKey.map((byte, i) => byte ^ signature[i]));
-  assert.equal(proof.toString("base64"), "dHzbZapWIk4jUhN+Ute9ytag9zjfMHgsqmmiz7AndVQ=");
-  assert.equal(createHmac("sha256", serverKey).update(authMessage).digest("base64"), "6rriTRBi23WpRR/wtup+mMhUZUn/dB5nLTJRsjl95G4=");
-  assert.deepEqual(createHash("sha256").update(clientKey).digest(), storedKey);
-});
-ok(() => assert.match(scramVerifier("pencil", Buffer.from("W22ZaJ0SNY7soEsUEjb6gQ==", "base64")), /^SCRAM-SHA-256\$4096:W22ZaJ0SNY7soEsUEjb6gQ==\$[A-Za-z0-9+/=]{44}:[A-Za-z0-9+/=]{44}$/));
-refuses("password_not_printable_ascii", () => scramKeys("pässword", Buffer.alloc(16)));
-refuses("password_not_printable_ascii", () => scramKeys("with space", Buffer.alloc(16)));
+// ---- Password: 256 bits, base64url only (safe inside a SQL literal without escaping)
+ok(() => assert.equal(newPassword(n => Buffer.alloc(n, 0xff)), "_".repeat(42) + "8"));
+ok(() => { for (let i = 0; i < 200; i++) assert.match(newPassword(n => Buffer.from(Array.from({ length: n }, () => Math.floor(Math.random() * 256)))), /^[A-Za-z0-9_-]{43}$/); });
+refuses("password_malformed", () => newPassword(n => Buffer.alloc(n - 1)));
+
+// ---- Plaintext only over a verified TLS socket (pg's connection.stream after SSL negotiation)
+ok(() => checkVerifiedTls({ connection: { stream: verifiedStream(PREVIEW) } }, PREVIEW));
+ok(() => checkVerifiedTls({ connection: { stream: verifiedStream("*.c-14.us-east-1.aws.neon.tech") } }, PREVIEW));
+for (const stream of [undefined, {}, { encrypted: true }, verifiedStream(PREVIEW, false), { authorized: true }]) {
+  refuses("tls_not_verified", () => checkVerifiedTls({ connection: { stream } }, PREVIEW));
+}
+refuses("tls_not_verified", () => checkVerifiedTls({}, PREVIEW));
+// CA-authorized but for another host, no certificate, or no expected host: hostname not verified.
+for (const stream of [verifiedStream("attacker.example"), verifiedStream("ep-other.c-14.us-east-1.aws.neon.tech"),
+  { encrypted: true, authorized: true }, { encrypted: true, authorized: true, getPeerCertificate: () => ({}) }]) {
+  refuses("tls_hostname_not_verified", () => checkVerifiedTls({ connection: { stream } }, PREVIEW));
+}
+refuses("tls_hostname_not_verified", () => checkVerifiedTls({ connection: { stream: verifiedStream(PREVIEW) } }, undefined));
+
+refuses("tls_hostname_check_disabled", () => checkTlsConfig(`${OWNER_URL}&uselibpqcompat=false`));
+refuses("tls_hostname_check_disabled", () => checkTlsConfig(OWNER_URL.replace("sslmode=require", "sslmode=verify-ca")));
+ok(() => { checkTlsConfig(OWNER_URL); checkTlsConfig(OWNER_URL.replace("sslmode=require", "sslmode=verify-full")); });
+const tlsBypassRegression = async () => {
+  const dir = mkdtempSync(join(tmpdir(), "filumire-w4-tls-")), ca = join(dir, "fictional-ca.pem");
+  writeFileSync(ca, "fictional CA, never used for a connection\n");
+  try {
+    for (const query of [`sslmode=verify-ca&uselibpqcompat=true&sslrootcert=${encodeURIComponent(ca)}`,
+      `sslmode=require&uselibpqcompat=true&sslrootcert=${encodeURIComponent(ca)}`]) {
+      const bypass = `postgresql://neondb_owner:fictional-owner@${PREVIEW}/neondb?${query}`;
+      const parsed = pgConnectionString.parse(bypass);
+      assert.equal(parsed.ssl.checkServerIdentity("attacker.example", {}), undefined, "parser disables hostname check");
+      ok(() => checkTarget(bypass, PREVIEW, "neondb", profile)); // the target gate alone accepts it
+      refuses("tls_hostname_check_disabled", () => checkTlsConfig(bypass));
+      const client = fakeClient({ connection: { stream: verifiedStream("attacker.example") } }), f = files();
+      await rejects("tls_hostname_check_disabled", () => execute(client, manifest, target, code, profile, { ...output, ownerUrl: bypass }, f.io));
+      await rejects("tls_hostname_not_verified", () => execute(client, manifest, target, code, profile, output, f.io));
+      assert.deepEqual(client.queries, []); assert.deepEqual(f.written, {}); checks++;
+    }
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+};
 
 // ---- Output hygiene
 ok(() => assert.equal(redact("bad SCRAM-SHA-256$4096:abc$def:ghi near postgresql://u:p@h/db x"), "bad <verifier> near <url> x"));
@@ -69,8 +99,18 @@ ok(() => assert.equal(TABLES.length, 29));
 const oldCode = createHash("sha256").update(JSON.stringify([
   target.host, target.database, observed.timelineId, observed.ledger, observed.schemaSha256, "create filumire_app",
 ])).digest("hex").slice(0, 12);
-ok(() => assert.notEqual(code, oldCode));
-await rejects("approval_code_does_not_match", () => execute(fakeClient(), manifest, target, oldCode, profile, output, files().io));
+// Verifier-era codes (before the switch to plaintext over TLS) are refused too.
+const verifierCode = createHash("sha256").update(JSON.stringify([
+  target.host, target.database, observed.timelineId, observed.ledger, observed.schemaSha256, "create filumire_app", CREDENTIAL_POLICY_VERSION,
+])).digest("hex").slice(0, 12);
+ok(() => { assert.notEqual(code, oldCode); assert.notEqual(code, verifierCode); assert.equal(PASSWORD_TRANSMISSION, "plaintext-over-verified-tls-v1"); });
+for (const stale of [oldCode, verifierCode]) {
+  await rejects("approval_code_does_not_match", () => execute(fakeClient(), manifest, target, stale, profile, output, files().io));
+}
+
+// Regression (reported bypass): pg 8.23 libpq-compat verify-ca (or require) with sslrootcert disables hostname
+// checks while `authorized` stays true. Proven against the installed parser, then refused at the URL and the socket.
+await tlsBypassRegression();
 
 // Dry run: read-only session, every pre-flight passes, no role statement.
 {
@@ -78,6 +118,7 @@ await rejects("approval_code_does_not_match", () => execute(fakeClient(), manife
   const report = await dryRun(client, manifest, target, profile);
   assert.equal(client.queries[0], "SET SESSION");
   assert.equal(report.approvalCode, code);
+  assert.equal(report.passwordTransmission, PASSWORD_TRANSMISSION);
   assert.deepEqual([report.tables, report.ledger.length, report.attributes], [29, 7, ROLE_ATTRIBUTES]);
   assert(!client.queries.some(q => q.startsWith("CREATE"))); checks++;
 }
@@ -89,6 +130,7 @@ await rejects("ledger_not_complete_and_consistent", () => dryRun(fakeClient({ le
 await rejects("public_tables_differ_from_grant_matrix", () => dryRun(fakeClient({ tables: [...TABLES, "new_table"].sort() }), manifest, target, profile));
 await rejects("role_already_exists", () => dryRun(fakeClient({ roleExists: true }), manifest, target, profile));
 await rejects("other_filumire_roles_present", () => dryRun(fakeClient({ others: "filumire_dev_owner" }), manifest, target, profile));
+await rejects("password_encryption_not_scram", () => dryRun(fakeClient({ passwordEncryption: "md5" }), manifest, target, profile));
 for (const kind of ["publicTableGrants", "publicViewGrants", "publicColumnGrants", "publicSequenceGrants"]) {
   await rejects("public_has_relation_or_column_grants", () => dryRun(fakeClient({ [kind]: 1 }), manifest, target, profile));
 }
@@ -98,20 +140,57 @@ ok(() => {
   assert(PUBLIC_ACCESS_SQL.includes("a.grantee = 0") && PUBLIC_ACCESS_SQL.includes("col.attacl"));
 });
 
-// Happy path: one transaction, verifier only, env file written before COMMIT, nothing secret returned.
+// Happy path: one transaction, plaintext (Neon needs it), env file written before COMMIT, nothing secret returned.
+const PASSWORD = Buffer.alloc(32, 7).toString("base64url");
 {
   const client = fakeClient(), f = files();
   const result = await execute(client, manifest, target, code, profile, output, f.io);
-  const password = Buffer.alloc(32, 7).toString("base64url");
   assert.equal(client.queries[0], "BEGIN");
   assert.equal(client.queries[1], "SET LOCAL");
   assert.equal(client.queries.at(-1), "COMMIT");
-  assert(client.roleCreated.startsWith(`CREATE ROLE filumire_app ${ROLE_ATTRIBUTES} CONNECTION LIMIT 20 PASSWORD 'SCRAM-SHA-256$4096:`));
-  assert(!client.roleCreated.includes(password), "plaintext never sent");
-  assert.equal(client.roleCreated, `CREATE ROLE filumire_app ${ROLE_ATTRIBUTES} CONNECTION LIMIT 20 PASSWORD '${scramVerifier(password, Buffer.alloc(16, 7))}'`);
-  assert.deepEqual(f.written, { [output.envOut]: `FILUMIRE_PREVIEW_APP_URL=${appUrl(OWNER_URL, password)}\n` });
-  assert(!JSON.stringify(result).includes(password) && !JSON.stringify(result).includes("SCRAM-SHA-256$"));
+  assert.equal(client.roleCreated, `CREATE ROLE filumire_app ${ROLE_ATTRIBUTES} CONNECTION LIMIT 20 PASSWORD '${PASSWORD}'`);
+  assert(!client.roleCreated.includes("SCRAM-SHA-256$"), "no precomputed verifier");
+  assert(client.sql.indexOf("select current_setting('password_encryption') pe") < client.sql.indexOf(client.roleCreated));
+  assert.equal(client.sql.filter(q => q.includes(PASSWORD)).length, 1, "password sent exactly once");
+  assert.deepEqual(f.written, { [output.envOut]: `FILUMIRE_PREVIEW_APP_URL=${appUrl(OWNER_URL, PASSWORD)}\n` });
+  assert(!JSON.stringify(result).includes(PASSWORD));
+  assert.equal(result.passwordTransmission, PASSWORD_TRANSMISSION);
   assert.equal(result.created, "filumire_app"); checks++;
+}
+// Unverified or absent TLS: refused before BEGIN, nothing sent, no file.
+for (const stream of [{ encrypted: true, authorized: false }, { encrypted: false }, undefined]) {
+  const client = fakeClient({ connection: { stream } }), f = files();
+  await rejects("tls_not_verified", () => execute(client, manifest, target, code, profile, output, f.io));
+  assert.deepEqual(client.queries, []); assert.deepEqual(f.written, {}); checks++;
+}
+// Server would not hash as SCRAM: rolled back before the password is generated or sent.
+{
+  const client = fakeClient({ passwordEncryption: "md5" }), f = files();
+  await rejects("password_encryption_not_scram", () => execute(client, manifest, target, code, profile, output, f.io));
+  assert.equal(client.roleCreated, null); assert(!client.sql.some(q => q.includes(PASSWORD)));
+  assert.equal(client.queries.at(-1), "ROLLBACK"); assert.deepEqual(f.written, {}); checks++;
+}
+// Neon rejects CREATE ROLE with a driver error that echoes the statement: nothing of it reaches output.
+{
+  const client = fakeClient(), query = client.query, f = files(), emitted = [];
+  client.query = async (sql, params) => {
+    if (sql.startsWith("CREATE ROLE")) throw Object.assign(new pg.DatabaseError(`fictional rejection of ${sql}`, 0, "error"), { code: "XX000", detail: sql });
+    return query(sql, params);
+  };
+  assert.equal(await reportCli(() => execute(client, manifest, target, code, profile, output, f.io), { emit: r => emitted.push(r) }), 1);
+  assert.deepEqual(emitted, [{ refused: "w4_transaction_failed", outcome: "rolled_back", rolledBack: true,
+    credentialRetained: false, envFileRemoved: false, cleanupFailed: false }]);
+  assert(!JSON.stringify(emitted).includes(PASSWORD)); assert.deepEqual(f.written, {}); checks++;
+}
+// Neon rejects at COMMIT (the observed XX000 case): outcome unknown, credential kept, password never output.
+{
+  const client = fakeClient(), query = client.query, f = files(), emitted = [];
+  client.query = async (sql, params) => sql === "COMMIT"
+    ? Promise.reject(Object.assign(new pg.DatabaseError("fictional HTTP 400: plaintext password required", 0, "error"), { code: "XX000" }))
+    : query(sql, params);
+  assert.equal(await reportCli(() => execute(client, manifest, target, code, profile, output, f.io), { emit: r => emitted.push(r) }), 1);
+  assert.equal(emitted[0].refused, "transaction_outcome_unknown"); assert.equal(emitted[0].credentialRetained, true);
+  assert(!JSON.stringify(emitted).includes(PASSWORD) && !JSON.stringify(emitted).includes("HTTP 400")); checks++;
 }
 // Wrong approval code: rolled back, no role, no file.
 {
@@ -127,7 +206,7 @@ ok(() => {
 }
 // Neon rejects the role (e.g. password policy): rolled back, no file, error redacted.
 {
-  const client = fakeClient({ failCreate: "password rejected: SCRAM-SHA-256$4096:x$y:z" }), f = files();
+  const client = fakeClient({ failCreate: "password rejected" }), f = files();
   await rejects("w4_transaction_failed", () => execute(client, manifest, target, code, profile, output, f.io));
   assert.deepEqual(f.written, {}); assert.equal(client.queries.at(-1), "ROLLBACK"); checks++;
 }
@@ -252,4 +331,4 @@ for (const failRollback of [false, true]) {
 }
 ok(() => assert(new RoleError("x") instanceof Error));
 
-console.log(`PASS: filumire_app creation — ${checks} checks (SCRAM RFC 7677, pre-flight, verifier-only, env file before COMMIT, fail-closed)`);
+console.log(`PASS: filumire_app creation — ${checks} checks (pre-flight, verified TLS, server SCRAM, plaintext never output, env file before COMMIT, fail-closed)`);

@@ -111,7 +111,8 @@ async function run(kind, commitReply, { idleKill = false } = {}) {
     return result;
   };
   const removed = [];
-  const io = { random: n => Buffer.alloc(n, 7), remove: path => removed.push(path),
+  // The local backend has no TLS; the verified-TLS gate is covered in create-app-role.test.mjs.
+  const io = { random: n => Buffer.alloc(n, 7), remove: path => removed.push(path), tls: () => {},
     write: async (path, text, created) => { created(); if (idleKill) await server.terminateIdle(); } };
   const emitted = [];
   const action = kind === "create" ? () => execute(client, manifest, target, createCode, profile, output, io)

@@ -10,13 +10,18 @@ export const profile = pinnedTarget("filumire-preview");
 export const LEDGER = manifest.entries.map(e => ({ id: e.id, kind: e.kind, sha256: e.sha256 ?? "b".repeat(64) }));
 export const TABLES = Object.keys(APP_ROLE_MATRIX).sort();
 
+/** A TLSSocket-shaped stream: CA-authorized, presenting a certificate for `certHost` (may be a wildcard). */
+export const verifiedStream = (certHost, authorized = true) => ({ encrypted: true, authorized,
+  getPeerCertificate: () => ({ subject: { CN: certHost }, subjectaltname: `DNS:${certHost}` }) });
+
 export function fakeClient(overrides = {}) {
   const s = { queries: [], sql: [], roleCreated: null, policySent: false, ledger: LEDGER, tables: TABLES, roleExists: false, others: null,
     publicTableGrants: 0, publicViewGrants: 0, publicColumnGrants: 0, publicSequenceGrants: 0,
     createrole: true, identity: { db: "neondb", usr: "neondb_owner", su: false, tl: profile.timelineId },
     role: { rolsuper: false, rolcreaterole: false, rolcreatedb: false, rolreplication: false, rolbypassrls: false, rolcanlogin: true,
       rolinherit: false, rolconnlimit: 20, rolvaliduntil: null }, memberships: 0, failCreate: null, failCommit: false, failRollback: false,
-    commitResult: "COMMIT", viewTrusted: true, viewDefinition: EVIDENCE_DEFINITION, ...overrides };
+    commitResult: "COMMIT", viewTrusted: true, viewDefinition: EVIDENCE_DEFINITION, passwordEncryption: "scram-sha-256",
+    connection: { stream: verifiedStream(profile.host) }, ...overrides };
   s.query = async (sql, params) => {
     s.sql.push(sql); s.queries.push(sql.trim().split(/\s+/).slice(0, 2).join(" "));
     if (sql === "COMMIT") {
@@ -27,6 +32,7 @@ export function fakeClient(overrides = {}) {
     if (sql === IDENTITY_SQL) return { rows: [s.identity] };
     if (sql === PUBLIC_ACCESS_SQL) return { rows: [{ n: s.publicTableGrants + s.publicViewGrants + s.publicColumnGrants + s.publicSequenceGrants }] };
     if (sql === EVIDENCE_SQL) return { rows: s.viewMissing ? [] : [{ trusted: s.viewTrusted, definition: s.viewDefinition }] };
+    if (sql === "select current_setting('password_encryption') pe") return { rows: [{ pe: s.passwordEncryption }] };
     if (sql.startsWith("select rolcreaterole r")) return { rows: [{ r: s.createrole }] };
     if (sql.startsWith("select to_regclass")) return { rows: [{ t: "filumire_schema_migrations" }] };
     if (sql.startsWith("select id, kind, sha256")) return { rows: s.ledger };
