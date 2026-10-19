@@ -19,6 +19,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { LearningRequestOrder, restoreLearningActivity, submitPendingAnswer, acknowledgeCurrentActivity, checkKnowledgeFirstForActivity } from "../../services/learning-continuity";
 import { completionPercent, stageIndicators, evaluatedFeedback, type ActivityFeedback } from "../../services/learning-presentation";
 import { useLessonClosure } from "../../services/use-lesson-closure";
+import { isTeachingFirstStep as isIntroductionStep } from "../../services/lesson-closure-client";
 import { LessonClosureCard } from "../../components/filumire/LessonClosureCard";
 import { ReadAloudControls } from "../../components/filumire/ReadAloudControls";
 import { LearnerLoadingState } from "../../components/filumire/LearnerLoadingState";
@@ -249,22 +250,6 @@ function clearSelectedTopicFromUrl() {
   window.history.replaceState(window.history.state, "", url.toString());
 }
 
-/*
- * Teaching-first (Phase 1): a new topic's introduction, the
- * explanation (or the hand-over card that opens the next topic) and
- * the worked example.
- */
-function isIntroductionStep(decision: {
-  action: string;
-  reasonCode: string;
-}): boolean {
-  return (
-    decision.action === "advance" ||
-    decision.reasonCode === "NEW_TOPIC_INSTRUCTION" ||
-    decision.reasonCode === "NEW_TOPIC_WORKED_EXAMPLE"
-  );
-}
-
 function buttonLabel(
   action: string,
 ): string {
@@ -426,10 +411,11 @@ function LearnRoute() {
   const params = useSearchParams();
   // A subject navigation starts a new screen lifecycle. Outstanding mutations
   // are reconciled by the shared restoration coordinator before it loads.
-  return <LearnPageContent key={params.get("subjectId") ?? "current"} />;
+  return <LearnPageContent key={params.get("subjectId") ?? "current"} selectedTopicId={params.get("competencyId")} />;
 }
 
-function LearnPageContent() {
+function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null }) {
+  const consumedSelection = useRef<string | null>(null);
   const requestOrder = useRef(new LearningRequestOrder());
   const operationBusy = useRef(false);
   const closureContinueBusy = useRef(false);
@@ -514,7 +500,10 @@ function LearnPageContent() {
       if (!requestOrder.current.accepts(ticket)) return;
       // Phase 2: the chosen topic is now the learner's current topic, so
       // a later reload continues from wherever the learner has moved on to.
-      clearSelectedTopicFromUrl();
+      if (!result.syncError) {
+        consumedSelection.current = query.get("competencyId");
+        clearSelectedTopicFromUrl();
+      }
       setData(result.data);
       setPending(result.pending ?? null);
       if (result.submission && result.submittedAnswer) {
@@ -667,6 +656,7 @@ function LearnPageContent() {
       const restored = await restoreLearningActivity(
         new URLSearchParams(window.location.search).get("subjectId") ?? undefined,
         undefined, pending ?? undefined,
+        new URLSearchParams(window.location.search).get("competencyId") ?? undefined,
       );
       if (!requestOrder.current.accepts(ticket)) return;
       setData(restored.data);
@@ -783,8 +773,16 @@ function LearnPageContent() {
   }
 
   useEffect(() => {
+    // A different topic in the same subject is a new selection too. Consuming
+    // the URL parameter after a successful restore must not reload the old topic.
+    if (!selectedTopicId && consumedSelection.current) {
+      consumedSelection.current = null;
+      return;
+    }
     loadLearning();
+  }, [selectedTopicId]);
 
+  useEffect(() => {
     const unsubscribe = subscribeConnectivity(
       setConnectivity,
     );

@@ -93,11 +93,11 @@ async function restoreActivity(
   }
   dependencies.clearPending(pending.clientRequestId);
   try {
-    return { data: await dependencies.fetch(subjectId), submission, submittedAnswer: pending };
+    return { data: await dependencies.fetch(subjectId, competencyId), submission, submittedAnswer: pending };
   } catch (syncError) {
     // A committed POST remains authoritative if the follow-up GET is offline.
     return {
-      data: isPendingTeacherReviewResponse(submission) ? current : submission,
+      data: competencyId || isPendingTeacherReviewResponse(submission) ? current : submission,
       submission, submittedAnswer: pending, syncError,
     };
   }

@@ -1,3 +1,4 @@
+import { currentTeachingCycle, nextTeachingCycle, teachingBinding, teachingPolicy } from "./topic-teaching";
 import type {
   AdaptiveDecisionRequest,
   AdaptiveDecisionResponse,
@@ -144,6 +145,7 @@ export async function makeAdaptiveDecision(
 
   const currentDefinition =
     getCompetency(currentCompetency.competencyId);
+  const currentInterventions = await getLearnerInterventions(request.learnerId, currentCompetency.competencyId);
 
   let focus = timeAware
     ? chooseFocus({
@@ -172,7 +174,7 @@ export async function makeAdaptiveDecision(
   }
 
   // Phase 2: a topic the learner chose is learnt now; due reviews wait.
-  if (options.selectedTopic && focus) {
+  if ((options.selectedTopic || currentTeachingCycle(currentInterventions)) && focus) {
     focus = { ...focus, competencyId: currentCompetency.competencyId, reviewDue: false };
   }
 
@@ -246,13 +248,15 @@ export async function makeAdaptiveDecision(
    * intervention, before the policy chooses anything new.
    */
   let storedInterventions =
-    await getLearnerInterventions(
+    reviewTarget ? await getLearnerInterventions(
       request.learnerId,
       competency.competencyId,
-    );
+    ) : currentInterventions;
   // Guardian-recovered attempts remain historical records. Do not reuse,
   // cancel or evaluate them when selecting the next real learning activity.
   const recoveredHistory = await readAssessmentRecovery(request.learnerId);
+  const recoveredTeachingCycles = new Set(storedInterventions.filter(item => recoveredHistory.recovered(item))
+    .map(item => teachingBinding(item)?.cycle));
   // Teaching-first: a recovered question was still put to the learner, so
   // the topic is not introduced again.
   const recoveredQuestionPut = storedInterventions.some(item =>
@@ -375,24 +379,24 @@ export async function makeAdaptiveDecision(
     ).length;
 
   /*
-   * Phase 2: a completed topic the learner chose again is revisited
-   * from its explanation (then checked as usual), instead of being
-   * handed straight over to the next topic.
+   * Explicit selection starts a persisted explanation/example cycle even
+   * on a partly learnt topic. Ordinary refreshes and acknowledgements
+   * continue that cycle without changing the learner's scored history.
    */
-  const revisiting =
-    Boolean(options.selectedTopic) &&
-    !reviewTarget &&
-    !introducing &&
-    introductionCardCount > 0 &&
-    isCompetencyCompleted(competency, timeAware);
+  let teachingCycle = currentTeachingCycle(storedInterventions);
+  if (reviewTarget || options.checkKnowledgeFirst || recoveredTeachingCycles.has(teachingCycle?.cycle)) teachingCycle = undefined;
+  if (options.selectedTopic && !reviewTarget && !options.checkKnowledgeFirst && introductionCardCount > 0 && teachingCycle?.step !== "explain") {
+    teachingCycle = { cycle: nextTeachingCycle(currentInterventions), step: "explain" };
+  }
+  const revisiting = Boolean(teachingCycle) && !introducing;
 
   const introductionStep:
     | "explain"
     | "worked_example"
     | "guided_practice"
     | undefined =
-    revisiting
-      ? "explain"
+    teachingCycle
+      ? teachingCycle.step
       : !introducing
       ? undefined
       : completedIntroductionCards === 0
@@ -433,6 +437,7 @@ export async function makeAdaptiveDecision(
         .filter(
           (item) =>
             isAwaitingInstructionCheck(item) &&
+            (!teachingCycle || item.policyVersion === teachingPolicy(teachingCycle.cycle, "worked_example")) &&
             !answeredInterventionIds.has(
               item.interventionId,
             ) &&
@@ -576,7 +581,7 @@ export async function makeAdaptiveDecision(
     ? {
         action: "teach" as const,
         reasonCode:
-          revisiting
+          revisiting && introductionStep === "explain"
             ? TOPIC_REVISIT_REASON_CODE
             : introductionStep === "explain"
             ? NEW_TOPIC_INSTRUCTION_REASON_CODE
@@ -699,7 +704,7 @@ export async function makeAdaptiveDecision(
           focusedLearnerState,
           introductionStep,
           // A revisit shows the explanation again, even though it was seen.
-          revisiting ? [] : usedContentIds,
+          teachingCycle ? [] : usedContentIds,
         )
       : instructionCheck?.content ??
         selectLearningContent(
@@ -729,6 +734,7 @@ export async function makeAdaptiveDecision(
     );
 
   if (contentExhausted) {
+    const completedRevisit = Boolean(teachingCycle) && isCompetencyCompleted(competency, timeAware);
     /*
      * The competency is not completed, so its successors keep an
      * unmet prerequisite: choose again without counting it.
@@ -738,7 +744,7 @@ export async function makeAdaptiveDecision(
         currentCompetencyId:
           competency.competencyId,
         states: allCompetencyStates.map((item) =>
-          item.competencyId === competency.competencyId
+          item.competencyId === competency.competencyId && !completedRevisit
             ? {
                 ...item,
                 readinessState: {
@@ -752,7 +758,7 @@ export async function makeAdaptiveDecision(
               }
             : item,
         ),
-        currentCompleted: false,
+        currentCompleted: completedRevisit,
         timeAware,
         retryable: retryableNeedsSupport,
       });
@@ -780,10 +786,9 @@ export async function makeAdaptiveDecision(
         usedContentIds,
       );
 
-    await markContentExhausted(
-      request.learnerId,
-      competency.competencyId,
-      learnerState,
+    // Lack of another safe question on a revisit cannot revoke earned mastery.
+    if (!completedRevisit) await markContentExhausted(
+      request.learnerId, competency.competencyId, learnerState,
     );
   }
 
@@ -971,6 +976,8 @@ export async function makeAdaptiveDecision(
           (item) =>
             item.type ===
               pedagogicalDecision.action &&
+            (!teachingCycle || item.policyVersion === teachingPolicy(teachingCycle.cycle,
+              introductionStep === "worked_example" ? "worked_example" : "explain")) &&
             item.startedAt >= latestEvidenceAt,
         )
         .sort((a, b) =>
@@ -980,7 +987,7 @@ export async function makeAdaptiveDecision(
         )[0];
 
     for (const item of openInterventions) {
-      if (item !== reusable) {
+      if (item !== reusable && (!teachingCycle || !QUESTION_ACTIONS.includes(item.type))) {
         await cancelIntervention(
           item.interventionId,
         );
@@ -1016,8 +1023,8 @@ export async function makeAdaptiveDecision(
           responseModeDecision
             .responseMode,
 
-        policyVersion:
-          "intervention-v1",
+        policyVersion: teachingCycle && (introductionStep === "explain" || introductionStep === "worked_example")
+          ? teachingPolicy(teachingCycle.cycle, introductionStep) : "intervention-v1",
       });
 
     decision.interventionId =
@@ -1192,7 +1199,10 @@ export function replayShownCardIds(
       introductionCards < MAX_INTRODUCTION_CARDS &&
       (!firstQuestionAt || item.startedAt < firstQuestionAt);
 
-    const card = introduction
+    const binding = teachingBinding(item);
+    const card = binding
+      ? selectIntroductionCard(replayState, binding.step, [])
+      : introduction
       ? selectIntroductionCard(
           replayState,
           introductionCards === 0 ? "explain" : "worked_example",
@@ -1205,7 +1215,7 @@ export function replayShownCardIds(
           shown,
         );
 
-    if (introduction) {
+    if (introduction && !binding) {
       introductionCards += 1;
     }
 

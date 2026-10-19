@@ -190,7 +190,11 @@ async function overview(language: "en" | "fr") {
   assert.equal(revisit.body.decision.reasonCode, "TOPIC_REVISIT");
   assert.equal(revisit.body.content?.type, "lesson", "it is revisited from its explanation");
   const evidenceBefore = (await getEvidenceForLearner(learner.learnerId)).length;
-  const check = await learner.next(revisit.body, `subjectId=${B4}`);
+  const example = await learner.next(revisit.body, `subjectId=${B4}`);
+  assert.equal(example.decision.reasonCode, "NEW_TOPIC_WORKED_EXAMPLE", "a mastered-topic revisit includes its worked example");
+  assert.equal(example.content?.type, "example");
+  const check = await learner.next(example, `subjectId=${B4}`);
+  assert.equal(check.decision.reasonCode, "GUIDED_PRACTICE");
   assert(check.content?.assessmentItemId && check.decision.competencyId === PATTERNS_1, "the revisit is checked on the same topic");
   assert.equal((await getEvidenceForLearner(learner.learnerId)).length, evidenceBefore, "reading the revisit records no evidence");
   console.log("PASS due review waits for a chosen topic; mastered topic revisited");

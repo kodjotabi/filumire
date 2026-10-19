@@ -150,3 +150,27 @@ globalThis.fetch = async (_url, options) => {
 try { assert.equal((await fetchLearningSession("math")).decision.id, "fresh"); }
 finally { globalThis.fetch = originalFetch; }
 console.log("PASS: authoritative activity fetch bypasses browser cache");
+
+// Reconciliation of an earlier number-pattern answer must not replace a
+// newly selected Fractions lesson, even if the final GET goes offline.
+for (const offlineAfterCommit of [false, true]) {
+  const selections: Array<[string | undefined, string | undefined]> = [];
+  const fractions = activity("fractions-explanation");
+  fractions.decision.competencyId = "fractions";
+  let calls = 0, submitted = 0, removed = 0;
+  const result = await restoreLearningActivity("math", {
+    fetch: async (subject, topic) => {
+      selections.push([subject, topic]);
+      if (++calls === 2 && offlineAfterCommit) throw new LearningNetworkError("offline after earlier answer committed");
+      return fractions;
+    },
+    readPending: () => pending,
+    clearPending: key => { assert.equal(key, pending.clientRequestId); removed++; },
+    submit: async body => { assert.equal(body.clientRequestId, pending.clientRequestId); submitted++; return activity("number-pattern-response"); },
+  }, undefined, "fractions");
+  assert.deepEqual(selections, [["math", "fractions"], ["math", "fractions"]]);
+  assert.equal(result.data.decision.competencyId, "fractions");
+  assert.equal(submitted, 1); assert.equal(removed, 1);
+  assert.equal(Boolean(result.syncError), offlineAfterCommit);
+}
+console.log("PASS: pending answer reconciliation preserves explicit topic selection and idempotency");

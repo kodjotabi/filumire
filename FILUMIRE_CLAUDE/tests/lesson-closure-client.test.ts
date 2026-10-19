@@ -10,6 +10,10 @@ const pending = { scope, receipt: "signed-delivery-receipt", phase: "pending" as
 saveLessonClosure(pending); assert.deepEqual(readLessonClosure(scope), pending, "lost acknowledgement response survives refresh without storing fabricated completion");
 assert.equal(readLessonClosure(closureScope("fictional-b", "math")), undefined);
 assert.equal(readLessonClosure(closureScope("fictional-a", "science")), undefined);
+saveLessonClosure({ ...pending, scope: closureScope("fictional-a", "math", "number-patterns") });
+assert.equal(readLessonClosure(closureScope("fictional-a", "math", "fractions")), undefined, "same-subject topic navigation cannot restore another topic's summary");
+storage.set("filumire.lessonClosure", JSON.stringify({ ...pending, scope: JSON.stringify(["fictional-a", "math"]) }));
+assert.equal(readLessonClosure(closureScope("fictional-a", "math", "fractions")), undefined, "legacy subject-only receipts cannot be restored into a topic");
 saveLessonClosure({ ...pending, phase: "review" }); assert.equal(readLessonClosure(scope)?.phase, "review");
 saveLessonClosure({ ...pending, phase: "dismissed" }); assert.equal(readLessonClosure(scope)?.phase, "dismissed", "returning to the lesson cannot reshow an already dismissed summary");
 saveLessonClosure({ ...pending, expiresAt: Date.now() - 1 }); assert.equal(readLessonClosure(scope), undefined);

@@ -1,5 +1,6 @@
 import type { LessonClosure } from "../../../packages/contracts/lesson-closure";
 import { getApiHeaders } from "./learning-client";
+import type { LearningResponse } from "./learning-client";
 
 const KEY = "filumire.lessonClosure";
 export interface ClosureSession {
@@ -8,7 +9,14 @@ export interface ClosureSession {
   phase: "pending" | "summary" | "review" | "dismissed";
   expiresAt: number;
 }
-export function closureScope(learnerId: string, subjectId?: string) { return JSON.stringify([learnerId, subjectId ?? ""]); }
+export function closureScope(learnerId: string, subjectId?: string, competencyId?: string) { return JSON.stringify([learnerId, subjectId ?? "", competencyId ?? ""]); }
+export function isTeachingFirstStep(decision: { action: string; reasonCode: string }) {
+  return decision.action === "advance" || ["NEW_TOPIC_INSTRUCTION", "NEW_TOPIC_WORKED_EXAMPLE", "TOPIC_REVISIT"].includes(decision.reasonCode);
+}
+export function closureMatchesActivity(closure: LessonClosure, data: LearningResponse, language: "en" | "fr") {
+  return !isTeachingFirstStep(data.decision) && closure.language === language &&
+    closure.competencyId === data.decision.competencyId && closure.subjectId === data.progress.subjectId;
+}
 export function clearLessonClosure(): void {
   try { window.sessionStorage.removeItem(KEY); } catch { /* optional browser continuity */ }
 }
