@@ -32,6 +32,7 @@ export const OFFLINE_SECURITY_SUITES = [
   // Tutoring, lesson closure and safeguarding
   "tutoring-conversation-identity", "tutoring-conversation-api", "tutoring-recovery",
   "tutoring-conceptual-help",
+  "outline-visuals",
   "lesson-closure-api", "lesson-closure-production", "cluster5c-safeguarding",
 ];
 

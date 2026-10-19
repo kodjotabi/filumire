@@ -4,10 +4,13 @@ import type { LessonClosure } from "../../packages/contracts/lesson-closure";
 import { getCompetency, getCompetenciesForSubject } from "../../packages/curriculum";
 import { getContent, getContentForCompetency } from "../content-store";
 import { seedContent } from "../content-store/seed";
-import { getIntervention, INSTRUCTIONAL_INTERVENTION_TYPES } from "../intervention-store";
+import { getIntervention, getLearnerInterventions, isAwaitingInstructionCheck, INSTRUCTIONAL_INTERVENTION_TYPES } from "../intervention-store";
 import { getLearnerState, getLearnerStates } from "../learner-state-store";
 import { getEvidence } from "../evidence-store";
 import { buildLearnerPath } from "../learner-path";
+import { selectVerifiedReflectionVisuals } from "../outline-visuals";
+import { loadConversationContext } from "../edututor/conversation-context";
+import { getPilotMeasurementEvents } from "../pilot-measurement";
 
 const TTL = 7 * 24 * 60 * 60 * 1000;
 const localKey = randomBytes(32);
@@ -93,11 +96,23 @@ export async function getLessonClosure(learnerId: string, token: string, languag
   for (const item of [...attempts].reverse()) { if (item.outcome !== "incorrect") break; consecutiveErrors++; }
   const firstRecorded = attempts[0]?.timestamp;
   const elapsed = firstRecorded && profile?.masteredAt ? Date.parse(profile.masteredAt) - Date.parse(firstRecorded) : undefined;
+  // A verified old receipt must not become a diagram lookup during a scored
+  // activity. Reuse the existing read-only assessment boundary; ambiguity denies.
+  const reflectionCandidates = translated && excerpts.length ? selectVerifiedReflectionVisuals(translated, language) : [];
+  let reflectionVisualsAllowed = false;
+  if (reflectionCandidates.length) try {
+    const [interventions, deliveries] = await Promise.all([getLearnerInterventions(learnerId), getPilotMeasurementEvents(learnerId)]);
+    const awaitingCheck = interventions.some(i => isAwaitingInstructionCheck(i) && deliveries.some(e =>
+      e.eventType === "learning_presented" && e.competencyId === i.competencyId && e.createdAt >= i.startedAt &&
+      e.metadata.source === "assessment-delivery-v1" && e.metadata.interventionId === i.interventionId && Boolean(e.metadata.assessmentItemId)));
+    reflectionVisualsAllowed = !awaitingCheck && !(await loadConversationContext(learnerId, language)).assessmentProtected;
+  } catch { /* Fail closed. */ }
   return {
     interventionId: intervention.interventionId, competencyId: source.competencyId, subjectId: competency.subjectId,
     completedAt: intervention.completedAt, language,
     summary: { available: Boolean(translated && excerpts.length), title: translated?.title,
-      concepts: source.type === "example" ? [] : excerpts, examples: source.type === "example" ? excerpts : [], narration: excerpts.join("\n\n") },
+      concepts: source.type === "example" ? [] : excerpts, examples: source.type === "example" ? excerpts : [], narration: excerpts.join("\n\n"),
+      visuals: reflectionVisualsAllowed ? reflectionCandidates : [] },
     evidence: {
       attempts: attempts.length, correct: attempts.filter((item) => item.outcome === "correct").length,
       partial: attempts.filter((item) => item.outcome === "partial").length, incorrect: attempts.filter((item) => item.outcome === "incorrect").length,

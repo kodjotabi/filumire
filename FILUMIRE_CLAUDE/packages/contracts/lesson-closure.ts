@@ -1,3 +1,4 @@
+import type { OutlineVisual } from "./outline-visual";
 export interface LessonClosure {
   interventionId: string;
   competencyId: string;
@@ -11,6 +12,7 @@ export interface LessonClosure {
     examples: string[];
     /** Exact authored excerpts, suitable for a future approved read-aloud adapter. */
     narration: string;
+    visuals?: OutlineVisual[];
   };
   evidence: {
     attempts: number;

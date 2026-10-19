@@ -39,6 +39,7 @@ import {
 
 import { evaluateAssessment } from "../../../../../services/assessment";
 import { prepareLearnerContent } from "../../../../../services/assessment/learner-content";
+import { selectActivityVisuals } from "../../../../../services/outline-visuals";
 
 import {
   applyEvidence,
@@ -657,6 +658,7 @@ async function buildLearningResponse(
     nextCompetency:
       adaptiveDecision.nextCompetency,
     instruction,
+    visuals: selectActivityVisuals(adaptiveDecision.content, updatedLearnerState.language === "fr" ? "fr" : "en", adaptiveDecision.decision.action),
     progress:
       buildProgress(updatedLearnerState),
   };

@@ -22,6 +22,7 @@ import { useLessonClosure } from "../../services/use-lesson-closure";
 import { isTeachingFirstStep as isIntroductionStep } from "../../services/lesson-closure-client";
 import { LessonClosureCard } from "../../components/filumire/LessonClosureCard";
 import { ReadAloudControls } from "../../components/filumire/ReadAloudControls";
+import { ActivityOutlineVisuals } from "../../components/filumire/OutlineVisual";
 import { LearnerLoadingState } from "../../components/filumire/LearnerLoadingState";
 import { learnerErrorText, translateLearnerError, lessonLanguageNotice } from "../../services/learner-interface";
 
@@ -366,39 +367,6 @@ function BulbIcon() {
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M9 18h6M10 21h4" />
       <path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3Z" />
-    </svg>
-  );
-}
-
-function LessonVisual({ topic, language }: { topic: string; language: Language }) {
-  if (!/equivalent fraction/i.test(topic)) {
-    return null;
-  }
-
-  return (
-    <svg
-      className="lessonVisual" style={{ display: "block", width: "auto", height: 92, margin: "4px auto 2px" }}
-      viewBox="0 0 260 150"
-      role="img"
-      aria-label={language === "fr" ? "Une moitié est égale à deux quarts" : "One half is equal to two quarters"}
-    >
-      <circle cx="55" cy="42" r="38" fill="#e8f2fd" stroke="#0f2a6b" strokeWidth="2.5" />
-      <path d="M55 4 A38 38 0 0 0 55 80 Z" fill="#2f8cf0" />
-      <path d="M55 4 V80" stroke="#0f2a6b" strokeWidth="2.5" />
-      <circle cx="55" cy="42" r="38" fill="none" stroke="#0f2a6b" strokeWidth="2.5" />
-      <rect x="118" y="36" width="24" height="5" rx="2" fill="#0f2a6b" />
-      <rect x="118" y="46" width="24" height="5" rx="2" fill="#0f2a6b" />
-      <circle cx="205" cy="42" r="38" fill="#ffffff" />
-      <path d="M205 42 V4 A38 38 0 0 0 167 42 Z" fill="#2f8cf0" />
-      <path d="M205 4 V80 M167 42 H243" stroke="#0f2a6b" strokeWidth="2.5" />
-      <circle cx="205" cy="42" r="38" fill="none" stroke="#0f2a6b" strokeWidth="2.5" />
-      <g fill="#0f2a6b" fontSize="24" fontWeight="800" textAnchor="middle">
-        <text x="55" y="106">1</text>
-        <text x="55" y="140">2</text>
-        <text x="205" y="106">2</text>
-        <text x="205" y="140">4</text>
-      </g>
-      <path d="M40 114 H70 M190 114 H220" stroke="#0f2a6b" strokeWidth="2" />
     </svg>
   );
 }
@@ -1151,7 +1119,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
           <button type="button" className="fButton" onClick={lessonClosure.retry}>{tr(language, "Try again")}</button>
           <button type="button" className="fButton secondary" onClick={lessonClosure.dismiss}>{tr(language, "Continue learning")}</button>
         </section>}
-        {lessonClosure.closure && <LessonClosureCard closure={lessonClosure.closure} decision={data.decision} phase={lessonClosure.phase}
+        {lessonClosure.closure && <LessonClosureCard closure={lessonClosure.closure} decision={data.decision} phase={lessonClosure.phase} visualContextSafe={!data.content?.assessmentItemId && !pending}
           learnerId={data.learnerState.learnerId}
           onPhase={lessonClosure.changePhase} onContinue={startRecommendedActivity} busy={submitting || syncing || Boolean(pending)} />}
         {!lessonClosure.loading && !lessonClosure.closure && <section className={`lessonPanel${teachView ? " teach" : ""}`}>
@@ -1194,12 +1162,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
               </div>
               {data.content.language && <ReadAloudControls learnerId={data.learnerState.learnerId} text={data.content.body} language={data.content.language} surface={hasAssessment ? "question" : "lesson"} />}
 
-              {teachView && (
-                <LessonVisual
-                  language={language}
-                  topic={`${data.progress.competencyTitle ?? ""} ${data.content.title}`}
-                />
-              )}
+              <ActivityOutlineVisuals visuals={data.visuals} content={data.content} decision={data.decision} language={language} />
             </>
           )}
 

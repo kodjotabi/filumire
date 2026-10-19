@@ -4,6 +4,7 @@ import type { LessonClosure } from "../../../../packages/contracts/lesson-closur
 import type { LearningResponse } from "../../services/learning-client";
 import { closureNextStep, closureReview } from "../../services/lesson-closure-presentation";
 import { ReadAloudControls } from "./ReadAloudControls";
+import { OutlineVisuals } from "./OutlineVisual";
 
 const copy = {
   en: {
@@ -37,11 +38,12 @@ const copy = {
     later: "FILUMIRE vérifiera ta mémoire quand sa règle de révision espacée le recommandera. Ce résumé ne programme pas de nouveau test.", audio: "Écouter ce résumé",
   },
 };
-export function LessonClosureCard({ closure, decision, phase, onPhase, onContinue, busy = false, onReadAloud, learnerId }: {
+export function LessonClosureCard({ closure, decision, phase, onPhase, onContinue, busy = false, onReadAloud, learnerId, visualContextSafe = false }: {
   closure: LessonClosure; decision: LearningResponse["decision"]; phase: "summary" | "review";
   onPhase: (phase: "summary" | "review") => void; onContinue: () => void; busy?: boolean;
   onReadAloud?: (text: string, language: "en" | "fr") => void;
   learnerId?: string;
+  visualContextSafe?: boolean;
 }) {
   const t = copy[closure.language];
   const focus = useRef<HTMLElement>(null);
@@ -53,6 +55,7 @@ export function LessonClosureCard({ closure, decision, phase, onPhase, onContinu
       <p className="boundary">{t.boundary}</p>
       {closure.summary.available ? <>
         <h3>{closure.summary.title}</h3>
+        {visualContextSafe && ["teach", "remediate", "advance", "complete"].includes(decision.action) && <OutlineVisuals visuals={closure.summary.visuals} competencyId={closure.competencyId} language={closure.language} stage="Reflect" />}
         {closure.summary.concepts.length > 0 && <><h4>{t.covered}</h4><ul>{closure.summary.concepts.map((text, index) => <li key={index}>{text}</li>)}</ul></>}
         {closure.summary.examples.length > 0 && <><h4>{t.example}</h4>{closure.summary.examples.map((text, index) => <p key={index}>{text}</p>)}</>}
         {onReadAloud && <button type="button" onClick={() => onReadAloud(closure.summary.narration, closure.language)}>{t.audio}</button>}

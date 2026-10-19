@@ -1,5 +1,6 @@
 import { usesDevelopmentIdentity } from "./session-marker";
 import { readLanguage } from "../components/filumire/language";
+import type { OutlineVisual } from "../../../packages/contracts/outline-visual";
 
 export const DEVELOPMENT_LEARNER_ID =
   "learner-runtime-feedback-001";
@@ -15,6 +16,7 @@ export type LearningContent = {
   id: string;
   competencyId: string;
   type: string;
+  version?: string;
   title: string;
   body: string;
   assessmentItemId?: string;
@@ -26,6 +28,7 @@ export type LearningContent = {
 };
 
 export type LearningResponse = {
+  visuals?: OutlineVisual[];
   /** Signed delivery identity; not proof of completion or mastery. */
   lessonReceipt?: string;
   learnerState: {
