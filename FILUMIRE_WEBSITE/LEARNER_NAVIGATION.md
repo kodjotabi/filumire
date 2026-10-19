@@ -1,0 +1,7 @@
+The existing shared desktop and mobile header control is **Learner Portal** in English and **Espace apprenant** in French. The FILUMIRE logo continues to open the localized public homepage. The learner application's existing **Website / Site web** button is unchanged.
+
+Configure the website at build time with `NEXT_PUBLIC_FILUMIRE_LEARNER_APP_URL` set to the owner-approved, stable public learner origin and `NEXT_PUBLIC_FILUMIRE_LEARNER_PUBLIC_APPROVED=true`. These existing settings are public configuration, never credentials. Do not put a private Preview URL in either public configuration or documentation. Vercel hostnames are rejected even when the approval flag is true. Loopback destinations remain supported for local development tests only.
+
+The destination opens the learner root with `lang=en` or `lang=fr`; the learner retains responsibility for authentication and its existing session redirects. No authentication tokens, learner identifiers or progress data are passed between sites. Existing query parameters and fragments in the configured URL are discarded.
+
+When configuration is absent, invalid or unapproved, the same control opens `/access#learner` (French: `/fr/access#learner`), which explains the access status and offers existing inquiry options. No new public learner hostname is provisioned by this change. Production settings and the protected learner Preview remain unchanged. A build with the approved stable origin is required before public navigation can leave the website.
