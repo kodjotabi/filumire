@@ -9,6 +9,7 @@ import {
 } from "../../packages/ai/conversation";
 import { CurriculumConversationProvider } from "../../packages/ai/curriculum-conversation";
 import { conversationSafety, privateQuestionLabel, safetyReply } from "../../packages/ai/conversation-safety";
+import { conceptualExplanation } from "../../packages/ai/conceptual-explanations";
 
 const MAX_BODY_BYTES = 64 * 1024;
 const MAX_HISTORY_CHARS = 12000;
@@ -147,9 +148,10 @@ export function createConversationHandler(overrides: Partial<Dependencies> = {})
         if (safety) {
           reply = safetyReply(safety, body.language);
         } else if (context.assessmentProtected) {
+          const concept = conceptualExplanation(body.question, body.language);
           // Never pass learner prompts, transcript, assessment content, options,
           // answer keys or rubrics to a provider during a scored/uncertain activity.
-          reply = body.language === "fr"
+          reply = concept && context.safeConceptualExplanations?.includes(concept.id) ? concept.reply : body.language === "fr"
             ? "Je peux te guider, mais je ne peux pas donner ni valider une réponse à une activité évaluée. Relis la consigne : que dois-tu trouver ? Quelle règle pourrais-tu utiliser ? Vérifie chaque étape de ton raisonnement. Reviens à la leçon pour soumettre ta réponse."
             : "I can guide you, but I cannot give or mark an answer to a scored activity. Read the instruction: what do you need to find? Which rule could you use? Check each step of your reasoning. Return to your lesson to submit your answer.";
         } else {

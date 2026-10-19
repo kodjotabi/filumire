@@ -12,12 +12,15 @@ import { getContentForCompetency } from "../content-store";
 import { seedContent } from "../content-store/seed";
 import { generateInstruction } from ".";
 import type { ConversationLanguage, TutoringConversationContext } from "../../packages/ai/conversation";
+import { independentConceptualExplanations } from "../../packages/ai/conceptual-explanations";
 
 export interface TrustedConversationContext {
   fingerprint: string;
   assessmentProtected: boolean;
   providerContext: TutoringConversationContext;
   topicTitle?: string;
+  // Server-only policy. Never sent to a provider or the client as assessment data.
+  safeConceptualExplanations?: string[];
 }
 
 /** Reads existing authoritative state. Never generates an adaptive decision or acknowledges a lesson. */
@@ -86,6 +89,18 @@ export async function loadConversationContext(learnerId: string, language: Conve
   const intervention = currentActive.length === 1 ? currentActive[0] : undefined;
   const assessmentProtected = recovery.pendingTeacherReview || currentActive.length > 1 || (active.length > 0 && !intervention) ||
     active.some((item) => !["teach", "remediate"].includes(item.type) || scoredDeliveries.has(item.interventionId));
+  const protectedActivities = active.filter(item => !["teach", "remediate"].includes(item.type) || scoredDeliveries.has(item.interventionId));
+  // Unknown, conflicting or teacher-reviewed work remains fail closed. For a
+  // known activity, inspect the entire authored assessment pool, including both
+  // languages, so a missing/legacy delivery pointer cannot hide a related task.
+  const assessmentPools = protectedActivities.map(item => getContentForCompetency(item.competencyId)
+    .filter(content => content.assessmentItemId));
+  const safeConceptualExplanations = assessmentProtected && !recovery.pendingTeacherReview &&
+    protectedActivities.length > 0 && new Set(protectedActivities.map(item => item.competencyId)).size === protectedActivities.length &&
+    assessmentPools.every(pool => pool.length > 0)
+    ? independentConceptualExplanations(assessmentPools.flatMap(pool => pool.map(content =>
+      JSON.stringify([content.title, content.body, content.metadata?.options, content.metadata?.expectedResponse,
+        content.metadata?.targetSubskills, content.metadata?.successCriteria])))) : [];
   const teaching: Array<{ type: string; text: string }> = [];
   let teachingSource: { id: string; title: string } | undefined;
   if (!assessmentProtected) {
@@ -124,7 +139,8 @@ export async function loadConversationContext(learnerId: string, language: Conve
   }
   return {
     topicTitle,
-    fingerprint: createHash("sha256").update(JSON.stringify({ context, state, active, recovery: recovery.fingerprint })).digest("hex"),
+    safeConceptualExplanations,
+    fingerprint: createHash("sha256").update(JSON.stringify({ context, state, active, recovery: recovery.fingerprint, safeConceptualExplanations })).digest("hex"),
     assessmentProtected,
     providerContext: {
       language,

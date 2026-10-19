@@ -1,6 +1,7 @@
 import type { ConversationLanguage, ConversationPractice, ConversationProvider, ConversationTurn } from "./conversation";
 import { conversationSafety, normalizedQuestion, safetyReply } from "./conversation-safety";
 import { generalEducationReply } from "./general-education";
+import { conceptualExplanation } from "./conceptual-explanations";
 
 const stopWords = new Set(("a an the this that these those with from have what why how does do can you me my your about please explain help understand more again lesson topic want know is are and or of to in it be as for on by at which when where tell give i am not oui une un le la les des du de et ce cette ces avec dans pour sur comment pourquoi quoi quel quelle moi mon ma mes ton ta je tu il elle est sont explique aide comprendre encore exemple indice peux voudrais que qui same amount chaque meme fois number nombres rule regle next suivant think pense answer reponse practice entrainer question help aide" ).split(/\s+/));
 const terms = (text: string) => normalizedQuestion(text).match(/[a-z]{3,}/g)?.filter(word => !stopWords.has(word)) ?? [];
@@ -54,6 +55,8 @@ export class CurriculumConversationProvider implements ConversationProvider {
     if (safety) return { reply: safetyReply(safety, language) };
     // The loader never falls back to another language. Defend that boundary here too.
     if (context.language && context.language !== language) return { reply: t.missing };
+    const concept = conceptualExplanation(input.question, language);
+    if (concept) return { reply: concept.reply };
     const general = generalEducationReply(input.question, language, history);
     if (general) return { reply: general };
     const teaching = context.teaching.filter(item => item.text.trim() && !conversationSafety(item.text));
