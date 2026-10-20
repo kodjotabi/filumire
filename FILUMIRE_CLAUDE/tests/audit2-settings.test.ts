@@ -30,6 +30,8 @@ try {
     assert.equal((settings.match(/type="radio"/g) ?? []).length, 2, "Light and Dark only");
     assert.equal((settings.match(/type="checkbox"/g) ?? []).length, 2);
     assert(settings.includes(`https://filumire.com${language === "fr" ? "/fr" : ""}/contact`));
+    assert(settings.includes(`https://filumire.com${language === "fr" ? "/fr" : ""}/pricing`));
+    assert(!settings.includes("_blank"), "website links stay in the same tab so the learner session is kept");
     assert(settings.includes(`/privacy?lang=${language}`));
     assert(settings.includes(language === "fr" ? "Mot de passe et appareils" : "Password and devices"));
     const guardian = renderToStaticMarkup(React.createElement(AdditionalSettings, { learnerId: "fictional-a", language, signedIn: true, guardianSession: true }));

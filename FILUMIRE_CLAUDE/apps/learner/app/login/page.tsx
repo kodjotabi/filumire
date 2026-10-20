@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { LearnerBottomNav } from "../../components/filumire/LearnerBottomNav";
 import { LanguageToggle } from "../../components/filumire/LanguageToggle";
-import { PublicHomeLink } from "../../components/filumire/PublicHomeLink";
+import { PublicHomeLink, publicSiteHref } from "../../components/filumire/PublicHomeLink";
 import { readLanguage, useLanguage } from "../../components/filumire/language";
 import {
   accountErrorMessage,
@@ -280,7 +280,7 @@ export default function LoginPage() {
       <section className="newAccount">
         <h2>{t.newTitle}</h2>
         <p>{t.newBody}</p>
-        <a className="createButton subscriptionLink" href={`https://filumire.com${language === "fr" ? "/fr" : ""}/pricing`}>{language === "fr" ? "Abonnement" : "Subscription"}</a>
+        <a className="createButton subscriptionLink" href={publicSiteHref("/pricing", language)}>{language === "fr" ? "Abonnement" : "Subscription"}</a>
         <p className="subscriptionAvailability">{language === "fr" ? "Consulte les tarifs. Le paiement et les droits d’abonnement connectés ne sont pas disponibles dans cet aperçu." : "View pricing information. Payments and connected subscription access are not available in this preview."}</p>
         <Link href={`/register?lang=${language}`} className="createButton">
           {t.create} <ArrowRight />
