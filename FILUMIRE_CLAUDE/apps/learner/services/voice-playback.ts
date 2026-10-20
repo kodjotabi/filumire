@@ -1,7 +1,7 @@
 import { AFRICAN_VOICES, type LearningVoice, type VoiceLanguage } from "./voice-catalogue";
 import { type VoicePreference } from "./voice-preference";
 import { browserSpeechPlayback } from "./browser-speech-playback";
-export type SpeechSurface = "lesson" | "summary" | "question" | "filu" | "preview";
+export type SpeechSurface = "lesson" | "summary" | "question" | "filu" | "correction" | "preview";
 export interface VoiceAdapter {
   id: string;
   // External speech adapters are excluded by the revised browser-only strategy.

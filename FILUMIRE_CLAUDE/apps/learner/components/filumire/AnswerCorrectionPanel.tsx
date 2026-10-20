@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import type { AnswerCorrection } from "../../services/learning-client";
 import type { Language } from "./language";
+import { ReadAloudControls } from "./ReadAloudControls";
 
 export type CorrectionPhase = "explain" | "retry" | "done";
 
@@ -34,9 +35,11 @@ const copy = {
  * Shown on the question's own screen after a wrong answer: what was chosen,
  * why it is not right, the key idea, then one retry before moving on.
  */
-export function AnswerCorrectionPanel({ correction, phase, language, busy, onRetry, onContinue }: {
+export function AnswerCorrectionPanel({ correction, phase, language, busy, onRetry, onContinue, learnerId, speechLanguage }: {
   correction: AnswerCorrection; phase: CorrectionPhase; language: Language; busy: boolean;
   onRetry: () => void; onContinue: () => void;
+  /** Read-aloud of the shown explanation, in the lesson content's language. */
+  learnerId?: string; speechLanguage?: "en" | "fr";
 }) {
   const t = copy[language];
   const heading = useRef<HTMLHeadingElement | null>(null);
@@ -61,10 +64,13 @@ export function AnswerCorrectionPanel({ correction, phase, language, busy, onRet
       {text(correction.concept)}
     </div>}
   </>;
+  // Reads what is shown first: the short explanation and key idea.
+  const spoken = [correction.explanation ? correction.explanation.short?.trim() || correction.explanation.body : t.noExplanation, correction.concept && (correction.concept.short?.trim() || correction.concept.body)].filter(Boolean).join(" ");
   return <section className={`answerCorrection ${outcome ?? "incorrect"}`} aria-labelledby="answer-correction-title" data-phase={phase}>
     <h2 id="answer-correction-title" ref={heading} tabIndex={-1}>{t.title}</h2>
     <p className="chosen">{t.chose} <q>{correction.chosen}</q></p>
     {phase === "explain" ? teaching : <details className="again"><summary>{t.again}</summary>{teaching}</details>}
+    {phase === "explain" && speechLanguage && <ReadAloudControls learnerId={learnerId} text={spoken} language={speechLanguage} surface="correction" />}
     {phase === "explain" && <div className="actions">
       {correction.retryAvailable
         ? <button type="button" className="primary" onClick={onRetry} disabled={busy}>{t.retry} <span aria-hidden="true">↻</span></button>

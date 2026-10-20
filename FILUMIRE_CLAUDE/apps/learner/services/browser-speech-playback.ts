@@ -1,4 +1,4 @@
-import { browserVoiceId, installedVoices, isAfricanVoice, speechEngine, voiceMatchesLanguage } from "./browser-voices";
+import { browserVoiceId, installedVoices, speechEngine, voiceMatchesLanguage } from "./browser-voices";
 import { readBrowserVoicePreference, type BrowserVoicePreference } from "./voice-preference";
 import type { VoiceLanguage } from "./voice-catalogue";
 export interface PlaybackState { status: "idle" | "speaking" | "paused" | "error"; owner?: string; error?: string }
@@ -30,8 +30,6 @@ export class BrowserSpeechPlayback {
     const voice = installedVoices().find((item) => browserVoiceId(item) === preference.voiceId);
     if (!voice) return reject("voice_unavailable");
     if (!voiceMatchesLanguage(voice, language)) return reject("language_unavailable");
-    // Owner policy: a non-African voice never reads learning text, even if saved earlier.
-    if (!isAfricanVoice(voice, language)) return reject("voice_not_african");
     // Browser-library voices can also be remote. No child text may be sent to them.
     if (voice.localService !== true) return reject("remote_voice_blocked");
     if (!text.trim() || text.length > 12000) return reject("invalid_text");

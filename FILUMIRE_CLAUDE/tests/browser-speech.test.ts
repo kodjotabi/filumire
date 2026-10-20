@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { browserVoiceId, installedVoices, africanLocaleHint, isAfricanVoice, knownVoiceGender, voiceGroups, voicesForLanguage } from "../apps/learner/services/browser-voices";
+import { bestLocalVoice, browserVoiceId, installedVoices, africanLocaleHint, isAfricanVoice, knownVoiceGender, usingFallbackVoices, voiceGroups, voicesForLanguage } from "../apps/learner/services/browser-voices";
 import { saveBrowserVoicePreference, readBrowserVoicePreference, forgetBrowserVoicePreference } from "../apps/learner/services/voice-preference";
 import { BrowserSpeechPlayback } from "../apps/learner/services/browser-speech-playback";
 const storage = new Map<string, string>();
@@ -14,17 +14,22 @@ Object.assign(globalThis, { SpeechSynthesisUtterance: FakeUtterance, window: { s
 assert.equal(installedVoices().length, 0);
 voices = [european, kenyan, remote, france, fr, regional, american, en, untagged, canada, southAfrican];
 assert.equal(installedVoices().length, 11);
-// Owner policy: African voices only — South Africa, Ghana, Nigeria (local before remote), Kenya; never a European/American voice.
-assert.deepEqual(voicesForLanguage(voices, "en"), [southAfrican, en, regional, remote, kenyan]);
+// Owner policy: African voices first — South Africa, Ghana, Nigeria (local before remote), Kenya — then the temporary same-language device fallback.
+assert.deepEqual(voicesForLanguage(voices, "en"), [southAfrican, en, regional, remote, kenyan, american, european, untagged]);
+assert.equal(bestLocalVoice(voices, "en"), southAfrican); assert(!usingFallbackVoices(voices, "en"));
 // Tessa (en-ZA) leads; vendor-published names give gender, otherwise "not stated". Name alone never makes a voice African.
 const tessa = voice("Tessa", "en-ZA"), luke = voice("Microsoft Luke Online (Natural) - English (South Africa)", "en-ZA", false), abeo = voice("Microsoft Abeo Online (Natural) - English (Nigeria)", "en-NG", false), elimu = voice("Microsoft Elimu Online (Natural) - English (Tanzania)", "en-TZ", false), fakeTessa = voice("Tessa", "en-GB");
-assert.deepEqual(voicesForLanguage([en, southAfrican, elimu, abeo, luke, tessa, fakeTessa], "en"), [tessa, southAfrican, luke, en, abeo, elimu]);
+assert.deepEqual(voicesForLanguage([en, southAfrican, elimu, abeo, luke, tessa, fakeTessa], "en"), [tessa, southAfrican, luke, en, abeo, elimu, fakeTessa]);
 assert.equal(knownVoiceGender(tessa), "female"); assert.equal(knownVoiceGender(luke), "male"); assert.equal(knownVoiceGender(abeo), "male"); assert.equal(knownVoiceGender(elimu), "male");
 assert.equal(knownVoiceGender(en), undefined); assert.equal(knownVoiceGender(voice("Luke", "en-NG")), undefined, "gender only for the published name+locale pair");
 assert.deepEqual(voiceGroups([tessa, luke, en]), { female: [tessa], male: [luke], unstated: [en] });
-assert.deepEqual(voicesForLanguage(voices, "fr"), [fr]);
-assert.deepEqual(voicesForLanguage([european, american, untagged, france, canada], "en"), [], "no African voice means text-only, never a substitute");
-assert.deepEqual(voicesForLanguage([european, france, canada], "fr"), []);
+assert.equal(knownVoiceGender(voice("Microsoft George - English (United Kingdom)", "en-GB")), "male"); assert.equal(knownVoiceGender(voice("Microsoft Hortense - French (France)", "fr-FR")), "female");
+assert.deepEqual(voicesForLanguage(voices, "fr"), [fr, canada, france]);
+// Without an African voice the device's own same-language voices keep FILUMIRE speaking (temporary fallback).
+assert.deepEqual(voicesForLanguage([european, american, untagged, france, canada], "en"), [american, european, untagged]);
+assert(usingFallbackVoices([european, france], "en")); assert.equal(bestLocalVoice([remote, european], "en"), european, "a remote voice is never the default");
+assert.deepEqual(voicesForLanguage([european, france, canada], "fr"), [canada, france]);
+assert.deepEqual(voicesForLanguage([european, american], "fr"), [], "no same-language voice means text-only");
 assert(africanLocaleHint(regional)); assert(africanLocaleHint(fr)); assert(!africanLocaleHint(european)); assert(!africanLocaleHint(france));
 assert(isAfricanVoice(en, "en")); assert(!isAfricanVoice(en, "fr")); assert(!isAfricanVoice(fr, "en"));
 assert.notEqual(browserVoiceId(en), browserVoiceId({ ...en, name: "Another fixture" }));
@@ -53,16 +58,19 @@ assert(updates > 0); unsubscribe();
 await assert.rejects(player.play({ ...request, preference: { ...preference, muted: true } }), /muted/);
 await assert.rejects(player.play({ ...request, language: "fr" }), /language_unavailable/);
 await assert.rejects(player.play({ ...request, preference: { ...preference, voiceId: browserVoiceId(remote) } }), /remote_voice_blocked/);
-await assert.rejects(player.play({ ...request, preference: { ...preference, voiceId: browserVoiceId(european) } }), /voice_not_african/, "a previously saved non-African voice is refused");
-await assert.rejects(player.play({ ...request, language: "fr", preference: { ...preference, language: "fr", voiceId: browserVoiceId(france) } }), /voice_not_african/);
+for (const [fallback, language] of [[european, "en"], [france, "fr"]] as const) {
+  const playing = player.play({ ...request, language, preference: { ...preference, language, voiceId: browserVoiceId(fallback) } });
+  assert.equal(utterances.at(-1)!.voice, fallback, "a chosen same-language device voice reads (temporary fallback)");
+  utterances.at(-1)!.onend!.call(utterances.at(-1)!, {} as SpeechSynthesisEvent); await playing;
+}
 voices = [fr]; await assert.rejects(player.play(request), /voice_unavailable/);
-assert.equal(utterances.length, 2, "missing, remote, non-African, mismatched or muted voices must never fall back");
+assert.equal(utterances.length, 4, "missing, remote, mismatched or muted voices must never fall back");
 voices = [en, fr];
 const failed = player.play(request); const expectedFailure = assert.rejects(failed, /playback_failed/);
-utterances[2].onerror!.call(utterances[2], {} as SpeechSynthesisErrorEvent); await expectedFailure;
+utterances[4].onerror!.call(utterances[4], {} as SpeechSynthesisErrorEvent); await expectedFailure;
 assert.equal(player.snapshot().status, "error");
 const last = player.read("fictional-a", request.text, "fr", "fictional-a:filu");
-assert.equal(utterances[3].voice, fr); assert.equal(utterances[3].lang, "fr-SN"); player.stop(); await last;
+assert.equal(utterances[5].voice, fr); assert.equal(utterances[5].lang, "fr-SN"); player.stop(); await last;
 assert.equal(player.snapshot().status, "idle"); assert(cancelled > 0);
 forgetBrowserVoicePreference("fictional-a", "en"); assert.equal(readBrowserVoicePreference("fictional-a", "en"), undefined);
 await assert.rejects(player.read("fictional-a", request.text, "en", "fictional-a:question"), /voice_not_selected/);
@@ -75,4 +83,4 @@ assert.equal(readBrowserVoicePreference("fictional-other", "en"), undefined);
 forgetBrowserVoicePreference("fictional-no-storage", "en");
 assert.equal(readBrowserVoicePreference("fictional-no-storage", "en"), undefined);
 deviceWindow.localStorage.setItem = setItem;
-console.log("PASS: African-only voices (Tessa/ZA > GH > NG > KE > TZ, African French, published gender groups), dynamic library, locale honesty, bilingual preference isolation, exact voice/rate, pause/resume/replay/stop, stale events, mute, missing/remote voice failures and safe errors (mock browser only)");
+console.log("PASS: African voices first (Tessa/ZA > GH > NG > KE > TZ, African French), temporary local same-language fallback, published gender groups, dynamic library, locale honesty, bilingual preference isolation, exact voice/rate, pause/resume/replay/stop, stale events, mute, missing/remote voice failures and safe errors (mock browser only)");

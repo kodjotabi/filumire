@@ -1333,6 +1333,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
 
           {/* Below the question, above its options: explain, re-teach, then retry. */}
           {activeCorrection && <AnswerCorrectionPanel correction={activeCorrection.value} phase={activeCorrection.phase} language={language} busy={submitting}
+            learnerId={data.learnerState.learnerId} speechLanguage={data.content?.language}
             onRetry={() => {
               setSelectedResponse(""); setCorrection({ ...activeCorrection, phase: "retry" });
               // Take keyboard and screen-reader users straight to the answers.
