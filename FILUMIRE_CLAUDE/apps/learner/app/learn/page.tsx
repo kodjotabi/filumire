@@ -1548,6 +1548,14 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
           list-style: none;
         }
 
+        /* Phones: the subject banner just below already names the subject
+           and topic, so only "All topics" stays. */
+        @media (max-width: 767px) {
+          .topicTrail ol {
+            display: none;
+          }
+        }
+
         .topicTrail li + li::before {
           content: "›";
           margin-right: 6px;

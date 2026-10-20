@@ -177,8 +177,6 @@
   .learnerUi .homeScreen .homeContinueHead > div { max-width: none; }
   .learnerUi .homeScreen .homeContinueHead p { overflow-wrap: break-word; }
 
-  /* The subject banner just below already names the subject and topic. */
-  .learnerUi .learnBody .topicTrail ol { display: none; }
 
   /* Lesson stages: whole words only ("Understand" never splits). */
   .learnerUi .learningStages .learningStage { gap: 4px; font-size: .66rem; }
