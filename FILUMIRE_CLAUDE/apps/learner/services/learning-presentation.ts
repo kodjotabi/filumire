@@ -1,4 +1,4 @@
-import type { LearningResponse, LearningOverview, PendingTeacherReviewResponse } from "./learning-client";
+import type { AnswerCorrection, LearningResponse, LearningOverview, PendingTeacherReviewResponse } from "./learning-client";
 
 type SubjectStats = LearningOverview["subjects"][string];
 export function completionPercent(stats?: Pick<SubjectStats, "total" | "completed">): number | null {
@@ -31,4 +31,18 @@ export function evaluatedFeedback(result: Submission, source: { assessmentItemId
     : authoritativeOutcome ? "recorded"
       : assessment.result.correct === true ? "correct" : assessment.result.correct === false ? "incorrect" : "recorded";
   return { ...source, outcome };
+}
+
+const passage = (value: unknown): value is { title: string; body: string } =>
+  Boolean(value) && typeof value === "object" && typeof (value as { title?: unknown }).title === "string" && typeof (value as { body?: unknown }).body === "string" &&
+  Boolean((value as { body: string }).body.trim());
+/** FILU's correction for exactly the answered item, or null (feedback then stays generic). */
+export function correctionFor(result: Submission, assessmentItemId: string): AnswerCorrection | null {
+  if ("pendingTeacherReview" in result) return null;
+  const c = result.correction;
+  if (!c || c.assessmentItemId !== assessmentItemId || typeof c.chosen !== "string" || typeof c.retryAvailable !== "boolean") return null;
+  if (c.retryOutcome !== undefined && c.retryOutcome !== "correct" && c.retryOutcome !== "incorrect") return null;
+  return { assessmentItemId, chosen: c.chosen, retryAvailable: c.retryAvailable,
+    ...(passage(c.explanation) ? { explanation: c.explanation } : {}), ...(passage(c.concept) ? { concept: c.concept } : {}),
+    ...(c.retryOutcome ? { retryOutcome: c.retryOutcome } : {}) };
 }

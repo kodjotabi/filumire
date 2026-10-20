@@ -17,7 +17,8 @@ import { useLanguage, withLang, type Language } from "../../components/filumire/
 
 import { Suspense, useEffect, useRef, useState } from "react";
 import { LearningRequestOrder, restoreLearningActivity, submitPendingAnswer, acknowledgeCurrentActivity, checkKnowledgeFirstForActivity } from "../../services/learning-continuity";
-import { completionPercent, stageIndicators, evaluatedFeedback, type ActivityFeedback } from "../../services/learning-presentation";
+import { completionPercent, correctionFor, stageIndicators, evaluatedFeedback, type ActivityFeedback } from "../../services/learning-presentation";
+import { AnswerCorrectionPanel, type CorrectionPhase } from "../../components/filumire/AnswerCorrectionPanel";
 import { useLessonClosure } from "../../services/use-lesson-closure";
 import { isTeachingFirstStep as isIntroductionStep } from "../../services/lesson-closure-client";
 import { LessonClosureCard } from "../../components/filumire/LessonClosureCard";
@@ -31,6 +32,8 @@ import {
   isPendingTeacherReviewResponse,
   LearningNetworkError,
   LearningRequestError,
+  submitAssessmentResponse,
+  type AnswerCorrection,
   type LearningResponse,
 } from "../../services/learning-client";
 
@@ -169,6 +172,8 @@ const FR_TEXT: Record<string, string> = {
   "Current recommendation. These stages are not a completion checklist.": "Étape recommandée. Ces étapes ne sont pas une liste de réalisations.",
   "FILUMIRE may revisit an earlier stage to strengthen your understanding. Your recorded work is kept.": "FILUMIRE peut revenir à une étape précédente pour renforcer ta compréhension. Ton travail enregistré est conservé.",
   "Feedback on your submitted activity": "Résultat de ton activité envoyée",
+  "your first answer": "ta première réponse",
+  "Check my new answer": "Vérifier ma nouvelle réponse",
   "The following activity is your next learning step.": "L'activité suivante est ta prochaine étape d'apprentissage.",
   "Your submitted answer": "Ta réponse envoyée",
   "Your answer is waiting to synchronise. No result has been confirmed on this device.": "Ta réponse attend d'être synchronisée. Aucun résultat n'a été confirmé sur cet appareil.",
@@ -430,6 +435,14 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
   const [assessmentFeedback, setAssessmentFeedback] =
     useState<ActivityFeedback | null>(null);
 
+  /*
+   * Immediate correction: after a wrong answer the question stays on screen
+   * with FILU's explanation and one retry. The server's next step waits in
+   * `next` until the learner continues.
+   */
+  const [correction, setCorrection] =
+    useState<{ value: AnswerCorrection; phase: CorrectionPhase; next: LearningResponse } | null>(null);
+
   const [connectivity, setConnectivity] =
     useState<ConnectivityStatus>(
       getConnectivityStatus(),
@@ -454,6 +467,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
     setSyncError("");
     setLoadFailure(null);
     setAssessmentFeedback(null);
+    setCorrection(null);
 
     try {
       const query = new URLSearchParams(window.location.search);
@@ -627,6 +641,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
         new URLSearchParams(window.location.search).get("competencyId") ?? undefined,
       );
       if (!requestOrder.current.accepts(ticket)) return;
+      setCorrection(null);
       setData(restored.data);
       setPending(restored.pending ?? null);
       if (restored.submission && restored.submittedAnswer) {
@@ -688,6 +703,14 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
       setPending(null);
 
       markConnected();
+      const wrongAnswerCorrection = isPendingTeacherReviewResponse(result) || result.assessment?.result.correct !== false
+        ? null : correctionFor(result, submissionBody.assessmentItemId);
+      if (wrongAnswerCorrection && !isPendingTeacherReviewResponse(result)) {
+        // Stay on this question: explain, re-teach, then offer one retry.
+        setCorrection({ value: wrongAnswerCorrection, phase: "explain", next: result });
+        setSelectedResponse("");
+        return;
+      }
       setAssessmentFeedback(evaluatedFeedback(result, {
         assessmentItemId: submissionBody.assessmentItemId,
         title: data.content.title,
@@ -738,6 +761,52 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
       operationBusy.current = false;
       if (requestOrder.current.accepts(ticket)) setSubmitting(false);
     }
+  }
+
+  /* The one retry after FILU's correction. Scored as guided practice by the server. */
+  async function submitCorrectiveRetry() {
+    if (operationBusy.current || !correction || correction.phase !== "retry" || !data?.content?.assessmentItemId || !selectedResponse) return;
+    const assessmentItemId = data.content.assessmentItemId;
+    operationBusy.current = true;
+    setSubmitting(true);
+    setError("");
+    const ticket = requestOrder.current.begin();
+    try {
+      const result = await submitAssessmentResponse({
+        learnerId: data.learnerState.learnerId,
+        sessionId: getSessionId(data),
+        interventionId: data.decision.interventionId,
+        assessmentItemId,
+        competencyId: data.decision.competencyId,
+        response: selectedResponse,
+        clientRequestId: typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`,
+      }, "corrective_retry");
+      if (!requestOrder.current.accepts(ticket)) return;
+      markConnected();
+      const retried = correctionFor(result, assessmentItemId);
+      if (isPendingTeacherReviewResponse(result) || !retried?.retryOutcome) {
+        setCorrection(null);
+        if (!isPendingTeacherReviewResponse(result)) setData(result);
+        return;
+      }
+      setCorrection({ value: { ...retried, chosen: correction.value.chosen }, phase: "done", next: result });
+      setSelectedResponse("");
+    } catch (err) {
+      if (!requestOrder.current.accepts(ticket)) return;
+      if (err instanceof LearningNetworkError) markOffline();
+      setError(learnerErrorText(err, "en"));
+    } finally {
+      operationBusy.current = false;
+      if (requestOrder.current.accepts(ticket)) setSubmitting(false);
+    }
+  }
+
+  function continueAfterCorrection() {
+    if (!correction || operationBusy.current) return;
+    setData(correction.next);
+    setCorrection(null);
+    setAssessmentFeedback(null);
+    setSelectedResponse("");
   }
 
   useEffect(() => {
@@ -943,6 +1012,10 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
     Boolean(data.content?.assessmentItemId) &&
     options.length > 0 &&
     !requiresTrustedEvaluation;
+
+  const activeCorrection =
+    correction && correction.value.assessmentItemId === data.content?.assessmentItemId ? correction : null;
+  const retrying = activeCorrection?.phase === "retry";
 
   const showContinue =
     Boolean(data.content) &&
@@ -1238,7 +1311,15 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
             </div>
           )}
 
-          {hasAssessment && !pending && (
+          {/* Below the question, above its options: explain, re-teach, then retry. */}
+          {activeCorrection && <AnswerCorrectionPanel correction={activeCorrection.value} phase={activeCorrection.phase} language={language} busy={submitting}
+            onRetry={() => {
+              setSelectedResponse(""); setCorrection({ ...activeCorrection, phase: "retry" });
+              // Take keyboard and screen-reader users straight to the answers.
+              setTimeout(() => document.querySelector<HTMLInputElement>('input[name="answer"]:not(:disabled)')?.focus(), 0);
+            }} onContinue={continueAfterCorrection} />}
+
+          {hasAssessment && !pending && (!activeCorrection || retrying) && (
             <fieldset className="assessment">
               <legend className="assessment-label">
                 {tr(language, "Your answer")}
@@ -1254,7 +1335,9 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
                     <label
                       key={`${option}-${index}`}
                       className={
-                        selectedResponse ===
+                        retrying && option === activeCorrection?.value.chosen
+                          ? "option ruledOut"
+                          : selectedResponse ===
                         option
                           ? "option selected"
                           : "option"
@@ -1273,12 +1356,14 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
                           setSelectedResponse(option);
                         }}
                         disabled={
-                          submitting || syncing || Boolean(pending)
+                          submitting || syncing || Boolean(pending) ||
+                          (retrying && option === activeCorrection?.value.chosen)
                         }
                       />
 
                       <span className="option-text">
                         {option}
+                        {retrying && option === activeCorrection?.value.chosen && <span className="visuallyHidden"> ({tr(language, "your first answer")})</span>}
                       </span>
                     </label>
                   ),
@@ -1288,7 +1373,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
               <button
                 type="button"
                 onClick={
-                  submitAssessment
+                  retrying ? submitCorrectiveRetry : submitAssessment
                 }
                 disabled={
                   !selectedResponse ||
@@ -1298,7 +1383,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
               >
                 {tr(language, submitting
                   ? "Checking..."
-                  : "Submit answer")}
+                  : retrying ? "Check my new answer" : "Submit answer")}
               </button>
             </fieldset>
           )}
@@ -1975,6 +2060,16 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
         .option:has(input:checked) {
           border-color: #f58a07;
           background: #fdf3de;
+        }
+
+        /* The first, wrong answer during FILU's one retry. */
+        .option.ruledOut {
+          opacity: .65;
+          border-style: dashed;
+        }
+
+        .option.ruledOut .option-text {
+          text-decoration: line-through;
         }
 
         .option input {

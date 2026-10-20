@@ -27,8 +27,19 @@ export type LearningContent = {
   };
 };
 
+/** FILU's immediate correction after a wrong answer. Never contains the answer key. */
+export type AnswerCorrection = {
+  assessmentItemId: string;
+  chosen: string;
+  explanation?: { title: string; body: string };
+  concept?: { title: string; body: string };
+  retryAvailable: boolean;
+  retryOutcome?: "correct" | "incorrect";
+};
+
 export type LearningResponse = {
   visuals?: OutlineVisual[];
+  correction?: AnswerCorrection;
   /** Signed delivery identity; not proof of completion or mastery. */
   lessonReceipt?: string;
   learnerState: {
@@ -254,6 +265,7 @@ export interface AssessmentSubmissionBody {
  */
 export async function submitAssessmentResponse(
   body: AssessmentSubmissionBody,
+  interactionType: "assessment" | "corrective_retry" = "assessment",
 ): Promise<LearningResponse | { pendingTeacherReview: PendingTeacherReviewResponse }> {
   let response: Response;
 
@@ -263,7 +275,7 @@ export async function submitAssessmentResponse(
       headers: getApiHeaders(),
       body: JSON.stringify({
         ...body,
-        interactionType: "assessment",
+        interactionType,
       }),
     });
   } catch {

@@ -38,6 +38,7 @@ import {
 } from "../../../../../services/learner-context";
 
 import { evaluateAssessment } from "../../../../../services/assessment";
+import { buildCorrection, correctiveRetryKey, retryableEvidence, type Correction } from "../../../../../services/assessment/corrective-feedback";
 import { prepareLearnerContent } from "../../../../../services/assessment/learner-content";
 import { selectActivityVisuals } from "../../../../../services/outline-visuals";
 
@@ -122,6 +123,7 @@ type InteractionType =
   | "assessment"
   | "acknowledge"
   | "check_first"
+  | "corrective_retry"
   | "retention"
   | "transfer";
 
@@ -1121,9 +1123,13 @@ export async function POST(
       return NextResponse.json(checkResponse);
     }
 
+    // A corrective retry is the same question answered again after FILU's
+    // explanation; it follows the assessment path as guided evidence.
+    const correctiveRetry = interactionType === "corrective_retry";
+
     if (
       interactionType !==
-      "assessment"
+      "assessment" && !correctiveRetry
     ) {
       return NextResponse.json(
         {
@@ -1220,6 +1226,10 @@ export async function POST(
       );
     }
 
+    if (correctiveRetry && (assessmentContent.metadata?.evaluationMethod === "trusted_rubric_evaluation" || !assessmentContent.metadata?.options)) {
+      return NextResponse.json({ error: "This activity cannot be retried here.", code: "retry_unavailable" }, { status: 400 });
+    }
+
     if (
       assessmentContent.metadata
         ?.evaluationMethod ===
@@ -1253,7 +1263,15 @@ export async function POST(
       });
     }
 
-    const spacedReview = supportsSpacedRevision(body.competencyId) && assessmentContent.metadata?.assessmentPurpose === "retention";
+    const spacedReview = !correctiveRetry && supportsSpacedRevision(body.competencyId) && assessmentContent.metadata?.assessmentPurpose === "retention";
+    if (correctiveRetry) {
+      // Only the learner's own wrong first answer in this session can be retried,
+      // once, as attempt 2 after a worked explanation (guided, never independent).
+      const original = retryableEvidence(await getEvidence(authenticatedLearnerId, body.competencyId), body.assessmentItemId, body.sessionId);
+      if (!original) return NextResponse.json({ error: "There is no answer to try again.", code: "retry_unavailable" }, { status: 409 });
+      submission.clientRequestId = correctiveRetryKey(authenticatedLearnerId, original.id);
+      submission.assistance = { attemptNumber: 2, workedExampleViewed: true };
+    }
     if (spacedReview) {
       const intervention = body.interventionId ? await getIntervention(body.interventionId) : undefined;
       if (!intervention || intervention.learnerId !== authenticatedLearnerId || intervention.competencyId !== body.competencyId || intervention.type !== "retention_check") {
@@ -1299,7 +1317,8 @@ export async function POST(
         submission,
         expectedResponse,
         assessmentContent.id,
-        assessmentContent.metadata,
+        // A retry after FILU's explanation is guided practice whatever step delivered it.
+        correctiveRetry ? { ...assessmentContent.metadata, evidenceIndependence: "guided" } : assessmentContent.metadata,
       );
 
     /*
@@ -1332,7 +1351,7 @@ export async function POST(
       );
 
 
-    if (!isNewEvidence && spacedReview) {
+    if (!isNewEvidence && (spacedReview || correctiveRetry)) {
       const recorded = (await getEvidence(authenticatedLearnerId, body.competencyId)).find(item => item.id === assessment.evidence.id);
       if (recorded) {
         assessment.evidence = recorded;
@@ -1394,6 +1413,20 @@ export async function POST(
       );
     }
 
+    let correction: Correction | undefined;
+    if (assessmentContent.metadata?.options && (correctiveRetry || assessment.evidence.outcome === "incorrect")) {
+      const history = correctiveRetry ? [] : await getEvidence(authenticatedLearnerId, body.competencyId);
+      const retryId = `ev-${correctiveRetryKey(authenticatedLearnerId, assessment.evidence.id)}`;
+      correction = buildCorrection({
+        assessmentItemId: body.assessmentItemId,
+        chosen: submission.response,
+        language: assessmentContent.language,
+        topicContent: getContentForCompetency(body.competencyId),
+        retryAvailable: !correctiveRetry && !history.some((item) => item.id === retryId),
+        retryOutcome: correctiveRetry ? (assessment.evidence.outcome === "correct" ? "correct" : "incorrect") : undefined,
+      });
+    }
+
     return NextResponse.json({
       assessment: {
         ...assessment,
@@ -1402,6 +1435,7 @@ export async function POST(
           duplicate: !isNewEvidence,
         },
       },
+      ...(correction ? { correction } : {}),
       ...response,
     });
   } catch (error) {
