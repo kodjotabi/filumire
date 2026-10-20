@@ -945,7 +945,7 @@ a {
 
   .homeView .homeContinueHead h2 {
     font-size: 22px;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
   }
 
   .homeView .homeTrack {

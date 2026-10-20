@@ -72,7 +72,7 @@ export function LessonClosureCard({ closure, decision, phase, onPhase, onContinu
     <style jsx>{`
       .closureCard { padding: 24px; margin: 18px 0; border: 1px solid #c8e1d7; border-radius: 20px; background: #f7fcf9; color: #24463b; line-height: 1.65; }
       h2 { color: #0f2a6b; margin: 0 0 16px; font-size: 24px; } h3,h4 { margin: 16px 0 8px; }
-      p,li { font-size: 17px; overflow-wrap: anywhere; white-space: pre-wrap; } li { margin-bottom: 10px; }
+      p,li { font-size: 17px; overflow-wrap: break-word; white-space: pre-wrap; } li { margin-bottom: 10px; }
       .boundary { font-size: 15px; padding: 12px; background: white; border-radius: 12px; } ul { padding-left: 22px; }
       button { min-height: 44px; padding: 12px 18px; border: 0; border-radius: 12px; background: #176651; color: white; font: inherit; font-weight: 700; cursor: pointer; }
       button:disabled { opacity: .6; cursor: default; } .actions { display: flex; flex-wrap: wrap; gap: 12px; } .secondary { color: #176651; background: #e4f1eb; }

@@ -287,8 +287,11 @@ export function ProgressPage({
                 {renderIcon(subject.key)}
               </span>
               <span className="pCardName">
-                <strong>{subjectLabel(subject.name, language, true)}</strong>
+                <strong>{subjectLabel(subject.name, language)}</strong>
                 <b>{percent === null ? "—" : `${percent}%`}</b>
+              </span>
+              <span className="pArrow" aria-hidden="true">
+                {"›"}
               </span>
               <span
                 className="pTrack small"
@@ -300,10 +303,9 @@ export function ProgressPage({
               >
                 <span style={{ width: `${percent ?? 0}%` }} />
               </span>
-              <span className={`pChip ${tone}`}>{t[tone]}</span>
-              <small>{done} / {total} {t.mastered}</small>
-              <span className="pArrow" aria-hidden="true">
-                {"›"}
+              <span className="pCardMeta">
+                <span className={`pChip ${tone}`}>{t[tone]}</span>
+                <small>{done} / {total} {t.mastered}</small>
               </span>
             </Link>
           ))}
@@ -406,7 +408,8 @@ export function ProgressPage({
           display: block;
           margin-top: 2px;
           color: #3d5a78;
-          font-size: 12.5px;
+          font-size: 13px;
+          line-height: 1.4;
         }
 
         .pMasteryHead b {
@@ -417,18 +420,19 @@ export function ProgressPage({
 
         .pMasteryMeta {
           display: flex;
+          flex-wrap: wrap;
           align-items: center;
           justify-content: space-between;
           gap: 8px;
           color: #3d5a78;
-          font-size: 12px;
+          font-size: 13px;
         }
 
         .pMastery p {
           margin: 0;
           color: #3d5a78;
-          font-size: 12.5px;
-          line-height: 1.4;
+          font-size: 14px;
+          line-height: 1.45;
         }
 
         .pMastery :global(.pMasteryLink) {
@@ -439,16 +443,20 @@ export function ProgressPage({
           text-decoration: none;
         }
 
+        /* Phones first: one column, white cards, nothing positioned over text. */
         .progressPage {
           display: flex;
           flex: 1;
           flex-direction: column;
-          gap: 6px;
+          gap: 12px;
         }
 
         .pHero {
           position: relative;
-          min-height: 96px;
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) auto;
+          align-items: end;
+          column-gap: 12px;
           padding: 8px 0 0 4px;
         }
 
@@ -456,31 +464,30 @@ export function ProgressPage({
           margin: 0;
           color: var(--filumire-navy);
           font-size: 28px;
-          line-height: 1.1;
+          line-height: 1.15;
           font-weight: 800;
         }
 
         .pHero p {
-          max-width: 190px;
-          margin: 4px 0 0;
+          margin: 6px 0 0;
           color: #3d5a78;
-          font-size: 14px;
-          line-height: 1.25;
+          font-size: 15px;
+          line-height: 1.4;
         }
 
         .pHero img {
-          position: absolute;
-          right: -4px;
-          bottom: 0;
+          grid-column: 2;
+          grid-row: 1 / span 2;
           width: auto;
-          height: 92px;
+          height: 84px;
         }
 
+        /* The decorative bubble only appears where there is room beside the title. */
         .pBubble {
           position: absolute;
           top: 0;
           right: 70px;
-          display: flex;
+          display: none;
           width: 98px;
           height: 78px;
           flex-direction: column;
@@ -498,12 +505,17 @@ export function ProgressPage({
 
         .pOverall {
           display: grid;
-          grid-template-columns: 44px minmax(0, 1fr) minmax(0, 1.25fr);
+          grid-template-columns: 44px minmax(0, 1fr);
           align-items: center;
-          column-gap: 10px;
-          padding: 8px 12px;
-          border-radius: 14px;
-          background: #e8f2fc;
+          gap: 12px;
+          padding: 14px 16px;
+          border: 1px solid #dbe6f0;
+          border-radius: 16px;
+          background: #ffffff;
+        }
+
+        .pOverallBar {
+          grid-column: 1 / -1;
         }
 
         .pOverallIcon {
@@ -512,7 +524,7 @@ export function ProgressPage({
           height: 44px;
           place-items: center;
           border-radius: 50%;
-          background: #cfe3fa;
+          background: #e8f2fc;
         }
 
         .pOverallIcon svg {
@@ -524,27 +536,27 @@ export function ProgressPage({
         .pOverallText strong {
           display: block;
           color: var(--filumire-navy);
-          font-size: 15px;
-          line-height: 1.15;
+          font-size: 16px;
+          line-height: 1.25;
         }
 
         .pOverallText small {
           color: #4a6580;
-          font-size: 12px;
+          font-size: 13px;
         }
 
         .pOverallBar b {
           display: block;
           color: var(--filumire-navy);
-          font-size: 20px;
+          font-size: 22px;
           line-height: 1;
         }
 
         .pOverallBar small {
           display: block;
-          margin-top: 3px;
+          margin-top: 6px;
           color: #4a6580;
-          font-size: 11px;
+          font-size: 13px;
         }
 
         .pTrack {
@@ -565,9 +577,11 @@ export function ProgressPage({
 
         .pHead {
           display: flex;
+          flex-wrap: wrap;
           align-items: baseline;
           justify-content: space-between;
-          margin-bottom: 4px;
+          gap: 4px 12px;
+          margin-bottom: 8px;
         }
 
         .pHead h2 {
@@ -579,27 +593,26 @@ export function ProgressPage({
 
         .pHead :global(a) {
           color: #0b7bff;
-          font-size: 12px;
+          font-size: 14px;
           font-weight: 700;
           text-decoration: none;
         }
 
         .pGrid {
           display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 6px;
+          grid-template-columns: minmax(0, 1fr);
+          gap: 10px;
         }
 
+        /* Icon, name and percentage on one row; bar and status underneath at full width. */
         .pGrid :global(.pCard) {
-          position: relative;
           display: grid;
-          grid-template-columns: 36px minmax(0, 1fr);
-          column-gap: 6px;
-          row-gap: 2px;
+          grid-template-columns: 40px minmax(0, 1fr) auto;
+          gap: 10px;
           align-items: center;
-          padding: 6px 8px;
+          padding: 12px 14px;
           border: 1px solid #dbe6f0;
-          border-radius: 12px;
+          border-radius: 16px;
           background: #ffffff;
           color: inherit;
           text-decoration: none;
@@ -607,9 +620,8 @@ export function ProgressPage({
 
         .pIcon {
           display: grid;
-          grid-row: 1 / span 1;
-          width: 36px;
-          height: 36px;
+          width: 40px;
+          height: 40px;
           place-items: center;
           border-radius: 50%;
           background: var(--c);
@@ -644,34 +656,53 @@ export function ProgressPage({
           min-width: 0;
           align-items: baseline;
           justify-content: space-between;
-          gap: 4px;
+          gap: 8px;
         }
 
+        /* Full subject name, wrapping between words only. */
         .pCardName strong {
-          overflow: hidden;
+          min-width: 0;
           color: var(--filumire-navy);
-          font-size: 13px;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+          font-size: 16px;
+          line-height: 1.25;
+          overflow-wrap: normal;
+          hyphens: manual;
         }
 
         .pCardName b {
+          flex: 0 0 auto;
           color: var(--filumire-navy);
-          font-size: 13px;
+          font-size: 16px;
         }
 
         .pTrack.small {
           grid-column: 1 / -1;
-          height: 6px;
+          height: 8px;
           margin-top: 0;
         }
 
-        .pChip {
+        .pCardMeta {
+          display: flex;
           grid-column: 1 / -1;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: space-between;
+          gap: 6px 12px;
+          min-width: 0;
+        }
+
+        .pCardMeta small {
+          color: #4a6580;
+          font-size: 13px;
+          line-height: 1.35;
+          white-space: nowrap;
+        }
+
+        .pChip {
           justify-self: start;
-          padding: 2px 10px;
+          padding: 3px 10px;
           border-radius: 8px;
-          font-size: 11px;
+          font-size: 12px;
           font-weight: 700;
         }
 
@@ -691,11 +722,8 @@ export function ProgressPage({
         }
 
         .pArrow {
-          position: absolute;
-          right: 8px;
-          bottom: 8px;
           color: var(--filumire-navy);
-          font-size: 18px;
+          font-size: 22px;
           line-height: 1;
         }
 
@@ -704,11 +732,12 @@ export function ProgressPage({
           display: grid;
           grid-template-columns: 40px minmax(0, 1fr);
           align-items: center;
-          column-gap: 10px;
-          min-height: 56px;
-          padding: 6px 92px 6px 12px;
-          border-radius: 14px;
-          background: #e3f4e8;
+          gap: 8px 12px;
+          padding: 14px 16px;
+          border: 1px solid #cfe9d8;
+          border-left: 5px solid #22a85a;
+          border-radius: 16px;
+          background: #ffffff;
         }
 
         .pSprout {
@@ -732,97 +761,99 @@ export function ProgressPage({
 
         .pGrowing strong {
           color: var(--filumire-navy);
-          font-size: 15px;
+          font-size: 16px;
         }
 
         .pGrowing p {
-          margin: 2px 0 0;
+          margin: 4px 0 0;
           color: #3d5a78;
-          font-size: 11px;
-          line-height: 1.3;
+          font-size: 14px;
+          line-height: 1.45;
         }
 
+        /* On phones the handwritten note sits on its own line below the text. */
         .pGrowNote {
-          position: absolute;
-          top: 6px;
-          right: 8px;
           display: flex;
-          width: 84px;
-          flex-direction: column;
-          align-items: center;
+          grid-column: 1 / -1;
+          flex-wrap: wrap;
+          gap: 0 5px;
           color: #1a6fd1;
           font-family: var(--font-hand), cursive;
-          font-size: 13px;
-          line-height: 1.05;
-          text-align: center;
-          transform: rotate(-4deg);
+          font-size: 15px;
+          line-height: 1.2;
         }
 
         .pLists {
           display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 8px;
+          grid-template-columns: minmax(0, 1fr);
+          gap: 12px;
         }
 
         .pList {
-          padding: 10px 10px 8px;
-          border-radius: 14px;
+          padding: 14px 16px;
+          border: 1px solid #dbe6f0;
+          border-radius: 16px;
+          background: #ffffff;
         }
 
         .pList.strengths {
-          background: #e3f4e8;
+          border-top: 5px solid #22a85a;
         }
 
         .pList.focus {
-          background: #e4effb;
+          border-top: 5px solid #0b7bff;
         }
 
         .pList strong {
           display: block;
           color: var(--filumire-navy);
-          font-size: 14px;
+          font-size: 16px;
         }
 
         .pList small {
           display: block;
-          margin-top: 1px;
+          margin-top: 2px;
           color: #4a6580;
-          font-size: 10px;
-          line-height: 1.25;
+          font-size: 13px;
+          line-height: 1.35;
         }
 
         .pList ol {
-          margin: 4px 0 0;
+          margin: 8px 0 0;
           padding: 0;
           list-style: none;
         }
 
         .pList li {
           display: flex;
+          flex-wrap: wrap;
           align-items: center;
-          gap: 6px;
-          padding: 2px 0;
+          gap: 4px 10px;
+          padding: 4px 0;
           color: var(--filumire-navy);
-          font-size: 12px;
+          font-size: 14px;
+          line-height: 1.4;
         }
 
         .pList li span {
-          flex: 1;
+          flex: 1 1 8em;
+          min-width: 0;
         }
 
         .pList li b {
-          font-size: 12px;
+          font-size: 13px;
+          white-space: nowrap;
         }
 
         .pList li i {
           display: grid;
-          width: 18px;
-          height: 18px;
-          flex: 0 0 18px;
+          width: 22px;
+          height: 22px;
+          flex: 0 0 22px;
           place-items: center;
           border-radius: 50%;
           color: #ffffff;
-          font-size: 10px;
+          font-size: 11px;
           font-style: normal;
           font-weight: 800;
         }
@@ -837,12 +868,14 @@ export function ProgressPage({
 
         .pQuote {
           display: grid;
-          grid-template-columns: 30px minmax(0, 1fr) auto;
-          align-items: center;
-          column-gap: 8px;
-          padding: 6px 12px;
-          border-radius: 14px;
-          background: #ece6fa;
+          grid-template-columns: 30px minmax(0, 1fr);
+          align-items: start;
+          gap: 4px 10px;
+          padding: 14px 16px;
+          border: 1px solid #e2dbf6;
+          border-left: 5px solid #9b86e8;
+          border-radius: 16px;
+          background: #ffffff;
         }
 
         .pQuoteMark {
@@ -855,14 +888,23 @@ export function ProgressPage({
         .pQuote p {
           margin: 0;
           color: #3d3a66;
-          font-size: 11px;
-          line-height: 1.3;
+          font-size: 14px;
+          line-height: 1.5;
         }
 
         .pQuote b {
-          align-self: end;
+          grid-column: 2;
+          justify-self: end;
           color: #3d3a66;
-          font-size: 11px;
+          font-size: 13px;
+        }
+
+        /* Large phones: two cards per row once each has room for its full name. */
+        @media (min-width: 560px) {
+          .pGrid,
+          .pLists {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
         }
 
         /* Tablet: same order, roomier cards and readable text */
@@ -889,6 +931,7 @@ export function ProgressPage({
           }
 
           .pBubble {
+            display: flex;
             right: 120px;
             width: 118px;
             height: 92px;
@@ -900,6 +943,10 @@ export function ProgressPage({
             column-gap: 16px;
             padding: 16px 20px;
             border-radius: 18px;
+          }
+
+          .pOverallBar {
+            grid-column: auto;
           }
 
           .pOverallIcon {
@@ -937,9 +984,9 @@ export function ProgressPage({
           }
 
           .pGrid :global(.pCard) {
-            grid-template-columns: 44px minmax(0, 1fr);
+            grid-template-columns: 44px minmax(0, 1fr) auto;
             column-gap: 12px;
-            row-gap: 8px;
+            row-gap: 10px;
             padding: 14px 16px;
             border-radius: 16px;
           }
@@ -963,15 +1010,9 @@ export function ProgressPage({
             font-size: 12px;
           }
 
-          .pArrow {
-            right: 14px;
-            bottom: 12px;
-          }
-
           .pGrowing {
             grid-template-columns: 48px minmax(0, 1fr);
-            min-height: 76px;
-            padding: 12px 130px 12px 16px;
+            padding: 16px 20px;
             border-radius: 18px;
           }
 
@@ -986,13 +1027,6 @@ export function ProgressPage({
 
           .pGrowing p {
             font-size: 13px;
-          }
-
-          .pGrowNote {
-            top: 10px;
-            right: 14px;
-            width: 104px;
-            font-size: 15px;
           }
 
           .pLists {
@@ -1030,8 +1064,8 @@ export function ProgressPage({
           }
 
           .pQuote {
-            grid-template-columns: 40px minmax(0, 1fr) auto;
-            padding: 14px 18px;
+            grid-template-columns: 40px minmax(0, 1fr);
+            padding: 16px 20px;
             border-radius: 18px;
           }
 

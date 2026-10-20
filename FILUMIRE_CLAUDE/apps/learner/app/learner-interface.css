@@ -8,7 +8,10 @@
   --learner-space: 12px;
   --ui-blue: var(--learner-action);
   min-width: 0;
-  overflow-wrap: anywhere;
+  /* Break a word only when it cannot fit on a line by itself, and then
+     hyphenate by language (the page carries lang="en" or lang="fr"). */
+  overflow-wrap: break-word;
+  hyphens: auto;
   scroll-padding-block: 24px 112px;
 }
 .learnerUi :where(button, input, select, textarea) { font-family: inherit; }
@@ -67,7 +70,7 @@
 .learnerUi :where(button, a.fButton, .homeCta, .learningStart, .subjectCta, .homeSeeAll, .filumireBack, .filumireAskFilu, .filumireSetupAskFilu, .filumireLangSwitch, .filumireLangToggle button) {
   min-height: var(--learner-touch);
   white-space: normal;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 .learnerUi :where(.homeCta, .learningStart, .subjectCta) { height: auto; padding: 10px 12px; line-height: 1.5; }
 .learnerUi :where(button, a, input, select, textarea, summary):focus-visible { outline: 3px solid var(--learner-focus); outline-offset: 3px; }
@@ -77,7 +80,7 @@
 .learnerUi :where(.filumireHeaderSide, .filumireSetupHeaderLeft, .filumireHeaderActions, .filumireSetupHeaderRight) { min-width: 0; flex-wrap: wrap; gap: 8px; }
 .learnerUi :where(.filumireHeaderActions, .filumireSetupHeaderRight) { margin-left: auto; }
 .learnerUi .filumireHeaderLogoCentered { position: static; transform: none; }
-.learnerUi .filumireNavItem { min-height: 64px; font-size: .75rem; line-height: 1.4; padding: 8px 4px; overflow-wrap: anywhere; }
+.learnerUi .filumireNavItem { min-height: 64px; font-size: .75rem; line-height: 1.4; padding: 8px 4px; overflow-wrap: break-word; }
 .learnerUi .filumireBottomNav { grid-template-columns: repeat(5, minmax(0, 1fr)); padding-bottom: env(safe-area-inset-bottom, 0px); }
 /* Phones: fit each menu label on one line ("Challenges", "Progression") instead of
    splitting mid-word; the one longer word ("Apprentissage") breaks at its soft hyphen. */
@@ -94,7 +97,7 @@
 .learnerUi .homeScreen .subjectTag { background: var(--tint); color: var(--filumire-navy); }
 .learnerUi :where(.filumireBack, .filumireSetupAskFilu, .filumireAskFilu) { font-size: .875rem; line-height: 1.5; }
 .learnerUi .profilePage > .voiceSettings { grid-column: 1 / -1; }
-.learnerUi :where(.lesson-body, .instruction-element p, .tutor-message p, .message p, .closureCard p, .closureCard li) { max-width: var(--learner-reading-width); overflow-wrap: anywhere; line-height: 1.65; }
+.learnerUi :where(.lesson-body, .instruction-element p, .tutor-message p, .message p, .closureCard p, .closureCard li) { max-width: var(--learner-reading-width); overflow-wrap: break-word; hyphens: manual; line-height: 1.65; }
 .learnerUi :where(.lessonVisual, .lesson-body img) { max-width: 100%; }
 .learnerUi :where(.readAloud, .voiceSettings, .closureCard) { max-width: 100%; min-width: 0; }
 .learnerUi .readAloud { padding: 12px; border: 1px solid var(--filumire-border); border-radius: var(--learner-control-radius); background: var(--filumire-surface); }
@@ -106,7 +109,7 @@
 .learnerUi .readAloud button { border-radius: var(--learner-control-radius); }
 .learnerUi .readAloud button:first-child { font-weight: 700; }
 .learnerUi .contentLanguageNotice { padding: 12px; border: 1px solid var(--filumire-border); border-radius: var(--learner-control-radius); background: var(--filumire-blue-soft); color: var(--filumire-navy); line-height: 1.6; }
-.learnerUi :where(.fState, .connectivity-banner, .assessment-feedback) { overflow-wrap: anywhere; }
+.learnerUi :where(.fState, .connectivity-banner, .assessment-feedback) { overflow-wrap: break-word; }
 .learnerUi :where(.filumireNavItem, .fButton, .homeCta, .subjectCta, .primary-button, .secondary-button, textarea, input) { scroll-margin-block: 24px 112px; }
 @media (max-width: 359px) {
   .learnerUi .homeSubjects { grid-template-columns: minmax(0, 1fr); }
@@ -133,7 +136,7 @@
 
 .learnerUi[data-appearance="dark"] .learnerShell { background: #0e1a2b; color: #e5efff; }
 .learnerUi .cTodayBar { flex-wrap: wrap; min-width: 0; }
-.learnerUi .challengesPage .cTodayBar b { white-space: normal; overflow-wrap: anywhere; }
+.learnerUi .challengesPage .cTodayBar b { white-space: normal; overflow-wrap: break-word; }
 .learnerUi[data-appearance="dark"] .learnerShell :is(.cBadge, .cQuote, .pQuote, .pChip, .pGrowing, .pGrowNote) { background: #203752; color: #e5efff; }
 .learnerUi[data-appearance="dark"] .learnerShell .cBadge.on em { color: #a3e5bb; }
 .learnerUi[data-appearance="dark"] .learnerShell :is(.cStart, .subjectCta, .fButton, .homeCta) { background: #0357c3; color: white; }
@@ -173,8 +176,11 @@
   .learnerUi .filumireLearnerHeader :is(.filumireHeaderLogo, .filumireSetupLogo) img { width: 104px; }
 
   /* Continue Learning card: the subject and topic never run under the avatar. */
-  .learnerUi .homeScreen .homeContinueHead { padding-right: 100px; }
+  .learnerUi .homeScreen .homeContinueArt { width: 72px; height: 72px; right: 12px; }
+  .learnerUi .homeScreen .homeContinueHead { padding-right: 84px; }
   .learnerUi .homeScreen .homeContinueHead > div { max-width: none; }
+  /* Long subject names ("Mathématiques") hyphenate properly, never mid-word at random. */
+  .learnerUi .homeScreen .homeContinueHead h2 { font-size: 20px; overflow-wrap: normal; word-break: normal; hyphens: auto; }
   .learnerUi .homeScreen .homeContinueHead p { overflow-wrap: break-word; }
 
 

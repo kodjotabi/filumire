@@ -1,9 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 
+// "system" is kept only so older saved choices still parse; it now means light.
 export type Appearance = "light" | "dark" | "system";
 export type InterfacePreferences = { appearance: Appearance; progressNotices: boolean; achievementNotices: boolean };
-export const DEFAULT_INTERFACE_PREFERENCES: InterfacePreferences = { appearance: "system", progressNotices: true, achievementNotices: true };
+export const DEFAULT_INTERFACE_PREFERENCES: InterfacePreferences = { appearance: "light", progressNotices: true, achievementNotices: true };
 export const INTERFACE_PREFERENCE_EVENT = "filumire-interface-preferences";
 export function interfacePreferenceKey(learnerId: string) { return `filumire.interface.v1.${encodeURIComponent(learnerId)}`; }
 export function readInterfacePreferences(learnerId?: string): InterfacePreferences {
@@ -13,7 +14,7 @@ export function readInterfacePreferences(learnerId?: string): InterfacePreferenc
     if (!raw || raw.length > 500) return { ...DEFAULT_INTERFACE_PREFERENCES };
     const value = JSON.parse(raw);
     return {
-      appearance: ["light", "dark", "system"].includes(value?.appearance) ? value.appearance : "system",
+      appearance: value?.appearance === "dark" ? "dark" : "light",
       progressNotices: typeof value?.progressNotices === "boolean" ? value.progressNotices : true,
       achievementNotices: typeof value?.achievementNotices === "boolean" ? value.achievementNotices : true,
     };
@@ -37,15 +38,13 @@ export function useInterfacePreferences(learnerId?: string) {
   }, [learnerId]);
   return saved.scope === learnerId ? saved.value : DEFAULT_INTERFACE_PREFERENCES;
 }
+/*
+ * FILUMIRE's learning screens are white whatever the device's dark-mode
+ * setting (owner decision 2026-10-20). The dark theme is used only when a
+ * learner chooses it in Additional settings.
+ */
 export function useLearnerAppearance(learnerId?: string): "light" | "dark" {
   const { appearance } = useInterfacePreferences(learnerId);
-  const [systemDark, setSystemDark] = useState(false);
-  useEffect(() => {
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const refresh = () => setSystemDark(media.matches);
-    refresh(); media.addEventListener("change", refresh);
-    return () => media.removeEventListener("change", refresh);
-  }, []);
   // No preferences of a previous learner are applied while switching accounts.
-  return learnerId && (appearance === "dark" || (appearance === "system" && systemDark)) ? "dark" : "light";
+  return learnerId && appearance === "dark" ? "dark" : "light";
 }

@@ -205,9 +205,10 @@ export function AskFiluPage({
           display: flex;
           align-items: center;
           gap: 10px;
-          padding: 10px 12px;
+          padding: 12px 14px;
+          border: 1px solid #dbe6f0;
           border-radius: 16px;
-          background: #eaf3fc;
+          background: #ffffff;
         }
 
         .fTopicIcon {
@@ -229,8 +230,8 @@ export function AskFiluPage({
         }
 
         .fTopicText small {
-          color: #5b7aa3;
-          font-size: 11px;
+          color: #4a6580;
+          font-size: 12px;
         }
 
         .fTopicText strong {
@@ -269,6 +270,21 @@ export function AskFiluPage({
           display: block;
           height: 100%;
           background: #3fb34f;
+        }
+
+        /* Phones: the goals bar takes its own row so the subject name keeps its width. */
+        @media (max-width: 479px) {
+          .fTopic {
+            flex-wrap: wrap;
+          }
+
+          .fTopicText strong {
+            hyphens: manual;
+          }
+
+          .fTopicGoals {
+            width: 100%;
+          }
         }
 
         .fHelp h2 {

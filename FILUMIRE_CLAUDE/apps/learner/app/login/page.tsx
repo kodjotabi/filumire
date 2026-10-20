@@ -327,7 +327,7 @@ export default function LoginPage() {
         .hero { width: 100%; display: flex; flex-direction: column; }
         .heroFrame { position: relative; width: 100%; aspect-ratio: 1560 / 900; margin-top: 8px; overflow: hidden; }
         .heroArt { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: contain; }
-        .heroTitle { margin: 20px 24px 0; color: var(--ui-ink); font-size: 26px; line-height: 1.15; font-weight: 800; letter-spacing: -0.5px; overflow-wrap: anywhere; }
+        .heroTitle { margin: 20px 24px 0; color: var(--ui-ink); font-size: 26px; line-height: 1.15; font-weight: 800; letter-spacing: -0.5px; overflow-wrap: break-word; hyphens: auto; }
         .heroTitle span { color: var(--ui-brand); }
         .heroGreeting { margin: 6px 24px 0; color: var(--ui-ink); font-size: 14px; line-height: 1.2; font-weight: 500; }
         .heroIntro { margin: 8px 24px 0; color: var(--ui-ink); font-size: 10.5px; line-height: 1.55; font-weight: 500; }

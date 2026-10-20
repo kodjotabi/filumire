@@ -5,7 +5,8 @@ const css = readFileSync(new URL("../apps/learner/app/learner-interface.css", im
 assert.match(css, /--learner-touch:\s*44px/);
 assert.match(css, /max-width:\s*359px/); assert.match(css, /max-width:\s*767px/); assert.match(css, /min-width:\s*768px/); assert.match(css, /min-width:\s*1024px/);
 assert.match(css, /repeat\(5, minmax\(0, 1fr\)\)/); assert.match(css, /repeat\(2, minmax\(0, 1fr\)\)/);
-assert.match(css, /safe-area-inset-bottom/); assert.match(css, /overflow-wrap:\s*anywhere/);
+assert.match(css, /safe-area-inset-bottom/); assert.match(css, /overflow-wrap:\s*break-word/);
+assert.doesNotMatch(css, /overflow-wrap:\s*anywhere/, "'anywhere' lets narrow columns split words letter by letter");
 assert.match(css, /textarea:focus, input:focus, select:focus/); assert.match(css, /prefers-reduced-motion/);
 assert.match(css, /--learner-reading-width:\s*68ch/); assert(!/overflow-x:\s*hidden/.test(css), "do not mask layout defects by clipping horizontal overflow");
 const selectors = css.replace(/\/\*[\s\S]*?\*\//g, "").match(/[^{}]+(?=\{)/g) ?? [];

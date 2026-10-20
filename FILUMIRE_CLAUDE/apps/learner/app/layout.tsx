@@ -34,6 +34,9 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#0B3573",
+  // White-dominant by design: browsers that force dark mode on websites
+  // (Samsung Internet, Chrome's auto-dark) must leave FILUMIRE as it is.
+  colorScheme: "only light",
 };
 
 export default function LearnerLayout({

@@ -221,7 +221,7 @@ export function FiluConversation({ language, scope: learnerId, contextKey, onCon
         .message :global(.readAloud) { min-width: 0; max-width: 100%; }
         .message :global(.readAloud label) { min-width: 0; max-width: 100%; }
         .message :global(.readAloud select) { min-width: 0; max-width: 100%; }
-        .message p { margin: 8px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.65; font-size: 16px; }
+        .message p { margin: 8px 0 0; white-space: pre-wrap; overflow-wrap: break-word; line-height: 1.65; font-size: 16px; }
         .message strong { font-size: 13px; }
         label { display: block; font-weight: 700; margin: 0 0 8px; }
         .compose { display: flex; gap: 10px; align-items: stretch; }

@@ -209,7 +209,7 @@ export function TeacherAccess({
         .taList li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; border-radius: 12px; background: #f5f9ff; }
         .taList li div { display: grid; gap: 2px; }
         .taList strong { font-size: 15px; }
-        .taList span { font-size: 13px; color: #4a5d7a; overflow-wrap: anywhere; }
+        .taList span { font-size: 13px; color: #4a5d7a; overflow-wrap: break-word; }
         .taCode { display: grid; gap: 4px; padding: 12px; border-radius: 12px; background: #eef9ee; }
         .taCode span { font-size: 13px; font-weight: 700; color: #33476a; }
         .taCode strong { font-size: 26px; letter-spacing: 0.12em; font-family: ui-monospace, Menlo, Consolas, monospace; color: #14213d; }

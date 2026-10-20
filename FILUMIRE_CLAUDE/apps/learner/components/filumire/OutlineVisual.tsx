@@ -60,7 +60,7 @@ export function OutlineVisual({ visual }: { visual: Visual }) {
       svg :global(.paper) { fill: var(--filumire-surface, #fff); }
       svg :global(.accent) { fill: var(--filumire-blue-soft, #eaf7fd); }
       svg :global(.hatch) { stroke: var(--filumire-navy, #003b71); stroke-width: 1; }
-      figcaption, p, li { overflow-wrap: anywhere; line-height: 1.5; font-size: 16px; }
+      figcaption, p, li { overflow-wrap: break-word; line-height: 1.5; font-size: 16px; }
       p { margin: 6px 0; } ol { padding-left: 26px; margin-bottom: 0; } li { margin: 6px 0; }
       .sentenceParts, .processSteps { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); }
       .sentenceParts li span { display: block; }

@@ -42,6 +42,6 @@ export function VoiceSelection({ learnerId, language }: { learnerId?: string; la
     <ReadAloudControls learnerId={learnerId} language={language} surface="preview" text={language === "en" ? "Welcome to FILUMIRE. Let’s learn together. Compare two equal parts." : "Bienvenue dans FILUMIRE. Apprenons ensemble. Compare deux parts égales."} />
     <button type="button" disabled={!learnerId || !preference} onClick={() => { if (learnerId) { forgetBrowserVoicePreference(learnerId, language); browserSpeechPlayback.stop(); setSelected({ scope }); setStatus(null); } }}>{t.forget}</button>
     <p role="status">{status ? t[status] : ""}</p>
-    <style jsx>{`.voiceSettings { padding: 20px; border-radius: 16px; background: #f7fcf9; color: #24463b; margin: 16px 0; overflow-wrap: anywhere; } label { display: block; margin-top: 12px; } select { width: 100%; min-height: 44px; font: inherit; } button { min-height: 44px; padding: 10px; font: inherit; } button:disabled { opacity: .65; } :focus-visible { outline: 3px solid #277dca; outline-offset: 3px; }`}</style>
+    <style jsx>{`.voiceSettings { padding: 20px; border-radius: 16px; background: #f7fcf9; color: #24463b; margin: 16px 0; overflow-wrap: break-word; } label { display: block; margin-top: 12px; } select { width: 100%; min-height: 44px; font: inherit; } button { min-height: 44px; padding: 10px; font: inherit; } button:disabled { opacity: .65; } :focus-visible { outline: 3px solid #277dca; outline-offset: 3px; }`}</style>
   </section>;
 }

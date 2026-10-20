@@ -244,6 +244,11 @@ function sourceChecks(): void {
 
   const progress = read("apps/learner/components/filumire/ProgressPage.tsx");
   assert.match(progress, /\.filter\(\(row\) => row\.done > 0\)/);
+  // My Progress on phones: the goals count spans the card, names are never truncated.
+  assert.match(progress, /className="pCardMeta"/);
+  assert.match(progress, /\.pCardMeta \{[^}]*grid-column: 1 \/ -1;/);
+  assert.doesNotMatch(progress, /text-overflow: ellipsis/);
+  assert.doesNotMatch(progress, /overflow-wrap: anywhere/);
 }
 
 async function run(): Promise<void> {

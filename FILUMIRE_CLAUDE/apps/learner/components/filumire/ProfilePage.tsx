@@ -612,7 +612,7 @@ export default function ProfilePage({
           .prWho h2 {
             margin-bottom: 10px;
             font-size: 36px;
-            overflow-wrap: anywhere;
+            overflow-wrap: break-word;
           }
 
           .prEdit {

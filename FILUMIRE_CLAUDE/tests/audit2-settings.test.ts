@@ -13,11 +13,13 @@ try {
   const preferences = { appearance: "dark" as const, progressNotices: false, achievementNotices: true };
   assert.equal(saveInterfacePreferences("fictional-a", preferences), true);
   assert.deepEqual(readInterfacePreferences("fictional-a"), preferences);
-  assert.equal(readInterfacePreferences("fictional-b").appearance, "system", "shared devices must isolate learners");
+  assert.equal(readInterfacePreferences("fictional-b").appearance, "light", "shared devices must isolate learners; screens default to white");
   storage.set(interfacePreferenceKey("fictional-b"), '{"appearance":"invalid","progressNotices":"false"}');
   assert.equal(readInterfacePreferences("fictional-b").progressNotices, true);
   storage.set(interfacePreferenceKey("fictional-b"), 'broken');
-  assert.equal(readInterfacePreferences("fictional-b").appearance, "system");
+  assert.equal(readInterfacePreferences("fictional-b").appearance, "light");
+  storage.set(interfacePreferenceKey("fictional-b"), '{"appearance":"system"}');
+  assert.equal(readInterfacePreferences("fictional-b").appearance, "light", "an old 'system' choice no longer follows device dark mode");
   const oldSet = window.localStorage.setItem;
   window.localStorage.setItem = () => { throw new Error("storage denied"); };
   assert.equal(saveInterfacePreferences("fictional-a", preferences), false);
@@ -25,7 +27,7 @@ try {
   for (const language of ["en", "fr"] as const) {
     const settings = renderToStaticMarkup(React.createElement(AdditionalSettings, { learnerId: "fictional-a", language, signedIn: true }));
     assert.equal((settings.match(/<summary>/g) ?? []).length, 4);
-    assert.equal((settings.match(/type="radio"/g) ?? []).length, 3);
+    assert.equal((settings.match(/type="radio"/g) ?? []).length, 2, "Light and Dark only");
     assert.equal((settings.match(/type="checkbox"/g) ?? []).length, 2);
     assert(settings.includes(`https://filumire.com${language === "fr" ? "/fr" : ""}/contact`));
     assert(settings.includes(`/privacy?lang=${language}`));
@@ -40,8 +42,9 @@ try {
     const header = renderToStaticMarkup(React.createElement(LearnerHeader, { language }));
     assert(!header.includes('learnerSignOut'));
     const chat = renderToStaticMarkup(React.createElement(FiluConversation, { language }));
-    assert(!chat.includes('quickActions'));
-    assert(chat.indexOf('id="filu-question"') < chat.indexOf('role="log"'));
+    // Chat-style layout (400b9cbd): conversation first, then quick actions and the question box.
+    assert(chat.includes('quickActions'));
+    assert(chat.indexOf('role="log"') < chat.indexOf('id="filu-question"'));
     assert(chat.includes('filu-privacy-notice'));
   }
   console.log("PASS: learner preference isolation, corrupt/blocked storage, bilingual functional settings, guardian boundaries, profile order and question prominence");

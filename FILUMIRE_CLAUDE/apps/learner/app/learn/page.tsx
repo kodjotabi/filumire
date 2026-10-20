@@ -1754,7 +1754,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
 
         .stageName {
           max-width: 100%;
-          overflow-wrap: anywhere;
+          overflow-wrap: break-word;
           white-space: normal;
         }
 
