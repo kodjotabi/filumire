@@ -145,9 +145,11 @@ export function createConversationHandler(overrides: Partial<Dependencies> = {})
       const generate = async (): Promise<ConversationResponse> => {
         let reply: string;
         let practice: ConversationPractice | undefined;
+        // Say where the waiting question is and when full help comes back.
+        const waitingTitle = context.assessmentProtected ? context.protectingTopicTitle : undefined;
         const guidedRefusal = body.language === "fr"
-          ? "Je peux te guider, mais je ne peux pas donner ni valider une réponse à une activité évaluée. Relis la consigne : que dois-tu trouver ? Quelle règle pourrais-tu utiliser ? Vérifie chaque étape de ton raisonnement. Reviens à la leçon pour soumettre ta réponse."
-          : "I can guide you, but I cannot give or mark an answer to a scored activity. Read the instruction: what do you need to find? Which rule could you use? Check each step of your reasoning. Return to your lesson to submit your answer.";
+          ? `${waitingTitle ? `Une question notée t'attend dans ta leçon « ${waitingTitle} ». ` : "Une question notée t'attend dans tes leçons. "}Pour que ta réponse reste la tienne, je ne peux pas donner ni valider de réponse à une activité évaluée, ni expliquer ce qui pourrait y répondre. Relis la consigne, réfléchis à la règle que tu as apprise, puis envoie ta réponse dans la leçon. Ensuite, je pourrai tout t'expliquer avec des exemples.`
+          : `${waitingTitle ? `A scored question is waiting for you in your lesson “${waitingTitle}”. ` : "A scored question is waiting for you in your lessons. "}So that your answer stays your own, I cannot give or mark an answer to a scored activity, or explain anything that would answer it. Read the question again, think about the rule you learned, then send your answer in the lesson. After that, I can explain everything with examples.`;
         const concept = safety ? undefined : conceptualExplanation(body.question, body.language);
         if (safety) {
           reply = safetyReply(safety, body.language);

@@ -77,7 +77,7 @@ for (const discipline of ["mathematics", "science", "computing", "english"]) {
   const envelope = JSON.parse(Buffer.from(practice.historyToken.split(".")[0],"base64url").toString());
   const wrong = await ask("not-the-answer"); assert.equal(wrong.practiceActive,true);
   const correct = await ask(envelope.practice.answer); assert.match(correct.messages.at(-1)!.text,/You found it/); assert.equal(correct.practiceActive,false);
-  const unrelated = await ask("Explain quantum teleportation"); assert.match(unrelated.messages.at(-1)!.text,/could not find that topic/);
+  const unrelated = await ask("Explain quantum teleportation"); assert.match(unrelated.messages.at(-1)!.text,/could not find that topic in your current lesson/);
   for (const language of ["en","fr"] as const) {
     const privateText = language === "en" ? "My address is 88 Fictional Road" : "Mon adresse est 88 Rue Imaginaire";
     const safe = await ask(privateText, language); assert(!JSON.stringify(safe).includes(privateText));

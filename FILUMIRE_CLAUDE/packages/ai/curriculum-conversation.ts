@@ -3,8 +3,12 @@ import { conversationSafety, normalizedQuestion, safetyReply } from "./conversat
 import { generalEducationReply } from "./general-education";
 import { conceptualExplanation } from "./conceptual-explanations";
 
-const stopWords = new Set(("a an the this that these those with from have what why how does do can you me my your about please explain help understand more again lesson topic want know is are and or of to in it be as for on by at which when where tell give i am not oui une un le la les des du de et ce cette ces avec dans pour sur comment pourquoi quoi quel quelle moi mon ma mes ton ta je tu il elle est sont explique aide comprendre encore exemple indice peux voudrais que qui same amount chaque meme fois number nombres rule regle next suivant think pense answer reponse practice entrainer question help aide" ).split(/\s+/));
-const terms = (text: string) => normalizedQuestion(text).match(/[a-z]{3,}/g)?.filter(word => !stopWords.has(word)) ?? [];
+const stopWords = new Set(("a an the this that these those with from have what why how does do did can could you me my your about please explain help understand more again lesson topic want know is are and or of to in it its be as for on by at which when where tell give i am not oui une un le la les des du de et ce cette ces avec dans pour sur comment pourquoi quoi quel quelle moi mon ma mes ton ta je tu il elle est sont explique aide comprendre encore exemple indice peux voudrais que qui same amount chaque meme fois number nombres rule regle next suivant think pense answer reponse practice entrainer question help aide mean means meaning say said word words thing things something important really very veut dire dit mot chose doit doivent dois faut sont pas une" ).split(/\s+/));
+// The digit 0 and the word zero are the same idea to a learner.
+const terms = (text: string) => normalizedQuestion(text).replace(/(?<![\d,.])\b0\b(?![\d,.])/g, " zero ")
+  .match(/[a-z]{3,}/g)?.filter(word => !stopWords.has(word)) ?? [];
+// Light stemming by shared prefix: drag/dragging, piece/pieces, click/clicks.
+const sameTerm = (a: string, b: string) => a === b || Math.min(a.length, b.length) >= 4 && (a.startsWith(b) || b.startsWith(a));
 const sentences = (text: string) => text.replace(/\r/g, "").split(/(?<=[.!?])\s+|\n+/).map(s => s.trim()).filter(Boolean);
 type Intent = "explain" | "hint" | "example" | "simpler" | "next" | "practice" | "summary" | "unknown";
 export function conversationIntent(question: string): Intent {
@@ -29,6 +33,23 @@ const copy = {
     practice: "Practice only — this does not change your marks or progress.", fill: "Complete the missing word from your lesson:", pattern: "Continue this practice pattern:",
     correct: "You found it!", hintAnswer: "Let's try again. The answer begins with", numberHint: "Find the change between neighbouring numbers, then use the same change once more.",
     reveal: "Let's review it together:", retry: "Have another try, or ask for an explanation.", unavailable: "I cannot make a useful practice question from this teaching yet. Ask for an explanation, or practise in your lesson.",
+    lesson: "your lesson",
+    notFound: (title: string) => `I could not find that topic in your current lesson “${title}”. I can only explain what this lesson teaches. Try “Explain this lesson”, “Show me an example”, “Give me a hint” or “Let me practise”.`,
+    intros: {
+      explanation: (title: string) => `From your lesson “${title}”:`,
+      worked_example: (title: string) => `Here is a worked example from your lesson “${title}”:`,
+      hint: () => "Let's go step by step:",
+      remediation: () => "Here is a common mistake to avoid, and why:",
+    } as Record<string, (title: string) => string>,
+    onlyExample: "Your lesson has only this one worked example. Let's look at it again:",
+    supportCloser: "Would you like me to go step by step, or show you an example?",
+    allShown: "We have looked at everything in this lesson. Ask me for a practice question, or go back to your lesson and try it yourself.",
+    closers: {
+      explanation: "Would you like an example, a hint, or a practice question?",
+      worked_example: "Would you like me to explain it another way, or try a practice question?",
+      hint: "Try the next step yourself. If you are still stuck, ask me for an example.",
+      remediation: "Does that make sense? Ask me for an example or a practice question.",
+    } as Record<string, string>,
   },
   fr: {
     missing: "Je n'ai pas encore de contenu pédagogique validé en français pour ce sujet. Je ne vais pas deviner. Demande à ton enseignant ou retourne à la leçon.",
@@ -39,6 +60,23 @@ const copy = {
     practice: "Entraînement seulement — cela ne change ni tes notes ni ta progression.", fill: "Complète le mot manquant dans ta leçon :", pattern: "Continue cette suite d'entraînement :",
     correct: "Tu as trouvé !", hintAnswer: "Réessayons. La réponse commence par", numberHint: "Trouve le changement entre deux nombres voisins, puis applique le même changement encore une fois.",
     reveal: "Revoyons cela ensemble :", retry: "Essaie encore, ou demande une explication.", unavailable: "Je ne peux pas encore créer un exercice utile avec ce contenu. Demande une explication ou entraîne-toi dans ta leçon.",
+    lesson: "ta leçon",
+    notFound: (title: string) => `Je n'ai pas trouvé ce sujet dans ta leçon actuelle « ${title} ». Je peux seulement expliquer ce que cette leçon enseigne. Essaie « Explique-moi la leçon », « Montre-moi un exemple », « Donne-moi un indice » ou « Je veux m'entraîner ».`,
+    intros: {
+      explanation: (title: string) => `Dans ta leçon « ${title} » :`,
+      worked_example: (title: string) => `Voici un exemple résolu de ta leçon « ${title} » :`,
+      hint: () => "Allons-y étape par étape :",
+      remediation: () => "Voici une erreur fréquente à éviter, et pourquoi :",
+    } as Record<string, (title: string) => string>,
+    onlyExample: "Ta leçon n'a que cet exemple résolu. Regardons-le encore :",
+    supportCloser: "Veux-tu que je t'explique étape par étape, ou que je te montre un exemple ?",
+    allShown: "Nous avons vu tout le contenu de cette leçon. Demande-moi un exercice, ou retourne à ta leçon pour essayer toi-même.",
+    closers: {
+      explanation: "Veux-tu un exemple, un indice ou un exercice ?",
+      worked_example: "Veux-tu une autre explication, ou essayer un exercice ?",
+      hint: "Essaie l'étape suivante toi-même. Si tu bloques encore, demande-moi un exemple.",
+      remediation: "Est-ce que c'est plus clair ? Demande-moi un exemple ou un exercice.",
+    } as Record<string, string>,
   },
 };
 
@@ -91,25 +129,77 @@ export class CurriculumConversationProvider implements ConversationProvider {
       }
       return exercise ? { reply: bounded([t.practice, exercise.prompt, t.next]), practice: exercise } : { reply: t.unavailable };
     }
-    const requested = terms(q);
-    const generic = /^(?:explain (?:this|this step|the lesson)|why|how|what does (?:this|it) mean|explique(?:-moi)?(?: cette etape| ceci| la lecon)?|pourquoi|comment)\??$/.test(q);
-    const scored = teaching.flatMap(item => sentences(item.text).map(text => ({ text, type: item.type,
-      score: requested.filter(word => terms(text).includes(word)).length,
-    })));
-    const matches = scored.filter(item => item.score > 0).sort((a,b) => b.score-a.score);
-    if ((intent === "unknown" || intent === "explain" && !generic && requested.length > 0) && !matches.length) return { reply: t.unrelated };
-    let chosen = intent === "example" ? scored.filter(item => item.type === "worked_example")
-      : intent === "hint" || intent === "simpler" ? scored.filter(item => ["hint", "remediation"].includes(item.type)) : matches.length ? matches : scored.filter(item => item.type === "explanation");
-    const hasExample = chosen.length > 0;
-    if (!chosen.length) chosen = scored;
+    // Answers are whole authored teaching blocks (or a self-contained part of
+    // one), never a lone sentence whose "it" or "this" points at nothing.
+    const title = context.teachingSource?.title ?? t.lesson;
+    const order = ["explanation", "worked_example", "hint", "remediation"];
+    const blocks = teaching.filter(item => order.includes(item.type)).map(item => ({ ...item, sentences: sentences(item.text) }));
+    if (!blocks.length) return { reply: t.missing };
     const previous = history.filter(item => item.role === "assistant" && item.language === language);
-    const last = previous.at(-1)?.text ?? "";
-    const fresh = intent === "next" ? chosen.filter(item => !previous.some(message => message.text.includes(item.text)))
-      : intent === "simpler" ? chosen.filter(item => !last.includes(item.text)) : chosen;
-    if (fresh.length) chosen = fresh;
-    const count = intent === "summary" ? 3 : intent === "example" ? 4 : needsSupport || intent === "hint" || intent === "simpler" ? 1 : 2;
-    const text = chosen.slice(0,count).map(item => item.text).join(" ");
-    const intro = intent === "hint" ? t.hint : intent === "example" ? hasExample ? t.example : t.noExample : intent === "summary" ? t.summary : needsSupport ? t.small : turns ? t.follow : t.intro;
-    return { reply: bounded([intro, text, needsSupport ? t.next : context.mastery >= .8 ? t.ready : t.reflect]) };
+    const shownIn = (block: (typeof blocks)[number], messages: readonly { text: string }[]) =>
+      block.sentences.some(sentence => messages.some(message => message.text.includes(sentence)));
+    const shown = (block: (typeof blocks)[number]) => shownIn(block, previous);
+    const lastShown = (block: (typeof blocks)[number]) => shownIn(block, previous.slice(-1));
+    const byType = (type: string) => blocks.filter(block => block.type === type);
+    const firstUnshown = (types: string[]) => types.flatMap(byType).find(block => !shown(block));
+    // The closing offer adapts to the learner: a struggling learner is offered
+    // step-by-step help first, a confident one is asked to explain it back.
+    const closer = (type: string) => type === "explanation" && needsSupport ? t.supportCloser
+      : type === "explanation" && context.mastery >= .8 ? t.ready : t.closers[type] ?? t.closers.explanation;
+    const reply = (block: (typeof blocks)[number], text = block.text, intro = t.intros[block.type]?.(title) ?? "") =>
+      ({ reply: bounded([intro, text, closer(block.type)]) });
+    // A self-contained window around the best sentence of a long block.
+    const excerpt = (block: (typeof blocks)[number], focus: number) => {
+      if (block.text.length <= 520) return block.text;
+      let start = Math.max(0, focus - 1);
+      while (start > 0 && /^(?:it|this|that|they|these|those|so|but|then|also|now|here|il|elle|ils|elles|cela|ce|ces|donc|mais|puis|ici)\b/i.test(block.sentences[start])) start--;
+      if (start <= 2) start = 0;
+      let end = Math.min(block.sentences.length, focus + 2);
+      while (end < block.sentences.length && block.sentences.slice(start, end).join(" ").length < 280) end++;
+      return block.sentences.slice(start, end).join(" ");
+    };
+
+    if (intent === "example" || intent === "next" && /\b(example|exemple)\b/.test(q)) {
+      const examples = byType("worked_example");
+      const fresh = examples.find(block => !shown(block));
+      if (fresh) return reply(fresh);
+      if (examples.length) return reply(examples[0], examples[0].text, t.onlyExample);
+      return reply(byType("explanation")[0] ?? blocks[0], undefined, t.noExample);
+    }
+    if (intent === "hint") {
+      const hint = byType("hint").find(block => !lastShown(block)) ?? byType("hint")[0];
+      if (hint) return reply(hint);
+    }
+    if (intent === "simpler") {
+      const simpler = ["hint", "worked_example", "remediation", "explanation"].flatMap(byType).find(block => !lastShown(block));
+      if (simpler) return reply(simpler);
+    }
+    if (intent === "summary") {
+      const explanation = byType("explanation")[0] ?? blocks[0];
+      return reply(explanation, excerpt(explanation, 0), t.summary);
+    }
+
+    const requested = terms(q);
+    if (!requested.length) {
+      // "Explain this", "why?", "what does it mean?": with history, a follow-up
+      // moves on to teaching not yet shown; "why" is answered by the
+      // common-mistakes block, which explains the reasons.
+      if (!previous.length) return reply(byType("explanation")[0] ?? blocks[0]);
+      if (intent === "next") return firstUnshown(order) ? reply(firstUnshown(order)!) : { reply: t.allShown };
+      const preferred = /\b(why|pourquoi)\b/.test(q) ? ["remediation", "hint", "worked_example", "explanation"] : ["hint", "worked_example", "remediation", "explanation"];
+      const followUp = preferred.flatMap(byType).find(block => !lastShown(block)) ?? blocks[0];
+      return reply(followUp);
+    }
+    const ranked = blocks.map(block => {
+      const scores = block.sentences.map(sentence => { const words = terms(sentence); return requested.filter(word => words.some(other => sameTerm(word, other))).length; });
+      const best = Math.max(...scores);
+      return { block, best, focus: scores.indexOf(best), total: requested.filter(word => terms(block.text).some(other => sameTerm(word, other))).length };
+    }).filter(item => item.total > 0);
+    if (!ranked.length) return { reply: t.notFound(title) };
+    const prefer = /\b(why|pourquoi)\b/.test(q) ? ["remediation", "explanation"] : ["explanation", "remediation", "worked_example", "hint"];
+    ranked.sort((a, b) => b.total - a.total || b.best - a.best || prefer.indexOf(a.block.type) - prefer.indexOf(b.block.type)
+      || Number(shown(a.block)) - Number(shown(b.block)));
+    const top = intent === "next" ? ranked.find(item => !shown(item.block)) ?? ranked[0] : ranked[0];
+    return reply(top.block, excerpt(top.block, top.focus));
   }
 }

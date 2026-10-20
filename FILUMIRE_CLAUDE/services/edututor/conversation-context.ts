@@ -24,6 +24,7 @@ export interface TrustedConversationContext {
   // An unanswered scored activity exists only in unrelated topics. The current
   // topic is not protected, but built-in explanations still need clearing.
   otherTopicsOpen?: boolean;
+  protectingTopicTitle?: string;
 }
 
 /** Every competency reachable through prerequisite links from `competencyId`. */
@@ -115,6 +116,12 @@ export async function loadConversationContext(learnerId: string, language: Conve
     relevant.some(scored);
   const otherTopicActivities = active.filter(item => !related(item) && scored(item));
   const otherTopicsOpen = !assessmentProtected && otherTopicActivities.length > 0;
+  // The lesson title (teaching content only) of the topic whose waiting
+  // question protects this one, so a refusal can say where to go.
+  const waiting = relevant.find(scored);
+  const protectingTopicTitle = assessmentProtected && waiting && !recovery.pendingTeacherReview && waiting.type !== "teacher_review"
+    ? getContentForCompetency(waiting.competencyId, language).find(item => !item.assessmentItemId && item.type === "lesson")?.title
+    : undefined;
   // Built-in explanations are cleared against whichever activities are open:
   // the protecting ones, or else those in unrelated topics.
   const protectedActivities = assessmentProtected ? relevant.filter(scored) : otherTopicActivities;
@@ -169,6 +176,7 @@ export async function loadConversationContext(learnerId: string, language: Conve
     topicTitle,
     safeConceptualExplanations,
     otherTopicsOpen,
+    protectingTopicTitle,
     fingerprint: createHash("sha256").update(JSON.stringify({ context, state, active, recovery: recovery.fingerprint, safeConceptualExplanations, otherTopicsOpen })).digest("hex"),
     assessmentProtected,
     providerContext: {

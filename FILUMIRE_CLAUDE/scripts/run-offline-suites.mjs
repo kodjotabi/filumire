@@ -31,7 +31,7 @@ export const OFFLINE_SECURITY_SUITES = [
   "parent-teacher-communication-api", "family-access-api", "family-subscriptions", "family-phone-otp",
   // Tutoring, lesson closure and safeguarding
   "tutoring-conversation-identity", "tutoring-conversation-api", "tutoring-recovery",
-  "tutoring-conceptual-help",
+  "tutoring-conceptual-help", "filu-teaching-quality",
   "outline-visuals",
   "lesson-closure-api", "lesson-closure-production", "cluster5c-safeguarding",
 ];
