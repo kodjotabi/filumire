@@ -8,9 +8,10 @@ export function OutlineVisual({ visual }: { visual: Visual }) {
   if (!validOutlineVisual(visual)) return null;
   const model = visual.model;
   const rows = model.kind === "part-whole" ? model.fractions.length : 0;
+  const stepIcons = model.kind === "process" && model.icons ? model.icons : undefined;
   const height = rows ? rows * 86 + 10 : model.kind === "number-line" ? 110 : model.kind === "process" ? (model.icons ? 146 : 100) : model.kind === "sentence-strip" ? 220 : 300;
   return <figure className="outlineFigure" lang={visual.language} data-outline-id={visual.id} data-outline-stage={visual.stage}>
-    <svg viewBox={model.kind === "equipment" ? EQUIPMENT_VIEWBOX : `0 0 600 ${height}`} role="img" aria-labelledby={`${uid}-title ${uid}-desc`} preserveAspectRatio="xMidYMid meet">
+    <svg className={stepIcons ? "stepRow" : undefined} viewBox={model.kind === "equipment" ? EQUIPMENT_VIEWBOX : `0 0 600 ${height}`} role="img" aria-labelledby={`${uid}-title ${uid}-desc`} preserveAspectRatio="xMidYMid meet">
       <title id={`${uid}-title`}>{visual.title}</title><desc id={`${uid}-desc`}>{visual.description}</desc>
       <defs><pattern id={`${uid}-hatch`} width="10" height="10" patternUnits="userSpaceOnUse"><path d="M0 10 L10 0" className="hatch" /></pattern></defs>
       {model.kind === "part-whole" && model.fractions.map((f, row) => <g key={row} data-fraction={`${f.numerator}/${f.denominator}`}>
@@ -61,7 +62,13 @@ export function OutlineVisual({ visual }: { visual: Visual }) {
     {model.kind === "labelled-diagram" && <ol>{model.labels.map((label, i) => <li key={i}>{label.text}</li>)}</ol>}
     {model.kind === "equipment" && <ol>{model.devices.map((d, i) => <li key={d.device}>{d.label}</li>)}</ol>}
     {model.kind === "sentence-strip" && <ol className="sentenceParts">{model.parts.map((part, i) => <li key={i}><strong>{part.label}</strong><span lang={part.language}>{part.text}</span></li>)}</ol>}
-    {model.kind === "process" && <ol className="processSteps">{model.steps.map((step, i) => <li key={i}>{step}</li>)}</ol>}
+    {model.kind === "process" && <ol className="processSteps">{model.steps.map((step, i) => <li key={i}>
+      {/* On phones the row is too small, so each step shows its own drawing here instead. */}
+      <div className="stepBody">
+        {stepIcons && <svg className="stepIcon" viewBox="0 0 100 80" aria-hidden="true" focusable="false"><ProcessStepIcon icon={stepIcons[i]} x={0} y={0} width={100} height={80} /></svg>}
+        <span>{step}</span>
+      </div>
+    </li>)}</ol>}
     <style jsx>{`
       .outlineFigure { margin: 16px 0; padding: 16px; border: 1px solid var(--filumire-border, #dfe8ef); border-radius: 12px; color: var(--filumire-text, #12304a); background: var(--filumire-surface, #fff); min-width: 0; max-width: 100%; }
       svg { display: block; width: 100%; max-width: 640px; height: auto; margin: auto; overflow: visible; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -78,7 +85,16 @@ export function OutlineVisual({ visual }: { visual: Visual }) {
       .sentenceParts, .processSteps { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); }
       .sentenceParts li span { display: block; }
       :global(.learnerUi[data-appearance="dark"]) .outlineFigure { --filumire-text: #e5efff; --filumire-surface: #203752; --filumire-blue-soft: #315577; --filumire-border: #839fbe; --filumire-navy: #d5ebff; }
-      @media (max-width: 480px) { .outlineFigure { padding: 12px; } }
+      .stepIcon { display: none; }
+      @media (max-width: 480px) {
+        .outlineFigure { padding: 12px; }
+        svg.stepRow { display: none; }
+        .processSteps:has(.stepIcon) { list-style: none; padding-left: 0; counter-reset: step; }
+        .stepBody:has(.stepIcon) { display: flex; align-items: center; gap: 10px; }
+        .stepBody:has(.stepIcon)::before { counter-increment: step; content: counter(step) "."; font-weight: 700; min-width: 1.4em; }
+        .stepIcon { display: block; flex: 0 0 88px; width: 88px; height: auto; margin: 0; }
+        .stepIcon :global(.iconText) { font-size: 16px; }
+      }
     `}</style>
   </figure>;
 }

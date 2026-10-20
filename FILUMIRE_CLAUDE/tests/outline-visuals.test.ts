@@ -131,7 +131,9 @@ for (const language of ["en", "fr"] as const) {
   assert.equal((html.match(/class="[^"]*cable/g) ?? []).length, 4, "each peripheral is shown connected to the system unit");
   const [printing] = pilotVisuals(printingReview, "lesson", language);
   const steps = renderToStaticMarkup(React.createElement(OutlineVisual, { visual: { ...visual, ...printing } }));
-  assert.equal((steps.match(/data-icon=/g) ?? []).length, 5, `${language}: every printing step has a drawing`);
+  assert.equal((steps.match(/data-icon=/g) ?? []).length, 10, `${language}: every printing step has a drawing in the row and, for phones, beside its list item`);
+  assert.equal((steps.match(/class="[^"]*stepIcon/g) ?? []).length, 5);
+  assert(steps.includes("stepRow"), "the desktop row can be swapped out on phones");
   assert.equal((steps.match(/<li>/g) ?? []).length, 5);
 }
 console.log("PASS: 862-topic coverage; 48 bilingual content bindings; six-topic API teaching/closure/practice journey; all scored content denied; safe contracts, geometry, equipment line drawings, context isolation and unchanged progress");
