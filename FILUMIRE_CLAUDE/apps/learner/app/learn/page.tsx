@@ -785,12 +785,14 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
     }
   }, [assessmentFeedback]);
 
-  const backHref = subjectId
-    ? `/dashboard?view=learning&subjectId=${encodeURIComponent(subjectId)}`
+  const askSubjectId = subjectId ?? data?.progress.subjectId;
+  // A lesson opened without ?subjectId (Home's "Continue Learning") still
+  // belongs to a subject: "All topics" must open that subject's topic list.
+  const backHref = askSubjectId
+    ? `/dashboard?view=learning&subjectId=${encodeURIComponent(askSubjectId)}`
     : "/dashboard";
   const learningHref = withLang("/dashboard?view=learning", language);
   const progressHref = withLang("/dashboard?view=progress", language);
-  const askSubjectId = subjectId ?? data?.progress.subjectId;
   const askHref = askFiluHref(language, askSubjectId);
 
   /* Loading and failure screens keep the learner's header and

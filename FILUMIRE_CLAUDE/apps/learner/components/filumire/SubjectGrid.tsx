@@ -118,20 +118,14 @@ export function SubjectGrid({
           Boolean(currentSubjectId) &&
           subject.subjectId === currentSubjectId;
 
-        return (
-          <Link
-            key={subject.subjectId}
-            href={`/dashboard?lang=${language}&view=learning&subjectId=${encodeURIComponent(
-              subject.subjectId,
-            )}`}
-            className={`filumireSubjectCard subject-${subject.key}`}
-            style={{
-              background: compact ? (COMPACT_TINTS[subject.key]?.bg ?? subject.softAccent) : subject.softAccent,
-              borderColor: current
-                ? subject.accent
-                : "transparent",
-            }}
-          >
+        const cardStyle = {
+          background: compact ? (COMPACT_TINTS[subject.key]?.bg ?? subject.softAccent) : subject.softAccent,
+          borderColor: current
+            ? subject.accent
+            : "transparent",
+        };
+        const content = (
+          <>
             <span
               className="filumireSubjectBadge"
               style={{ background: compact ? (COMPACT_TINTS[subject.key]?.accent ?? subject.accent) : subject.accent, color: compact ? (COMPACT_TINTS[subject.key]?.accent ?? subject.accent) : undefined }}
@@ -147,6 +141,29 @@ export function SubjectGrid({
             <span className="filumireSubjectAction">
               {subjectCopy(subject, language)}
             </span>
+          </>
+        );
+
+        // The compact grid is the first-time setup preview. Setup must be
+        // finished before a subject can open, so these cards are not links.
+        return compact ? (
+          <div
+            key={subject.subjectId}
+            className={`filumireSubjectCard subject-${subject.key}`}
+            style={cardStyle}
+          >
+            {content}
+          </div>
+        ) : (
+          <Link
+            key={subject.subjectId}
+            href={`/dashboard?lang=${language}&view=learning&subjectId=${encodeURIComponent(
+              subject.subjectId,
+            )}`}
+            className={`filumireSubjectCard subject-${subject.key}`}
+            style={cardStyle}
+          >
+            {content}
           </Link>
         );
       })}
