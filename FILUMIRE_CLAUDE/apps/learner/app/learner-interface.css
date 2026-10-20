@@ -143,8 +143,55 @@
 /* The existing subject banner uses an important subject tint. */
 .learnerUi[data-appearance="dark"] .learnerShell .learnBanner { background: #203752 !important; }
 .learnerUi[data-appearance="dark"] .learnerShell .learnMain .lessonPanel.teach .tutor-message { background: #203752; color: #e5efff; }
+/* Answer options, every subject and question type. Their light-theme
+   background is fixed white, so in the dark theme they must change with the
+   text colour or the dark theme's light text disappears on white. */
+.learnerUi .learnerShell .options .option { cursor: pointer; }
+.learnerUi .learnerShell .options .option:hover { border-color: #f58a07; }
+.learnerUi .learnerShell .options .option.selected { border-color: #f58a07; background: #fdf3de; }
+.learnerUi .learnerShell .options .option:has(input:focus-visible) { outline: 3px solid var(--learner-focus, #277dca); outline-offset: 2px; }
+.learnerUi .learnerShell .options .option:has(input:disabled) { cursor: default; }
+.learnerUi[data-appearance="dark"] .learnerShell .options .option { background: #203752; color: #f4f8ff; border-color: #839fbe; }
+.learnerUi[data-appearance="dark"] .learnerShell .options .option .option-text { color: #f4f8ff; }
+.learnerUi[data-appearance="dark"] .learnerShell .options .option:hover { border-color: #ffb547; }
+.learnerUi[data-appearance="dark"] .learnerShell .options :is(.option.selected, .option:has(input:checked)) { background: #4a3410; border-color: #ffb547; color: #ffffff; }
+.learnerUi[data-appearance="dark"] .learnerShell .options .option input { accent-color: #ffb547; }
 .learnerUi[data-appearance="dark"] .learnerShell :is(.lessonPanel, .lessonPill, .complete-card, .reflectCard, .connectivity-banner) { background: #203752; color: #e5efff; }
 .learnerUi[data-appearance="dark"] .learnerShell .progressPage .pMasteryMeta span { color: #bdcee4; }
 .learnerUi[data-appearance="dark"] .learnerShell .learningStage .stageName { color: #bdcee4; }
 .learnerUi[data-appearance="dark"] .learnerShell .learningStage.active .stageName { color: #ffcb79; }
 .learnerUi[data-appearance="dark"] .learnerShell .askFiluLink { color: #9ac8ff; }
+
+/* Phones (< 768px). One compact header row: the bottom bar already has Ask
+   FILU, and the website link keeps its icon and its accessible name. */
+@media (max-width: 767px) {
+  .learnerUi .filumireLearnerHeader { flex-wrap: nowrap; height: auto; min-height: 60px; padding: 8px 12px; gap: 8px; }
+  .learnerUi .filumireLearnerHeader :is(.filumireHeaderSide, .filumireSetupHeaderLeft, .filumireHeaderActions, .filumireSetupHeaderRight) { flex-wrap: nowrap; gap: 8px; }
+  .learnerUi .filumireLearnerHeader .filumirePublicHome { padding: 0 10px; }
+  .learnerUi .filumireLearnerHeader .filumirePublicHome span { display: none; }
+  .learnerUi:has(.filumireBottomNav) .filumireLearnerHeader :is(.filumireAskFilu, .filumireSetupAskFilu) { display: none; }
+  .learnerUi .filumireLearnerHeader :is(.filumireHeaderLogo, .filumireSetupLogo) img { width: 104px; }
+
+  /* Continue Learning card: the subject and topic never run under the avatar. */
+  .learnerUi .homeScreen .homeContinueHead { padding-right: 100px; }
+  .learnerUi .homeScreen .homeContinueHead > div { max-width: none; }
+  .learnerUi .homeScreen .homeContinueHead p { overflow-wrap: break-word; }
+
+  /* The subject banner just below already names the subject and topic. */
+  .learnerUi .learnBody .topicTrail ol { display: none; }
+
+  /* Lesson stages: whole words only ("Understand" never splits). */
+  .learnerUi .learningStages .learningStage { gap: 4px; font-size: .66rem; }
+  .learnerUi .learningStages .learningStage .stageName { overflow-wrap: normal; word-break: keep-all; hyphens: manual; letter-spacing: -.01em; }
+  .learnerUi .learningStages .learningStage .stageDot { width: 28px; height: 28px; font-size: .85rem; }
+  .learnerUi .learningStages .learningStage:not(:last-child)::after { top: 14px; left: calc(50% + 16px); width: calc(100% - 32px); }
+}
+/* Secondary lesson buttons have a fixed white background: keep their text dark. */
+.learnerUi[data-appearance="dark"] .learnerShell .secondary-button { background: #203752; color: #e5efff; border-color: #839fbe; }
+/* Dark theme: brand-blue highlights and FILU's notices need light-on-dark colours. */
+.learnerUi[data-appearance="dark"] .learnerShell :is(.homeGreeting h1 span, .learningNextNote) { color: #9ac8ff; }
+.learnerUi[data-appearance="dark"] .learnerShell .filuConversation .filuStatus { background: #3b3220; color: #ffe6b3; }
+.learnerUi[data-appearance="dark"] .learnerShell .filuConversation .transcript .filuStatus { background: transparent; color: #bdcee4; }
+.learnerUi[data-appearance="dark"] .learnerShell .filuConversation .filuError { background: #432032; color: #ffd1da; }
+.learnerUi[data-appearance="dark"] .learnerShell .filuConversation .quickAction { background: #203752; color: #e5efff; border-color: #839fbe; }
+.learnerUi[data-appearance="dark"] .learnerShell .filuConversation .message.user > div { background: #1d4a3f; color: #e5efff; border-color: #6fbfa6; }

@@ -2011,7 +2011,8 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
           gap: 10px;
           margin-top: auto;
           background: #f58a07;
-          color: #ffffff;
+          /* Navy on FILUMIRE orange: white text here was 2.5:1 and hard to read. */
+          color: #12304a;
           font-size: 18px;
         }
 
