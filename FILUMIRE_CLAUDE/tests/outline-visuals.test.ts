@@ -106,4 +106,32 @@ assert.equal(buildVisualCoverage().find(r => r.competencyId === source.competenc
 saveContent({ ...source, language: "en" });
 assert.equal(buildVisualCoverage().find(r => r.competencyId === source.competencyId)?.status, "Required", "a missing French variant cannot count as Complete");
 saveContent(source);
-console.log("PASS: 862-topic coverage; 48 bilingual content bindings; six-topic API teaching/closure/practice journey; all scored content denied; safe contracts, geometry, context isolation and unchanged progress");
+// Computing equipment: recognisable line drawings from the renderer library, never DTO geometry.
+const allDevices = ["monitor", "system-unit", "keyboard", "mouse", "printer"] as const;
+const equipment = { kind: "equipment", devices: allDevices.map(device => ({ device, label: device + " label" })) };
+assert(validOutlineModel(equipment));
+assert(!validOutlineModel({ kind: "equipment", devices: [{ device: "scanner", label: "x" }] }), "only library devices");
+assert(!validOutlineModel({ kind: "equipment", devices: [{ device: "mouse", label: "a" }, { device: "mouse", label: "b" }] }), "each device once");
+assert(!validOutlineModel({ kind: "equipment", devices: [{ device: "mouse", label: "a", path: "M0 0" }] }), "no geometry or raw SVG from data");
+assert(!validOutlineModel({ kind: "equipment", devices: [] }));
+assert(validOutlineModel({ kind: "process", steps: ["a", "b"], icons: ["open-page", "printer-output"] }));
+assert(!validOutlineModel({ kind: "process", steps: ["a", "b"], icons: ["open-page"] }), "one icon per step");
+assert(!validOutlineModel({ kind: "process", steps: ["a", "b"], icons: ["open-page", "<svg>"] }));
+const computerReview = PILOT_REVIEWS.find(r => r.family === "computer")!;
+const printingReview = PILOT_REVIEWS.find(r => r.family === "printing")!;
+const { pilotVisuals } = await import("../services/outline-visuals/pilot");
+for (const language of ["en", "fr"] as const) {
+  const [computer] = pilotVisuals(computerReview, "lesson", language);
+  assert.equal(computer.model.kind, "equipment");
+  const visual = { id: "outline/fictional/0", revision: 1, contentId: "fictional", contentVersion: "1", competencyId: computerReview.competencyId, language, stage: "Understand" as const, ...computer };
+  const html = renderToStaticMarkup(React.createElement(OutlineVisual, { visual }));
+  for (const device of allDevices) assert(html.includes(`data-device="${device}"`), `${language}: ${device} is drawn`);
+  assert.equal((html.match(/class="[^"]*markerText/g) ?? []).length, 5, "one numbered marker per device");
+  assert.equal((html.match(/<li>/g) ?? []).length, 5, "the numbered list under the drawing is kept");
+  assert.equal((html.match(/class="[^"]*cable/g) ?? []).length, 4, "each peripheral is shown connected to the system unit");
+  const [printing] = pilotVisuals(printingReview, "lesson", language);
+  const steps = renderToStaticMarkup(React.createElement(OutlineVisual, { visual: { ...visual, ...printing } }));
+  assert.equal((steps.match(/data-icon=/g) ?? []).length, 5, `${language}: every printing step has a drawing`);
+  assert.equal((steps.match(/<li>/g) ?? []).length, 5);
+}
+console.log("PASS: 862-topic coverage; 48 bilingual content bindings; six-topic API teaching/closure/practice journey; all scored content denied; safe contracts, geometry, equipment line drawings, context isolation and unchanged progress");

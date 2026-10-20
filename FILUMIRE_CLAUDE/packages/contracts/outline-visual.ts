@@ -4,6 +4,11 @@ export type VisualStage = typeof VISUAL_STAGES[number];
 export type VisualLanguage = "en" | "fr";
 export type CoverageStatus = "Complete" | "Required" | "Text-first" | "Unreviewed";
 export type Point = { x: number; y: number };
+/** Recognisable equipment drawn by the renderer's own line-art library, never by DTO geometry. */
+export const EQUIPMENT_DEVICES = ["monitor", "system-unit", "keyboard", "mouse", "printer"] as const;
+export type EquipmentDevice = typeof EQUIPMENT_DEVICES[number];
+export const PROCESS_ICONS = ["open-page", "print-shortcut", "print-preview", "print-settings", "printer-output"] as const;
+export type ProcessIcon = typeof PROCESS_ICONS[number];
 export type OutlineShape =
   | { kind: "rect"; x: number; y: number; width: number; height: number; accent?: boolean }
   | { kind: "ellipse"; cx: number; cy: number; rx: number; ry: number; accent?: boolean }
@@ -14,7 +19,8 @@ export type OutlineModel =
   | { kind: "number-line"; start: number; end: number; format: "fraction" | "number"; divisions: number; marked: number }
   | { kind: "labelled-diagram"; shapes: OutlineShape[]; labels: Array<Point & { text: string }> }
   | { kind: "sentence-strip"; parts: Array<{ text: string; label: string; language: VisualLanguage }> }
-  | { kind: "process"; steps: string[] };
+  | { kind: "process"; steps: string[]; icons?: ProcessIcon[] }
+  | { kind: "equipment"; devices: Array<{ device: EquipmentDevice; label: string }> };
 export interface OutlineVisual {
   id: string;
   revision: number;
@@ -62,7 +68,11 @@ export function validOutlineModel(v: unknown): v is OutlineModel {
       Array.isArray(v.labels) && v.labels.length > 0 && v.labels.length <= 12 && v.labels.every(p => object(p) && keys(p, ["x", "y", "text"]) && coordinate(p.x) && coordinate(p.y) && Number(p.y) <= 300 && text(p.text));
     case "sentence-strip": return keys(v, ["kind", "parts"]) && Array.isArray(v.parts) && v.parts.length >= 1 && v.parts.length <= 8 &&
       v.parts.every(p => object(p) && keys(p, ["text", "label", "language"]) && text(p.text) && text(p.label) && language(p.language));
-    case "process": return keys(v, ["kind", "steps"]) && Array.isArray(v.steps) && v.steps.length >= 2 && v.steps.length <= 8 && v.steps.every(text);
+    case "process": return keys(v, ["kind", "steps", "icons"]) && Array.isArray(v.steps) && v.steps.length >= 2 && v.steps.length <= 8 && v.steps.every(text) &&
+      (v.icons === undefined || Array.isArray(v.icons) && v.icons.length === v.steps.length && v.icons.every(i => PROCESS_ICONS.includes(i as ProcessIcon)));
+    case "equipment": return keys(v, ["kind", "devices"]) && Array.isArray(v.devices) && v.devices.length >= 1 && v.devices.length <= EQUIPMENT_DEVICES.length &&
+      v.devices.every(d => object(d) && keys(d, ["device", "label"]) && EQUIPMENT_DEVICES.includes(d.device as EquipmentDevice) && text(d.label)) &&
+      new Set(v.devices.map(d => (d as { device: string }).device)).size === v.devices.length;
     default: return false;
   }
 }

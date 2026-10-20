@@ -59,31 +59,21 @@ export function pilotVisuals(review: PilotReview, type: string, lang: VisualLang
         { x: 345, y: 60, text: fr ? "Fleur : participe à la formation des graines." : "Flower: involved in forming seeds." },
       ] } }];
     case "computer": return [{ title: fr ? "Les parties travaillent ensemble" : "Parts work together", description: fr
-      ? "Schéma simplifié d’un ordinateur de bureau. L’écran n’est pas tout l’ordinateur. Les périphériques sont reliés à l’unité centrale."
-      : "Simplified desktop computer diagram. The monitor is not the whole computer. Peripherals connect to the system unit.",
-      model: { kind: "labelled-diagram", shapes: [
-        { kind: "rect", x: 50, y: 30, width: 180, height: 110 },
-        { kind: "line", x1: 140, y1: 140, x2: 140, y2: 165 },
-        { kind: "line", x1: 110, y1: 165, x2: 170, y2: 165 },
-        { kind: "rect", x: 50, y: 190, width: 180, height: 40 },
-        { kind: "line", x1: 60, y1: 210, x2: 220, y2: 210 },
-        { kind: "ellipse", cx: 275, cy: 210, rx: 15, ry: 22 },
-        { kind: "rect", x: 340, y: 30, width: 70, height: 180 },
-        { kind: "ellipse", cx: 375, cy: 160, rx: 6, ry: 6, accent: true },
-        { kind: "rect", x: 450, y: 160, width: 110, height: 75 },
-        { kind: "rect", x: 470, y: 125, width: 70, height: 60 },
-      ], labels: [
-        { x: 140, y: 80, text: fr ? "Écran : affiche des informations." : "Monitor: displays information." },
-        { x: 140, y: 210, text: fr ? "Clavier : permet de taper." : "Keyboard: used for typing." },
-        { x: 275, y: 210, text: fr ? "Souris : permet de pointer et de sélectionner." : "Mouse: used to point and select." },
-        { x: 375, y: 80, text: fr ? "Unité centrale : contient le processeur, la mémoire et le stockage." : "System unit: contains the processor, memory and storage." },
-        { x: 510, y: 210, text: fr ? "Imprimante : produit une copie sur papier." : "Printer: produces a paper copy." },
+      ? "Dessin d’un ordinateur de bureau, non à l’échelle. L’écran n’est pas tout l’ordinateur. Les lignes en pointillé montrent comment les périphériques sont reliés à l’unité centrale."
+      : "Line drawing of a desktop computer, not to scale. The monitor is not the whole computer. The dashed lines show how the peripherals connect to the system unit.",
+      model: { kind: "equipment", devices: [
+        { device: "monitor", label: fr ? "Écran : affiche des informations." : "Monitor: displays information." },
+        { device: "system-unit", label: fr ? "Unité centrale : contient le processeur, la mémoire et le stockage." : "System unit: contains the processor, memory and storage." },
+        { device: "keyboard", label: fr ? "Clavier : permet de taper." : "Keyboard: used for typing." },
+        { device: "mouse", label: fr ? "Souris : permet de pointer et de sélectionner." : "Mouse: used to point and select." },
+        { device: "printer", label: fr ? "Imprimante : produit une copie sur papier." : "Printer: produces a paper copy." },
       ] } }];
     case "printing": return [{ title: fr ? "Préparer puis imprimer" : "Prepare, then print", description: fr
       ? "L’aperçu montre le résultat prévu ; il n’imprime rien. Schéma du processus, sans interaction avec une vraie imprimante."
       : "Preview shows the expected result; it does not print. This is a process diagram, not a connection to a real printer.",
       model: { kind: "process", steps: fr
         ? ["Ouvrir la page", "Ouvrir la fenêtre d’impression (Ctrl + P)", "Vérifier l’aperçu", "Choisir les pages, l’imprimante et les copies", "Cliquer sur Imprimer"]
-        : ["Open the page", "Open the print window (Ctrl + P)", "Check the preview", "Choose pages, printer and copies", "Click Print"] } }];
+        : ["Open the page", "Open the print window (Ctrl + P)", "Check the preview", "Choose pages, printer and copies", "Click Print"],
+        icons: ["open-page", "print-shortcut", "print-preview", "print-settings", "printer-output"] } }];
   }
 }

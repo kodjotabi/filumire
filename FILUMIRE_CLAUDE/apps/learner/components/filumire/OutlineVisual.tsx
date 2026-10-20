@@ -1,5 +1,6 @@
 import React, { useId } from "react";
 import { validOutlineVisual, type OutlineVisual as Visual, type VisualStage } from "../../../../packages/contracts/outline-visual";
+import { EQUIPMENT_VIEWBOX, EquipmentScene, ProcessStepIcon } from "./EquipmentDrawings";
 
 /** Only safe DTOs, never authored content, metadata, assessment keys or raw SVG. */
 export function OutlineVisual({ visual }: { visual: Visual }) {
@@ -7,9 +8,9 @@ export function OutlineVisual({ visual }: { visual: Visual }) {
   if (!validOutlineVisual(visual)) return null;
   const model = visual.model;
   const rows = model.kind === "part-whole" ? model.fractions.length : 0;
-  const height = rows ? rows * 86 + 10 : model.kind === "number-line" ? 110 : model.kind === "process" ? 100 : model.kind === "sentence-strip" ? 220 : 300;
+  const height = rows ? rows * 86 + 10 : model.kind === "number-line" ? 110 : model.kind === "process" ? (model.icons ? 146 : 100) : model.kind === "sentence-strip" ? 220 : 300;
   return <figure className="outlineFigure" lang={visual.language} data-outline-id={visual.id} data-outline-stage={visual.stage}>
-    <svg viewBox={`0 0 600 ${height}`} role="img" aria-labelledby={`${uid}-title ${uid}-desc`} preserveAspectRatio="xMidYMid meet">
+    <svg viewBox={model.kind === "equipment" ? EQUIPMENT_VIEWBOX : `0 0 600 ${height}`} role="img" aria-labelledby={`${uid}-title ${uid}-desc`} preserveAspectRatio="xMidYMid meet">
       <title id={`${uid}-title`}>{visual.title}</title><desc id={`${uid}-desc`}>{visual.description}</desc>
       <defs><pattern id={`${uid}-hatch`} width="10" height="10" patternUnits="userSpaceOnUse"><path d="M0 10 L10 0" className="hatch" /></pattern></defs>
       {model.kind === "part-whole" && model.fractions.map((f, row) => <g key={row} data-fraction={`${f.numerator}/${f.denominator}`}>
@@ -43,13 +44,22 @@ export function OutlineVisual({ visual }: { visual: Visual }) {
         <text x={15 + i * 570 / model.parts.length + 275 / model.parts.length} y="140" textAnchor="middle" lang={part.language}>{part.text}</text>
       </g>)}
       {model.kind === "process" && model.steps.map((_, i) => <g key={i}>
-        <rect x={10 + i * 580 / model.steps.length} y="20" width={480 / model.steps.length} height="60" rx="8" className="paper" />
-        <text x={10 + i * 580 / model.steps.length + 240 / model.steps.length} y="56" textAnchor="middle">{i + 1}</text>
-        {i < model.steps.length - 1 && <path d={`M${10 + i * 580 / model.steps.length + 480 / model.steps.length} 50 h${100 / model.steps.length - 5} m-5 -5 l5 5 l-5 5`} fill="none" />}
+        {model.icons ? <>
+          <rect x={10 + i * 580 / model.steps.length} y="10" width={480 / model.steps.length} height="126" rx="8" className="paper" />
+          <ProcessStepIcon icon={model.icons[i]} x={14 + i * 580 / model.steps.length} y={46} width={480 / model.steps.length - 8} height={86} />
+          <circle cx={28 + i * 580 / model.steps.length} cy="28" r="15" className="accent" />
+          <text x={28 + i * 580 / model.steps.length} y="36" textAnchor="middle" className="markerText">{i + 1}</text>
+        </> : <>
+          <rect x={10 + i * 580 / model.steps.length} y="20" width={480 / model.steps.length} height="60" rx="8" className="paper" />
+          <text x={10 + i * 580 / model.steps.length + 240 / model.steps.length} y="56" textAnchor="middle">{i + 1}</text>
+        </>}
+        {i < model.steps.length - 1 && <path d={`M${10 + i * 580 / model.steps.length + 480 / model.steps.length} ${model.icons ? 73 : 50} h${100 / model.steps.length - 5} m-5 -5 l5 5 l-5 5`} fill="none" />}
       </g>)}
+      {model.kind === "equipment" && <EquipmentScene devices={model.devices.map(d => d.device)} />}
     </svg>
     <figcaption><strong>{visual.title}</strong><p>{visual.description}</p></figcaption>
     {model.kind === "labelled-diagram" && <ol>{model.labels.map((label, i) => <li key={i}>{label.text}</li>)}</ol>}
+    {model.kind === "equipment" && <ol>{model.devices.map((d, i) => <li key={d.device}>{d.label}</li>)}</ol>}
     {model.kind === "sentence-strip" && <ol className="sentenceParts">{model.parts.map((part, i) => <li key={i}><strong>{part.label}</strong><span lang={part.language}>{part.text}</span></li>)}</ol>}
     {model.kind === "process" && <ol className="processSteps">{model.steps.map((step, i) => <li key={i}>{step}</li>)}</ol>}
     <style jsx>{`
@@ -60,6 +70,9 @@ export function OutlineVisual({ visual }: { visual: Visual }) {
       svg :global(.paper) { fill: var(--filumire-surface, #fff); }
       svg :global(.accent) { fill: var(--filumire-blue-soft, #eaf7fd); }
       svg :global(.hatch) { stroke: var(--filumire-navy, #003b71); stroke-width: 1; }
+      svg :global(.markerText) { font-size: 24px; font-weight: 700; }
+      svg :global(.iconText) { font-size: 15px; font-weight: 700; }
+      svg :global(.cable) { stroke-dasharray: 6 5; }
       figcaption, p, li { overflow-wrap: break-word; line-height: 1.5; font-size: 16px; }
       p { margin: 6px 0; } ol { padding-left: 26px; margin-bottom: 0; } li { margin: 6px 0; }
       .sentenceParts, .processSteps { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); }
