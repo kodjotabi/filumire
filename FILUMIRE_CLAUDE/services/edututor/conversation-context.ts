@@ -21,6 +21,21 @@ export interface TrustedConversationContext {
   topicTitle?: string;
   // Server-only policy. Never sent to a provider or the client as assessment data.
   safeConceptualExplanations?: string[];
+  // An unanswered scored activity exists only in unrelated topics. The current
+  // topic is not protected, but built-in explanations still need clearing.
+  otherTopicsOpen?: boolean;
+}
+
+/** Every competency reachable through prerequisite links from `competencyId`. */
+function prerequisiteClosure(competencyId: string): Set<string> {
+  const seen = new Set<string>();
+  const pending = [competencyId];
+  while (pending.length) {
+    for (const id of getCompetency(pending.pop()!)?.prerequisiteCompetencyIds ?? []) {
+      if (!seen.has(id)) { seen.add(id); pending.push(id); }
+    }
+  }
+  return seen;
 }
 
 /** Reads existing authoritative state. Never generates an adaptive decision or acknowledges a lesson. */
@@ -87,15 +102,28 @@ export async function loadConversationContext(learnerId: string, language: Conve
   // teacher review also remains protected. Client content IDs cannot relax this.
   const currentActive = active.filter((item) => item.competencyId === competencyId);
   const intervention = currentActive.length === 1 ? currentActive[0] : undefined;
-  const assessmentProtected = recovery.pendingTeacherReview || currentActive.length > 1 || (active.length > 0 && !intervention) ||
-    active.some((item) => !["teach", "remediate"].includes(item.type) || scoredDeliveries.has(item.interventionId));
-  const protectedActivities = active.filter(item => !["teach", "remediate"].includes(item.type) || scoredDeliveries.has(item.interventionId));
+  // Owner decision 2026-10-20: an unanswered activity protects the current topic
+  // only when it is related: the same topic, or either topic is a prerequisite of
+  // the other. Teacher reviews and unknown competencies always count as related.
+  const prerequisites = prerequisiteClosure(competencyId);
+  const related = (item: (typeof active)[number]) => item.type === "teacher_review" ||
+    item.competencyId === competencyId || !getCompetency(item.competencyId) ||
+    prerequisites.has(item.competencyId) || prerequisiteClosure(item.competencyId).has(competencyId);
+  const relevant = active.filter(related);
+  const scored = (item: (typeof active)[number]) => !["teach", "remediate"].includes(item.type) || scoredDeliveries.has(item.interventionId);
+  const assessmentProtected = recovery.pendingTeacherReview || currentActive.length > 1 || (relevant.length > 0 && !intervention) ||
+    relevant.some(scored);
+  const otherTopicActivities = active.filter(item => !related(item) && scored(item));
+  const otherTopicsOpen = !assessmentProtected && otherTopicActivities.length > 0;
+  // Built-in explanations are cleared against whichever activities are open:
+  // the protecting ones, or else those in unrelated topics.
+  const protectedActivities = assessmentProtected ? relevant.filter(scored) : otherTopicActivities;
   // Unknown, conflicting or teacher-reviewed work remains fail closed. For a
   // known activity, inspect the entire authored assessment pool, including both
   // languages, so a missing/legacy delivery pointer cannot hide a related task.
   const assessmentPools = protectedActivities.map(item => getContentForCompetency(item.competencyId)
     .filter(content => content.assessmentItemId));
-  const safeConceptualExplanations = assessmentProtected && !recovery.pendingTeacherReview &&
+  const safeConceptualExplanations = (assessmentProtected || otherTopicsOpen) && !recovery.pendingTeacherReview &&
     protectedActivities.length > 0 && new Set(protectedActivities.map(item => item.competencyId)).size === protectedActivities.length &&
     assessmentPools.every(pool => pool.length > 0)
     ? independentConceptualExplanations(assessmentPools.flatMap(pool => pool.map(content =>
@@ -140,7 +168,8 @@ export async function loadConversationContext(learnerId: string, language: Conve
   return {
     topicTitle,
     safeConceptualExplanations,
-    fingerprint: createHash("sha256").update(JSON.stringify({ context, state, active, recovery: recovery.fingerprint, safeConceptualExplanations })).digest("hex"),
+    otherTopicsOpen,
+    fingerprint: createHash("sha256").update(JSON.stringify({ context, state, active, recovery: recovery.fingerprint, safeConceptualExplanations, otherTopicsOpen })).digest("hex"),
     assessmentProtected,
     providerContext: {
       language,

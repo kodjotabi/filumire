@@ -145,15 +145,20 @@ export function createConversationHandler(overrides: Partial<Dependencies> = {})
       const generate = async (): Promise<ConversationResponse> => {
         let reply: string;
         let practice: ConversationPractice | undefined;
+        const guidedRefusal = body.language === "fr"
+          ? "Je peux te guider, mais je ne peux pas donner ni valider une réponse à une activité évaluée. Relis la consigne : que dois-tu trouver ? Quelle règle pourrais-tu utiliser ? Vérifie chaque étape de ton raisonnement. Reviens à la leçon pour soumettre ta réponse."
+          : "I can guide you, but I cannot give or mark an answer to a scored activity. Read the instruction: what do you need to find? Which rule could you use? Check each step of your reasoning. Return to your lesson to submit your answer.";
+        const concept = safety ? undefined : conceptualExplanation(body.question, body.language);
         if (safety) {
           reply = safetyReply(safety, body.language);
         } else if (context.assessmentProtected) {
-          const concept = conceptualExplanation(body.question, body.language);
           // Never pass learner prompts, transcript, assessment content, options,
           // answer keys or rubrics to a provider during a scored/uncertain activity.
-          reply = concept && context.safeConceptualExplanations?.includes(concept.id) ? concept.reply : body.language === "fr"
-            ? "Je peux te guider, mais je ne peux pas donner ni valider une réponse à une activité évaluée. Relis la consigne : que dois-tu trouver ? Quelle règle pourrais-tu utiliser ? Vérifie chaque étape de ton raisonnement. Reviens à la leçon pour soumettre ta réponse."
-            : "I can guide you, but I cannot give or mark an answer to a scored activity. Read the instruction: what do you need to find? Which rule could you use? Check each step of your reasoning. Return to your lesson to submit your answer.";
+          reply = concept && context.safeConceptualExplanations?.includes(concept.id) ? concept.reply : guidedRefusal;
+        } else if (context.otherTopicsOpen && concept && !context.safeConceptualExplanations?.includes(concept.id)) {
+          // The current topic is unprotected, but this built-in explanation could
+          // answer a question still open in another topic.
+          reply = guidedRefusal;
         } else {
           const controller = new AbortController();
           let timer: ReturnType<typeof setTimeout> | undefined;

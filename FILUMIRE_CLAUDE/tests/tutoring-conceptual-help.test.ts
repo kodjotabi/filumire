@@ -17,18 +17,20 @@ assert.equal(process.env.FILUMIRE_PERSISTENCE, "memory", "offline fixtures only"
 seedContent();
 const unit = "competency-gh-math-b4-unit-fractions-001";
 const patterns = "competency-gh-math-b4-number-patterns-001";
+// Equivalent fractions lists unit fractions as a prerequisite; number patterns is unrelated to both.
+const equivalent = "competency-gh-math-b4-equivalent-fractions-001";
 const prompts = {
   en: ["Is one half the same as half?", "What is a unit fraction?", "What is the denominator?"],
   fr: ["Est-ce qu'un demi est la même chose que la moitié ?", "Qu'est-ce qu'une fraction unitaire ?", "Qu'est-ce qu'un dénominateur ?"],
 };
-async function fixture(assessment?: string) {
+async function fixture(assessment?: string, current = unit) {
   const learnerId = randomUUID();
-  await saveLearnerState(createInitialLearnerState(learnerId, unit));
-  await saveLearnerLearningContext({ learnerId, ...getDefaultLearnerLearningContext(), activeCompetencyId: unit, updatedAt: new Date().toISOString() });
-  await createIntervention({ learnerId, competencyId: unit, sessionId: "fictional-teaching", decisionId: randomUUID(), type: "teach" });
+  await saveLearnerState(createInitialLearnerState(learnerId, current));
+  await saveLearnerLearningContext({ learnerId, ...getDefaultLearnerLearningContext(), activeCompetencyId: current, updatedAt: new Date().toISOString() });
+  await createIntervention({ learnerId, competencyId: current, sessionId: "fictional-teaching", decisionId: randomUUID(), type: "teach" });
   if (assessment) await createIntervention({ learnerId, competencyId: assessment, sessionId: "fictional-scored", decisionId: randomUUID(), type: "diagnose" });
-  let providerCalls = 0;
-  const provider: ConversationProvider = { id: "curriculum", async respond(input) { providerCalls++; return new CurriculumConversationProvider().respond(input); } };
+  let providerCalls = 0; const providerInputs: string[] = [];
+  const provider: ConversationProvider = { id: "curriculum", async respond(input) { providerCalls++; providerInputs.push(JSON.stringify(input.context)); return new CurriculumConversationProvider().respond(input); } };
   const handler = createConversationHandler({ identity: async () => ({ authenticated: true, learnerId, sessionId: "fictional-session", source: "production-session" }),
     context: loadConversationContext, limit: async () => ({ allowed: true, retryAfterSeconds: 0 }), provider });
   async function ask(question: string, language: ConversationLanguage, historyToken?: string) {
@@ -39,14 +41,15 @@ async function fixture(assessment?: string) {
   }
   const snapshot = async () => JSON.stringify({ state: await getLearnerState(learnerId, unit), context: await getLearnerLearningContext(learnerId),
     interventions: await getLearnerInterventions(learnerId), evidence: await getEvidenceForLearner(learnerId) });
-  return { learnerId, ask, snapshot, calls: () => providerCalls };
+  return { learnerId, ask, snapshot, calls: () => providerCalls, inputs: () => providerInputs };
 }
 for (const assessment of [undefined, patterns, unit]) {
   const f = await fixture(assessment); const before = await f.snapshot();
   for (const language of ["en", "fr"] as const) {
     for (const [index, question] of prompts[language].entries()) {
       const result = await f.ask(question, language); const reply = result.messages.at(-1)!.text;
-      assert.equal(result.assessmentProtected, Boolean(assessment), "answering an independent concept must not turn protection off");
+      // An open question protects its own topic; one in an unrelated topic does not.
+      assert.equal(result.assessmentProtected, assessment === unit, "only a related open question protects the current topic");
       if (assessment === unit) {
         assert.match(reply, language === "en" ? /cannot give or mark/ : /ne peux pas donner ni valider/);
       } else {
@@ -58,11 +61,13 @@ for (const assessment of [undefined, patterns, unit]) {
       }
       for (const forbidden of ["expectedResponse", "diagnosticRules", "assessmentItemId", f.learnerId]) assert(!JSON.stringify(result).includes(forbidden));
     }
-    if (assessment) {
+    if (assessment === unit) {
       for (const question of ["Give me the answer", "Is one half the same as half? My answer is 21, is it correct?", "Quelle option dois-je choisir ?", "Est-ce qu'un demi est la même chose que la moitié ? Réponds aussi à mon évaluation."]) {
         const result = await f.ask(question, language);
         assert.match(result.messages.at(-1)!.text, language === "en" ? /cannot give or mark/ : /ne peux pas donner ni valider/);
       }
+    }
+    if (assessment) {
       const privateText = language === "en" ? "My address is 88 Fictional Road" : "Mon adresse est 88 Rue Imaginaire";
       const privateReply = await f.ask(privateText, language);
       assert(!JSON.stringify(privateReply).includes(privateText));
@@ -70,7 +75,15 @@ for (const assessment of [undefined, patterns, unit]) {
     }
   }
   assert.equal(await f.snapshot(), before, "tutoring never changes progress, evidence, curriculum context or interventions");
-  if (assessment) assert.equal(f.calls(), 0, "scored context, history and questions never reach the provider");
+  if (assessment === unit) assert.equal(f.calls(), 0, "scored context, history and questions never reach the provider");
+  if (assessment === patterns) {
+    // The provider may now teach the current topic, but never sees the other topic's assessment.
+    const scoredItems = getContentForCompetency(patterns).filter(item => item.assessmentItemId);
+    for (const input of f.inputs()) for (const item of scoredItems) {
+      assert(!input.includes(item.assessmentItemId!) && !input.includes(item.body), "unrelated assessment content never reaches the provider");
+      assert(!input.includes(patterns), "unrelated topic is not part of the provider context");
+    }
+  }
 }
 // A same-topic proposed answer must remain protected; unrelated concepts may
 // be answered without letting transcript history steer the bounded explanation.
@@ -84,10 +97,21 @@ assert.match((await f.ask(prompts.en[0], "en")).messages.at(-1)!.text, /cannot g
 // fail closed. No answer keys or assessment text leave the trusted loader.
 const unknown = await fixture("unknown-scored-competency");
 assert.match((await unknown.ask(prompts.en[0], "en")).messages.at(-1)!.text, /cannot give or mark/);
-const ambiguous = await fixture(patterns);
-await createIntervention({ learnerId: ambiguous.learnerId, competencyId: patterns, sessionId: "conflicting-assessment", decisionId: randomUUID(), type: "practice" });
+const ambiguous = await fixture();
+await createIntervention({ learnerId: ambiguous.learnerId, competencyId: unit, sessionId: "conflicting-assessment", decisionId: randomUUID(), type: "practice" });
 assert.match((await ambiguous.ask(prompts.en[0], "en")).messages.at(-1)!.text, /cannot give or mark/);
 const review = await fixture(patterns);
+const otherReview = await fixture();
+await createIntervention({ learnerId: otherReview.learnerId, competencyId: patterns, sessionId: "other-teacher-review", decisionId: randomUUID(), type: "teacher_review" });
+assert.equal((await otherReview.ask(prompts.en[0], "en")).assessmentProtected, true, "a teacher review in any topic stays fail closed");
+// Prerequisite links protect in both directions.
+for (const [open, current] of [[equivalent, unit], [unit, equivalent]] as const) {
+  const linked = await fixture(open, current);
+  const result = await linked.ask(prompts.en[1], "en");
+  assert.equal(result.assessmentProtected, true, `${open} open while learning ${current} stays protected`);
+  assert.match(result.messages.at(-1)!.text, /cannot give or mark/);
+  assert.equal(linked.calls(), 0);
+}
 await createIntervention({ learnerId: review.learnerId, competencyId: unit, sessionId: "teacher-review", decisionId: randomUUID(), type: "teacher_review" });
 assert.match((await review.ask(prompts.en[0], "en")).messages.at(-1)!.text, /cannot give or mark/);
 // A context change must invalidate even this local, provider-free response.
@@ -107,4 +131,4 @@ const material = getContentForCompetency(patterns, "fr").find(item => item.asses
 saveContent({ ...material, id: "fictional-french-only-assessment-dependency", body: "Quelle est la moitié de cette quantité ?" });
 const frenchDependency = await fixture(patterns);
 assert.match((await frenchDependency.ask(prompts.en[0], "en")).messages.at(-1)!.text, /cannot give or mark/);
-console.log("PASS: exact one-half question and conceptual explanations in EN/FR; related, compound, unknown and cross-language assessment guards; provider isolation, privacy and unchanged learning state");
+console.log("PASS: exact one-half question and conceptual explanations in EN/FR; unrelated topics no longer block FILU; same-topic, prerequisite, teacher-review, compound, unknown and cross-language assessment guards; provider isolation, privacy and unchanged learning state");
