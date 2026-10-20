@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { browserVoiceId, installedVoices, africanLocaleHint, isAfricanVoice, voicesForLanguage } from "../apps/learner/services/browser-voices";
+import { browserVoiceId, installedVoices, africanLocaleHint, isAfricanVoice, knownVoiceGender, voiceGroups, voicesForLanguage } from "../apps/learner/services/browser-voices";
 import { saveBrowserVoicePreference, readBrowserVoicePreference, forgetBrowserVoicePreference } from "../apps/learner/services/voice-preference";
 import { BrowserSpeechPlayback } from "../apps/learner/services/browser-speech-playback";
 const storage = new Map<string, string>();
@@ -14,10 +14,16 @@ Object.assign(globalThis, { SpeechSynthesisUtterance: FakeUtterance, window: { s
 assert.equal(installedVoices().length, 0);
 voices = [european, kenyan, remote, france, fr, regional, american, en, untagged, canada, southAfrican];
 assert.equal(installedVoices().length, 11);
-// Owner policy: African voices only — Ghana, then Nigeria (local before remote), then Kenya; never a European/American voice.
-assert.deepEqual(voicesForLanguage(voices, "en"), [en, regional, remote, kenyan]);
+// Owner policy: African voices only — South Africa, Ghana, Nigeria (local before remote), Kenya; never a European/American voice.
+assert.deepEqual(voicesForLanguage(voices, "en"), [southAfrican, en, regional, remote, kenyan]);
+// Tessa (en-ZA) leads; vendor-published names give gender, otherwise "not stated". Name alone never makes a voice African.
+const tessa = voice("Tessa", "en-ZA"), luke = voice("Microsoft Luke Online (Natural) - English (South Africa)", "en-ZA", false), abeo = voice("Microsoft Abeo Online (Natural) - English (Nigeria)", "en-NG", false), elimu = voice("Microsoft Elimu Online (Natural) - English (Tanzania)", "en-TZ", false), fakeTessa = voice("Tessa", "en-GB");
+assert.deepEqual(voicesForLanguage([en, southAfrican, elimu, abeo, luke, tessa, fakeTessa], "en"), [tessa, southAfrican, luke, en, abeo, elimu]);
+assert.equal(knownVoiceGender(tessa), "female"); assert.equal(knownVoiceGender(luke), "male"); assert.equal(knownVoiceGender(abeo), "male"); assert.equal(knownVoiceGender(elimu), "male");
+assert.equal(knownVoiceGender(en), undefined); assert.equal(knownVoiceGender(voice("Luke", "en-NG")), undefined, "gender only for the published name+locale pair");
+assert.deepEqual(voiceGroups([tessa, luke, en]), { female: [tessa], male: [luke], unstated: [en] });
 assert.deepEqual(voicesForLanguage(voices, "fr"), [fr]);
-assert.deepEqual(voicesForLanguage([european, american, untagged, france, canada, southAfrican], "en"), [], "no African voice means text-only, never a substitute");
+assert.deepEqual(voicesForLanguage([european, american, untagged, france, canada], "en"), [], "no African voice means text-only, never a substitute");
 assert.deepEqual(voicesForLanguage([european, france, canada], "fr"), []);
 assert(africanLocaleHint(regional)); assert(africanLocaleHint(fr)); assert(!africanLocaleHint(european)); assert(!africanLocaleHint(france));
 assert(isAfricanVoice(en, "en")); assert(!isAfricanVoice(en, "fr")); assert(!isAfricanVoice(fr, "en"));
@@ -69,4 +75,4 @@ assert.equal(readBrowserVoicePreference("fictional-other", "en"), undefined);
 forgetBrowserVoicePreference("fictional-no-storage", "en");
 assert.equal(readBrowserVoicePreference("fictional-no-storage", "en"), undefined);
 deviceWindow.localStorage.setItem = setItem;
-console.log("PASS: African-only voices (GH > NG > KE, African French), dynamic library, locale honesty, bilingual preference isolation, exact voice/rate, pause/resume/replay/stop, stale events, mute, missing/remote voice failures and safe errors (mock browser only)");
+console.log("PASS: African-only voices (Tessa/ZA > GH > NG > KE > TZ, African French, published gender groups), dynamic library, locale honesty, bilingual preference isolation, exact voice/rate, pause/resume/replay/stop, stale events, mute, missing/remote voice failures and safe errors (mock browser only)");

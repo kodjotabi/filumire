@@ -4,9 +4,10 @@ import { browserSpeechPlayback } from "../../services/browser-speech-playback";
 import { browserVoiceId, isAfricanVoice, voicesForLanguage } from "../../services/browser-voices";
 import { readBrowserVoicePreference, saveBrowserVoicePreference } from "../../services/voice-preference";
 import { useBrowserVoices } from "../../services/use-browser-voices";
+import { VoiceOptions } from "./VoiceMenu";
 import type { SpeechSurface } from "../../services/voice-playback";
 export const speechCopy = {
-  en: { read: "Read aloud", replay: "Replay", pause: "Pause", resume: "Resume", stop: "Stop", mute: "Mute", unmute: "Unmute", speed: "Reading speed", missing: "Your preferred voice is unavailable on this device, or is not an African voice. Choose a Ghanaian, Nigerian or Kenyan English voice.", choose: "Choose an African English voice in your profile to read aloud.", textOnly: "Text only: this device has no Ghanaian, Nigerian or Kenyan English voice, so FILUMIRE does not read aloud.", remote: "This voice is not confirmed as local to your device. It cannot read learning text.", error: "Audio could not play. You can retry; your learning is unchanged.", muted: "Audio is muted.", local: "Audio uses a local device voice. No voice gender or accent is guaranteed." },
+  en: { read: "Read aloud", replay: "Replay", pause: "Pause", resume: "Resume", stop: "Stop", mute: "Mute", unmute: "Unmute", speed: "Reading speed", missing: "Your preferred voice is unavailable on this device, or is not an African voice. Choose a South African, Ghanaian, Nigerian, Kenyan or Tanzanian English voice.", choose: "Choose an African English voice in your profile to read aloud.", textOnly: "Text only: this device has no African English voice (South African, Ghanaian, Nigerian, Kenyan or Tanzanian English), so FILUMIRE does not read aloud.", remote: "This voice is not confirmed as local to your device. It cannot read learning text.", error: "Audio could not play. You can retry; your learning is unchanged.", muted: "Audio is muted.", local: "Audio uses a local device voice. No accent is guaranteed." },
   fr: { read: "Écouter", replay: "Réécouter", pause: "Pause", resume: "Reprendre", stop: "Arrêter", mute: "Couper le son", unmute: "Activer le son", speed: "Vitesse de lecture", missing: "Ta voix préférée n’est pas disponible sur cet appareil, ou n’est pas une voix africaine. Choisis une voix française d’Afrique.", choose: "Choisis une voix française d’Afrique dans ton profil pour écouter.", textOnly: "Texte seulement : cet appareil n’a pas de voix française d’Afrique, donc FILUMIRE ne lit pas à voix haute.", remote: "Cette voix n’est pas confirmée comme locale à ton appareil. Elle ne peut pas lire le texte d’apprentissage.", error: "Le son n’a pas pu être lu. Tu peux réessayer ; ton apprentissage est conservé.", muted: "Le son est coupé.", local: "Le son utilise une voix locale. Le genre et l’accent ne sont pas garantis." },
 };
 const audioLabels = {
@@ -43,7 +44,7 @@ export function ReadAloudControls({ learnerId, text, language, surface }: { lear
     {surface !== "preview" && <label htmlFor={`${id}-voice`}>{language === "fr" ? "Voix de lecture" : "Reading voice"}
       <select id={`${id}-voice`} value={voice?.localService === true ? preference?.voiceId : ""} disabled={!localVoices.length} onChange={(event) => chooseVoice(event.target.value)}>
         <option value="" disabled>{language === "fr" ? "Choisis une voix africaine" : "Choose an African voice"}</option>
-        {localVoices.map((item) => <option key={browserVoiceId(item)} value={browserVoiceId(item)}>{item.name} ({item.lang})</option>)}
+        <VoiceOptions voices={localVoices} language={language} label={(item) => `${item.name} (${item.lang})`} />
       </select>
     </label>}
     <button type="button" disabled={!enabled} onClick={() => void browserSpeechPlayback.read(learnerId, text, language, owner).catch(() => {})}>{active ? t.replay : t.read}</button>
