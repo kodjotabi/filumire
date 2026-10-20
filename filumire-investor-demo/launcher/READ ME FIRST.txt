@@ -1,0 +1,73 @@
+FILUMIRE OFFLINE DEMO
+=====================
+
+A complete copy of the FILUMIRE learner app that runs on this laptop with no
+internet connection. All learners and adults in it are fictional.
+
+
+START
+-----
+Double-click "Start FILUMIRE Demo.cmd".
+
+A small black window opens first (leave it open), then the FILUMIRE window.
+Choose a learner, the parent or guardian, or the teacher.
+
+  Ama    Basic 4   English
+  Kofi   Basic 5   French
+  Amina  Basic 6   English
+  Parent or guardian (Demo Family)   family page and parent progress view
+  Teacher (Mrs Mensah)               teacher workspace for all three learners
+
+The yellow strip at the top says it is an offline demo. "Switch learner"
+returns to the choice screen at any time, and so does "Sign out".
+
+
+STOP
+----
+Close the FILUMIRE window. Progress is saved and the demo stops by itself.
+The black window closes too.
+
+
+PROGRESS AND RESET
+------------------
+Progress is kept in the "data" folder and comes back next time.
+To start again from scratch, open the choice screen, scroll down and press
+"Reset demo", then "Yes, reset".
+
+
+READING ALOUD
+-------------
+FILUMIRE reads with voices installed on this laptop: an African voice first
+if there is one, otherwise the laptop's own English or French voice. If the
+laptop has no voice for a language, that language stays text-only and says
+so. No online voices are used.
+
+
+NOTHING LEAVES THIS LAPTOP
+--------------------------
+The demo only listens on this laptop's own address (127.0.0.1). It has no
+database, account service or internet connection, and no links to websites.
+
+
+IF SOMETHING GOES WRONG
+-----------------------
+- The FILUMIRE window does not appear: wait up to a minute, then check
+  data\launcher.log and data\server.log.
+- Microsoft Edge (or Google Chrome) must be installed. Without either, the
+  black window shows an address to open in any browser.
+- Do not move or rename folders inside "FILUMIRE Demo". The whole folder can
+  be copied or moved as one piece (for example to a USB stick).
+- Close the demo before copying the folder.
+- Keep the folder somewhere short, such as the Desktop or C:\FILUMIRE Demo.
+  Inside a very deep folder, Windows may refuse to copy or delete some
+  files because their full path becomes too long.
+
+
+WHAT IS INSIDE
+--------------
+  Start FILUMIRE Demo.cmd   start the demo
+  node\                     the program that runs the app (bundled)
+  app\                      the FILUMIRE learner app
+  launcher\                 starts the app and opens the window
+  data\                     made on first start: saved progress, logs
+  build-info.json           which FILUMIRE version this demo was built from

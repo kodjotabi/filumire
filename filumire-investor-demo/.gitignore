@@ -1,0 +1,10 @@
+# Generated: the built demo and the frozen working copy.
+.build/
+dist/
+# Owner's local data if a demo folder is ever placed here: never committed.
+data/
+browser-profile/
+demo-state.json*
+session-key.txt
+*.log
+.env*
