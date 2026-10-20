@@ -54,6 +54,8 @@ export interface RestoredLearningActivity {
   pending?: PendingAssessmentSubmission;
   submission?: SubmissionResponse;
   submittedAnswer?: PendingAssessmentSubmission;
+  /** The screen the replayed answer belonged to, so a wrong answer can be corrected on it. */
+  question?: LearningResponse;
   syncError?: unknown;
 }
 
@@ -92,13 +94,14 @@ async function restoreActivity(
     return { data: current, pending, syncError };
   }
   dependencies.clearPending(pending.clientRequestId);
+  const question = current.content?.assessmentItemId === pending.assessmentItemId ? current : undefined;
   try {
-    return { data: await dependencies.fetch(subjectId, competencyId), submission, submittedAnswer: pending };
+    return { data: await dependencies.fetch(subjectId, competencyId), submission, submittedAnswer: pending, question };
   } catch (syncError) {
     // A committed POST remains authoritative if the follow-up GET is offline.
     return {
       data: competencyId || isPendingTeacherReviewResponse(submission) ? current : submission,
-      submission, submittedAnswer: pending, syncError,
+      submission, submittedAnswer: pending, question, syncError,
     };
   }
 }

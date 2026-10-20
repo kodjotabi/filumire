@@ -1420,6 +1420,7 @@ export async function POST(
       correction = buildCorrection({
         assessmentItemId: body.assessmentItemId,
         chosen: submission.response,
+        question: `${assessmentContent.title} ${assessmentContent.body}`,
         language: assessmentContent.language,
         topicContent: getContentForCompetency(body.competencyId),
         retryAvailable: !correctiveRetry && !history.some((item) => item.id === retryId),

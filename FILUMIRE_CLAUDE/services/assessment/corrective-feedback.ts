@@ -17,7 +17,8 @@ import type { LearningEvidence } from "../../packages/domain";
 const RETRY_PREFIX = "corrective-retry-";
 
 type TeachingContent = { type: string; language?: string; title: string; body: string };
-export interface CorrectionPassage { title: string; body: string }
+/** `short` is what a child reads first; `body` stays available as "Read more". */
+export interface CorrectionPassage { title: string; body: string; short: string }
 export interface Correction {
   assessmentItemId: string;
   chosen: string;
@@ -49,22 +50,45 @@ export function retryableEvidence(evidence: readonly LearningEvidence[], assessm
     .sort((a, b) => b.timestamp.localeCompare(a.timestamp))[0];
 }
 
-function passage(content: TeachingContent | undefined): CorrectionPassage | undefined {
-  return content && content.title.trim() && content.body.trim() ? { title: content.title, body: content.body } : undefined;
+const SHORT_SENTENCES = 2;
+const words = (text: string) => new Set((text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").match(/[a-z0-9]{4,}/g) ?? []));
+
+/**
+ * Keeps at most two sentences, chosen for what this learner did: the ones
+ * sharing the most words with their answer and the question, in reading
+ * order. With no overlap the opening sentences are kept.
+ */
+export function shortPassage(body: string, focus: string): string {
+  const sentences = body.trim().split(/(?<=[.!?])\s+(?=[A-ZÀ-Ý«"“])/);
+  if (sentences.length <= SHORT_SENTENCES) return body.trim();
+  const target = words(focus);
+  const scored = sentences.map((text, index) => ({ index, score: [...words(text)].filter((w) => target.has(w)).length }));
+  const relevant = scored.filter((s) => s.score > 0);
+  const chosen = relevant.length
+    ? relevant.sort((a, b) => b.score - a.score || a.index - b.index).slice(0, SHORT_SENTENCES).sort((a, b) => a.index - b.index)
+    : scored.slice(0, SHORT_SENTENCES);
+  return chosen.map((s) => sentences[s.index]).join(" ");
+}
+
+function passage(content: TeachingContent | undefined, focus: string): CorrectionPassage | undefined {
+  return content && content.title.trim() && content.body.trim() ? { title: content.title, body: content.body, short: shortPassage(content.body, focus) } : undefined;
 }
 
 /** Learner-safe correction built only from teaching content in the learner's language. */
 export function buildCorrection(input: {
   assessmentItemId: string;
   chosen: string;
+  /** The question's own title and text, used only to pick relevant sentences. */
+  question?: string;
   language?: string;
   topicContent: readonly TeachingContent[];
   retryAvailable: boolean;
   retryOutcome?: "correct" | "incorrect";
 }): Correction {
   const inLanguage = input.topicContent.filter((item) => !input.language || item.language === input.language);
-  const explanation = passage(inLanguage.find((item) => item.type === "remediation"));
-  const concept = passage(inLanguage.find((item) => item.type === "lesson"));
+  // "Why" follows the learner's own choice; the key idea follows the question.
+  const explanation = passage(inLanguage.find((item) => item.type === "remediation"), `${input.chosen} ${input.question ?? ""}`);
+  const concept = passage(inLanguage.find((item) => item.type === "lesson"), input.question ?? input.chosen);
   return {
     assessmentItemId: input.assessmentItemId,
     chosen: input.chosen,

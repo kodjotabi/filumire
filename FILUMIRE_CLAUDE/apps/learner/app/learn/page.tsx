@@ -459,6 +459,22 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
   const [syncError, setSyncError] =
     useState("");
 
+  /*
+   * An answer saved offline and sent after reconnecting gets the same
+   * correction as a live one: back on its question, with one retry.
+   */
+  function showReplayedCorrection(restored: Awaited<ReturnType<typeof restoreLearningActivity>>): boolean {
+    const { submission, submittedAnswer, question } = restored;
+    if (!submission || !submittedAnswer || !question || isPendingTeacherReviewResponse(submission) || submission.assessment?.result.correct !== false) return false;
+    const value = correctionFor(submission, submittedAnswer.assessmentItemId);
+    if (!value) return false;
+    setData(question);
+    setCorrection({ value, phase: "explain", next: restored.data });
+    setAssessmentFeedback(null);
+    setSelectedResponse("");
+    return true;
+  }
+
   async function loadLearning() {
     if (operationBusy.current) return;
     const ticket = requestOrder.current.begin();
@@ -486,10 +502,12 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
         consumedSelection.current = query.get("competencyId");
         clearSelectedTopicFromUrl();
       }
-      setData(result.data);
       setPending(result.pending ?? null);
-      if (result.submission && result.submittedAnswer) {
-        setAssessmentFeedback(evaluatedFeedback(result.submission, result.submittedAnswer));
+      if (!showReplayedCorrection(result)) {
+        setData(result.data);
+        if (result.submission && result.submittedAnswer) {
+          setAssessmentFeedback(evaluatedFeedback(result.submission, result.submittedAnswer));
+        }
       }
       if (result.syncError) {
         setSyncError(learnerErrorText(result.syncError, "en"));
@@ -642,11 +660,13 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
       );
       if (!requestOrder.current.accepts(ticket)) return;
       setCorrection(null);
-      setData(restored.data);
       setPending(restored.pending ?? null);
-      if (restored.submission && restored.submittedAnswer) {
-        setAssessmentFeedback(evaluatedFeedback(restored.submission, restored.submittedAnswer));
-        setSelectedResponse("");
+      if (!showReplayedCorrection(restored)) {
+        setData(restored.data);
+        if (restored.submission && restored.submittedAnswer) {
+          setAssessmentFeedback(evaluatedFeedback(restored.submission, restored.submittedAnswer));
+          setSelectedResponse("");
+        }
       }
       if (restored.syncError) throw restored.syncError;
       markConnected();

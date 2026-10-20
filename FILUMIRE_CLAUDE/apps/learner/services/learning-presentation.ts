@@ -33,9 +33,9 @@ export function evaluatedFeedback(result: Submission, source: { assessmentItemId
   return { ...source, outcome };
 }
 
-const passage = (value: unknown): value is { title: string; body: string } =>
+const passage = (value: unknown): value is { title: string; body: string; short?: string } =>
   Boolean(value) && typeof value === "object" && typeof (value as { title?: unknown }).title === "string" && typeof (value as { body?: unknown }).body === "string" &&
-  Boolean((value as { body: string }).body.trim());
+  Boolean((value as { body: string }).body.trim()) && ["string", "undefined"].includes(typeof (value as { short?: unknown }).short);
 /** FILU's correction for exactly the answered item, or null (feedback then stays generic). */
 export function correctionFor(result: Submission, assessmentItemId: string): AnswerCorrection | null {
   if ("pendingTeacherReview" in result) return null;

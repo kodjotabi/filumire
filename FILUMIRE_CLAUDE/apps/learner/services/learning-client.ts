@@ -31,8 +31,9 @@ export type LearningContent = {
 export type AnswerCorrection = {
   assessmentItemId: string;
   chosen: string;
-  explanation?: { title: string; body: string };
-  concept?: { title: string; body: string };
+  /** `short`: the two most relevant sentences, read first; `body`: the full text. */
+  explanation?: { title: string; body: string; short?: string };
+  concept?: { title: string; body: string; short?: string };
   retryAvailable: boolean;
   retryOutcome?: "correct" | "incorrect";
 };

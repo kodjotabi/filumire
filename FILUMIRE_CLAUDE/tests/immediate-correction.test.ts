@@ -5,6 +5,7 @@ import { createInitialLearnerState, saveLearnerState } from "../services/learner
 import { getEvidence } from "../services/evidence-store";
 import { getContentForCompetency } from "../services/content-store";
 import { correctionFor } from "../apps/learner/services/learning-presentation";
+import { shortPassage } from "../services/assessment/corrective-feedback";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { AnswerCorrectionPanel } from "../apps/learner/components/filumire/AnswerCorrectionPanel";
@@ -47,6 +48,13 @@ async function start(learnerId: string) {
   assert.equal(correction.explanation?.title, "Check Your Thinking", "explains the mistake with the topic's error-analysis text");
   assert.equal(correction.concept?.title, "Computer Parts and Tools", "re-teaches the key idea from the topic's lesson");
   assert(!JSON.stringify(wrong.json.correction).includes(question.metadata!.expectedResponse!), "the answer key never reaches the device");
+  // Short enough for a child: two sentences picked for this answer, full text kept as "Read more".
+  for (const p of [correction.explanation!, correction.concept!]) {
+    assert(p.short && p.short.length < p.body.length, "a shorter version is offered");
+    assert((p.short.match(/[.!?](s|$)/g) ?? []).length <= 2, "at most two sentences");
+    assert(p.body.includes(p.short.split(". ")[0]), "short text is the author's own sentences");
+  }
+  assert(/monitor/i.test(correction.explanation!.short!), "the explanation addresses the learner's own mistake (the monitor)");
   assert(!("expectedResponse" in (wrong.json.content?.metadata ?? {})));
 
   const retry = await answer(question.metadata!.expectedResponse!, "corrective_retry");
@@ -86,6 +94,13 @@ async function start(learnerId: string) {
   const retry = await post(learnerId, { sessionId, competencyId, interactionType: "corrective_retry", assessmentItemId: question.assessmentItemId, response: wrongOption(question), clientRequestId: "fr-2" });
   assert.equal(retry.json.correction?.retryOutcome, "incorrect");
 }
+
+// Sentence choice follows the learner's answer, in reading order; no overlap keeps the opening.
+const sample = "Three slips are common. Some call the monitor the computer. Some mix memory with the mouse. Each part has its own job.";
+assert.equal(shortPassage(sample, "the mouse and memory"), "Some mix memory with the mouse.", "only sentences about this mistake are kept");
+assert.equal(shortPassage(sample, "zzzz"), "Three slips are common. Some call the monitor the computer.");
+assert.equal(shortPassage("One. Two.", "x"), "One. Two.", "two sentences or fewer stay whole");
+assert.equal(shortPassage("L'écran montre la sortie. « Le clavier » sert à taper. La souris pointe.", "souris"), "La souris pointe.", "French sentences, including guillemets, split correctly");
 
 // The panel on the question screen: explain + key idea + retry, then the result.
 for (const language of ["en", "fr"] as const) {

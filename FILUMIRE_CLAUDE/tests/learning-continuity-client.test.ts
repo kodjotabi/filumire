@@ -62,6 +62,20 @@ assert.deepEqual(retried, { ...pending, sessionId: "new-session" });
 assert.equal(cleared, pending.clientRequestId);
 assert.equal(fetches, 2);
 console.log("PASS: returning session reconciles original answer before authoritative restoration");
+assert.equal(restored.question, undefined, "no question screen when the restored activity is a different item");
+
+// A wrong answer replayed after reconnecting is corrected on its own question.
+let questionFetches = 0;
+const onQuestion = await restoreLearningActivity("math", {
+  fetch: async () => ++questionFetches === 1
+    ? { ...activity("question"), content: { id: "content-a", competencyId: "competency-a", type: "assessment", title: "Q", body: "Q", assessmentItemId: "item-a" } }
+    : activity("next-step"),
+  readPending: () => pending,
+  clearPending: () => {},
+  submit: async () => activity("post"),
+});
+assert.equal(onQuestion.question?.decision.id, "question", "the screen the answer belonged to is kept for FILU’s correction");
+assert.equal(onQuestion.data.decision.id, "next-step", "the next step still waits behind the correction");
 
 let foreignSubmitted = false;
 const foreign = await restoreLearningActivity(undefined, {

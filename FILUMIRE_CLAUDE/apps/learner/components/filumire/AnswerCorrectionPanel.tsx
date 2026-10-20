@@ -15,6 +15,7 @@ const copy = {
     wrong: "Not yet. That’s okay — mistakes help us learn.", wrongNote: "FILU will teach this idea again in your next steps.",
     used: "You have already used your retry for this question.",
     again: "Read FILU’s explanation again",
+    more: "Read more",
   },
   fr: {
     title: "Pas encore tout à fait. Corrigeons ensemble.", chose: "Tu as choisi :", why: "Pourquoi cette réponse n’est pas juste", idea: "L’idée clé",
@@ -25,6 +26,7 @@ const copy = {
     wrong: "Pas encore. Ce n’est pas grave — les erreurs nous aident à apprendre.", wrongNote: "FILU t’enseignera de nouveau cette idée dans tes prochaines étapes.",
     used: "Tu as déjà utilisé ton nouvel essai pour cette question.",
     again: "Relire l’explication de FILU",
+    more: "Lire la suite",
   },
 };
 
@@ -42,14 +44,21 @@ export function AnswerCorrectionPanel({ correction, phase, language, busy, onRet
   // During the retry the page focuses the answers instead.
   useEffect(() => { if (phase !== "retry") (phase === "done" ? result : heading).current?.focus(); }, [phase]);
   const outcome = correction.retryOutcome;
+  // Children read two focused sentences first; the full authored text stays one tap away.
+  const text = (passage: { body: string; short?: string }) => {
+    const short = passage.short?.trim();
+    return short && short !== passage.body.trim()
+      ? <><p>{short}</p><details className="more"><summary>{t.more}</summary><p>{passage.body}</p></details></>
+      : <p>{passage.body}</p>;
+  };
   const teaching = <>
     <div className="passage">
-      <h3>{correction.explanation ? `${t.why} — ${correction.explanation.title}` : t.why}</h3>
-      <p>{correction.explanation?.body ?? t.noExplanation}</p>
+      <h3>{t.why}</h3>
+      {correction.explanation ? text(correction.explanation) : <p>{t.noExplanation}</p>}
     </div>
     {correction.concept && <div className="passage idea">
-      <h3>{t.idea} — {correction.concept.title}</h3>
-      <p>{correction.concept.body}</p>
+      <h3>{t.idea}</h3>
+      {text(correction.concept)}
     </div>}
   </>;
   return <section className={`answerCorrection ${outcome ?? "incorrect"}`} aria-labelledby="answer-correction-title" data-phase={phase}>
@@ -84,6 +93,7 @@ export function AnswerCorrectionPanel({ correction, phase, language, busy, onRet
       button:disabled { opacity: .6; cursor: default; }
       button:focus-visible { outline: 3px solid #277dca; outline-offset: 3px; }
       .hint { font-weight: 600; }
+      .more summary { padding: 10px 0; cursor: pointer; font-weight: 700; text-decoration: underline; }
       .again { margin-top: 10px; } .again summary { padding: 12px 0; font-weight: 700; cursor: pointer; text-decoration: underline; }
       :global(.learnerUi[data-appearance="dark"]) .answerCorrection { background: #3a3220; color: #fff4d6; border-color: #d9a520; }
       :global(.learnerUi[data-appearance="dark"]) .answerCorrection.correct { background: #1f3a2a; color: #dbf7e6; border-color: #3fcf7a; }
