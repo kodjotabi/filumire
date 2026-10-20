@@ -44,15 +44,32 @@ export function saveConversation(value: SessionConversation): void {
 export class ConversationRequestError extends Error {
   constructor(public readonly code: string, public readonly status: number, public readonly retryAfterSeconds = 0) { super(code); }
 }
+// A request that never answers must not leave the question box disabled.
+const REQUEST_TIMEOUT_MS = 20000;
+
 export async function sendConversation(body: ConversationRequest, signal?: AbortSignal): Promise<ConversationResponse> {
   let response: Response;
+  const timeout = new AbortController();
+  const timer = setTimeout(() => timeout.abort(), REQUEST_TIMEOUT_MS);
+  const cancel = () => timeout.abort();
+  signal?.addEventListener("abort", cancel, { once: true });
+  let data: unknown;
   try {
     response = await fetch("/api/tutoring/conversation", {
       method: "POST", headers: getApiHeaders(), credentials: "same-origin", cache: "no-store",
-      body: JSON.stringify(body), signal,
+      body: JSON.stringify(body), signal: timeout.signal,
     });
-  } catch { throw new ConversationRequestError("network", 0); }
-  const data = await response.json().catch(() => null);
+    data = await response.json().catch(() => null);
+  } catch {
+    throw new ConversationRequestError(signal?.aborted ? "network" : timeout.signal.aborted ? "timeout" : "network", 0);
+  } finally {
+    clearTimeout(timer);
+    signal?.removeEventListener("abort", cancel);
+  }
+  return checkedResponse(response, data as ConversationResponse & { code?: string } | null);
+}
+
+function checkedResponse(response: Response, data: (ConversationResponse & { code?: string }) | null): ConversationResponse {
   if (!response.ok) throw new ConversationRequestError(data?.code ?? "temporarily_unavailable", response.status, Number(response.headers.get("Retry-After")) || 0);
   if (!data || !Array.isArray(data.messages) || data.messages.length > MAX_CONVERSATION_MESSAGES ||
     data.messages.some((message: unknown) => !message || typeof message !== "object" ||

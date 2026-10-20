@@ -18,8 +18,9 @@ const copy = {
     question: "Your question for FILU", placeholder: "What would you like help with?", send: "Send", retry: "Retry", clear: "Clear conversation",
     loading: "FILU is preparing a response…", chat: "Conversation with FILU", you: "You", mock: "FILU",
     explain: "Explain this", hint: "Give me a hint", example: "Show an example", practice: "Let me practise", simpler: "Make it simpler", actions: "Ways FILU can help", edit: "Edit question",
-    protected: "This is a scored activity. FILU can guide your thinking; submit your answer in the lesson.",
+    protected: "A scored question is waiting in your lesson. FILU will not give its answer. Answer it in the lesson, then FILU can explain everything.",
     practising: "Practice in this chat does not change your marks or progress.",
+    slow: "FILU is taking too long to answer. Your question is kept: press Retry.",
     unavailable: "Open a lesson first so FILU can use your learning context.", network: "Your question has not received a response. Check your connection, then retry.",
     provider: "FILU could not prepare a response. Please retry.", auth: "Your session has ended. Sign in again to continue.",
     changed: "Your lesson or conversation session changed. Send your question again using the current context.",
@@ -31,8 +32,9 @@ const copy = {
     question: "Ta question pour FILU", placeholder: "Sur quoi voudrais-tu de l’aide ?", send: "Envoyer", retry: "Réessayer", clear: "Effacer la conversation",
     loading: "FILU prépare une réponse…", chat: "Conversation avec FILU", you: "Toi", mock: "FILU",
     explain: "Explique-moi", hint: "Donne-moi un indice", example: "Montre un exemple", practice: "Je veux m'entraîner", simpler: "Explique plus simplement", actions: "Comment FILU peut aider", edit: "Modifier la question",
-    protected: "Cette activité est évaluée. FILU peut guider ta réflexion ; envoie ta réponse dans la leçon.",
+    protected: "Une question notée t'attend dans ta leçon. FILU ne donnera pas sa réponse. Réponds-y dans la leçon, puis FILU pourra tout t'expliquer.",
     practising: "L'entraînement dans cette conversation ne change ni tes notes ni ta progression.",
+    slow: "FILU met trop de temps à répondre. Ta question est gardée : appuie sur Réessayer.",
     unavailable: "Ouvre d’abord une leçon pour que FILU utilise ton contexte d’apprentissage.", network: "Ta question n’a pas reçu de réponse. Vérifie ta connexion, puis réessaie.",
     provider: "FILU n’a pas pu préparer de réponse. Réessaie.", auth: "Ta session est terminée. Reconnecte-toi pour continuer.",
     changed: "Ta leçon ou ta session de conversation a changé. Envoie à nouveau ta question avec le contexte actuel.",
@@ -56,6 +58,7 @@ export function FiluConversation({ language, scope: learnerId, contextKey, onCon
   const log = useRef<HTMLDivElement>(null);
   const latestQuestion = useRef<HTMLElement>(null);
   const field = useRef<HTMLTextAreaElement>(null);
+  const askedHere = useRef(false);
   const [contextInfo, setContextInfo] = useState<ConversationContextResponse | null>(null);
 
   useEffect(() => {
@@ -93,6 +96,13 @@ export function FiluConversation({ language, scope: learnerId, contextKey, onCon
     const transcript = log.current;
     if (!transcript) return;
     const question = latestQuestion.current;
+    if (transcript.scrollHeight <= transcript.clientHeight + 1) {
+      // Phones: the transcript is part of the page, so bring the learner's own
+      // question into view after they send, never on first load.
+      if (question && askedHere.current) question.scrollIntoView({ block: "start", behavior: "smooth" });
+      if (!busy) askedHere.current = false;
+      return;
+    }
     transcript.scrollTop = question
       ? Math.max(0, transcript.scrollTop + question.getBoundingClientRect().top - transcript.getBoundingClientRect().top - transcript.clientTop - 12)
       : 0;
@@ -101,7 +111,7 @@ export function FiluConversation({ language, scope: learnerId, contextKey, onCon
   const current = conversation.scope === scope ? conversation : { scope: scope ?? "", expiresAt: 0 };
   async function submit(retry?: ConversationRequest, selectedQuestion?: string) {
     if (!scope || busyRef.current || Date.now() < retryAt || error === "auth" || (!retry && !(selectedQuestion ?? draft).trim())) return;
-    busyRef.current = true; setBusy(true); setError("");
+    busyRef.current = true; askedHere.current = true; setBusy(true); setError("");
     const ticket = guard.current.begin();
     const pending = retry ?? {
       question: (selectedQuestion ?? draft).trim(), language, requestId: crypto.randomUUID(), historyToken: current.response?.historyToken,
@@ -127,7 +137,7 @@ export function FiluConversation({ language, scope: learnerId, contextKey, onCon
         const recovered = { ...next, pending: undefined };
         setConversation(recovered); saveConversation(recovered); setDraft(pending.question); setError("provider");
       } else {
-        setError(problem.status === 429 ? "rate" : problem.status === 0 ? "network" : "provider");
+        setError(problem.status === 429 ? "rate" : problem.code === "timeout" ? "slow" : problem.status === 0 ? "network" : "provider");
         if (problem.status === 429) setRetryAt(Date.now() + Math.max(1, problem.retryAfterSeconds) * 1000);
       }
     } finally {
@@ -149,6 +159,30 @@ export function FiluConversation({ language, scope: learnerId, contextKey, onCon
   return (
     <section className="filuConversation" aria-label={t.chat}>
       <p className="mockNotice" id="filu-privacy-notice">{t.notice}</p>
+      {(current.response?.assessmentProtected ?? contextInfo?.assessmentProtected) && <p className="filuStatus" role="status">{t.protected}</p>}
+      {current.response?.practiceActive && <p className="filuStatus" role="status">{t.practising}</p>}
+      {/* The conversation comes first and the question box follows it, as in
+          any chat: a reply always appears just above where the learner types. */}
+      <div className="transcript" ref={log} role="log" aria-live="polite" aria-relevant="additions text" aria-busy={busy} tabIndex={0}>
+        <p className="transcriptIntro">{scope ? t.intro : t.unavailable}</p>
+        {current.response?.messages.map((message, index) => (
+          <article ref={!current.pending && index === latestQuestionIndex ? latestQuestion : undefined} className={`message ${message.role}`} key={`${index}-${message.role}`} lang={message.language}>
+            {message.role === "assistant" && <FiluAvatar className="conversationAvatar" />}
+            <div><strong>{message.role === "user" ? t.you : t.mock}</strong><p>{message.text}</p>{message.role === "assistant" && <ReadAloudControls learnerId={learnerId} text={message.text} language={message.language} surface="filu" />}</div>
+          </article>
+        ))}
+        {current.pending && <article ref={latestQuestion} className="message user" lang={current.pending.language}><div><strong>{t.you}</strong><p>{conversationSafety(current.pending.question) ? privateQuestionLabel(current.pending.language) : current.pending.question}</p></div></article>}
+        {busy && <p className="filuStatus" role="status">{t.loading}</p>}
+      </div>
+      {error && <p className="filuError" role="alert" id="filu-request-error">{t[error]}</p>}
+
+      {scope && !current.pending && error !== "auth" && (
+        <div className="quickActions" role="group" aria-label={t.actions}>
+          {[t.explain, t.example, t.hint, t.simpler, t.practice].map(label => (
+            <button key={label} type="button" className="quickAction" disabled={busy || waiting} onClick={() => void submit(undefined, label)}>{label}</button>
+          ))}
+        </div>
+      )}
       <form className="filuQuestion" onSubmit={onSubmit} aria-busy={busy}>
         <label htmlFor="filu-question">{t.question}</label>
         <div className="compose">
@@ -158,31 +192,27 @@ export function FiluConversation({ language, scope: learnerId, contextKey, onCon
             enterKeyHint="send" onKeyDown={(event) => {
               if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); void submit(current.pending); }
             }} />
-          <button type="submit" disabled={!scope || busy || waiting || error === "auth" || (!current.pending && !draft.trim())}>{current.pending ? t.retry : t.send}</button>
+          <button type="submit" disabled={!scope || busy || waiting || error === "auth" || (!current.pending && !draft.trim())}>{busy ? "…" : current.pending ? t.retry : t.send}</button>
         </div>
       </form>
-      {(current.response?.assessmentProtected ?? contextInfo?.assessmentProtected) && <p role="status">{t.protected}</p>}
-      {current.response?.practiceActive && <p role="status">{t.practising}</p>}
-      <div className="transcript" ref={log} role="log" aria-live="polite" aria-relevant="additions text" aria-busy={busy} tabIndex={0}>
-        <p>{scope ? t.intro : t.unavailable}</p>
-        {current.response?.messages.map((message, index) => (
-          <article ref={!current.pending && index === latestQuestionIndex ? latestQuestion : undefined} className={`message ${message.role}`} key={`${index}-${message.role}`} lang={message.language}>
-            {message.role === "assistant" && <FiluAvatar className="conversationAvatar" />}
-            <div><strong>{message.role === "user" ? t.you : t.mock}</strong><p>{message.text}</p>{message.role === "assistant" && <ReadAloudControls learnerId={learnerId} text={message.text} language={message.language} surface="filu" />}</div>
-          </article>
-        ))}
-        {current.pending && <article ref={latestQuestion} className="message user" lang={current.pending.language}><div><strong>{t.you}</strong><p>{conversationSafety(current.pending.question) ? privateQuestionLabel(current.pending.language) : current.pending.question}</p></div></article>}
-        {busy && <p role="status">{t.loading}</p>}
-      </div>
-      {error && <p role="alert" id="filu-request-error">{t[error]}</p>}
 
-      {current.pending && !busy && <button type="button" className="clearChat" onClick={editPending}>{t.edit}</button>}
-      {error === "auth" && <Link className="clearChat" href={`/login?lang=${language}`}>{language === "fr" ? "Se reconnecter" : "Sign in again"}</Link>}
-      {(current.response?.messages.length || current.pending) ? <button className="clearChat" type="button" onClick={clear}>{t.clear}</button> : null}
+      <div className="chatTools">
+        {current.pending && !busy && <button type="button" className="clearChat" onClick={editPending}>{t.edit}</button>}
+        {error === "auth" && <Link className="clearChat" href={`/login?lang=${language}`}>{language === "fr" ? "Se reconnecter" : "Sign in again"}</Link>}
+        {(current.response?.messages.length || current.pending) ? <button className="clearChat" type="button" onClick={clear}>{t.clear}</button> : null}
+      </div>
       <style jsx>{`
-        .filuConversation { color: #253e44; margin: 20px 0; }
-        .mockNotice { font-size: 14px; line-height: 1.6; padding: 14px; background: #f0f7f5; border-radius: 14px; }
-        .transcript { max-height: min(52dvh, 520px); overflow-y: auto; overflow-anchor: none; overscroll-behavior: contain; padding: 14px; border: 1px solid #d4e5df; border-radius: 18px; background: white; }
+        .filuConversation { color: #253e44; margin: 12px 0; display: flex; flex-direction: column; gap: 12px; }
+        .mockNotice { margin: 0; font-size: 13px; line-height: 1.5; padding: 10px 14px; background: #f0f7f5; border-radius: 14px; }
+        .filuStatus { margin: 0; padding: 10px 14px; border-radius: 12px; background: #fff6e0; color: #5a3d00; font-size: 15px; line-height: 1.5; }
+        .transcript .filuStatus { background: transparent; padding: 4px 0; color: #4b5d61; }
+        .filuError { margin: 0; padding: 10px 14px; border-radius: 12px; background: #fdecec; color: #8a1f1f; font-weight: 600; }
+        .transcriptIntro { margin: 0; color: #4b5d61; font-size: 15px; line-height: 1.5; }
+        .quickActions { display: flex; flex-wrap: wrap; gap: 8px; }
+        .quickActions .quickAction { min-height: 40px; padding: 8px 14px; border-radius: 999px; background: #edf6f2; color: #135a47; border: 1px solid #b9d9cd; font-size: 15px; font-weight: 600; }
+        .chatTools { display: flex; flex-wrap: wrap; gap: 8px; }
+        .chatTools:empty { display: none; }
+        .transcript { max-height: min(60dvh, 560px); overflow-y: auto; overflow-anchor: none; overscroll-behavior: contain; padding: 14px; border: 1px solid #d4e5df; border-radius: 18px; background: white; }
         .message { display: flex; gap: 10px; margin: 16px 0; align-items: flex-start; }
         .message > div { border-radius: 16px; padding: 12px 16px; background: #f1f6f4; min-width: 0; max-width: 90%; }
         .message.user { justify-content: flex-end; }
@@ -193,14 +223,20 @@ export function FiluConversation({ language, scope: learnerId, contextKey, onCon
         .message :global(.readAloud select) { min-width: 0; max-width: 100%; }
         .message p { margin: 8px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.65; font-size: 16px; }
         .message strong { font-size: 13px; }
-        label { display: block; font-weight: 700; margin: 18px 0 8px; }
+        label { display: block; font-weight: 700; margin: 0 0 8px; }
         .compose { display: flex; gap: 10px; align-items: stretch; }
         textarea { min-width: 0; flex: 1; resize: vertical; padding: 12px; border: 1px solid #91b8aa; border-radius: 12px; font: inherit; font-size: 16px; max-height: 160px; }
         button { min-height: 44px; padding: 10px 18px; border: 0; border-radius: 12px; background: #176651; color: white; font: inherit; font-weight: 700; cursor: pointer; }
         button:disabled { opacity: .55; cursor: default; }
-        .clearChat { margin-top: 12px; color: #176651; background: #edf6f2; }
+        .clearChat { color: #176651; background: #edf6f2; }
         :focus-visible { outline: 3px solid #277dca; outline-offset: 3px; }
-        @media (max-width: 480px) { .transcript { padding: 10px; } .compose { flex-wrap: wrap; } .compose button { width: 100%; } .message > div { max-width: 100%; } }
+        /* Phones: one page scroll, not a small scroll box inside the page. */
+        @media (max-width: 480px) {
+          .transcript { padding: 10px; max-height: none; overflow: visible; }
+          .compose button { padding: 10px 14px; }
+          .message > div { max-width: 100%; padding: 10px 12px; }
+          .message :global(.conversationAvatar) { display: none; }
+        }
       `}</style>
     </section>
   );
