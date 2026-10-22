@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-12",
+  "scope": "FILUMIRE_WEBSITE only",
+  "design": "Retained shared English/French three-field form, existing FILUMIRE styles, no outer border or contact panels.",
+  "recipient": "info@filumire.com",
+  "configuration": {
+    "recipient": "info@filumire.com",
+    "configurationReady": false,
+    "issues": [
+      "FILUMIRE_CONTACT_ENABLED must be true to enable contact submissions.",
+      "FILUMIRE_SMTP_HOST is missing; confirm the Zoho SMTP host for the account region.",
+      "FILUMIRE_SMTP_USER is missing; supply the authenticated Zoho account.",
+      "FILUMIRE_SMTP_PASSWORD is missing; supply the SMTP/app password securely."
+    ],
+    "deliveryVerified": false,
+    "note": "Configuration check only. No SMTP connection or email is sent."
+  },
+  "localConfigurationPrepared": {
+    "ignored": true,
+    "port": 465,
+    "from": "info@filumire.com",
+    "enabled": false,
+    "credentialsSupplied": false
+  },
+  "tests": {
+    "exitCode": 0,
+    "passed": 62,
+    "failed": 0,
+    "transport": "Injected mock; no real SMTP delivery"
+  },
+  "typecheck": {
+    "exitCode": 0
+  },
+  "productionBuild": {
+    "exitCode": 1,
+    "status": "BLOCKED",
+    "reason": "Google Fonts Montserrat and Kalam fetch fails with connect EACCES under network restrictions."
+  },
+  "liveDelivery": "UNVERIFIED — missing credentials",
+  "hostedEnvironment": "Not inspected or modified",
+  "dns": "Not modified",
+  "deployment": "Not performed",
+  "affectedFiles": [
+    "src/lib/server/smtp.ts",
+    "tests/contact.test.mjs",
+    ".env.example",
+    "package.json",
+    "NATIVE_CONTACT_SETUP.md",
+    "scripts/check-contact-config.mjs",
+    ".env.local"
+  ]
+}

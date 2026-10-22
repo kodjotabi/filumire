@@ -1,0 +1,27 @@
+import { resolveSignedInSession } from '../../../../../../../../services/identity';
+import { placeLearnerInCurriculum, getLearnerPlacementOptions } from '../../../../../../../../services/learner-context/placement';
+import { errorResponse, json, readJsonBody } from '../../../http';
+
+export async function GET(request: Request, { params }: { params: Promise<{ learnerId: string }> }) {
+  try {
+    const session = await resolveSignedInSession(request);
+    const { learnerId } = await params;
+    return json(await getLearnerPlacementOptions(session.principalId, learnerId));
+  } catch (error) {
+    return errorResponse(error, 'curriculum placement choices');
+  }
+}
+
+export async function POST(request: Request, { params }: { params: Promise<{ learnerId: string }> }) {
+  try {
+    const session = await resolveSignedInSession(request);
+    const body = await readJsonBody(request);
+    const { learnerId } = await params;
+    if (typeof body.curriculumVersionId !== 'string' || typeof body.gradeId !== 'string' || typeof body.subjectId !== 'string') {
+      return json({ error: 'A curriculum version, class and subject are required.' }, { status: 400 });
+    }
+    return json(await placeLearnerInCurriculum(session.principalId, learnerId, { curriculumVersionId: body.curriculumVersionId, gradeId: body.gradeId, subjectId: body.subjectId }));
+  } catch (error) {
+    return errorResponse(error, 'curriculum placement');
+  }
+}

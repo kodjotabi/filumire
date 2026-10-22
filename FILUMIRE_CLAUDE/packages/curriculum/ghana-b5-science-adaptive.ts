@@ -1,3 +1,4 @@
+import { B5_COMPLETION_SCIENCE } from "./ghana-b5-completion-specs";
 export interface GhanaB5ScienceAdaptiveSpec {
   code: string;
   competencyId: string;
@@ -443,6 +444,10 @@ export const GHANA_B5_SCIENCE_ADAPTIVE_SPECS: GhanaB5ScienceAdaptiveSpec[] = [
     relatedCodes: ["B5.2.1.5.2"],
   },
 ];
+
+// Append only: keep existing competency definitions and navigation order stable.
+GHANA_B5_SCIENCE_ADAPTIVE_SPECS.push(...B5_COMPLETION_SCIENCE);
+GHANA_B5_SCIENCE_PUBLISHED_CODES.push(...B5_COMPLETION_SCIENCE.map(spec => spec.code));
 
 export const GHANA_B5_SCIENCE_PUBLISHED_SPECS =
   GHANA_B5_SCIENCE_ADAPTIVE_SPECS.filter((spec) =>

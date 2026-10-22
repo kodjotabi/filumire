@@ -4,7 +4,7 @@ import { GHANA_B5_SCIENCE_ADAPTIVE_SPECS, GHANA_B5_SCIENCE_PUBLISHED_SPECS } fro
 import { getCurriculumNodesForSubject, getSubjectsForGrade, GRADE_GHANA_BASIC_5_ID, SUBJECT_GHANA_BASIC5_SCIENCE_ID } from "../packages/curriculum-framework";
 import { AUTHORED_B5_SCIENCE_CONTENT, AUTHORED_B5_SCIENCE_COMPETENCY_IDS } from "../services/content-store/authored-index-b5-science";
 
-assert.equal(GHANA_B5_SCIENCE_ADAPTIVE_SPECS.length, 28, "all 28 B5 Science indicators are modelled");
+assert.equal(GHANA_B5_SCIENCE_ADAPTIVE_SPECS.length, 29, "29 source-reconciled B5 Science specifications remain modelled; official source gaps are checked separately");
 const published = GHANA_B5_SCIENCE_PUBLISHED_SPECS;
 assert.ok(published.length > 0, "at least one topic is published");
 
@@ -37,5 +37,5 @@ for (const spec of published) {
 
 assert.ok(getSubjectsForGrade(GRADE_GHANA_BASIC_5_ID).some((s) => s.id === SUBJECT_GHANA_BASIC5_SCIENCE_ID), "B5 Science subject is registered");
 const indicatorNodes = getCurriculumNodesForSubject(SUBJECT_GHANA_BASIC5_SCIENCE_ID).filter((n) => n.nodeType === "learning_indicator");
-assert.equal(indicatorNodes.length, 28, "framework carries all 28 B5 Science indicator nodes");
+assert.equal(indicatorNodes.length, 29, "framework carries the 29 source-reconciled B5 Science indicator nodes");
 console.log("b5 science v1 test passed");

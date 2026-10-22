@@ -1,0 +1,134 @@
+[
+  {
+    "grade": 7,
+    "subject": "English Language",
+    "mapped": 53,
+    "authoredDraft": 1,
+    "technicallyValidated": 1,
+    "remainingAuthoring": 52,
+    "unresolvedSourceRows": 1,
+    "releaseApproved": 0,
+    "publicActive": 0
+  },
+  {
+    "grade": 7,
+    "subject": "Mathematics",
+    "mapped": 74,
+    "authoredDraft": 1,
+    "technicallyValidated": 1,
+    "remainingAuthoring": 73,
+    "unresolvedSourceRows": 2,
+    "releaseApproved": 0,
+    "publicActive": 0
+  },
+  {
+    "grade": 7,
+    "subject": "Science",
+    "mapped": 53,
+    "authoredDraft": 31,
+    "technicallyValidated": 31,
+    "remainingAuthoring": 22,
+    "unresolvedSourceRows": 0,
+    "releaseApproved": 0,
+    "publicActive": 0
+  },
+  {
+    "grade": 7,
+    "subject": "Computing",
+    "mapped": 55,
+    "authoredDraft": 1,
+    "technicallyValidated": 1,
+    "remainingAuthoring": 54,
+    "unresolvedSourceRows": 9,
+    "releaseApproved": 0,
+    "publicActive": 0
+  },
+  {
+    "grade": 8,
+    "subject": "English Language",
+    "mapped": 49,
+    "authoredDraft": 1,
+    "technicallyValidated": 1,
+    "remainingAuthoring": 48,
+    "unresolvedSourceRows": 3,
+    "releaseApproved": 0,
+    "publicActive": 0
+  },
+  {
+    "grade": 8,
+    "subject": "Mathematics",
+    "mapped": 58,
+    "authoredDraft": 1,
+    "technicallyValidated": 1,
+    "remainingAuthoring": 57,
+    "unresolvedSourceRows": 1,
+    "releaseApproved": 0,
+    "publicActive": 0
+  },
+  {
+    "grade": 8,
+    "subject": "Science",
+    "mapped": 46,
+    "authoredDraft": 1,
+    "technicallyValidated": 1,
+    "remainingAuthoring": 45,
+    "unresolvedSourceRows": 3,
+    "releaseApproved": 0,
+    "publicActive": 0
+  },
+  {
+    "grade": 8,
+    "subject": "Computing",
+    "mapped": 39,
+    "authoredDraft": 1,
+    "technicallyValidated": 1,
+    "remainingAuthoring": 38,
+    "unresolvedSourceRows": 2,
+    "releaseApproved": 0,
+    "publicActive": 0
+  },
+  {
+    "grade": 9,
+    "subject": "English Language",
+    "mapped": 51,
+    "authoredDraft": 1,
+    "technicallyValidated": 1,
+    "remainingAuthoring": 50,
+    "unresolvedSourceRows": 2,
+    "releaseApproved": 0,
+    "publicActive": 0
+  },
+  {
+    "grade": 9,
+    "subject": "Mathematics",
+    "mapped": 52,
+    "authoredDraft": 1,
+    "technicallyValidated": 1,
+    "remainingAuthoring": 51,
+    "unresolvedSourceRows": 3,
+    "releaseApproved": 0,
+    "publicActive": 0
+  },
+  {
+    "grade": 9,
+    "subject": "Science",
+    "mapped": 58,
+    "authoredDraft": 1,
+    "technicallyValidated": 1,
+    "remainingAuthoring": 57,
+    "unresolvedSourceRows": 11,
+    "releaseApproved": 0,
+    "publicActive": 0
+  },
+  {
+    "grade": 9,
+    "subject": "Computing",
+    "mapped": 37,
+    "authoredDraft": 1,
+    "technicallyValidated": 1,
+    "remainingAuthoring": 36,
+    "unresolvedSourceRows": 2,
+    "releaseApproved": 0,
+    "publicActive": 0
+  }
+]

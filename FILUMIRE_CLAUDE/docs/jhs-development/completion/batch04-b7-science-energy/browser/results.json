@@ -1,0 +1,242 @@
+[
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p063-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "2e420e4a9bcd4151347335e1e12fd0f28bfc9114e8176c8056a365c03875f8a1",
+    "code": "B7.4.1.1.1",
+    "width": 390,
+    "language": "en",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p064-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "7e8b51826ddea3b984d90df2ea22b2e74f628badabc17609436114885606dfdc",
+    "code": "B7.4.1.1.2",
+    "width": 390,
+    "language": "en",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p065-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "638a61d5ce8b0fe2f1dc73a6bd683baeb85ef79eedafee34111babe6b590eb90",
+    "code": "B7.4.1.2.1",
+    "width": 390,
+    "language": "en",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p066-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "2900fc87171abea9c90ac79e933a952aa9a0bf73da18e44b45a2f967573bf3b1",
+    "code": "B7.4.1.3.1",
+    "width": 390,
+    "language": "en",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p067-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "d955a34d38dac887aa0f0dff38e7da3c1c4f3ad4d5598cb1a7357b2acc8eae95",
+    "code": "B7.4.2.1.1",
+    "width": 390,
+    "language": "en",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p067-r02",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "7690ba3b4dc1647d937d9eb3b13880f4cb5937ba47ef42caa6d9f2a0afb81e44",
+    "code": "B7.4.2.1.2",
+    "width": 390,
+    "language": "en",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p063-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "2e420e4a9bcd4151347335e1e12fd0f28bfc9114e8176c8056a365c03875f8a1",
+    "code": "B7.4.1.1.1",
+    "width": 390,
+    "language": "fr",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p064-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "7e8b51826ddea3b984d90df2ea22b2e74f628badabc17609436114885606dfdc",
+    "code": "B7.4.1.1.2",
+    "width": 390,
+    "language": "fr",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p065-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "638a61d5ce8b0fe2f1dc73a6bd683baeb85ef79eedafee34111babe6b590eb90",
+    "code": "B7.4.1.2.1",
+    "width": 390,
+    "language": "fr",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p066-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "2900fc87171abea9c90ac79e933a952aa9a0bf73da18e44b45a2f967573bf3b1",
+    "code": "B7.4.1.3.1",
+    "width": 390,
+    "language": "fr",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p067-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "d955a34d38dac887aa0f0dff38e7da3c1c4f3ad4d5598cb1a7357b2acc8eae95",
+    "code": "B7.4.2.1.1",
+    "width": 390,
+    "language": "fr",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p067-r02",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "7690ba3b4dc1647d937d9eb3b13880f4cb5937ba47ef42caa6d9f2a0afb81e44",
+    "code": "B7.4.2.1.2",
+    "width": 390,
+    "language": "fr",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p063-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "2e420e4a9bcd4151347335e1e12fd0f28bfc9114e8176c8056a365c03875f8a1",
+    "code": "B7.4.1.1.1",
+    "width": 1280,
+    "language": "en",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p064-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "7e8b51826ddea3b984d90df2ea22b2e74f628badabc17609436114885606dfdc",
+    "code": "B7.4.1.1.2",
+    "width": 1280,
+    "language": "en",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p065-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "638a61d5ce8b0fe2f1dc73a6bd683baeb85ef79eedafee34111babe6b590eb90",
+    "code": "B7.4.1.2.1",
+    "width": 1280,
+    "language": "en",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p066-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "2900fc87171abea9c90ac79e933a952aa9a0bf73da18e44b45a2f967573bf3b1",
+    "code": "B7.4.1.3.1",
+    "width": 1280,
+    "language": "en",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p067-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "d955a34d38dac887aa0f0dff38e7da3c1c4f3ad4d5598cb1a7357b2acc8eae95",
+    "code": "B7.4.2.1.1",
+    "width": 1280,
+    "language": "en",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p067-r02",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "7690ba3b4dc1647d937d9eb3b13880f4cb5937ba47ef42caa6d9f2a0afb81e44",
+    "code": "B7.4.2.1.2",
+    "width": 1280,
+    "language": "en",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p063-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "2e420e4a9bcd4151347335e1e12fd0f28bfc9114e8176c8056a365c03875f8a1",
+    "code": "B7.4.1.1.1",
+    "width": 1280,
+    "language": "fr",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p064-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "7e8b51826ddea3b984d90df2ea22b2e74f628badabc17609436114885606dfdc",
+    "code": "B7.4.1.1.2",
+    "width": 1280,
+    "language": "fr",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p065-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "638a61d5ce8b0fe2f1dc73a6bd683baeb85ef79eedafee34111babe6b590eb90",
+    "code": "B7.4.1.2.1",
+    "width": 1280,
+    "language": "fr",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p066-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "2900fc87171abea9c90ac79e933a952aa9a0bf73da18e44b45a2f967573bf3b1",
+    "code": "B7.4.1.3.1",
+    "width": 1280,
+    "language": "fr",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p067-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "d955a34d38dac887aa0f0dff38e7da3c1c4f3ad4d5598cb1a7357b2acc8eae95",
+    "code": "B7.4.2.1.1",
+    "width": 1280,
+    "language": "fr",
+    "status": "PASS"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p067-r02",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "7690ba3b4dc1647d937d9eb3b13880f4cb5937ba47ef42caa6d9f2a0afb81e44",
+    "code": "B7.4.2.1.2",
+    "width": 1280,
+    "language": "fr",
+    "status": "PASS"
+  }
+]

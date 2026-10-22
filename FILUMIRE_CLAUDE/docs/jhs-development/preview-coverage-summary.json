@@ -1,0 +1,134 @@
+[
+  {
+    "grade": 7,
+    "subject": "English Language",
+    "mapped": 53,
+    "authoredDraft": 1,
+    "apiValidated": 1,
+    "browserValidated": 1,
+    "remainingAuthoring": 52,
+    "releaseApproved": 0,
+    "remainingReleaseApproval": 53
+  },
+  {
+    "grade": 7,
+    "subject": "Mathematics",
+    "mapped": 74,
+    "authoredDraft": 1,
+    "apiValidated": 1,
+    "browserValidated": 1,
+    "remainingAuthoring": 73,
+    "releaseApproved": 0,
+    "remainingReleaseApproval": 74
+  },
+  {
+    "grade": 7,
+    "subject": "Science",
+    "mapped": 53,
+    "authoredDraft": 3,
+    "apiValidated": 3,
+    "browserValidated": 3,
+    "remainingAuthoring": 50,
+    "releaseApproved": 0,
+    "remainingReleaseApproval": 53
+  },
+  {
+    "grade": 7,
+    "subject": "Computing",
+    "mapped": 55,
+    "authoredDraft": 1,
+    "apiValidated": 1,
+    "browserValidated": 1,
+    "remainingAuthoring": 54,
+    "releaseApproved": 0,
+    "remainingReleaseApproval": 55
+  },
+  {
+    "grade": 8,
+    "subject": "English Language",
+    "mapped": 49,
+    "authoredDraft": 1,
+    "apiValidated": 1,
+    "browserValidated": 1,
+    "remainingAuthoring": 48,
+    "releaseApproved": 0,
+    "remainingReleaseApproval": 49
+  },
+  {
+    "grade": 8,
+    "subject": "Mathematics",
+    "mapped": 58,
+    "authoredDraft": 1,
+    "apiValidated": 1,
+    "browserValidated": 1,
+    "remainingAuthoring": 57,
+    "releaseApproved": 0,
+    "remainingReleaseApproval": 58
+  },
+  {
+    "grade": 8,
+    "subject": "Science",
+    "mapped": 46,
+    "authoredDraft": 1,
+    "apiValidated": 1,
+    "browserValidated": 1,
+    "remainingAuthoring": 45,
+    "releaseApproved": 0,
+    "remainingReleaseApproval": 46
+  },
+  {
+    "grade": 8,
+    "subject": "Computing",
+    "mapped": 39,
+    "authoredDraft": 1,
+    "apiValidated": 1,
+    "browserValidated": 1,
+    "remainingAuthoring": 38,
+    "releaseApproved": 0,
+    "remainingReleaseApproval": 39
+  },
+  {
+    "grade": 9,
+    "subject": "English Language",
+    "mapped": 51,
+    "authoredDraft": 1,
+    "apiValidated": 1,
+    "browserValidated": 1,
+    "remainingAuthoring": 50,
+    "releaseApproved": 0,
+    "remainingReleaseApproval": 51
+  },
+  {
+    "grade": 9,
+    "subject": "Mathematics",
+    "mapped": 52,
+    "authoredDraft": 1,
+    "apiValidated": 1,
+    "browserValidated": 1,
+    "remainingAuthoring": 51,
+    "releaseApproved": 0,
+    "remainingReleaseApproval": 52
+  },
+  {
+    "grade": 9,
+    "subject": "Science",
+    "mapped": 58,
+    "authoredDraft": 1,
+    "apiValidated": 1,
+    "browserValidated": 1,
+    "remainingAuthoring": 57,
+    "releaseApproved": 0,
+    "remainingReleaseApproval": 58
+  },
+  {
+    "grade": 9,
+    "subject": "Computing",
+    "mapped": 37,
+    "authoredDraft": 1,
+    "apiValidated": 1,
+    "browserValidated": 1,
+    "remainingAuthoring": 36,
+    "releaseApproved": 0,
+    "remainingReleaseApproval": 37
+  }
+]

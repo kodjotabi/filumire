@@ -1,0 +1,19 @@
+[
+  {
+    "grade": 7,
+    "discipline": "english",
+    "language": "en",
+    "width": 390,
+    "guardianPlacementUi": true,
+    "overflowPixels": 0,
+    "status": "PASS"
+  },
+  {
+    "grade": 7,
+    "discipline": "mathematics",
+    "language": "en",
+    "width": 390,
+    "status": "FAIL",
+    "error": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.ppCard') to be visible\u001b[22m\n\n    at <anonymous> (C:\\Users\\tabi\\Documents\\Codex\\filumire-jhs-integration\\FILUMIRE_CLAUDE\\tests\\jhs-private.browser.mjs:121:37)"
+  }
+]

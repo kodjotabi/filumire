@@ -1,0 +1,47 @@
+[
+  {
+    "width": 390,
+    "language": "en",
+    "scope": "one Basic 4 mathematics question; generic offline shell and pending-answer behaviour",
+    "dashboardOverflowPixels": 0,
+    "lessonOverflowPixels": 0,
+    "pendingAnswerSaved": true,
+    "exactlyOneServerEvidenceAfterReconnect": true,
+    "repeatOnlineEventDoesNotDuplicateEvidence": true,
+    "offlineReloadShowsFallback": true,
+    "offlineNewLearningAvailable": false,
+    "noApiOrPersonalHtmlCached": true,
+    "status": "PASS"
+  },
+  {
+    "width": 1280,
+    "language": "fr",
+    "scope": "one Basic 4 mathematics question; generic offline shell and pending-answer behaviour",
+    "dashboardOverflowPixels": 0,
+    "lessonOverflowPixels": 0,
+    "pendingAnswerSaved": true,
+    "exactlyOneServerEvidenceAfterReconnect": true,
+    "repeatOnlineEventDoesNotDuplicateEvidence": true,
+    "status": "FAIL",
+    "error": "locator.waitFor: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('div[lang=\"fr\"] h1') to be visible\u001b[22m\n\u001b[2m    42 × locator resolved to hidden <h1>Vous êtes hors ligne</h1>\u001b[22m\n",
+    "failureDiagnostic": {
+      "navigatorLanguage": "fr",
+      "documentLanguage": "fr",
+      "documentClasses": "fr",
+      "documentDisplay": "none",
+      "documentVisibility": "visible",
+      "headings": [
+        {
+          "text": "You are offline",
+          "display": "block",
+          "rendered": false
+        },
+        {
+          "text": "Vous êtes hors ligne",
+          "display": "block",
+          "rendered": false
+        }
+      ]
+    }
+  }
+]

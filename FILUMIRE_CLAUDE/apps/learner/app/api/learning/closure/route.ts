@@ -1,5 +1,6 @@
 import { resolveRequestIdentity } from "../../../../../../services/identity";
 import { getLessonClosure, LessonClosureError } from "../../../../../../services/lesson-closure";
+import { assertSameOrigin, BadRequestError } from "../../account/http";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -7,8 +8,10 @@ function json(body: unknown, status = 200) { return Response.json(body, { status
 /** POST transports the receipt without putting it in URLs/logs; it is read-only. */
 export async function POST(request: Request) {
   try {
-    const origin = request.headers.get("origin");
-    if ((origin && origin !== new URL(request.url).origin) || request.headers.get("sec-fetch-site") === "cross-site") return json({ code: "invalid_origin" }, 403);
+    // Use the same Host-aware origin policy as the account routes: Next's
+    // internal URL may say localhost when the browser connects to 127.0.0.1.
+    try { assertSameOrigin(request); }
+    catch (error) { if (error instanceof BadRequestError) return json({ code: "invalid_origin" }, 403); throw error; }
     let identity;
     try { identity = await resolveRequestIdentity(request); } catch { return json({ code: "unauthenticated" }, 401); }
     if (!request.headers.get("content-type")?.startsWith("application/json")) return json({ code: "invalid_request" }, 400);

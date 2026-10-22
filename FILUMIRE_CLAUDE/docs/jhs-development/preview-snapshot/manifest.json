@@ -1,0 +1,923 @@
+{
+  "capturedAt": "2026-10-22T13:12:11.470Z",
+  "head": "29854417561714a62024be2b150de9b4a2cd24b3",
+  "branch": "feat/jhs7-9-development",
+  "worktree": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\jhs7-9-development\\FILUMIRE_CLAUDE\\",
+  "node": "v24.20.0",
+  "source": [
+    {
+      "path": "apps/learner/app/api/account/learners/[learnerId]/placement/route.ts",
+      "state": "untracked_addition",
+      "sha256": "c86e2c01e20d782b686c47b7e3e639c2858070598354e336390f9beaf4b51fd3"
+    },
+    {
+      "path": "apps/learner/app/api/learning/closure/route.ts",
+      "state": "tracked_modified",
+      "sha256": "9cac39c0e439779f0626c9c1429c5d86de6d1801c84198f35d42d865f9a8ed9e"
+    },
+    {
+      "path": "apps/learner/app/api/teacher/review/route.ts",
+      "state": "tracked_modified",
+      "sha256": "362dc309c72be37410b749f91150fba636576c804d20854c2973156dde5cce8a"
+    },
+    {
+      "path": "apps/learner/app/learn/page.tsx",
+      "state": "tracked_modified",
+      "sha256": "b016b4485b9c5630ecaa940ed83d427dce33261a768f4d4dff1b66974f7c9d00"
+    },
+    {
+      "path": "apps/learner/components/filumire/AnswerCorrectionPanel.tsx",
+      "state": "tracked_modified",
+      "sha256": "6bcc7f6b906380556c74a6b23eb84ba7519f06b9df88bea01af2caeebb52b0e0"
+    },
+    {
+      "path": "apps/learner/public/offline.html",
+      "state": "tracked_modified",
+      "sha256": "a61fa05fdc0af6e04c7b8364e0f375f77a0589ace8915832c0e12cc86fe30de6"
+    },
+    {
+      "path": "apps/learner/public/sw.js",
+      "state": "tracked_modified",
+      "sha256": "a9782c8e25c5449829d228eeef3ae5e876ba9e3ef8ece39ca1daee15d0cba0d5"
+    },
+    {
+      "path": "apps/learner/services/learner-interface.ts",
+      "state": "tracked_modified",
+      "sha256": "7824e2e3b3486df3d2c3090e168a60a2ad2b70945580d1ac85ce8f76ffef6eae"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/PHASE8B-MAPPING-AND-IMPLEMENTATION-PLAN.md",
+      "state": "untracked_addition",
+      "sha256": "b8f9cb88345d137f222d32959495fbb3628cc35bba4df1a41f22553dd438ec70"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/PHASE8C-FRAMEWORK-INTEGRATION.md",
+      "state": "untracked_addition",
+      "sha256": "b470da99455587fa5532d72254c93daccb2c7b7b625f6d1103324491bd20e55a"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/PHASE8D-COVERAGE-AND-REVIEW.md",
+      "state": "untracked_addition",
+      "sha256": "2aa6dcf95818b8ad276f07d397c88cde225985ab4a71d51e2248ca7a01d498dd"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/PHASE8D-FILES.md",
+      "state": "untracked_addition",
+      "sha256": "acf0a11797ac953f63bb3d48d0f0f893847210e3ee6df7ec8ace09dc5e44c500"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/README.md",
+      "state": "untracked_addition",
+      "sha256": "12156c73ed4a0b50ec83ca40e987d961c26a02b1300f46e718877cdd271a6b60"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-9-coverage.csv",
+      "state": "untracked_addition",
+      "sha256": "2f4d8afe6945de518fd61c76d5bf460b2a2a319ce324cb685402458a03fc9002"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-9-coverage.json",
+      "state": "untracked_addition",
+      "sha256": "a9056575a0aaa67e7e472cbe8412a4d1522874c32bbd977c2be7790f7615395a"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-coverage-matrix.csv",
+      "state": "untracked_addition",
+      "sha256": "59861ca0cebeac8e2f470857fc48dc3344b72badf153d482d4623eef64f0566b"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-curriculum-structure.json",
+      "state": "untracked_addition",
+      "sha256": "cb1c21c955678dfff8e04699d1f75c952e77236e95f1767f21f3a9f386a79bb7"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-filumire-mapping.csv",
+      "state": "untracked_addition",
+      "sha256": "3280a2887587d92e07845660152f139ef7787fabe9de601da1c909c9b786e45a"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-filumire-mapping.json",
+      "state": "untracked_addition",
+      "sha256": "5b990ee30fc0e4825087a5dca1252a46b4e134ef17b2c29eadf7dc68fac64236"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-mapping-source-issues.json",
+      "state": "untracked_addition",
+      "sha256": "e731cfe27ab9a371bcfb92b0cc6123b77f313d52b4e2bb8845a0ec22fb02ffd9"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-mapping-source-review.json",
+      "state": "untracked_addition",
+      "sha256": "de4e7e28f58c07cf4fd14866f1cf7350debc476540a541f581dfafd9e106919b"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-mapping-validation.json",
+      "state": "untracked_addition",
+      "sha256": "3bf5f252825c3657f35fa82b1de1b6a03df96889444027d35a4cfddc866ad86b"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-source-manifest.json",
+      "state": "untracked_addition",
+      "sha256": "e098fa35f5c1cae0223b6df512896d057120fd51245b1b7c1e85fdd576757609"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-validation.json",
+      "state": "untracked_addition",
+      "sha256": "7a1946e31944297fa280623e4c76a18135bd835eb575bc855f771b97c7e1f902"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic8-curriculum-inventory.csv",
+      "state": "untracked_addition",
+      "sha256": "4bbebc145f8e4057a001abe7a7ae57ce034a658c7cf6464a9641bbd1b4b68b3e"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic8-curriculum-inventory.json",
+      "state": "untracked_addition",
+      "sha256": "bb2e51e6863a83ccbd3e4207ace4841a73d15bcbda03eeefb9db5d55a241dc9f"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic8-filumire-mapping.csv",
+      "state": "untracked_addition",
+      "sha256": "6078ec2b4f57c138f15f41045a3946e6510b2dadc62a6361be4770dab9883657"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic8-filumire-mapping.json",
+      "state": "untracked_addition",
+      "sha256": "1d065d4b01bdd17aa716dde53447a5c4f41c86d4adc9102e53bbb086df32bc55"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic89-source-issues.json",
+      "state": "untracked_addition",
+      "sha256": "ce4ad0526852b47f7bbbd4a1a054be4078cba739b3e1544c1d6c9b7d8c370a20"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic9-curriculum-inventory.csv",
+      "state": "untracked_addition",
+      "sha256": "725b969fb63c45ad3ac4e9f1a1cb3e5a9bd53649b80ad98ef0ffbd48eec74295"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic9-curriculum-inventory.json",
+      "state": "untracked_addition",
+      "sha256": "5a1232f65ed130ca0929a75bdbf8d89a69efe7b8a42b015d98731cf8f4052d9d"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic9-filumire-mapping.csv",
+      "state": "untracked_addition",
+      "sha256": "02d25bc65f59c3104a395bd8d6658f8018bd2da56b2fbedb97d4116a95267481"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic9-filumire-mapping.json",
+      "state": "untracked_addition",
+      "sha256": "144a0f2086692eb982b0fecbba3e15f6ddec0d5e38a45795ec55403cdbf84aa0"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/build-basic7-mapping.mjs",
+      "state": "untracked_addition",
+      "sha256": "94b019f53840e521d1e57b20c174ac41de31c4e708cd30a424bf0b57625440f3"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/build-basic89-mapping.mjs",
+      "state": "untracked_addition",
+      "sha256": "d3b0f559193f80e7039fabb3f443856dc45d0dab9ec98f9c2ff1d1c06101425f"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/extract-basic7.mjs",
+      "state": "untracked_addition",
+      "sha256": "834bc5742c062b218cbaf353edba581094cec455ab7fe8ecb551b94462fd4fb6"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/extract-basic89.mjs",
+      "state": "untracked_addition",
+      "sha256": "32a02c70510d1fc2efb44e528db8e120507322d1c502be543f8a7077a9f0e2af"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-input-lock.json",
+      "state": "untracked_addition",
+      "sha256": "ddaaee7d21ed137403ae020f91041734bf98b33d76a635c971b04ee5911e9350"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-output-manifest.json",
+      "state": "untracked_addition",
+      "sha256": "b215f79c4a006ab898e752271895e682e823a205a85117cc430e7fbac03ba49b"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-reviewed-anchors.json",
+      "state": "untracked_addition",
+      "sha256": "0c48a1a9db7284e2325440e2f02aebb0f4114976259fc122835e777c56990dcb"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-reviewed-corrections.json",
+      "state": "untracked_addition",
+      "sha256": "9b09a2dae342e8aad2aae829dd77483c6831b41fb4be2b350337fa376775b68d"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-source.mjs",
+      "state": "untracked_addition",
+      "sha256": "ca0989ab242aada9d45bae90ec1273f9b61c75026530ee9b808449aa4fa3c5f2"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-validation.json",
+      "state": "untracked_addition",
+      "sha256": "a51b88bd201f582dee78895fc5eed56804b42d0a2a3cce044100b5f88d57d63f"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/render-basic7-mapping-review.mjs",
+      "state": "untracked_addition",
+      "sha256": "ea37b152fca25cb09c35f701012524e016af854ca4c522b6dcd256f204e4cde7"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/render-basic89-review.mjs",
+      "state": "untracked_addition",
+      "sha256": "6ec429fda04ae7fe39dbfb09f14a41d1e8e32757b420f42736c99f02d6dbd266"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/validate-basic7-mapping.mjs",
+      "state": "untracked_addition",
+      "sha256": "9ebcbc5360e7a46cf39892f818ccffcc26d310f987d3cd7140dec88824cdbe56"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/validate-basic7.mjs",
+      "state": "untracked_addition",
+      "sha256": "3510d81beb28bedcf0d7d78b2407bb5bb264d94c0fab766b97481ea0f011d25a"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/validate-basic89.mjs",
+      "state": "untracked_addition",
+      "sha256": "0ee3dba8827fef3b1c8c99f13543eec18cfb6f96a63367d8ac18712fbfb1faaf"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/write-phase8d-report.mjs",
+      "state": "untracked_addition",
+      "sha256": "68a4f732d4645947d8231c62bd4bfae94ed5f037796b5d02a63e0fe636830a8f"
+    },
+    {
+      "path": "docs/jhs-development/ARCHITECTURE-DECISION.md",
+      "state": "untracked_addition",
+      "sha256": "4406fefeccc8881d8d6ed281bd7f746ce95fa3e85b26f3e02203b015a9474d06"
+    },
+    {
+      "path": "docs/jhs-development/MINISTERIAL-PREVIEW.md",
+      "state": "untracked_addition",
+      "sha256": "4444850374667aa25b3abbfd5f9c76c0fa50a25ba82ead2ac23cce0a8ed54de8"
+    },
+    {
+      "path": "docs/jhs-development/lineage-manifest.json",
+      "state": "untracked_addition",
+      "sha256": "a69c4026c9160b9f625f65763cd1ed53df8dc2e4985c5371744ec0577d304b57"
+    },
+    {
+      "path": "docs/jhs-development/preview-competency-matrix.json",
+      "state": "untracked_addition",
+      "sha256": "0fb9a08f9b56249d739e805188bd6a582f70552105a132bfb5681017e5cdbb42"
+    },
+    {
+      "path": "docs/jhs-development/preview-coverage-summary.json",
+      "state": "untracked_addition",
+      "sha256": "d4640a3990e029f6070bb3930ffad7cfc5e1fbae4202f130299f235ef1923bf4"
+    },
+    {
+      "path": "docs/jhs-development/preview-validation-summary.json",
+      "state": "untracked_addition",
+      "sha256": "a9e71c5535b75ca963fd45ede4a3c056eec5efd61b9163f869e5e6fcba4cdcbc"
+    },
+    {
+      "path": "package.json",
+      "state": "tracked_modified",
+      "sha256": "81617061ec7460cdf6c15a9904fbbb6f0551ad11b7c28b8fb000a530d8b2f7ed"
+    },
+    {
+      "path": "packages/curriculum-framework/ghana-b4-english.ts",
+      "state": "untracked_addition",
+      "sha256": "015bda071bbf13992e7e7a66c1cb456ea21206880765ddd1ef1728b6b5f4bd75"
+    },
+    {
+      "path": "packages/curriculum-framework/ghana-b7-ccp-data.json",
+      "state": "untracked_addition",
+      "sha256": "d87f6b5f4aa7c64e73c7e50441b4582503e737564bd0e7e30d88d466db69d885"
+    },
+    {
+      "path": "packages/curriculum-framework/ghana-b7-ccp.ts",
+      "state": "untracked_addition",
+      "sha256": "a4a99d726f63d758e0b7d26d63076e77b246f52f6b51d0167e3f98531a47b6f1"
+    },
+    {
+      "path": "packages/curriculum-framework/ghana-b89-ccp-data.json",
+      "state": "untracked_addition",
+      "sha256": "eaf8e7ab32d2eb26438cea28d9ec8b8edd2d71b400020fee22ff3cbb8aba8853"
+    },
+    {
+      "path": "packages/curriculum-framework/ghana-b89-ccp.ts",
+      "state": "untracked_addition",
+      "sha256": "60dded1a53ae8a6cdbfe396815b5797b5aaadf0e2725f6f294b05431a0d91da2"
+    },
+    {
+      "path": "packages/curriculum-framework/index.ts",
+      "state": "tracked_modified",
+      "sha256": "791670d499d055f86080f5e34f5574630756c09f4f16ea994ca1d3bae0e8d534"
+    },
+    {
+      "path": "packages/curriculum/ghana-ccp-runtime.ts",
+      "state": "untracked_addition",
+      "sha256": "db0c65fcbdcf24ea7b3bc70cad5426bcbfbf84c1373a3adedbd2ca3c55b9b5cf"
+    },
+    {
+      "path": "packages/curriculum/index.ts",
+      "state": "tracked_modified",
+      "sha256": "dd96300323e693b9f806d00a25aaa9285258e723f0f5431fe2537dd317ba9585"
+    },
+    {
+      "path": "scripts/audit-basic4-6-offline.browser.mjs",
+      "state": "untracked_addition",
+      "sha256": "08070f4278b57fa564daadb3876a5c7036b4cc14a4e985f0ec63f38ce6c80c11"
+    },
+    {
+      "path": "scripts/capture-jhs-preview.mjs",
+      "state": "untracked_addition",
+      "sha256": "8880b05a57367f8c6c575e703722e39e875c0435cc813aa37a10e9fe20db498b"
+    },
+    {
+      "path": "scripts/diagnose-jhs-font.cjs",
+      "state": "untracked_addition",
+      "sha256": "c3166f64b475c953528bb324e99f8fafbdd9df298671e5660dd420f00c7e3171"
+    },
+    {
+      "path": "scripts/generate-b7-framework.mjs",
+      "state": "untracked_addition",
+      "sha256": "be08a325474f8a444760c292ebb1cc2c611568d259bd1288b177d683b1538987"
+    },
+    {
+      "path": "scripts/jhs-coverage.ts",
+      "state": "untracked_addition",
+      "sha256": "ffd3ab1ce2c5712aee856dae29d22ae6214dfd065b87474ff4f5b1182c0ca3ef"
+    },
+    {
+      "path": "scripts/jhs-preview-coverage.ts",
+      "state": "untracked_addition",
+      "sha256": "de6a853ed3faebae2c73d040d422e41f6a83f8abd57e697e0cb4091bff4fb94d"
+    },
+    {
+      "path": "scripts/jhs-preview-source-proof.mjs",
+      "state": "untracked_addition",
+      "sha256": "c5a20bc5e08f727dc45a40060e31175cec7599a2aa08f49ecfe8656accf4bba9"
+    },
+    {
+      "path": "scripts/register-jhs-sources.mjs",
+      "state": "untracked_addition",
+      "sha256": "75d46bd574d241af538ed727136cfbb331c126fdf3fcd56bdf3a0e56388a5f39"
+    },
+    {
+      "path": "scripts/start-jhs-preview.ps1",
+      "state": "untracked_addition",
+      "sha256": "cddcbad54d282fcc826a79686dba563c0a3ba7a03093f6a91e73b9b205f2a766"
+    },
+    {
+      "path": "scripts/summarise-jhs-preview-validation.mjs",
+      "state": "untracked_addition",
+      "sha256": "279ab196b30d3e7e24116c2c947e521b1f5bfe0c0be9d47aeea4b9965d9578e7"
+    },
+    {
+      "path": "scripts/validate-retention-repair.mjs",
+      "state": "untracked_addition",
+      "sha256": "35155e5d969212bc27b2b2afc1cde13438def362a70ea518bbba7908931fe79f"
+    },
+    {
+      "path": "scripts/verify-jhs-preview-snapshot.mjs",
+      "state": "untracked_addition",
+      "sha256": "c488937e945b50908a25b7c0853eda2e184287b97c83eeaccb9410d3d18de99e"
+    },
+    {
+      "path": "services/content-store/ghana-b7-materials-pilot.ts",
+      "state": "untracked_addition",
+      "sha256": "8f7410e26d69dc4837f5c2b4494b51e2bff9231d82a2fe65a7f803a06ec43fbc"
+    },
+    {
+      "path": "services/content-store/ghana-b7-science-materials-batch.ts",
+      "state": "untracked_addition",
+      "sha256": "a29bd4aa522dbe7a199d1a716051f48d13f363a88b2fe50ae5219ed58d8ec7af"
+    },
+    {
+      "path": "services/content-store/jhs-preview-units.ts",
+      "state": "untracked_addition",
+      "sha256": "0bbb2cafb77431b8d1ae20e88e6a4b12e492826581b0f37033769b8b2a242aec"
+    },
+    {
+      "path": "services/content-store/jhs-representative-preview.ts",
+      "state": "untracked_addition",
+      "sha256": "b650e62e719665c4cad34ec9a76144f6dc13b6077f5f5c6bc06bbf3ff3f50150"
+    },
+    {
+      "path": "services/learner-context/placement.ts",
+      "state": "untracked_addition",
+      "sha256": "913555c8d997b27826d6e7592b6891c82d29c60799c1fcf66eca78de46e5fae9"
+    },
+    {
+      "path": "services/learner-path/revision.ts",
+      "state": "tracked_modified",
+      "sha256": "3d82554b3f326c0c33f65ffedeafb60ff3d433aa92351b5bf907820f5ad34a41"
+    },
+    {
+      "path": "services/learner-progress/ghana-b7-materials-pilot.ts",
+      "state": "untracked_addition",
+      "sha256": "1f9259297373ef9a6458eb698afd5b3f4a2ab746ed041e0ebf0779efbc23e920"
+    },
+    {
+      "path": "services/teacher-review/index.ts",
+      "state": "tracked_modified",
+      "sha256": "3795e28123f95a07776c3aa93aa89854fb6a23e55324d149921e569621a5c88c"
+    },
+    {
+      "path": "tests/ask-filu-navigation.browser.mjs",
+      "state": "tracked_modified",
+      "sha256": "1b8ca47a53fab28ff7f7a84503ab3a0c5c717421078ddfc8926a1227b3e92697"
+    },
+    {
+      "path": "tests/b4-framework-registration.test.ts",
+      "state": "untracked_addition",
+      "sha256": "c4fcc5e846151e19ab871a48a0e43cbedf91cb792c936c72bfaec9926bcf3a3d"
+    },
+    {
+      "path": "tests/b7-existing-curriculum-regression.test.ts",
+      "state": "untracked_addition",
+      "sha256": "354b71d8a07669939949298d8b88bbd6902a46ac2bc8812aadb5fe210225cb09"
+    },
+    {
+      "path": "tests/b7-framework-registration.test.ts",
+      "state": "untracked_addition",
+      "sha256": "8ef1276242e51fecf0f622ce3df07c411b66445d4e3efcccafeaeac2baa12f61"
+    },
+    {
+      "path": "tests/basic7-materials-pilot.browser.mjs",
+      "state": "untracked_addition",
+      "sha256": "d1712cda7b4f7cdcc0d8242f6c1feb6d8de86a8b548441f3c6463786cfbeeb94"
+    },
+    {
+      "path": "tests/basic7-materials-pilot.test.ts",
+      "state": "untracked_addition",
+      "sha256": "119fa6938db3d764ecfadb350f85f79e76e7161ebf54ac2fee662f092ce8f720"
+    },
+    {
+      "path": "tests/fixtures/basic7-materials-app.tsx",
+      "state": "untracked_addition",
+      "sha256": "d8e7a568d2d187be851d7dd60552ca72cc39365560a04af0e62b0f286e98f9f9"
+    },
+    {
+      "path": "tests/fixtures/basic7-materials-pilot.ts",
+      "state": "untracked_addition",
+      "sha256": "1b0ece3a68992b2f205e5465762bfd29ec41e913303e9733405ea63a497394df"
+    },
+    {
+      "path": "tests/fixtures/ccp-source.ts",
+      "state": "untracked_addition",
+      "sha256": "d367e988b89c04b92e70cd3fa94e9ac4d614e1a487fb877d5d3efbf56e9ec4b5"
+    },
+    {
+      "path": "tests/fixtures/current-topic-route.ts",
+      "state": "untracked_addition",
+      "sha256": "cb254e2f2c59ceac64fad29c1f785c6efbacd134f18c39f1040be6a89bcf46ca"
+    },
+    {
+      "path": "tests/fixtures/jhs-journey-runner.ts",
+      "state": "untracked_addition",
+      "sha256": "f57504799db1adcbe4ea613b043757acf19889f2d8737d539435c7bd5a4cf073"
+    },
+    {
+      "path": "tests/fixtures/jhs-materials-app.tsx",
+      "state": "untracked_addition",
+      "sha256": "c775c01a4a5866695bffc5f2b02f70ad26a70e5f0a6f0b68c9cc9b879aebda06"
+    },
+    {
+      "path": "tests/fixtures/jhs-materials-batch.ts",
+      "state": "untracked_addition",
+      "sha256": "52bb669753847eac8cb55afd56c7ac5dff0eb6434b3c35e57b8e642be17318cc"
+    },
+    {
+      "path": "tests/fixtures/jhs-representative-preview.ts",
+      "state": "untracked_addition",
+      "sha256": "2883d67dad685d5b56d780116ca27231999be681d6a895645be6ca29274b0ee2"
+    },
+    {
+      "path": "tests/immediate-correction.test.ts",
+      "state": "tracked_modified",
+      "sha256": "59c84d0a70ef748b7319210d821a539f6c5b28a5ab7d9282a48bbae0a907e718"
+    },
+    {
+      "path": "tests/jhs-curriculum-integrity.test.ts",
+      "state": "untracked_addition",
+      "sha256": "6e77a9bbd7d18bdf12e674f535abd60e4394efc0a510e008105c916b9af00e8c"
+    },
+    {
+      "path": "tests/jhs-materials-journey.test.ts",
+      "state": "untracked_addition",
+      "sha256": "34b53ef5e87c0eac5eeb4048974cb8fbb6c9a773736391ae8eb22a98210c2df3"
+    },
+    {
+      "path": "tests/jhs-materials.browser.mjs",
+      "state": "untracked_addition",
+      "sha256": "2cfac29cd5ad0b9159d199f8c3335ee1eb274f910507d34b6d9f6a306447748c"
+    },
+    {
+      "path": "tests/jhs-placement.test.ts",
+      "state": "untracked_addition",
+      "sha256": "704a96590d3a1d5efb03690ea3d98614b58483246bf1fe7f7ccc1d520034e522"
+    },
+    {
+      "path": "tests/jhs-preview-content-integrity.test.ts",
+      "state": "untracked_addition",
+      "sha256": "925a3be83dcea944b92c80c749e56380818308ff6566f2f808b060ba161a2be5"
+    },
+    {
+      "path": "tests/jhs-preview-placement.test.ts",
+      "state": "untracked_addition",
+      "sha256": "6538fb0426d2943ad9e53cac519785074f1676519ce550b24515a076b8556630"
+    },
+    {
+      "path": "tests/jhs-representative-journey.test.ts",
+      "state": "untracked_addition",
+      "sha256": "37b7d32cbfc2ebc7bf6531ba92354158c44d156d6d04f015f110e9ecae12a190"
+    },
+    {
+      "path": "tests/jhs-runtime-foundation.test.ts",
+      "state": "untracked_addition",
+      "sha256": "e0c7900d6fa88196b17fc4f477faaa86e79f2fc54e9d36029d83959a940e071c"
+    },
+    {
+      "path": "tests/learner-interface-copy.test.ts",
+      "state": "tracked_modified",
+      "sha256": "ddfe56848886efe579cae4b7440df975f959c3f5662c2345a648d3105e171f8e"
+    },
+    {
+      "path": "tests/learner-interface-repairs.browser.mjs",
+      "state": "untracked_addition",
+      "sha256": "7037f83f756237d3da2ab3e7a52f7143c0a324c581b300881412ce057ac87bc9"
+    },
+    {
+      "path": "tests/learner-offline-repairs.browser.mjs",
+      "state": "untracked_addition",
+      "sha256": "0bb608a2a58619c8b7ce8b95e749eca75e67e5660548b13fa4c0c4721022dfc0"
+    },
+    {
+      "path": "tests/lesson-closure-production.test.ts",
+      "state": "tracked_modified",
+      "sha256": "14616024dd004dd796bb8399c643709cb0d7e487eaa73d809074a0652a5b3ff7"
+    },
+    {
+      "path": "tests/offline-shell-v1.test.ts",
+      "state": "tracked_modified",
+      "sha256": "b73bfcc38d735588699f1cde35856b1c5ccc5841e526478aa6aa0f4fabd413a5"
+    },
+    {
+      "path": "tests/prerequisite-repair-4d.test.ts",
+      "state": "tracked_modified",
+      "sha256": "ca46a35d45a8a6bba7e864999124ced16b4dda1dbd4bfeb3d1efd28590f5caa8"
+    },
+    {
+      "path": "tests/route-advance-4g.test.ts",
+      "state": "tracked_modified",
+      "sha256": "4d7e3ec985d0ed567bdfc59f238f7f1192f2aed971a544130779be5f5efb14ed"
+    },
+    {
+      "path": "tests/teacher-review-delivery-provenance.test.ts",
+      "state": "untracked_addition",
+      "sha256": "f8b0f78a1e0b126165ec1a268b9d78e7bd39c2d073a20c67eea38087dd23d6e8"
+    },
+    {
+      "path": "tests/teaching-first-retention.test.ts",
+      "state": "untracked_addition",
+      "sha256": "a39c7bc7b3112dd44384c21f15c56c2c57b7ddc65add82442f1aa30e22b3f9c7"
+    }
+  ],
+  "patchSha256": "1f6d0205ec4b5a0a623ff6cd51aa5139296c4eccdd73c9c498798316c2f55901",
+  "additionsTarSha256": "c0c554f85dbbb274885b0a5783e093c6e93d1b9710341ac58fbfb70b393d3f77",
+  "lockfileSha256": "de88d2a62201c4ec0f40a51947573757b71a50bfd606e8f206e460b4928d959d",
+  "gitStatus": " M FILUMIRE_CLAUDE/apps/learner/app/api/learning/closure/route.ts\n M FILUMIRE_CLAUDE/apps/learner/app/api/teacher/review/route.ts\n M FILUMIRE_CLAUDE/apps/learner/app/learn/page.tsx\n M FILUMIRE_CLAUDE/apps/learner/components/filumire/AnswerCorrectionPanel.tsx\n M FILUMIRE_CLAUDE/apps/learner/public/offline.html\n M FILUMIRE_CLAUDE/apps/learner/public/sw.js\n M FILUMIRE_CLAUDE/apps/learner/services/learner-interface.ts\n M FILUMIRE_CLAUDE/package.json\n M FILUMIRE_CLAUDE/packages/curriculum-framework/index.ts\n M FILUMIRE_CLAUDE/packages/curriculum/index.ts\n M FILUMIRE_CLAUDE/services/learner-path/revision.ts\n M FILUMIRE_CLAUDE/services/teacher-review/index.ts\n M FILUMIRE_CLAUDE/tests/ask-filu-navigation.browser.mjs\n M FILUMIRE_CLAUDE/tests/immediate-correction.test.ts\n M FILUMIRE_CLAUDE/tests/learner-interface-copy.test.ts\n M FILUMIRE_CLAUDE/tests/lesson-closure-production.test.ts\n M FILUMIRE_CLAUDE/tests/offline-shell-v1.test.ts\n M FILUMIRE_CLAUDE/tests/prerequisite-repair-4d.test.ts\n M FILUMIRE_CLAUDE/tests/route-advance-4g.test.ts\n?? FILUMIRE_CLAUDE/apps/learner/app/api/account/learners/[learnerId]/placement/route.ts\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/PHASE8B-MAPPING-AND-IMPLEMENTATION-PLAN.md\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/PHASE8C-FRAMEWORK-INTEGRATION.md\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/PHASE8D-COVERAGE-AND-REVIEW.md\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/PHASE8D-FILES.md\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/README.md\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic7-9-coverage.csv\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic7-9-coverage.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic7-coverage-matrix.csv\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic7-curriculum-structure.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic7-filumire-mapping.csv\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic7-filumire-mapping.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic7-mapping-source-issues.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic7-mapping-source-review.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic7-mapping-validation.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic7-source-manifest.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic7-validation.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic8-curriculum-inventory.csv\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic8-curriculum-inventory.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic8-filumire-mapping.csv\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic8-filumire-mapping.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic89-source-issues.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic9-curriculum-inventory.csv\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic9-curriculum-inventory.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic9-filumire-mapping.csv\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/basic9-filumire-mapping.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/build-basic7-mapping.mjs\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/build-basic89-mapping.mjs\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/extract-basic7.mjs\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/extract-basic89.mjs\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-input-lock.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-output-manifest.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-reviewed-anchors.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-reviewed-corrections.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-source.mjs\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-validation.json\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/render-basic7-mapping-review.mjs\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/render-basic89-review.mjs\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/validate-basic7-mapping.mjs\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/validate-basic7.mjs\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/validate-basic89.mjs\n?? FILUMIRE_CLAUDE/docs/curriculum-sources/ghana/ccp-b7-b9/write-phase8d-report.mjs\n?? FILUMIRE_CLAUDE/docs/jhs-development/ARCHITECTURE-DECISION.md\n?? FILUMIRE_CLAUDE/docs/jhs-development/BATCH01-REPORT.md\n?? FILUMIRE_CLAUDE/docs/jhs-development/MINISTERIAL-PREVIEW.md\n?? FILUMIRE_CLAUDE/docs/jhs-development/architecture-regressions.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/batch01-competency-matrix.json\n?? FILUMIRE_CLAUDE/docs/jhs-development/batch01-journeys.json\n?? FILUMIRE_CLAUDE/docs/jhs-development/batch01-summary.json\n?? FILUMIRE_CLAUDE/docs/jhs-development/browser/materials-0-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/browser/materials-0-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/browser/materials-0-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/browser/materials-0-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/browser/materials-1-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/browser/materials-1-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/browser/materials-1-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/browser/materials-1-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/browser/materials-2-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/browser/materials-2-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/browser/materials-2-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/browser/materials-2-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/browser/results.json\n?? FILUMIRE_CLAUDE/docs/jhs-development/files-changed.json\n?? FILUMIRE_CLAUDE/docs/jhs-development/final-integrity.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/font-diagnostic-build.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/kalam-build-font-response.css\n?? FILUMIRE_CLAUDE/docs/jhs-development/legacy-pilot-browser.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/lineage-manifest.json\n?? FILUMIRE_CLAUDE/docs/jhs-development/montserrat-build-font-response.css\n?? FILUMIRE_CLAUDE/docs/jhs-development/placement-security.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/preservation.json\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-competency-matrix.json\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-content-final.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-coverage-summary.json\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-coverage.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-final-regressions.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-live-routes.json\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-placement-final.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-regressions.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-serve-smoke.json\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-snapshot-capture.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-snapshot/additions-list.txt\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-snapshot/additions.tar\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-snapshot/manifest.json\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-snapshot/tracked.patch\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/computing-31.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/computing-31.txt\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/computing-54.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/computing-54.txt\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/computing-70.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/computing-70.txt\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/english-106.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/english-106.txt\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/english-38.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/english-38.txt\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/english-74.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/english-74.txt\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/mathematics-120.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/mathematics-120.txt\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/mathematics-195.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/mathematics-195.txt\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/mathematics-34.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/mathematics-34.txt\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/results.json\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/science-124.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/science-124.txt\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/science-39.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/science-39.txt\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/science-40.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/science-40.txt\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/science-91.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-source-review/science-91.txt\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-validation-final.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/preview-validation-summary.json\n?? FILUMIRE_CLAUDE/docs/jhs-development/production-build-approved.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/production-build-final.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/production-build-retry.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/production-build.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/regressions.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-0-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-0-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-0-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-0-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-1-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-1-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-1-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-1-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-10-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-10-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-10-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-10-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-11-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-11-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-11-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-11-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-12-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-12-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-12-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-12-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-13-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-13-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-13-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-13-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-2-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-2-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-2-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-2-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-3-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-3-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-3-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-3-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-4-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-4-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-4-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-4-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-5-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-5-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-5-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-5-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-6-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-6-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-6-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-6-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-7-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-7-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-7-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-7-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-8-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-8-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-8-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-8-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-9-en-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-9-en-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-9-fr-1280.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/materials-9-fr-390.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-browser/results.json\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-journeys.json\n?? FILUMIRE_CLAUDE/docs/jhs-development/representative-journeys.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/source-proof.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/source-review/science-pdf39.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/source-review/science-pdf40.png\n?? FILUMIRE_CLAUDE/docs/jhs-development/typescript-architecture.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/typescript-final-approved.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/typescript-preview-final.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/typescript-preview.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/typescript.log\n?? FILUMIRE_CLAUDE/docs/jhs-development/validation.json\n?? FILUMIRE_CLAUDE/packages/curriculum-framework/ghana-b4-english.ts\n?? FILUMIRE_CLAUDE/packages/curriculum-framework/ghana-b7-ccp-data.json\n?? FILUMIRE_CLAUDE/packages/curriculum-framework/ghana-b7-ccp.ts\n?? FILUMIRE_CLAUDE/packages/curriculum-framework/ghana-b89-ccp-data.json\n?? FILUMIRE_CLAUDE/packages/curriculum-framework/ghana-b89-ccp.ts\n?? FILUMIRE_CLAUDE/packages/curriculum/ghana-ccp-runtime.ts\n?? FILUMIRE_CLAUDE/scripts/audit-basic4-6-offline.browser.mjs\n?? FILUMIRE_CLAUDE/scripts/capture-jhs-preview.mjs\n?? FILUMIRE_CLAUDE/scripts/diagnose-jhs-font.cjs\n?? FILUMIRE_CLAUDE/scripts/generate-b7-framework.mjs\n?? FILUMIRE_CLAUDE/scripts/jhs-coverage.ts\n?? FILUMIRE_CLAUDE/scripts/jhs-preview-coverage.ts\n?? FILUMIRE_CLAUDE/scripts/jhs-preview-source-proof.mjs\n?? FILUMIRE_CLAUDE/scripts/register-jhs-sources.mjs\n?? FILUMIRE_CLAUDE/scripts/start-jhs-preview.ps1\n?? FILUMIRE_CLAUDE/scripts/summarise-jhs-preview-validation.mjs\n?? FILUMIRE_CLAUDE/scripts/validate-retention-repair.mjs\n?? FILUMIRE_CLAUDE/scripts/verify-jhs-preview-snapshot.mjs\n?? FILUMIRE_CLAUDE/services/content-store/ghana-b7-materials-pilot.ts\n?? FILUMIRE_CLAUDE/services/content-store/ghana-b7-science-materials-batch.ts\n?? FILUMIRE_CLAUDE/services/content-store/jhs-preview-units.ts\n?? FILUMIRE_CLAUDE/services/content-store/jhs-representative-preview.ts\n?? FILUMIRE_CLAUDE/services/learner-context/placement.ts\n?? FILUMIRE_CLAUDE/services/learner-progress/ghana-b7-materials-pilot.ts\n?? FILUMIRE_CLAUDE/tests/b4-framework-registration.test.ts\n?? FILUMIRE_CLAUDE/tests/b7-existing-curriculum-regression.test.ts\n?? FILUMIRE_CLAUDE/tests/b7-framework-registration.test.ts\n?? FILUMIRE_CLAUDE/tests/basic7-materials-pilot.browser.mjs\n?? FILUMIRE_CLAUDE/tests/basic7-materials-pilot.test.ts\n?? FILUMIRE_CLAUDE/tests/fixtures/basic7-materials-app.tsx\n?? FILUMIRE_CLAUDE/tests/fixtures/basic7-materials-pilot.ts\n?? FILUMIRE_CLAUDE/tests/fixtures/ccp-source.ts\n?? FILUMIRE_CLAUDE/tests/fixtures/current-topic-route.ts\n?? FILUMIRE_CLAUDE/tests/fixtures/jhs-journey-runner.ts\n?? FILUMIRE_CLAUDE/tests/fixtures/jhs-materials-app.tsx\n?? FILUMIRE_CLAUDE/tests/fixtures/jhs-materials-batch.ts\n?? FILUMIRE_CLAUDE/tests/fixtures/jhs-representative-preview.ts\n?? FILUMIRE_CLAUDE/tests/jhs-curriculum-integrity.test.ts\n?? FILUMIRE_CLAUDE/tests/jhs-materials-journey.test.ts\n?? FILUMIRE_CLAUDE/tests/jhs-materials.browser.mjs\n?? FILUMIRE_CLAUDE/tests/jhs-placement.test.ts\n?? FILUMIRE_CLAUDE/tests/jhs-preview-content-integrity.test.ts\n?? FILUMIRE_CLAUDE/tests/jhs-preview-placement.test.ts\n?? FILUMIRE_CLAUDE/tests/jhs-representative-journey.test.ts\n?? FILUMIRE_CLAUDE/tests/jhs-runtime-foundation.test.ts\n?? FILUMIRE_CLAUDE/tests/learner-interface-repairs.browser.mjs\n?? FILUMIRE_CLAUDE/tests/learner-offline-repairs.browser.mjs\n?? FILUMIRE_CLAUDE/tests/teacher-review-delivery-provenance.test.ts\n?? FILUMIRE_CLAUDE/tests/teaching-first-retention.test.ts\n",
+  "inheritedSourceOrigins": [
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\apps\\learner\\app\\api\\learning\\closure\\route.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\apps\\learner\\app\\learn\\page.tsx",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\apps\\learner\\components\\filumire\\AnswerCorrectionPanel.tsx",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\apps\\learner\\services\\learner-interface.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\package.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\packages\\curriculum-framework\\index.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\packages\\curriculum\\index.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\services\\learner-path\\revision.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\tests\\ask-filu-navigation.browser.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\tests\\immediate-correction.test.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\tests\\learner-interface-copy.test.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\tests\\lesson-closure-production.test.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\tests\\prerequisite-repair-4d.test.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\tests\\route-advance-4g.test.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\packages\\curriculum-framework\\ghana-b4-english.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\packages\\curriculum-framework\\ghana-b7-ccp-data.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\packages\\curriculum-framework\\ghana-b7-ccp.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\scripts\\generate-b7-framework.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\scripts\\validate-retention-repair.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\services\\content-store\\ghana-b7-materials-pilot.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\services\\learner-progress\\ghana-b7-materials-pilot.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\tests\\b4-framework-registration.test.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\tests\\b7-existing-curriculum-regression.test.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\tests\\b7-framework-registration.test.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\tests\\basic7-materials-pilot.browser.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\tests\\basic7-materials-pilot.test.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\tests\\fixtures\\basic7-materials-app.tsx",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\tests\\fixtures\\basic7-materials-pilot.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\tests\\fixtures\\current-topic-route.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\tests\\learner-interface-repairs.browser.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic7-science-pilot\\FILUMIRE_CLAUDE\\tests\\teaching-first-retention.test.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic7-9-coverage.csv",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic7-9-coverage.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic7-coverage-matrix.csv",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic7-curriculum-structure.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic7-filumire-mapping.csv",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic7-filumire-mapping.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic7-mapping-source-issues.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic7-mapping-source-review.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic7-mapping-validation.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic7-source-manifest.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic7-validation.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic8-curriculum-inventory.csv",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic8-curriculum-inventory.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic8-filumire-mapping.csv",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic8-filumire-mapping.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic89-source-issues.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic9-curriculum-inventory.csv",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic9-curriculum-inventory.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic9-filumire-mapping.csv",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\basic9-filumire-mapping.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\build-basic7-mapping.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\build-basic89-mapping.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\extract-basic7.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\extract-basic89.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\PHASE8B-MAPPING-AND-IMPLEMENTATION-PLAN.md",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\PHASE8C-FRAMEWORK-INTEGRATION.md",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\PHASE8D-COVERAGE-AND-REVIEW.md",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\PHASE8D-FILES.md",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\phase8d-input-lock.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\phase8d-output-manifest.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\phase8d-reviewed-anchors.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\phase8d-reviewed-corrections.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\phase8d-source.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\phase8d-validation.json",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\README.md",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\render-basic7-mapping-review.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\render-basic89-review.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\validate-basic7-mapping.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\validate-basic7.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\validate-basic89.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\write-phase8d-report.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic4-6-completion\\FILUMIRE_CLAUDE\\apps\\learner\\app\\api\\teacher\\review\\route.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic4-6-completion\\FILUMIRE_CLAUDE\\services\\teacher-review\\index.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic4-6-completion\\FILUMIRE_CLAUDE\\tests\\teacher-review-delivery-provenance.test.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic4-6-completion\\FILUMIRE_CLAUDE\\apps\\learner\\public\\offline.html",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic4-6-completion\\FILUMIRE_CLAUDE\\apps\\learner\\public\\sw.js",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic4-6-completion\\FILUMIRE_CLAUDE\\tests\\offline-shell-v1.test.ts",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic4-6-completion\\FILUMIRE_CLAUDE\\tests\\learner-offline-repairs.browser.mjs",
+      "unchangedFromCarriedHash": true
+    },
+    {
+      "origin": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic4-6-completion\\FILUMIRE_CLAUDE\\scripts\\audit-basic4-6-offline.browser.mjs",
+      "unchangedFromCarriedHash": true
+    }
+  ],
+  "exclusions": [
+    "credentials",
+    "dependencies",
+    "build caches",
+    "official PDFs",
+    "screenshots and volatile logs"
+  ],
+  "reconstruction": "Use the recorded HEAD in a separate disposable checkout. Review tracked.patch; extract additions.tar inside FILUMIRE_CLAUDE to restore exact raw modified and added file bytes, including Windows line endings. Verify every source SHA-256. Never extract over another worktree’s uncommitted work."
+}

@@ -1,0 +1,567 @@
+{
+  "date": "2026-10-11",
+  "source": "C:/Users/tabi/Desktop/filumire/FILUMIRE_WEBSITE",
+  "project": "filumire-website",
+  "projectId": "prj_wgK6IrwedlpjD7Wm8HBaHmdIdDQc",
+  "deploymentId": "dpl_4i6dsdf5mbyVzSygKT1C9ytPZsN4",
+  "url": "https://filumire-website-aldpse645-tabicrentsil-6879s-projects.vercel.app",
+  "publicUrl": "https://filumire.com",
+  "target": "production",
+  "status": "READY",
+  "sourceFiles": 146,
+  "sourceUnchanged": true,
+  "tests": {
+    "passed": 57,
+    "failed": 0
+  },
+  "typecheck": "passed",
+  "productionBuild": {
+    "location": "Vercel",
+    "result": "passed",
+    "durationSeconds": 29,
+    "localAttempt": "Blocked fetching Google Fonts by execution environment network permissions"
+  },
+  "pages": [
+    {
+      "path": "/fr/pricing",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/fr/pricing",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/fr",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/fr",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/curriculum",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/curriculum",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/fr/curriculum",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/fr/curriculum",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/contact",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/contact",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/fr/contact",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/fr/contact",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/pricing",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/pricing",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/account",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/account",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true,
+      "privatePage": true
+    },
+    {
+      "path": "/fr/account",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/fr/account",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true,
+      "privatePage": true
+    },
+    {
+      "path": "/account/subscription",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/account/subscription",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true,
+      "privatePage": true
+    },
+    {
+      "path": "/fr/account/subscription",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/fr/account/subscription",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true,
+      "privatePage": true
+    },
+    {
+      "path": "/how-it-works",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/how-it-works",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/fr/how-it-works",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/fr/how-it-works",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/for-families",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/for-families",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/fr/for-families",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/fr/for-families",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/for-schools",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/for-schools",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/fr/for-schools",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/fr/for-schools",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/about",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/about",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/fr/about",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/fr/about",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/access",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/access",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/fr/access",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/fr/access",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/partners",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/partners",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/fr/partners",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/fr/partners",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/privacy",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/privacy",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/fr/privacy",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/fr/privacy",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/contact?inquiry=school-pilot",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/contact",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    },
+    {
+      "path": "/fr/contact?inquiry=school-pilot",
+      "status": 200,
+      "language": true,
+      "main": true,
+      "canonical": "https://filumire.com/fr/contact",
+      "canonicalCorrect": true,
+      "heading": true,
+      "languageSelector": true
+    }
+  ],
+  "httpChecks": [
+    {
+      "path": "/fr/pricing",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/fr",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/curriculum",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/fr/curriculum",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/contact",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/fr/contact",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/pricing",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/account",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/fr/account",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/account/subscription",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/fr/account/subscription",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/api/subscriptions",
+      "status": 503,
+      "type": "application/json",
+      "apiResponse": "{\"code\":\"configuration\"}"
+    },
+    {
+      "path": "/api/contact",
+      "status": 503,
+      "type": "application/json",
+      "apiResponse": "{\"available\":false}"
+    },
+    {
+      "path": "/api/parent-auth",
+      "status": 405,
+      "apiResponse": ""
+    },
+    {
+      "path": "/api/paystack/webhook",
+      "status": 405,
+      "apiResponse": ""
+    },
+    {
+      "path": "/how-it-works",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/fr/how-it-works",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/for-families",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/fr/for-families",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/for-schools",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/fr/for-schools",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/about",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/fr/about",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/access",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/fr/access",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/partners",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/fr/partners",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/privacy",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/fr/privacy",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/contact?inquiry=school-pilot",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/fr/contact?inquiry=school-pilot",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "type": "application/xml"
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "type": "text/plain"
+    },
+    {
+      "path": "/illustrations/fr/avatar-selection.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "path": "/illustrations/fr/learners.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "path": "/product-preview/fr/FILUMIRE-Interface-Page-04.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "path": "/curriculum-sources/ENGLISH-B4-B6.pdf",
+      "status": 200,
+      "type": "application/pdf"
+    },
+    {
+      "path": "/curriculum-sources/NaCCA-Computing-B4-B6-2019.pdf",
+      "status": 200,
+      "type": "application/pdf"
+    },
+    {
+      "path": "/curriculum-sources/NaCCA-Mathematics-B4-B6-2019.pdf",
+      "status": 200,
+      "type": "application/pdf"
+    },
+    {
+      "path": "/illustrations/landscapefooter.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "path": "/curriculum-sources/NaCCA-Science-B4-B6-2019.pdf",
+      "status": 200,
+      "type": "application/pdf"
+    },
+    {
+      "path": "/brand/filumire-logo-blue.svg",
+      "status": 200,
+      "type": "image/svg+xml"
+    },
+    {
+      "path": "/_next/static/css/afc9fddb5b9adff6.css",
+      "status": 200,
+      "type": "text/css; charset=utf-8"
+    },
+    {
+      "path": "/_next/static/css/fb31c875d9bf7eef.css",
+      "status": 200,
+      "type": "text/css; charset=utf-8"
+    },
+    {
+      "path": "/_next/static/chunks/webpack-d277a8a61c42f0e9.js",
+      "status": 200,
+      "type": "application/javascript; charset=utf-8"
+    }
+  ],
+  "runtimeErrors": "None reported in project lookback window of 30 minutes",
+  "temporaryVerificationLinkRevoked": true,
+  "limitations": [
+    "HTTP checks used authenticated Vercel connector, not an independent unauthenticated browser.",
+    "No browser available: interactive/visual QA outstanding.",
+    "No production POST requests or payments performed."
+  ],
+  "outstanding": [
+    "Hosted subscription persistence adapter and database",
+    "Parent authentication/email configuration",
+    "Paystack test credentials and webhook verification against the provider",
+    "Learning entitlement integration before full-access trials can activate",
+    "Native contact SMTP configuration and controlled delivery verification",
+    "Dependency audit reported one moderate and one high vulnerability: review required"
+  ],
+  "safety": {
+    "livePayments": false,
+    "trialActivation": false,
+    "checkoutEnabled": false,
+    "dnsChanged": false,
+    "otherProjectsChanged": false,
+    "projectProtectionChanged": false
+  }
+}

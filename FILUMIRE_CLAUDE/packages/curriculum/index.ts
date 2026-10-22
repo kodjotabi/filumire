@@ -1,3 +1,5 @@
+import { isPrivateJhsEnabled, PRIVATE_JHS_SCOPE } from './jhs-private-policy';
+import { CCP_RUNTIME_FRAMEWORK, CCP_EDUCATION_SYSTEM, CCP_RUNTIME_LEVELS, CCP_RUNTIME_SUBJECTS, CCP_RUNTIME_STRANDS, CCP_RUNTIME_SUBSTRANDS, CCP_RUNTIME_STANDARDS, CCP_RUNTIME_INDICATORS, CCP_SOURCE_REGISTRATIONS, getCcpBlockingSourceIssueIds } from './ghana-ccp-runtime';
 import {
   GHANA_B5_SCIENCE_COMPETENCIES,
   GHANA_B5_SCIENCE_INDICATORS,
@@ -1077,19 +1079,65 @@ export function getAllCompetencies(): CompetencyDefinition[] {
   return [...curriculum];
 }
 
+/** In-memory pilot harness only. No application import or persisted activation.
+ * Keep public getters defensive and never replace an existing curriculum record.
+ */
+export function registerIsolatedBasic7TestCurriculum(
+  competency: CompetencyDefinition,
+  subject: Subject,
+  level: LearningLevel,
+): void {
+  if (process.env.NODE_ENV !== "test" || process.env.FILUMIRE_PERSISTENCE !== "memory" || process.env.FILUMIRE_BASIC7_PILOT !== "test-only" || process.env.VERCEL) {
+    throw new Error("Basic 7 registration is restricted to an isolated in-memory test process");
+  }
+    const existingSubject = subjects.find(item => item.id === subject.id);
+    const existingLevel = learningLevels.find(item => item.id === level.id);
+    if (level.id !== "level-gh-basic-7-ccp" || competency.learningLevelId !== level.id || subject.learningLevelId !== level.id || competency.subjectId !== subject.id || curriculum.some((item) => item.id === competency.id) ||
+      (existingSubject && JSON.stringify(existingSubject) !== JSON.stringify(subject)) ||
+      (existingLevel && JSON.stringify(existingLevel) !== JSON.stringify(level))) {
+    throw new Error("Invalid or duplicate isolated Basic 7 registration");
+  }
+  curriculum.push(competency);
+    if (!existingSubject) subjects.push(subject);
+    if (!existingLevel) learningLevels.push(level);
+}
+
 export function getCurriculumFramework(
   frameworkId: CurriculumFrameworkId,
 ): CurriculumFramework | undefined {
-  return curriculumFrameworks.find(
+  return [...curriculumFrameworks, CCP_RUNTIME_FRAMEWORK].find(
     (framework) =>
       framework.id === frameworkId,
   );
 }
 
+/** Explicitly isolated preview only. App seeds never import or call this adapter. */
+export function registerIsolatedJhsPreviewCompetency(competency: CompetencyDefinition): void {
+  if (process.env.NODE_ENV !== 'test' || process.env.FILUMIRE_PERSISTENCE !== 'memory' || process.env.FILUMIRE_JHS_PREVIEW !== 'test-only' || process.env.VERCEL) {
+    throw new Error('JHS preview registration requires an isolated non-deployed test process');
+  }
+  appendSourceBackedJhs(competency);
+}
+
+export function registerPrivateJhsCompetency(competency: CompetencyDefinition): void {
+  if (!isPrivateJhsEnabled() || !PRIVATE_JHS_SCOPE.some(row => row.competencyId === competency.id)) throw new Error("Private JHS scope is unavailable");
+  const existing = curriculum.find(item => item.id === competency.id);
+  if (existing && JSON.stringify(existing) === JSON.stringify(competency)) return;
+  appendSourceBackedJhs(competency);
+}
+
+function appendSourceBackedJhs(competency: CompetencyDefinition): void {
+  const source = CCP_SOURCE_REGISTRATIONS.find(r => r.id === competency.id);
+  if (!source || getCcpBlockingSourceIssueIds(source.sourceIssueIds).length || competency.curriculumFrameworkId !== CCP_RUNTIME_FRAMEWORK.id || competency.educationSystemId !== CCP_EDUCATION_SYSTEM.id || competency.learningLevelId !== source.gradeId || competency.subjectId !== source.subjectId || competency.learningIndicatorId !== source.curriculumNodeId || competency.strandId !== source.hierarchy.strandId || competency.subStrandId !== source.hierarchy.subStrandId || competency.contentStandardId !== source.hierarchy.contentStandardId || curriculum.some(c => c.id === competency.id)) {
+    throw new Error('Invalid or duplicate source-backed JHS preview competency');
+  }
+  curriculum.push(competency);
+}
+
 export function getEducationSystem(
   educationSystemId: EducationSystemId,
 ): EducationSystem | undefined {
-  return educationSystems.find(
+  return [...educationSystems, CCP_EDUCATION_SYSTEM].find(
     (system) =>
       system.id === educationSystemId,
   );
@@ -1098,7 +1146,7 @@ export function getEducationSystem(
 export function getLearningLevel(
   levelId: LearningLevelId,
 ): LearningLevel | undefined {
-  return learningLevels.find(
+  return [...learningLevels, ...CCP_RUNTIME_LEVELS].find(
     (level) =>
       level.id === levelId,
   );
@@ -1107,7 +1155,7 @@ export function getLearningLevel(
 export function getSubject(
   subjectId: SubjectId,
 ): Subject | undefined {
-  return subjects.find(
+  return [...subjects, ...CCP_RUNTIME_SUBJECTS].find(
     (subject) =>
       subject.id === subjectId,
   );
@@ -1116,7 +1164,7 @@ export function getSubject(
 export function getStrand(
   strandId: StrandId,
 ): Strand | undefined {
-  return strands.find(
+  return [...strands, ...CCP_RUNTIME_STRANDS].find(
     (strand) =>
       strand.id === strandId,
   );
@@ -1125,7 +1173,7 @@ export function getStrand(
 export function getSubStrand(
   subStrandId: SubStrandId,
 ): SubStrand | undefined {
-  return subStrands.find(
+  return [...subStrands, ...CCP_RUNTIME_SUBSTRANDS].find(
     (subStrand) =>
       subStrand.id === subStrandId,
   );
@@ -1134,7 +1182,7 @@ export function getSubStrand(
 export function getContentStandard(
   contentStandardId: ContentStandardId,
 ): ContentStandard | undefined {
-  return contentStandards.find(
+  return [...contentStandards, ...CCP_RUNTIME_STANDARDS].find(
     (standard) =>
       standard.id === contentStandardId,
   );
@@ -1143,7 +1191,7 @@ export function getContentStandard(
 export function getLearningIndicator(
   learningIndicatorId: LearningIndicatorId,
 ): LearningIndicator | undefined {
-  return learningIndicators.find(
+  return [...learningIndicators, ...CCP_RUNTIME_INDICATORS].find(
     (indicator) =>
       indicator.id === learningIndicatorId,
   );

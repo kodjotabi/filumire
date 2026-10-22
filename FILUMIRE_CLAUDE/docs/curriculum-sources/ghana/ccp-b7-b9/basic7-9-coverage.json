@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "policy": "Counts are physical printed indicator entries; repeated/conflicting source codes remain separate. 100% means documentation mapping coverage of these pinned PDFs, not production support, independent learning objectives or independent source authentication.",
+  "rows": [
+    {
+      "grade": "Basic 7",
+      "subject": "English Language",
+      "indicator_entries": 53,
+      "mapped_entries": 53,
+      "proposed_unique_competencies": 53,
+      "distinct_printed_codes": 53,
+      "coverage_percent": 100,
+      "basis": "unchanged_Phase8B_carry_forward",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 7",
+      "subject": "Mathematics",
+      "indicator_entries": 74,
+      "mapped_entries": 74,
+      "proposed_unique_competencies": 74,
+      "distinct_printed_codes": 74,
+      "coverage_percent": 100,
+      "basis": "unchanged_Phase8B_carry_forward",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 7",
+      "subject": "Computing",
+      "indicator_entries": 55,
+      "mapped_entries": 55,
+      "proposed_unique_competencies": 55,
+      "distinct_printed_codes": 52,
+      "coverage_percent": 100,
+      "basis": "unchanged_Phase8B_carry_forward",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 7",
+      "subject": "Science",
+      "indicator_entries": 53,
+      "mapped_entries": 53,
+      "proposed_unique_competencies": 53,
+      "distinct_printed_codes": 53,
+      "coverage_percent": 100,
+      "basis": "unchanged_Phase8B_carry_forward",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 8",
+      "subject": "English Language",
+      "indicator_entries": 49,
+      "mapped_entries": 49,
+      "proposed_unique_competencies": 49,
+      "distinct_printed_codes": 49,
+      "coverage_percent": 100,
+      "basis": "Phase8D_reviewed_source_entries",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 8",
+      "subject": "Mathematics",
+      "indicator_entries": 58,
+      "mapped_entries": 58,
+      "proposed_unique_competencies": 58,
+      "distinct_printed_codes": 58,
+      "coverage_percent": 100,
+      "basis": "Phase8D_reviewed_source_entries",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 8",
+      "subject": "Computing",
+      "indicator_entries": 39,
+      "mapped_entries": 39,
+      "proposed_unique_competencies": 39,
+      "distinct_printed_codes": 39,
+      "coverage_percent": 100,
+      "basis": "Phase8D_reviewed_source_entries",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 8",
+      "subject": "Science",
+      "indicator_entries": 46,
+      "mapped_entries": 46,
+      "proposed_unique_competencies": 46,
+      "distinct_printed_codes": 46,
+      "coverage_percent": 100,
+      "basis": "Phase8D_reviewed_source_entries",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 9",
+      "subject": "English Language",
+      "indicator_entries": 51,
+      "mapped_entries": 51,
+      "proposed_unique_competencies": 51,
+      "distinct_printed_codes": 51,
+      "coverage_percent": 100,
+      "basis": "Phase8D_reviewed_source_entries",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 9",
+      "subject": "Mathematics",
+      "indicator_entries": 52,
+      "mapped_entries": 52,
+      "proposed_unique_competencies": 52,
+      "distinct_printed_codes": 52,
+      "coverage_percent": 100,
+      "basis": "Phase8D_reviewed_source_entries",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 9",
+      "subject": "Computing",
+      "indicator_entries": 37,
+      "mapped_entries": 37,
+      "proposed_unique_competencies": 37,
+      "distinct_printed_codes": 37,
+      "coverage_percent": 100,
+      "basis": "Phase8D_reviewed_source_entries",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 9",
+      "subject": "Science",
+      "indicator_entries": 58,
+      "mapped_entries": 58,
+      "proposed_unique_competencies": 58,
+      "distinct_printed_codes": 54,
+      "coverage_percent": 100,
+      "basis": "Phase8D_reviewed_source_entries",
+      "status": "documentation_mapping_only"
+    }
+  ],
+  "total_entries": 625,
+  "new_basic8_9_entries": 390
+}

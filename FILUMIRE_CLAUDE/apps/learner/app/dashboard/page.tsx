@@ -12,6 +12,7 @@ import {
 } from "react";
 import { LearningRequestOrder } from "../../services/learning-continuity";
 import { fetchDashboardSnapshot } from "../../services/learning-client";
+import { classUnavailableText, isClassUnavailable } from "../../services/learner-interface";
 import { completionPercent } from "../../services/learning-presentation";
 
 import {
@@ -178,6 +179,8 @@ function LearnerDashboardView() {
   const [setupAvatar, setSetupAvatar] = useState("1");
   const [viewState, setViewState] =
     useState<ViewState>("loading");
+  // A stored class that is no longer offered: the guardian must choose again.
+  const [classUnavailable, setClassUnavailable] = useState(false);
   const [data, setData] =
     useState<LearningResponse | null>(null);
   const [learnerName, setLearnerName] = useState("");
@@ -294,10 +297,12 @@ function LearnerDashboardView() {
       );
       if (!requestOrder.current.accepts(ticket)) return;
       setData(result);
+      setClassUnavailable(false);
       setViewState("ready");
     } catch (err) {
       if (!requestOrder.current.accepts(ticket)) return;
       setData(null);
+      setClassUnavailable(isClassUnavailable(err));
       setViewState(
         err instanceof LearningRequestError &&
           err.status === 401
@@ -627,7 +632,7 @@ function LearnerDashboardView() {
           <section className="fState" role="alert">
             <span className="fStateIcon warn" aria-hidden="true">!</span>
             <h1>{viewState === "offline" ? copy.offline : copy.unavailable}</h1>
-            <p>{viewState === "offline" ? copy.offlineBody : copy.unavailableBody}</p>
+            <p>{viewState === "offline" ? copy.offlineBody : classUnavailable ? classUnavailableText(language) : copy.unavailableBody}</p>
             <div className="fStateActions">
               <button
                 type="button"

@@ -1,0 +1,105 @@
+{
+  "origin": "http://127.0.0.1:3281",
+  "fictionalLearners": true,
+  "persistence": "memory",
+  "routes": [
+    {
+      "competencyId": "competency-gh-computing-b8-nacca2020-p054-r01",
+      "gradeId": "level-gh-basic-8-ccp",
+      "subjectId": "subject-gh-basic8-computing-ccp",
+      "english": "http://127.0.0.1:3281/?topic=0&lang=en",
+      "french": "http://127.0.0.1:3281/?topic=0&lang=fr"
+    },
+    {
+      "competencyId": "competency-gh-computing-b9-nacca2020-p070-r02",
+      "gradeId": "level-gh-basic-9-ccp",
+      "subjectId": "subject-gh-basic9-computing-ccp",
+      "english": "http://127.0.0.1:3281/?topic=1&lang=en",
+      "french": "http://127.0.0.1:3281/?topic=1&lang=fr"
+    },
+    {
+      "competencyId": "competency-gh-science-b8-nacca2020-p091-r01",
+      "gradeId": "level-gh-basic-8-ccp",
+      "subjectId": "subject-gh-basic8-science-ccp",
+      "english": "http://127.0.0.1:3281/?topic=2&lang=en",
+      "french": "http://127.0.0.1:3281/?topic=2&lang=fr"
+    },
+    {
+      "competencyId": "competency-gh-science-b9-nacca2020-p124-r02",
+      "gradeId": "level-gh-basic-9-ccp",
+      "subjectId": "subject-gh-basic9-science-ccp",
+      "english": "http://127.0.0.1:3281/?topic=3&lang=en",
+      "french": "http://127.0.0.1:3281/?topic=3&lang=fr"
+    },
+    {
+      "competencyId": "competency-gh-mathematics-b8-nacca2020-p120-r01",
+      "gradeId": "level-gh-basic-8-ccp",
+      "subjectId": "subject-gh-basic8-mathematics-ccp",
+      "english": "http://127.0.0.1:3281/?topic=4&lang=en",
+      "french": "http://127.0.0.1:3281/?topic=4&lang=fr"
+    },
+    {
+      "competencyId": "competency-gh-mathematics-b9-nacca2020-p195-r01",
+      "gradeId": "level-gh-basic-9-ccp",
+      "subjectId": "subject-gh-basic9-mathematics-ccp",
+      "english": "http://127.0.0.1:3281/?topic=5&lang=en",
+      "french": "http://127.0.0.1:3281/?topic=5&lang=fr"
+    },
+    {
+      "competencyId": "competency-gh-computing-b7-nacca2020-p031-r01",
+      "gradeId": "level-gh-basic-7-ccp",
+      "subjectId": "subject-gh-basic7-computing-ccp",
+      "english": "http://127.0.0.1:3281/?topic=6&lang=en",
+      "french": "http://127.0.0.1:3281/?topic=6&lang=fr"
+    },
+    {
+      "competencyId": "competency-gh-english-b7-nacca2020-p038-r01",
+      "gradeId": "level-gh-basic-7-ccp",
+      "subjectId": "subject-gh-basic7-english-ccp",
+      "english": "http://127.0.0.1:3281/?topic=7&lang=en",
+      "french": "http://127.0.0.1:3281/?topic=7&lang=fr"
+    },
+    {
+      "competencyId": "competency-gh-english-b8-nacca2020-p074-r01",
+      "gradeId": "level-gh-basic-8-ccp",
+      "subjectId": "subject-gh-basic8-english-ccp",
+      "english": "http://127.0.0.1:3281/?topic=8&lang=en",
+      "french": "http://127.0.0.1:3281/?topic=8&lang=fr"
+    },
+    {
+      "competencyId": "competency-gh-english-b9-nacca2020-p106-r01",
+      "gradeId": "level-gh-basic-9-ccp",
+      "subjectId": "subject-gh-basic9-english-ccp",
+      "english": "http://127.0.0.1:3281/?topic=9&lang=en",
+      "french": "http://127.0.0.1:3281/?topic=9&lang=fr"
+    },
+    {
+      "competencyId": "competency-gh-mathematics-b7-nacca2020-p034-r01",
+      "gradeId": "level-gh-basic-7-ccp",
+      "subjectId": "subject-gh-basic7-mathematics-ccp",
+      "english": "http://127.0.0.1:3281/?topic=10&lang=en",
+      "french": "http://127.0.0.1:3281/?topic=10&lang=fr"
+    },
+    {
+      "competencyId": "competency-gh-science-b7-nacca2020-p039-r01",
+      "gradeId": "level-gh-basic-7-ccp",
+      "subjectId": "subject-gh-basic7-science-ccp",
+      "english": "http://127.0.0.1:3281/?topic=11&lang=en",
+      "french": "http://127.0.0.1:3281/?topic=11&lang=fr"
+    },
+    {
+      "competencyId": "competency-gh-science-b7-nacca2020-p040-r01",
+      "gradeId": "level-gh-basic-7-ccp",
+      "subjectId": "subject-gh-basic7-science-ccp",
+      "english": "http://127.0.0.1:3281/?topic=12&lang=en",
+      "french": "http://127.0.0.1:3281/?topic=12&lang=fr"
+    },
+    {
+      "competencyId": "competency-gh-science-b7-nacca2020-p040-r02",
+      "gradeId": "level-gh-basic-7-ccp",
+      "subjectId": "subject-gh-basic7-science-ccp",
+      "english": "http://127.0.0.1:3281/?topic=13&lang=en",
+      "french": "http://127.0.0.1:3281/?topic=13&lang=fr"
+    }
+  ]
+}

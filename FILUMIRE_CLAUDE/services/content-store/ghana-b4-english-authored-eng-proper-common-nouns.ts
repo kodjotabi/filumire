@@ -70,7 +70,7 @@ const QUESTIONS: Question[] = [
     answer: 0,
     rules: { 1: ["treats_all_capitalised_words_as_proper_nouns", "misconception"], 2: ["confuses_category_name_with_specific_name", "misconception"], 3: ["omits_capital_letter_for_proper_noun", "misconception"] },
     code: "B4.3.1.1.2",
-    subskills: ["distinguish_proper_and_common_nouns"],
+    subskills: ["distinguish_proper_and_common_nouns", "recognise_common_noun"],
     criteria: ["demonstrates_distinguish_proper_and_common_nouns"],
     contexts: ["home"],
   },
@@ -178,4 +178,4 @@ export const GHANA_B4_ENG_PROPER_COMMON_NOUNS_AUTHORED_CONTENT = buildTopic(
   LESSONS,
   PRACTICE,
   QUESTIONS,
-);
+).map(item => item.id.includes("-diagnostic-capital-") ? { ...item, version: "authored-eng-proper-common-nouns-1.1" } : item);

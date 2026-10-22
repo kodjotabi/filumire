@@ -7,6 +7,29 @@ import {
 import type {
   PendingTeacherReviewRecord,
 } from "../persistence";
+import { getPilotMeasurementEvents } from "../pilot-measurement";
+import { getIntervention } from "../intervention-store";
+
+/** Recover the server-recorded delivery, never a teacher/client-supplied ID.
+ * Pending-review storage predates intervention IDs. Match the exact learner,
+ * session, topic, item and content, only at/before submission. Legacy reviews
+ * without a recorded delivery retain their existing unbound behaviour.
+ */
+export async function resolveReviewIntervention(review: PendingTeacherReviewRecord): Promise<string | undefined> {
+  const deliveries = (await getPilotMeasurementEvents(review.learnerId)).filter(event =>
+    event.eventType === "learning_presented" && event.sessionId === review.sessionId &&
+    event.competencyId === review.competencyId && event.createdAt <= review.submittedAt &&
+    event.metadata.source === "assessment-delivery-v1" &&
+    event.metadata.assessmentItemId === review.assessmentItemId &&
+    event.metadata.contentId === review.contentId && typeof event.metadata.interventionId === "string");
+  for (const event of [...deliveries].reverse().sort((a, b) => b.createdAt.localeCompare(a.createdAt))) {
+    const id = event.metadata.interventionId as string;
+    const intervention = await getIntervention(id);
+    if (intervention?.learnerId === review.learnerId && intervention.sessionId === review.sessionId &&
+      intervention.competencyId === review.competencyId) return id;
+  }
+  return undefined;
+}
 
 export interface PendingTeacherReviewSubmission {
   learnerId: string;

@@ -1,0 +1,122 @@
+[
+  {
+    "grade": 7,
+    "subject": "English Language",
+    "mapped": 53,
+    "authored": 0,
+    "APIValidated": 0,
+    "remainingAuthoring": 53,
+    "completeForLearnerRelease": 0,
+    "remainingForLearnerRelease": 53
+  },
+  {
+    "grade": 7,
+    "subject": "Mathematics",
+    "mapped": 74,
+    "authored": 0,
+    "APIValidated": 0,
+    "remainingAuthoring": 74,
+    "completeForLearnerRelease": 0,
+    "remainingForLearnerRelease": 74
+  },
+  {
+    "grade": 7,
+    "subject": "Computing",
+    "mapped": 55,
+    "authored": 0,
+    "APIValidated": 0,
+    "remainingAuthoring": 55,
+    "completeForLearnerRelease": 0,
+    "remainingForLearnerRelease": 55
+  },
+  {
+    "grade": 7,
+    "subject": "Science",
+    "mapped": 53,
+    "authored": 3,
+    "APIValidated": 3,
+    "remainingAuthoring": 50,
+    "completeForLearnerRelease": 0,
+    "remainingForLearnerRelease": 53
+  },
+  {
+    "grade": 8,
+    "subject": "English Language",
+    "mapped": 49,
+    "authored": 0,
+    "APIValidated": 0,
+    "remainingAuthoring": 49,
+    "completeForLearnerRelease": 0,
+    "remainingForLearnerRelease": 49
+  },
+  {
+    "grade": 8,
+    "subject": "Mathematics",
+    "mapped": 58,
+    "authored": 0,
+    "APIValidated": 0,
+    "remainingAuthoring": 58,
+    "completeForLearnerRelease": 0,
+    "remainingForLearnerRelease": 58
+  },
+  {
+    "grade": 8,
+    "subject": "Computing",
+    "mapped": 39,
+    "authored": 0,
+    "APIValidated": 0,
+    "remainingAuthoring": 39,
+    "completeForLearnerRelease": 0,
+    "remainingForLearnerRelease": 39
+  },
+  {
+    "grade": 8,
+    "subject": "Science",
+    "mapped": 46,
+    "authored": 0,
+    "APIValidated": 0,
+    "remainingAuthoring": 46,
+    "completeForLearnerRelease": 0,
+    "remainingForLearnerRelease": 46
+  },
+  {
+    "grade": 9,
+    "subject": "English Language",
+    "mapped": 51,
+    "authored": 0,
+    "APIValidated": 0,
+    "remainingAuthoring": 51,
+    "completeForLearnerRelease": 0,
+    "remainingForLearnerRelease": 51
+  },
+  {
+    "grade": 9,
+    "subject": "Mathematics",
+    "mapped": 52,
+    "authored": 0,
+    "APIValidated": 0,
+    "remainingAuthoring": 52,
+    "completeForLearnerRelease": 0,
+    "remainingForLearnerRelease": 52
+  },
+  {
+    "grade": 9,
+    "subject": "Computing",
+    "mapped": 37,
+    "authored": 0,
+    "APIValidated": 0,
+    "remainingAuthoring": 37,
+    "completeForLearnerRelease": 0,
+    "remainingForLearnerRelease": 37
+  },
+  {
+    "grade": 9,
+    "subject": "Science",
+    "mapped": 58,
+    "authored": 0,
+    "APIValidated": 0,
+    "remainingAuthoring": 58,
+    "completeForLearnerRelease": 0,
+    "remainingForLearnerRelease": 58
+  }
+]

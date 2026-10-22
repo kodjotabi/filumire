@@ -1,0 +1,236 @@
+{
+  "competencies": 862,
+  "catalogue_competencies": 859,
+  "framework_indicator_nodes": 866,
+  "content_records": 22432,
+  "questions": 15533,
+  "strategies": {
+    "multiple_choice": 15532,
+    "application": 1
+  },
+  "seeded_trusted_rubric_questions": 0,
+  "missing_representation_metadata_questions": 15533,
+  "missing_subskill_tag_competencies": 34,
+  "productive_review_candidates_heuristic_only": 99,
+  "shared_indicator_codes": [
+    {
+      "grade": 4,
+      "subject": "Mathematics",
+      "code": "B4.2.1.1.1",
+      "node_id": "node-gh-b4-math-b4.2.1.1.1",
+      "title": "Describe patterns in a table or chart",
+      "hierarchy": [
+        {
+          "id": "node-gh-b4-math-algebra",
+          "type": "strand",
+          "code": "B4.2",
+          "title": "Algebra",
+          "source": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019"
+        },
+        {
+          "id": "node-gh-b4-math-algebra-patterns-relationships",
+          "type": "sub_strand",
+          "code": "B4.2.1",
+          "title": "Patterns and Relationships",
+          "source": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019"
+        },
+        {
+          "id": "node-gh-b4-math-b4.2.1.1",
+          "type": "content_standard",
+          "code": "B4.2.1.1",
+          "title": "Identify and describe patterns found in tables and charts",
+          "source": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019"
+        },
+        {
+          "id": "node-gh-b4-math-b4.2.1.1.1",
+          "type": "learning_indicator",
+          "code": "B4.2.1.1.1",
+          "title": "Describe patterns in a table or chart",
+          "source": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019"
+        }
+      ],
+      "source_claim": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019",
+      "official_pdf_page": null,
+      "source_status": "repository_reference_only_official_pdf_page_unverified",
+      "competency_links": [
+        {
+          "competency_id": "competency-gh-math-b4-pattern-describe-001",
+          "relationship": "direct"
+        },
+        {
+          "competency_id": "competency-gh-math-b4-number-patterns-002",
+          "relationship": "direct"
+        }
+      ]
+    },
+    {
+      "grade": 4,
+      "subject": "Mathematics",
+      "code": "B4.2.1.1.2",
+      "node_id": "node-gh-b4-math-b4.2.1.1.2",
+      "title": "Determine missing elements in a table or chart",
+      "hierarchy": [
+        {
+          "id": "node-gh-b4-math-algebra",
+          "type": "strand",
+          "code": "B4.2",
+          "title": "Algebra",
+          "source": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019"
+        },
+        {
+          "id": "node-gh-b4-math-algebra-patterns-relationships",
+          "type": "sub_strand",
+          "code": "B4.2.1",
+          "title": "Patterns and Relationships",
+          "source": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019"
+        },
+        {
+          "id": "node-gh-b4-math-b4.2.1.1",
+          "type": "content_standard",
+          "code": "B4.2.1.1",
+          "title": "Identify and describe patterns found in tables and charts",
+          "source": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019"
+        },
+        {
+          "id": "node-gh-b4-math-b4.2.1.1.2",
+          "type": "learning_indicator",
+          "code": "B4.2.1.1.2",
+          "title": "Determine missing elements in a table or chart",
+          "source": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019"
+        }
+      ],
+      "source_claim": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019",
+      "official_pdf_page": null,
+      "source_status": "repository_reference_only_official_pdf_page_unverified",
+      "competency_links": [
+        {
+          "competency_id": "competency-gh-math-b4-pattern-missing-elements-001",
+          "relationship": "direct"
+        },
+        {
+          "competency_id": "competency-gh-math-b4-number-patterns-001",
+          "relationship": "direct"
+        }
+      ]
+    },
+    {
+      "grade": 4,
+      "subject": "Mathematics",
+      "code": "B4.2.1.3.1",
+      "node_id": "node-gh-b4-math-b4.2.1.3.1",
+      "title": "Translate problem information into a table or chart",
+      "hierarchy": [
+        {
+          "id": "node-gh-b4-math-algebra",
+          "type": "strand",
+          "code": "B4.2",
+          "title": "Algebra",
+          "source": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019"
+        },
+        {
+          "id": "node-gh-b4-math-algebra-patterns-relationships",
+          "type": "sub_strand",
+          "code": "B4.2.1",
+          "title": "Patterns and Relationships",
+          "source": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019"
+        },
+        {
+          "id": "node-gh-b4-math-b4.2.1.3",
+          "type": "content_standard",
+          "code": "B4.2.1.3",
+          "title": "Represent, describe and extend patterns and relationships",
+          "source": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019"
+        },
+        {
+          "id": "node-gh-b4-math-b4.2.1.3.1",
+          "type": "learning_indicator",
+          "code": "B4.2.1.3.1",
+          "title": "Translate problem information into a table or chart",
+          "source": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019"
+        }
+      ],
+      "source_claim": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019",
+      "official_pdf_page": null,
+      "source_status": "repository_reference_only_official_pdf_page_unverified",
+      "competency_links": [
+        {
+          "competency_id": "competency-gh-math-b4-pattern-problem-to-table-001",
+          "relationship": "direct"
+        },
+        {
+          "competency_id": "competency-gh-math-b4-number-patterns-003",
+          "relationship": "supports"
+        }
+      ]
+    },
+    {
+      "grade": 4,
+      "subject": "Mathematics",
+      "code": "B4.2.1.3.2",
+      "node_id": "node-gh-b4-math-b4.2.1.3.2",
+      "title": "Extend patterns to solve a problem",
+      "hierarchy": [
+        {
+          "id": "node-gh-b4-math-algebra",
+          "type": "strand",
+          "code": "B4.2",
+          "title": "Algebra",
+          "source": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019"
+        },
+        {
+          "id": "node-gh-b4-math-algebra-patterns-relationships",
+          "type": "sub_strand",
+          "code": "B4.2.1",
+          "title": "Patterns and Relationships",
+          "source": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019"
+        },
+        {
+          "id": "node-gh-b4-math-b4.2.1.3",
+          "type": "content_standard",
+          "code": "B4.2.1.3",
+          "title": "Represent, describe and extend patterns and relationships",
+          "source": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019"
+        },
+        {
+          "id": "node-gh-b4-math-b4.2.1.3.2",
+          "type": "learning_indicator",
+          "code": "B4.2.1.3.2",
+          "title": "Extend patterns to solve a problem",
+          "source": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019"
+        }
+      ],
+      "source_claim": "NaCCA Mathematics Curriculum for Primary Schools, Basic 4-6, September 2019",
+      "official_pdf_page": null,
+      "source_status": "repository_reference_only_official_pdf_page_unverified",
+      "competency_links": [
+        {
+          "competency_id": "competency-gh-math-b4-pattern-extension-problem-001",
+          "relationship": "direct"
+        },
+        {
+          "competency_id": "competency-gh-math-b4-number-patterns-001",
+          "relationship": "supports"
+        },
+        {
+          "competency_id": "competency-gh-math-b4-number-patterns-003",
+          "relationship": "direct"
+        }
+      ]
+    }
+  ],
+  "placeholders_found": 0,
+  "source_verified": false,
+  "official_denominator": null,
+  "bilingual_human_review_status": "unverified",
+  "english_b4_existing_text_crosscheck": {
+    "unique_codes": 131,
+    "text_codes_without_mapping": [],
+    "mapped_codes_absent_from_text": [],
+    "limitation": "existing text is not a verified PDF with page references"
+  },
+  "sampled_api_competencies": 12,
+  "api_cases": 48,
+  "api_cases_without_failed_checks": 48,
+  "inherited_files_verified_unchanged": 15,
+  "changedInheritedFiles": []
+}

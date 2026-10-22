@@ -2,6 +2,7 @@
   DiagnosticState,
   InterventionType,
 } from "../../packages/domain";
+import { seedContent } from '../content-store/seed';
 
 import {
   GHANA_MATH_PILOT_INITIAL_COMPETENCY_ID,
@@ -311,6 +312,7 @@ export async function buildAdultLearnerSummary(
   learnerId: string,
   language: SummaryLanguage = "en",
 ): Promise<AdultLearnerSummary> {
+  seedContent();
   const messages = SUMMARY_MESSAGES[language];
   let learnerState;
 

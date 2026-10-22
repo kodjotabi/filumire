@@ -7,20 +7,36 @@ const errors = {
   wait: { en: "Please wait a moment before trying again. Your recorded work is kept.", fr: "Attends un instant avant de réessayer. Ton travail enregistré est conservé." },
   network: { en: "FILUMIRE cannot reach the server. Check your connection and try again.", fr: "FILUMIRE ne peut pas joindre le serveur. Vérifie ta connexion et réessaie." },
   unavailable: { en: "This action could not be confirmed. Try again; your recorded work is kept.", fr: "Cette action n’a pas pu être confirmée. Réessaie ; ton travail enregistré est conservé." },
+  // Same English text as the learning API's class_unavailable response.
+  classUnavailable: { en: "Your class is not available right now. Ask your parent or guardian to choose your class.", fr: "Ta classe n’est pas disponible pour le moment. Demande à ton parent ou tuteur de choisir ta classe." },
 };
+/** The learning API's 409 class_unavailable: the stored class is no longer offered. */
+export function isClassUnavailable(error: unknown): boolean {
+  const status = error && typeof error === "object" && "status" in error ? (error as { status: unknown }).status : undefined;
+  return status === 409 && error instanceof Error && error.message === errors.classUnavailable.en;
+}
+export function classUnavailableText(language: Language): string {
+  return errors.classUnavailable[language];
+}
 /** UI wording only: never changes pending answers, retry IDs or authoritative data. */
 export function learnerErrorText(error: unknown, language: Language): string {
   const status = error && typeof error === "object" && "status" in error ? (error as { status: unknown }).status : undefined;
   const name = error instanceof Error ? error.name : "";
+  if (isClassUnavailable(error)) return errors.classUnavailable[language];
   const kind = status === 401 ? "signIn" : status === 403 ? "access" : status === 409 ? "changed" : status === 429 ? "wait" : status === 0 || error instanceof LearningNetworkError || name === "LearningNetworkError" ? "network" : "unavailable";
   return errors[kind][language];
 }
 export function translateLearnerError(text: string, language: Language): string | undefined {
   return Object.values(errors).find((entry) => entry.en === text || entry.fr === text)?.[language];
 }
-export function lessonLanguageNotice(contentLanguage: "en" | "fr" | undefined, interfaceLanguage: Language): string | undefined {
+export function lessonLanguageNotice(contentLanguage: "en" | "fr" | undefined, interfaceLanguage: Language, retainingQuestion = false): string | undefined {
   if (!contentLanguage || contentLanguage === interfaceLanguage) return;
+  if (retainingQuestion) {
+    return interfaceLanguage === "fr"
+      ? "Cette question reste en anglais pendant la correction et le nouvel essai. Ta progression et tes réponses sont conservées."
+      : "This question stays in French during correction and retry. Your progress and answers are kept.";
+  }
   return interfaceLanguage === "fr"
-    ? "Le texte actuel de cette leçon est en anglais. Une version française validée n’a pas été fournie pour cette activité. Ton apprentissage enregistré est conservé."
-    : "The current lesson text is in French. A trusted English version has not been supplied for this activity. Your recorded learning is kept.";
+    ? "Cette activité est en anglais. Ta progression enregistrée est conservée."
+    : "This activity is in French. Your saved progress is kept.";
 }

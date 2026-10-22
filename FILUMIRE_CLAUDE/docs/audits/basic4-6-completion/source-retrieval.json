@@ -1,0 +1,29 @@
+{
+  "retrievedAt": "2026-10-22T08:31:15.900Z",
+  "documents": [
+    {
+      "subject": "english",
+      "url": "https://nacca.gov.gh/wp-content/uploads/2019/06/ENGLISH-B4-B6.pdf",
+      "status": "unavailable",
+      "error": "TypeError: fetch failed"
+    },
+    {
+      "subject": "mathematics",
+      "url": "https://nacca.gov.gh/wp-content/uploads/2019/04/MATHS-UPPER-PRIMARY-B4-B6.pdf",
+      "status": "unavailable",
+      "error": "TypeError: fetch failed"
+    },
+    {
+      "subject": "science",
+      "url": "https://nacca.gov.gh/wp-content/uploads/2019/04/SCIENCE-UPPER-PRIMARY-B4-B6.pdf",
+      "status": "unavailable",
+      "error": "TypeError: fetch failed"
+    },
+    {
+      "subject": "computing",
+      "url": "https://nacca.gov.gh/wp-content/uploads/2019/04/COMPUTING-B4-B6.pdf",
+      "status": "unavailable",
+      "error": "TypeError: fetch failed"
+    }
+  ]
+}

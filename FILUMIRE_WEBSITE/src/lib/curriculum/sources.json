@@ -1,0 +1,42 @@
+[
+  {
+    "id": "mathematics",
+    "file": "/curriculum-sources/NaCCA-Mathematics-B4-B6-2019.pdf",
+    "edition": "September 2019",
+    "authority": "NaCCA / Ministry of Education, Ghana",
+    "sha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+    "pdfPages": 183,
+    "detailStartsAt": 23,
+    "verification": "source-extracted; outstanding issues listed in inventory"
+  },
+  {
+    "id": "english",
+    "file": "/curriculum-sources/ENGLISH-B4-B6.pdf",
+    "edition": "September 2019",
+    "authority": "NaCCA / Ministry of Education, Ghana",
+    "sha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+    "pdfPages": 246,
+    "detailStartsAt": 26,
+    "verification": "source-extracted; outstanding issues listed in inventory"
+  },
+  {
+    "id": "science",
+    "file": "/curriculum-sources/NaCCA-Science-B4-B6-2019.pdf",
+    "edition": "September 2019",
+    "authority": "NaCCA / Ministry of Education, Ghana",
+    "sha256": "9fd09042246256c1248d6976c4ee82b8b02c910fec771bc797ec2b05320e3c7b",
+    "pdfPages": 69,
+    "detailStartsAt": 24,
+    "verification": "source-extracted; outstanding issues listed in inventory"
+  },
+  {
+    "id": "computing",
+    "file": "/curriculum-sources/NaCCA-Computing-B4-B6-2019.pdf",
+    "edition": "September 2019",
+    "authority": "NaCCA / Ministry of Education, Ghana",
+    "sha256": "d622739de46fdc138508aa82b56a196453581677cd653bcab5f4b3723eb1ecca",
+    "pdfPages": 76,
+    "detailStartsAt": 23,
+    "verification": "source-extracted; outstanding issues listed in inventory"
+  }
+]

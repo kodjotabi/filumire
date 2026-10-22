@@ -1,3 +1,5 @@
+import { B5_COMPLETION_CONTENT } from "./ghana-b5-completion-authored";
+import { B5_COMPLETION_SCIENCE } from "../../packages/curriculum/ghana-b5-completion-specs";
 import type { LearningContent } from "../../packages/content";
 import {
   GHANA_B5_SCIENCE_LIFE_PROCESSES_AUTHORED_CONTENT,
@@ -143,7 +145,10 @@ export const AUTHORED_B5_SCIENCE_COMPETENCY_IDS: string[] = [
   GHANA_B5_SCIENCE_DEFORESTATION_CLIMATE_AUTHORED_COMPETENCY_ID,
 ];
 
+AUTHORED_B5_SCIENCE_COMPETENCY_IDS.push(...B5_COMPLETION_SCIENCE.map(spec => spec.competencyId));
+
 export const AUTHORED_B5_SCIENCE_CONTENT: LearningContent[] = [
+  ...B5_COMPLETION_CONTENT.filter(item => B5_COMPLETION_SCIENCE.some(spec => spec.competencyId === item.competencyId)),
   ...GHANA_B5_SCIENCE_LIFE_PROCESSES_AUTHORED_CONTENT,
   ...GHANA_B5_SCIENCE_LIVING_NONLIVING_AUTHORED_CONTENT,
   ...GHANA_B5_SCIENCE_MATERIAL_PROPERTIES_AUTHORED_CONTENT,

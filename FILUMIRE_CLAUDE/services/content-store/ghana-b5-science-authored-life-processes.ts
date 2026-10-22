@@ -11,8 +11,8 @@ const LESSONS: Lesson[] = [
     strategy: "direct_explanation",
     title: { en: "Life Processes", fr: "Les processus de la vie" },
     body: {
-      en: "All living things carry out life processes. Growth means getting bigger and developing. Sensitivity means sensing changes around you and responding to them, such as a plant turning toward light or a child pulling a hand away from a hot pot. Respiration means releasing energy from food with the help of oxygen, and every living thing does it, plants included. Excretion means removing waste that the body has made, such as carbon dioxide from the lungs, urine from the kidneys and sweat from the skin.",
-      fr: "Tous les êtres vivants accomplissent des processus de la vie. La croissance consiste à grandir et à se développer. La sensibilité consiste à percevoir les changements autour de soi et à y réagir, comme une plante qui se tourne vers la lumière ou un enfant qui retire sa main d'une marmite chaude. La respiration consiste à libérer de l'énergie à partir des aliments avec l'aide de l'oxygène, et tous les êtres vivants la font, les plantes comprises. L'excrétion consiste à éliminer les déchets fabriqués par le corps, comme le dioxyde de carbone par les poumons, l'urine par les reins et la sueur par la peau.",
+      en: "All living things carry out life processes. Growth means getting bigger and developing. Sensitivity means sensing changes around you and responding to them, such as a plant turning toward light or a child pulling a hand away from a hot pot. Respiration releases energy from food in living cells. Plants respire as well as animals. Excretion means removing waste that the body has made, such as carbon dioxide from the lungs, urine from the kidneys and sweat from the skin.",
+      fr: "Tous les êtres vivants accomplissent des processus de la vie. La croissance consiste à grandir et à se développer. La sensibilité consiste à percevoir les changements autour de soi et à y réagir, comme une plante qui se tourne vers la lumière ou un enfant qui retire sa main d'une marmite chaude. La respiration libère de l'énergie à partir des aliments dans les cellules vivantes. Les plantes respirent, tout comme les animaux. L'excrétion consiste à éliminer les déchets fabriqués par le corps, comme le dioxyde de carbone par les poumons, l'urine par les reins et la sueur par la peau.",
     },
   },
   {
@@ -31,8 +31,8 @@ const LESSONS: Lesson[] = [
     strategy: "step_by_step_scaffold",
     title: { en: "Step by Step", fr: "Pas à pas" },
     body: {
-      en: "Step 1: Is it getting bigger or developing? That is growth. Step 2: Does it react to light, heat, touch or sound? That is sensitivity. Step 3: Is it releasing energy from food with oxygen? That is respiration. Step 4: Is it getting rid of waste that its body made? That is excretion.",
-      fr: "Étape 1 : Est-ce qu'il grandit ou se développe ? C'est la croissance. Étape 2 : Est-ce qu'il réagit à la lumière, à la chaleur, au toucher ou au son ? C'est la sensibilité. Étape 3 : Est-ce qu'il libère de l'énergie à partir des aliments avec l'oxygène ? C'est la respiration. Étape 4 : Est-ce qu'il se débarrasse de déchets fabriqués par son corps ? C'est l'excrétion.",
+      en: "Step 1: Is it getting bigger or developing? That is growth. Step 2: Does it react to light, heat, touch or sound? That is sensitivity. Step 3: Is it releasing energy from food in its cells? That is respiration. Step 4: Is it getting rid of waste that its body made? That is excretion.",
+      fr: "Étape 1 : Est-ce qu'il grandit ou se développe ? C'est la croissance. Étape 2 : Est-ce qu'il réagit à la lumière, à la chaleur, au toucher ou au son ? C'est la sensibilité. Étape 3 : Est-ce qu'il libère de l'énergie à partir des aliments dans ses cellules ? C'est la respiration. Étape 4 : Est-ce qu'il se débarrasse de déchets fabriqués par son corps ? C'est l'excrétion.",
     },
   },
   {
@@ -179,4 +179,6 @@ export const GHANA_B5_SCIENCE_LIFE_PROCESSES_AUTHORED_CONTENT = buildTopic(
   LESSONS,
   PRACTICE,
   QUESTIONS,
-);
+).map((item) => item.type === "lesson" || item.type === "scaffold"
+  ? { ...item, version: "authored-life-processes-1.1" }
+  : item);

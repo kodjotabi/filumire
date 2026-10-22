@@ -13,7 +13,8 @@
  *    kept for the next person using the same phone.
  */
 
-const VERSION = "filumire-shell-v1";
+// Refresh the precached offline page after fixing its French visibility rules.
+const VERSION = "filumire-shell-v2";
 const STATIC_CACHE = `${VERSION}-static`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 const RUNTIME_LIMIT = 80;

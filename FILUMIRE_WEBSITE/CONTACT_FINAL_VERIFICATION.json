@@ -1,0 +1,156 @@
+{
+  "date": "2026-10-12",
+  "workspace": "C:/Users/tabi/Desktop/filumire/FILUMIRE_WEBSITE",
+  "deploymentReady": false,
+  "contact": {
+    "http": [
+      {
+        "path": "/contact",
+        "status": 200,
+        "oneForm": true,
+        "fields": [
+          "inquiry-name",
+          "inquiry-email",
+          "inquiry-message"
+        ],
+        "labels": [
+          "Your name",
+          "Your email address",
+          "Your message"
+        ],
+        "send": true,
+        "noExtraPanels": true,
+        "locale": true,
+        "formAnchor": true,
+        "brandClasses": true
+      },
+      {
+        "path": "/fr/contact",
+        "status": 200,
+        "oneForm": true,
+        "fields": [
+          "inquiry-name",
+          "inquiry-email",
+          "inquiry-message"
+        ],
+        "labels": [
+          "Votre nom",
+          "Votre adresse de courriel",
+          "Votre message"
+        ],
+        "send": true,
+        "noExtraPanels": true,
+        "locale": true,
+        "formAnchor": true,
+        "brandClasses": true
+      },
+      {
+        "path": "/contact?inquiry=school-pilot",
+        "status": 200,
+        "oneForm": true,
+        "fields": [
+          "inquiry-name",
+          "inquiry-email",
+          "inquiry-message"
+        ],
+        "labels": [
+          "Your name",
+          "Your email address",
+          "Your message"
+        ],
+        "send": true,
+        "noExtraPanels": true,
+        "locale": true,
+        "formAnchor": true,
+        "brandClasses": true
+      },
+      {
+        "path": "/fr/contact?inquiry=partnership",
+        "status": 200,
+        "oneForm": true,
+        "fields": [
+          "inquiry-name",
+          "inquiry-email",
+          "inquiry-message"
+        ],
+        "labels": [
+          "Votre nom",
+          "Votre adresse de courriel",
+          "Votre message"
+        ],
+        "send": true,
+        "noExtraPanels": true,
+        "locale": true,
+        "formAnchor": true,
+        "brandClasses": true
+      }
+    ],
+    "design": "Existing site section/container, form controls, brand button and no outer card border preserved",
+    "accessibility": "Labels, required fields, aria-invalid/error associations, focused validation errors, live feedback and confirmation focus retained",
+    "responsive": "Fluid max-width 640px form, full-width 16px inputs, 48px input targets and site media queries reviewed; real viewport testing unavailable"
+  },
+  "smtp": {
+    "primarySenderVariable": "FILUMIRE_CONTACT_FROM",
+    "legacySenderFallback": "FILUMIRE_SMTP_FROM",
+    "exactProductionNamesTested": true,
+    "reportedHost": "smtppro.zoho.com",
+    "port": 465,
+    "recipient": "info@filumire.com",
+    "tls": "Implicit TLS; certificate verification; SNI; minimum TLSv1.2",
+    "confirmation": "Only after final SMTP 250 acceptance; inbox receipt not claimed",
+    "productionSettingsEvidence": "Owner-reported; no hosted environment or secret values read",
+    "liveDelivery": "Not attempted; reserved for approved post-deployment verification"
+  },
+  "validation": {
+    "tests": {
+      "exitCode": 0,
+      "passed": 63,
+      "failed": 0,
+      "mailTransport": "Injected mock, no real mail"
+    },
+    "typecheck": {
+      "exitCode": 0,
+      "note": "Sequential rerun after build/type generation passed"
+    },
+    "productionBuild": {
+      "exitCode": 1,
+      "status": "BLOCKED",
+      "reason": "Google Fonts fetch fails with connect EACCES"
+    },
+    "networkProbe": [
+      {
+        "host": "fonts.googleapis.com",
+        "error": "EACCES"
+      },
+      {
+        "host": "fonts.gstatic.com",
+        "error": "EACCES"
+      },
+      {
+        "host": "example.com",
+        "error": "EACCES"
+      }
+    ],
+    "browser": "Unavailable: no connected browser"
+  },
+  "blockers": [
+    "A successful production build is still required; local outbound HTTPS restriction prevents font fetches.",
+    "Real mobile rendering and keyboard interactions remain unverified."
+  ],
+  "risks": [
+    "Actual SMTP authentication and inbox receipt require the approved post-deployment test.",
+    "Rate limits remain per instance, not globally durable."
+  ],
+  "scope": {
+    "dnsModified": false,
+    "deployed": false,
+    "otherRepositoriesModified": false,
+    "hostedSettingsModified": false
+  },
+  "changedFiles": [
+    "src/lib/server/smtp.ts",
+    "tests/contact.test.mjs",
+    ".env.example",
+    "NATIVE_CONTACT_SETUP.md"
+  ]
+}

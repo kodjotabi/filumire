@@ -1,0 +1,2454 @@
+{
+  "generatedAt": "2026-10-22T08:43:51.798Z",
+  "baseline": "main snapshot, without Phase 8E retention repair",
+  "results": [
+    {
+      "grade": 4,
+      "subject": "Mathematics",
+      "subjectId": "subject-gh-basic-4-mathematics-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-math-b4-number-patterns-001",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8400000000000001,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "scaffold/PROCEDURAL_ERROR",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 4,
+      "subject": "Mathematics",
+      "subjectId": "subject-gh-basic-4-mathematics-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-math-b4-number-patterns-001",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8475,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "teach/CONCEPTUAL_MISUNDERSTANDING",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 4,
+      "subject": "Science",
+      "subjectId": "subject-gh-basic4-science-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-science-b4-animal-classification-001",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8475,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 4,
+      "subject": "Science",
+      "subjectId": "subject-gh-basic4-science-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-science-b4-animal-classification-001",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8475,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 4,
+      "subject": "Computing",
+      "subjectId": "subject-gh-basic4-computing-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-computing-b4-computer-parts-001",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8025000000000001,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 4,
+      "subject": "Computing",
+      "subjectId": "subject-gh-basic4-computing-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-computing-b4-computer-parts-001",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8025000000000001,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 4,
+      "subject": "English Language",
+      "subjectId": "subject-gh-basic4-english-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-english-b4-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8025000000000001,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 4,
+      "subject": "English Language",
+      "subjectId": "subject-gh-basic4-english-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-english-b4-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8025000000000001,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 5,
+      "subject": "Science",
+      "subjectId": "subject-gh-basic5-science-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-science-b5-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8475,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 5,
+      "subject": "Science",
+      "subjectId": "subject-gh-basic5-science-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-science-b5-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8475,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 6,
+      "subject": "Science",
+      "subjectId": "subject-gh-basic6-science-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-science-b6-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8475,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 6,
+      "subject": "Science",
+      "subjectId": "subject-gh-basic6-science-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-science-b6-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8475,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 5,
+      "subject": "Computing",
+      "subjectId": "subject-gh-basic5-computing-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-computing-b5-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8475,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 5,
+      "subject": "Computing",
+      "subjectId": "subject-gh-basic5-computing-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-computing-b5-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8475,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 6,
+      "subject": "Computing",
+      "subjectId": "subject-gh-basic6-computing-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-computing-b6-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8925000000000001,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 6,
+      "subject": "Computing",
+      "subjectId": "subject-gh-basic6-computing-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-computing-b6-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8925000000000001,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 5,
+      "subject": "Mathematics",
+      "subjectId": "subject-gh-basic5-mathematics-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-math-b5-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8925000000000001,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 5,
+      "subject": "Mathematics",
+      "subjectId": "subject-gh-basic5-mathematics-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-math-b5-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8925000000000001,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 6,
+      "subject": "Mathematics",
+      "subjectId": "subject-gh-basic6-mathematics-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-math-b6-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8475,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 6,
+      "subject": "Mathematics",
+      "subjectId": "subject-gh-basic6-mathematics-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-math-b6-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8475,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 5,
+      "subject": "English Language",
+      "subjectId": "subject-gh-basic5-english-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-english-b5-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8475,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 5,
+      "subject": "English Language",
+      "subjectId": "subject-gh-basic5-english-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-english-b5-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8475,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 6,
+      "subject": "English Language",
+      "subjectId": "subject-gh-basic6-english-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-english-b6-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8925000000000001,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "grade": 6,
+      "subject": "English Language",
+      "subjectId": "subject-gh-basic6-english-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-english-b6-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "incorrect_answer_correction": "verified",
+        "repeated_mistake_guided_evidence_integrity": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8925000000000001,
+        "evidenceCount": 8,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "remediate/MISCONCEPTION",
+        "reassess/INSTRUCTION_CHECK",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ],
+      "scenario": "repeated_mistakes"
+    },
+    {
+      "scenario": "perfect",
+      "grade": 4,
+      "subject": "Mathematics",
+      "subjectId": "subject-gh-basic-4-mathematics-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-math-b4-number-patterns-001",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8400000000000001,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 4,
+      "subject": "Mathematics",
+      "subjectId": "subject-gh-basic-4-mathematics-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-math-b4-number-patterns-001",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8437500000000001,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 4,
+      "subject": "Science",
+      "subjectId": "subject-gh-basic4-science-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-science-b4-animal-classification-001",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8437500000000001,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 4,
+      "subject": "Science",
+      "subjectId": "subject-gh-basic4-science-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-science-b4-animal-classification-001",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8437500000000001,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 4,
+      "subject": "Computing",
+      "subjectId": "subject-gh-basic4-computing-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-computing-b4-computer-parts-001",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.972,
+        "confidence": 0.8495,
+        "evidenceCount": 7,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 4,
+      "subject": "Computing",
+      "subjectId": "subject-gh-basic4-computing-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-computing-b4-computer-parts-001",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.972,
+        "confidence": 0.8495,
+        "evidenceCount": 7,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 4,
+      "subject": "English Language",
+      "subjectId": "subject-gh-basic4-english-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-english-b4-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.972,
+        "confidence": 0.8495,
+        "evidenceCount": 7,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 4,
+      "subject": "English Language",
+      "subjectId": "subject-gh-basic4-english-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-english-b4-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.972,
+        "confidence": 0.8495,
+        "evidenceCount": 7,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 5,
+      "subject": "Science",
+      "subjectId": "subject-gh-basic5-science-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-science-b5-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8887500000000002,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 5,
+      "subject": "Science",
+      "subjectId": "subject-gh-basic5-science-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-science-b5-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8887500000000002,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 6,
+      "subject": "Science",
+      "subjectId": "subject-gh-basic6-science-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-science-b6-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8437500000000001,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 6,
+      "subject": "Science",
+      "subjectId": "subject-gh-basic6-science-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-science-b6-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8437500000000001,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 5,
+      "subject": "Computing",
+      "subjectId": "subject-gh-basic5-computing-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-computing-b5-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8437500000000001,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 5,
+      "subject": "Computing",
+      "subjectId": "subject-gh-basic5-computing-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-computing-b5-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8437500000000001,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 6,
+      "subject": "Computing",
+      "subjectId": "subject-gh-basic6-computing-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-computing-b6-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8887500000000002,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 6,
+      "subject": "Computing",
+      "subjectId": "subject-gh-basic6-computing-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-computing-b6-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8887500000000002,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 5,
+      "subject": "Mathematics",
+      "subjectId": "subject-gh-basic5-mathematics-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-math-b5-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8887500000000002,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 5,
+      "subject": "Mathematics",
+      "subjectId": "subject-gh-basic5-mathematics-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-math-b5-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8887500000000002,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 6,
+      "subject": "Mathematics",
+      "subjectId": "subject-gh-basic6-mathematics-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-math-b6-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8437500000000001,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 6,
+      "subject": "Mathematics",
+      "subjectId": "subject-gh-basic6-mathematics-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-math-b6-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8437500000000001,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 5,
+      "subject": "English Language",
+      "subjectId": "subject-gh-basic5-english-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-english-b5-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8887500000000002,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 5,
+      "subject": "English Language",
+      "subjectId": "subject-gh-basic5-english-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-english-b5-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8887500000000002,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 6,
+      "subject": "English Language",
+      "subjectId": "subject-gh-basic6-english-pilot",
+      "language": "en",
+      "competencyId": "competency-gh-english-b6-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8887500000000002,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    },
+    {
+      "scenario": "perfect",
+      "grade": 6,
+      "subject": "English Language",
+      "subjectId": "subject-gh-basic6-english-pilot",
+      "language": "fr",
+      "competencyId": "competency-gh-english-b6-1-1-1-1",
+      "scope": "one prerequisite-free topic per subject/grade/language, actual in-memory learning API, not all competencies or database/browser verification",
+      "checks": {
+        "explanation": "verified",
+        "interrupted_explanation_resume": "verified",
+        "worked_example": "verified",
+        "guided_practice": "verified",
+        "unanswered_question_resume": "verified",
+        "correct_guided_answer": "verified",
+        "mastery_after_correction": "verified",
+        "transfer": "verified",
+        "retention_scheduling": "verified",
+        "due_retention_delivery": "verified",
+        "retention_scoring": "verified"
+      },
+      "observations": [],
+      "finalState": {
+        "mastery": 0.9650000000000001,
+        "confidence": 0.8887500000000002,
+        "evidenceCount": 6,
+        "transfer": "demonstrated",
+        "retention": "not_tested"
+      },
+      "actions": [
+        "diagnose/INSUFFICIENT_EVIDENCE",
+        "practice/PRACTICE_REQUIRED",
+        "transfer_check/TRANSFER_REQUIRED"
+      ],
+      "retentionDecision": "retention_check",
+      "pendingActivities": [
+        {
+          "type": "teach",
+          "status": "completed",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        },
+        {
+          "type": "retention_check",
+          "status": "active",
+          "outcome": "not_yet_evaluated",
+          "evidenceIds": []
+        }
+      ]
+    }
+  ]
+}

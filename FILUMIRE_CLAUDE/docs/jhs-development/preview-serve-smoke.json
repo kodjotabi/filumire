@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "origin": "http://127.0.0.1:3281",
+  "competencyId": "competency-gh-science-b7-nacca2020-p039-r01",
+  "httpStatus": 200,
+  "language": "fr",
+  "scope": "loopback memory-only signed session; app startup and API smoke"
+}

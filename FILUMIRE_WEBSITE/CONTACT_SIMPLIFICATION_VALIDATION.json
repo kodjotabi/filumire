@@ -1,0 +1,137 @@
+{
+  "date": "2026-10-12",
+  "workspace": "C:/Users/tabi/Desktop/filumire/FILUMIRE_WEBSITE",
+  "changes": [
+    "src/components/pages/contact.tsx",
+    "src/components/ContactInquiry.tsx",
+    "src/lib/server/contact.ts",
+    "src/lib/translations.ts",
+    "src/app/globals.css",
+    "tests/contact.test.mjs",
+    "NATIVE_CONTACT_SETUP.md",
+    "scripts/check-links.mjs"
+  ],
+  "tests": {
+    "code": 0,
+    "passed": 58,
+    "failed": 0
+  },
+  "typecheck": {
+    "code": 0
+  },
+  "productionBuild": {
+    "status": "BLOCKED",
+    "code": 1,
+    "reason": "Google Fonts downloads for Montserrat and Kalam fail with connect EACCES in restricted environment; no fonts or unrelated layout changed."
+  },
+  "contactHttp": {
+    "status": "PASS",
+    "pages": [
+      {
+        "path": "/contact",
+        "status": 200,
+        "forms": 1,
+        "labels": [
+          "Your name",
+          "Your email address",
+          "Your message"
+        ],
+        "send": true,
+        "removed": true,
+        "formAnchor": true,
+        "locale": true
+      },
+      {
+        "path": "/fr/contact",
+        "status": 200,
+        "forms": 1,
+        "labels": [
+          "Votre nom",
+          "Votre adresse de courriel",
+          "Votre message"
+        ],
+        "send": true,
+        "removed": true,
+        "formAnchor": true,
+        "locale": true
+      },
+      {
+        "path": "/contact?inquiry=school-pilot",
+        "status": 200,
+        "forms": 1,
+        "labels": [
+          "Your name",
+          "Your email address",
+          "Your message"
+        ],
+        "send": true,
+        "removed": true,
+        "formAnchor": true,
+        "locale": true
+      },
+      {
+        "path": "/fr/contact?inquiry=partnership",
+        "status": 200,
+        "forms": 1,
+        "labels": [
+          "Votre nom",
+          "Votre adresse de courriel",
+          "Votre message"
+        ],
+        "send": true,
+        "removed": true,
+        "formAnchor": true,
+        "locale": true
+      }
+    ],
+    "api": [
+      {
+        "locale": "en",
+        "invalid": false,
+        "status": 503,
+        "body": {
+          "message": "Messaging is currently unavailable. No message was sent. Please try again later."
+        }
+      },
+      {
+        "locale": "en",
+        "invalid": true,
+        "status": 400,
+        "body": {
+          "message": "Please enter a message between 10 and 3,000 characters.",
+          "field": "message"
+        }
+      },
+      {
+        "locale": "fr",
+        "invalid": false,
+        "status": 503,
+        "body": {
+          "message": "La messagerie est actuellement indisponible. Aucun message n’a été envoyé. Réessayez plus tard."
+        }
+      },
+      {
+        "locale": "fr",
+        "invalid": true,
+        "status": 400,
+        "body": {
+          "message": "Rédigez un message de 10 à 3 000 caractères.",
+          "field": "message"
+        }
+      }
+    ]
+  },
+  "fullLinks": {
+    "status": "BLOCKED",
+    "reason": "Existing homepage development rendering error in translateTree: attempted to render h3 without development properties; HTTP 500."
+  },
+  "browser": {
+    "status": "UNVERIFIED",
+    "reason": "No connected browser available."
+  },
+  "emailDelivery": {
+    "status": "NOT ENABLED",
+    "reason": "SMTP is unconfigured. Tests use injected mock transport; no real mail sent."
+  },
+  "deployment": "NOT PERFORMED"
+}

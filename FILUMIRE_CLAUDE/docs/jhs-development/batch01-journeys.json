@@ -1,0 +1,134 @@
+[
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p039-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "4d68f5cc04b0fe24db4a12163d8bb9252d3e6c3b55d9a7432cf651583ea5d143",
+    "code": "B7.1.1.1.1",
+    "language": "en",
+    "retentionOutcome": "correct",
+    "passed": true,
+    "scope": "in-memory API; fictional teacher fixtures, no educational approval"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p039-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "4d68f5cc04b0fe24db4a12163d8bb9252d3e6c3b55d9a7432cf651583ea5d143",
+    "code": "B7.1.1.1.1",
+    "language": "en",
+    "retentionOutcome": "incorrect",
+    "passed": true,
+    "scope": "in-memory API; fictional teacher fixtures, no educational approval"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p039-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "4d68f5cc04b0fe24db4a12163d8bb9252d3e6c3b55d9a7432cf651583ea5d143",
+    "code": "B7.1.1.1.1",
+    "language": "fr",
+    "retentionOutcome": "correct",
+    "passed": true,
+    "scope": "in-memory API; fictional teacher fixtures, no educational approval"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p039-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "4d68f5cc04b0fe24db4a12163d8bb9252d3e6c3b55d9a7432cf651583ea5d143",
+    "code": "B7.1.1.1.1",
+    "language": "fr",
+    "retentionOutcome": "incorrect",
+    "passed": true,
+    "scope": "in-memory API; fictional teacher fixtures, no educational approval"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p040-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "41ddbba93819a9f4340d9faff5c44af125afca06bdfa43d4890ed7f38f280abe",
+    "code": "B7.1.1.1.2",
+    "language": "en",
+    "retentionOutcome": "correct",
+    "passed": true,
+    "scope": "in-memory API; fictional teacher fixtures, no educational approval"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p040-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "41ddbba93819a9f4340d9faff5c44af125afca06bdfa43d4890ed7f38f280abe",
+    "code": "B7.1.1.1.2",
+    "language": "en",
+    "retentionOutcome": "incorrect",
+    "passed": true,
+    "scope": "in-memory API; fictional teacher fixtures, no educational approval"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p040-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "41ddbba93819a9f4340d9faff5c44af125afca06bdfa43d4890ed7f38f280abe",
+    "code": "B7.1.1.1.2",
+    "language": "fr",
+    "retentionOutcome": "correct",
+    "passed": true,
+    "scope": "in-memory API; fictional teacher fixtures, no educational approval"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p040-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "41ddbba93819a9f4340d9faff5c44af125afca06bdfa43d4890ed7f38f280abe",
+    "code": "B7.1.1.1.2",
+    "language": "fr",
+    "retentionOutcome": "incorrect",
+    "passed": true,
+    "scope": "in-memory API; fictional teacher fixtures, no educational approval"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p040-r02",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "dc23770cab4961891a4d9c06ea6407783761cbbbc679c092b6be01701411afc8",
+    "code": "B7.1.1.1.3",
+    "language": "en",
+    "retentionOutcome": "correct",
+    "passed": true,
+    "scope": "in-memory API; fictional teacher fixtures, no educational approval"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p040-r02",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "dc23770cab4961891a4d9c06ea6407783761cbbbc679c092b6be01701411afc8",
+    "code": "B7.1.1.1.3",
+    "language": "en",
+    "retentionOutcome": "incorrect",
+    "passed": true,
+    "scope": "in-memory API; fictional teacher fixtures, no educational approval"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p040-r02",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "dc23770cab4961891a4d9c06ea6407783761cbbbc679c092b6be01701411afc8",
+    "code": "B7.1.1.1.3",
+    "language": "fr",
+    "retentionOutcome": "correct",
+    "passed": true,
+    "scope": "in-memory API; fictional teacher fixtures, no educational approval"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p040-r02",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "dc23770cab4961891a4d9c06ea6407783761cbbbc679c092b6be01701411afc8",
+    "code": "B7.1.1.1.3",
+    "language": "fr",
+    "retentionOutcome": "incorrect",
+    "passed": true,
+    "scope": "in-memory API; fictional teacher fixtures, no educational approval"
+  }
+]

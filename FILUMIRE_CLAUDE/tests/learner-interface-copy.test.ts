@@ -14,8 +14,16 @@ assert.match(learnerErrorText(new LearningNetworkError("fixture"), "fr"), /conne
 assert.match(learnerErrorText(new Error("fixture"), "en"), /could not be confirmed/);
 assert.equal(lessonLanguageNotice("fr", "fr"), undefined);
 assert.equal(lessonLanguageNotice(undefined, "fr"), undefined, "unknown curriculum language must not be invented");
-assert.match(lessonLanguageNotice("en", "fr")!, /version française validée/);
-assert.match(lessonLanguageNotice("fr", "en")!, /trusted English version/);
+assert.equal(lessonLanguageNotice("en", "en", true), undefined);
+assert.equal(lessonLanguageNotice(undefined, "en", true), undefined);
+for (const [content, language] of [["en", "fr"], ["fr", "en"]] as const) {
+  const activity = lessonLanguageNotice(content, language)!;
+  const retained = lessonLanguageNotice(content, language, true)!;
+  assert(!/not been supplied|pas été fournie|unavailable|indisponible/.test(activity + retained), "a language mismatch does not establish that a translation is missing");
+  assert.match(activity, language === "fr" ? /activité.*anglais/ : /activity.*French/);
+  assert.match(retained, language === "fr" ? /question reste en anglais.*correction.*essai/ : /question stays in French.*correction.*retry/);
+  assert.match(retained, language === "fr" ? /progression.*réponses.*conservées/ : /progress.*answers.*kept/);
+}
 const target = new URL(withLang("/dashboard?view=learning&subjectId=fictional-math&lang=en", "fr"), "http://fixture.local");
 assert.equal(target.searchParams.get("subjectId"), "fictional-math"); assert.equal(target.searchParams.get("view"), "learning"); assert.equal(target.searchParams.getAll("lang").length, 1); assert.equal(target.searchParams.get("lang"), "fr");
 console.log("PASS: safe bilingual errors, switching after errors, honest curriculum fallback and language-preserving subject navigation");

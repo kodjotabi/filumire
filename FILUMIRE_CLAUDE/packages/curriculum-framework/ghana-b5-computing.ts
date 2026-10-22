@@ -133,5 +133,9 @@ export function getGhanaB5ComputingNodes(subjectId: FrameworkSubjectId): Curricu
     node(subjectId, "B5.6.10.1.2", "learning_indicator", "Illustrate how to keep some information from the public when using the internet", 2, id("B5.6.10.1")),
     node(subjectId, "B5.7.1.1.1", "learning_indicator", "Identify major health hazards of using ICT tools", 1, id("B5.7.1.1")),
     node(subjectId, "B5.7.1.1.2", "learning_indicator", "Describe proper sitting posture when using a computer", 2, id("B5.7.1.1")),
+    { ...node(subjectId, "B5.1.3.1.9", "learning_indicator", "Make Tables and Diagrams from Data", 9, id("B5.1.3.1")), sourceReference: "NaCCA Computing B4-B6, September 2019; PDF36, printed15; B5. 1.3.1.9" },
+    { ...node(subjectId, "B5.1.3.1.10", "learning_indicator", "Analyse Data and Explain Conclusions", 10, id("B5.1.3.1")), sourceReference: "NaCCA Computing B4-B6, September 2019; PDF36, printed15; B5. 1.3.1.10" },
+    { ...node(subjectId, "B5.6.4.9.1", "content_standard", "Demonstrate proficiency in Digital Literacy", 1, id("B5.6.9")), sourceReference: "NaCCA Computing B4-B6, September 2019; PDF48, printed27; literal printed six-part hierarchy preserved" },
+    { ...node(subjectId, "B5.6.4.9.1.2", "learning_indicator", "Protect Against Online Identity Theft", 2, id("B5.6.4.9.1")), sourceReference: "NaCCA Computing B4-B6, September 2019; PDF48, printed27; B5.6.4.9.1.2." },
   ];
 }

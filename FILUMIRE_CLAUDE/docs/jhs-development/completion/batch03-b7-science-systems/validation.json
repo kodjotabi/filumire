@@ -1,0 +1,430 @@
+{
+  "batch": "batch03-b7-science-systems",
+  "sourceIndicators": 9,
+  "newBilingualRecords": 234,
+  "apiCasesPassed": 36,
+  "apiCasesFailed": 0,
+  "browserCasesPassed": 36,
+  "browserCasesFailed": 0,
+  "regressionSuitesPassed": 11,
+  "regressionSuitesFailed": 0,
+  "typescriptPassed": true,
+  "productionBuildPassed": true,
+  "aggregate": {
+    "mapped": 625,
+    "authoredDraft": 42,
+    "technicallyValidated": 42,
+    "remainingAuthoring": 583,
+    "unresolvedSourceRows": 39,
+    "releaseApproved": 0
+  },
+  "inheritedOrigins": [
+    {
+      "path": "apps/learner/app/api/learning/closure/route.ts",
+      "sha256": "9cac39c0e439779f0626c9c1429c5d86de6d1801c84198f35d42d865f9a8ed9e",
+      "unchanged": true
+    },
+    {
+      "path": "apps/learner/app/learn/page.tsx",
+      "sha256": "b016b4485b9c5630ecaa940ed83d427dce33261a768f4d4dff1b66974f7c9d00",
+      "unchanged": true
+    },
+    {
+      "path": "apps/learner/components/filumire/AnswerCorrectionPanel.tsx",
+      "sha256": "6bcc7f6b906380556c74a6b23eb84ba7519f06b9df88bea01af2caeebb52b0e0",
+      "unchanged": true
+    },
+    {
+      "path": "apps/learner/services/learner-interface.ts",
+      "sha256": "7824e2e3b3486df3d2c3090e168a60a2ad2b70945580d1ac85ce8f76ffef6eae",
+      "unchanged": true
+    },
+    {
+      "path": "package.json",
+      "sha256": "81617061ec7460cdf6c15a9904fbbb6f0551ad11b7c28b8fb000a530d8b2f7ed",
+      "unchanged": true
+    },
+    {
+      "path": "packages/curriculum-framework/index.ts",
+      "sha256": "ec088e25e9b1738b70c1b53f6e134b4f1428ed1f752969339db0fba822fb9847",
+      "unchanged": true
+    },
+    {
+      "path": "packages/curriculum/index.ts",
+      "sha256": "851043bc78ee2a716ed6fe87c19147a49f6ee6a3d68ff9afa1aca4748cf3fc5a",
+      "unchanged": true
+    },
+    {
+      "path": "services/learner-path/revision.ts",
+      "sha256": "3d82554b3f326c0c33f65ffedeafb60ff3d433aa92351b5bf907820f5ad34a41",
+      "unchanged": true
+    },
+    {
+      "path": "tests/ask-filu-navigation.browser.mjs",
+      "sha256": "1b8ca47a53fab28ff7f7a84503ab3a0c5c717421078ddfc8926a1227b3e92697",
+      "unchanged": true
+    },
+    {
+      "path": "tests/immediate-correction.test.ts",
+      "sha256": "59c84d0a70ef748b7319210d821a539f6c5b28a5ab7d9282a48bbae0a907e718",
+      "unchanged": true
+    },
+    {
+      "path": "tests/learner-interface-copy.test.ts",
+      "sha256": "ddfe56848886efe579cae4b7440df975f959c3f5662c2345a648d3105e171f8e",
+      "unchanged": true
+    },
+    {
+      "path": "tests/lesson-closure-production.test.ts",
+      "sha256": "14616024dd004dd796bb8399c643709cb0d7e487eaa73d809074a0652a5b3ff7",
+      "unchanged": true
+    },
+    {
+      "path": "tests/prerequisite-repair-4d.test.ts",
+      "sha256": "ca46a35d45a8a6bba7e864999124ced16b4dda1dbd4bfeb3d1efd28590f5caa8",
+      "unchanged": true
+    },
+    {
+      "path": "tests/route-advance-4g.test.ts",
+      "sha256": "4d7e3ec985d0ed567bdfc59f238f7f1192f2aed971a544130779be5f5efb14ed",
+      "unchanged": true
+    },
+    {
+      "path": "packages/curriculum-framework/ghana-b4-english.ts",
+      "sha256": "015bda071bbf13992e7e7a66c1cb456ea21206880765ddd1ef1728b6b5f4bd75",
+      "unchanged": true
+    },
+    {
+      "path": "packages/curriculum-framework/ghana-b7-ccp-data.json",
+      "sha256": "d87f6b5f4aa7c64e73c7e50441b4582503e737564bd0e7e30d88d466db69d885",
+      "unchanged": true
+    },
+    {
+      "path": "packages/curriculum-framework/ghana-b7-ccp.ts",
+      "sha256": "a4a99d726f63d758e0b7d26d63076e77b246f52f6b51d0167e3f98531a47b6f1",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/generate-b7-framework.mjs",
+      "sha256": "be08a325474f8a444760c292ebb1cc2c611568d259bd1288b177d683b1538987",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/validate-retention-repair.mjs",
+      "sha256": "35155e5d969212bc27b2b2afc1cde13438def362a70ea518bbba7908931fe79f",
+      "unchanged": true
+    },
+    {
+      "path": "services/content-store/ghana-b7-materials-pilot.ts",
+      "sha256": "8f7410e26d69dc4837f5c2b4494b51e2bff9231d82a2fe65a7f803a06ec43fbc",
+      "unchanged": true
+    },
+    {
+      "path": "services/learner-progress/ghana-b7-materials-pilot.ts",
+      "sha256": "1f9259297373ef9a6458eb698afd5b3f4a2ab746ed041e0ebf0779efbc23e920",
+      "unchanged": true
+    },
+    {
+      "path": "tests/b4-framework-registration.test.ts",
+      "sha256": "c4fcc5e846151e19ab871a48a0e43cbedf91cb792c936c72bfaec9926bcf3a3d",
+      "unchanged": true
+    },
+    {
+      "path": "tests/b7-existing-curriculum-regression.test.ts",
+      "sha256": "354b71d8a07669939949298d8b88bbd6902a46ac2bc8812aadb5fe210225cb09",
+      "unchanged": true
+    },
+    {
+      "path": "tests/b7-framework-registration.test.ts",
+      "sha256": "1d618860417d292522e04e8911aa2ecbec217a24c99c9f821be9669d5fa0425d",
+      "unchanged": true
+    },
+    {
+      "path": "tests/basic7-materials-pilot.browser.mjs",
+      "sha256": "d1712cda7b4f7cdcc0d8242f6c1feb6d8de86a8b548441f3c6463786cfbeeb94",
+      "unchanged": true
+    },
+    {
+      "path": "tests/basic7-materials-pilot.test.ts",
+      "sha256": "3ff75442df6aabdfdba20a6cf1218da3c24e2cbc1325bdb80325785d295e54b1",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/basic7-materials-app.tsx",
+      "sha256": "d8e7a568d2d187be851d7dd60552ca72cc39365560a04af0e62b0f286e98f9f9",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/basic7-materials-pilot.ts",
+      "sha256": "a83543819f50446ca3f8f13112aaf684d1f7c3ee6d067d035e53d6c30b287076",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/current-topic-route.ts",
+      "sha256": "cb254e2f2c59ceac64fad29c1f785c6efbacd134f18c39f1040be6a89bcf46ca",
+      "unchanged": true
+    },
+    {
+      "path": "tests/learner-interface-repairs.browser.mjs",
+      "sha256": "7037f83f756237d3da2ab3e7a52f7143c0a324c581b300881412ce057ac87bc9",
+      "unchanged": true
+    },
+    {
+      "path": "tests/teaching-first-retention.test.ts",
+      "sha256": "a39c7bc7b3112dd44384c21f15c56c2c57b7ddc65add82442f1aa30e22b3f9c7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-9-coverage.csv",
+      "sha256": "2f4d8afe6945de518fd61c76d5bf460b2a2a319ce324cb685402458a03fc9002",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-9-coverage.json",
+      "sha256": "a9056575a0aaa67e7e472cbe8412a4d1522874c32bbd977c2be7790f7615395a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-coverage-matrix.csv",
+      "sha256": "59861ca0cebeac8e2f470857fc48dc3344b72badf153d482d4623eef64f0566b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-curriculum-structure.json",
+      "sha256": "cb1c21c955678dfff8e04699d1f75c952e77236e95f1767f21f3a9f386a79bb7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-filumire-mapping.csv",
+      "sha256": "3280a2887587d92e07845660152f139ef7787fabe9de601da1c909c9b786e45a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-filumire-mapping.json",
+      "sha256": "5b990ee30fc0e4825087a5dca1252a46b4e134ef17b2c29eadf7dc68fac64236",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-mapping-source-issues.json",
+      "sha256": "e731cfe27ab9a371bcfb92b0cc6123b77f313d52b4e2bb8845a0ec22fb02ffd9",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-mapping-source-review.json",
+      "sha256": "de4e7e28f58c07cf4fd14866f1cf7350debc476540a541f581dfafd9e106919b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-mapping-validation.json",
+      "sha256": "3bf5f252825c3657f35fa82b1de1b6a03df96889444027d35a4cfddc866ad86b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-source-manifest.json",
+      "sha256": "e098fa35f5c1cae0223b6df512896d057120fd51245b1b7c1e85fdd576757609",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-validation.json",
+      "sha256": "7a1946e31944297fa280623e4c76a18135bd835eb575bc855f771b97c7e1f902",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic8-curriculum-inventory.csv",
+      "sha256": "4bbebc145f8e4057a001abe7a7ae57ce034a658c7cf6464a9641bbd1b4b68b3e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic8-curriculum-inventory.json",
+      "sha256": "bb2e51e6863a83ccbd3e4207ace4841a73d15bcbda03eeefb9db5d55a241dc9f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic8-filumire-mapping.csv",
+      "sha256": "6078ec2b4f57c138f15f41045a3946e6510b2dadc62a6361be4770dab9883657",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic8-filumire-mapping.json",
+      "sha256": "1d065d4b01bdd17aa716dde53447a5c4f41c86d4adc9102e53bbb086df32bc55",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic89-source-issues.json",
+      "sha256": "ce4ad0526852b47f7bbbd4a1a054be4078cba739b3e1544c1d6c9b7d8c370a20",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic9-curriculum-inventory.csv",
+      "sha256": "725b969fb63c45ad3ac4e9f1a1cb3e5a9bd53649b80ad98ef0ffbd48eec74295",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic9-curriculum-inventory.json",
+      "sha256": "5a1232f65ed130ca0929a75bdbf8d89a69efe7b8a42b015d98731cf8f4052d9d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic9-filumire-mapping.csv",
+      "sha256": "02d25bc65f59c3104a395bd8d6658f8018bd2da56b2fbedb97d4116a95267481",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic9-filumire-mapping.json",
+      "sha256": "144a0f2086692eb982b0fecbba3e15f6ddec0d5e38a45795ec55403cdbf84aa0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/build-basic7-mapping.mjs",
+      "sha256": "94b019f53840e521d1e57b20c174ac41de31c4e708cd30a424bf0b57625440f3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/build-basic89-mapping.mjs",
+      "sha256": "d3b0f559193f80e7039fabb3f443856dc45d0dab9ec98f9c2ff1d1c06101425f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/extract-basic7.mjs",
+      "sha256": "834bc5742c062b218cbaf353edba581094cec455ab7fe8ecb551b94462fd4fb6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/extract-basic89.mjs",
+      "sha256": "32a02c70510d1fc2efb44e528db8e120507322d1c502be543f8a7077a9f0e2af",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/PHASE8B-MAPPING-AND-IMPLEMENTATION-PLAN.md",
+      "sha256": "b8f9cb88345d137f222d32959495fbb3628cc35bba4df1a41f22553dd438ec70",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/PHASE8C-FRAMEWORK-INTEGRATION.md",
+      "sha256": "b470da99455587fa5532d72254c93daccb2c7b7b625f6d1103324491bd20e55a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/PHASE8D-COVERAGE-AND-REVIEW.md",
+      "sha256": "2aa6dcf95818b8ad276f07d397c88cde225985ab4a71d51e2248ca7a01d498dd",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/PHASE8D-FILES.md",
+      "sha256": "acf0a11797ac953f63bb3d48d0f0f893847210e3ee6df7ec8ace09dc5e44c500",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-input-lock.json",
+      "sha256": "ddaaee7d21ed137403ae020f91041734bf98b33d76a635c971b04ee5911e9350",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-output-manifest.json",
+      "sha256": "b215f79c4a006ab898e752271895e682e823a205a85117cc430e7fbac03ba49b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-reviewed-anchors.json",
+      "sha256": "0c48a1a9db7284e2325440e2f02aebb0f4114976259fc122835e777c56990dcb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-reviewed-corrections.json",
+      "sha256": "9b09a2dae342e8aad2aae829dd77483c6831b41fb4be2b350337fa376775b68d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-source.mjs",
+      "sha256": "ca0989ab242aada9d45bae90ec1273f9b61c75026530ee9b808449aa4fa3c5f2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/phase8d-validation.json",
+      "sha256": "a51b88bd201f582dee78895fc5eed56804b42d0a2a3cce044100b5f88d57d63f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/README.md",
+      "sha256": "12156c73ed4a0b50ec83ca40e987d961c26a02b1300f46e718877cdd271a6b60",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/render-basic7-mapping-review.mjs",
+      "sha256": "ea37b152fca25cb09c35f701012524e016af854ca4c522b6dcd256f204e4cde7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/render-basic89-review.mjs",
+      "sha256": "6ec429fda04ae7fe39dbfb09f14a41d1e8e32757b420f42736c99f02d6dbd266",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/validate-basic7-mapping.mjs",
+      "sha256": "9ebcbc5360e7a46cf39892f818ccffcc26d310f987d3cd7140dec88824cdbe56",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/validate-basic7.mjs",
+      "sha256": "3510d81beb28bedcf0d7d78b2407bb5bb264d94c0fab766b97481ea0f011d25a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/validate-basic89.mjs",
+      "sha256": "0ee3dba8827fef3b1c8c99f13543eec18cfb6f96a63367d8ac18712fbfb1faaf",
+      "unchanged": true
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/write-phase8d-report.mjs",
+      "sha256": "68a4f732d4645947d8231c62bd4bfae94ed5f037796b5d02a63e0fe636830a8f",
+      "unchanged": true
+    },
+    {
+      "path": "apps/learner/app/api/teacher/review/route.ts",
+      "sha256": "362dc309c72be37410b749f91150fba636576c804d20854c2973156dde5cce8a",
+      "unchanged": true
+    },
+    {
+      "path": "services/teacher-review/index.ts",
+      "sha256": "3795e28123f95a07776c3aa93aa89854fb6a23e55324d149921e569621a5c88c",
+      "unchanged": true
+    },
+    {
+      "path": "tests/teacher-review-delivery-provenance.test.ts",
+      "sha256": "f8b0f78a1e0b126165ec1a268b9d78e7bd39c2d073a20c67eea38087dd23d6e8",
+      "unchanged": true
+    },
+    {
+      "path": "apps/learner/public/offline.html",
+      "sha256": "a61fa05fdc0af6e04c7b8364e0f375f77a0589ace8915832c0e12cc86fe30de6",
+      "unchanged": true
+    },
+    {
+      "path": "apps/learner/public/sw.js",
+      "sha256": "a9782c8e25c5449829d228eeef3ae5e876ba9e3ef8ece39ca1daee15d0cba0d5",
+      "unchanged": true
+    },
+    {
+      "path": "tests/offline-shell-v1.test.ts",
+      "sha256": "b73bfcc38d735588699f1cde35856b1c5ccc5841e526478aa6aa0f4fabd413a5",
+      "unchanged": true
+    },
+    {
+      "path": "tests/learner-offline-repairs.browser.mjs",
+      "sha256": "0bb608a2a58619c8b7ce8b95e749eca75e67e5660548b13fa4c0c4721022dfc0",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/audit-basic4-6-offline.browser.mjs",
+      "sha256": "08070f4278b57fa564daadb3876a5c7036b4cc14a4e985f0ec63f38ce6c80c11",
+      "unchanged": true
+    }
+  ],
+  "programmeComplete": false,
+  "fullClaudeIntegrationHandoverReady": false,
+  "limitations": [
+    "All content remains draft and hidden; educator/French approval not supplied",
+    "Fictional teacher decisions test mechanics, not real productive/practical competence",
+    "Real database, full service-worker offline flow, subject-wide sequencing and production JHS interfaces require later validation"
+  ]
+}

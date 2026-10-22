@@ -1,0 +1,1149 @@
+{
+  "schema_version": 1,
+  "policy": "No official indicator code is repaired or renumbered. Source-supported hierarchy resolutions are explicit. Global authenticity/edition/assessment blockers apply even to entries without row-specific issues.",
+  "issues": [
+    {
+      "id": "8D-SOURCE-AUTHENTICATION",
+      "subject": "all",
+      "grades": [
+        8,
+        9
+      ],
+      "status": "unresolved",
+      "description": "Existing PDFs were retrieved over unauthenticated official-host HTTP after HTTPS timeouts. Original hashes are unchanged; no new authenticity claim is made.",
+      "source_pdf_pages": [],
+      "affected_entries": [],
+      "required_action": "Reconfirm the pinned files over authenticated HTTPS or against authenticated publisher checksums before production acceptance.",
+      "source_entry_details": [],
+      "affected_printed_codes": []
+    },
+    {
+      "id": "8D-ASSESSMENT-REFERENCES",
+      "subject": "all",
+      "grades": [
+        8,
+        9
+      ],
+      "status": "unresolved",
+      "description": "NPLAF (2020a) and School-Based Assessment Guidelines (2020b) are cited but are not part of the four verified PDFs.",
+      "source_pdf_pages": [],
+      "affected_entries": [],
+      "required_action": "Verify those references before claiming complete national assessment/reporting compliance.",
+      "source_entry_details": [],
+      "affected_printed_codes": []
+    },
+    {
+      "id": "8D-EDITION",
+      "subject": "all",
+      "grades": [
+        8,
+        9
+      ],
+      "status": "unresolved",
+      "description": "Cover, imprint, footer years and three-/four-year programme wording differ, as documented in Phase 8A/8B.",
+      "source_pdf_pages": [],
+      "affected_entries": [],
+      "required_action": "Keep original edition evidence; no latest-edition claim or automatic source substitution.",
+      "source_entry_details": [],
+      "affected_printed_codes": []
+    },
+    {
+      "id": "8D-EN8-EDITORIAL",
+      "subject": "english",
+      "grades": [
+        8
+      ],
+      "status": "unresolved",
+      "description": "The PDF visibly includes a red missing-example annotation at PDF 86 and a request to check red numbering at PDF 89. These are source editorial annotations, not extraction errors.",
+      "source_pdf_pages": [
+        86,
+        89
+      ],
+      "affected_entries": [
+        "english:pdf86:row1",
+        "english:pdf89:row1",
+        "english:pdf89:row2"
+      ],
+      "required_action": "Obtain an authenticated final/errata version or publisher clarification; do not supply the missing example or repair codes.",
+      "source_entry_details": [
+        {
+          "entry_id": "english:pdf86:row1",
+          "grade": "Basic 8",
+          "printed_code": "B8.3.1.1.1",
+          "displayed_parent_code": "B8.3.1.1",
+          "statement": "Use an increasing range of singular and plural forms of compound nouns correctly and appropriately in sentences",
+          "pdf_page": 86,
+          "printed_page": "50",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "english:pdf89:row1",
+          "grade": "Basic 8",
+          "printed_code": "B8.3.1.5.2",
+          "displayed_parent_code": "B8.3.1.1",
+          "statement": "Demonstrate command of the use of reported speech",
+          "pdf_page": 89,
+          "printed_page": "53",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "english:pdf89:row2",
+          "grade": "Basic 8",
+          "printed_code": "B8.3.1.6.1",
+          "displayed_parent_code": "B8.3.1.6",
+          "statement": "Demonstrate command of question tags",
+          "pdf_page": 89,
+          "printed_page": "53",
+          "cross_grade_references": []
+        }
+      ],
+      "affected_printed_codes": [
+        "B8.3.1.1.1",
+        "B8.3.1.5.2",
+        "B8.3.1.6.1"
+      ]
+    },
+    {
+      "id": "8D-EN9-EDITORIAL",
+      "subject": "english",
+      "grades": [
+        9
+      ],
+      "status": "unresolved",
+      "description": "The content-standard cell on PDF 127 includes a red request to check an omission. Original wording remains unchanged.",
+      "source_pdf_pages": [
+        127
+      ],
+      "affected_entries": [
+        "english:pdf127:row1"
+      ],
+      "required_action": "Publisher clarification before treating the annotated standard as final.",
+      "source_entry_details": [
+        {
+          "entry_id": "english:pdf127:row1",
+          "grade": "Basic 9",
+          "printed_code": "B9.4.1.2.1",
+          "displayed_parent_code": "B9.4.1.2",
+          "statement": "Compose more complex paragraphs using appropriate strategies",
+          "pdf_page": 127,
+          "printed_page": "91",
+          "cross_grade_references": []
+        }
+      ],
+      "affected_printed_codes": [
+        "B9.4.1.2.1"
+      ]
+    },
+    {
+      "id": "8D-MATH9-SUMMARY",
+      "subject": "mathematics",
+      "grades": [
+        9
+      ],
+      "status": "unresolved",
+      "description": "Overview PDF 30 lists 17 Basic 9 standards and one Shapes and Space standard. The detailed section has 18 standards, including B9.3.1.1 and B9.3.1.2.",
+      "source_pdf_pages": [
+        30,
+        226,
+        229
+      ],
+      "affected_entries": [],
+      "required_action": "Keep every detailed standard and indicator. Obtain publisher clarification of the overview total.",
+      "source_entry_details": [],
+      "affected_printed_codes": []
+    },
+    {
+      "id": "8D-MATH9-VECTOR-PARENT",
+      "subject": "mathematics",
+      "grades": [
+        9
+      ],
+      "status": "unresolved",
+      "description": "The position-vector indicator B9.3.2.1.4 is displayed beneath the prism surface-area standard B.9.3.2.1. Its printed parent and code are preserved.",
+      "source_pdf_pages": [
+        235,
+        237
+      ],
+      "affected_entries": [
+        "mathematics:pdf237:row1"
+      ],
+      "required_action": "Review intended content-standard scope; do not silently reparent the indicator.",
+      "source_entry_details": [
+        {
+          "entry_id": "mathematics:pdf237:row1",
+          "grade": "Basic 9",
+          "printed_code": "B9.3.2.1.4",
+          "displayed_parent_code": "B.9.3.2.1",
+          "statement": "Express points in the Cartesian plane as position vectors",
+          "pdf_page": 237,
+          "printed_page": "207",
+          "cross_grade_references": []
+        }
+      ],
+      "affected_printed_codes": [
+        "B9.3.2.1.4"
+      ]
+    },
+    {
+      "id": "8D-SCI8-CELL-SCOPE",
+      "subject": "science",
+      "grades": [
+        8
+      ],
+      "status": "unresolved",
+      "description": "B8.1.2.1.2 classifies organisms (plants or animals) as prokaryotic or eukaryotic. The source wording and exemplars require scientific review.",
+      "source_pdf_pages": [
+        93
+      ],
+      "affected_entries": [
+        "science:pdf93:row2"
+      ],
+      "required_action": "A qualified Science reviewer should clarify the intended biological scope before any instruction is authored.",
+      "source_entry_details": [
+        {
+          "entry_id": "science:pdf93:row2",
+          "grade": "Basic 8",
+          "printed_code": "B8.1.2.1.2",
+          "displayed_parent_code": "B8.1.2.1",
+          "statement": "Classify organisms (plants or animals) as prokaryotic or eukaryotic based on the type of cells they are made of",
+          "pdf_page": 93,
+          "printed_page": "56",
+          "cross_grade_references": []
+        }
+      ],
+      "affected_printed_codes": [
+        "B8.1.2.1.2"
+      ]
+    },
+    {
+      "id": "8D-SCI8-FORCE",
+      "subject": "science",
+      "grades": [
+        8
+      ],
+      "status": "unresolved",
+      "description": "B8.4.4.1.2 links magnetic force and Newton’s Second Law. Preserve both the statement and exemplars pending subject review.",
+      "source_pdf_pages": [
+        111
+      ],
+      "affected_entries": [
+        "science:pdf111:row2"
+      ],
+      "required_action": "Review scientific scope and the required evidence before implementation.",
+      "source_entry_details": [
+        {
+          "entry_id": "science:pdf111:row2",
+          "grade": "Basic 8",
+          "printed_code": "B8.4.4.1.2",
+          "displayed_parent_code": "B8.4.4.1",
+          "statement": "Explain the relationship between magnetic force and Newton’s Second Law of motion; and show the law’s application to life.",
+          "pdf_page": 111,
+          "printed_page": "74",
+          "cross_grade_references": []
+        }
+      ],
+      "affected_printed_codes": [
+        "B8.4.4.1.2"
+      ]
+    },
+    {
+      "id": "8D-SCI-SCOPE-ORDER",
+      "subject": "science",
+      "grades": [
+        8,
+        9
+      ],
+      "status": "unresolved",
+      "description": "The Forces and Energy sub-strand numbering in the general scope (PDF 36) differs from the detailed tables. The detailed tables include Energy and five sub-strands.",
+      "source_pdf_pages": [
+        36,
+        106,
+        109,
+        110,
+        111,
+        113,
+        144,
+        146,
+        147,
+        148,
+        150
+      ],
+      "affected_entries": [],
+      "required_action": "Use displayed detailed-table parents for this inventory; request publisher clarification before reconciling navigation labels.",
+      "source_entry_details": [],
+      "affected_printed_codes": []
+    },
+    {
+      "id": "8D-SCI9-PARENT-VARIANTS",
+      "subject": "science",
+      "grades": [
+        9
+      ],
+      "status": "unresolved",
+      "description": "Printed B9.4.4.2 has changing Newton-law descriptions at PDF 148/149; B9.5.2.2 describes health/disease at PDF 153 and selected fungal diseases at PDF 154. Every displayed parent fragment is retained per entry.",
+      "source_pdf_pages": [
+        148,
+        149,
+        153,
+        154
+      ],
+      "affected_entries": [
+        "science:pdf148:row2",
+        "science:pdf149:row1",
+        "science:pdf149:row2",
+        "science:pdf153:row1",
+        "science:pdf153:row2",
+        "science:pdf154:row1"
+      ],
+      "required_action": "Review whether these are repeated standards, misplaced statements or numbering errors. No official replacement codes or merged competency scopes.",
+      "source_entry_details": [
+        {
+          "entry_id": "science:pdf148:row2",
+          "grade": "Basic 9",
+          "printed_code": "B9.4.4.2.1",
+          "displayed_parent_code": "B9.4.4.2",
+          "statement": "Explain the importance of Newton’s Third Law of Motion in life.",
+          "pdf_page": 148,
+          "printed_page": "111",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "science:pdf149:row1",
+          "grade": "Basic 9",
+          "printed_code": "B9.4.4.1.2",
+          "displayed_parent_code": "B9.4.4.2",
+          "statement": "Demonstrate the application of Newton’s Third Law of motion in life.",
+          "pdf_page": 149,
+          "printed_page": "112",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "science:pdf149:row2",
+          "grade": "Basic 9",
+          "printed_code": "B9.4.4.2.1",
+          "displayed_parent_code": "B9.4.4.2",
+          "statement": "Explain Newton’s Laws of Motion and their applications to daily life.",
+          "pdf_page": 149,
+          "printed_page": "112",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "science:pdf153:row1",
+          "grade": "Basic 9",
+          "printed_code": "B9.5.2.2.1",
+          "displayed_parent_code": "B9.5.2.2",
+          "statement": "Explain the concepts of health and disease and show their relationship.",
+          "pdf_page": 153,
+          "printed_page": "116",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "science:pdf153:row2",
+          "grade": "Basic 9",
+          "printed_code": "B9.5.2.2.2",
+          "displayed_parent_code": "B9.5.2.2",
+          "statement": "Explain the concept of common diseases in an environment.",
+          "pdf_page": 153,
+          "printed_page": "116",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "science:pdf154:row1",
+          "grade": "Basic 9",
+          "printed_code": "B9.5.2.2.1",
+          "displayed_parent_code": "B9.5.2.2",
+          "statement": "Explain the nature of fungal diseases with special emphasis on Ringworm/candidiasis/fingernail, and toe nail infection, their causes, symptoms, effects on humans and its prevention",
+          "pdf_page": 154,
+          "printed_page": "117",
+          "cross_grade_references": []
+        }
+      ],
+      "affected_printed_codes": [
+        "B9.4.4.2.1",
+        "B9.4.4.1.2",
+        "B9.5.2.2.1",
+        "B9.5.2.2.2"
+      ]
+    },
+    {
+      "id": "8D-COMP-SOFTWARE",
+      "subject": "computing",
+      "grades": [
+        8,
+        9
+      ],
+      "status": "unresolved",
+      "description": "The curriculum names version-/service-specific interfaces and products, including Charms, MS-Publisher, Periscope and named AI demonstrations. This phase preserves the published requirements without certifying current availability.",
+      "source_pdf_pages": [
+        54,
+        59,
+        63,
+        76,
+        85
+      ],
+      "affected_entries": [],
+      "required_action": "Review feasible supported tools and equivalence before instructional implementation; preserve original source requirements.",
+      "source_entry_details": [],
+      "affected_printed_codes": []
+    },
+    {
+      "id": "8D-MATH-NOTATION",
+      "subject": "mathematics",
+      "grades": [
+        8,
+        9
+      ],
+      "status": "requires_subject_review",
+      "description": "PDF text order does not reproduce fractions, roots, column vectors, superscripts or geometric diagrams. Four leading statements have explicit visual transcriptions; the complete original cells and PDFs remain authoritative.",
+      "source_pdf_pages": [
+        173,
+        179,
+        200,
+        247
+      ],
+      "affected_entries": [],
+      "required_action": "Review original mathematical figures and exemplars before authoring. Plain text is not a faithful replacement for formula/diagram layout.",
+      "source_entry_details": [],
+      "affected_printed_codes": []
+    },
+    {
+      "id": "8D-8-english-scope-heading-B8.2.2",
+      "subject": "english",
+      "grades": [
+        8
+      ],
+      "status": "resolved_from_same_PDF",
+      "description": "A detailed-table heading is missing; the original scope and sequence explicitly supplies the corresponding title. Detailed-table null and preceding context remain in the inventory.",
+      "source_pdf_pages": [
+        36,
+        85
+      ],
+      "affected_entries": [],
+      "required_action": "Use the source-backed scope title only; do not assert it appeared in the detailed table.",
+      "source_entry_details": [],
+      "affected_printed_codes": []
+    },
+    {
+      "id": "8D-8-english-indicator_prefix_differs_from_displayed_parent",
+      "subject": "english",
+      "grades": [
+        8
+      ],
+      "status": "unresolved",
+      "description": "indicator_prefix_differs_from_displayed_parent: printed codes and every physical entry are preserved; no publisher replacement code is inferred.",
+      "source_pdf_pages": [
+        89
+      ],
+      "affected_entries": [
+        "english:pdf89:row1"
+      ],
+      "required_action": "Human source/subject review before implementation.",
+      "source_entry_details": [
+        {
+          "entry_id": "english:pdf89:row1",
+          "grade": "Basic 8",
+          "printed_code": "B8.3.1.5.2",
+          "displayed_parent_code": "B8.3.1.1",
+          "statement": "Demonstrate command of the use of reported speech",
+          "pdf_page": 89,
+          "printed_page": "53",
+          "cross_grade_references": []
+        }
+      ],
+      "affected_printed_codes": [
+        "B8.3.1.5.2"
+      ]
+    },
+    {
+      "id": "8D-8-mathematics-standard-format-B.8.3.2.1",
+      "subject": "mathematics",
+      "grades": [
+        8
+      ],
+      "status": "resolved_structural_formatting",
+      "description": "Printed parent B.8.3.2.1 is retained; internal hierarchy key B8.3.2.1 preserves its source digits with separators. This is a FILUMIRE structural key, not an official corrected code.",
+      "source_pdf_pages": [
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178
+      ],
+      "affected_entries": [],
+      "required_action": "Retain source spelling and formatting provenance.",
+      "source_entry_details": [],
+      "affected_printed_codes": []
+    },
+    {
+      "id": "8D-8-mathematics-cross_grade_code_in_source_cell",
+      "subject": "mathematics",
+      "grades": [
+        8
+      ],
+      "status": "unresolved",
+      "description": "cross_grade_code_in_source_cell: printed codes and every physical entry are preserved; no publisher replacement code is inferred.",
+      "source_pdf_pages": [
+        184
+      ],
+      "affected_entries": [
+        "mathematics:pdf184:row1"
+      ],
+      "required_action": "Human source/subject review before implementation.",
+      "source_entry_details": [
+        {
+          "entry_id": "mathematics:pdf184:row1",
+          "grade": "Basic 8",
+          "printed_code": "B8.4.1.1.2",
+          "displayed_parent_code": "B8.4.1.1",
+          "statement": "Select and justify a method to collect data (quantitative and qualitative) to answer a given question.",
+          "pdf_page": 184,
+          "printed_page": "154",
+          "cross_grade_references": [
+            "B7.4.1.1.1"
+          ]
+        }
+      ],
+      "affected_printed_codes": [
+        "B8.4.1.1.2"
+      ]
+    },
+    {
+      "id": "8D-8-computing-nonstandard_or_cross_grade_printed_code_preserved",
+      "subject": "computing",
+      "grades": [
+        8
+      ],
+      "status": "unresolved",
+      "description": "nonstandard_or_cross_grade_printed_code_preserved: printed codes and every physical entry are preserved; no publisher replacement code is inferred.",
+      "source_pdf_pages": [
+        57,
+        60
+      ],
+      "affected_entries": [
+        "computing:pdf57:row1",
+        "computing:pdf60:row4"
+      ],
+      "required_action": "Human source/subject review before implementation.",
+      "source_entry_details": [
+        {
+          "entry_id": "computing:pdf57:row1",
+          "grade": "Basic 8",
+          "printed_code": "B982.1.1.1",
+          "displayed_parent_code": "B8.2.1.1",
+          "statement": "Demonstrate how to create a table and hyperlinks",
+          "pdf_page": 57,
+          "printed_page": "28",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "computing:pdf60:row4",
+          "grade": "Basic 8",
+          "printed_code": "B9.2.3.1.7",
+          "displayed_parent_code": "B8.2.3.1",
+          "statement": "Create and present a Publisher document (flyer, advertisement, invitation cards, business cards)",
+          "pdf_page": 60,
+          "printed_page": "31",
+          "cross_grade_references": [
+            "B9.2.3.1.7"
+          ]
+        }
+      ],
+      "affected_printed_codes": [
+        "B982.1.1.1",
+        "B9.2.3.1.7"
+      ]
+    },
+    {
+      "id": "8D-8-computing-indicator_prefix_differs_from_displayed_parent",
+      "subject": "computing",
+      "grades": [
+        8
+      ],
+      "status": "unresolved",
+      "description": "indicator_prefix_differs_from_displayed_parent: printed codes and every physical entry are preserved; no publisher replacement code is inferred.",
+      "source_pdf_pages": [
+        57,
+        60
+      ],
+      "affected_entries": [
+        "computing:pdf57:row1",
+        "computing:pdf60:row4"
+      ],
+      "required_action": "Human source/subject review before implementation.",
+      "source_entry_details": [
+        {
+          "entry_id": "computing:pdf57:row1",
+          "grade": "Basic 8",
+          "printed_code": "B982.1.1.1",
+          "displayed_parent_code": "B8.2.1.1",
+          "statement": "Demonstrate how to create a table and hyperlinks",
+          "pdf_page": 57,
+          "printed_page": "28",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "computing:pdf60:row4",
+          "grade": "Basic 8",
+          "printed_code": "B9.2.3.1.7",
+          "displayed_parent_code": "B8.2.3.1",
+          "statement": "Create and present a Publisher document (flyer, advertisement, invitation cards, business cards)",
+          "pdf_page": 60,
+          "printed_page": "31",
+          "cross_grade_references": [
+            "B9.2.3.1.7"
+          ]
+        }
+      ],
+      "affected_printed_codes": [
+        "B982.1.1.1",
+        "B9.2.3.1.7"
+      ]
+    },
+    {
+      "id": "8D-8-computing-standard-format-B82.2.1",
+      "subject": "computing",
+      "grades": [
+        8
+      ],
+      "status": "resolved_structural_formatting",
+      "description": "Printed parent B82.2.1 is retained; internal hierarchy key B8.2.2.1 preserves its source digits with separators. This is a FILUMIRE structural key, not an official corrected code.",
+      "source_pdf_pages": [
+        58
+      ],
+      "affected_entries": [],
+      "required_action": "Retain source spelling and formatting provenance.",
+      "source_entry_details": [],
+      "affected_printed_codes": []
+    },
+    {
+      "id": "8D-8-computing-cross_grade_code_in_source_cell",
+      "subject": "computing",
+      "grades": [
+        8
+      ],
+      "status": "unresolved",
+      "description": "cross_grade_code_in_source_cell: printed codes and every physical entry are preserved; no publisher replacement code is inferred.",
+      "source_pdf_pages": [
+        60
+      ],
+      "affected_entries": [
+        "computing:pdf60:row4"
+      ],
+      "required_action": "Human source/subject review before implementation.",
+      "source_entry_details": [
+        {
+          "entry_id": "computing:pdf60:row4",
+          "grade": "Basic 8",
+          "printed_code": "B9.2.3.1.7",
+          "displayed_parent_code": "B8.2.3.1",
+          "statement": "Create and present a Publisher document (flyer, advertisement, invitation cards, business cards)",
+          "pdf_page": 60,
+          "printed_page": "31",
+          "cross_grade_references": [
+            "B9.2.3.1.7"
+          ]
+        }
+      ],
+      "affected_printed_codes": [
+        "B9.2.3.1.7"
+      ]
+    },
+    {
+      "id": "8D-8-science-cross_grade_code_in_source_cell",
+      "subject": "science",
+      "grades": [
+        8
+      ],
+      "status": "unresolved",
+      "description": "cross_grade_code_in_source_cell: printed codes and every physical entry are preserved; no publisher replacement code is inferred.",
+      "source_pdf_pages": [
+        112
+      ],
+      "affected_entries": [
+        "science:pdf112:row1"
+      ],
+      "required_action": "Human source/subject review before implementation.",
+      "source_entry_details": [
+        {
+          "entry_id": "science:pdf112:row1",
+          "grade": "Basic 8",
+          "printed_code": "B8.4.4.2.1",
+          "displayed_parent_code": "B8.4.4.2",
+          "statement": "Identify complex machines and describe their functions in life",
+          "pdf_page": 112,
+          "printed_page": "75",
+          "cross_grade_references": [
+            "B7.4.4.2.1"
+          ]
+        }
+      ],
+      "affected_printed_codes": [
+        "B8.4.4.2.1"
+      ]
+    },
+    {
+      "id": "8D-8-science-scope-heading-B8.5.6",
+      "subject": "science",
+      "grades": [
+        8
+      ],
+      "status": "resolved_from_same_PDF",
+      "description": "A detailed-table heading is missing; the original scope and sequence explicitly supplies the corresponding title. Detailed-table null and preceding context remain in the inventory.",
+      "source_pdf_pages": [
+        37,
+        122
+      ],
+      "affected_entries": [],
+      "required_action": "Use the source-backed scope title only; do not assert it appeared in the detailed table.",
+      "source_entry_details": [],
+      "affected_printed_codes": []
+    },
+    {
+      "id": "8D-9-english-scope-heading-B9.5.1",
+      "subject": "english",
+      "grades": [
+        9
+      ],
+      "status": "resolved_from_same_PDF",
+      "description": "A detailed-table heading is missing; the original scope and sequence explicitly supplies the corresponding title. Detailed-table null and preceding context remain in the inventory.",
+      "source_pdf_pages": [
+        36,
+        135
+      ],
+      "affected_entries": [],
+      "required_action": "Use the source-backed scope title only; do not assert it appeared in the detailed table.",
+      "source_entry_details": [],
+      "affected_printed_codes": []
+    },
+    {
+      "id": "8D-9-english-nonstandard_or_cross_grade_printed_code_preserved",
+      "subject": "english",
+      "grades": [
+        9
+      ],
+      "status": "unresolved",
+      "description": "nonstandard_or_cross_grade_printed_code_preserved: printed codes and every physical entry are preserved; no publisher replacement code is inferred.",
+      "source_pdf_pages": [
+        136
+      ],
+      "affected_entries": [
+        "english:pdf136:row1"
+      ],
+      "required_action": "Human source/subject review before implementation.",
+      "source_entry_details": [
+        {
+          "entry_id": "english:pdf136:row1",
+          "grade": "Basic 9",
+          "printed_code": "B9.5.1.14",
+          "displayed_parent_code": "B9.5.1.1",
+          "statement": "Use literary devices (imagery) in texts",
+          "pdf_page": 136,
+          "printed_page": "100",
+          "cross_grade_references": []
+        }
+      ],
+      "affected_printed_codes": [
+        "B9.5.1.14"
+      ]
+    },
+    {
+      "id": "8D-9-english-indicator_prefix_differs_from_displayed_parent",
+      "subject": "english",
+      "grades": [
+        9
+      ],
+      "status": "unresolved",
+      "description": "indicator_prefix_differs_from_displayed_parent: printed codes and every physical entry are preserved; no publisher replacement code is inferred.",
+      "source_pdf_pages": [
+        136
+      ],
+      "affected_entries": [
+        "english:pdf136:row1"
+      ],
+      "required_action": "Human source/subject review before implementation.",
+      "source_entry_details": [
+        {
+          "entry_id": "english:pdf136:row1",
+          "grade": "Basic 9",
+          "printed_code": "B9.5.1.14",
+          "displayed_parent_code": "B9.5.1.1",
+          "statement": "Use literary devices (imagery) in texts",
+          "pdf_page": 136,
+          "printed_page": "100",
+          "cross_grade_references": []
+        }
+      ],
+      "affected_printed_codes": [
+        "B9.5.1.14"
+      ]
+    },
+    {
+      "id": "8D-9-mathematics-standard-format-B.9.1.2.1",
+      "subject": "mathematics",
+      "grades": [
+        9
+      ],
+      "status": "resolved_structural_formatting",
+      "description": "Printed parent B.9.1.2.1 is retained; internal hierarchy key B9.1.2.1 preserves its source digits with separators. This is a FILUMIRE structural key, not an official corrected code.",
+      "source_pdf_pages": [
+        198
+      ],
+      "affected_entries": [],
+      "required_action": "Retain source spelling and formatting provenance.",
+      "source_entry_details": [],
+      "affected_printed_codes": []
+    },
+    {
+      "id": "8D-9-mathematics-nonstandard_or_cross_grade_printed_code_preserved",
+      "subject": "mathematics",
+      "grades": [
+        9
+      ],
+      "status": "unresolved",
+      "description": "nonstandard_or_cross_grade_printed_code_preserved: printed codes and every physical entry are preserved; no publisher replacement code is inferred.",
+      "source_pdf_pages": [
+        198
+      ],
+      "affected_entries": [
+        "mathematics:pdf198:row2"
+      ],
+      "required_action": "Human source/subject review before implementation.",
+      "source_entry_details": [
+        {
+          "entry_id": "mathematics:pdf198:row2",
+          "grade": "Basic 9",
+          "printed_code": "B.9.1.2.1.2",
+          "displayed_parent_code": "B.9.1.2.1",
+          "statement": "Demonstrate the ability to determine commutative properties of addition and multiplication. E.g1. Recognise that for any two numbers a and b ;",
+          "pdf_page": 198,
+          "printed_page": "168",
+          "cross_grade_references": []
+        }
+      ],
+      "affected_printed_codes": [
+        "B.9.1.2.1.2"
+      ]
+    },
+    {
+      "id": "8D-9-mathematics-indicator_prefix_differs_from_displayed_parent",
+      "subject": "mathematics",
+      "grades": [
+        9
+      ],
+      "status": "unresolved",
+      "description": "indicator_prefix_differs_from_displayed_parent: printed codes and every physical entry are preserved; no publisher replacement code is inferred.",
+      "source_pdf_pages": [
+        201
+      ],
+      "affected_entries": [
+        "mathematics:pdf201:row1"
+      ],
+      "required_action": "Human source/subject review before implementation.",
+      "source_entry_details": [
+        {
+          "entry_id": "mathematics:pdf201:row1",
+          "grade": "Basic 9",
+          "printed_code": "B9.1.2.3.4",
+          "displayed_parent_code": "B9.1.2.4",
+          "statement": "Approximate the square roots of non-perfect squares with calculators/tables.",
+          "pdf_page": 201,
+          "printed_page": "171",
+          "cross_grade_references": []
+        }
+      ],
+      "affected_printed_codes": [
+        "B9.1.2.3.4"
+      ]
+    },
+    {
+      "id": "8D-9-mathematics-standard-format-B.9.3.2.1",
+      "subject": "mathematics",
+      "grades": [
+        9
+      ],
+      "status": "resolved_structural_formatting",
+      "description": "Printed parent B.9.3.2.1 is retained; internal hierarchy key B9.3.2.1 preserves its source digits with separators. This is a FILUMIRE structural key, not an official corrected code.",
+      "source_pdf_pages": [
+        235,
+        236,
+        237
+      ],
+      "affected_entries": [],
+      "required_action": "Retain source spelling and formatting provenance.",
+      "source_entry_details": [],
+      "affected_printed_codes": []
+    },
+    {
+      "id": "8D-9-computing-nonstandard_or_cross_grade_printed_code_preserved",
+      "subject": "computing",
+      "grades": [
+        9
+      ],
+      "status": "unresolved",
+      "description": "nonstandard_or_cross_grade_printed_code_preserved: printed codes and every physical entry are preserved; no publisher replacement code is inferred.",
+      "source_pdf_pages": [
+        70,
+        71
+      ],
+      "affected_entries": [
+        "computing:pdf70:row1",
+        "computing:pdf71:row1"
+      ],
+      "required_action": "Human source/subject review before implementation.",
+      "source_entry_details": [
+        {
+          "entry_id": "computing:pdf70:row1",
+          "grade": "Basic 9",
+          "printed_code": "B91.1.1.1",
+          "displayed_parent_code": "B9.1.1.1",
+          "statement": "Discuss the trends in the next generation of computers",
+          "pdf_page": 70,
+          "printed_page": "41",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "computing:pdf71:row1",
+          "grade": "Basic 9",
+          "printed_code": "B91.1.2.1",
+          "displayed_parent_code": "B9.1.1.2",
+          "statement": "Explore personalisation of the computer",
+          "pdf_page": 71,
+          "printed_page": "42",
+          "cross_grade_references": []
+        }
+      ],
+      "affected_printed_codes": [
+        "B91.1.1.1",
+        "B91.1.2.1"
+      ]
+    },
+    {
+      "id": "8D-9-computing-indicator_prefix_differs_from_displayed_parent",
+      "subject": "computing",
+      "grades": [
+        9
+      ],
+      "status": "unresolved",
+      "description": "indicator_prefix_differs_from_displayed_parent: printed codes and every physical entry are preserved; no publisher replacement code is inferred.",
+      "source_pdf_pages": [
+        70,
+        71
+      ],
+      "affected_entries": [
+        "computing:pdf70:row1",
+        "computing:pdf71:row1"
+      ],
+      "required_action": "Human source/subject review before implementation.",
+      "source_entry_details": [
+        {
+          "entry_id": "computing:pdf70:row1",
+          "grade": "Basic 9",
+          "printed_code": "B91.1.1.1",
+          "displayed_parent_code": "B9.1.1.1",
+          "statement": "Discuss the trends in the next generation of computers",
+          "pdf_page": 70,
+          "printed_page": "41",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "computing:pdf71:row1",
+          "grade": "Basic 9",
+          "printed_code": "B91.1.2.1",
+          "displayed_parent_code": "B9.1.1.2",
+          "statement": "Explore personalisation of the computer",
+          "pdf_page": 71,
+          "printed_page": "42",
+          "cross_grade_references": []
+        }
+      ],
+      "affected_printed_codes": [
+        "B91.1.1.1",
+        "B91.1.2.1"
+      ]
+    },
+    {
+      "id": "8D-9-science-cross_grade_code_in_source_cell",
+      "subject": "science",
+      "grades": [
+        9
+      ],
+      "status": "unresolved",
+      "description": "cross_grade_code_in_source_cell: printed codes and every physical entry are preserved; no publisher replacement code is inferred.",
+      "source_pdf_pages": [
+        131
+      ],
+      "affected_entries": [
+        "science:pdf131:row1"
+      ],
+      "required_action": "Human source/subject review before implementation.",
+      "source_entry_details": [
+        {
+          "entry_id": "science:pdf131:row1",
+          "grade": "Basic 9",
+          "printed_code": "B9.2.2.1.1",
+          "displayed_parent_code": "B9.2.2.1",
+          "statement": "Describe the life cycle of the grasshopper as a form of incomplete metamorphosis",
+          "pdf_page": 131,
+          "printed_page": "94",
+          "cross_grade_references": [
+            "B7.2.2.1.1",
+            "B8.2.2.1.1"
+          ]
+        }
+      ],
+      "affected_printed_codes": [
+        "B9.2.2.1.1"
+      ]
+    },
+    {
+      "id": "8D-9-science-duplicate_printed_code_distinct_entries",
+      "subject": "science",
+      "grades": [
+        9
+      ],
+      "status": "unresolved",
+      "description": "duplicate_printed_code_distinct_entries: printed codes and every physical entry are preserved; no publisher replacement code is inferred.",
+      "source_pdf_pages": [
+        133,
+        134,
+        135,
+        148,
+        149,
+        153,
+        154
+      ],
+      "affected_entries": [
+        "science:pdf133:row2",
+        "science:pdf134:row1",
+        "science:pdf134:row2",
+        "science:pdf135:row1",
+        "science:pdf148:row2",
+        "science:pdf149:row2",
+        "science:pdf153:row1",
+        "science:pdf154:row1"
+      ],
+      "required_action": "Human source/subject review before implementation.",
+      "source_entry_details": [
+        {
+          "entry_id": "science:pdf133:row2",
+          "grade": "Basic 9",
+          "printed_code": "B9.2.3.2.1",
+          "displayed_parent_code": "B9.2.3.2",
+          "statement": "Observe and record the uses of different crops at different maturity stages.",
+          "pdf_page": 133,
+          "printed_page": "96",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "science:pdf134:row1",
+          "grade": "Basic 9",
+          "printed_code": "B9.2.3.2.2",
+          "displayed_parent_code": "B9.2.3.2",
+          "statement": "Evaluate the importance of knowledge of maturity stages of different crops to human beings",
+          "pdf_page": 134,
+          "printed_page": "97",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "science:pdf134:row2",
+          "grade": "Basic 9",
+          "printed_code": "B9.2.3.2.1",
+          "displayed_parent_code": "B9.2.3.2",
+          "statement": "Observe and record the uses of different crops at different maturity stages",
+          "pdf_page": 134,
+          "printed_page": "97",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "science:pdf135:row1",
+          "grade": "Basic 9",
+          "printed_code": "B9.2.3.2.2",
+          "displayed_parent_code": "B9.2.3.2",
+          "statement": "Evaluate the importance of knowledge of the maturity stages of different crops to human beings",
+          "pdf_page": 135,
+          "printed_page": "98",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "science:pdf148:row2",
+          "grade": "Basic 9",
+          "printed_code": "B9.4.4.2.1",
+          "displayed_parent_code": "B9.4.4.2",
+          "statement": "Explain the importance of Newton’s Third Law of Motion in life.",
+          "pdf_page": 148,
+          "printed_page": "111",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "science:pdf149:row2",
+          "grade": "Basic 9",
+          "printed_code": "B9.4.4.2.1",
+          "displayed_parent_code": "B9.4.4.2",
+          "statement": "Explain Newton’s Laws of Motion and their applications to daily life.",
+          "pdf_page": 149,
+          "printed_page": "112",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "science:pdf153:row1",
+          "grade": "Basic 9",
+          "printed_code": "B9.5.2.2.1",
+          "displayed_parent_code": "B9.5.2.2",
+          "statement": "Explain the concepts of health and disease and show their relationship.",
+          "pdf_page": 153,
+          "printed_page": "116",
+          "cross_grade_references": []
+        },
+        {
+          "entry_id": "science:pdf154:row1",
+          "grade": "Basic 9",
+          "printed_code": "B9.5.2.2.1",
+          "displayed_parent_code": "B9.5.2.2",
+          "statement": "Explain the nature of fungal diseases with special emphasis on Ringworm/candidiasis/fingernail, and toe nail infection, their causes, symptoms, effects on humans and its prevention",
+          "pdf_page": 154,
+          "printed_page": "117",
+          "cross_grade_references": []
+        }
+      ],
+      "affected_printed_codes": [
+        "B9.2.3.2.1",
+        "B9.2.3.2.2",
+        "B9.4.4.2.1",
+        "B9.5.2.2.1"
+      ]
+    },
+    {
+      "id": "8D-9-science-indicator_prefix_differs_from_displayed_parent",
+      "subject": "science",
+      "grades": [
+        9
+      ],
+      "status": "unresolved",
+      "description": "indicator_prefix_differs_from_displayed_parent: printed codes and every physical entry are preserved; no publisher replacement code is inferred.",
+      "source_pdf_pages": [
+        149
+      ],
+      "affected_entries": [
+        "science:pdf149:row1"
+      ],
+      "required_action": "Human source/subject review before implementation.",
+      "source_entry_details": [
+        {
+          "entry_id": "science:pdf149:row1",
+          "grade": "Basic 9",
+          "printed_code": "B9.4.4.1.2",
+          "displayed_parent_code": "B9.4.4.2",
+          "statement": "Demonstrate the application of Newton’s Third Law of motion in life.",
+          "pdf_page": 149,
+          "printed_page": "112",
+          "cross_grade_references": []
+        }
+      ],
+      "affected_printed_codes": [
+        "B9.4.4.1.2"
+      ]
+    }
+  ]
+}

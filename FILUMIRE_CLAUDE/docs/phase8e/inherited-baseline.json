@@ -1,0 +1,94 @@
+{
+  "baseCommit": "29854417",
+  "sourceWorkspace": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE",
+  "files": [
+    {
+      "path": "packages/curriculum-framework/ghana-b7-ccp-data.json",
+      "sha256": "d87f6b5f4aa7c64e73c7e50441b4582503e737564bd0e7e30d88d466db69d885"
+    },
+    {
+      "path": "packages/curriculum-framework/ghana-b7-ccp.ts",
+      "sha256": "a4a99d726f63d758e0b7d26d63076e77b246f52f6b51d0167e3f98531a47b6f1"
+    },
+    {
+      "path": "tests/b7-existing-curriculum-regression.test.ts",
+      "sha256": "354b71d8a07669939949298d8b88bbd6902a46ac2bc8812aadb5fe210225cb09"
+    },
+    {
+      "path": "tests/b7-framework-registration.test.ts",
+      "sha256": "d0f00817b30384428c15a6df5e825365f636a03303f1095c1a3e795180c7bfdd"
+    },
+    {
+      "path": "scripts/generate-b7-framework.mjs",
+      "sha256": "be08a325474f8a444760c292ebb1cc2c611568d259bd1288b177d683b1538987"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-coverage-matrix.csv",
+      "sha256": "59861ca0cebeac8e2f470857fc48dc3344b72badf153d482d4623eef64f0566b"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-curriculum-structure.json",
+      "sha256": "cb1c21c955678dfff8e04699d1f75c952e77236e95f1767f21f3a9f386a79bb7"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-filumire-mapping.csv",
+      "sha256": "3280a2887587d92e07845660152f139ef7787fabe9de601da1c909c9b786e45a"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-filumire-mapping.json",
+      "sha256": "5b990ee30fc0e4825087a5dca1252a46b4e134ef17b2c29eadf7dc68fac64236"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-mapping-source-issues.json",
+      "sha256": "e731cfe27ab9a371bcfb92b0cc6123b77f313d52b4e2bb8845a0ec22fb02ffd9"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-mapping-source-review.json",
+      "sha256": "de4e7e28f58c07cf4fd14866f1cf7350debc476540a541f581dfafd9e106919b"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-mapping-validation.json",
+      "sha256": "3bf5f252825c3657f35fa82b1de1b6a03df96889444027d35a4cfddc866ad86b"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-source-manifest.json",
+      "sha256": "e098fa35f5c1cae0223b6df512896d057120fd51245b1b7c1e85fdd576757609"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-validation.json",
+      "sha256": "7a1946e31944297fa280623e4c76a18135bd835eb575bc855f771b97c7e1f902"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/build-basic7-mapping.mjs",
+      "sha256": "94b019f53840e521d1e57b20c174ac41de31c4e708cd30a424bf0b57625440f3"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/extract-basic7.mjs",
+      "sha256": "834bc5742c062b218cbaf353edba581094cec455ab7fe8ecb551b94462fd4fb6"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/PHASE8B-MAPPING-AND-IMPLEMENTATION-PLAN.md",
+      "sha256": "b8f9cb88345d137f222d32959495fbb3628cc35bba4df1a41f22553dd438ec70"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/PHASE8C-FRAMEWORK-INTEGRATION.md",
+      "sha256": "b470da99455587fa5532d72254c93daccb2c7b7b625f6d1103324491bd20e55a"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/render-basic7-mapping-review.mjs",
+      "sha256": "ea37b152fca25cb09c35f701012524e016af854ca4c522b6dcd256f204e4cde7"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/SCIENCE.pdf",
+      "sha256": "10e9fbec7adff109f4e1a67301c1f87a4b7cd62a39d9c3d9b2116314a34728b8"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/validate-basic7-mapping.mjs",
+      "sha256": "9ebcbc5360e7a46cf39892f818ccffcc26d310f987d3cd7140dec88824cdbe56"
+    },
+    {
+      "path": "docs/curriculum-sources/ghana/ccp-b7-b9/validate-basic7.mjs",
+      "sha256": "3510d81beb28bedcf0d7d78b2407bb5bb264d94c0fab766b97481ea0f011d25a"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "createdAt": "2026-10-22T08:27:40.074Z",
+  "branch": "feat/basic4-6-completion",
+  "baseCommit": "29854417",
+  "sourceWorkspace": "C:/FILUMIRE/filumire-batch1/FILUMIRE_CLAUDE",
+  "project": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\.worktrees\\basic4-6-completion\\FILUMIRE_CLAUDE",
+  "inheritedFiles": [
+    {
+      "path": "apps/learner/app/api/learning/closure/route.ts",
+      "sha256": "9cac39c0e439779f0626c9c1429c5d86de6d1801c84198f35d42d865f9a8ed9e"
+    },
+    {
+      "path": "apps/learner/app/learn/page.tsx",
+      "sha256": "b016b4485b9c5630ecaa940ed83d427dce33261a768f4d4dff1b66974f7c9d00"
+    },
+    {
+      "path": "apps/learner/components/filumire/AnswerCorrectionPanel.tsx",
+      "sha256": "6bcc7f6b906380556c74a6b23eb84ba7519f06b9df88bea01af2caeebb52b0e0"
+    },
+    {
+      "path": "apps/learner/services/learner-interface.ts",
+      "sha256": "7824e2e3b3486df3d2c3090e168a60a2ad2b70945580d1ac85ce8f76ffef6eae"
+    },
+    {
+      "path": "packages/curriculum-framework/index.ts",
+      "sha256": "ec088e25e9b1738b70c1b53f6e134b4f1428ed1f752969339db0fba822fb9847"
+    },
+    {
+      "path": "tests/ask-filu-navigation.browser.mjs",
+      "sha256": "1b8ca47a53fab28ff7f7a84503ab3a0c5c717421078ddfc8926a1227b3e92697"
+    },
+    {
+      "path": "tests/immediate-correction.test.ts",
+      "sha256": "1eddc7f22cb9247e93463936692dce2343602855f94de733f51d831cec376ed0"
+    },
+    {
+      "path": "tests/learner-interface-copy.test.ts",
+      "sha256": "ddfe56848886efe579cae4b7440df975f959c3f5662c2345a648d3105e171f8e"
+    },
+    {
+      "path": "tests/lesson-closure-production.test.ts",
+      "sha256": "14616024dd004dd796bb8399c643709cb0d7e487eaa73d809074a0652a5b3ff7"
+    },
+    {
+      "path": "packages/curriculum-framework/ghana-b4-english.ts",
+      "sha256": "015bda071bbf13992e7e7a66c1cb456ea21206880765ddd1ef1728b6b5f4bd75"
+    },
+    {
+      "path": "packages/curriculum-framework/ghana-b7-ccp.ts",
+      "sha256": "a4a99d726f63d758e0b7d26d63076e77b246f52f6b51d0167e3f98531a47b6f1"
+    },
+    {
+      "path": "packages/curriculum-framework/ghana-b7-ccp-data.json",
+      "sha256": "d87f6b5f4aa7c64e73c7e50441b4582503e737564bd0e7e30d88d466db69d885"
+    },
+    {
+      "path": "tests/b4-framework-registration.test.ts",
+      "sha256": "2c74989c7beace996cb7d832a9477efed0fe5129b63800736599b0c1920906da"
+    },
+    {
+      "path": "tests/b7-existing-curriculum-regression.test.ts",
+      "sha256": "354b71d8a07669939949298d8b88bbd6902a46ac2bc8812aadb5fe210225cb09"
+    },
+    {
+      "path": "tests/learner-interface-repairs.browser.mjs",
+      "sha256": "7037f83f756237d3da2ab3e7a52f7143c0a324c581b300881412ce057ac87bc9"
+    }
+  ],
+  "scope": "Current main learner snapshot. Phase 8E retention/validation changes are not imported; they are separately assessed integration dependencies. No B8-9 extraction, env files or Voice Lab assets copied."
+}

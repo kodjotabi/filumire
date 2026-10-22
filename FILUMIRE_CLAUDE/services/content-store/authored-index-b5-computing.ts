@@ -1,3 +1,5 @@
+import { B5_COMPLETION_CONTENT } from "./ghana-b5-completion-authored";
+import { B5_COMPLETION_COMPUTING } from "../../packages/curriculum/ghana-b5-completion-specs";
 import type { LearningContent } from "../../packages/content";
 import {
   GHANA_B5_COMPUTING_OUTPUT_DEVICES_AUTHORED_CONTENT,
@@ -398,7 +400,10 @@ export const AUTHORED_B5_COMPUTING_COMPETENCY_IDS: string[] = [
   GHANA_B5_COMPUTING_SITTING_POSTURE_AUTHORED_COMPETENCY_ID,
 ];
 
+AUTHORED_B5_COMPUTING_COMPETENCY_IDS.push(...B5_COMPLETION_COMPUTING.map(spec => spec.competencyId));
+
 export const AUTHORED_B5_COMPUTING_CONTENT: LearningContent[] = [
+  ...B5_COMPLETION_CONTENT.filter(item => B5_COMPLETION_COMPUTING.some(spec => spec.competencyId === item.competencyId)),
   ...GHANA_B5_COMPUTING_OUTPUT_DEVICES_AUTHORED_CONTENT,
   ...GHANA_B5_COMPUTING_OUTPUT_DEVICE_TYPES_AUTHORED_CONTENT,
   ...GHANA_B5_COMPUTING_ANALOGUE_DIGITAL_AUTHORED_CONTENT,

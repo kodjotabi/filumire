@@ -1,0 +1,16 @@
+apps/learner/app/api/account/learners/[learnerId]/placement/route.ts
+apps/learner/app/api/learning/route.ts
+apps/learner/app/dashboard/page.tsx
+apps/learner/app/family/page.tsx
+apps/learner/app/layout.tsx
+apps/learner/services/account-client.ts
+apps/learner/services/learner-interface.ts
+apps/learner/services/learning-client.ts
+packages/curriculum/index.ts
+packages/curriculum-framework/index.ts
+scripts/deploy-guard.mjs
+services/adult-summary/index.ts
+services/content-store/seed.ts
+services/learner-context/placement.ts
+services/teacher-summary/index.ts
+tests/integration-phase1-foundation.test.mjs

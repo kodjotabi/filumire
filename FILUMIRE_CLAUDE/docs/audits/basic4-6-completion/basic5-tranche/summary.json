@@ -1,0 +1,19 @@
+{
+  "competencies": 866,
+  "previousCompetencies": 862,
+  "newCompetencies": 4,
+  "sourceObjectives": 871,
+  "sourceAssociated": 871,
+  "unresolvedSourceMappingReviewRecords": 68,
+  "mappingInvestigationIsEducationalApproval": false,
+  "subskillRecordsInvestigated": 34,
+  "repairedSubskillRecords": 2,
+  "remainingSubskillRecords": 32,
+  "seededContentIncludingNonBasic46Fixtures": 22586,
+  "pendingHumanApprovals": [
+    "Ghana subject educators",
+    "French-language specialists",
+    "actual learner practical/observed work"
+  ],
+  "controlledPilotReady": false
+}

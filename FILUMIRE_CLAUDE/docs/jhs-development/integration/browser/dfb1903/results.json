@@ -1,0 +1,42 @@
+[
+  {
+    "grade": 7,
+    "discipline": "english",
+    "language": "en",
+    "width": 390,
+    "guardianPlacementUi": true,
+    "reviewedWorkResumedAfterLogin": true,
+    "overflowPixels": 0,
+    "status": "PASS"
+  },
+  {
+    "grade": 7,
+    "discipline": "english",
+    "language": "fr",
+    "width": 390,
+    "guardianPlacementUi": true,
+    "reviewedWorkResumedAfterLogin": true,
+    "overflowPixels": 0,
+    "status": "PASS"
+  },
+  {
+    "grade": 7,
+    "discipline": "english",
+    "language": "en",
+    "width": 1280,
+    "guardianPlacementUi": true,
+    "reviewedWorkResumedAfterLogin": true,
+    "overflowPixels": 0,
+    "status": "PASS"
+  },
+  {
+    "grade": 7,
+    "discipline": "english",
+    "language": "fr",
+    "width": 1280,
+    "guardianPlacementUi": true,
+    "reviewedWorkResumedAfterLogin": true,
+    "overflowPixels": 0,
+    "status": "PASS"
+  }
+]

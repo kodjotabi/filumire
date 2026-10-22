@@ -4,8 +4,93 @@
     {
       "name": "filumire-learner",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--workspace=@filumire/learner", "--prefix", "FILUMIRE_CLAUDE", "--", "-p", "3100"],
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--workspace=@filumire/learner",
+        "--prefix",
+        "FILUMIRE_CLAUDE",
+        "--",
+        "-p",
+        "3100"
+      ],
       "port": 3100
+    },
+    {
+      "name": "filumire-learner-memory",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--workspace=@filumire/learner",
+        "--prefix",
+        "FILUMIRE_CLAUDE",
+        "--",
+        "-p",
+        "3101"
+      ],
+      "env": {
+        "FILUMIRE_PERSISTENCE": "memory",
+        "DATABASE_URL": "postgres://none:none@db.fictional.invalid:5432/none"
+      },
+      "port": 3101
+    },
+    {
+      "name": "filumire-learner-prod-memory",
+      "runtimeExecutable": "C:/Users/tabi/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+      "runtimeArgs": [
+        "FILUMIRE_CLAUDE/node_modules/next/dist/bin/next",
+        "start",
+        "FILUMIRE_CLAUDE/apps/learner",
+        "--hostname",
+        "127.0.0.1",
+        "--port",
+        "3102"
+      ],
+      "env": {
+        "FILUMIRE_PERSISTENCE": "memory",
+        "DATABASE_URL": "postgresql://offline:offline@127.0.0.1:1/offline",
+        "FILUMIRE_AUTH_JWT_SECRET": "fictional-local-recovery-signing-key-at-least-32chars",
+        "FILUMIRE_ACCOUNT_REGISTRATION": "open",
+        "NEXT_TELEMETRY_DISABLED": "1"
+      },
+      "port": 3102
+    },
+    {
+      "name": "filumire-website-local-pair",
+      "runtimeExecutable": "C:/Users/tabi/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+      "runtimeArgs": [
+        "FILUMIRE_WEBSITE/node_modules/next/dist/bin/next",
+        "dev",
+        "FILUMIRE_WEBSITE",
+        "--hostname",
+        "localhost",
+        "--port",
+        "3200"
+      ],
+      "env": {
+        "NEXT_PUBLIC_FILUMIRE_LEARNER_APP_URL": "http://localhost:3102",
+        "NEXT_PUBLIC_FILUMIRE_LEARNER_PUBLIC_APPROVED": "true",
+        "NEXT_TELEMETRY_DISABLED": "1"
+      },
+      "port": 3200
+    },
+    {
+      "name": "filumire-website-local-prod",
+      "runtimeExecutable": "C:/Users/tabi/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+      "runtimeArgs": [
+        "FILUMIRE_WEBSITE/node_modules/next/dist/bin/next",
+        "start",
+        "FILUMIRE_WEBSITE",
+        "--hostname",
+        "localhost",
+        "--port",
+        "3200"
+      ],
+      "env": {
+        "NEXT_TELEMETRY_DISABLED": "1"
+      },
+      "port": 3200
     }
   ]
 }

@@ -1,0 +1,227 @@
+{
+  "branch": "feat/basic4-6-completion",
+  "validatedAt": "2026-10-22T11:35:05.090Z",
+  "uniqueSuites": 50,
+  "failedSuites": 0,
+  "latestSuiteResults": {
+    "b4-framework-registration": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "b4-science-adaptive-coverage": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "b4-computing-adaptive-coverage": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "b4-english-adaptive-coverage": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "b4-mathematics-adaptive-coverage": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "b5-science-v1": {
+      "status": "PASS",
+      "log": "final-targeted.log"
+    },
+    "b6-science-v1": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "b5-computing-v1": {
+      "status": "PASS",
+      "log": "final-targeted.log"
+    },
+    "b6-computing-v1": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "b5-mathematics-v1": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "b6-mathematics-v1": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "b5-english-v1": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "b6-english-v1": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "immediate-correction": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "teaching-first-journey": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "mastery-v1": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "retention-transfer-negative-gate": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "spaced-revision": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "spaced-revision-subjects": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "learning-continuity-api": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "offline-shell-v1": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "pending-submission-client": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "full-adaptive-progression": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "no-premature-advancement": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "curriculum-navigation": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "selected-topic-lesson-integration": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "teacher-trusted-review": {
+      "status": "PASS",
+      "log": "final-targeted.log"
+    },
+    "outline-visuals": {
+      "status": "PASS",
+      "log": "post-correction-regressions.log"
+    },
+    "option-order-4e": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "b5-b6-english-runtime": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "time-aware-retention-v1": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "time-aware-retention-engine-v1": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "learner-ui-runtime-integrity": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "production-learner-journey": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "grade-aware-subject-selection": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "learning-language": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "learner-interface-copy": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "lesson-closure-production": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "b4-6-source-reconciliation": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "b5-science-life-processes-integrity": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "b5-completion-curriculum": {
+      "status": "PASS",
+      "log": "final-audit-validation.log"
+    },
+    "b5-completion-existing-content": {
+      "status": "PASS",
+      "log": "final-targeted.log"
+    },
+    "b5-completion-journey": {
+      "status": "PASS",
+      "log": "final-targeted.log"
+    },
+    "teacher-review-delivery-provenance": {
+      "status": "PASS",
+      "log": "final-targeted.log"
+    },
+    "teacher-review-end-to-end": {
+      "status": "PASS",
+      "log": "final-targeted.log"
+    },
+    "teacher-pending-review": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "learner-pending-teacher-review": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "teacher-authorization": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "red-team-02-trusted-evidence": {
+      "status": "PASS",
+      "log": "regressions.log"
+    },
+    "assessment-evidence-hardening": {
+      "status": "PASS",
+      "log": "regressions.log"
+    }
+  },
+  "initialResolvedFailure": "outline-visuals: expected inventory 862 before the four approved registrations; now requires 866 unique topics and 860 unreviewed topics",
+  "apiScenarios": 16,
+  "browserCases": 36,
+  "browserResultFiles": [
+    "browser/final/basic5-browser-results.json",
+    "browser/regressions/interface-repairs-results.json",
+    "browser/offline/offline-results.json"
+  ],
+  "typescript": "passed_zero_errors",
+  "build": "passed_final_learner_production_build",
+  "buildLog": "final-build.log",
+  "limitations": [
+    "memory persistence only; no database durability verification",
+    "teacher judgements in tests are fictional, not educational approvals",
+    "new automatic retention checks assess knowledge; one success remains pending",
+    "32 subskill-gap records and source ambiguities remain open",
+    "native French, educational and real-classroom approvals pending"
+  ],
+  "noCommitMergePushOrDeploy": true
+}

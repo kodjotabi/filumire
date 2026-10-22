@@ -14,7 +14,7 @@
                     "test:integration-foundation":  "node ./tests/integration-phase1-foundation.test.mjs && node ./tests/deploy-grade-lock-guard.test.mjs && node ./tests/deployment-migration-evidence.test.mjs && node ./tests/preview-pinned-target.test.mjs && node ./tests/create-app-role.test.mjs && node ./tests/app-role-grants-safety.test.mjs && node ./tests/windows-credential-security.test.mjs && node ./tests/w4-pg-client-lifecycle.test.mjs && npm run test:grade-lock",
                     "test:grade-lock":  "node ./scripts/run-offline-suites.mjs ./tests/grade-lock-schema-guard.test.ts ./tests/guardian-grade-lock.test.ts",
                     "test:security-offline": "node ./scripts/run-offline-suites.mjs",
-                    "test:revision": "node ./scripts/run-offline-suites.mjs ./tests/spaced-revision.test.ts ./tests/spaced-revision-subjects.test.ts ./tests/time-aware-retention-v1.test.ts ./tests/time-aware-retention-engine-v1.test.ts",
+                    "test:revision": "node ./scripts/run-offline-suites.mjs ./tests/spaced-revision.test.ts ./tests/spaced-revision-subjects.test.ts ./tests/time-aware-retention-v1.test.ts ./tests/time-aware-retention-engine-v1.test.ts ./tests/teaching-first-retention.test.ts",
                     "test:teaching-first": "node ./scripts/run-offline-suites.mjs ./tests/teaching-first-journey.test.ts",
                     "test:public-site-navigation": "node ./scripts/run-offline-suites.mjs ./tests/public-site-navigation.test.ts",
                     "test:voice": "node ./scripts/run-offline-suites.mjs ./tests/browser-speech.test.ts ./tests/african-voice.test.ts",

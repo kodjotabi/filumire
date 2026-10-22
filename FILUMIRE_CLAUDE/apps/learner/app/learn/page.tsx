@@ -1247,7 +1247,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
 
           {data.content && (
             <>
-              {lessonLanguageNotice(data.content.language, language) && <p className="contentLanguageNotice" role="note">{lessonLanguageNotice(data.content.language, language)}</p>}
+              {lessonLanguageNotice(data.content.language, language, Boolean(activeCorrection)) && <p className="contentLanguageNotice" role="note">{lessonLanguageNotice(data.content.language, language, Boolean(activeCorrection))}</p>}
               <h2 lang={data.content.language}>
                 {data.content.title}
               </h2>

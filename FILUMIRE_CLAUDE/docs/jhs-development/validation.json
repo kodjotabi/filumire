@@ -1,0 +1,104 @@
+{
+  "branch": "feat/jhs7-9-development",
+  "validatedAt": "2026-10-22T12:12:19.801Z",
+  "mapped": 625,
+  "authoredIsolated": 3,
+  "remainingAuthoring": 622,
+  "releaseComplete": 0,
+  "regressionSuites": {
+    "passed": 45,
+    "failed": 0,
+    "names": [
+      "jhs-curriculum-integrity",
+      "jhs-materials-journey",
+      "b7-framework-registration",
+      "b7-existing-curriculum-regression",
+      "basic7-materials-pilot",
+      "teaching-first-retention",
+      "b4-framework-registration",
+      "b4-science-adaptive-coverage",
+      "b4-computing-adaptive-coverage",
+      "b4-english-adaptive-coverage",
+      "b4-mathematics-adaptive-coverage",
+      "b5-science-v1",
+      "b6-science-v1",
+      "b5-computing-v1",
+      "b6-computing-v1",
+      "b5-english-v1",
+      "b6-english-v1",
+      "b5-mathematics-v1",
+      "b6-mathematics-v1",
+      "immediate-correction",
+      "teaching-first-journey",
+      "mastery-v1",
+      "retention-transfer-negative-gate",
+      "spaced-revision",
+      "spaced-revision-subjects",
+      "learning-continuity-api",
+      "offline-shell-v1",
+      "pending-submission-client",
+      "full-adaptive-progression",
+      "no-premature-advancement",
+      "curriculum-navigation",
+      "selected-topic-lesson-integration",
+      "teacher-trusted-review",
+      "teacher-review-end-to-end",
+      "teacher-review-delivery-provenance",
+      "teacher-pending-review",
+      "learner-pending-teacher-review",
+      "prerequisite-repair-4d",
+      "route-advance-4g",
+      "grade-aware-subject-selection",
+      "learning-language",
+      "learner-interface-copy",
+      "lesson-closure-production",
+      "assessment-evidence-hardening",
+      "red-team-02-trusted-evidence"
+    ]
+  },
+  "newApiScenarios": {
+    "passed": 12,
+    "failed": 0
+  },
+  "newBrowserCases": {
+    "passed": 12,
+    "failed": 0
+  },
+  "legacyBrowserCases": {
+    "passed": 4,
+    "failed": 0
+  },
+  "typescript": {
+    "status": "PASS",
+    "errors": 0,
+    "log": "typescript-final.log"
+  },
+  "productionBuild": {
+    "status": "FAIL",
+    "ordinaryAttempts": 2,
+    "logs": [
+      "production-build.log",
+      "production-build-retry.log"
+    ],
+    "error": "next/font/google loader.js:122 null font extension match; underlying cause unresolved; no font mock or application/dependency alteration used"
+  },
+  "preservation": {
+    "checkedOriginRecords": 80,
+    "changedOrigins": [],
+    "modifiedCarriedFiles": [
+      "packages/curriculum/index.ts",
+      "tests/b7-framework-registration.test.ts",
+      "tests/basic7-materials-pilot.test.ts"
+    ]
+  },
+  "limitations": [
+    "memory-only test persistence",
+    "isolated JHS preview; no supported production JHS onboarding/navigation",
+    "educator and French approvals pending",
+    "MCQ retention checks concern knowledge, not practical re-performance",
+    "full production service-worker browser run unavailable on failed build",
+    "six payment suites remain a separate branch dependency"
+  ],
+  "approvalBoundary": "ARCHITECTURE-DECISION.md",
+  "noCommitMergePushOrDeploy": true
+}

@@ -6,6 +6,7 @@ import { FormEvent, useCallback, useEffect, useState } from "react";
 import { AccountSecurity } from "../../components/filumire/AccountSecurity";
 import { AccountShell } from "../../components/filumire/AccountShell";
 import { TeacherAccess } from "../../components/filumire/TeacherAccess";
+import { GuardianPlacement } from "../../components/filumire/GuardianPlacement";
 import { TutoringRecovery } from "../../components/filumire/TutoringRecovery";
 import { LEARNER_AVATARS } from "../../components/filumire/avatars";
 import { LEARNER_GRADES } from "../../components/filumire/grades";
@@ -233,6 +234,7 @@ function LearnerCard({
       <p className={`acMessage${ok ? " ok" : ""}`} role="status">
         {message}
       </p>
+      <GuardianPlacement learnerId={learner.learnerId} language={language} />
       <TeacherAccess
         learnerId={learner.learnerId}
         learnerName={learner.displayName}

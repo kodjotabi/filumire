@@ -58,10 +58,18 @@ export async function unansweredActivities(learnerId: string, subjectId: string,
     getLearnerInterventions(learnerId), getEvidenceForLearner(learnerId), readAssessmentRecovery(learnerId),
   ]);
   const answered = new Set(evidence.map(item => item.interventionId));
+  const latestEvidenceAt = new Map<string, string>();
+  for (const item of evidence) {
+    if (item.timestamp > (latestEvidenceAt.get(item.competencyId) ?? "")) latestEvidenceAt.set(item.competencyId, item.timestamp);
+  }
   return interventions.filter(item =>
     getCompetency(item.competencyId)?.subjectId === subjectId &&
     (item.competencyId === currentCompetencyId || item.type === "retention_check") &&
-    (item.status === "active" || isAwaitingInstructionCheck(item)) &&
+    // Match adaptive selection's instructionToCheck boundary: an acknowledged
+    // explanation older than later evidence on this competency is superseded.
+    // Keep active work and genuinely unchecked teaching, including time ties.
+    (item.status === "active" || (isAwaitingInstructionCheck(item) &&
+      (!item.completedAt || item.completedAt >= (latestEvidenceAt.get(item.competencyId) ?? "")))) &&
     !answered.has(item.interventionId) && !recovery.recovered(item));
 }
 

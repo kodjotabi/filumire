@@ -18,7 +18,8 @@ const OWNER_ROLE = /(^|_)owner$|^postgres$|^neondb_owner$/i;
  * - Production must use PostgreSQL (never memory mode), from an allow-listed host, with a non-owner role;
  * - Preview may use memory mode; if it uses PostgreSQL, the host must be allow-listed for Preview
  *   and must not be a Production host;
- * - Production builds only the approved commit from the approved branch.
+ * - Production builds only the approved commit from the approved branch;
+ * - the Basic 7–9 private presentation (FILUMIRE_JHS_MODE) is local rehearsal only: any value refuses.
  * Outside Vercel (local builds and tests) the guard does nothing.
  */
 export function checkDeployment(env) {
@@ -26,6 +27,7 @@ export function checkDeployment(env) {
   const target = env.VERCEL_ENV;
   if (target !== "production" && target !== "preview") refuse("unknown_vercel_environment");
   if (Object.keys(env).some(key => key.startsWith("FLPREVIEW_"))) refuse("owner_credentials_present");
+  if (env.FILUMIRE_JHS_MODE) refuse("jhs_mode_on_vercel");
 
   const persistence = env.FILUMIRE_PERSISTENCE ?? "memory";
   if (persistence !== "memory" && persistence !== "postgres") refuse("unknown_persistence");

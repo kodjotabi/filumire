@@ -1,0 +1,957 @@
+diff --git a/apps/learner/app/api/learning/closure/route.ts b/apps/learner/app/api/learning/closure/route.ts
+index e7425d2d..4459de9f 100644
+--- a/apps/learner/app/api/learning/closure/route.ts
++++ b/apps/learner/app/api/learning/closure/route.ts
+@@ -1,5 +1,6 @@
+ import { resolveRequestIdentity } from "../../../../../../services/identity";
+ import { getLessonClosure, LessonClosureError } from "../../../../../../services/lesson-closure";
++import { assertSameOrigin, BadRequestError } from "../../account/http";
+ 
+ export const runtime = "nodejs";
+ export const dynamic = "force-dynamic";
+@@ -7,8 +8,10 @@ function json(body: unknown, status = 200) { return Response.json(body, { status
+ /** POST transports the receipt without putting it in URLs/logs; it is read-only. */
+ export async function POST(request: Request) {
+   try {
+-    const origin = request.headers.get("origin");
+-    if ((origin && origin !== new URL(request.url).origin) || request.headers.get("sec-fetch-site") === "cross-site") return json({ code: "invalid_origin" }, 403);
++    // Use the same Host-aware origin policy as the account routes: Next's
++    // internal URL may say localhost when the browser connects to 127.0.0.1.
++    try { assertSameOrigin(request); }
++    catch (error) { if (error instanceof BadRequestError) return json({ code: "invalid_origin" }, 403); throw error; }
+     let identity;
+     try { identity = await resolveRequestIdentity(request); } catch { return json({ code: "unauthenticated" }, 401); }
+     if (!request.headers.get("content-type")?.startsWith("application/json")) return json({ code: "invalid_request" }, 400);
+diff --git a/apps/learner/app/api/teacher/review/route.ts b/apps/learner/app/api/teacher/review/route.ts
+index 77436dc2..cc6a3140 100644
+--- a/apps/learner/app/api/teacher/review/route.ts
++++ b/apps/learner/app/api/teacher/review/route.ts
+@@ -40,6 +40,7 @@ import {
+ import {
+   getPendingTeacherReview,
+   markPendingTeacherReviewReviewed,
++  resolveReviewIntervention,
+ } from "../../../../../../services/teacher-review";
+ 
+ seedContent();
+@@ -202,6 +203,7 @@ export async function POST(
+         pendingReview.response,
+       clientRequestId:
+         pendingReview.id,
++      interventionId: await resolveReviewIntervention(pendingReview),
+     };
+ 
+     const assessment =
+diff --git a/apps/learner/app/learn/page.tsx b/apps/learner/app/learn/page.tsx
+index 17b98fe2..85eab2b3 100644
+--- a/apps/learner/app/learn/page.tsx
++++ b/apps/learner/app/learn/page.tsx
+@@ -1247,7 +1247,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null
+ 
+           {data.content && (
+             <>
+-              {lessonLanguageNotice(data.content.language, language) && <p className="contentLanguageNotice" role="note">{lessonLanguageNotice(data.content.language, language)}</p>}
++              {lessonLanguageNotice(data.content.language, language, Boolean(activeCorrection)) && <p className="contentLanguageNotice" role="note">{lessonLanguageNotice(data.content.language, language, Boolean(activeCorrection))}</p>}
+               <h2 lang={data.content.language}>
+                 {data.content.title}
+               </h2>
+diff --git a/apps/learner/components/filumire/AnswerCorrectionPanel.tsx b/apps/learner/components/filumire/AnswerCorrectionPanel.tsx
+index 4786f9b6..5e605aad 100644
+--- a/apps/learner/components/filumire/AnswerCorrectionPanel.tsx
++++ b/apps/learner/components/filumire/AnswerCorrectionPanel.tsx
+@@ -8,6 +8,7 @@ export type CorrectionPhase = "explain" | "retry" | "done";
+ 
+ const copy = {
+   en: {
++    correctedTitle: "You corrected your mistake.",
+     title: "Not quite yet. Let’s fix it together.", chose: "You chose:", why: "Why this answer is not right", idea: "The key idea",
+     noExplanation: "This answer does not match what the question asks. Read the question again slowly and think about the key idea below.",
+     retry: "Try the question again", retryHint: "Choose a different answer below. Your first answer is crossed out.",
+@@ -19,6 +20,7 @@ const copy = {
+     more: "Read more",
+   },
+   fr: {
++    correctedTitle: "Tu as corrigé ton erreur.",
+     title: "Pas encore tout à fait. Corrigeons ensemble.", chose: "Tu as choisi :", why: "Pourquoi cette réponse n’est pas juste", idea: "L’idée clé",
+     noExplanation: "Cette réponse ne correspond pas à ce que demande la question. Relis la question lentement et pense à l’idée clé ci-dessous.",
+     retry: "Réessayer la question", retryHint: "Choisis une autre réponse ci-dessous. Ta première réponse est barrée.",
+@@ -67,7 +69,7 @@ export function AnswerCorrectionPanel({ correction, phase, language, busy, onRet
+   // Reads what is shown first: the short explanation and key idea.
+   const spoken = [correction.explanation ? correction.explanation.short?.trim() || correction.explanation.body : t.noExplanation, correction.concept && (correction.concept.short?.trim() || correction.concept.body)].filter(Boolean).join(" ");
+   return <section className={`answerCorrection ${outcome ?? "incorrect"}`} aria-labelledby="answer-correction-title" data-phase={phase}>
+-    <h2 id="answer-correction-title" ref={heading} tabIndex={-1}>{t.title}</h2>
++    <h2 id="answer-correction-title" ref={heading} tabIndex={-1}>{phase === "done" && outcome === "correct" ? t.correctedTitle : t.title}</h2>
+     <p className="chosen">{t.chose} <q>{correction.chosen}</q></p>
+     {phase === "explain" ? teaching : <details className="again"><summary>{t.again}</summary>{teaching}</details>}
+     {phase === "explain" && speechLanguage && <ReadAloudControls learnerId={learnerId} text={spoken} language={speechLanguage} surface="correction" />}
+diff --git a/apps/learner/public/offline.html b/apps/learner/public/offline.html
+index 8349a42b..f6af8fef 100644
+--- a/apps/learner/public/offline.html
++++ b/apps/learner/public/offline.html
+@@ -22,9 +22,9 @@
+     font: inherit; font-weight: 700; color: #0B3573; background: #FEA102;
+     border: 0; border-radius: 999px; padding: 14px 28px; min-height: 48px;
+   }
+-  [lang="fr"] { display: none; }
+-  html.fr [lang="en"] { display: none; }
+-  html.fr [lang="fr"] { display: block; }
++  main > div[lang="fr"] { display: none; }
++  html.fr main > div[lang="en"] { display: none; }
++  html.fr main > div[lang="fr"] { display: block; }
+ </style>
+ </head>
+ <body>
+diff --git a/apps/learner/public/sw.js b/apps/learner/public/sw.js
+index 6c3dd4e8..10b99255 100644
+--- a/apps/learner/public/sw.js
++++ b/apps/learner/public/sw.js
+@@ -13,7 +13,8 @@
+  *    kept for the next person using the same phone.
+  */
+ 
+-const VERSION = "filumire-shell-v1";
++// Refresh the precached offline page after fixing its French visibility rules.
++const VERSION = "filumire-shell-v2";
+ const STATIC_CACHE = `${VERSION}-static`;
+ const RUNTIME_CACHE = `${VERSION}-runtime`;
+ const RUNTIME_LIMIT = 80;
+diff --git a/apps/learner/services/learner-interface.ts b/apps/learner/services/learner-interface.ts
+index 5439e1a5..e6ea2f27 100644
+--- a/apps/learner/services/learner-interface.ts
++++ b/apps/learner/services/learner-interface.ts
+@@ -18,9 +18,14 @@ export function learnerErrorText(error: unknown, language: Language): string {
+ export function translateLearnerError(text: string, language: Language): string | undefined {
+   return Object.values(errors).find((entry) => entry.en === text || entry.fr === text)?.[language];
+ }
+-export function lessonLanguageNotice(contentLanguage: "en" | "fr" | undefined, interfaceLanguage: Language): string | undefined {
++export function lessonLanguageNotice(contentLanguage: "en" | "fr" | undefined, interfaceLanguage: Language, retainingQuestion = false): string | undefined {
+   if (!contentLanguage || contentLanguage === interfaceLanguage) return;
++  if (retainingQuestion) {
++    return interfaceLanguage === "fr"
++      ? "Cette question reste en anglais pendant la correction et le nouvel essai. Ta progression et tes réponses sont conservées."
++      : "This question stays in French during correction and retry. Your progress and answers are kept.";
++  }
+   return interfaceLanguage === "fr"
+-    ? "Le texte actuel de cette leçon est en anglais. Une version française validée n’a pas été fournie pour cette activité. Ton apprentissage enregistré est conservé."
+-    : "The current lesson text is in French. A trusted English version has not been supplied for this activity. Your recorded learning is kept.";
++    ? "Cette activité est en anglais. Ta progression enregistrée est conservée."
++    : "This activity is in French. Your saved progress is kept.";
+ }
+diff --git a/package.json b/package.json
+index b714759b..ec00a7b8 100644
+--- a/package.json
++++ b/package.json
+@@ -14,7 +14,7 @@
+                     "test:integration-foundation":  "node ./tests/integration-phase1-foundation.test.mjs && node ./tests/deploy-grade-lock-guard.test.mjs && node ./tests/deployment-migration-evidence.test.mjs && node ./tests/preview-pinned-target.test.mjs && node ./tests/create-app-role.test.mjs && node ./tests/app-role-grants-safety.test.mjs && node ./tests/windows-credential-security.test.mjs && node ./tests/w4-pg-client-lifecycle.test.mjs && npm run test:grade-lock",
+                     "test:grade-lock":  "node ./scripts/run-offline-suites.mjs ./tests/grade-lock-schema-guard.test.ts ./tests/guardian-grade-lock.test.ts",
+                     "test:security-offline": "node ./scripts/run-offline-suites.mjs",
+-                    "test:revision": "node ./scripts/run-offline-suites.mjs ./tests/spaced-revision.test.ts ./tests/spaced-revision-subjects.test.ts ./tests/time-aware-retention-v1.test.ts ./tests/time-aware-retention-engine-v1.test.ts",
++                    "test:revision": "node ./scripts/run-offline-suites.mjs ./tests/spaced-revision.test.ts ./tests/spaced-revision-subjects.test.ts ./tests/time-aware-retention-v1.test.ts ./tests/time-aware-retention-engine-v1.test.ts ./tests/teaching-first-retention.test.ts",
+                     "test:teaching-first": "node ./scripts/run-offline-suites.mjs ./tests/teaching-first-journey.test.ts",
+                     "test:public-site-navigation": "node ./scripts/run-offline-suites.mjs ./tests/public-site-navigation.test.ts",
+                     "test:voice": "node ./scripts/run-offline-suites.mjs ./tests/browser-speech.test.ts ./tests/african-voice.test.ts",
+diff --git a/packages/curriculum-framework/index.ts b/packages/curriculum-framework/index.ts
+index 82cbae70..98088692 100644
+--- a/packages/curriculum-framework/index.ts
++++ b/packages/curriculum-framework/index.ts
+@@ -17,6 +17,25 @@ import { getGhanaB5EnglishNodes } from "./ghana-b5-english";
+ import { GHANA_B6_ENGLISH_PUBLISHED_SPECS } from "../curriculum/ghana-b6-english-adaptive";
+ import { getGhanaB6EnglishNodes } from "./ghana-b6-english";
+ import type { CompetencyId } from "../domain";
++import { GHANA_B4_ENGLISH_PRODUCTION_SPECS } from "../curriculum/ghana-b4-english-production";
++import { GHANA_B4_MATHEMATICS_ADAPTIVE_SPECS } from "../curriculum/ghana-b4-mathematics-adaptive";
++import { getGhanaB4EnglishNodes } from "./ghana-b4-english";
++import { GHANA_B89_CCP_REGISTRY } from "./ghana-b89-ccp";
++import { GHANA_CCP_RUNTIME_ID } from '../curriculum/ghana-ccp-runtime';
++import {
++  GHANA_B7_CCP_REGISTRY,
++  CURRICULUM_VERSION_GHANA_CCP_2020_ID,
++  PHASE_GHANA_JHS_CCP_ID,
++  GRADE_GHANA_BASIC_7_CCP_ID,
++  type CurriculumSourceProvenance,
++  type FrameworkCompetencyRegistration,
++  type CurriculumSourceIssue,
++} from "./ghana-b7-ccp";
++export { CURRICULUM_VERSION_GHANA_CCP_2020_ID, PHASE_GHANA_JHS_CCP_ID, GRADE_GHANA_BASIC_7_CCP_ID };
++export type { FrameworkCompetencyRegistration, CurriculumSourceIssue, CurriculumSourceProvenance };
++
++const jhsSubjects = [...GHANA_B7_CCP_REGISTRY.subjects, ...GHANA_B89_CCP_REGISTRY.subjects];
++const jhsRegistrations = [...GHANA_B7_CCP_REGISTRY.competencies, ...GHANA_B89_CCP_REGISTRY.competencies];
+ 
+ import {
+   GHANA_MATH_PILOT_CURRICULUM_ID,
+@@ -89,6 +108,7 @@ export interface CurriculumVersion {
+   curriculumId: CurriculumId;
+   name: string;
+   isActive: boolean;
++  runtimeFrameworkId?: string;
+ }
+ 
+ export interface Phase {
+@@ -103,6 +123,8 @@ export interface FrameworkGrade {
+   phaseId: PhaseId;
+   name: string;
+   order: number;
++  learnerVisibility?: "visible" | "hidden";
++  supportStatus?: "unsupported";
+ }
+ 
+ /*
+@@ -131,6 +153,10 @@ export interface CurriculumNode {
+   description?: string;
+   sourceReference?: string;
+   order: number;
++  source?: CurriculumSourceProvenance;
++  officialTitle?: string | null;
++  structuralKey?: string;
++  reviewFlags?: string[];
+ }
+ 
+ export interface ResolvedCurriculumContext {
+@@ -332,6 +358,13 @@ const curricula: Curriculum[] = [
+ ];
+ 
+ const curriculumVersions: CurriculumVersion[] = [
++  {
++    id: CURRICULUM_VERSION_GHANA_CCP_2020_ID,
++    curriculumId: CURRICULUM_GHANA_ID,
++    name: "Ghana NaCCA Common Core Programme (September 2020)",
++    runtimeFrameworkId: GHANA_CCP_RUNTIME_ID,
++    isActive: false,
++  },
+   {
+     id: CURRICULUM_VERSION_GHANA_PILOT_V1_ID,
+     curriculumId: CURRICULUM_GHANA_ID,
+@@ -341,6 +374,7 @@ const curriculumVersions: CurriculumVersion[] = [
+ ];
+ 
+ const phases: Phase[] = [
++  { id: PHASE_GHANA_JHS_CCP_ID, curriculumVersionId: CURRICULUM_VERSION_GHANA_CCP_2020_ID, name: "Junior High School (Common Core Programme)", order: 2 },
+   {
+     id: PHASE_GHANA_BASIC_EDUCATION_ID,
+     curriculumVersionId:
+@@ -351,6 +385,8 @@ const phases: Phase[] = [
+ ];
+ 
+ const grades: FrameworkGrade[] = [
++  ...[8, 9].map(order => ({ id: `level-gh-basic-${order}-ccp`, phaseId: PHASE_GHANA_JHS_CCP_ID, name: `Basic ${order}`, order, learnerVisibility: "hidden" as const, supportStatus: "unsupported" as const })),
++  { id: GRADE_GHANA_BASIC_7_CCP_ID, phaseId: PHASE_GHANA_JHS_CCP_ID, name: "Basic 7", order: 7, learnerVisibility: "hidden", supportStatus: "unsupported" },
+   {
+     id: GRADE_GHANA_BASIC_4_ID,
+     phaseId: PHASE_GHANA_BASIC_EDUCATION_ID,
+@@ -372,6 +408,7 @@ const grades: FrameworkGrade[] = [
+ ];
+ 
+ const subjects: FrameworkSubject[] = [
++  ...jhsSubjects,
+   {
+     id: SUBJECT_GHANA_BASIC4_MATH_ID,
+     gradeId: GRADE_GHANA_BASIC_4_ID,
+@@ -459,6 +496,7 @@ const subjects: FrameworkSubject[] = [
+ ];
+ 
+ const subjectCapabilities: SubjectCapability[] = [
++  ...jhsSubjects.map((subject) => ({ subjectId: subject.id, status: "unsupported" as const, notes: "Source framework registered only. No CCP learner placement, lessons or assessments are activated." })),
+   {
+     subjectId: SUBJECT_GHANA_BASIC4_MATH_ID,
+     status: "partial",
+@@ -534,6 +572,8 @@ const subjectCapabilities: SubjectCapability[] = [
+ ];
+ 
+ const curriculumNodes: CurriculumNode[] = [
++  ...GHANA_B7_CCP_REGISTRY.nodes,
++  ...GHANA_B89_CCP_REGISTRY.nodes,
+   /*
+    * Compatibility pilot nodes
+    */
+@@ -674,6 +714,7 @@ const curriculumNodes: CurriculumNode[] = [
+   ...getGhanaB4MathematicsAdditionalNodes(
+     SUBJECT_GHANA_BASIC4_MATH_ID,
+   ),
++  ...getGhanaB4EnglishNodes(SUBJECT_GHANA_BASIC4_ENGLISH_ID),
+ 
+   ...getGhanaB4ScienceNodes(
+     SUBJECT_GHANA_BASIC4_SCIENCE_ID,
+@@ -708,6 +749,7 @@ const curriculumNodes: CurriculumNode[] = [
+ ];
+ 
+ const competencyMappings: CurriculumCompetencyMapping[] = [
++  ...jhsRegistrations.map((registration) => ({ id: `mapping-${registration.id}`, curriculumNodeId: registration.curriculumNodeId, competencyId: registration.id, relationship: "direct" as const })),
+   /*
+    * Legacy compatibility mappings
+    */
+@@ -779,6 +821,20 @@ const competencyMappings: CurriculumCompetencyMapping[] = [
+       "competency-gh-math-b4-number-patterns-003",
+     relationship: "supports",
+   },
++  ...GHANA_B4_ENGLISH_PRODUCTION_SPECS.map((spec) => ({
++    id: `mapping-gh-b4-english-${spec.code.toLowerCase().replace(/\./g, "-")}`,
++    curriculumNodeId: `node-gh-b4-english-${spec.code.toLowerCase()}`,
++    competencyId: spec.competencyId,
++    relationship: "direct" as const,
++  })),
++  ...GHANA_B4_MATHEMATICS_ADAPTIVE_SPECS.flatMap((spec) =>
++    spec.indicatorMappings.map((indicator) => ({
++      id: `mapping-gh-b4-math-${spec.competencyId}-${indicator.code.toLowerCase().replace(/\./g, "-")}`,
++      curriculumNodeId: `node-gh-b4-math-${indicator.code.toLowerCase()}`,
++      competencyId: spec.competencyId,
++      relationship: indicator.relationship,
++    })),
++  ),
+   ...GHANA_B4_SCIENCE_ADAPTIVE_SPECS
+     .filter((spec) => spec.code !== "B4.1.1.1.1")
+     .map((spec) => ({
+@@ -1030,8 +1086,13 @@ export function getDefaultLearnerLearningContext(): {
+ export function getInitialCompetencyIdForResolvedContext(
+   resolved: ResolvedCurriculumContext,
+ ): CompetencyId | undefined {
++  if (
++    !resolved.curriculumVersion.isActive ||
++    resolved.grade.learnerVisibility === "hidden" ||
++    resolved.grade.supportStatus === "unsupported"
++  ) return undefined;
+   return getInitialCompetencyForCurriculumSubjectLevel(
+-    resolved.curriculum.id,
++    resolved.curriculumVersion.runtimeFrameworkId ?? resolved.curriculum.id,
+     resolved.subject.id,
+     resolved.grade.id,
+   )?.id;
+@@ -1048,6 +1109,10 @@ export function getAvailableSubjectsForGrade(
+   curriculumVersionId: CurriculumVersionId,
+   gradeId: FrameworkGradeId,
+ ): FrameworkSubject[] {
++  const version = getCurriculumVersion(curriculumVersionId);
++  const grade = getFrameworkGrade(gradeId);
++  // Structural resolution remains available to curriculum tooling. Learner availability fails closed.
++  if (!version?.isActive || !grade || grade.learnerVisibility === "hidden" || grade.supportStatus === "unsupported") return [];
+   return getSubjectsForGrade(gradeId).filter((subject) => {
+     if (
+       getSubjectCapability(subject.id)?.status ===
+@@ -1106,6 +1171,19 @@ export function getSupportedGradesForCurriculumVersion(
+ 
+ // ---- Layer 2 accessors ----
+ 
++/** Source registrations are intentionally separate from the teachable runtime registry. */
++export function getFrameworkCompetencyRegistration(competencyId: CompetencyId): FrameworkCompetencyRegistration | undefined {
++  return jhsRegistrations.find((registration) => registration.id === competencyId);
++}
++
++export function getFrameworkCompetencyRegistrationsForSubject(subjectId: FrameworkSubjectId): FrameworkCompetencyRegistration[] {
++  return jhsRegistrations.filter((registration) => registration.subjectId === subjectId);
++}
++
++export function getCurriculumSourceIssue(issueId: string): CurriculumSourceIssue | undefined {
++  return GHANA_B7_CCP_REGISTRY.sourceIssues.find((issue) => issue.id === issueId) ?? GHANA_B89_CCP_REGISTRY.sourceIssues.find((issue) => issue.id === issueId);
++}
++
+ export function getCompetencyMappingsForNode(
+   curriculumNodeId: CurriculumNodeId,
+ ): CurriculumCompetencyMapping[] {
+diff --git a/packages/curriculum/index.ts b/packages/curriculum/index.ts
+index 219986b4..9cff193f 100644
+--- a/packages/curriculum/index.ts
++++ b/packages/curriculum/index.ts
+@@ -1,3 +1,4 @@
++import { CCP_RUNTIME_FRAMEWORK, CCP_EDUCATION_SYSTEM, CCP_RUNTIME_LEVELS, CCP_RUNTIME_SUBJECTS, CCP_RUNTIME_STRANDS, CCP_RUNTIME_SUBSTRANDS, CCP_RUNTIME_STANDARDS, CCP_RUNTIME_INDICATORS, CCP_SOURCE_REGISTRATIONS } from './ghana-ccp-runtime';
+ import {
+   GHANA_B5_SCIENCE_COMPETENCIES,
+   GHANA_B5_SCIENCE_INDICATORS,
+@@ -1077,19 +1078,54 @@ export function getAllCompetencies(): CompetencyDefinition[] {
+   return [...curriculum];
+ }
+ 
++/** In-memory pilot harness only. No application import or persisted activation.
++ * Keep public getters defensive and never replace an existing curriculum record.
++ */
++export function registerIsolatedBasic7TestCurriculum(
++  competency: CompetencyDefinition,
++  subject: Subject,
++  level: LearningLevel,
++): void {
++  if (process.env.NODE_ENV !== "test" || process.env.FILUMIRE_PERSISTENCE !== "memory" || process.env.FILUMIRE_BASIC7_PILOT !== "test-only" || process.env.VERCEL) {
++    throw new Error("Basic 7 registration is restricted to an isolated in-memory test process");
++  }
++    const existingSubject = subjects.find(item => item.id === subject.id);
++    const existingLevel = learningLevels.find(item => item.id === level.id);
++    if (level.id !== "level-gh-basic-7-ccp" || competency.learningLevelId !== level.id || subject.learningLevelId !== level.id || competency.subjectId !== subject.id || curriculum.some((item) => item.id === competency.id) ||
++      (existingSubject && JSON.stringify(existingSubject) !== JSON.stringify(subject)) ||
++      (existingLevel && JSON.stringify(existingLevel) !== JSON.stringify(level))) {
++    throw new Error("Invalid or duplicate isolated Basic 7 registration");
++  }
++  curriculum.push(competency);
++    if (!existingSubject) subjects.push(subject);
++    if (!existingLevel) learningLevels.push(level);
++}
++
+ export function getCurriculumFramework(
+   frameworkId: CurriculumFrameworkId,
+ ): CurriculumFramework | undefined {
+-  return curriculumFrameworks.find(
++  return [...curriculumFrameworks, CCP_RUNTIME_FRAMEWORK].find(
+     (framework) =>
+       framework.id === frameworkId,
+   );
+ }
+ 
++/** Explicitly isolated preview only. App seeds never import or call this adapter. */
++export function registerIsolatedJhsPreviewCompetency(competency: CompetencyDefinition): void {
++  if (process.env.NODE_ENV !== 'test' || process.env.FILUMIRE_PERSISTENCE !== 'memory' || process.env.FILUMIRE_JHS_PREVIEW !== 'test-only' || process.env.VERCEL) {
++    throw new Error('JHS preview registration requires an isolated non-deployed test process');
++  }
++  const source = CCP_SOURCE_REGISTRATIONS.find(r => r.id === competency.id);
++  if (!source || source.sourceIssueIds.length || competency.curriculumFrameworkId !== CCP_RUNTIME_FRAMEWORK.id || competency.educationSystemId !== CCP_EDUCATION_SYSTEM.id || competency.learningLevelId !== source.gradeId || competency.subjectId !== source.subjectId || competency.learningIndicatorId !== source.curriculumNodeId || competency.strandId !== source.hierarchy.strandId || competency.subStrandId !== source.hierarchy.subStrandId || competency.contentStandardId !== source.hierarchy.contentStandardId || curriculum.some(c => c.id === competency.id)) {
++    throw new Error('Invalid or duplicate source-backed JHS preview competency');
++  }
++  curriculum.push(competency);
++}
++
+ export function getEducationSystem(
+   educationSystemId: EducationSystemId,
+ ): EducationSystem | undefined {
+-  return educationSystems.find(
++  return [...educationSystems, CCP_EDUCATION_SYSTEM].find(
+     (system) =>
+       system.id === educationSystemId,
+   );
+@@ -1098,7 +1134,7 @@ export function getEducationSystem(
+ export function getLearningLevel(
+   levelId: LearningLevelId,
+ ): LearningLevel | undefined {
+-  return learningLevels.find(
++  return [...learningLevels, ...CCP_RUNTIME_LEVELS].find(
+     (level) =>
+       level.id === levelId,
+   );
+@@ -1107,7 +1143,7 @@ export function getLearningLevel(
+ export function getSubject(
+   subjectId: SubjectId,
+ ): Subject | undefined {
+-  return subjects.find(
++  return [...subjects, ...CCP_RUNTIME_SUBJECTS].find(
+     (subject) =>
+       subject.id === subjectId,
+   );
+@@ -1116,7 +1152,7 @@ export function getSubject(
+ export function getStrand(
+   strandId: StrandId,
+ ): Strand | undefined {
+-  return strands.find(
++  return [...strands, ...CCP_RUNTIME_STRANDS].find(
+     (strand) =>
+       strand.id === strandId,
+   );
+@@ -1125,7 +1161,7 @@ export function getStrand(
+ export function getSubStrand(
+   subStrandId: SubStrandId,
+ ): SubStrand | undefined {
+-  return subStrands.find(
++  return [...subStrands, ...CCP_RUNTIME_SUBSTRANDS].find(
+     (subStrand) =>
+       subStrand.id === subStrandId,
+   );
+@@ -1134,7 +1170,7 @@ export function getSubStrand(
+ export function getContentStandard(
+   contentStandardId: ContentStandardId,
+ ): ContentStandard | undefined {
+-  return contentStandards.find(
++  return [...contentStandards, ...CCP_RUNTIME_STANDARDS].find(
+     (standard) =>
+       standard.id === contentStandardId,
+   );
+@@ -1143,7 +1179,7 @@ export function getContentStandard(
+ export function getLearningIndicator(
+   learningIndicatorId: LearningIndicatorId,
+ ): LearningIndicator | undefined {
+-  return learningIndicators.find(
++  return [...learningIndicators, ...CCP_RUNTIME_INDICATORS].find(
+     (indicator) =>
+       indicator.id === learningIndicatorId,
+   );
+diff --git a/services/learner-path/revision.ts b/services/learner-path/revision.ts
+index 6d4f2537..9c2a9cec 100644
+--- a/services/learner-path/revision.ts
++++ b/services/learner-path/revision.ts
+@@ -58,10 +58,18 @@ export async function unansweredActivities(learnerId: string, subjectId: string,
+     getLearnerInterventions(learnerId), getEvidenceForLearner(learnerId), readAssessmentRecovery(learnerId),
+   ]);
+   const answered = new Set(evidence.map(item => item.interventionId));
++  const latestEvidenceAt = new Map<string, string>();
++  for (const item of evidence) {
++    if (item.timestamp > (latestEvidenceAt.get(item.competencyId) ?? "")) latestEvidenceAt.set(item.competencyId, item.timestamp);
++  }
+   return interventions.filter(item =>
+     getCompetency(item.competencyId)?.subjectId === subjectId &&
+     (item.competencyId === currentCompetencyId || item.type === "retention_check") &&
+-    (item.status === "active" || isAwaitingInstructionCheck(item)) &&
++    // Match adaptive selection's instructionToCheck boundary: an acknowledged
++    // explanation older than later evidence on this competency is superseded.
++    // Keep active work and genuinely unchecked teaching, including time ties.
++    (item.status === "active" || (isAwaitingInstructionCheck(item) &&
++      (!item.completedAt || item.completedAt >= (latestEvidenceAt.get(item.competencyId) ?? "")))) &&
+     !answered.has(item.interventionId) && !recovery.recovered(item));
+ }
+ 
+diff --git a/services/teacher-review/index.ts b/services/teacher-review/index.ts
+index a5f47b38..b13ecb15 100644
+--- a/services/teacher-review/index.ts
++++ b/services/teacher-review/index.ts
+@@ -7,6 +7,29 @@ import {
+ import type {
+   PendingTeacherReviewRecord,
+ } from "../persistence";
++import { getPilotMeasurementEvents } from "../pilot-measurement";
++import { getIntervention } from "../intervention-store";
++
++/** Recover the server-recorded delivery, never a teacher/client-supplied ID.
++ * Pending-review storage predates intervention IDs. Match the exact learner,
++ * session, topic, item and content, only at/before submission. Legacy reviews
++ * without a recorded delivery retain their existing unbound behaviour.
++ */
++export async function resolveReviewIntervention(review: PendingTeacherReviewRecord): Promise<string | undefined> {
++  const deliveries = (await getPilotMeasurementEvents(review.learnerId)).filter(event =>
++    event.eventType === "learning_presented" && event.sessionId === review.sessionId &&
++    event.competencyId === review.competencyId && event.createdAt <= review.submittedAt &&
++    event.metadata.source === "assessment-delivery-v1" &&
++    event.metadata.assessmentItemId === review.assessmentItemId &&
++    event.metadata.contentId === review.contentId && typeof event.metadata.interventionId === "string");
++  for (const event of [...deliveries].reverse().sort((a, b) => b.createdAt.localeCompare(a.createdAt))) {
++    const id = event.metadata.interventionId as string;
++    const intervention = await getIntervention(id);
++    if (intervention?.learnerId === review.learnerId && intervention.sessionId === review.sessionId &&
++      intervention.competencyId === review.competencyId) return id;
++  }
++  return undefined;
++}
+ 
+ export interface PendingTeacherReviewSubmission {
+   learnerId: string;
+diff --git a/tests/ask-filu-navigation.browser.mjs b/tests/ask-filu-navigation.browser.mjs
+index f698cd70..49acd8e3 100644
+--- a/tests/ask-filu-navigation.browser.mjs
++++ b/tests/ask-filu-navigation.browser.mjs
+@@ -74,6 +74,15 @@ try {
+       assert.equal(fits, true, `assistant must fit width ${width}`);
+       checks++;
+     }
++    async function askFromResponsiveNavigation() {
++      // Below 768px the header shortcut is deliberately hidden in favour of
++      // the bottom menu; tablet/desktop retain the visible header shortcut.
++      const control = page.locator(width < 768
++        ? 'nav.filumireBottomNav a[href*="view=ask-filu"]'
++        : '.filumireSetupAskFilu');
++      assert.equal(await control.isVisible(), true, `Ask FILU control is visible at ${width}px`);
++      await control.click();
++    }
+     for (const origin of ["/dashboard?lang=en", "/dashboard?view=setup&lang=en", `/dashboard?view=learning&subjectId=${subjectId}&lang=en`]) {
+       await open(origin);
+       await page.locator('nav a[href*="view=ask-filu"]').click();
+@@ -84,10 +93,10 @@ try {
+     await page.locator(".homeTile.ask").click();
+     await assistant();
+     await open("/dashboard?view=setup&lang=en");
+-    await page.locator(".filumireSetupAskFilu").click();
++    await askFromResponsiveNavigation();
+     await assistant();
+     await open(`/learn?subjectId=${subjectId}&lang=en`);
+-    await page.locator(".filumireSetupAskFilu").click();
++    await askFromResponsiveNavigation();
+     await assistant();
+     assert.equal(new URL(page.url()).searchParams.get("subjectId"), subjectId);
+     await open(`/learn?subjectId=${subjectId}&lang=en`);
+diff --git a/tests/immediate-correction.test.ts b/tests/immediate-correction.test.ts
+index bf7113c8..b77dfaa5 100644
+--- a/tests/immediate-correction.test.ts
++++ b/tests/immediate-correction.test.ts
+@@ -1,7 +1,7 @@
+ import assert from "node:assert/strict";
+-import { POST } from "../apps/learner/app/api/learning/route";
++import { GET, POST } from "../apps/learner/app/api/learning/route";
+ import { createSession } from "../services/session";
+-import { createInitialLearnerState, saveLearnerState } from "../services/learner-state";
++import { createInitialLearnerState, getLearnerState, saveLearnerState } from "../services/learner-state";
+ import { getEvidence } from "../services/evidence-store";
+ import { getContentForCompetency } from "../services/content-store";
+ import { correctionFor } from "../apps/learner/services/learning-presentation";
+@@ -9,6 +9,10 @@ import { shortPassage } from "../services/assessment/corrective-feedback";
+ import React from "react";
+ import { renderToStaticMarkup } from "react-dom/server";
+ import { AnswerCorrectionPanel } from "../apps/learner/components/filumire/AnswerCorrectionPanel";
++import { getAllSubjects, getCompetenciesForSubject } from "../packages/curriculum";
++import { setActiveSubject, setLearnerGrade, updateActiveCompetency } from "../services/learner-context";
++import { getApiHeaders, type LearningResponse } from "../apps/learner/services/learning-client";
++import { readLanguage, setLanguagePreference } from "../apps/learner/components/filumire/language";
+ Object.assign(globalThis, { React });
+ 
+ // Immediate correction: a wrong answer gets FILU's explanation, the key idea and
+@@ -115,8 +119,192 @@ for (const language of ["en", "fr"] as const) {
+   assert(retry.includes("<details") && !retry.includes("<button"), "during the retry the explanation folds away and the answers take over");
+   const done = renderToStaticMarkup(React.createElement(AnswerCorrectionPanel, { correction: { ...value, retryAvailable: false, retryOutcome: "correct" }, phase: "done", language, busy: false, onRetry: noop, onContinue: noop }));
+   assert(done.includes(language === "fr" ? "Oui, c’est juste" : "Yes, that’s right"));
++  const negativeHeading = language === "fr" ? "Pas encore tout à fait. Corrigeons ensemble." : "Not quite yet. Let’s fix it together.";
++  const correctedHeading = language === "fr" ? "Tu as corrigé ton erreur." : "You corrected your mistake.";
++  assert(done.includes(`<h2 id="answer-correction-title" tabindex="-1">${correctedHeading}</h2>`), "successful retry has a success heading");
++  assert(!done.includes(negativeHeading), "successful retry no longer says the answer is wrong");
++  assert(explain.includes(negativeHeading) && retry.includes(negativeHeading), "the original correction heading stays until the retry succeeds");
++  const stillWrong = renderToStaticMarkup(React.createElement(AnswerCorrectionPanel, { correction: { ...value, retryAvailable: false, retryOutcome: "incorrect" }, phase: "done", language, busy: false, onRetry: noop, onContinue: noop }));
++  assert(stillWrong.includes(negativeHeading) && !stillWrong.includes(correctedHeading), "an incorrect retry must not claim success");
+   const used = renderToStaticMarkup(React.createElement(AnswerCorrectionPanel, { correction: { ...value, retryAvailable: false }, phase: "explain", language, busy: false, onRetry: noop, onContinue: noop }));
+   assert(!used.includes(language === "fr" ? "Réessayer la question" : "Try the question again"), "no second retry");
+ }
+ 
+ console.log("PASS: wrong answers get an explanation, the key idea and one guided retry on the same question (EN/FR); answer key stays on the server; retries are idempotent and never independent evidence");
++
++// Phase 4: the same delivered-question correction journey for all 12 Ghana
++// subject/grade pairs in both languages. No fabricated questions or evidence.
++// As on /learn, switching the interface language keeps the delivered question
++// (and its content language) until Continue; it does not request a new question.
++assert.equal(process.env.FILUMIRE_PERSISTENCE, "memory", "run through the offline test infrastructure");
++const cases = getAllSubjects().filter((subject) =>
++  /^subject-gh-/.test(subject.id) && /basic-?[456]-/.test(subject.id) &&
++  /(?:english|mathematics|computing|science)/.test(subject.id),
++);
++assert.equal(cases.length, 12, "four subjects across Basic 4, 5 and 6");
++
++// Use the real preference setter and API-header builder with the minimal
++// browser environment used by the existing client tests. Restore it afterwards.
++const originalWindow = Object.getOwnPropertyDescriptor(globalThis, "window");
++const originalDocument = Object.getOwnPropertyDescriptor(globalThis, "document");
++const storage = new Map<string, string>();
++let pageUrl = new URL("http://localhost/learn?lang=en");
++let languageEvents = 0;
++Object.defineProperty(globalThis, "window", { configurable: true, value: {
++  localStorage: { getItem: (key: string) => storage.get(key) ?? null, setItem: (key: string, value: string) => storage.set(key, value) },
++  location: { get href() { return pageUrl.href; }, get search() { return pageUrl.search; } },
++  history: { state: null, replaceState: (_state: unknown, _unused: string, url: URL) => { pageUrl = new URL(url); } },
++  dispatchEvent: (event: CustomEvent) => { assert.equal(event.type, "filumire-language"); languageEvents += 1; return true; },
++} });
++Object.defineProperty(globalThis, "document", { configurable: true, value: { cookie: "", documentElement: { lang: "en" } } });
++
++async function correctionJourney(subject: (typeof cases)[number], language: "en" | "fr") {
++  const grade = subject.learningLevelId;
++  const label = `${subject.name} ${grade.match(/basic-(\d)/)![1]} ${language.toUpperCase()}`;
++  const learnerId = `learner-correction-matrix-${crypto.randomUUID()}`;
++  const sessionId = `session-${crypto.randomUUID()}`;
++  const competency = getCompetenciesForSubject(subject.id)[0];
++  assert(competency, `${label}: published competency`);
++  await setLearnerGrade(learnerId, grade);
++  await setActiveSubject(learnerId, subject.id);
++  await updateActiveCompetency(learnerId, competency.id);
++  await createSession(sessionId, learnerId);
++  setLanguagePreference(language);
++
++  const headers = () => ({ ...getApiHeaders(), "x-filumire-learner-id": learnerId, origin: "http://localhost" });
++  async function read(response: Response) {
++    const body = await response.json();
++    assert.equal(response.status, 200, `${label}: API accepted request: ${JSON.stringify(body.error ?? "")}`);
++    return body as LearningResponse;
++  }
++  const send = (body: Record<string, unknown>) => POST(new Request("http://localhost/api/learning", {
++    method: "POST", headers: headers(), body: JSON.stringify({ sessionId, ...body }),
++  })).then(read);
++  const get = (query = "") => GET(new Request(
++    `http://localhost/api/learning?sessionId=${sessionId}&subjectId=${subject.id}${query}`, { headers: headers() },
++  )).then(read);
++  async function nextQuestion(step: LearningResponse) {
++    for (let cards = 0; !step.content?.assessmentItemId && cards < 8; cards += 1) {
++      assert(step.content && step.decision.interventionId, `${label}: actionable teaching before practice`);
++      step = await send({ interactionType: "acknowledge", competencyId: step.decision.competencyId, interventionId: step.decision.interventionId });
++    }
++    assert(step.content?.assessmentItemId, `${label}: learner receives a question`);
++    assert.equal(step.decision.competencyId, competency.id, `${label}: stays on the chosen topic`);
++    return step;
++  }
++  const question = await nextQuestion(await get(`&competencyId=${competency.id}`));
++  const delivered = question.content!;
++  assert.equal(delivered.language, language);
++  const authored = getContentForCompetency(competency.id).find((content) => content.id === delivered.id)!;
++  assert(authored?.metadata?.expectedResponse && authored.metadata.options, `${label}: real authored multiple-choice question`);
++  assert.equal(delivered.metadata?.expectedResponse, undefined, "answer key stays on server");
++  const incorrect = (JSON.parse(authored.metadata.options) as string[]).find((option) => option !== authored.metadata!.expectedResponse)!;
++  assert(incorrect, `${label}: wrong option exists`);
++  const identity = {
++    competencyId: competency.id, assessmentItemId: delivered.assessmentItemId,
++    interventionId: question.decision.interventionId,
++  };
++  const submit = (response: string, interactionType: "assessment" | "corrective_retry") =>
++    send({ ...identity, interactionType, response, clientRequestId: crypto.randomUUID() });
++  const wrong = await submit(incorrect, "assessment");
++  assert.equal(wrong.assessment?.result.correct, false, `${label}: wrong answer is incorrect`);
++  const correction = correctionFor(wrong, delivered.assessmentItemId!);
++  assert(correction?.retryAvailable, `${label}: correction offers retry on the delivered question`);
++  assert.equal(correction.assessmentItemId, delivered.assessmentItemId);
++  assert.equal(correction.chosen, incorrect);
++  for (const [passage, type] of [[correction.explanation, "remediation"], [correction.concept, "lesson"]] as const) {
++    assert(passage, `${label}: ${type} corrective passage exists`);
++    assert(passage.body.trim() && passage.short?.trim(), `${label}: substantive corrective teaching`);
++    const source = getContentForCompetency(competency.id, language).find((item) => item.type === type && item.language === language)!;
++    assert(source, `${label}: authored ${language} ${type}`);
++    assert.equal(passage.title, source.title);
++    assert.equal(passage.body, source.body, `${label}: correction teaches this topic in the delivered language`);
++  }
++
++  const beforeEvidence = structuredClone(await getEvidence(learnerId, competency.id));
++  assert.equal(beforeEvidence.length, 1, `${label}: one wrong-answer record`);
++  const beforeState = (await getLearnerState(learnerId, competency.id))!;
++  const beforeCompetencies = structuredClone(beforeState.competencies);
++  const beforeProgress = { ...wrong.progress };
++  const otherLanguage = language === "en" ? "fr" : "en";
++  const eventsBefore = languageEvents;
++  setLanguagePreference(otherLanguage);
++  assert.equal(languageEvents, eventsBefore + 1, "preference notifies mounted components");
++  assert.equal(readLanguage(), otherLanguage);
++  assert.equal(getApiHeaders()["x-filumire-language"], otherLanguage);
++  assert.equal(document.documentElement.lang, otherLanguage);
++  // Dashboard reads must not advance the pending activity or write evidence.
++  const switched = await get("&dashboard=1");
++  const progressValues = (progress: LearningResponse["progress"]) => ({
++    mastery: progress.masteryEstimate, confidence: progress.confidence, evidence: progress.evidenceCount,
++    completed: progress.completedCompetencies, readiness: progress.readiness, percent: progress.percent,
++  });
++  assert.deepEqual(progressValues(switched.progress), progressValues(beforeProgress), `${label}: language switch preserves progress`);
++  assert.deepEqual((await getLearnerState(learnerId, competency.id))!.competencies, beforeCompetencies, `${label}: language switch preserves competency state`);
++  assert.deepEqual(await getEvidence(learnerId, competency.id), beforeEvidence, `${label}: language switch preserves evidence`);
++  // Exercise the real correction panel in the switched interface language.
++  const panel = renderToStaticMarkup(React.createElement(AnswerCorrectionPanel, {
++    correction, phase: "explain", language: otherLanguage, busy: false, onRetry: () => {}, onContinue: () => {},
++  }));
++  assert(panel.includes(otherLanguage === "fr" ? "Réessayer la question" : "Try the question again"));
++  assert.equal(correctionFor(wrong, delivered.assessmentItemId!)?.assessmentItemId, identity.assessmentItemId);
++
++  const retry = await submit(authored.metadata.expectedResponse, "corrective_retry");
++  assert.equal(retry.assessment?.result.correct, true, `${label}: guided retry accepted after switching language`);
++  assert.equal(retry.correction?.assessmentItemId, identity.assessmentItemId, `${label}: retry retains exact question identity`);
++  assert.equal(retry.correction?.retryOutcome, "correct");
++  assert.equal(retry.correction?.retryAvailable, false);
++  const afterEvidence = await getEvidence(learnerId, competency.id);
++  assert.equal(afterEvidence.length, beforeEvidence.length + 1);
++  const guided = afterEvidence.find((evidence) => evidence.id.startsWith("ev-corrective-retry-"))!;
++  assert(guided, `${label}: retry persisted`);
++  assert.equal(guided.assessmentItemId, identity.assessmentItemId);
++  assert.equal(guided.outcome, "correct");
++  assert.equal(guided.independence, "guided", `${label}: corrected response is never independent mastery`);
++  assert.equal(afterEvidence.filter((evidence) => evidence.independence === "independent").length,
++    beforeEvidence.filter((evidence) => evidence.independence === "independent").length);
++  const state = (await getLearnerState(learnerId, competency.id))!.competencies.find((item) => item.competencyId === competency.id)!;
++  assert(!state.masteredAt && !state.readinessState?.readyForAdvancement, `${label}: one guided success does not master the topic`);
++  assert.equal(retry.progress.completedCompetencies, beforeProgress.completedCompetencies);
++
++  // A repeated retry cannot earn additional evidence even after a language change.
++  const duplicate = await submit(authored.metadata.expectedResponse, "corrective_retry");
++  assert.equal(duplicate.assessment?.result.duplicate, true);
++  assert.equal((await getEvidence(learnerId, competency.id)).length, afterEvidence.length);
++  const continued = await nextQuestion(retry);
++  assert.equal(continued.content?.language, otherLanguage, `${label}: continued learning follows the new language`);
++  assert.notEqual(continued.content?.assessmentItemId, delivered.assessmentItemId, `${label}: Continue reaches a subsequent question`);
++  const nextAuthored = getContentForCompetency(competency.id).find((content) => content.id === continued.content!.id)!;
++  assert(nextAuthored.metadata?.expectedResponse);
++  const nextAnswer = await send({ interactionType: "assessment", competencyId: competency.id,
++    interventionId: continued.decision.interventionId, assessmentItemId: continued.content!.assessmentItemId,
++    response: nextAuthored.metadata.expectedResponse, clientRequestId: crypto.randomUUID() });
++  assert.equal(nextAnswer.assessment?.result.correct, true, `${label}: learner can answer after correction`);
++  assert.equal(nextAnswer.correction, undefined);
++  return label;
++}
++
++const passedCombinations: string[] = [];
++const failedCombinations: string[] = [];
++try {
++  for (const subject of cases) {
++    for (const language of ["en", "fr"] as const) {
++      const label = `${subject.name} ${subject.learningLevelId.match(/basic-(\d)/)![1]} ${language.toUpperCase()}`;
++      try {
++        await correctionJourney(subject, language);
++        passedCombinations.push(label);
++        console.log(`PASS matrix: ${label} — question, teaching, guided retry, mastery guard, continuation, language switch`);
++      } catch (error) {
++        failedCombinations.push(label);
++        console.error(`FAIL matrix: ${label}`, error);
++      }
++    }
++  }
++} finally {
++  if (originalWindow) Object.defineProperty(globalThis, "window", originalWindow);
++  else Reflect.deleteProperty(globalThis, "window");
++  if (originalDocument) Object.defineProperty(globalThis, "document", originalDocument);
++  else Reflect.deleteProperty(globalThis, "document");
++}
++console.log(`Correction matrix: ${passedCombinations.length}/24 passed; ${failedCombinations.length} failed${failedCombinations.length ? ": " + failedCombinations.join(", ") : ""}`);
++if (failedCombinations.length) process.exitCode = 1;
+diff --git a/tests/learner-interface-copy.test.ts b/tests/learner-interface-copy.test.ts
+index 7d698cbd..ce8283b2 100644
+--- a/tests/learner-interface-copy.test.ts
++++ b/tests/learner-interface-copy.test.ts
+@@ -14,8 +14,16 @@ assert.match(learnerErrorText(new LearningNetworkError("fixture"), "fr"), /conne
+ assert.match(learnerErrorText(new Error("fixture"), "en"), /could not be confirmed/);
+ assert.equal(lessonLanguageNotice("fr", "fr"), undefined);
+ assert.equal(lessonLanguageNotice(undefined, "fr"), undefined, "unknown curriculum language must not be invented");
+-assert.match(lessonLanguageNotice("en", "fr")!, /version française validée/);
+-assert.match(lessonLanguageNotice("fr", "en")!, /trusted English version/);
++assert.equal(lessonLanguageNotice("en", "en", true), undefined);
++assert.equal(lessonLanguageNotice(undefined, "en", true), undefined);
++for (const [content, language] of [["en", "fr"], ["fr", "en"]] as const) {
++  const activity = lessonLanguageNotice(content, language)!;
++  const retained = lessonLanguageNotice(content, language, true)!;
++  assert(!/not been supplied|pas été fournie|unavailable|indisponible/.test(activity + retained), "a language mismatch does not establish that a translation is missing");
++  assert.match(activity, language === "fr" ? /activité.*anglais/ : /activity.*French/);
++  assert.match(retained, language === "fr" ? /question reste en anglais.*correction.*essai/ : /question stays in French.*correction.*retry/);
++  assert.match(retained, language === "fr" ? /progression.*réponses.*conservées/ : /progress.*answers.*kept/);
++}
+ const target = new URL(withLang("/dashboard?view=learning&subjectId=fictional-math&lang=en", "fr"), "http://fixture.local");
+ assert.equal(target.searchParams.get("subjectId"), "fictional-math"); assert.equal(target.searchParams.get("view"), "learning"); assert.equal(target.searchParams.getAll("lang").length, 1); assert.equal(target.searchParams.get("lang"), "fr");
+ console.log("PASS: safe bilingual errors, switching after errors, honest curriculum fallback and language-preserving subject navigation");
+diff --git a/tests/lesson-closure-production.test.ts b/tests/lesson-closure-production.test.ts
+index b62ef912..5112ebb2 100644
+--- a/tests/lesson-closure-production.test.ts
++++ b/tests/lesson-closure-production.test.ts
+@@ -55,6 +55,44 @@ for (const language of ["en", "fr"]) {
+   assert.equal(model.summary.available, true); assert(model.summary.narration.length > 0); assert.equal(model.language, language);
+   if (language === "fr") assert.match(model.summary.narration, /suite|nombres|règle/);
+ }
++// Next can construct an internal localhost URL even when the browser connects
++// to 127.0.0.1. Match the actual Host, without trusting forwarded host input.
++const previousVercel = process.env.VERCEL;
++try {
++  delete process.env.VERCEL;
++  const originCases: Array<[string, string, Record<string, string>, number]> = [
++    ["loopback Host differs from internal URL", "http://localhost:3228", { host: "127.0.0.1:3228", origin: "http://127.0.0.1:3228", "sec-fetch-site": "same-origin" }, 200],
++    ["localhost", "http://localhost:3228", { host: "localhost:3228", origin: "http://localhost:3228" }, 200],
++    ["hosted same-origin", "https://learner.example.test", { host: "learner.example.test", origin: "https://learner.example.test" }, 200],
++    ["foreign origin", "http://localhost:3228", { host: "127.0.0.1:3228", origin: "https://evil.example" }, 403],
++    ["internal URL must not bypass Host", "http://localhost:3228", { host: "127.0.0.1:3228", origin: "http://localhost:3228" }, 403],
++    ["different port", "http://localhost:3228", { host: "127.0.0.1:3228", origin: "http://127.0.0.1:3229" }, 403],
++    ["different scheme", "http://localhost:3228", { host: "127.0.0.1:3228", origin: "https://127.0.0.1:3228" }, 403],
++    ["cross-site even with matching origin", "http://localhost:3228", { origin: "http://localhost:3228", "sec-fetch-site": "cross-site" }, 403],
++    ["same-site is not same-origin", "https://learner.example.test", { origin: "https://sibling.example.test", "sec-fetch-site": "same-site" }, 403],
++    ["opaque origin", "http://localhost:3228", { origin: "null" }, 403],
++    ["malformed origin", "http://localhost:3228", { origin: "not-an-origin" }, 403],
++    ["forwarded host cannot override Host", "http://localhost:3228", { host: "127.0.0.1:3228", origin: "https://evil.example", "x-forwarded-host": "evil.example", "x-forwarded-proto": "https" }, 403],
++  ];
++  for (const [label, internalUrl, originHeaders, status] of originCases) {
++    const response = await closurePost(new Request(`${internalUrl}/api/learning/closure`, { method: "POST",
++      headers: { "content-type": "application/json", cookie: a.cookie, ...originHeaders }, body: JSON.stringify({ receipt, language: "en" }) }));
++    assert.equal(response.status, status, label);
++    const body = await response.json();
++    if (status === 403) assert.equal(body.code, "invalid_origin", label);
++    else assert.equal(body.competencyId, data.decision.competencyId, label);
++  }
++  process.env.VERCEL = "1";
++  const proxied = await closurePost(new Request("http://localhost/api/learning/closure", { method: "POST",
++    headers: { "content-type": "application/json", cookie: a.cookie, host: "learner.example.test", origin: "https://learner.example.test", "x-forwarded-proto": "https", "sec-fetch-site": "same-origin" },
++    body: JSON.stringify({ receipt, language: "fr" }) }));
++  assert.equal(proxied.status, 200, "trusted deployment protocol follows existing same-origin policy");
++} finally {
++  if (previousVercel === undefined) delete process.env.VERCEL;
++  else process.env.VERCEL = previousVercel;
++}
++assert.equal(JSON.stringify(await getLearnerState(a.learnerId, data.decision.competencyId)), beforeState, "origin checks and summary reads preserve progress");
++assert.equal(JSON.stringify(await getEvidenceForLearner(a.learnerId)), beforeEvidence, "origin checks and summary reads preserve evidence");
+ assert.equal((await closurePost(request("/api/learning/closure", { receipt, language: "en" }, b.cookie))).status, 404);
+ assert.equal((await closurePost(request("/api/learning/closure", { receipt, language: "en" }, undefined, { "x-filumire-learner-id": a.learnerId }))).status, 401);
+ assert.equal((await closurePost(request("/api/learning/closure", { receipt, language: "en", mastery: 1 }, a.cookie))).status, 400);
+diff --git a/tests/offline-shell-v1.test.ts b/tests/offline-shell-v1.test.ts
+index 6d854434..38819754 100644
+--- a/tests/offline-shell-v1.test.ts
++++ b/tests/offline-shell-v1.test.ts
+@@ -112,11 +112,14 @@ const req = (url: string, method = "GET", mode = "cors") => ({
+ {
+   const w = makeWorker(async () => ok());
+   await (await w.caches.open("filumire-shell-v0-static")).put("x", ok());
++  await (await w.caches.open("filumire-shell-v1-static")).put("http://localhost/offline.html", ok("OLD FRENCH OFFLINE PAGE"));
+   await (await w.caches.open("someone-elses-cache")).put("y", ok());
+   await fire(w.handlers, "install", {});
+   await fire(w.handlers, "activate", {});
+   const names = [...w.stores.keys()];
+   assert.ok(!names.includes("filumire-shell-v0-static"));
++  assert.ok(!names.includes("filumire-shell-v1-static"), "the old offline page must be invalidated for existing installations");
++  assert.notEqual(await (await w.caches.match("/offline.html"))!.text(), "OLD FRENCH OFFLINE PAGE");
+   assert.ok(names.includes("someone-elses-cache"));
+ }
+ 
+diff --git a/tests/prerequisite-repair-4d.test.ts b/tests/prerequisite-repair-4d.test.ts
+index c9a07dce..cbdb8882 100644
+--- a/tests/prerequisite-repair-4d.test.ts
++++ b/tests/prerequisite-repair-4d.test.ts
+@@ -3,7 +3,7 @@ import { getAllCompetencies, getCompetency } from "../packages/curriculum/index"
+ import { createInitialLearnerState, getLearnerState, saveLearnerState } from "../services/learner-state/index";
+ import { persistenceStore } from "../services/persistence-provider";
+ import { buildTeacherLearnerSummary } from "../services/teacher-summary/index";
+-import { GET } from "../apps/learner/app/api/learning/route";
++import { currentTopicRoute } from "./fixtures/current-topic-route";
+ import { acknowledgeIntervention } from "../services/intervention-store/index";
+ import { CONTENT_EXHAUSTED_REASON_CODE } from "../services/adaptive-engine/index";
+ import {
+@@ -116,7 +116,8 @@ async function persisted(): Promise<void> {
+   const struggling = base(learnerId, P3, { evidenceCount: 4, masteryEstimate: 0.5, confidence: 0.5, diagnosticState: "insufficient_evidence" });
+   await saveLearnerState({ ...createInitialLearnerState(learnerId, P3), competencies: [struggling] });
+ 
+-  const response = await GET(new Request(`http://localhost/api/learning?sessionId=session-4g-${Date.now()}&subjectId=subject-gh-basic-4-mathematics-pilot&competencyId=${P3}`, { headers: { "x-filumire-learner-id": learnerId } }));
++  const route = await currentTopicRoute(learnerId, P3);
++  const response = await route.get();
+   check(response.status === 200, `route: GET 200 (${response.status})`);
+   const body = (await response.json()) as { decision: { action: string; reasonCode: string; competencyId: string } };
+   check(body.decision.action === "advance" && body.decision.reasonCode === "PREREQUISITE_REPAIR" && body.decision.competencyId === P1, `route: repair to 001 (${body.decision.action}/${body.decision.reasonCode} ${body.decision.competencyId})`);
+diff --git a/tests/route-advance-4g.test.ts b/tests/route-advance-4g.test.ts
+index b1d744c2..51ea67f4 100644
+--- a/tests/route-advance-4g.test.ts
++++ b/tests/route-advance-4g.test.ts
+@@ -1,11 +1,11 @@
+ import { seedContent } from "../services/content-store/seed";
+ import { getContentForCompetency } from "../services/content-store/index";
+ import { createInitialLearnerState, getLearnerState, saveLearnerState } from "../services/learner-state/index";
+-import { saveEvidence } from "../services/evidence-store/index";
++import { getEvidence, saveEvidence } from "../services/evidence-store/index";
+ import { persistenceStore } from "../services/persistence-provider";
+ import { getCompetency } from "../packages/curriculum/index";
+ import { CONTENT_EXHAUSTED_NEEDS_SUPPORT } from "../services/learner-path/progression";
+-import { GET } from "../apps/learner/app/api/learning/route";
++import { currentTopicRoute } from "./fixtures/current-topic-route";
+ import type { LearnerCompetencyState, LearningEvidence } from "../packages/domain";
+ import { useTinyPilotPool } from "./repro-4a-helpers";
+ 
+@@ -38,8 +38,8 @@ function base(learnerId: string, id: string, extra: Partial<LearnerCompetencySta
+   return { ...createInitialLearnerState(learnerId, id).competencies[0], ...extra };
+ }
+ 
+-async function get(learnerId: string, competencyId: string) {
+-  const response = await GET(new Request(`http://localhost/api/learning?sessionId=session-4g-${Date.now()}&subjectId=${SUBJECT}&competencyId=${competencyId}`, { headers: { "x-filumire-learner-id": learnerId } }));
++async function get(route: Awaited<ReturnType<typeof currentTopicRoute>>, selectedTopic?: string) {
++  const response = await route.get(selectedTopic);
+   const body = (await response.json()) as { decision?: { action: string; reasonCode: string; competencyId: string }; content?: { competencyId: string }; nextCompetency?: string; error?: string };
+   return { status: response.status, body };
+ }
+@@ -55,7 +55,8 @@ async function masteryAdvance(): Promise<void> {
+   });
+   await saveLearnerState({ ...createInitialLearnerState(learnerId, P1), competencies: [done] });
+ 
+-  const { status, body } = await get(learnerId, P1);
++  const route = await currentTopicRoute(learnerId, P1);
++  const { status, body } = await get(route);
+   check(status === 200, `mastery advance: route 200 (was 500 before 4G) (${status} ${body.error ?? ""})`);
+   check(body.decision?.action === "advance" && body.decision.reasonCode === "MASTERY_RETENTION_TRANSFER_CONFIRMED", `mastery advance: decision (${body.decision?.action}/${body.decision?.reasonCode})`);
+   check(!body.content || body.content.competencyId === body.decision?.competencyId, "mastery advance: content belongs to the next competency");
+@@ -63,8 +64,14 @@ async function masteryAdvance(): Promise<void> {
+   const stored = await getLearnerState(learnerId, body.decision!.competencyId);
+   check(stored?.competencies[0].competencyId === body.decision!.competencyId, "mastery advance: next competency is now current");
+ 
+-  const again = await get(learnerId, body.decision!.competencyId);
++  const again = await get(route);
+   check(again.status === 200 && again.body.decision?.competencyId === body.decision!.competencyId, `next request works on the new competency (${again.status} ${again.body.decision?.action})`);
++  const evidenceBefore = await getEvidence(learnerId, P1);
++  const revisit = await get(route, P1);
++  check(revisit.status === 200 && revisit.body.decision?.action === "teach" && revisit.body.decision.reasonCode === "TOPIC_REVISIT", "explicit topic selection still teaches a mastered topic again");
++  check(revisit.body.decision?.competencyId === P1 && revisit.body.content?.competencyId === P1, "revisit teaches the selected topic, not its successor");
++  check((await getLearnerState(learnerId, P1))!.competencies.find((item) => item.competencyId === P1)!.masteryEstimate === done.masteryEstimate, "revisit preserves earned mastery");
++  check(JSON.stringify(await getEvidence(learnerId, P1)) === JSON.stringify(evidenceBefore), "revisit creates no assessment evidence");
+ }
+ 
+ async function exhaustedAdvance(): Promise<void> {
+@@ -79,7 +86,8 @@ async function exhaustedAdvance(): Promise<void> {
+   }
+   await saveLearnerState({ ...createInitialLearnerState(learnerId, P1), competencies: [base(learnerId, P1, { evidenceCount: 4, masteryEstimate: 0.3, confidence: 0.4, diagnosticState: "insufficient_evidence" })] });
+ 
+-  const { status, body } = await get(learnerId, P1);
++  const route = await currentTopicRoute(learnerId, P1);
++  const { status, body } = await get(route);
+   check(status === 200, `exhausted advance: route 200 (${status} ${body.error ?? ""})`);
+   check(body.decision?.reasonCode === "CONTENT_EXHAUSTED_NEEDS_SUPPORT", `exhausted advance: decision (${body.decision?.action}/${body.decision?.reasonCode})`);
+   const stored = await getLearnerState(learnerId, P1);

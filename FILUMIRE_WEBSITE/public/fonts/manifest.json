@@ -1,0 +1,147 @@
+{
+  "source": "Original Next.js Google Fonts output from this FILUMIRE workspace, copied byte-for-byte before build cleanup.",
+  "display": "swap",
+  "assets": [
+    {
+      "file": "montserrat-cyrillic-ext.woff2",
+      "family": "Montserrat",
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "subset": "cyrillic-ext",
+      "bytes": 24072,
+      "sha256": "744830a0e77dd14dd543a4230d6e3ce67ca961634074b5d536ebafc66c732301",
+      "originalCacheFile": "b1f344208eb4edfe-s.woff2"
+    },
+    {
+      "file": "montserrat-cyrillic.woff2",
+      "family": "Montserrat",
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "subset": "cyrillic",
+      "bytes": 21492,
+      "sha256": "0b00fbd6edcc84cd5f77364bbeb06b75ed263c740061eba34511f1e2ac1a82d3",
+      "originalCacheFile": "48e2044251ef3125-s.woff2"
+    },
+    {
+      "file": "montserrat-vietnamese.woff2",
+      "family": "Montserrat",
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "subset": "vietnamese",
+      "bytes": 10620,
+      "sha256": "9e2672d100bc36a37073fb250abfaa7394f5151bf5dda3f4d5fc281345eb391b",
+      "originalCacheFile": "bf24a9759715e608-s.woff2"
+    },
+    {
+      "file": "montserrat-latin-ext.woff2",
+      "family": "Montserrat",
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "subset": "latin-ext",
+      "bytes": 68224,
+      "sha256": "920711de9ae96c18970fa4faca73cd302b93ac5ed57ebeb6bfec2ddeff930082",
+      "originalCacheFile": "1f173e5e25f3efee-s.woff2"
+    },
+    {
+      "file": "montserrat-latin.woff2",
+      "family": "Montserrat",
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "subset": "latin",
+      "bytes": 35508,
+      "sha256": "6438d7b8ea9c7c3992d5e2fd2afdb1ff948570a3ef0bedae76247b51632960ba",
+      "originalCacheFile": "904be59b21bd51cb-s.p.woff2"
+    },
+    {
+      "file": "kalam-devanagari-400.woff2",
+      "family": "Kalam",
+      "weights": [
+        400
+      ],
+      "subset": "devanagari",
+      "bytes": 53104,
+      "sha256": "2e8e8d463f7877c5725d45735f52b720a2808bf3b9aebcd50b4b95a588bb763d",
+      "originalCacheFile": "548d4a6452851abd-s.woff2"
+    },
+    {
+      "file": "kalam-latin-ext-400.woff2",
+      "family": "Kalam",
+      "weights": [
+        400
+      ],
+      "subset": "latin-ext",
+      "bytes": 6784,
+      "sha256": "409a1c973bba365895b897c14604383b7e3df4e400f43dfb07af64a77e973232",
+      "originalCacheFile": "89f9cb1a88b9175b-s.woff2"
+    },
+    {
+      "file": "kalam-latin-400.woff2",
+      "family": "Kalam",
+      "weights": [
+        400
+      ],
+      "subset": "latin",
+      "bytes": 14040,
+      "sha256": "257f0129d54c60cda0f8856ad1de05e760a219c9365fb19cd50b0cc8fdb2c9d1",
+      "originalCacheFile": "bf273aca3d6b346f-s.p.woff2"
+    },
+    {
+      "file": "kalam-devanagari-700.woff2",
+      "family": "Kalam",
+      "weights": [
+        700
+      ],
+      "subset": "devanagari",
+      "bytes": 49552,
+      "sha256": "eb63c97e508e38e0ba40b7fb12aa4937b9d9bb3721869fb0a255854b07667f60",
+      "originalCacheFile": "2f968d8fa37d003d-s.woff2"
+    },
+    {
+      "file": "kalam-latin-ext-700.woff2",
+      "family": "Kalam",
+      "weights": [
+        700
+      ],
+      "subset": "latin-ext",
+      "bytes": 6236,
+      "sha256": "ece1261539d395aa5e2918bb855e625e9cf42d315965bb9e321d20d7e2651cc7",
+      "originalCacheFile": "a741d221f759c10d-s.woff2"
+    },
+    {
+      "file": "kalam-latin-700.woff2",
+      "family": "Kalam",
+      "weights": [
+        700
+      ],
+      "subset": "latin",
+      "bytes": 13104,
+      "sha256": "c1bc5092263cb16e72fa43621eb116966068950e1b77ffd38fd401dd43ce1120",
+      "originalCacheFile": "59086a93cebe8094-s.p.woff2"
+    }
+  ]
+}

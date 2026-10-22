@@ -1,3 +1,4 @@
+import { seedPrivateJhsContent } from './jhs-private';
 import { GHANA_B4_ENGLISH_GENERATED_CONTENT } from "./ghana-b4-english-content";
 import { GHANA_B4_SCIENCE_GENERATED_CONTENT } from "./ghana-b4-science-content";
 import { GHANA_B4_COMPUTING_GENERATED_CONTENT } from "./ghana-b4-computing-content";
@@ -1386,6 +1387,7 @@ const initialContent: LearningContent[] = [
 ];
 
 export function seedContent(): void {
+  seedPrivateJhsContent();
   for (const content of initialContent) {
     saveContent(content);
   }

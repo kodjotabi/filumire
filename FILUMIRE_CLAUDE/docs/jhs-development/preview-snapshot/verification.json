@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "sourceFiles": 116,
+  "exactArchiveBytesVerified": true,
+  "patchSyntaxVerified": true,
+  "head": "29854417561714a62024be2b150de9b4a2cd24b3",
+  "inheritedOriginsStillMatch": 80,
+  "inheritedOriginCount": 80,
+  "scope": "Read-only verification of archive bytes and source hashes; no restore into another worktree or commit performed"
+}

@@ -1,0 +1,285 @@
+"use client";
+
+import { useState, FormEvent, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import { FILUMIRE_CONFIG } from "@/lib/constants";
+
+function ContactFormInner() {
+  const searchParams = useSearchParams();
+  const initialInquiry = searchParams.get("inquiry") || "general";
+
+  const [inquiryType, setInquiryType] = useState(initialInquiry);
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    organization: "",
+    country: "Ghana",
+    message: "",
+  });
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    // Simulates intake to configurable endpoint placeholder
+    setSubmitted(true);
+  }
+
+  return (
+    <>
+      <section className="site-section site-section-alt" style={{ paddingBottom: "48px" }}>
+        <div className="site-container">
+          <div className="section-heading-center" style={{ marginBottom: "24px" }}>
+            <span className="section-eyebrow">Get in Touch</span>
+            <h1 className="section-title">Contact &amp; School Pilot Inquiries</h1>
+            <p className="section-subtitle">
+              Connect with the FILUMIRE team for school pilot programs, educational partnership inquiries, or family support.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="site-section">
+        <div className="site-container">
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1.3fr",
+            gap: "48px",
+            alignItems: "flex-start"
+          }}>
+            {/* Contact Details Column */}
+            <div>
+              <div style={{
+                background: "var(--ui-blue-tint)",
+                border: "1px solid var(--ui-line)",
+                borderRadius: "var(--radius-lg)",
+                padding: "36px"
+              }}>
+                <h3 style={{ fontSize: "22px", fontWeight: "800", color: "var(--ui-ink)", marginBottom: "16px" }}>
+                  Institutional Channels
+                </h3>
+                <p style={{ fontSize: "14.5px", color: "var(--ui-ink-soft)", lineHeight: "1.6", marginBottom: "24px" }}>
+                  We work closely with primary schools, education authorities, and researchers dedicated to foundational learning excellence across Africa.
+                </p>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                  <div>
+                    <strong style={{ display: "block", fontSize: "13px", textTransform: "uppercase", color: "var(--ui-brand)", letterSpacing: "0.5px" }}>
+                      School Pilots &amp; Demonstrations
+                    </strong>
+                    <span style={{ fontSize: "15px", color: "var(--ui-ink)", fontWeight: "600" }}>
+                      {FILUMIRE_CONFIG.meta.schoolsEmail}
+                    </span>
+                  </div>
+
+                  <div>
+                    <strong style={{ display: "block", fontSize: "13px", textTransform: "uppercase", color: "var(--ui-brand)", letterSpacing: "0.5px" }}>
+                      Curriculum &amp; Institutional Partnerships
+                    </strong>
+                    <span style={{ fontSize: "15px", color: "var(--ui-ink)", fontWeight: "600" }}>
+                      {FILUMIRE_CONFIG.meta.partnershipsEmail}
+                    </span>
+                  </div>
+
+                  <div>
+                    <strong style={{ display: "block", fontSize: "13px", textTransform: "uppercase", color: "var(--ui-brand)", letterSpacing: "0.5px" }}>
+                      General Inquiries
+                    </strong>
+                    <span style={{ fontSize: "15px", color: "var(--ui-ink)", fontWeight: "600" }}>
+                      {FILUMIRE_CONFIG.meta.inquiriesEmail}
+                    </span>
+                  </div>
+                </div>
+
+                <div style={{ marginTop: "32px", paddingTop: "24px", borderTop: "1px solid var(--ui-line)" }}>
+                  <p style={{ fontSize: "13px", color: "var(--ui-ink-soft)", fontStyle: "italic" }}>
+                    Endpoint status: Connected to configured intake receiver ({FILUMIRE_CONFIG.destinations.contactEndpoint}).
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Form Column */}
+            <div style={{
+              background: "#ffffff",
+              border: "1px solid var(--ui-line)",
+              borderRadius: "var(--radius-lg)",
+              padding: "40px",
+              boxShadow: "var(--shadow-card)"
+            }}>
+              {submitted ? (
+                <div style={{ textAlign: "center", padding: "40px 20px" }}>
+                  <div style={{ fontSize: "48px", marginBottom: "16px" }}>✅</div>
+                  <h3 style={{ fontSize: "24px", fontWeight: "800", color: "var(--ui-ink)", marginBottom: "8px" }}>
+                    Thank you for reaching out!
+                  </h3>
+                  <p style={{ fontSize: "15px", color: "var(--ui-ink-soft)", maxWidth: "480px", margin: "0 auto 24px" }}>
+                    Your inquiry has been received. A member of the FILUMIRE educational team will review your message and respond promptly.
+                  </p>
+                  <button
+                    type="button"
+                    className="btn btn-outline"
+                    onClick={() => {
+                      setSubmitted(false);
+                      setFormData({ name: "", email: "", phone: "", organization: "", country: "Ghana", message: "" });
+                    }}
+                  >
+                    Submit Another Inquiry
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                  <h3 style={{ fontSize: "22px", fontWeight: "800", color: "var(--ui-ink)" }}>
+                    Send an Inquiry
+                  </h3>
+
+                  <div>
+                    <label style={{ display: "block", fontSize: "13px", fontWeight: "700", color: "var(--ui-ink)", marginBottom: "6px" }}>
+                      Inquiry Category
+                    </label>
+                    <select
+                      value={inquiryType}
+                      onChange={(e) => setInquiryType(e.target.value)}
+                      style={{
+                        width: "100%",
+                        padding: "12px 14px",
+                        borderRadius: "var(--radius-sm)",
+                        border: "1px solid var(--ui-line)",
+                        fontFamily: "inherit",
+                        fontSize: "14.5px",
+                        background: "#ffffff"
+                      }}
+                    >
+                      <option value="school-pilot">Apply for School Pilot (Ghana Primary B4-B6)</option>
+                      <option value="curriculum">Curriculum &amp; Pedagogy Partnership</option>
+                      <option value="family">Parent &amp; Family Support</option>
+                      <option value="general">General Information</option>
+                    </select>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                    <div>
+                      <label style={{ display: "block", fontSize: "13px", fontWeight: "700", color: "var(--ui-ink)", marginBottom: "6px" }}>
+                        Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="e.g. Kwame Mensah"
+                        style={{
+                          width: "100%",
+                          padding: "12px 14px",
+                          borderRadius: "var(--radius-sm)",
+                          border: "1px solid var(--ui-line)",
+                          fontFamily: "inherit",
+                          fontSize: "14.5px"
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: "13px", fontWeight: "700", color: "var(--ui-ink)", marginBottom: "6px" }}>
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="e.g. kmensah@school.edu.gh"
+                        style={{
+                          width: "100%",
+                          padding: "12px 14px",
+                          borderRadius: "var(--radius-sm)",
+                          border: "1px solid var(--ui-line)",
+                          fontFamily: "inherit",
+                          fontSize: "14.5px"
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                    <div>
+                      <label style={{ display: "block", fontSize: "13px", fontWeight: "700", color: "var(--ui-ink)", marginBottom: "6px" }}>
+                        School or Organisation
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.organization}
+                        onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
+                        placeholder="e.g. St. Peter's Basic School"
+                        style={{
+                          width: "100%",
+                          padding: "12px 14px",
+                          borderRadius: "var(--radius-sm)",
+                          border: "1px solid var(--ui-line)",
+                          fontFamily: "inherit",
+                          fontSize: "14.5px"
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: "13px", fontWeight: "700", color: "var(--ui-ink)", marginBottom: "6px" }}>
+                        Phone / WhatsApp
+                      </label>
+                      <input
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        placeholder="+233 ..."
+                        style={{
+                          width: "100%",
+                          padding: "12px 14px",
+                          borderRadius: "var(--radius-sm)",
+                          border: "1px solid var(--ui-line)",
+                          fontFamily: "inherit",
+                          fontSize: "14.5px"
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: "block", fontSize: "13px", fontWeight: "700", color: "var(--ui-ink)", marginBottom: "6px" }}>
+                      Message or Pilot Requirements *
+                    </label>
+                    <textarea
+                      required
+                      rows={4}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="Please share details about your school, number of learners, or specific curriculum questions..."
+                      style={{
+                        width: "100%",
+                        padding: "12px 14px",
+                        borderRadius: "var(--radius-sm)",
+                        border: "1px solid var(--ui-line)",
+                        fontFamily: "inherit",
+                        fontSize: "14.5px",
+                        resize: "vertical"
+                      }}
+                    />
+                  </div>
+
+                  <button type="submit" className="btn btn-primary btn-lg" style={{ marginTop: "8px" }}>
+                    Submit Inquiry &rarr;
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+export default function ContactPage() {
+  return (
+    <Suspense fallback={<div className="site-section"><div className="site-container">Loading form...</div></div>}>
+      <ContactFormInner />
+    </Suspense>
+  );
+}

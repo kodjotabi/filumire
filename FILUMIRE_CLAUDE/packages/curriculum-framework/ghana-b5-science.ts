@@ -81,5 +81,7 @@ export function getGhanaB5ScienceNodes(subjectId: FrameworkSubjectId): Curriculu
     node(subjectId, "B5.5.2.1.2", "learning_indicator", "Identify causes, symptoms and prevention of cholera", 2, id("B5.5.2.1")),
     node(subjectId, "B5.5.3.1.1", "learning_indicator", "Identify the raw materials used in some local industries (kenkey production, gari production, ceramic and pottery production)", 1, id("B5.5.3.1")),
     node(subjectId, "B5.5.4.1.1", "learning_indicator", "Identify the impact of deforestation on climate change", 1, id("B5.5.4.1")),
+    { ...node(subjectId, "B5.2.2.1.2", "learning_indicator", "Compare Bean and Maize Germination", 2, id("B5.2.2.1")),
+      sourceReference: "NaCCA Science B4-B6, September 2019; PDF44, printed22; B5.2. 2.1.2; SHA-256 9fd09042246256c1248d6976c4ee82b8b02c910fec771bc797ec2b05320e3c7b" },
   ];
 }

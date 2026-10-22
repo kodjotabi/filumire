@@ -1,0 +1,9 @@
+{
+  "checkedOriginRecords": 80,
+  "changedOrigins": [],
+  "modifiedCarriedFiles": [
+    "packages/curriculum/index.ts",
+    "tests/b7-framework-registration.test.ts",
+    "tests/basic7-materials-pilot.test.ts"
+  ]
+}

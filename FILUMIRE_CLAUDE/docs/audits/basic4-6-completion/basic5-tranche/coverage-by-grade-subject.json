@@ -1,0 +1,98 @@
+[
+  {
+    "grade": 4,
+    "subject": "english",
+    "sourceObjectives": 131,
+    "sourceAssociated": 131,
+    "competencies": 131,
+    "educationalApproval": "not_established"
+  },
+  {
+    "grade": 4,
+    "subject": "mathematics",
+    "sourceObjectives": 71,
+    "sourceAssociated": 71,
+    "competencies": 67,
+    "educationalApproval": "not_established"
+  },
+  {
+    "grade": 4,
+    "subject": "science",
+    "sourceObjectives": 24,
+    "sourceAssociated": 24,
+    "competencies": 24,
+    "educationalApproval": "not_established"
+  },
+  {
+    "grade": 4,
+    "subject": "computing",
+    "sourceObjectives": 27,
+    "sourceAssociated": 27,
+    "competencies": 27,
+    "educationalApproval": "not_established"
+  },
+  {
+    "grade": 5,
+    "subject": "english",
+    "sourceObjectives": 134,
+    "sourceAssociated": 134,
+    "competencies": 134,
+    "educationalApproval": "not_established"
+  },
+  {
+    "grade": 5,
+    "subject": "mathematics",
+    "sourceObjectives": 67,
+    "sourceAssociated": 67,
+    "competencies": 67,
+    "educationalApproval": "not_established"
+  },
+  {
+    "grade": 5,
+    "subject": "science",
+    "sourceObjectives": 29,
+    "sourceAssociated": 29,
+    "competencies": 29,
+    "educationalApproval": "not_established"
+  },
+  {
+    "grade": 5,
+    "subject": "computing",
+    "sourceObjectives": 82,
+    "sourceAssociated": 82,
+    "competencies": 82,
+    "educationalApproval": "not_established"
+  },
+  {
+    "grade": 6,
+    "subject": "english",
+    "sourceObjectives": 134,
+    "sourceAssociated": 134,
+    "competencies": 134,
+    "educationalApproval": "not_established"
+  },
+  {
+    "grade": 6,
+    "subject": "mathematics",
+    "sourceObjectives": 45,
+    "sourceAssociated": 45,
+    "competencies": 45,
+    "educationalApproval": "not_established"
+  },
+  {
+    "grade": 6,
+    "subject": "science",
+    "sourceObjectives": 28,
+    "sourceAssociated": 28,
+    "competencies": 28,
+    "educationalApproval": "not_established"
+  },
+  {
+    "grade": 6,
+    "subject": "computing",
+    "sourceObjectives": 99,
+    "sourceAssociated": 99,
+    "competencies": 98,
+    "educationalApproval": "not_established"
+  }
+]

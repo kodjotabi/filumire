@@ -1,0 +1,108 @@
+{
+  "date": "2026-10-22T10:26:12.371Z",
+  "branch": "feat/basic4-6-completion",
+  "source": {
+    "documents": 4,
+    "totalPdfPages": 574,
+    "rawIndicatorAndActivityOccurrences": 876,
+    "distinctSourceObjectivesAndActivities": 871,
+    "associated": 867,
+    "unmapped": 4,
+    "competencies": 862,
+    "codeDiscrepancyCompetencies": 17,
+    "mappingReviewRecords": 68,
+    "sourceAnomalyOccurrences": 53
+  },
+  "tests": {
+    "passedSuites": 40,
+    "failedSuites": 0,
+    "names": [
+      "b4-framework-registration",
+      "b4-science-adaptive-coverage",
+      "b4-computing-adaptive-coverage",
+      "b4-english-adaptive-coverage",
+      "b4-mathematics-adaptive-coverage",
+      "b5-science-v1",
+      "b6-science-v1",
+      "b5-computing-v1",
+      "b6-computing-v1",
+      "b5-mathematics-v1",
+      "b6-mathematics-v1",
+      "b5-english-v1",
+      "b6-english-v1",
+      "immediate-correction",
+      "teaching-first-journey",
+      "mastery-v1",
+      "retention-transfer-negative-gate",
+      "spaced-revision",
+      "spaced-revision-subjects",
+      "learning-continuity-api",
+      "offline-shell-v1",
+      "pending-submission-client",
+      "full-adaptive-progression",
+      "no-premature-advancement",
+      "curriculum-navigation",
+      "selected-topic-lesson-integration",
+      "teacher-trusted-review",
+      "outline-visuals",
+      "option-order-4e",
+      "b5-b6-english-runtime",
+      "time-aware-retention-v1",
+      "time-aware-retention-engine-v1",
+      "learner-ui-runtime-integrity",
+      "production-learner-journey",
+      "grade-aware-subject-selection",
+      "learning-language",
+      "learner-interface-copy",
+      "lesson-closure-production",
+      "b4-6-source-reconciliation",
+      "b5-science-life-processes-integrity"
+    ],
+    "runner": "node scripts/run-offline-suites.mjs <names>",
+    "note": "Initial source-coordinate lookup assertion corrected to exact stored position and rerun successfully. Sandbox-blocked attempts rerun outside sandbox; no tests skipped."
+  },
+  "typescript": {
+    "status": "passed",
+    "errors": 0,
+    "command": "node ../../../node_modules/typescript/bin/tsc --noEmit --pretty false"
+  },
+  "build": {
+    "status": "passed",
+    "command": "npm.cmd run build:learner",
+    "warning": "Existing multiple-lockfile/workspace-root inference warning"
+  },
+  "browser": {
+    "interface": {
+      "passed": 24,
+      "failed": 0
+    },
+    "offline": {
+      "passed": 4,
+      "failed": 0
+    },
+    "persistence": "memory",
+    "accounts": "fictional",
+    "origin": "http://127.0.0.1:3276"
+  },
+  "preservation": {
+    "productionFilesChecked": 1113,
+    "changedProductionFiles": [
+      "services/content-store/ghana-b5-science-authored-life-processes.ts"
+    ],
+    "otherProductionFilesUnchanged": 1112,
+    "sourcePdfHashesUnchanged": 4,
+    "contentAndAssessmentIdsPreserved": true,
+    "learningRulesUnchanged": true
+  },
+  "remaining": [
+    "Four Basic 5 source registration gaps; related-content reuse to be adjudicated",
+    "68 mapping review records, printed-code and source-heading uncertainties",
+    "286 oral/written/practical evidence review candidates, no seeded trusted rubrics",
+    "34 subskill tag gaps and one unreferenced misconception tag",
+    "Educational and French-language reviewer approval pending for all current topics",
+    "Live database, physical-device and classroom accessibility verification pending",
+    "Full offline adaptive curriculum not supplied by existing offline shell",
+    "Payment-inclusive validation and other branches outside scope"
+  ],
+  "approvalBoundary": "No substantial curriculum expansion or mastery/assessment rule changes begun"
+}

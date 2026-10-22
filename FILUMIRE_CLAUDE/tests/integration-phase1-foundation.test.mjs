@@ -64,6 +64,11 @@ refuses("database_owner_role", () => checkDeployment({ ...prod, DATABASE_URL: `p
 refuses("production_commit_not_approved", () => checkDeployment({ ...prod, FILUMIRE_APPROVED_PRODUCTION_SHA: "other" }));
 refuses("production_commit_not_approved", () => checkDeployment({ ...prod, FILUMIRE_APPROVED_PRODUCTION_SHA: undefined }));
 refuses("production_branch_not_approved", () => checkDeployment({ ...prod, VERCEL_GIT_COMMIT_REF: "feature-x" }));
+// Basic 7–9 private presentation is local rehearsal only, whatever the value or target.
+refuses("jhs_mode_on_vercel", () => checkDeployment({ ...prod, FILUMIRE_JHS_MODE: "private-presentation" }));
+refuses("jhs_mode_on_vercel", () => checkDeployment({ ...preview, FILUMIRE_JHS_MODE: "private-presentation" }));
+refuses("jhs_mode_on_vercel", () => checkDeployment({ ...preview, FILUMIRE_JHS_MODE: "off" }));
+ok(() => assert.equal(checkDeployment({ FILUMIRE_JHS_MODE: "private-presentation" }).mode, "local"));
 
 // ---- Guarded apply (test databases only)
 const { checkTarget, planApply, approvalCode, DENIED_ENDPOINTS } = await import("../scripts/apply-migrations.mjs");

@@ -1,0 +1,104 @@
+"use client";
+
+import Link from "next/link";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { FILUMIRE_CONFIG } from "@/lib/constants";
+
+export function Navbar() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  return (
+    <header className="header-wrapper">
+      {/* Top Banner Bar */}
+      <div className="top-announcement">
+        <span>
+          <strong>FILUMIRE</strong>: Adaptive Learning Infrastructure for African Children
+        </span>
+        <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+          <span style={{ opacity: 0.85, fontSize: "11.5px" }}>EN | FR</span>
+          <a
+            href={FILUMIRE_CONFIG.destinations.parentPortal}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#ffffff", fontSize: "12px", textDecoration: "none" }}
+          >
+            Parent &amp; Teacher Portal &rarr;
+          </a>
+        </div>
+      </div>
+
+      {/* Main Navbar */}
+      <div className="site-container">
+        <div className="site-header">
+          {/* Brand Logo */}
+          <Link href="/" className="brand-link">
+            <img
+              src="/brand/filumire-logo-blue.svg"
+              alt="FILUMIRE"
+              className="brand-logo-img"
+            />
+          </Link>
+
+          {/* Navigation Links */}
+          <nav>
+            <ul className={`nav-menu ${mobileMenuOpen ? "mobile-open" : ""}`}>
+              {FILUMIRE_CONFIG.navLinks.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className={`nav-link ${isActive ? "active" : ""}`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
+              {/* Mobile Only CTA */}
+              <li style={{ marginTop: "12px", display: mobileMenuOpen ? "block" : "none" }}>
+                <a
+                  href={FILUMIRE_CONFIG.destinations.learnerApp}
+                  className="btn btn-primary btn-sm"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ width: "100%" }}
+                >
+                  Launch Learner Platform
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          {/* Action CTAs */}
+          <div className="header-actions">
+            <Link href="/contact?inquiry=school-pilot" className="btn btn-outline btn-sm">
+              School Pilots
+            </Link>
+            <a
+              href={FILUMIRE_CONFIG.destinations.learnerApp}
+              className="btn btn-primary btn-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Learner Sign In
+            </a>
+
+            {/* Mobile Hamburger Toggle */}
+            <button
+              type="button"
+              className="mobile-menu-toggle"
+              onClick={() => setMobileMenuOpen((open) => !open)}
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? "✕" : "☰"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}

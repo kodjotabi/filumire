@@ -1,0 +1,4653 @@
+{
+  "scope": "Automated checks over all current seeded content, source action triage, and targeted desk review; not educator or native-language approval",
+  "competencies": 862,
+  "contentRecords": 22432,
+  "questions": 15533,
+  "strategies": {
+    "multiple_choice": 15532,
+    "application": 1
+  },
+  "trustedRubricQuestions": 0,
+  "missingRepresentationMetadata": 15533,
+  "evidenceModeReviewCandidates": [
+    {
+      "id": "competency-gh-english-b4-1-1-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 26,
+          "code": "B4.1.1.1.1",
+          "statement": "Listen attentively to songs and sing them with appropriate stress, rhythm and actions"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-1-1-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 26,
+          "code": "B4.1.1.1.2",
+          "statement": "Identify and discuss values in songs"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-3-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 27,
+          "code": "B4.1.3.1.1",
+          "statement": "Recite poems with stress, rhythm and actions and interpret them in own their words"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-3-1-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 27,
+          "code": "B4.1.3.1.2",
+          "statement": "Identify and discuss values in poems"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-3-1-3",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review",
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 27,
+          "code": "B4.1.3.1.3",
+          "statement": "Compose four-line poems"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-4-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 28,
+          "code": "B4.1.4.1.1",
+          "statement": "Retell stories sequentially, including key details"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-4-1-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 28,
+          "code": "B4.1.4.1.2",
+          "statement": "Tell own stories"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-5-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 29,
+          "code": "B4.1.5.1.1",
+          "statement": "Role-play a story/play"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-5-2-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 29,
+          "code": "B4.1.5.2.1",
+          "statement": "Identify moral values in sketches and relate them to real life situations"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-6-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 30,
+          "code": "B4.1.6.1.1",
+          "statement": "Describe/talk about objects, events, dates and time"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-6-2-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 31,
+          "code": "B4.1.6.2.1",
+          "statement": "Listen and view attentively and for a sustained period (e.g., look at the person speaking) and maintain eye contact."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-6-2-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 31,
+          "code": "B4.1.6.2.2",
+          "statement": "Listen and view for the entire duration of a text, a speech, a presentation, a video etc."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-6-3-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 32,
+          "code": "B4.1.6.3.1",
+          "statement": "Engage in collaborative conversation on topics such as myself, family, personalities etc. with peers"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-6-3-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 33,
+          "code": "B4.1.6.3.2",
+          "statement": "Demonstrate turn taking in conversation on different topics and speak audibly, and express thoughts and feelings clearly"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-6-3-3",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 33,
+          "code": "B4.1.6.3.3",
+          "statement": "Ask relevant questions to find out the opinion of others about a given topic"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-7-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 33,
+          "code": "B4.1.7.1",
+          "statement": "Construct meaning from texts based on knowledge of stress, rhythm and intonation"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-7-1-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 34,
+          "code": "B4.1.7.1.2",
+          "statement": "Make connections with events in narrative texts"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-7-1-3",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 34,
+          "code": "B4.1.7.1.3",
+          "statement": "Recognise and discuss moral lessons in a story"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-7-1-4",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 34,
+          "code": "B4.1.7.1.4",
+          "statement": "Use background knowledge to aid in understanding and building new knowledge while listening to narrative texts"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-7-1-5",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 34,
+          "code": "B4.1.7.1.5",
+          "statement": "Identify the main idea/gist and details of texts"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-7-1-7",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 35,
+          "code": "B4.1.7.1.7",
+          "statement": "Compare and contrast information (two or more ideas) from texts"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-8-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 35,
+          "code": "B4.1.8.1.1",
+          "statement": "Use appropriate pronunciation and intonation in asking and answering questions"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-8-2-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 36,
+          "code": "B4.1.8.2.1",
+          "statement": "Use positive tags, negative tags and auxiliaries in speech"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-9-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 37,
+          "code": "B4.1.9.1.1",
+          "statement": "Give and respond to commands, instructions and directions"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-9-1-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 37,
+          "code": "B4.1.9.1.2",
+          "statement": "Make and respond to polite requests for help from peers"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-10-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 38,
+          "code": "B4.1.10.1.1",
+          "statement": "Demonstrate awareness of the features of spoken language (contractions, ellipsis e.g. A: How are you? B: Fine)"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-10-1-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review",
+        "written_or_composed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 38,
+          "code": "B4.1.10.1.2",
+          "statement": "Demonstrate awareness of the differences between spoken and written forms of language e.g. simple and complex sentence structures"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-10-1-3",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 38,
+          "code": "B4.1.10.1.3",
+          "statement": "Demonstrate awareness of how meaning is conveyed through appropriate pace, stress, tone – through stories read aloud"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-10-2-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 39,
+          "code": "B4.1.10.2.1",
+          "statement": "Speak clearly and fluently, using the appropriate voice qualities (pace, tone etc.)"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-10-2-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 39,
+          "code": "B4.1.10.2.2",
+          "statement": "Read aloud clearly, at a good pace and with expression"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-10-3-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 39,
+          "code": "B4.1.10.3.1",
+          "statement": "Identify the purpose and audience of a speech and set goals in the context of assigned topics (e.g. about familiar persons)"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-10-3-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 39,
+          "code": "B4.1.10.3.2",
+          "statement": "Draw on prior knowledge to identify the subject matter of a speech"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-10-3-3",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 40,
+          "code": "B4.1.10.3.3",
+          "statement": "Gather and select facts and ideas from one or multiple print and/ or non-print sources, appropriate to the purpose, audience, context and culture"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-10-3-4",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 40,
+          "code": "B4.1.10.3.4",
+          "statement": "Support ideas and points with visual resources to convey meaning appropriate to purpose and context"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-10-3-5",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 40,
+          "code": "B4.1.10.3.5",
+          "statement": "Use effective introductions and conclusions"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-10-3-6",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 40,
+          "code": "B4.1.10.3.6",
+          "statement": "Elaborate on ideas using explanations"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-10-3-7",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 41,
+          "code": "B4.1.10.3.7",
+          "statement": "Speak with confidence before peers and maintain eye contact"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-2-2-1-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 42,
+          "code": "B4.2.2.1.2",
+          "statement": "Read single-syllable-words with taught consonant digraphs (sh-ship, ch-rich, ck-lock) and when reading continuous texts"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-2-3-1-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 43,
+          "code": "B4.2.3.1.2",
+          "statement": "Read words with digraphs to make meaningful sentences"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-2-5-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 45,
+          "code": "B4.2.5.1.1",
+          "statement": "Orally produce single-syllable words by blending sounds (phonemes), including consonant blends"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-2-6-4-3",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 50,
+          "code": "B4.2.6.4.3",
+          "statement": ". Use words suitable for purpose, audience, context and culture in relation to type of texts (exposition/explanation)"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-2-7-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 51,
+          "code": "B4.2.7.1.1",
+          "statement": ". Construct meaning from texts read"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-2-7-2-3",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 53,
+          "code": "B4.2.7.2.3",
+          "statement": "Demonstrate awareness of the structure of texts (e.g. introduction, body, conclusion)"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-2-9-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 55,
+          "code": "B4.2.9.1.1",
+          "statement": ". Read grade- level texts at good pace, with accuracy and expression"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-2-10-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 56,
+          "code": "B4.2.10.1.1",
+          "statement": "Summarise level-appropriate passages/texts orally"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-2-10-1-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 56,
+          "code": "B4.2.10.1.2",
+          "statement": ". Write short summary of a level-appropriate passage/text read"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-4-2-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 71,
+          "code": "B4.4.2.1.1",
+          "statement": "Write clearly using joined letters of consistent size"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-4-6-1-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 73,
+          "code": "B4.4.6.1.2",
+          "statement": "Identify the main idea and minor ideas/supporting details in a paragraph"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-4-9-2-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 75,
+          "code": "B4.4.9.2.1",
+          "statement": "Develop ideas into a one-paragraph draft using appropriate nouns or pronouns within and across sentences to aid cohesion and avoid ambiguity Writing stage"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-4-9-3-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 75,
+          "code": "B4.4.9.3.1",
+          "statement": "Review and revise the one-paragraph draft taking out irrelevant details"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-4-9-3-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 76,
+          "code": "B4.4.9.3.2",
+          "statement": "Proofread draft, checking capitalisation, usage, punctuation and spelling"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-4-10-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 77,
+          "code": "B4.4.10.1.1",
+          "statement": "Write about real or imagined experiences or events following story structure (beginning, middle and ending), using appropriate nouns or pronouns within and across sentences to aid cohesion. i. Describing the setting and developing the plot (events in the story). ii. Describing characters with elaboration. iii. Using first and third persons."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-4-11-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 78,
+          "code": "B4.4.11.1.1",
+          "statement": "Write freely about topics of choice in their immediate environment"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-4-11-1-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 78,
+          "code": "B4.4.11.1.2",
+          "statement": "Write poems and imaginative, narrative stories and illustrate them"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-4-14-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 81,
+          "code": "B4.4.14.1.1",
+          "statement": "Write words giving information about family"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-4-14-2-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 81,
+          "code": "B4.4.14.2.1",
+          "statement": "Write picture events about personal experiences and make radio/TV presentations"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-4-15-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 82,
+          "code": "B4.4.15.1.1",
+          "statement": "Write to friends about personal experiences using appropriate letter formats"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-5-4-1-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 86,
+          "code": "B4.5.4.1.2",
+          "statement": "Demonstrate the use of the simple past form in speech and in writing to express past conditions"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-5-9-1-2",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 91,
+          "code": "B4.5.9.1.2",
+          "statement": "Construct simple sentences correctly"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-6-1-1-1",
+      "grade": 4,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 93,
+          "code": "B4.6.1.1.1",
+          "statement": "Read a variety of age- and level appropriate books and present a-two-paragraph summary of each book read"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-place-value-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "modes": [
+        "written_or_composed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 23,
+          "code": "B4.1.1.1.1",
+          "statement": "Model number quantities, place value for multi-digit using graph sheets or multi-base materials up to 100,000"
+        },
+        {
+          "page": 24,
+          "code": "B4.1.1.1.2",
+          "statement": "Read and write numbers in figures and in words up 100,000"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-fractions-greater-than-one-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 43,
+          "code": "B4.1.3.1.4",
+          "statement": "Recognise fractions that are greater than one (i.e. improper fractions), draw and label such fractions with their symbols"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-percent-hundredths-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 49,
+          "code": "B4.1.5.1.1",
+          "statement": "Model or recognise percent (as a fraction related to hundredths) using concrete models, pictorial representations and number line."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-equation-from-problem-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 54,
+          "code": "B4.2.2.1.1",
+          "statement": "Write a given problem as an equation in which a symbol is used to represent an unknown number"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-cardinal-position-motion-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 59,
+          "code": "B4.3.2.1.1",
+          "statement": "Tell the position and motion of objects in space using the cardinal points north, south, east and west"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-perimeter-measurement-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 60,
+          "code": "B4.3.3.1.2",
+          "statement": "Measure and record perimeter for regular and irregular shapes in cm and m."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-fixed-perimeter-rectangles-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 62,
+          "code": "B4.3.3.1.4",
+          "statement": "Construct different rectangles for a given perimeter (cm, m) to demonstrate that many shapes are possible for a perimeter."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-fixed-area-rectangles-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 63,
+          "code": "B4.3.3.2.5",
+          "statement": "Construct different rectangles for a given area (cm or m ) in order to demonstrate that many different rectangles may have the same area. 2"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-time-reading-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 64,
+          "code": "B4.3.3.3.1",
+          "statement": "Tell the time in hours and minutes in analogue and digital watches including 24-hour clocks"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-event-duration-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 65,
+          "code": "B4.3.3.3.2",
+          "statement": "Use clock to measure time to complete simple events in minutes and seconds"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-graph-many-to-one-construct-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 69,
+          "code": "B4.4.1.1.2",
+          "statement": "Use an understanding of many-to-one correspondence to display or construct graphs"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-graph-media-examples-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 72,
+          "code": "B4.4.1.1.4",
+          "statement": "Find examples of graphs in which many-to-one correspondence is used in print and electronic media, such as newspapers, magazines and the Internet, and describe the correspondence used"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-pictograph-bargraph-construction-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 73,
+          "code": "B4.4.1.2.1",
+          "statement": "Identify common features of graphs that use many-to-one correspondence and use that understanding to draw bar graphs or pictographs, complete with title, labelled axes, key or legend, to represent data collected (up to 4 categories of data). B4.4.1.1.4 to common features of graphs that use many-to-one correspondence. Examine such features as title, vertical axis and label, hofrizontal axis and label, key or legend ."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b4-animal-classification-001",
+      "grade": 4,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 24,
+          "code": "B4.1.1.1.1",
+          "statement": "Classify animals into insects, birds, mammals and reptiles"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b4-2-1-1-1",
+      "grade": 4,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 27,
+          "code": "B4.2.1.1.1",
+          "statement": "Demonstrate understanding of cyclic movements in the environment"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b4-2-1-3-1",
+      "grade": 4,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 27,
+          "code": "B4.2.1.3.1",
+          "statement": "Demonstrate the process of evapotranspiration"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b4-2-1-5-1",
+      "grade": 4,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 28,
+          "code": "B4.2.1.5.1",
+          "statement": "Demonstrate ways of making water safe for use"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b4-2-2-1-1",
+      "grade": 4,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 29,
+          "code": "B4.2.2.1.1",
+          "statement": "Observe, identify and give functions of the parts of a plant"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b4-4-3-1-1",
+      "grade": 4,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 34,
+          "code": "B4.4.3.1.1",
+          "statement": "Demonstrate understanding of elastic and compressional forces and their everyday applications"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b4-5-2-1-2",
+      "grade": 4,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 36,
+          "code": "B4.5.2.1.2",
+          "statement": "Demonstrate understanding of the causes, symptoms and prevention of food-borne diseases"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b4-computer-parts-001",
+      "grade": 4,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 23,
+          "code": "B4.1.1.1.1",
+          "statement": "Identify parts of a computer and technology tools (the mouse, keyboard, monitor, system unit and its components (memory, hard disk drive, CD-ROM etc.), speakers, and peripherals."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b4-input-devices-001",
+      "grade": 4,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 23,
+          "code": "B4.1.1.1.2",
+          "statement": "Describe the types of input devices of a computer and their uses. E.g. joystick, light pen, mouse, pointing stick etc. Bring input devices to class."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b4-typing-001",
+      "grade": 4,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 23,
+          "code": "B4.1.1.1.4",
+          "statement": "Type short phrases."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b4-personalise-desktop-001",
+      "grade": 4,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 24,
+          "code": "B4.1.2.1.2",
+          "statement": "Demonstrate how to Personalise the Desktop Background using required tools and settings; Show projected examples of personalised Desktop Background to learners with the aid of a projector or pictures."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b4-taskbar-001",
+      "grade": 4,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 24,
+          "code": "B4.1.2.1.3",
+          "statement": "Demonstrate the use of the Sections of the Taskbar; Start Menu (Location and Launching only), Pinned Applications (Launched / Minimised programmes) and Notification Area or system tray (Date & Time, and Volume)."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b4-identify-data-001",
+      "grade": 4,
+      "subject": "computing",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 26,
+          "code": "B4.1.3.1.1",
+          "statement": "Use strategies for identifying data in conversation and newspapers."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b4-primary-information-sources-001",
+      "grade": 4,
+      "subject": "computing",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 26,
+          "code": "B4.1.3.1.3",
+          "statement": "Identify primary sources of information (photographs, audio recordings, video recordings, film, letters and diaries, speeches, published books, newspapers and magazines, government publications, oral histories, etc.)"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b4-share-information-001",
+      "grade": 4,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 26,
+          "code": "B4.1.3.1.4",
+          "statement": "Demonstrate Sending and sharing information to and from other gadgets. e.g., radio, fax, telephones calls, SMS etc."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b4-data-calculations-001",
+      "grade": 4,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 26,
+          "code": "B4.1.3.1.5",
+          "statement": "Demonstrate basic calculations on sample data e.g. sum, percentage, average etc."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b4-survey-maps-001",
+      "grade": 4,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 27,
+          "code": "B4.1.3.2.3",
+          "statement": "Draw or sketch maps of the area to be surveyed."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b4-powerpoint-home-ribbon-001",
+      "grade": 4,
+      "subject": "computing",
+      "modes": [
+        "written_or_composed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 29,
+          "code": "B4.2.1.1.1",
+          "statement": "Demonstrate the use of clipboard, slides, fonts, paragraph and editing in the ribbons under the home ribbons section."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b4-powerpoint-presentation-001",
+      "grade": 4,
+      "subject": "computing",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 29,
+          "code": "B4.2.1.1.2",
+          "statement": "Show a 3-slide presentation using clipboard, slides, fonts, paragraph and editing of the ribbons studied."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b4-word-processing-tools-001",
+      "grade": 4,
+      "subject": "computing",
+      "modes": [
+        "written_or_composed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 30,
+          "code": "B4.3.1.1.1",
+          "statement": "Demonstrate how to use the clipboard, styles, fonts, paragraph and editing."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b4-word-processing-application-001",
+      "grade": 4,
+      "subject": "computing",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 30,
+          "code": "B4.3.1.1.2",
+          "statement": "Illustrate the use of the clip board, styles, fonts, paragraph and editing."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-1-3-1-3",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 97,
+          "code": "B5.1.3.1.3",
+          "statement": "Compose six-line poems."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-1-4-1-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 98,
+          "code": "B5.1.4.1.1",
+          "statement": "Demonstrate understanding of lessons in stories by making relevant comments"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-1-4-1-2",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 98,
+          "code": "B5.1.4.1.2",
+          "statement": "Tell stories which are parallel to stories heard or read"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-1-5-1-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 99,
+          "code": "B5.1.5.1.1",
+          "statement": "Use costume to dramatise or role-play parts/whole of stories"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-1-6-3-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 102,
+          "code": "B5.1.6.3.1",
+          "statement": "Engage in collaborative conversation on topics such as social issues, values and manners with adults"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-1-6-3-2",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 103,
+          "code": "B5.1.6.3.2",
+          "statement": "Demonstrate turn taking in conversation in different topics and follow agreed-upon rules for conversation,"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-1-7-1-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 105,
+          "code": "B5.1.7.1.1",
+          "statement": "Employ the Think-Aloud strategy to convey meaning from level-appropriate texts."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-1-7-1-7",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 107,
+          "code": "B5.1.7.1.7",
+          "statement": "Draw conclusions from main ideas, key details and specific examples from texts"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-1-10-1-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 110,
+          "code": "B5.1.10.1.1",
+          "statement": "Demonstrate awareness of the features of spoken language, e.g. use of discourse markers – well, also, finally"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-1-10-1-2",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 110,
+          "code": "B5.1.10.1.2",
+          "statement": "Demonstrate awareness of the differences between spoken and written forms of language, e.g. formal and informal register"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-1-10-1-3",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 111,
+          "code": "B5.1.10.1.3",
+          "statement": "Demonstrate awareness of how meaning is conveyed through appropriate pace, stress, tone – through reciting poems."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-1-10-2-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 111,
+          "code": "B5.1.10.2.1",
+          "statement": "Speak audibly and coherently, using the appropriate voice qualities (pace, tone etc.)"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-1-10-2-2",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 112,
+          "code": "B5.1.10.2.2",
+          "statement": "Read aloud clearly, at a good pace and with expression"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-1-10-3-2",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 113,
+          "code": "B5.1.10.3.2",
+          "statement": "Draw on prior knowledge to identify organisational structure of speech"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-1-10-3-3",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 113,
+          "code": "B5.1.10.3.3",
+          "statement": "Gather and select facts and ideas from one or multiple print and non-print sources, appropriate to the purpose, audience, context and culture"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-1-10-3-7",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 115,
+          "code": "B5.1.10.3.7",
+          "statement": "Speak with confidence before different audiences and maintain appropriate posture"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-2-6-4-3",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 123,
+          "code": "B5.2.6.4.3",
+          "statement": ". Use words suitable for purpose, audience, context and culture in relation to: type of texts (expository/explanatory, persuasive language, argumentative), medium (spoken/written), register (formal/informal) etc."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-2-7-1-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 123,
+          "code": "B5.2.7.1.1",
+          "statement": "Construct meaning from text read"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-2-7-2-3",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 125,
+          "code": "B5.2.7.2.3",
+          "statement": "Demonstrate awareness of the structure of texts (e.g. introduction, body, conclusion)"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-2-10-1-2",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 128,
+          "code": "B5.2.10.1.2",
+          "statement": "Write a short summary of a level-appropriate text/passage read"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-4-2-1-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 144,
+          "code": "B5.4.2.1.1",
+          "statement": "Copy sentences clearly in joint script maintaining legible handwriting"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-4-2-1-2",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 145,
+          "code": "B5.4.2.1.2",
+          "statement": "Write compound sentences clearly and correctly"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-4-3-1-2",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 147,
+          "code": "B5.4.3.1.2",
+          "statement": "Identify the main idea and minor ideas/supporting details in a paragraph"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-4-3-1-3",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 148,
+          "code": "B5.4.3.1.3",
+          "statement": "Elaborate on, explain and or justify the main ideas of a paragraph by providing explanations and examples"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-4-3-1-4",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 149,
+          "code": "B5.4.3.1.4",
+          "statement": "Use cohesive devices – pronouns, repetition of vocabulary or grammatical structures to link ideas in a paragraph, e.g. use connectors to link similar ideas, give reasons and add information"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-4-9-2-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 150,
+          "code": "B5.4.9.2.1",
+          "statement": "Develop ideas into a two-paragraph draft without considering the writing conventions, using appropriate linking words within and across paragraphs to aid cohesion and avoid ambiguity, e.g. firstly, then, after"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-4-9-3-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 151,
+          "code": "B5.4.9.3.1",
+          "statement": "Review, and revise the draft by proposing grammar for improvement"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-4-9-3-2",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 151,
+          "code": "B4.4.9.3.2",
+          "statement": "Edit/proofread draft, checking capitalisation, usage of punctuation and spelling"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-4-10-1-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 152,
+          "code": "B5.4.10.1.1",
+          "statement": "Create settings, characters and at least one plot in a narrative text, using appropriate linking words within and across paragraphs to aid cohesion, and using simple literary devices, e.g. direct speech"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-4-11-1-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 155,
+          "code": "B5.4.11.1.1",
+          "statement": "Write freely on topics of choice on issues in the community"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-4-11-1-2",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 155,
+          "code": "B5.4.11.1.2",
+          "statement": "Write poems and imaginative narrative stories using knowledge of features of poems and imaginative texts"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-4-13-1-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 158,
+          "code": "B5.4.13.1.1",
+          "statement": "Write explanations to support opinions"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-4-14-1-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 160,
+          "code": "B5.4.14.1.1",
+          "statement": "Write sentences to describe a process of doing something"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-4-14-2-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 160,
+          "code": "B5.4.14.2.1",
+          "statement": "Write about incidence or events of the day (e.g. any event witnessed on their way to school) and make radio/TV presentations"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-4-15-1-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 161,
+          "code": "B5.4.15.1.1",
+          "statement": "Write to friends about events using appropriate letter formats"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-5-2-1-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 163,
+          "code": "B5.5.2.1.1",
+          "statement": "Use punctuations: - (the comma) to write an address; - (the apostrophe) in contraction"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-5-9-1-2",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 173,
+          "code": "B5.5.9.1.2",
+          "statement": "Construct compound sentences correctly"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b5-6-1-1-1",
+      "grade": 5,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 174,
+          "code": "B5.6.1.1.1",
+          "statement": "Read a variety of age- and level appropriate books and present at least a-three-paragraph summary of each book read"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b5-1-1-1-1",
+      "grade": 5,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 76,
+          "code": "B5.1.1.1.1",
+          "statement": "Model number quantities up to 1,000,000 using graph sheets and multi-base block"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b5-1-1-1-2",
+      "grade": 5,
+      "subject": "mathematics",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 77,
+          "code": "B5.1.1.1.2",
+          "statement": "Read and write numbers in figures and in words up to 1000,000"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b5-2-1-1-7",
+      "grade": 5,
+      "subject": "mathematics",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 109,
+          "code": "B5.2.1.1.7",
+          "statement": "Write a rule in words and in algebra to represent a given pattern"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b5-2-2-1-1",
+      "grade": 5,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 111,
+          "code": "B5.2.2.1.1",
+          "statement": "Demonstrate understanding of algebraic expressions as mathematical phrases that can contain letters which represent ordinary numbers and operators (like add, subtract, multiply, and divide)."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b5-3-1-1-1",
+      "grade": 5,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 115,
+          "code": "B5.3.1.1.1",
+          "statement": "Demonstrate an understanding of the properties (e.g. sides, angles, and diagonals) of squares and rectangles"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b5-3-1-1-2",
+      "grade": 5,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 116,
+          "code": "B5.3.1.1.2",
+          "statement": "Use paper folding with cut-out squares and rectangles to investigate sides, angles, and diagonals properties"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b5-3-2-2-4",
+      "grade": 5,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 123,
+          "code": "B5.3.3.2.4",
+          "statement": "Demonstrate an understanding of capacity by describing the relationship between 3 capacity and volume as well as litre and 10cm 3"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b5-3-3-3-2",
+      "grade": 5,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 125,
+          "code": "B5.3.3.3.2",
+          "statement": "Measure given angles with a protractor and classify them according to their measured sizes – right, acute, obtuse and reflex"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b5-3-4-1-1",
+      "grade": 5,
+      "subject": "mathematics",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 126,
+          "code": "B5.3.4.1.1",
+          "statement": "Tell the position and motion of objects in space using the cardinal points north, south, east and west"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b5-4-1-1-2",
+      "grade": 5,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 128,
+          "code": "B5.4.1.1.2",
+          "statement": "Find examples of second-hand data in print and electronic media, such as newspapers, magazines, and the internet."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b5-4-1-2-1",
+      "grade": 5,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 129,
+          "code": "B5.4.1.2.1",
+          "statement": "Draw double bar graphs, complete with title, labelled axes, key or legend, to represent data collected (up to 3 pairs of categories of data and use it to solve problems."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b5-4-1-2-2",
+      "grade": 5,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 132,
+          "code": "B5.4.1.2.2",
+          "statement": "Identify examples of double bar graphs used in a variety of print and electronic media, such as newspapers, magazines, and the internet."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b5-4-2-1-1",
+      "grade": 5,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 133,
+          "code": "B5.4.2.1.1",
+          "statement": "Classify the likelihood of a single outcome occurring in a probability experiment as impossible, possible, or certain"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b5-4-2-1-2",
+      "grade": 5,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 133,
+          "code": "B5.4.2.1.2",
+          "statement": "Design and conduct an experiment in which the likelihood of a single outcome occurring is impossible, possible (likely or unlikely), certain."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b5-4-2-1-3",
+      "grade": 5,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 133,
+          "code": "B5.4.2.1.3",
+          "statement": "Conduct a given probability experiment a number of times, recording the outcomes, and explaining the results."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b5-1-2-1-1",
+      "grade": 5,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 40,
+          "code": "B5.1.2.1.1",
+          "statement": "Classify everyday materials based on their properties (soft, hard, rough, smooth, opaque, transparent and bendable)"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b5-1-2-3-1",
+      "grade": 5,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 41,
+          "code": "B5.1.2.3.1",
+          "statement": "Demonstrate formation and separation of mixtures (solid-liquid and liquid-liquid mixtures)"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b5-2-1-3-1",
+      "grade": 5,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 42,
+          "code": "B5.2.1.3.1",
+          "statement": "Demonstrate evaporation and condensation as important processes of the hydrological (water) cycle"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b5-2-2-1-1",
+      "grade": 5,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 44,
+          "code": "B5.2.2.1.1",
+          "statement": "Relate structure of the parts of a plant (leaves, stem, root, flower) to the functions they perform"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b5-5-1-2-2",
+      "grade": 5,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 52,
+          "code": "B5.5.1.2.2",
+          "statement": "Demonstrate how to clean the environment regularly"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-1-1-1-4",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 32,
+          "code": "B5.1.1.1.4",
+          "statement": "Identify the left, right mouse button, holding of mouse, performing single, double and triple clicking and dragging object ."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-1-1-1-5",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 33,
+          "code": "B5.1.1.1.5",
+          "statement": "Identify home row keys, top row, bottom row keys, numerical pad and type (short sentences)."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-1-2-1-1",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 34,
+          "code": "B5.1.2.1.1",
+          "statement": "Personalise the Desktop Background and edit its images (e.g. image, icons and Taskbar of the background)."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-1-2-1-6",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 34,
+          "code": "B5.1.2.1.6",
+          "statement": "Demonstrate understanding of the File Explorer window and locations of the computer through the file explorer."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-1-3-1-1",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 35,
+          "code": "B5.1.3.1.1",
+          "statement": "Use Strategies for identifying data from results of an experiment."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-1-3-1-4",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 35,
+          "code": "B5.1.3.1.4",
+          "statement": "Demonstrate sending and sharing information e.g. arranging data, sorting and calculations etc. Task learners to sort data in alphabetical order (increasing and decreasing order) and perform basic calculations such as multiplying, dividing and adding vales of sample data. Learners can also be guided to generate age data from their dates of birth."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-1-3-1-5",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 35,
+          "code": "B5.1.3.1.5",
+          "statement": "Demonstrate basic calculations on sample data e.g. arranging and summing and averaging data."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-1-3-1-6",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 36,
+          "code": "B5.1.3.1.6",
+          "statement": "Recognise data types (integer, double, float). Divide learners into two groups and ask one group to mention a number and the other group to identify the type of data mentioned"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-1-3-1-7",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 36,
+          "code": "B5.1.3.1.7",
+          "statement": "Demonstrate sending and sharing information."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-1-3-1-8",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 36,
+          "code": "B5.1.3.1.8",
+          "statement": "Select the samples and collect data (e.g. listening to radio, newspaper, talking to people etc.)"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-1-4-1-3",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 37,
+          "code": "B5.1.4.1.3",
+          "statement": "Discuss how technology is used to save lives in community and how they are used"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-1-4-1-4",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 37,
+          "code": "B5.1.4.1.4",
+          "statement": "Discuss the effects of technology on the community."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-2-1-1-1",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 38,
+          "code": "B5.2.1.1.1",
+          "statement": "Show the use of Insert, design, animation and transition in the ribbons section. (New, Open, Save, Save As, Print and Close) and the Insert and design ribbon."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-2-1-1-2",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 38,
+          "code": "B5.2.1.1.2",
+          "statement": "Show a 5-slide presentation using of Insert, design, animation and transition of the ribbons studied."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-3-1-1-1",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "written_or_composed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 39,
+          "code": "B5.3.1.1.1",
+          "statement": "Demonstrate the use of Insert, Design, and Layout (New, Open, Save, Save As, Print and Close) and Insert, Design, and Layout ribbons. (i.e. clipboard, slides, fonts and paragraph)."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-3-1-1-2",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 39,
+          "code": "B5.3.1.1.2",
+          "statement": "Illustrate the use Insert, Design and Layout."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-5-1-2-2",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 41,
+          "code": "B5.5.1.2.2",
+          "statement": "Learners discuss the importance of Electronic Spreadsheets."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-5-1-3-2",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "oral_or_observed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 40,
+          "code": "B5.5.1.3.2",
+          "statement": "Discuss the importance and uses of database. Play a video of the importance and uses of databases and ask learners to mention other uses of database and their importance. Assist learners to realise that Database designers typically organise the data to model aspects of reality in a way that supports processes requiring information."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-5-1-3-6",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 40,
+          "code": "B5.5.1.3.6",
+          "statement": "Discuss programming languages and their use (e.g. scratch, vb.net etc.)"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-6-2-1-3",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 43,
+          "code": "B5.6.2.1.3",
+          "statement": "Demonstrate the use of MS-Internet Explorer."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-6-3-1-2",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 44,
+          "code": "B5.6.3.1.2",
+          "statement": "Demonstrate deleting favorite links."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-6-4-1-3",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 45,
+          "code": "B5.6.4.1.3",
+          "statement": "Demonstrate how to handle search results."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-6-5-1-2",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 45,
+          "code": "B5.6.5.1.2",
+          "statement": "Demonstrate working on or offline."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-6-5-1-3",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 45,
+          "code": "B5.6.5.1.3",
+          "statement": "Demonstrate downloading of files (e.g. pictures, audio, pdf etc.)."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-6-6-1-1",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 46,
+          "code": "B5.6.6.1.1",
+          "statement": "Demonstrate how to set default search engines."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-6-7-1-2",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 47,
+          "code": "B5.6.7.1.2",
+          "statement": "Demonstrate the use of internet e-mail addresses."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-6-7-1-4",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "written_or_composed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 47,
+          "code": "B5.6.7.1.4",
+          "statement": "Illustrate viewing received messages and Create or Compose messages. Guide learners to write messages, format text, etc."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b5-6-9-1-1",
+      "grade": 5,
+      "subject": "computing",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 48,
+          "code": "B5.6.4.9.1.1",
+          "statement": "Describe private and personal information. Encourage learners to tell you what they know about private and personal information online. Ask leading questions to help them bring out points they could not make out"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-1-3-1-2",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 177,
+          "code": "B6.1.3.1.2",
+          "statement": "Discuss values in poems and talk about the importance of these values in society"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-1-3-1-3",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 177,
+          "code": "B6.1.3.1.3",
+          "statement": "Compose eight-line poems"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-1-4-1-2",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 178,
+          "code": "B6.1.4.1.2",
+          "statement": "Tell stories around given themes"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-1-5-1-1",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 179,
+          "code": "B6.1.5.1.1",
+          "statement": "Dramatise/role-play whole/parts of stories/scenes, events"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-1-5-2-2",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 180,
+          "code": "B6.1.5.2.2",
+          "statement": "Write plays out of a story and perform them"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-1-6-3-1",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 182,
+          "code": "B6.1.6.3.1",
+          "statement": "Engage in collaborative conversation with unfamiliar audience Sample topics: social issues, social values and manners"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-1-6-3-2",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 183,
+          "code": "B6.1.6.3.2",
+          "statement": "Demonstrate turn taking in conversation on different topics and follow agreed-upon rules for conversation and express thoughts coherently"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-1-7-1-1",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 184,
+          "code": "B6.1.7.1.1",
+          "statement": "Employ Think Aloud and visualisation strategies to make meaning from level-appropriate texts"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-1-10-1-1",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 188,
+          "code": "B6.1.10.1.1",
+          "statement": "Demonstrate awareness of the features of spoken language e.g. the use of modal expressions to convey tentativeness e.g. probably, not too sure etc."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-1-10-1-2",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 188,
+          "code": "B6.1.10.1.2",
+          "statement": "Demonstrate awareness of the differences between spoken and written forms of language (simplicity/complexity of sentence structures, formal/informal)"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-1-10-1-3",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 188,
+          "code": "B6.1.10.1.3",
+          "statement": "Demonstrate awareness of how meaning is conveyed through appropriate pace, stress, tone – through news reporting"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-1-10-2-1",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 189,
+          "code": "B6.1.10.2.1",
+          "statement": "Speak at a good pace and with expression"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-1-10-2-2",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 189,
+          "code": "B6.1.10.2.2",
+          "statement": "Read aloud clearly, at a good pace and with expression"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-1-10-3-2",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 190,
+          "code": "B6.1.10.3.2",
+          "statement": "Draw on prior knowledge to identify subject matter and organisational structure of speech"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-1-10-3-3",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 190,
+          "code": "B6.1.10.3.3",
+          "statement": "Gather and select facts and ideas from one or multiple print and/ or non-print sources, appropriate to the purpose, audience, context and culture"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-1-10-3-7",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 191,
+          "code": "B6.1.10.3.7",
+          "statement": "Speak with confidence before different audiences using appropriate verbal and non-verbal cues to convey meaning"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-2-2-1-1",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 192,
+          "code": "B6.2.2.1.1",
+          "statement": "Read words with ending sounds like \"sure\" as in measure ; \"ture\" as in creature and \"tch\" as in Stretch"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-2-6-4-3",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 198,
+          "code": "B6.2.6.4.3",
+          "statement": "Use words suitable for purpose, audience, context and culture in relation to: type of texts (exposition/explanation, persuasive language, argumentative), medium (spoken/written), register (formal/informal) etc."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-2-7-1-1",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 199,
+          "code": "B6.2.7.1.1",
+          "statement": ". Construct meaning from texts"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-2-7-2-3",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 201,
+          "code": "B6.2.7.2.3",
+          "statement": "Demonstrate awareness of the structure of texts (e.g. introduction, body, conclusion)"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-2-9-1-2",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 202,
+          "code": "B6.2.9.1.2",
+          "statement": "read aloud with expressions that reflect the author’s purpose and meaning."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-2-10-1-2",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 203,
+          "code": "B6.2.10.1.2",
+          "statement": ". Write short summary of a level appropriate passage/text read"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-4-2-1-1",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 220,
+          "code": "B6.4.2.1.1",
+          "statement": "Write with a legible, fluent and personal handwriting style"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-4-2-1-2",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 220,
+          "code": "B6.4.2.1.2",
+          "statement": "Write complex sentences clearly and correctly"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-4-6-1-2",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 222,
+          "code": "B6.4.6.1.2",
+          "statement": "use key words, phrases or clauses to introduce the main idea in the paragraph."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-4-6-1-3",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 222,
+          "code": "B6.4.6.1.3",
+          "statement": "Elaborate on, explain and/or justify the main ideas of a paragraph by providing relevant details and examples"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-4-6-1-4",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 223,
+          "code": "B6.4.6.1.4",
+          "statement": "Use cohesive devices pronoun references, repeated key terms or grammatical structures to link ideas in a paragraph. E.g. use connectors to link contrasting ideas. Show results and purpose."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-4-9-2-1",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 224,
+          "code": "B6.4.9.2.1",
+          "statement": "Develop ideas into a three-paragraph draft without considering the writing conventions, linking ideas within and across paragraphs with a wider range of cohesive devices, e.g. as a result, on the other hand, however."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-4-9-3-1",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 225,
+          "code": "B6.4.9.3.1",
+          "statement": "Review, and revise the draft to produce a coherent piece by proposing grammar and vocabulary for improvement."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-4-9-3-2",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 225,
+          "code": "B6.4.9.3.2",
+          "statement": "Edit/proofread draft, checking capitalisation, usage, punctuation and spelling − Have learners pick up their clean draft (Refer to B5 4.3.1) and check for conventions. E.g. errors in capitalisation, punctuation and spelling. Tips for learners: i. Do my sentences have proper punctuation? E.g. full stop, question mark, exclamation mark. ii. Have I used commas correctly? iii. Do my sentences start with capital letters? iv. Have I capitalised proper nouns?"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-4-11-1-1",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 228,
+          "code": "B6.4.11.1.1",
+          "statement": "Write freely about topics of choice on national issues and issues from different learning areas."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-4-11-1-2",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 228,
+          "code": "B6.4.11.1.2",
+          "statement": "Write poems and imaginative narrative stories using ideas from poems and imaginative texts read or viewed"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-4-13-1-1",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 231,
+          "code": "B6.4.13.1.1",
+          "statement": "Write explanations and examples to support opinions"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-4-13-2-1",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 231,
+          "code": "B6.4.13.2.1",
+          "statement": "Introduce claims and support with clear reasons in order of importance and evidence using credible sources and demonstrate understanding of the topic or text."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-4-14-1-1",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 232,
+          "code": "B6.4.14.1.1",
+          "statement": "Write short paragraphs to describe incidents. E.g. accidents, fire outbreak."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-4-14-2-1",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 232,
+          "code": "B6.4.14.2.1",
+          "statement": "Write articles on varied topics"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-4-15-1-1",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 233,
+          "code": "B6.4.15.1.1",
+          "statement": "Write to friends to express their views on given topics using appropriate letter formats"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-english-b6-5-9-1-2",
+      "grade": 6,
+      "subject": "english",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 243,
+          "code": "B6.5.9.1.2",
+          "statement": "Construct complex sentences correctly"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b6-1-1-1-1",
+      "grade": 6,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 135,
+          "code": "B6.1.1.1.1",
+          "statement": "Model number quantities up to 1,000,000 using graph sheets and multi-base block"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b6-1-1-1-2",
+      "grade": 6,
+      "subject": "mathematics",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 136,
+          "code": "B6.1.1.1.2",
+          "statement": "Read and write numbers in figures and in words up to 1,000,000,000"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b6-1-4-1-1",
+      "grade": 6,
+      "subject": "mathematics",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 155,
+          "code": "B6.1.4.1.1",
+          "statement": "Use concrete models and pictorial representations to explain a ratio as a concept that shows the number of times one quantity can be obtained in another and write this symbolically and in its simplest form"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b6-2-1-1-7",
+      "grade": 6,
+      "subject": "mathematics",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 161,
+          "code": "B6.2.1.1.7",
+          "statement": "Write a rule in words and in algebra to represent a given pattern"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b6-2-2-1-1",
+      "grade": 6,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 162,
+          "code": "B6.2.2.1.1",
+          "statement": "Demonstrate understanding of algebraic expressions as mathematical phrases that can contain letters which represent ordinary numbers and operators (like add, subtract, multiply, and divide)."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b6-3-1-1-2",
+      "grade": 6,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 166,
+          "code": "B6.3.1.1.2",
+          "statement": "Construct rectangular and triangular prisms from their nets."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b6-3-3-5-1",
+      "grade": 6,
+      "subject": "mathematics",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 167,
+          "code": "B6.3.3.5.1",
+          "statement": "Tell the position and motion of objects in space using the cardinal points north- east, north-west, south-east and south-west"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b6-4-1-1-1",
+      "grade": 6,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 172,
+          "code": "B6.4.1.1.1",
+          "statement": "Draw a line graph by determining the common attributes (title, axes and intervals) and draw the graph for a given table of values Time (minutes) 0 1 2 3 4 5 6 7 8 9 10 11 o Temperature ( C) 15 25 35 45 53 60 70 75 80 85 90 95"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b6-4-1-1-3",
+      "grade": 6,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 174,
+          "code": "B6.4.1.1.3",
+          "statement": "Apply understanding of how to create a line graph by using a given table of values (or set of data) to draw a line graph and answer questions based on them to interpret and draw conclusions"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b6-4-1-2-2",
+      "grade": 6,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 176,
+          "code": "B6.5.2.2",
+          "statement": "Design and administer a questionnaire for collecting data to answer a given question and record the results"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b6-4-1-2-3",
+      "grade": 6,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 178,
+          "code": "B6.4.1.2.3",
+          "statement": "Design and administer a questionnaire for collecting data to answer given question(s), record the data, analyse and graph the results to solve problems"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b6-4-2-2-1",
+      "grade": 6,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 179,
+          "code": "B6.4.2.2.1",
+          "statement": "List the possible outcomes of a probability experiment, such as tossing a coin, rolling a die with a given number of sides, spinning a spinner with a given number of sectors and determine the theoretical probability of an outcome occurring for a given probability experiment"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b6-4-2-2-2",
+      "grade": 6,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 181,
+          "code": "B6.4.2.2.2",
+          "statement": "Predict the probability of a given outcome occurring for a given probability experiment by using theoretical probability"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-math-b6-4-2-2-3",
+      "grade": 6,
+      "subject": "mathematics",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 182,
+          "code": "P6.4.2.2.3",
+          "statement": "Explain that the experimental probability approaches the theoretical probability of a particular outcome as the number of trials in an experiment increases"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b6-1-1-1-1",
+      "grade": 6,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 56,
+          "code": "B6.1.1.1.1",
+          "statement": "Classify plants based on their root system"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b6-1-2-1-2",
+      "grade": 6,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 57,
+          "code": "B6.1.2.1.2",
+          "statement": "Investigate the uses of metals in everyday life and link the uses to their properties"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b6-2-1-4-1",
+      "grade": 6,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 59,
+          "code": "B6.2.1.4.1",
+          "statement": "Investigate ways of conserving water in the home, school and community"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b6-2-1-5-2",
+      "grade": 6,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 59,
+          "code": "B6.2.1.5.2",
+          "statement": "Demonstrate that air supports burning"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b6-2-2-1-2",
+      "grade": 6,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 59,
+          "code": "B6.2.2.1.2",
+          "statement": "Observe the life cycle of a plant (okra or maize plant)"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b6-3-3-1-1",
+      "grade": 6,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 61,
+          "code": "B6.3.3.1.1",
+          "statement": "Investigate various interactions in an ecosystem and the effect on humans"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b6-4-1-2-1",
+      "grade": 6,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 62,
+          "code": "B6.4.1.2.1",
+          "statement": "Measure the temperature of a body using a thermometer"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b6-4-2-1-1",
+      "grade": 6,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 63,
+          "code": "B6.4.2.1.1",
+          "statement": "Construct an electric circuit and know the functions of its components"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-science-b6-4-2-2-1",
+      "grade": 6,
+      "subject": "science",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 64,
+          "code": "B6.4.2.2.1",
+          "statement": "Construct an electronic circuit using battery, connecting wire and LED"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-1-1-3",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 51,
+          "code": "B6.1.1.1.3",
+          "statement": "Identify the left, right mouse button, holding of mouse, performing single, double and triple clicking, dragging object and using the scroll wheel"
+        },
+        {
+          "page": 52,
+          "code": "B6.1.1.1.3",
+          "statement": "Perform permanent delete or Empty Trash can and restoring files or icons in the recycle bin. Support learners to liken the Recycle bin and its use to the real-world office trash can."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-1-1-4",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 51,
+          "code": "B6.1.1.1.4",
+          "statement": "Demonstrate proper use of keyboarding technique."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-2-1-2",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 52,
+          "code": "B6.1.2.1.2",
+          "statement": "Demonstrate the use of the Recycle Bin or Trash Can."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-2-1-4",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 52,
+          "code": "B6.1.2.1.4",
+          "statement": "Explore the use of Copy, Paste, Delete tools, the moving of folders by using the Desktop Pop-Up menu."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-2-1-7",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 53,
+          "code": "B6.1.2.1.7",
+          "statement": "Use the File Explorer Ribbon (Home Ribbon only), that is, the use of the Clipboard and Organise tools of the Home Ribbon of the File Explorer, as well as the Open New Window and Close tools of the File Menu of the File Explorer."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-2-1-8",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 53,
+          "code": "B6.1.2.1.8",
+          "statement": "Demonstrate the use of the navigation Pane of the File Explorer to access different locations of the computer from the navigation pane."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-2-1-9",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 53,
+          "code": "B6.1.2.1.9",
+          "statement": "Demonstrate the use of Frequent Folders Section of the File Explorer to access frequently used locations of the computer."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-2-1-10",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 53,
+          "code": "B6.1.2.1.10",
+          "statement": "Demonstrate the use of Recent Files Section of the File Explorer to access frequently used files of the computer."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-3-1-3",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 54,
+          "code": "B6.1.3.1.3",
+          "statement": "Demonstrate sending and receiving information from other gadgets e.g. Bluetooth, Infrared, Radio, Fax, Telephones calls, SMS etc."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-3-1-4",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 54,
+          "code": "B6.1.3.1.4",
+          "statement": "Demonstrate basic manipulations on sample data e.g. arranging data in a matrix table, sorting and calculations etc."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-3-1-5",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 54,
+          "code": "B6.1.3.1.5",
+          "statement": "Demonstrate how to manage users of the Desktop"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-3-1-6",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 55,
+          "code": "B6.1.3.1.6",
+          "statement": "Demonstrate how to collect data (e.g. listening to radio, reading newspapers, interviews use of questionnaires etc.) Lead learners to collect data the community using simple questionnaire, surveys, documents, observations, and record their findings data"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-3-1-7",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 55,
+          "code": "B6.1.3.1.7",
+          "statement": "Demonstrate the use of the tools for collecting data."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-3-1-8",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 55,
+          "code": "B6.1.3.1.8",
+          "statement": "Demonstrate data interpretation by computing data to gain required information (e.g. Finding sum or grand total using Electronic Spreadsheet)."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-3-1-9",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 55,
+          "code": "B6.1.3.1.9",
+          "statement": "Demonstrate data presentation in different forms."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-3-1-10",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 55,
+          "code": "B6.1.3.1.10",
+          "statement": "Demonstrate how to store data."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-1-4-1-3",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 57,
+          "code": "B6.1.4.1.3",
+          "statement": "Demonstrate com munication with others."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-2-1-1-1",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 58,
+          "code": "B6.2.1.1.1",
+          "statement": "Demonstrate how to use the File menu, the Insert and Design Ribbon from B5."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-2-1-1-2",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 58,
+          "code": "B6.2.1.1.2",
+          "statement": "Demonstrate how to use icons in the Text group in the Insert Ribbon."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-3-1-1-1",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 59,
+          "code": "B6.3.1.1.1",
+          "statement": "Demonstrate how to use the File menu and Insert, Design, and Layout Ribbons from B5."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-3-1-1-2",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 59,
+          "code": "B6.3.1.1.2",
+          "statement": "Demonstrate how to use icons in the Text group in the Insert Ribbon."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-3-1-1-3",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "written_or_composed_response_review"
+      ],
+      "source": [
+        {
+          "page": 59,
+          "code": "B6.3.1.1.3",
+          "statement": "Be able to use the attributes of the ribbons studied in a paragraph."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-5-1-1-5",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 60,
+          "code": "B6.5.1.1.5",
+          "statement": "Describe the basics of Relational Data model. Lead learners to describe the basics of Relational Data model . ie. rows and columns"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-5-1-1-6",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 60,
+          "code": "B6.5.1.1.6",
+          "statement": "Identify the basics of logical Database Design."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-5-3-1-1",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "written_or_composed_response_review",
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 62,
+          "code": "B6.5.3.1.1",
+          "statement": "Demonstrate how to use the ribbons under the home ribbons. (i.e. clip board, styles, fonts, paragraph and editing)"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-5-3-1-7",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 63,
+          "code": "B6.5.3.1.7",
+          "statement": "Print the content of an MS-Excel worksheet."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-2-1-6",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 66,
+          "code": "B6.6.2.1.6",
+          "statement": "Demonstrate how to return to a URL."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-3-1-3",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 67,
+          "code": "B6.6.3.1.3",
+          "statement": "Demonstrate how to return to a URL."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-3-1-5",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 67,
+          "code": "B6.6.3.1.5",
+          "statement": "Illustrate how to print pages."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-4-1-2",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 68,
+          "code": "B6.6.4.1.2",
+          "statement": "Demonstrate deleting favourite links."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-5-1-1",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 69,
+          "code": "B6.6.5.1.1",
+          "statement": "Demonstrate the types and uses of form elements. Explore the uses of check boxes, radio buttons, textboxes etc."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-5-1-2",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 69,
+          "code": "B6.6.5.1.2",
+          "statement": "Demonstrate the filing of forms offline ."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-5-1-3",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 69,
+          "code": "B6.6.5.1.3",
+          "statement": "Demonstrate uploading of files. Lead learners to explore the upload button by adding pictures, audio, pdf etc."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-5-1-5",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 69,
+          "code": "B6.6.5.1.5",
+          "statement": "Discuss more about security on the form submission."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-6-1-1",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 70,
+          "code": "B6.6.6.1.1",
+          "statement": "Identify reasons for customising a web browser. Discuss the reasons needed for customising an item (i). to gain access to quick commands or information (ii) for side by side browsing (iii) for beautifications"
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-6-1-4",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 70,
+          "code": "B6.6.6.1.4",
+          "statement": "Set bookmarks. Demonstrate the meaning of bookmarks - Bookmarks, makes you save shortcuts to your favourite webpages and navigate to them in seconds from anywhere."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-6-1-5",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 70,
+          "code": "B6.6.6.1.5",
+          "statement": "Show how to set cookies demonstrate the steps in turning on cookies in a browser ."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-7-1-3",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 71,
+          "code": "B6.6.7.1.3",
+          "statement": "Demonstrate how to delete messages."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-7-1-6",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 71,
+          "code": "B6.6.7.1.6",
+          "statement": "Demonstrate attaching files to e-mail messages."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-7-1-7",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 71,
+          "code": "B6.6.7.1.7",
+          "statement": "Demonstrate some e-mail tips."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-9-1-1",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 73,
+          "code": "B6.6.9.1.1",
+          "statement": "Demonstrate how to handle private and personal information."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-9-1-3",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 73,
+          "code": "B6.6.9.1.3",
+          "statement": "Debate a spam and solicited messages."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-6-10-1-2",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 74,
+          "code": "B6.6.10.1.2",
+          "statement": "Investigate on the responsible use of computers."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-7-1-1-1",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "oral_or_observed_response_review"
+      ],
+      "source": [
+        {
+          "page": 75,
+          "code": "B6.7.1.1.1",
+          "statement": "Identify five (5) major health hazards associated with the use of ICT tools. Discuss Eye strain, Eye irritation and Eye fatigue."
+        }
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b6-7-1-1-2",
+      "grade": 6,
+      "subject": "computing",
+      "modes": [
+        "practical_or_observed_task_review"
+      ],
+      "source": [
+        {
+          "page": 75,
+          "code": "B6.7.1.1.2",
+          "statement": "Demonstrate solutions for the health related problems in ICT. Guide learners to brainstorm to find the solutions to the health hazards associated with the use of ICT tools."
+        }
+      ]
+    }
+  ],
+  "missingSubskillTagCompetencies": [
+    {
+      "id": "competency-gh-english-b4-1-4-1-1",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "identify_story_events"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-7-1-2",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "identify_narrative_events"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-9-1-2",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "recognise_context_for_request"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-1-10-3-6",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "state_main_idea"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-2-2-1-3",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "decode_target_word"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-2-2-2-1",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "notice_word_beginning"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-2-4-1-1",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "understand_target_word"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-2-6-3-1",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "locate_unknown_word"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-2-7-3-1",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "identify_target_word_or_phrase"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-2-8-1-2",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "locate_target_word"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-3-1-1-2",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "recognise_common_noun"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-3-2-1-1",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "recognise_article"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-3-2-1-5",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "recognise_question_determiner"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-3-4-1-1",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "identify_describing_adjective"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-3-5-1-4",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "identify_regular_verb"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-3-5-1-6",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "identify_past_event"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-3-9-1-1",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "recognise_modal_verb"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-4-6-1-2",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "identify_paragraph_topic"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-4-14-2-1",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "prepare_oral_presentation"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-5-2-1-1",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "recognise_direct_address"
+      ]
+    },
+    {
+      "id": "competency-gh-english-b4-5-5-1-1",
+      "grade": 4,
+      "subject": "english",
+      "subskills": [
+        "identify_quality_being_compared"
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-fact-families-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "subskills": [
+        "use_number_properties_mentally"
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-four-operation-problems-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "subskills": [
+        "identify_required_operations"
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-compare-like-fractions-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "subskills": [
+        "compare_like_denominator_models"
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-fraction-contexts-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "subskills": [
+        "generate_real_world_fraction_example"
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-decimal-representation-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "subskills": [
+        "represent_decimal_with_model"
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-decimal-rounding-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "subskills": [
+        "identify_tenths_place"
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-percent-hundredths-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "subskills": [
+        "locate_percent_on_number_line"
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-equation-guess-check-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "subskills": [
+        "select_trial_value"
+      ]
+    },
+    {
+      "id": "competency-gh-math-b4-event-duration-001",
+      "grade": 4,
+      "subject": "mathematics",
+      "subskills": [
+        "record_start_time",
+        "record_end_time"
+      ]
+    },
+    {
+      "id": "competency-gh-science-b4-1-1-2-2",
+      "grade": 4,
+      "subject": "science",
+      "subskills": [
+        "observe_plant_structure"
+      ]
+    },
+    {
+      "id": "competency-gh-science-b4-2-2-1-2",
+      "grade": 4,
+      "subject": "science",
+      "subskills": [
+        "observe_seed_features"
+      ]
+    },
+    {
+      "id": "competency-gh-computing-b4-data-collection-tools-001",
+      "grade": 4,
+      "subject": "computing",
+      "subskills": [
+        "identify_data_collection_tool"
+      ]
+    },
+    {
+      "id": "competency-gh-science-b5-1-1-1-1",
+      "grade": 5,
+      "subject": "science",
+      "subskills": [
+        "identify_growth_as_life_process"
+      ]
+    }
+  ],
+  "unreferencedMisconceptionTags": [
+    {
+      "id": "competency-gh-math-b4-rounding-001",
+      "tags": [
+        "changes_digits_left_of_rounding_place"
+      ]
+    }
+  ],
+  "bilingualAuthoredModulesPresent": 862,
+  "identicalFullLessonLanguageBodies": [],
+  "invalidMultipleChoiceOptions": [],
+  "translationOptionCountOrAnswerIndexMismatch": [],
+  "officialAssessmentGuidance": [
+    {
+      "subject": "english",
+      "pdfPage": 13
+    },
+    {
+      "subject": "mathematics",
+      "pdfPage": 14
+    },
+    {
+      "subject": "science",
+      "pdfPage": 14
+    },
+    {
+      "subject": "computing",
+      "pdfPage": 13
+    }
+  ],
+  "sourceExemplarPolicy": "Specific source exemplars support activity design; a qualified educator must decide the sufficient evidence and rubric. Heuristics are not mandatory NaCCA rubric assignments.",
+  "ghanaContextDeskReview": "Existing samples use cedis, local names, markets, kenkey, cocoa, maize and Akosombo. No automated keyword count is treated as cultural or age-appropriateness approval.",
+  "progression": "Within-grade prerequisites exist. Cross-grade concept progression and depth require subject-specialist review; guardian grade placement and adaptive thresholds unchanged.",
+  "translations": "Separate authored French instructional strings are present. English target-language passages within French English lessons are intentional candidates for review, not automatically fallbacks. French teaching quality is not certified.",
+  "approvals": {
+    "educator": 0,
+    "translation": 0
+  },
+  "acceptanceCriteria": [
+    "Every in-scope source objective has an explicit source occurrence and a justified mapping; unresolved printed codes remain visible.",
+    "Oral, written and practical outcomes require independently produced work or an existing trusted teacher review when selected responses cannot demonstrate them.",
+    "Guided retries remain guided evidence; no labels, scores, approvals or observed performances are manufactured.",
+    "A Ghanaian subject educator and French-language reviewer approve content accuracy, age progression, context, distractors and accessible alternatives before pilot readiness is claimed."
+  ]
+}

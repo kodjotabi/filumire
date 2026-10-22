@@ -74,6 +74,15 @@ try {
       assert.equal(fits, true, `assistant must fit width ${width}`);
       checks++;
     }
+    async function askFromResponsiveNavigation() {
+      // Below 768px the header shortcut is deliberately hidden in favour of
+      // the bottom menu; tablet/desktop retain the visible header shortcut.
+      const control = page.locator(width < 768
+        ? 'nav.filumireBottomNav a[href*="view=ask-filu"]'
+        : '.filumireSetupAskFilu');
+      assert.equal(await control.isVisible(), true, `Ask FILU control is visible at ${width}px`);
+      await control.click();
+    }
     for (const origin of ["/dashboard?lang=en", "/dashboard?view=setup&lang=en", `/dashboard?view=learning&subjectId=${subjectId}&lang=en`]) {
       await open(origin);
       await page.locator('nav a[href*="view=ask-filu"]').click();
@@ -84,10 +93,10 @@ try {
     await page.locator(".homeTile.ask").click();
     await assistant();
     await open("/dashboard?view=setup&lang=en");
-    await page.locator(".filumireSetupAskFilu").click();
+    await askFromResponsiveNavigation();
     await assistant();
     await open(`/learn?subjectId=${subjectId}&lang=en`);
-    await page.locator(".filumireSetupAskFilu").click();
+    await askFromResponsiveNavigation();
     await assistant();
     assert.equal(new URL(page.url()).searchParams.get("subjectId"), subjectId);
     await open(`/learn?subjectId=${subjectId}&lang=en`);

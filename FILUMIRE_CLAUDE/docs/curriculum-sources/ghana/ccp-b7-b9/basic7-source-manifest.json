@@ -1,0 +1,311 @@
+{
+  "schema_version": 1,
+  "official_index_url": "https://nacca.gov.gh/common-core-programme-ccp/",
+  "official_index_retrieval_url": "http://nacca.gov.gh/common-core-programme-ccp/",
+  "transport_note": "HTTPS connections timed out. Public official-host HTTP requests with X-Forwarded-Proto: https returned the index and PDF bytes. No third-party mirror used. HTTP transport is not authenticated; SHA-256 pins retrieved bytes but does not independently authenticate publication.",
+  "documents": [
+    {
+      "id": "english",
+      "subject": "English Language",
+      "source_url": "https://nacca.gov.gh/wp-content/uploads/2023/06/ENGLISH-LANGUAGE.pdf",
+      "retrieval_url": "http://nacca.gov.gh/wp-content/uploads/2023/06/ENGLISH-LANGUAGE.pdf",
+      "local_path": "docs/curriculum-sources/ghana/ccp-b7-b9/ENGLISH-LANGUAGE.pdf",
+      "sha256": "591295cce071d3021e5b9259594a0733000be081693e2c7ece2a12ba0605b961",
+      "bytes": 1302185,
+      "retrieved_at_utc": "2026-10-21T20:00:59.755Z",
+      "http_last_modified": "Wed, 28 Jun 2023 11:03:26 GMT",
+      "http_etag": null,
+      "verification_status": "official_index_link_and_document_contents_checked_HTTP_transport_limitation",
+      "title_as_printed": "NATIONAL COUNCIL FOR CURRICULUM & ASSESSMENT (MINISTRY OF EDUCATION) ENGLISH LANGUAGE COMMON CORE PROGRAMME (CCP) (COMMON CORE PROGRAMME) SEPTEMBER, 2020 MINISTRY OF EDUCATION REPUBLIC OF GHANA",
+      "publisher": "National Council for Curriculum and Assessment (NaCCA), Ministry of Education, Republic of Ghana",
+      "applicable_grades": [
+        "Basic 7 (JHS 1)",
+        "Basic 8 (JHS 2)",
+        "Basic 9 (JHS 3)"
+      ],
+      "grade_range_evidence": {
+        "pdf_pages": [
+          1,
+          2
+        ],
+        "note": "Cover repeats COMMON CORE PROGRAMME; B7–B9 applicability is explicit on imprint page 2."
+      },
+      "edition_information": {
+        "cover_publication_date": "September 2020",
+        "cover_pdf_page": 1,
+        "imprint_copyright": "2020",
+        "imprint_pdf_page": 2,
+        "imprint_verification": "Extracted text and rendered imprint checked.",
+        "body_footer_copyright": "2021",
+        "interpretation": "No numbered edition claimed. Cover date, imprint copyright, body footer and HTTP modification timestamp are distinct evidence; upload year is not the edition."
+      },
+      "pdf_page_count": 139,
+      "basic7_pdf_pages": [
+        38,
+        72
+      ],
+      "counts": {
+        "indicator_rows": 53,
+        "distinct_printed_codes": 53,
+        "flagged_rows": 3,
+        "content_standard_codes": 23
+      },
+      "identity_evidence": [
+        {
+          "pdf_page": 1,
+          "text": "NATIONAL COUNCIL FOR CURRICULUM & ASSESSMENT (MINISTRY OF EDUCATION) ENGLISH LANGUAGE COMMON CORE PROGRAMME (CCP) (COMMON CORE PROGRAMME) SEPTEMBER, 2020 MINISTRY OF EDUCATION REPUBLIC OF GHANA"
+        },
+        {
+          "pdf_page": 2,
+          "text": "i © NaCCA, Ministry of Education 2021 English Language Curriculum for B7- B9 Enquiries and comments on this Curriculum should be addressed to: The Director-General National Council for Curriculum and Assessment (NaCCA) Ministry of Education P. O. Box CT PMB 77 Cantonments Accra Telephone: 0302909071, 0302909862 Email: info@nacca.gov.gh Website: www.nacca.gov.gh ©2020 National Council for Curriculum and Assessment (NaCCA) This publication is not for sale. All rights reserved. No part of this publication may be reproduced without prior written permission f r o mthe Ministry of Education, Ghana. Ministry of Education Ghana"
+        }
+      ],
+      "pdf_metadata": {
+        "PDFFormatVersion": "1.6",
+        "Language": null,
+        "EncryptFilterName": null,
+        "IsLinearized": true,
+        "IsAcroFormPresent": false,
+        "IsXFAPresent": false,
+        "IsCollectionPresent": false,
+        "IsSignaturesPresent": false,
+        "Author": "Gab-Darlin Kofidis Mate-Teye",
+        "Custom": {},
+        "CreationDate": "D:20210718033714-07'00'",
+        "Creator": "Acrobat PDFMaker 19 for Word",
+        "Keywords": "",
+        "ModDate": "D:20210718033758-07'00'",
+        "Producer": "Adobe PDF Library 19.10.131",
+        "Subject": "",
+        "Title": ""
+      },
+      "title": "English Language Common Core Programme (CCP)"
+    },
+    {
+      "id": "mathematics",
+      "subject": "Mathematics",
+      "source_url": "https://nacca.gov.gh/wp-content/uploads/2023/06/MATHEMATICS.pdf",
+      "retrieval_url": "http://nacca.gov.gh/wp-content/uploads/2023/06/MATHEMATICS.pdf",
+      "local_path": "docs/curriculum-sources/ghana/ccp-b7-b9/MATHEMATICS.pdf",
+      "sha256": "220a7c1d435ecb4d81bd90bd081c44038aeab3a28a5e9f888128a4b450ef4bd2",
+      "bytes": 5590851,
+      "retrieved_at_utc": "2026-10-21T20:01:00.165Z",
+      "http_last_modified": "Wed, 28 Jun 2023 11:02:28 GMT",
+      "http_etag": null,
+      "verification_status": "official_index_link_and_document_contents_checked_HTTP_transport_limitation",
+      "title_as_printed": "NATIONAL COUNCIL FOR CURRICULUM & ASSESSMENT (MINISTRY OF EDUCATION) MATHEMATICS COMMON CORE PROGRAMME (CCP) CURRICULUM FOR JHS1 (B7) - JHS3 (B9) SEPTEMBER, 2020 MINISTRY OF EDUCATION REPUBLIC OF GHANA",
+      "publisher": "National Council for Curriculum and Assessment (NaCCA), Ministry of Education, Republic of Ghana",
+      "applicable_grades": [
+        "Basic 7 (JHS 1)",
+        "Basic 8 (JHS 2)",
+        "Basic 9 (JHS 3)"
+      ],
+      "grade_range_evidence": {
+        "pdf_pages": [
+          1
+        ],
+        "note": "JHS 1 (B7)–JHS 3 (B9) is explicit on cover."
+      },
+      "edition_information": {
+        "cover_publication_date": "September 2020",
+        "cover_pdf_page": 1,
+        "imprint_copyright": "2020",
+        "imprint_pdf_page": 2,
+        "imprint_verification": "Visually verified: copyright text is present in the rendered imprint although absent from extracted text.",
+        "body_footer_copyright": "No copyright footer identified in Basic 7 tables",
+        "interpretation": "No numbered edition claimed. Cover date, imprint copyright, body footer and HTTP modification timestamp are distinct evidence; upload year is not the edition."
+      },
+      "pdf_page_count": 259,
+      "basic7_pdf_pages": [
+        32,
+        118
+      ],
+      "counts": {
+        "indicator_rows": 74,
+        "distinct_printed_codes": 74,
+        "flagged_rows": 12,
+        "content_standard_codes": 20
+      },
+      "identity_evidence": [
+        {
+          "pdf_page": 1,
+          "text": "NATIONAL COUNCIL FOR CURRICULUM & ASSESSMENT (MINISTRY OF EDUCATION) MATHEMATICS COMMON CORE PROGRAMME (CCP) CURRICULUM FOR JHS1 (B7) - JHS3 (B9) SEPTEMBER, 2020 MINISTRY OF EDUCATION REPUBLIC OF GHANA"
+        },
+        {
+          "pdf_page": 2,
+          "text": "ii Enquiries and comments on this Curriculum should be addressed to: The Director-General National Council for Curriculum and Assessment (NaCCA) Ministry of Education P. O. Box CT PMB 77 Cantonments Accra Telephone: 0302909071, 0302909862 Email: info@nacca.gov.gh Website: www.nacca.gov.gh"
+        }
+      ],
+      "pdf_metadata": {
+        "PDFFormatVersion": "1.6",
+        "Language": null,
+        "EncryptFilterName": null,
+        "IsLinearized": true,
+        "IsAcroFormPresent": false,
+        "IsXFAPresent": false,
+        "IsCollectionPresent": false,
+        "IsSignaturesPresent": false,
+        "Author": "user",
+        "Custom": {},
+        "CreationDate": "D:20210717224114-07'00'",
+        "Creator": "Acrobat PDFMaker 19 for Word",
+        "ModDate": "D:20210717224306-07'00'",
+        "Producer": "Adobe PDF Library 19.10.131",
+        "Title": ""
+      },
+      "title": "Mathematics Common Core Programme (CCP) — Curriculum for JHS 1 (B7)–JHS 3 (B9)"
+    },
+    {
+      "id": "computing",
+      "subject": "Computing",
+      "source_url": "https://nacca.gov.gh/wp-content/uploads/2023/06/COMPUTING.pdf",
+      "retrieval_url": "http://nacca.gov.gh/wp-content/uploads/2023/06/COMPUTING.pdf",
+      "local_path": "docs/curriculum-sources/ghana/ccp-b7-b9/COMPUTING.pdf",
+      "sha256": "4d157e4ed4acf74879a0b8f7378319221ee639f42ce0d3b5eb820029210253fe",
+      "bytes": 1259162,
+      "retrieved_at_utc": "2026-10-21T20:00:58.019Z",
+      "http_last_modified": "Wed, 28 Jun 2023 11:03:21 GMT",
+      "http_etag": null,
+      "verification_status": "official_index_link_and_document_contents_checked_HTTP_transport_limitation",
+      "title_as_printed": "i © NaCCA, Ministry of Education 2021 NATIONAL COUNCIL FOR CURRICULUM & ASSESSMENT (MINISTRY OF EDUCATION) COMPUTING COMMON CORE PROGRAMME (CCP) CURRICULUM FOR JHS1 (B7) - JHS3 (B9) SEPTEMBER, 2020 MINISTRY OF EDUCATION REPUBLIC OF GHANA",
+      "publisher": "National Council for Curriculum and Assessment (NaCCA), Ministry of Education, Republic of Ghana",
+      "applicable_grades": [
+        "Basic 7 (JHS 1)",
+        "Basic 8 (JHS 2)",
+        "Basic 9 (JHS 3)"
+      ],
+      "grade_range_evidence": {
+        "pdf_pages": [
+          1,
+          2
+        ],
+        "note": "JHS 1 (B7)–JHS 3 (B9) is explicit on cover and imprint."
+      },
+      "edition_information": {
+        "cover_publication_date": "September 2020",
+        "cover_pdf_page": 1,
+        "imprint_copyright": "2020",
+        "imprint_pdf_page": 2,
+        "imprint_verification": "Extracted text and rendered imprint checked.",
+        "body_footer_copyright": "2021",
+        "interpretation": "No numbered edition claimed. Cover date, imprint copyright, body footer and HTTP modification timestamp are distinct evidence; upload year is not the edition."
+      },
+      "pdf_page_count": 95,
+      "basic7_pdf_pages": [
+        31,
+        51
+      ],
+      "counts": {
+        "indicator_rows": 55,
+        "distinct_printed_codes": 52,
+        "flagged_rows": 9,
+        "content_standard_codes": 18
+      },
+      "identity_evidence": [
+        {
+          "pdf_page": 1,
+          "text": "i © NaCCA, Ministry of Education 2021 NATIONAL COUNCIL FOR CURRICULUM & ASSESSMENT (MINISTRY OF EDUCATION) COMPUTING COMMON CORE PROGRAMME (CCP) CURRICULUM FOR JHS1 (B7) - JHS3 (B9) SEPTEMBER, 2020 MINISTRY OF EDUCATION REPUBLIC OF GHANA"
+        },
+        {
+          "pdf_page": 2,
+          "text": "ii © NaCCA, Ministry of Education 2021 Computing Curriculum for B7- B9 Enquiries and comments on this Curriculum should be addressed to: The Director-General National Council for Curriculum and Assessment (NaCCA) Ministry of Education P. O. Box CT PMB 77 Cantonments Accra Telephone: 0302909071, 0302909862 Email: info@nacca.gov.gh Website: www.nacca.gov.gh ©2020 National Council for Curriculum and Assessment (NaCCA) This publication is not for sale. All rights reserved. No part of this publication may be reproduced without prior written permission from the Ministry of Education, Ghana. Ministry of Education Ghana"
+        }
+      ],
+      "pdf_metadata": {
+        "PDFFormatVersion": "1.6",
+        "Language": null,
+        "EncryptFilterName": null,
+        "IsLinearized": true,
+        "IsAcroFormPresent": false,
+        "IsXFAPresent": false,
+        "IsCollectionPresent": false,
+        "IsSignaturesPresent": false,
+        "Custom": {},
+        "CreationDate": "D:20210718021050-07'00'",
+        "Creator": "Acrobat PDFMaker 19 for Word",
+        "ModDate": "D:20210718021137-07'00'",
+        "Producer": "Adobe PDF Library 19.10.131"
+      },
+      "title": "Computing Common Core Programme (CCP) — Curriculum for JHS 1 (B7)–JHS 3 (B9)"
+    },
+    {
+      "id": "science",
+      "subject": "Science",
+      "source_url": "https://nacca.gov.gh/wp-content/uploads/2023/06/SCIENCE.pdf",
+      "retrieval_url": "http://nacca.gov.gh/wp-content/uploads/2023/06/SCIENCE.pdf",
+      "local_path": "docs/curriculum-sources/ghana/ccp-b7-b9/SCIENCE.pdf",
+      "sha256": "10e9fbec7adff109f4e1a67301c1f87a4b7cd62a39d9c3d9b2116314a34728b8",
+      "bytes": 1526380,
+      "retrieved_at_utc": "2026-10-21T20:00:58.195Z",
+      "http_last_modified": "Wed, 28 Jun 2023 11:02:41 GMT",
+      "http_etag": null,
+      "verification_status": "official_index_link_and_document_contents_checked_HTTP_transport_limitation",
+      "title_as_printed": "NATIONAL COUNCIL FOR CURRICULUM & ASSESSMENT (MINISTRY OF EDUCATION) SCIENCE COMMON CORE PROGRAMME (CCP) CURRICULUM FOR JHS1 (B7) - JHS3 (B9) SEPTEMBER, 2020 MINISTRY OF EDUCATION REPUBLIC OF GHANA",
+      "publisher": "National Council for Curriculum and Assessment (NaCCA), Ministry of Education, Republic of Ghana",
+      "applicable_grades": [
+        "Basic 7 (JHS 1)",
+        "Basic 8 (JHS 2)",
+        "Basic 9 (JHS 3)"
+      ],
+      "grade_range_evidence": {
+        "pdf_pages": [
+          1,
+          2
+        ],
+        "note": "JHS 1 (B7)–JHS 3 (B9) is explicit on cover and imprint."
+      },
+      "edition_information": {
+        "cover_publication_date": "September 2020",
+        "cover_pdf_page": 1,
+        "imprint_copyright": "2020",
+        "imprint_pdf_page": 2,
+        "imprint_verification": "Extracted text and rendered imprint checked.",
+        "body_footer_copyright": "2021",
+        "interpretation": "No numbered edition claimed. Cover date, imprint copyright, body footer and HTTP modification timestamp are distinct evidence; upload year is not the edition."
+      },
+      "pdf_page_count": 170,
+      "basic7_pdf_pages": [
+        39,
+        87
+      ],
+      "counts": {
+        "indicator_rows": 53,
+        "distinct_printed_codes": 53,
+        "flagged_rows": 1,
+        "content_standard_codes": 27
+      },
+      "identity_evidence": [
+        {
+          "pdf_page": 1,
+          "text": "NATIONAL COUNCIL FOR CURRICULUM & ASSESSMENT (MINISTRY OF EDUCATION) SCIENCE COMMON CORE PROGRAMME (CCP) CURRICULUM FOR JHS1 (B7) - JHS3 (B9) SEPTEMBER, 2020 MINISTRY OF EDUCATION REPUBLIC OF GHANA"
+        },
+        {
+          "pdf_page": 2,
+          "text": "ii © NaCCA, Ministry of Education 2021 Science Curriculum for B7- B9 (JHS 1 – JHS 3) Enquiries and comments on this Curriculum should be addressed to: The Director-General National Council for Curriculum and Assessment (NaCCA)Ministry of Education P. O. Box CT PMB 77Cantonments Accra Telephone: 0302909071, 0302909862 Email: info@nacca.gov.gh Website: www.nacca.gov.gh ©2020 National Council for Curriculum and Assessment (NaCCA). This publication is not for sale. All rights reserved. No part of this publication may be reproduced without prior written permission from the Ministry of Education, Ghana. Ministry of Education"
+        }
+      ],
+      "pdf_metadata": {
+        "PDFFormatVersion": "1.6",
+        "Language": null,
+        "EncryptFilterName": null,
+        "IsLinearized": true,
+        "IsAcroFormPresent": false,
+        "IsXFAPresent": false,
+        "IsCollectionPresent": false,
+        "IsSignaturesPresent": false,
+        "Author": "Prof. Krueger",
+        "Custom": {},
+        "CreationDate": "D:20210718035522-07'00'",
+        "Creator": "Acrobat PDFMaker 19 for Word",
+        "ModDate": "D:20210718035645-07'00'",
+        "Producer": "Adobe PDF Library 19.10.131"
+      },
+      "title": "Science Common Core Programme (CCP) — Curriculum for JHS 1 (B7)–JHS 3 (B9)"
+    }
+  ],
+  "extraction_artifacts": {
+    "structure": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-curriculum-structure.json",
+    "coverage_matrix": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-coverage-matrix.csv",
+    "validation": "docs/curriculum-sources/ghana/ccp-b7-b9/basic7-validation.json"
+  }
+}

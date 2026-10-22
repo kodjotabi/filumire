@@ -41,6 +41,17 @@ export interface Account {
   activeLearnerId: string | null;
 }
 
+export interface PlacementOptions {
+  choices: { curriculumVersionId: string; gradeId: string; name: string; draft: boolean; subjects: { id: string; name: string; availableTopics: number }[] }[];
+  current?: { curriculumVersionId: string; gradeId: string; activeSubjectId: string };
+}
+export function fetchLearnerPlacement(learnerId: string) {
+  return request<PlacementOptions>(`/api/account/learners/${encodeURIComponent(learnerId)}/placement`);
+}
+export function placeLearner(learnerId: string, target: { curriculumVersionId: string; gradeId: string; subjectId: string }) {
+  return request(`/api/account/learners/${encodeURIComponent(learnerId)}/placement`, { body: target });
+}
+
 export class AccountRequestError extends Error {
   constructor(
     message: string,

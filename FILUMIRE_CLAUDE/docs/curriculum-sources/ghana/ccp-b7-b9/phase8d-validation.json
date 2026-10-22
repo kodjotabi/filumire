@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "completed_at_utc": "2026-10-22T03:55:49.209Z",
+  "fresh_pdf_extraction": true,
+  "checks_passed": 20553,
+  "checks_by_category": {
+    "preservation": 33,
+    "uniqueness": 2,
+    "coverage": 1133,
+    "source_traceability": 10419,
+    "hierarchy": 3115,
+    "mapping": 780,
+    "csv": 5071
+  },
+  "mutation_tests": [
+    {
+      "name": "dropped indicator",
+      "rejected": true
+    },
+    {
+      "name": "duplicate proposed competency ID",
+      "rejected": true
+    },
+    {
+      "name": "rewritten official code",
+      "rejected": true
+    },
+    {
+      "name": "incorrect source hash",
+      "rejected": true
+    },
+    {
+      "name": "incorrect source page",
+      "rejected": true
+    },
+    {
+      "name": "incorrect hierarchy parent",
+      "rejected": true
+    },
+    {
+      "name": "altered statement",
+      "rejected": true
+    },
+    {
+      "name": "untraceable assessment classification",
+      "rejected": true
+    },
+    {
+      "name": "production activation",
+      "rejected": true
+    }
+  ],
+  "totals": {
+    "basic7_entries": 235,
+    "basic8_entries": 192,
+    "basic9_entries": 198,
+    "new_entries": 390,
+    "total_basic7_9_entries": 625,
+    "unique_proposed_ids": 625
+  },
+  "subjects": [
+    {
+      "grade": "Basic 7",
+      "subject": "English Language",
+      "indicator_entries": 53,
+      "mapped_entries": 53,
+      "proposed_unique_competencies": 53,
+      "distinct_printed_codes": 53,
+      "coverage_percent": 100,
+      "basis": "unchanged_Phase8B_carry_forward",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 7",
+      "subject": "Mathematics",
+      "indicator_entries": 74,
+      "mapped_entries": 74,
+      "proposed_unique_competencies": 74,
+      "distinct_printed_codes": 74,
+      "coverage_percent": 100,
+      "basis": "unchanged_Phase8B_carry_forward",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 7",
+      "subject": "Computing",
+      "indicator_entries": 55,
+      "mapped_entries": 55,
+      "proposed_unique_competencies": 55,
+      "distinct_printed_codes": 52,
+      "coverage_percent": 100,
+      "basis": "unchanged_Phase8B_carry_forward",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 7",
+      "subject": "Science",
+      "indicator_entries": 53,
+      "mapped_entries": 53,
+      "proposed_unique_competencies": 53,
+      "distinct_printed_codes": 53,
+      "coverage_percent": 100,
+      "basis": "unchanged_Phase8B_carry_forward",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 8",
+      "subject": "English Language",
+      "indicator_entries": 49,
+      "mapped_entries": 49,
+      "proposed_unique_competencies": 49,
+      "distinct_printed_codes": 49,
+      "coverage_percent": 100,
+      "basis": "Phase8D_reviewed_source_entries",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 8",
+      "subject": "Mathematics",
+      "indicator_entries": 58,
+      "mapped_entries": 58,
+      "proposed_unique_competencies": 58,
+      "distinct_printed_codes": 58,
+      "coverage_percent": 100,
+      "basis": "Phase8D_reviewed_source_entries",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 8",
+      "subject": "Computing",
+      "indicator_entries": 39,
+      "mapped_entries": 39,
+      "proposed_unique_competencies": 39,
+      "distinct_printed_codes": 39,
+      "coverage_percent": 100,
+      "basis": "Phase8D_reviewed_source_entries",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 8",
+      "subject": "Science",
+      "indicator_entries": 46,
+      "mapped_entries": 46,
+      "proposed_unique_competencies": 46,
+      "distinct_printed_codes": 46,
+      "coverage_percent": 100,
+      "basis": "Phase8D_reviewed_source_entries",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 9",
+      "subject": "English Language",
+      "indicator_entries": 51,
+      "mapped_entries": 51,
+      "proposed_unique_competencies": 51,
+      "distinct_printed_codes": 51,
+      "coverage_percent": 100,
+      "basis": "Phase8D_reviewed_source_entries",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 9",
+      "subject": "Mathematics",
+      "indicator_entries": 52,
+      "mapped_entries": 52,
+      "proposed_unique_competencies": 52,
+      "distinct_printed_codes": 52,
+      "coverage_percent": 100,
+      "basis": "Phase8D_reviewed_source_entries",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 9",
+      "subject": "Computing",
+      "indicator_entries": 37,
+      "mapped_entries": 37,
+      "proposed_unique_competencies": 37,
+      "distinct_printed_codes": 37,
+      "coverage_percent": 100,
+      "basis": "Phase8D_reviewed_source_entries",
+      "status": "documentation_mapping_only"
+    },
+    {
+      "grade": "Basic 9",
+      "subject": "Science",
+      "indicator_entries": 58,
+      "mapped_entries": 58,
+      "proposed_unique_competencies": 58,
+      "distinct_printed_codes": 54,
+      "coverage_percent": 100,
+      "basis": "Phase8D_reviewed_source_entries",
+      "status": "documentation_mapping_only"
+    }
+  ],
+  "prior_artifacts_and_existing_application_changes_unchanged": true,
+  "limitations": [
+    "Coverage and identity validation do not authenticate the HTTP-retrieved source PDFs.",
+    "Human/publisher ambiguities remain in basic89-source-issues.json.",
+    "Visual review covers all leading indicator statements/codes, not an independent scientific certification of every exemplar/diagram.",
+    "Outputs are outside the repository because it is read-only in this session. No production support, content or registration was added."
+  ]
+}

@@ -1,0 +1,219 @@
+[
+  {
+    "competencyId": "competency-gh-computing-b8-nacca2020-p054-r01",
+    "officialCodeAsPrinted": "B8.1.1.1.3",
+    "sha256": "4d157e4ed4acf74879a0b8f7378319221ee639f42ce0d3b5eb820029210253fe",
+    "localPath": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\COMPUTING.pdf",
+    "pdfPage": 54,
+    "renderedPage": "docs/jhs-development/preview-source-review/computing-54.png",
+    "printedCodeVerified": true,
+    "sourceIssueIds": [
+      "8D-SOURCE-AUTHENTICATION",
+      "8D-ASSESSMENT-REFERENCES",
+      "8D-EDITION",
+      "8D-COMP-SOFTWARE"
+    ],
+    "educationalApproval": "pending"
+  },
+  {
+    "competencyId": "competency-gh-computing-b9-nacca2020-p070-r02",
+    "officialCodeAsPrinted": "B9.1.1.1.2",
+    "sha256": "4d157e4ed4acf74879a0b8f7378319221ee639f42ce0d3b5eb820029210253fe",
+    "localPath": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\COMPUTING.pdf",
+    "pdfPage": 70,
+    "renderedPage": "docs/jhs-development/preview-source-review/computing-70.png",
+    "printedCodeVerified": true,
+    "sourceIssueIds": [
+      "8D-SOURCE-AUTHENTICATION",
+      "8D-ASSESSMENT-REFERENCES",
+      "8D-EDITION",
+      "8D-COMP-SOFTWARE"
+    ],
+    "educationalApproval": "pending"
+  },
+  {
+    "competencyId": "competency-gh-science-b8-nacca2020-p091-r01",
+    "officialCodeAsPrinted": "B8.1.1.2.1",
+    "sha256": "10e9fbec7adff109f4e1a67301c1f87a4b7cd62a39d9c3d9b2116314a34728b8",
+    "localPath": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\SCIENCE.pdf",
+    "pdfPage": 91,
+    "renderedPage": "docs/jhs-development/preview-source-review/science-91.png",
+    "printedCodeVerified": true,
+    "sourceIssueIds": [
+      "8D-SOURCE-AUTHENTICATION",
+      "8D-ASSESSMENT-REFERENCES",
+      "8D-EDITION",
+      "8D-SCI-SCOPE-ORDER"
+    ],
+    "educationalApproval": "pending"
+  },
+  {
+    "competencyId": "competency-gh-science-b9-nacca2020-p124-r02",
+    "officialCodeAsPrinted": "B9.1.1.1.2",
+    "sha256": "10e9fbec7adff109f4e1a67301c1f87a4b7cd62a39d9c3d9b2116314a34728b8",
+    "localPath": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\SCIENCE.pdf",
+    "pdfPage": 124,
+    "renderedPage": "docs/jhs-development/preview-source-review/science-124.png",
+    "printedCodeVerified": true,
+    "sourceIssueIds": [
+      "8D-SOURCE-AUTHENTICATION",
+      "8D-ASSESSMENT-REFERENCES",
+      "8D-EDITION",
+      "8D-SCI-SCOPE-ORDER"
+    ],
+    "educationalApproval": "pending"
+  },
+  {
+    "competencyId": "competency-gh-mathematics-b8-nacca2020-p120-r01",
+    "officialCodeAsPrinted": "B8.1.1.1.1",
+    "sha256": "220a7c1d435ecb4d81bd90bd081c44038aeab3a28a5e9f888128a4b450ef4bd2",
+    "localPath": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\MATHEMATICS.pdf",
+    "pdfPage": 120,
+    "renderedPage": "docs/jhs-development/preview-source-review/mathematics-120.png",
+    "printedCodeVerified": true,
+    "sourceIssueIds": [
+      "8D-SOURCE-AUTHENTICATION",
+      "8D-ASSESSMENT-REFERENCES",
+      "8D-EDITION"
+    ],
+    "educationalApproval": "pending"
+  },
+  {
+    "competencyId": "competency-gh-mathematics-b9-nacca2020-p195-r01",
+    "officialCodeAsPrinted": "B9.1.1.1.1",
+    "sha256": "220a7c1d435ecb4d81bd90bd081c44038aeab3a28a5e9f888128a4b450ef4bd2",
+    "localPath": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\MATHEMATICS.pdf",
+    "pdfPage": 195,
+    "renderedPage": "docs/jhs-development/preview-source-review/mathematics-195.png",
+    "printedCodeVerified": true,
+    "sourceIssueIds": [
+      "8D-SOURCE-AUTHENTICATION",
+      "8D-ASSESSMENT-REFERENCES",
+      "8D-EDITION",
+      "8D-MATH9-SUMMARY"
+    ],
+    "educationalApproval": "pending"
+  },
+  {
+    "competencyId": "competency-gh-computing-b7-nacca2020-p031-r01",
+    "officialCodeAsPrinted": "B7.1.1.1.1",
+    "sha256": "4d157e4ed4acf74879a0b8f7378319221ee639f42ce0d3b5eb820029210253fe",
+    "localPath": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\COMPUTING.pdf",
+    "pdfPage": 31,
+    "renderedPage": "docs/jhs-development/preview-source-review/computing-31.png",
+    "printedCodeVerified": true,
+    "sourceIssueIds": [
+      "SRC-TRANSPORT",
+      "SRC-ASSESSMENT-REFERENCES",
+      "SRC-EDITION-SCOPE"
+    ],
+    "educationalApproval": "pending"
+  },
+  {
+    "competencyId": "competency-gh-english-b7-nacca2020-p038-r01",
+    "officialCodeAsPrinted": "B7.1.1.1.1",
+    "sha256": "591295cce071d3021e5b9259594a0733000be081693e2c7ece2a12ba0605b961",
+    "localPath": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\ENGLISH-LANGUAGE.pdf",
+    "pdfPage": 38,
+    "renderedPage": "docs/jhs-development/preview-source-review/english-38.png",
+    "printedCodeVerified": true,
+    "sourceIssueIds": [
+      "SRC-TRANSPORT",
+      "SRC-ASSESSMENT-REFERENCES",
+      "SRC-EN-ANNOTATION",
+      "SRC-EDITION-SCOPE"
+    ],
+    "educationalApproval": "pending"
+  },
+  {
+    "competencyId": "competency-gh-english-b8-nacca2020-p074-r01",
+    "officialCodeAsPrinted": "B8.1.1.1.1",
+    "sha256": "591295cce071d3021e5b9259594a0733000be081693e2c7ece2a12ba0605b961",
+    "localPath": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\ENGLISH-LANGUAGE.pdf",
+    "pdfPage": 74,
+    "renderedPage": "docs/jhs-development/preview-source-review/english-74.png",
+    "printedCodeVerified": true,
+    "sourceIssueIds": [
+      "8D-SOURCE-AUTHENTICATION",
+      "8D-ASSESSMENT-REFERENCES",
+      "8D-EDITION"
+    ],
+    "educationalApproval": "pending"
+  },
+  {
+    "competencyId": "competency-gh-english-b9-nacca2020-p106-r01",
+    "officialCodeAsPrinted": "B9.1.1.1.1",
+    "sha256": "591295cce071d3021e5b9259594a0733000be081693e2c7ece2a12ba0605b961",
+    "localPath": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\ENGLISH-LANGUAGE.pdf",
+    "pdfPage": 106,
+    "renderedPage": "docs/jhs-development/preview-source-review/english-106.png",
+    "printedCodeVerified": true,
+    "sourceIssueIds": [
+      "8D-SOURCE-AUTHENTICATION",
+      "8D-ASSESSMENT-REFERENCES",
+      "8D-EDITION"
+    ],
+    "educationalApproval": "pending"
+  },
+  {
+    "competencyId": "competency-gh-mathematics-b7-nacca2020-p034-r01",
+    "officialCodeAsPrinted": "B7.1.1.1.3",
+    "sha256": "220a7c1d435ecb4d81bd90bd081c44038aeab3a28a5e9f888128a4b450ef4bd2",
+    "localPath": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\MATHEMATICS.pdf",
+    "pdfPage": 34,
+    "renderedPage": "docs/jhs-development/preview-source-review/mathematics-34.png",
+    "printedCodeVerified": true,
+    "sourceIssueIds": [
+      "SRC-TRANSPORT",
+      "SRC-ASSESSMENT-REFERENCES",
+      "SRC-MATH-COUNT",
+      "SRC-EDITION-SCOPE"
+    ],
+    "educationalApproval": "pending"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p039-r01",
+    "officialCodeAsPrinted": "B7.1.1.1.1",
+    "sha256": "10e9fbec7adff109f4e1a67301c1f87a4b7cd62a39d9c3d9b2116314a34728b8",
+    "localPath": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\SCIENCE.pdf",
+    "pdfPage": 39,
+    "renderedPage": "docs/jhs-development/preview-source-review/science-39.png",
+    "printedCodeVerified": true,
+    "sourceIssueIds": [
+      "SRC-TRANSPORT",
+      "SRC-ASSESSMENT-REFERENCES",
+      "SRC-EDITION-SCOPE"
+    ],
+    "educationalApproval": "pending"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p040-r01",
+    "officialCodeAsPrinted": "B7.1.1.1.2",
+    "sha256": "10e9fbec7adff109f4e1a67301c1f87a4b7cd62a39d9c3d9b2116314a34728b8",
+    "localPath": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\SCIENCE.pdf",
+    "pdfPage": 40,
+    "renderedPage": "docs/jhs-development/preview-source-review/science-40.png",
+    "printedCodeVerified": true,
+    "sourceIssueIds": [
+      "SRC-TRANSPORT",
+      "SRC-ASSESSMENT-REFERENCES",
+      "SRC-EDITION-SCOPE"
+    ],
+    "educationalApproval": "pending"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p040-r02",
+    "officialCodeAsPrinted": "B7.1.1.1.3",
+    "sha256": "10e9fbec7adff109f4e1a67301c1f87a4b7cd62a39d9c3d9b2116314a34728b8",
+    "localPath": "C:\\FILUMIRE\\filumire-batch1\\FILUMIRE_CLAUDE\\docs\\curriculum-sources\\ghana\\ccp-b7-b9\\SCIENCE.pdf",
+    "pdfPage": 40,
+    "renderedPage": "docs/jhs-development/preview-source-review/science-40.png",
+    "printedCodeVerified": true,
+    "sourceIssueIds": [
+      "SRC-TRANSPORT",
+      "SRC-ASSESSMENT-REFERENCES",
+      "SRC-EDITION-SCOPE"
+    ],
+    "educationalApproval": "pending"
+  }
+]

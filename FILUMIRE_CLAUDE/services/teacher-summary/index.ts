@@ -7,6 +7,7 @@ import type {
   LearnerCompetencyState,
 } from "../../packages/domain";
 import { getLearnerStates } from "../learner-state-store";
+import { seedContent } from '../content-store/seed';
 import type { PendingTeacherReviewRecord } from "../persistence";
 import { getEvidenceForLearner } from "../evidence-store";
 import {
@@ -251,6 +252,7 @@ const ATTENTION_PRIORITY_WEIGHT: Record<
 export async function buildTeacherLearnerSummary(
   learnerId: string,
 ): Promise<TeacherLearnerSummary> {
+  seedContent();
   const [learnerStates, pendingReviews] =
     await Promise.all([
       getLearnerStates(learnerId),

@@ -1,0 +1,110 @@
+import assert from "node:assert/strict";
+import { getCompetenciesForSubject } from "../packages/curriculum";
+import { GHANA_B4_ENGLISH_PRODUCTION_SPECS } from "../packages/curriculum/ghana-b4-english-production";
+import { GHANA_B4_MATHEMATICS_ADAPTIVE_SPECS } from "../packages/curriculum/ghana-b4-mathematics-adaptive";
+import {
+  SUBJECT_GHANA_BASIC4_ENGLISH_ID, SUBJECT_GHANA_BASIC4_MATH_ID,
+  getCompetencyMappingsForCompetency, getCurriculumNode, getCurriculumNodesForSubject,
+} from "../packages/curriculum-framework";
+import { subjectTopics } from "../services/curriculum-navigation";
+import type { LearningOverview } from "../apps/learner/services/learning-client";
+
+// Check every authored edge, including Mathematics supports relationships.
+const registrations = [
+  ...GHANA_B4_ENGLISH_PRODUCTION_SPECS.map((spec) => ({
+    ...spec, subjectId: SUBJECT_GHANA_BASIC4_ENGLISH_ID,
+    indicators: [{ code: spec.code, relationship: "direct" }],
+  })),
+  ...GHANA_B4_MATHEMATICS_ADAPTIVE_SPECS.map((spec) => ({
+    ...spec, subjectId: SUBJECT_GHANA_BASIC4_MATH_ID, indicators: spec.indicatorMappings,
+  })),
+];
+assert.equal(GHANA_B4_ENGLISH_PRODUCTION_SPECS.length, 131);
+assert.equal(GHANA_B4_MATHEMATICS_ADAPTIVE_SPECS.length, 64);
+const mappingIds: string[] = [];
+for (const spec of registrations) {
+  const mappings = getCompetencyMappingsForCompetency(spec.competencyId);
+  assert.equal(mappings.length, spec.indicators.length, `${spec.competencyId}: all authored mappings registered once`);
+  mappingIds.push(...mappings.map((mapping) => mapping.id));
+  for (const indicator of spec.indicators) {
+    const mapping = mappings.find((item) => getCurriculumNode(item.curriculumNodeId)?.code === indicator.code);
+    assert(mapping, `${spec.competencyId}: missing ${indicator.code}`);
+    assert.equal(mapping.relationship, indicator.relationship);
+    const node = getCurriculumNode(mapping.curriculumNodeId)!;
+    assert.equal(node.subjectId, spec.subjectId);
+    assert.equal(node.nodeType, "learning_indicator");
+    assert(node.sourceReference);
+    const standard = getCurriculumNode(node.parentNodeId!)!;
+    assert.equal(standard.code, indicator.code.split(".").slice(0, 4).join("."));
+    const subStrand = getCurriculumNode(standard.parentNodeId!)!;
+    assert.equal(subStrand.code, indicator.code.split(".").slice(0, 3).join("."));
+    assert.equal(getCurriculumNode(subStrand.parentNodeId!)?.code, indicator.code.split(".").slice(0, 2).join("."));
+  }
+}
+assert.equal(new Set(mappingIds).size, mappingIds.length, "mapping IDs are unique");
+console.log(`PASS 195 competencies, ${mappingIds.length} authored mappings and complete ancestry`);
+
+for (const [subjectId, total, strands, subStrands] of [
+  [SUBJECT_GHANA_BASIC4_ENGLISH_ID, 131, 6, 47],
+  [SUBJECT_GHANA_BASIC4_MATH_ID, 67, 4, 11],
+] as const) {
+  const nodes = getCurriculumNodesForSubject(subjectId);
+  assert.equal(new Set(nodes.map((node) => node.id)).size, nodes.length);
+  const codes = nodes.flatMap((node) => node.code ? [node.code] : []);
+  assert.equal(new Set(codes).size, codes.length, "official codes are unique");
+  for (const node of nodes) {
+    if (node.parentNodeId) assert(nodes.some((parent) => parent.id === node.parentNodeId));
+  }
+  for (const language of ["en", "fr"] as const) {
+    const topics = subjectTopics(subjectId, language);
+    assert.equal(topics.length, total);
+    assert.deepEqual(topics.map((topic) => topic.id), getCompetenciesForSubject(subjectId).map((spec) => spec.id), "navigation preserves IDs and sequence");
+    assert.equal(new Set(topics.map((topic) => topic.strand.key)).size, strands);
+    assert.equal(new Set(topics.map((topic) => topic.subStrand.key)).size, subStrands);
+    for (const topic of topics) {
+      for (const place of [topic.strand, topic.subStrand]) {
+        const node = getCurriculumNode(place.key);
+        assert(node, `${topic.id}: placement uses registered framework`);
+        assert(place.title.trim() && !/B4\.|English (Sub-strand|Strand)|undefined/i.test(place.title), `${topic.id}: meaningful name: ${place.title}`);
+      }
+    }
+  }
+}
+const english = subjectTopics(SUBJECT_GHANA_BASIC4_ENGLISH_ID);
+assert.equal(english.find((topic) => topic.subStrand.code === "B4.3.3")?.subStrand.title, "Pronouns");
+assert.equal(english.find((topic) => topic.subStrand.code === "B4.4.6")?.subStrand.title, "Paragraph Development");
+assert.equal(english.find((topic) => topic.strand.code === "B4.6")?.strand.title, "Extensive Reading");
+console.log("PASS English/French navigation names, framework placement, stable topic IDs and sequence");
+
+// Verify the overview consumed by the real subject screen and its rendered tree.
+assert.equal(process.env.FILUMIRE_PERSISTENCE, "memory");
+const { seedContent } = await import("../services/content-store/seed");
+const { buildLearningOverview } = await import("../apps/learner/app/api/learning/overview-data");
+const React = await import("react");
+const { renderToStaticMarkup } = await import("react-dom/server");
+Object.assign(globalThis, { React });
+const { SubjectPage } = await import("../apps/learner/components/filumire/SubjectPage");
+const { toFilumireSubjects } = await import("../apps/learner/components/filumire/subjects");
+seedContent();
+for (const subjectId of [SUBJECT_GHANA_BASIC4_ENGLISH_ID, SUBJECT_GHANA_BASIC4_MATH_ID]) {
+  for (const language of ["en", "fr"] as const) {
+    const view = await buildLearningOverview("learner-b4-framework-registration", subjectId, language);
+    const overview: LearningOverview = { ...view, areas: view.areas.map((area): LearningOverview["areas"][number] => {
+      const status = area.status;
+      assert(status === "new" || status === "inprogress" || status === "completed", "overview status satisfies the learner component contract");
+      return { ...area, status };
+    }) };
+    const html = renderToStaticMarkup(React.createElement(SubjectPage, {
+      language, overview,
+      subject: toFilumireSubjects(view.availableSubjects).find((subject) => subject.subjectId === subjectId)!,
+      currentTitle: view.areas[0].title, learnHref: "/learn", icon: null, footer: null,
+    }));
+    const isEnglish = subjectId === SUBJECT_GHANA_BASIC4_ENGLISH_ID;
+    assert.equal((html.match(/<h3 /g) ?? []).length, isEnglish ? 6 : 4);
+    assert.equal((html.match(/<details/g) ?? []).length, isEnglish ? 47 : 11);
+    assert.equal((html.match(/competencyId=/g) ?? []).length, view.areas.length);
+    assert(!/English (Strand|Sub-strand) B4\./.test(html), "no placeholder headings rendered");
+    assert(html.includes(isEnglish ? ">Extensive Reading<" : language === "en" ? ">Number<" : ">Nombres<"));
+  }
+}
+console.log("PASS rendered English/French subject screens: named headings and a link for every topic");

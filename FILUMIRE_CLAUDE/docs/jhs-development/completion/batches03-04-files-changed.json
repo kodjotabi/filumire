@@ -1,0 +1,65 @@
+{
+  "sourceFiles": [
+    {
+      "path": "services/content-store/jhs-b7-science-systems.ts",
+      "change": "created_in_batches03_04",
+      "sha256": "afe7f1329d42f15b4d1ca8b31fdc355199a84b06d2c7a58d64203f3df951167c"
+    },
+    {
+      "path": "services/content-store/jhs-b7-science-energy.ts",
+      "change": "created_in_batches03_04",
+      "sha256": "9e7ea821cffdd04cee1ba271c555d74cda2693c273eeb45c95696fdc547a26bf"
+    },
+    {
+      "path": "tests/jhs-science-systems-content.test.ts",
+      "change": "created_in_batches03_04",
+      "sha256": "dda89a4f40f696ade23a0ae898ecca3252f02846bb7a813a48e99d24e119be2e"
+    },
+    {
+      "path": "tests/jhs-science-systems-journey.test.ts",
+      "change": "created_in_batches03_04",
+      "sha256": "a9f405e60906da255b2c3aed6b7db94742542ed1ea0b4aa7ad453d4dd7f6cd0d"
+    },
+    {
+      "path": "tests/jhs-science-energy-content.test.ts",
+      "change": "created_in_batches03_04",
+      "sha256": "3992c19e1d427718ecd035827924d6332e111bb2de31a68a9d1a7662205a4920"
+    },
+    {
+      "path": "tests/jhs-science-energy-journey.test.ts",
+      "change": "created_in_batches03_04",
+      "sha256": "eb6fc692613509a6e3f0f82a1b00114677fcc8ee70375f4cd84961c61bc8ea82"
+    },
+    {
+      "path": "scripts/jhs-completion-history.mjs",
+      "change": "created_in_batches03_04",
+      "sha256": "f690e7d4bff7cd849376ca2caf86db5719d6d1fe262aed6f90a9142219d86af8"
+    },
+    {
+      "path": "services/content-store/jhs-completion-batches.ts",
+      "change": "modified_existing_uncommitted",
+      "sha256": "4cb7f65933dd6fba001f2bdb97a0b5ce0d3d1e4d8036e0e75d9b56999eddd518"
+    },
+    {
+      "path": "scripts/jhs-preview-source-proof.mjs",
+      "change": "modified_existing_uncommitted",
+      "sha256": "0f74bea258e74d28165fdeccf0ca49e1a6371904975d929baa16a0218913b149"
+    },
+    {
+      "path": "scripts/validate-jhs-completion-batch.mjs",
+      "change": "modified_existing_uncommitted",
+      "sha256": "a8e0d7a2477b1e95f531415bc19af785f951932c5ea35b1837a927fb9f64da6d"
+    }
+  ],
+  "documentationAndValidationArtifacts": [
+    "docs/jhs-development/completion/batch03-b7-science-systems/",
+    "docs/jhs-development/completion/batch04-b7-science-energy/",
+    "docs/jhs-development/completion/competency-matrix.json",
+    "docs/jhs-development/completion/coverage-summary.json",
+    "docs/jhs-development/completion/coverage-history.json",
+    "docs/jhs-development/completion/unresolved-source-rows.json",
+    "docs/jhs-development/completion/CLAUDE-AUDIT.md",
+    "docs/jhs-development/completion/batches03-04-REVIEW.md"
+  ],
+  "preservedPreviewSnapshot": true
+}

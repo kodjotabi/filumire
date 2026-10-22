@@ -3,7 +3,7 @@ import { getAllCompetencies, getCompetency } from "../packages/curriculum/index"
 import { createInitialLearnerState, getLearnerState, saveLearnerState } from "../services/learner-state/index";
 import { persistenceStore } from "../services/persistence-provider";
 import { buildTeacherLearnerSummary } from "../services/teacher-summary/index";
-import { GET } from "../apps/learner/app/api/learning/route";
+import { currentTopicRoute } from "./fixtures/current-topic-route";
 import { acknowledgeIntervention } from "../services/intervention-store/index";
 import { CONTENT_EXHAUSTED_REASON_CODE } from "../services/adaptive-engine/index";
 import {
@@ -116,7 +116,8 @@ async function persisted(): Promise<void> {
   const struggling = base(learnerId, P3, { evidenceCount: 4, masteryEstimate: 0.5, confidence: 0.5, diagnosticState: "insufficient_evidence" });
   await saveLearnerState({ ...createInitialLearnerState(learnerId, P3), competencies: [struggling] });
 
-  const response = await GET(new Request(`http://localhost/api/learning?sessionId=session-4g-${Date.now()}&subjectId=subject-gh-basic-4-mathematics-pilot&competencyId=${P3}`, { headers: { "x-filumire-learner-id": learnerId } }));
+  const route = await currentTopicRoute(learnerId, P3);
+  const response = await route.get();
   check(response.status === 200, `route: GET 200 (${response.status})`);
   const body = (await response.json()) as { decision: { action: string; reasonCode: string; competencyId: string } };
   check(body.decision.action === "advance" && body.decision.reasonCode === "PREREQUISITE_REPAIR" && body.decision.competencyId === P1, `route: repair to 001 (${body.decision.action}/${body.decision.reasonCode} ${body.decision.competencyId})`);

@@ -1,0 +1,650 @@
+[
+  {
+    "id": "english:b4:pdf29:y266",
+    "code": "B4.1.5.2.1",
+    "grade": 4,
+    "subject": "english",
+    "pdfPage": 29,
+    "statement": "Identify moral values in sketches and relate them to real life situations",
+    "tableContentStandard": "B4.1.5.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b4:pdf33:y353",
+    "code": "B4.1.7.1",
+    "grade": 4,
+    "subject": "english",
+    "pdfPage": 33,
+    "statement": "Construct meaning from texts based on knowledge of stress, rhythm and intonation",
+    "tableContentStandard": "B4.1.7.1",
+    "flags": [
+      "nonstandard_indicator_code_length",
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b4:pdf34:y123",
+    "code": "B4.1.7.1.2",
+    "grade": 4,
+    "subject": "english",
+    "pdfPage": 34,
+    "statement": "Make connections with events in narrative texts",
+    "tableContentStandard": "B4.7.1.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b4:pdf34:y203",
+    "code": "B4.1.7.1.3",
+    "grade": 4,
+    "subject": "english",
+    "pdfPage": 34,
+    "statement": "Recognise and discuss moral lessons in a story",
+    "tableContentStandard": "B4.7.1.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b4:pdf34:y281",
+    "code": "B4.1.7.1.4",
+    "grade": 4,
+    "subject": "english",
+    "pdfPage": 34,
+    "statement": "Use background knowledge to aid in understanding and building new knowledge while listening to narrative texts",
+    "tableContentStandard": "B4.7.1.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b4:pdf34:y386",
+    "code": "B4.1.7.1.5",
+    "grade": 4,
+    "subject": "english",
+    "pdfPage": 34,
+    "statement": "Identify the main idea/gist and details of texts",
+    "tableContentStandard": "B4.7.1.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b4:pdf35:y121",
+    "code": "B4.1.7.1.7",
+    "grade": 4,
+    "subject": "english",
+    "pdfPage": 35,
+    "statement": "Compare and contrast information (two or more ideas) from texts",
+    "tableContentStandard": "B4.7.1.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b4:pdf53:y136",
+    "code": "B4.2.7.2.3",
+    "grade": 4,
+    "subject": "english",
+    "pdfPage": 53,
+    "statement": "Demonstrate awareness of the structure of texts (e.g. introduction, body, conclusion)",
+    "tableContentStandard": "B4.2.7.3",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b4:pdf56:y123",
+    "code": "B4.2.9.1.2",
+    "grade": 4,
+    "subject": "english",
+    "pdfPage": 56,
+    "statement": ". Use recognition strategies to confirm understanding of level-appropriate texts",
+    "tableContentStandard": "B4.2.8.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b4:pdf63:y136",
+    "code": "B4.3.4.1.1.1",
+    "grade": 4,
+    "subject": "english",
+    "pdfPage": 63,
+    "statement": "Use adjectives to make comparison e. g: − fast/slow (Ama is fast but Kofi is slow.) − good/bad − fast/faster − slow/slower",
+    "tableContentStandard": "B4.3.4.1",
+    "flags": [
+      "nonstandard_indicator_code_length",
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b4:pdf81:y277",
+    "code": "B4.4.14.2.1",
+    "grade": 4,
+    "subject": "english",
+    "pdfPage": 81,
+    "statement": "Write picture events about personal experiences and make radio/TV presentations",
+    "tableContentStandard": "B4.4.14.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b5:pdf102:y292",
+    "code": "B5.1.6.3.1",
+    "grade": 5,
+    "subject": "english",
+    "pdfPage": 102,
+    "statement": "Engage in collaborative conversation on topics such as social issues, values and manners with adults",
+    "tableContentStandard": "B5.1.6.2",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b5:pdf103:y251",
+    "code": "B5.1.6.3.2",
+    "grade": 5,
+    "subject": "english",
+    "pdfPage": 103,
+    "statement": "Demonstrate turn taking in conversation in different topics and follow agreed-upon rules for conversation,",
+    "tableContentStandard": "B5.1.6.2",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b5:pdf108:y322",
+    "code": "B5.1.8.2.1",
+    "grade": 5,
+    "subject": "english",
+    "pdfPage": 108,
+    "statement": "Use positive tags, negative tags and auxiliaries in speech",
+    "tableContentStandard": "B5.1.8.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b5:pdf121:y359",
+    "code": "B5.2.6.3.1",
+    "grade": 5,
+    "subject": "english",
+    "pdfPage": 121,
+    "statement": "Deduce meaning of words from the word class they belong to and how they relate to one another (synonyms and antonyms).",
+    "tableContentStandard": "B5.2.6.2",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b5:pdf124:y334",
+    "code": "B5.2.7.2.1",
+    "grade": 5,
+    "subject": "english",
+    "pdfPage": 124,
+    "statement": "Respond to a text with simple judgment",
+    "tableContentStandard": "B5.2.7.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b5:pdf149:y145",
+    "code": "B5.4.3.1.4",
+    "grade": 5,
+    "subject": "english",
+    "pdfPage": 149,
+    "statement": "Use cohesive devices – pronouns, repetition of vocabulary or grammatical structures to link ideas in a paragraph, e.g. use connectors to link similar ideas, give reasons and add information",
+    "tableContentStandard": "B5.4.6.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b5:pdf150:y420",
+    "code": "B5.4.9.2.1",
+    "grade": 5,
+    "subject": "english",
+    "pdfPage": 150,
+    "statement": "Develop ideas into a two-paragraph draft without considering the writing conventions, using appropriate linking words within and across paragraphs to aid cohesion and avoid ambiguity, e.g. firstly, then, after",
+    "tableContentStandard": "B5.4.9.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b5:pdf151:y343",
+    "code": "B4.4.9.3.2",
+    "grade": 5,
+    "subject": "english",
+    "pdfPage": 151,
+    "statement": "Edit/proofread draft, checking capitalisation, usage of punctuation and spelling",
+    "tableContentStandard": "B5.4.9.3",
+    "flags": [
+      "printed_grade_differs_from_section",
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b5:pdf158:y280",
+    "code": "B5.4.13.2.1",
+    "grade": 5,
+    "subject": "english",
+    "pdfPage": 158,
+    "statement": "Introduce claims and support them with clear reasons and evidence using credible sources",
+    "tableContentStandard": "B5.4.13.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b5:pdf160:y318",
+    "code": "B5.4.14.2.1",
+    "grade": 5,
+    "subject": "english",
+    "pdfPage": 160,
+    "statement": "Write about incidence or events of the day (e.g. any event witnessed on their way to school) and make radio/TV presentations",
+    "tableContentStandard": "B5.4.14.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b6:pdf176:y183",
+    "code": "B6.1.1.1.1",
+    "grade": 6,
+    "subject": "english",
+    "pdfPage": 176,
+    "statement": "Relate the central messages in songs to personal experiences",
+    "tableContentStandard": "B.6.1.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b6:pdf176:y353",
+    "code": "B6.1.1.1.2",
+    "grade": 6,
+    "subject": "english",
+    "pdfPage": 176,
+    "statement": "C ompose songs around values discussed",
+    "tableContentStandard": "B.6.1.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b6:pdf179:y331",
+    "code": "B6.1.5.2.1",
+    "grade": 6,
+    "subject": "english",
+    "pdfPage": 179,
+    "statement": "Express personal opinion about moral lessons in sketches",
+    "tableContentStandard": "B6.1.5.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b6:pdf194:y136",
+    "code": "B6.2.3.1.1",
+    "grade": 6,
+    "subject": "english",
+    "pdfPage": 194,
+    "statement": "Use words with centering diphthongs ( e.g. / i ǝ , eǝ, Ʊǝ ) to make meaningful sentences",
+    "tableContentStandard": "B6.2.4.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b6:pdf196:y410",
+    "code": "B6.2.6.2.1",
+    "grade": 6,
+    "subject": "english",
+    "pdfPage": 196,
+    "statement": ". Develop a rich vocabulary stock through extensive reading of age-appropriate text; substituting selected nouns verbs and adjectives in a text with synonyms /near synonyms.",
+    "tableContentStandard": "B6.2.6.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b6:pdf201:y419",
+    "code": "B6.2.8.1.1",
+    "grade": 6,
+    "subject": "english",
+    "pdfPage": 201,
+    "statement": "Read silently and reasonably for meaning from a level-appropriate text",
+    "tableContentStandard": "B6.2.7.3",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b6:pdf227:uncoded-reflective-writing",
+    "code": null,
+    "grade": 6,
+    "subject": "english",
+    "pdfPage": 227,
+    "statement": "Reflective Writing A reflective writing explores who you are now and who you were before now. It focuses on a change you have experienced and reflects on how that change makes you unique.",
+    "tableContentStandard": "B6.4.10.1",
+    "flags": [
+      "uncoded_source_activity"
+    ]
+  },
+  {
+    "id": "english:b6:pdf231:y261",
+    "code": "B6.4.13.2.1",
+    "grade": 6,
+    "subject": "english",
+    "pdfPage": 231,
+    "statement": "Introduce claims and support with clear reasons in order of importance and evidence using credible sources and demonstrate understanding of the topic or text.",
+    "tableContentStandard": "B6.4.13.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b6:pdf231:y355",
+    "code": "B6.4.13.2.2",
+    "grade": 6,
+    "subject": "english",
+    "pdfPage": 231,
+    "statement": "Use words, phrases, and clauses to clarify the relationships among claim(s) and reasons.",
+    "tableContentStandard": "B6.4.13.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b6:pdf232:y321",
+    "code": "B6.4.14.1.1",
+    "grade": 6,
+    "subject": "english",
+    "pdfPage": 232,
+    "statement": "Write short paragraphs to describe incidents. E.g. accidents, fire outbreak.",
+    "tableContentStandard": "B6.4.13.2",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "english:b6:pdf239:y162",
+    "code": "B6.5.5.1",
+    "grade": 6,
+    "subject": "english",
+    "pdfPage": 239,
+    "statement": "Use superlative forms of regular and irregular adjectives to make comparison Revise adjectives by having learners describe various classroom objects and people.",
+    "tableContentStandard": "B6.5.5.1",
+    "flags": [
+      "nonstandard_indicator_code_length",
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "mathematics:b4:pdf39:y349",
+    "code": "B4.1.2.6.1",
+    "grade": 4,
+    "subject": "mathematics",
+    "pdfPage": 39,
+    "statement": "Solve multi-step word problems involving the four basic operations",
+    "tableContentStandard": "B4.1.2.5",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "mathematics:b5:pdf98:y129",
+    "code": "B5.1.2.1.1",
+    "grade": 5,
+    "subject": "mathematics",
+    "pdfPage": 98,
+    "statement": "Multiply multi-digit numbers by 2-digit numbers efficiently",
+    "tableContentStandard": "B5.1.4.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "mathematics:b5:pdf114:y147",
+    "code": "B5.2.3.1.2",
+    "grade": 5,
+    "subject": "mathematics",
+    "pdfPage": 114,
+    "statement": "Identify the unknown in a problem; represent the problem with an equation; and solve the problem concretely, pictorially or symbolically.",
+    "tableContentStandard": "B5.3.2.2",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "mathematics:b5:pdf114:y348",
+    "code": "B5.2.3.1.3",
+    "grade": 5,
+    "subject": "mathematics",
+    "pdfPage": 114,
+    "statement": "Create a problem for a given equation",
+    "tableContentStandard": "B5.3.2.2",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "mathematics:b5:pdf122:y132",
+    "code": "B5.3.3.2.2",
+    "grade": 5,
+    "subject": "mathematics",
+    "pdfPage": 122,
+    "statement": "Determine the volume of boxes by finding how many cubes of sizes 1cm each contains",
+    "tableContentStandard": "B5.3.2.2",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "mathematics:b5:pdf123:y341",
+    "code": "B5.3.3.2.4",
+    "grade": 5,
+    "subject": "mathematics",
+    "pdfPage": 123,
+    "statement": "Demonstrate an understanding of capacity by describing the relationship between 3 capacity and volume as well as litre and 10cm 3",
+    "tableContentStandard": "B5.3.2.2",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "mathematics:b6:pdf149:y224",
+    "code": "B6.1.1.6.1",
+    "grade": 6,
+    "subject": "mathematics",
+    "pdfPage": 149,
+    "statement": "Locate, compare and order sets of integers using the number line and symbols \"< or >\"",
+    "tableContentStandard": "B6.1.2.6",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "mathematics:b6:pdf151:y178",
+    "code": "B6.1.1.4.3",
+    "grade": 6,
+    "subject": "mathematics",
+    "pdfPage": 151,
+    "statement": "Perform simple multiplication with integers",
+    "tableContentStandard": "B6.1.2.6",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "mathematics:b6:pdf165:y158",
+    "code": "B6.3.1.1.1",
+    "grade": 6,
+    "subject": "mathematics",
+    "pdfPage": 165,
+    "statement": "Identify examples of rectangular and triangular prisms in the classroom and the community",
+    "tableContentStandard": "B6.3.1.1",
+    "flags": [
+      "source_heading_not_extracted_do_not_invent_title"
+    ]
+  },
+  {
+    "id": "mathematics:b6:pdf166:y144",
+    "code": "B6.3.1.1.2",
+    "grade": 6,
+    "subject": "mathematics",
+    "pdfPage": 166,
+    "statement": "Construct rectangular and triangular prisms from their nets.",
+    "tableContentStandard": "B6.3.1.1",
+    "flags": [
+      "source_heading_not_extracted_do_not_invent_title"
+    ]
+  },
+  {
+    "id": "mathematics:b6:pdf176:y137",
+    "code": "B6.5.2.2",
+    "grade": 6,
+    "subject": "mathematics",
+    "pdfPage": 176,
+    "statement": "Design and administer a questionnaire for collecting data to answer a given question and record the results",
+    "tableContentStandard": "B6.4.1.2",
+    "flags": [
+      "nonstandard_indicator_code_length",
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "mathematics:b6:pdf182:y153",
+    "code": "P6.4.2.2.3",
+    "grade": 6,
+    "subject": "mathematics",
+    "pdfPage": 182,
+    "statement": "Explain that the experimental probability approaches the theoretical probability of a particular outcome as the number of trials in an experiment increases",
+    "tableContentStandard": "B6.4.2.2",
+    "flags": [
+      "nonstandard_grade_prefix",
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "science:b5:pdf42:y369",
+    "code": "B5.2.1.3.1",
+    "grade": 5,
+    "subject": "science",
+    "pdfPage": 42,
+    "statement": "Demonstrate evaporation and condensation as important processes of the hydrological (water) cycle",
+    "tableContentStandard": "B5.2.1.2",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "science:b6:pdf58:y370",
+    "code": "2.1.3.1",
+    "grade": 6,
+    "subject": "science",
+    "pdfPage": 58,
+    "statement": "Know the functions of carbon within the environment",
+    "tableContentStandard": "B6.2.1.3",
+    "flags": [
+      "nonstandard_grade_prefix",
+      "nonstandard_indicator_code_length",
+      "printed_grade_differs_from_section",
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "science:b6:pdf59:y233",
+    "code": "B6.2.1.5.2",
+    "grade": 6,
+    "subject": "science",
+    "pdfPage": 59,
+    "statement": "Demonstrate that air supports burning",
+    "tableContentStandard": "B6.2.1.4",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "science:b6:pdf65:y97",
+    "code": "B6.4.3.2.1",
+    "grade": 6,
+    "subject": "science",
+    "pdfPage": 65,
+    "statement": "Identify levers, pulleys, inclined planes as classes of simple machines and cite some common examples",
+    "tableContentStandard": "B4.4.3.2",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "science:b6:pdf67:y303",
+    "code": "5.3.1.1",
+    "grade": 6,
+    "subject": "science",
+    "pdfPage": 67,
+    "statement": "Identify the scientific concepts and principles underlying the operation of some industries",
+    "tableContentStandard": "B6.5.3.1",
+    "flags": [
+      "nonstandard_grade_prefix",
+      "nonstandard_indicator_code_length",
+      "printed_grade_differs_from_section",
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "computing:b4:pdf29:y135",
+    "code": "B4.1.4.1.4",
+    "grade": 4,
+    "subject": "computing",
+    "pdfPage": 29,
+    "statement": "Identify technological changes in the community (e.g. Using automated irrigation for farming, eco-friendly pesticides and manure, etc.)",
+    "tableContentStandard": "B4.2.1.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  },
+  {
+    "id": "computing:b5:pdf48:y287",
+    "code": "B5.6.4.9.1.1",
+    "grade": 5,
+    "subject": "computing",
+    "pdfPage": 48,
+    "statement": "Describe private and personal information. Encourage learners to tell you what they know about private and personal information online. Ask leading questions to help them bring out points they could not make out",
+    "tableContentStandard": "B5.6.4.9.1",
+    "flags": [
+      "nonstandard_indicator_code_length"
+    ]
+  },
+  {
+    "id": "computing:b5:pdf48:y352",
+    "code": "B5.6.4.9.1.2",
+    "grade": 5,
+    "subject": "computing",
+    "pdfPage": 48,
+    "statement": "Discuss various techniques on online protection from online identity theft.",
+    "tableContentStandard": "B5.6.4.9.1",
+    "flags": [
+      "nonstandard_indicator_code_length"
+    ]
+  },
+  {
+    "id": "computing:b6:pdf52:y279",
+    "code": "B6.1.1.1.3",
+    "grade": 6,
+    "subject": "computing",
+    "pdfPage": 52,
+    "statement": "Perform permanent delete or Empty Trash can and restoring files or icons in the recycle bin. Support learners to liken the Recycle bin and its use to the real-world office trash can.",
+    "tableContentStandard": "B6.1.2.1",
+    "flags": [
+      "printed_prefix_differs_from_table_standard"
+    ]
+  }
+]

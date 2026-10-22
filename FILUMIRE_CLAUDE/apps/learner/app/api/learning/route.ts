@@ -28,6 +28,7 @@ import {
 import {
   resolveCurriculumContext,
   getInitialCompetencyIdForResolvedContext,
+  isSupportedGrade,
 } from "../../../../../packages/curriculum-framework";
 
 import {
@@ -193,6 +194,27 @@ function buildProgress(
   };
 }
 
+/*
+ * A stored class that is no longer offered (for example a private
+ * presentation switched off). Nothing is migrated or rewritten: the
+ * guardian chooses the class again. Text matches learner-interface.ts.
+ */
+const CLASS_UNAVAILABLE =
+  "Your class is not available right now. Ask your parent or guardian to choose your class.";
+
+class ClassUnavailableError extends Error {
+  constructor() {
+    super(CLASS_UNAVAILABLE);
+  }
+}
+
+function classUnavailableResponse() {
+  return NextResponse.json(
+    { error: CLASS_UNAVAILABLE, code: "class_unavailable" },
+    { status: 409 },
+  );
+}
+
 function notFoundResponse(message: string) {
   return NextResponse.json(
     { error: message },
@@ -286,6 +308,10 @@ async function resolveProductionCompetencyId(
     await getOrCreateLearnerLearningContext(
       learnerId,
     );
+
+  if (!isSupportedGrade(context.curriculumVersionId, context.gradeId)) {
+    throw new ClassUnavailableError();
+  }
 
   const curriculumVersionId =
     url.searchParams.get("curriculumId") ??
@@ -690,6 +716,7 @@ export async function GET(
       // Displaying Home must not deliver questions, replay submissions or
       // activate an adaptive intervention. Existing evidence remains untouched.
       const context = await getOrCreateLearnerLearningContext(identity.learnerId);
+      if (!isSupportedGrade(context.curriculumVersionId, context.gradeId)) return classUnavailableResponse();
       const states = await getLearnerStates(identity.learnerId);
       const state = states.find(item => item.competencies.some(c => c.competencyId === context.activeCompetencyId));
       const empty = { learnerId: identity.learnerId, competencies: [] };
@@ -812,6 +839,7 @@ export async function GET(
     );
   } catch (error) {
     if (error instanceof BadRequestError) return errorResponse(error, "learning request");
+    if (error instanceof ClassUnavailableError) return classUnavailableResponse();
     if (
       error instanceof Error &&
       (
@@ -939,6 +967,9 @@ export async function POST(
         await getOrCreateLearnerLearningContext(
           authenticatedLearnerId,
         );
+      if (!isSupportedGrade(context.curriculumVersionId, context.gradeId)) {
+        return classUnavailableResponse();
+      }
       const competencySubjectId =
         getCompetency(body.competencyId)?.subjectId;
 

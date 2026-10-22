@@ -1,0 +1,84 @@
+{
+  "source": "C:/Users/tabi/Desktop/filumire/FILUMIRE_WEBSITE",
+  "date": "2026-10-11",
+  "scope": "public website local development only",
+  "tests": {
+    "passed": 57,
+    "failed": 0,
+    "providerFixtures": true,
+    "realPaystack": false
+  },
+  "build": {
+    "passed": true
+  },
+  "typecheck": {
+    "passed": true,
+    "stdout": "",
+    "stderr": ""
+  },
+  "localHttp": [
+    {
+      "name": "subscriptions",
+      "passed": true,
+      "stdout": "{\n  \"passed\": true,\n  \"checks\": [\n    {\n      \"path\": \"/pricing\",\n      \"status\": 200\n    },\n    {\n      \"path\": \"/fr/pricing\",\n      \"status\": 200\n    },\n    {\n      \"path\": \"/account\",\n      \"status\": 200\n    },\n    {\n      \"path\": \"/fr/account\",\n      \"status\": 200\n    },\n    {\n      \"path\": \"/account/subscription\",\n      \"status\": 200\n    },\n    {\n      \"path\": \"/fr/account/subscription\",\n      \"status\": 200\n    },\n    {\n      \"path\": \"/api/subscriptions\",\n      \"status\": 503,\n      \"code\": \"configuration\"\n    },\n    {\n      \"path\": \"/api/parent-auth\",\n      \"status\": 503,\n      \"code\": \"configuration\"\n    },\n    {\n      \"path\": \"/api/paystack/webhook\",\n      \"status\": 503,\n      \"code\": \"payments_unavailable\"\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "name": "existing-links",
+      "passed": false,
+      "code": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\r\n    triggerUncaughtException(\r\n    ^\r\n\r\nAssertionError [ERR_ASSERTION]: Sitemap includes /\r\n    at file:///C:/Users/tabi/Desktop/filumire/FILUMIRE_WEBSITE/scripts/check-links.mjs:114:36\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {\r\n  generatedMessage: false,\r\n  code: 'ERR_ASSERTION',\r\n  actual: false,\r\n  expected: true,\r\n  operator: '==',\r\n  diff: 'simple'\r\n}\r\n\r\nNode.js v24.19.0\r\n"
+    }
+  ],
+  "existingLinks": {
+    "passed": true,
+    "stdout": "{\n  \"pagesChecked\": 39,\n  \"uniqueLinks\": 121,\n  \"internalLinks\": 109,\n  \"emailLinks\": 3,\n  \"externalLinks\": 9,\n  \"localImages\": 21,\n  \"generatedAssets\": 32,\n  \"categoriesChecked\": 14,\n  \"notFoundRecovery\": \"passed\"\n}\n",
+    "stderr": ""
+  },
+  "browserAvailable": false,
+  "existingFilesChanged": [
+    "src/components/pages/access.tsx",
+    "src/lib/constants.ts",
+    "src/lib/locale.ts",
+    "src/lib/pages.tsx",
+    "src/lib/translations.ts",
+    "src/middleware.ts",
+    ".env.example",
+    ".gitignore"
+  ],
+  "newFiles": [
+    "src/app/account/page.tsx",
+    "src/app/account/subscription/page.tsx",
+    "src/app/api/parent-auth/route.ts",
+    "src/app/api/paystack/webhook/route.ts",
+    "src/app/api/subscriptions/route.ts",
+    "src/app/fr/account/page.tsx",
+    "src/app/fr/account/subscription/page.tsx",
+    "src/app/fr/pricing/page.tsx",
+    "src/app/pricing/page.tsx",
+    "src/components/subscriptions/LearnerProgress.tsx",
+    "src/components/subscriptions/ParentAccount.tsx",
+    "src/components/subscriptions/Pricing.tsx",
+    "src/components/subscriptions/subscriptions.module.css",
+    "src/lib/subscriptions/auth-mail.ts",
+    "src/lib/subscriptions/auth.ts",
+    "src/lib/subscriptions/copy.ts",
+    "src/lib/subscriptions/database.ts",
+    "src/lib/subscriptions/http.ts",
+    "src/lib/subscriptions/local-schema.sql",
+    "src/lib/subscriptions/paystack.ts",
+    "src/lib/subscriptions/plans.ts",
+    "src/lib/subscriptions/schema.sql",
+    "src/lib/subscriptions/service.ts",
+    "scripts/approve-trial-household.mjs",
+    "scripts/check-subscriptions.mjs",
+    "tests/subscriptions.test.mjs"
+  ],
+  "externalProvisioning": false,
+  "deployed": false,
+  "livePayments": false,
+  "credentialsConfigured": false,
+  "learningPlatformConnected": false,
+  "hostedPersistenceReady": false
+}

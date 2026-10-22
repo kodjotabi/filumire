@@ -1,0 +1,4 @@
+import Link from "next/link";
+import { translateTree } from "@/lib/translate";
+import type {Locale} from "@/lib/locale";
+export function Recovery({locale}:{locale:Locale}){return translateTree(<section className="site-section"><div className="site-container section-heading-center"><span className="section-eyebrow">Page not found</span><h1 className="section-title">Let’s find your next step.</h1><p className="section-subtitle">This address does not match a public FILUMIRE page. You can return home, explore the educational approach or find platform access.</p><div className="action-row"><Link href="/" className="btn btn-primary">Return home</Link><Link href="/how-it-works" className="btn btn-outline">How it works</Link><Link href="/access" className="btn btn-outline">Platform access</Link></div></div></section>,locale);}

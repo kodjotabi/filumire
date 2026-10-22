@@ -1,0 +1,40 @@
+import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+import * as f from "../packages/curriculum-framework";
+import { getCompetenciesForSubject } from "../packages/curriculum";
+import { subjectTopics } from "../services/curriculum-navigation";
+import { seedContent } from "../services/content-store/seed";
+import { getContentForCompetency } from "../services/content-store";
+
+// Fingerprints captured from the actual working tree before Phase 8C, including earlier uncommitted repairs.
+// Cover all definitions, mappings, hierarchy, EN/FR topic order and authored content (excluding timestamps).
+const expected: Record<string, string> = {
+  "subject-gh-basic-4-mathematics-pilot": "a6b421a2ddec2efed5b6e3d6d09d2655cd470f297148c0613b98cbf9a03566b1",
+  "subject-gh-basic4-english-pilot": "1afff7781f9bba424e4f1165b85dce9e55baa7911f751087de7b98deebc65bc5",
+  "subject-gh-basic4-science-pilot": "b840e7b30cad30528ad67d6703ad7d349cb3850048f743ed5cffb485b7397a8a",
+  "subject-gh-basic4-computing-pilot": "2e09f9f1459d896e3fcdb65f2493e44ad4f35e39da5fee227f614fdd9d2da3ff",
+  "subject-gh-basic5-science-pilot": "d8c6d81c2bb547aa4aec2523edb977257cb969b4d794fcee997847619ce79798",
+  "subject-gh-basic5-computing-pilot": "bbe7a9b53cdf1eaef36f647244d95de43377fe23cca3d07e4260f662402303e3",
+  "subject-gh-basic5-mathematics-pilot": "366d2f5aed23e85bb5c938e10de9953a41e2b90a3b9f0c4458df520daab6f132",
+  "subject-gh-basic5-english-pilot": "c76d3812d16f9e27c8ece5164723d6c9b662457d9711c869d93d50b81e24bb78",
+  "subject-gh-basic6-science-pilot": "8b0e7003ee4cc71c0db266537ec162247328728d4c65a340ff90a73daea8afd1",
+  "subject-gh-basic6-computing-pilot": "835a92073c50637f742307187f3252c8c1cc82736147d287884b3873b15b42f4",
+  "subject-gh-basic6-mathematics-pilot": "f6572a940238d938ab86a844a34a4f28b7fb79589f253fd87e5395326b5a6ec1",
+  "subject-gh-basic6-english-pilot": "98e413ab9a1504c70d0b896bdbdc0ca2470d48c55f714a46cf57d95ede2af41e",
+};
+seedContent();
+const grades = f.getSupportedGradesForCurriculumVersion(f.CURRICULUM_VERSION_GHANA_PILOT_V1_ID);
+assert.deepEqual(grades.map(g => g.order), [4, 5, 6]);
+const seen: string[] = [];
+for (const grade of grades) for (const subject of f.getSubjectsForGrade(grade.id)) {
+  const nodes = f.getCurriculumNodesForSubject(subject.id), competencies = getCompetenciesForSubject(subject.id);
+  const data = { grade, subject, capability: f.getSubjectCapability(subject.id), nodes,
+    mappings: nodes.flatMap(n => f.getCompetencyMappingsForNode(n.id)), competencies,
+    topics: (["en", "fr"] as const).map(lang => subjectTopics(subject.id, lang)),
+    content: competencies.flatMap(c => (["en", "fr"] as const).map(lang => getContentForCompetency(c.id, lang).map(({ createdAt, updatedAt, ...stable }) => stable))),
+  };
+  assert.equal(createHash("sha256").update(JSON.stringify(data)).digest("hex"), expected[subject.id], `${subject.name} Basic ${grade.order} changed since before Phase 8C`);
+  seen.push(subject.id);
+}
+assert.deepEqual(seen.sort(), Object.keys(expected).sort());
+console.log("PASS all 12 Basic 4-6 subjects: definitions, hierarchy, mappings, bilingual navigation and authored content unchanged");

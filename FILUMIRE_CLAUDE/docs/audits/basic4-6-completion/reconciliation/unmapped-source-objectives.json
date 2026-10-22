@@ -1,0 +1,120 @@
+[
+  {
+    "id": "science:b5:pdf44:y397",
+    "subject": "science",
+    "grade": 5,
+    "statement": "Compare the differences in germination of bean and maize seeds",
+    "sourceOccurrences": [
+      {
+        "id": "science:b5:pdf44:y397",
+        "printedCode": "B5.2.2.1.2",
+        "rawPrintedCode": "B5.2. 2.1.2",
+        "pdfPage": 44,
+        "printedPage": "22",
+        "tableContentStandard": "B5.2.2.1",
+        "sourceFlags": [],
+        "strand": {
+          "number": 2,
+          "title": "CYCLES",
+          "page": 42
+        },
+        "subStrand": {
+          "number": 2,
+          "title": "LIFE CYCLES OF ORGANISMS",
+          "page": 44
+        }
+      }
+    ],
+    "competencyIds": [],
+    "coverageStatus": "unmapped_source_requirement"
+  },
+  {
+    "id": "computing:b5:pdf36:y317",
+    "subject": "computing",
+    "grade": 5,
+    "statement": "Make simple tables and diagrams from the collected data.",
+    "sourceOccurrences": [
+      {
+        "id": "computing:b5:pdf36:y317",
+        "printedCode": "B5.1.3.1.9",
+        "rawPrintedCode": "B5. 1.3.1.9",
+        "pdfPage": 36,
+        "printedPage": "15",
+        "tableContentStandard": "B5.1.3.1",
+        "sourceFlags": [],
+        "strand": {
+          "number": 1,
+          "title": "INTRODUCTION TO COMPUTING",
+          "page": 32
+        },
+        "subStrand": {
+          "number": 3,
+          "title": "DATA, SOURCES AND USAGE",
+          "page": 35
+        }
+      }
+    ],
+    "competencyIds": [],
+    "coverageStatus": "unmapped_source_requirement"
+  },
+  {
+    "id": "computing:b5:pdf36:y382",
+    "subject": "computing",
+    "grade": 5,
+    "statement": "Analyse tables, maps, diagrams, photographs and charts, and generalize the results and make suggestions (e.g. Finding sum or grand total). Task learners to calculate the average, mean, sum and difference between data collected in an earlier class. NB: This is to help the learner with fundamental principle of problem solving skills and creativity in computing and computer science.",
+    "sourceOccurrences": [
+      {
+        "id": "computing:b5:pdf36:y382",
+        "printedCode": "B5.1.3.1.10",
+        "rawPrintedCode": "B5. 1.3.1.10",
+        "pdfPage": 36,
+        "printedPage": "15",
+        "tableContentStandard": "B5.1.3.1",
+        "sourceFlags": [],
+        "strand": {
+          "number": 1,
+          "title": "INTRODUCTION TO COMPUTING",
+          "page": 32
+        },
+        "subStrand": {
+          "number": 3,
+          "title": "DATA, SOURCES AND USAGE",
+          "page": 35
+        }
+      }
+    ],
+    "competencyIds": [],
+    "coverageStatus": "unmapped_source_requirement"
+  },
+  {
+    "id": "computing:b5:pdf48:y352",
+    "subject": "computing",
+    "grade": 5,
+    "statement": "Discuss various techniques on online protection from online identity theft.",
+    "sourceOccurrences": [
+      {
+        "id": "computing:b5:pdf48:y352",
+        "printedCode": "B5.6.4.9.1.2",
+        "rawPrintedCode": "B5.6.4.9.1.2",
+        "pdfPage": 48,
+        "printedPage": "27",
+        "tableContentStandard": "B5.6.4.9.1",
+        "sourceFlags": [
+          "nonstandard_indicator_code_length"
+        ],
+        "strand": {
+          "number": 6,
+          "title": "INTERNET AND SOCIAL MEDIA",
+          "page": 42
+        },
+        "subStrand": {
+          "number": 9,
+          "title": "DIGITAL LITERACY",
+          "page": 48
+        }
+      }
+    ],
+    "competencyIds": [],
+    "coverageStatus": "unmapped_source_requirement"
+  }
+]

@@ -148,7 +148,7 @@ const QUESTIONS: Question[] = [
     answer: 0,
     rules: { 1: ["assumes_one_collection_method_suits_every_task", "misconception"], 2: ["confuses_observation_with_guessing", "misconception"], 3: ["treats_checklist_as_completed_data", "misconception"] },
     code: "B4.1.3.2.2",
-    subskills: ["describe_checklist_method"],
+    subskills: ["describe_checklist_method", "identify_data_collection_tool"],
     criteria: ["demonstrates_describe_checklist_method"],
     contexts: ["school"],
   },
@@ -178,4 +178,4 @@ export const GHANA_B4_COMP_DATA_COLLECTION_TOOLS_AUTHORED_CONTENT = buildTopic(
   LESSONS,
   PRACTICE,
   QUESTIONS,
-);
+).map(item => item.id.includes("-transfer-attendance-") ? { ...item, version: "authored-data-collection-tools-1.1" } : item);

@@ -1,0 +1,451 @@
+{
+  "baselineHead": "29854417561714a62024be2b150de9b4a2cd24b3",
+  "branch": "feat/jhs7-9-development",
+  "workingRepository": "C:\\Users\\tabi\\Documents\\Codex\\filumire-jhs-integration",
+  "preservedOriginal": {
+    "path": "C:/FILUMIRE/filumire-batch1/FILUMIRE_CLAUDE/.worktrees/jhs7-9-development",
+    "filesChecked": 2417,
+    "changed": []
+  },
+  "description": "Delta against the exact inherited working files, including uncommitted work; not against HEAD alone. No commits or remote writes.",
+  "changes": [
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/app/api/account/learners/[learnerId]/placement/route.ts",
+      "status": "modified",
+      "beforeSha256": "c86e2c01e20d782b686c47b7e3e639c2858070598354e336390f9beaf4b51fd3",
+      "sha256": "cfea2e1995670e0988a69ce41101adc4b08c115dbf073f549f4be441c55b98d8"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/app/family/page.tsx",
+      "status": "modified",
+      "beforeSha256": "a9aa3b8d4922dfb189f3572185c37f896ab5e669fc65f882157f05c192afa3b6",
+      "sha256": "03d680381cd4d4e0a48638c0970ce6257b61ea5a2ab7d495f4091a12abde3df8"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/app/layout.tsx",
+      "status": "modified",
+      "beforeSha256": "9059c3d1fe3ad144a4569c17b283c1804332d67da14ee6c7a66833417fd827c1",
+      "sha256": "a7ce34d2ddc462a8b6101715f9da2ceb9213db73921125b93651b41f94c466ca"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/app/local-fonts.css",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "dbcf30cd5ea48f732c72337965497b4df2d79f09653287ef68bba8136529def6"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/components/filumire/GuardianPlacement.tsx",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "2ce7696bac94d3419fd6c9e77500fc5b36aefbf3346a111fa867d7810caebbc8"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/components/filumire/PrivatePresentationNotice.tsx",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "dea124fa23a8eb7fdda84eb4cf83037a28b9d77847a4b110547022217dc8492a"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/instrumentation.ts",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "b5be756ab0d95b4380cf11b15b8b0a55320a7d0342455d314d1a27a1f7ba5ebb"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/public/fonts/1f173e5e25f3efee-s.woff2",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "920711de9ae96c18970fa4faca73cd302b93ac5ed57ebeb6bfec2ddeff930082"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/public/fonts/2f968d8fa37d003d-s.woff2",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "eb63c97e508e38e0ba40b7fb12aa4937b9d9bb3721869fb0a255854b07667f60"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/public/fonts/48e2044251ef3125-s.woff2",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "0b00fbd6edcc84cd5f77364bbeb06b75ed263c740061eba34511f1e2ac1a82d3"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/public/fonts/548d4a6452851abd-s.woff2",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "2e8e8d463f7877c5725d45735f52b720a2808bf3b9aebcd50b4b95a588bb763d"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/public/fonts/59086a93cebe8094-s.p.woff2",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "c1bc5092263cb16e72fa43621eb116966068950e1b77ffd38fd401dd43ce1120"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/public/fonts/89f9cb1a88b9175b-s.woff2",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "409a1c973bba365895b897c14604383b7e3df4e400f43dfb07af64a77e973232"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/public/fonts/904be59b21bd51cb-s.p.woff2",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "6438d7b8ea9c7c3992d5e2fd2afdb1ff948570a3ef0bedae76247b51632960ba"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/public/fonts/a741d221f759c10d-s.woff2",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "ece1261539d395aa5e2918bb855e625e9cf42d315965bb9e321d20d7e2651cc7"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/public/fonts/b1f344208eb4edfe-s.woff2",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "744830a0e77dd14dd543a4230d6e3ce67ca961634074b5d536ebafc66c732301"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/public/fonts/bf24a9759715e608-s.woff2",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "9e2672d100bc36a37073fb250abfaa7394f5151bf5dda3f4d5fc281345eb391b"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/public/fonts/bf273aca3d6b346f-s.p.woff2",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "257f0129d54c60cda0f8856ad1de05e760a219c9365fb19cd50b0cc8fdb2c9d1"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/public/fonts/OFL.txt",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "e42128c85a7fe8123bdee265b7b405db08e9b433d7122d0e26df0171576a2867"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/public/fonts/provenance.json",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "f2c525958990024297c75e1733b1d7a7440f67d0707f8f725e6c35643fa8fc60"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/apps/learner/services/account-client.ts",
+      "status": "modified",
+      "beforeSha256": "78fbda8610177de1ac1c1b0e183372867a1755ac21886c55f7bc1bd8a497abd9",
+      "sha256": "01fe36fc6c1b56cde9269845d3642276006af890940816c16b663b75386f05bb"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/61b0153/b7-en-390.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "b5e904414cf96a3fc2420510303ff1d47854da0bc6a01059ebd7141e6b0851f2"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/61b0153/b8-en-390.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "495e8ab7c29de12827ed1e36dbc067aca80d1cd786cc79185ecb57a48e0b5631"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/61b0153/b9-en-390.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "4c87450ddc284118be497b8176f2b9920ed5916a6af5f89ea701c420522a8570"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/61b0153/results.json",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "41e73cdfcf770453c0ed26f64bce33629a690fa52cf64e27385d1cba109fa558"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/b1066de/b7-en-390.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "ad1724dd599d258056c200e149000a9ff628f7e9c6d40b1a96a7c35446984268"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/b1066de/failure-3.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "7b05ac14e70474f83952c72de51a5a22d756a81d22511a8ab0a4c4bb5a7a88f2"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/b1066de/results.json",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "8a8df08fdd05f5168beacc68108695c2944aa880fcc86b1414b316b18ac2c681"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/b7-en-390.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "ad1724dd599d258056c200e149000a9ff628f7e9c6d40b1a96a7c35446984268"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/c44550b/b7-en-1280.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "c8439b985bebb46b52a14ac7f8f7ec887197c981ea93ff7e2bc59695d37d6814"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/c44550b/b7-en-390.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "b5e904414cf96a3fc2420510303ff1d47854da0bc6a01059ebd7141e6b0851f2"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/c44550b/b7-fr-1280.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "1731f84929377a409e787739e328ca2895653c58a7d52d9b4eb1be15fdc12f63"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/c44550b/b7-fr-390.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "357660de5d46ce9d69a68db2c9fb3b565e7d3ccfa57cecdcf86628ef90293b38"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/c44550b/b8-en-1280.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "dd35fb7322b7f9d3aaf531b20317ba589301e6cfa9c58403d5c01f2f8b96b501"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/c44550b/b8-en-390.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "495e8ab7c29de12827ed1e36dbc067aca80d1cd786cc79185ecb57a48e0b5631"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/c44550b/b8-fr-1280.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "b4ddb26ad735c6351e3badf191ef789b6f1460eece30148bc25cadac4a82a0cf"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/c44550b/b8-fr-390.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "221f5f76cdb6aa22e1624d8e754bcd735653937a905bad013a63c6f9fc87693f"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/c44550b/b9-en-1280.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "e2db7e9cdaf9f06f5e4a584a3dbcfc755d04fcaaf2e517bbc6496e993e384a5c"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/c44550b/b9-en-390.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "4c87450ddc284118be497b8176f2b9920ed5916a6af5f89ea701c420522a8570"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/c44550b/b9-fr-1280.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "ebde84a1c80819275cf8411f1ca4a23deec8e9eda5e5361f963d4ce65eb98079"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/c44550b/b9-fr-390.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "454cb3e853a01a1efd8bd6cb9191c66ae992a73729fdcac2b6de709e3f6e49e1"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/c44550b/results.json",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "2f08537fc350108c917f35b9b870b1b6cbf80aec2ea5f2a470b6de87e7f11ccb"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/dfb1903/b7-en-1280.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "ba343a5a5e15d48a106db2441c1c249e677fcb9ebb8caa52eee6b786a197f3ce"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/dfb1903/b7-en-390.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "b5e904414cf96a3fc2420510303ff1d47854da0bc6a01059ebd7141e6b0851f2"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/dfb1903/b7-fr-1280.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "876fb14a5863bd968099c8dee6b5cfe4c3b9c50a9730df8fcfe9d8c7e02989b9"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/dfb1903/b7-fr-390.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "357660de5d46ce9d69a68db2c9fb3b565e7d3ccfa57cecdcf86628ef90293b38"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/dfb1903/results.json",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "c4eb0563eecdd992cf561dbf08fb43b9f98590c344ae1bc0aec82877a7722384"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/failure-2.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "f2066a21f041401909b42a0abc5cba6729185c78d09774af4da6928777602353"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/browser/results.json",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "73d24212016753e7b81597d6762504f3b7039f5a3c17748fd70d34d25d895940"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/CLAUDE-INTEGRATION-AUDIT.md",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "b474fc133b40eda0fd464a74da0291fac5808ba8916b838b0e93f19380778083"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/journeys.json",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "05689ccd8517fff6aceafab22e9cda44996a83dace34194975fd1de8b27493a5"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/primary-browser-1792689390350/interface-repairs-results.json",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "0ac314a77fa0ee95bd62708ce03ff56206c83d05d66c79ccdf56dc6bd048f574"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/primary-browser-1792689495186/offline-en-1280.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "e1aac02e5696eb14d630a54105b6c2cd82d8ade9fa350489c6d6abf7ba14ca1c"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/primary-browser-1792689495186/offline-en-390.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "030504fc7f37598f0bd4799a2a2d4a006979af71f3dba226d026d016a527f738"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/primary-browser-1792689495186/offline-fr-1280.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "c8d5f2bd4889314545bff29195580f914d4ffe4875c410054248d146b1f07ad2"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/primary-browser-1792689495186/offline-fr-390.png",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "fbcd4802e98c24fec90b7015864ef68048a3db70164010d38b1b4d14eb197791"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/primary-browser-1792689495186/offline-results.json",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "5e004253a41b820e38eba0b772dd1f8ebb60abdd0934eaef2816ec9e5c065b9f"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/docs/jhs-development/integration/validation-summary.json",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "2a6f469b333742c389ac8320384efbe290affa1ea92b220b5ef921455e7672a6"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/packages/curriculum/index.ts",
+      "status": "modified",
+      "beforeSha256": "7d8a24e406989fd0a24abbf29db079a893ecd01ba4d9062adc9661e89fca3b52",
+      "sha256": "c14c21c9d590fed0b2ef2976538d2f9d92330febbca3d4521020ab055f2a784c"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/packages/curriculum/jhs-private-manifest.json",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "c65b1bc0ad0c2c61c1b1b7460cc2853a8ca638bc295486b435976fa477586dde"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/packages/curriculum/jhs-private-policy.ts",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "879bc0b759b0f86c36a1136c50c3be1ef5a7cdfcdb9be8a718d2c86a22d129f9"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/packages/curriculum-framework/index.ts",
+      "status": "modified",
+      "beforeSha256": "791670d499d055f86080f5e34f5574630756c09f4f16ea994ca1d3bae0e8d534",
+      "sha256": "4e4f74bb83c2ce3961aef264dcd52d3adf9fefb7ee157f6a8f9e83cb3d716beb"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/scripts/jhs-integration-audit.mjs",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "3edc2c8417238d0d02f3b6a6d921245e0ad7e77bb309699c52131a87df1e323a"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/scripts/start-jhs-private.ps1",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "0fa835da94b544a2f8319955e73c901942a2662ac8a3c214d0d5e6ad4c566475"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/services/adult-summary/index.ts",
+      "status": "modified",
+      "beforeSha256": "2064136ad2600f152fe7056ba9e7ece2c8516eab4ac9251c79963964157fff7a",
+      "sha256": "c262f1a2767b5d43557e5ad054dc91b1624fe92b75e25e7fae40f3a9d8f4856c"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/services/content-store/jhs-private.ts",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "9387f392643a7923c7147ffc1c17d97e44530a9fdb074bf6ecc019d359ec6576"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/services/content-store/seed.ts",
+      "status": "modified",
+      "beforeSha256": "856101234d7ab7720efdef0454ace9f07123d8c05af6c06ce6beb2aa768a1536",
+      "sha256": "73087eefd26ce12c7b6e4bd1844794755675b6c7d0e9b19a2ae88dc73e07900a"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/services/learner-context/placement.ts",
+      "status": "modified",
+      "beforeSha256": "913555c8d997b27826d6e7592b6891c82d29c60799c1fcf66eca78de46e5fae9",
+      "sha256": "1e49b0ead0e3e9ea2dd2a7e6435d3eba79dec607db6ddde6846939ab09242754"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/services/teacher-summary/index.ts",
+      "status": "modified",
+      "beforeSha256": "768783b4722337125f9af468bc7cedda5bb624dba44d7b9203651c6877d93e17",
+      "sha256": "a56babebee6da0a315dc42b20ea2f7b1164079059a5b23008628795b132e47d3"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/tests/jhs-primary-browser.mjs",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "76c972cd6af5e9cb365ac2f78aa74572f303fccbe804c74c910cd19bdf81da7e"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/tests/jhs-private-integration.test.ts",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "a59a4a59cf5278b2176b4f578acf4cdef3036d4ed6dc5d5f00fc75942050a6dd"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/tests/jhs-private-journeys.test.ts",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "7062415210dea9e000679acaa56a6403e6b702e801c6ad5ea24ceeb3ecdf4103"
+    },
+    {
+      "path": "FILUMIRE_CLAUDE/tests/jhs-private.browser.mjs",
+      "status": "added",
+      "beforeSha256": null,
+      "sha256": "265457f57cd2f9d638ec93a4e4280f8516ddee2f1a8bc8e6fd957de76874eb63"
+    }
+  ]
+}

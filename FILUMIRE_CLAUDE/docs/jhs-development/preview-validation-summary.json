@@ -1,0 +1,86 @@
+{
+  "capturedAt": "2026-10-22T13:08:01.662Z",
+  "suites": {
+    "passed": 17,
+    "failed": 0,
+    "names": [
+      "jhs-preview-content-integrity",
+      "jhs-representative-journey",
+      "jhs-materials-journey",
+      "jhs-runtime-foundation",
+      "jhs-placement",
+      "jhs-preview-placement",
+      "b7-existing-curriculum-regression",
+      "b7-framework-registration",
+      "jhs-curriculum-integrity",
+      "grade-aware-subject-selection",
+      "teaching-first-retention",
+      "principal-identity",
+      "principal-auth-session",
+      "principal-learner-access",
+      "red-team-02-trusted-evidence",
+      "teacher-review-delivery-provenance",
+      "api-evidence-integrity"
+    ]
+  },
+  "representativeApiCases": {
+    "passed": 56,
+    "failed": 0,
+    "indicators": 14,
+    "gradeSubjectCombinations": 12,
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "retentionOutcomes": [
+      "correct",
+      "incorrect"
+    ],
+    "teacherDecisions": "fictional test fixtures; not educational approval"
+  },
+  "legacyMaterialsApiCases": {
+    "passed": 12,
+    "failed": 0
+  },
+  "browserCases": {
+    "passed": 56,
+    "failed": 0,
+    "widths": [
+      390,
+      1280
+    ],
+    "scope": "test harness with existing components and real signed-session APIs; not production /learn"
+  },
+  "typescript": {
+    "passed": true,
+    "exitCode": 0
+  },
+  "productionBuild": {
+    "passed": true,
+    "exitCode": 0,
+    "fontConfigurationChanged": false,
+    "intermittentFontRootCause": "not reproduced/captured; cold-cache recurrence not excluded"
+  },
+  "curriculum": {
+    "mapped": 625,
+    "authoredDraft": 14,
+    "isolatedApiAndBrowserValidated": 14,
+    "remainingAuthoring": 611,
+    "releaseApproved": 0
+  },
+  "sourceProof": {
+    "pinnedDocuments": 4,
+    "leadingIndicatorPagesRendered": 13,
+    "indicatorCodesVerified": 14,
+    "educationalApproval": "pending"
+  },
+  "compatibility": "All 12 Basic 4–6 fingerprints passed: definitions, hierarchy, mappings, bilingual navigation/content; no reauthoring",
+  "limitations": [
+    "Source authenticity/assessment-reference and existing mapping flags unresolved",
+    "Educator and French review pending",
+    "Real PostgreSQL and cold-start service-worker JHS offline flow unverified",
+    "Production JHS learner/parent/teacher interface integration remains inactive",
+    "Six missing payment suites are a separate inherited branch dependency",
+    "Original intermittent font URL parse failure has no proven permanent fix"
+  ]
+}

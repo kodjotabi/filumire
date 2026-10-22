@@ -1,0 +1,17 @@
+[
+  "apps/learner/app/api/teacher/review/route.ts",
+  "packages/curriculum/ghana-b5-computing-adaptive.ts",
+  "packages/curriculum/ghana-b5-computing-runtime.ts",
+  "packages/curriculum/ghana-b5-science-adaptive.ts",
+  "packages/curriculum-framework/ghana-b5-computing.ts",
+  "packages/curriculum-framework/ghana-b5-science.ts",
+  "services/content-store/authored-index-b5-computing.ts",
+  "services/content-store/authored-index-b5-science.ts",
+  "services/content-store/ghana-b4-computing-authored-data-collection-tools.ts",
+  "services/content-store/ghana-b4-english-authored-eng-proper-common-nouns.ts",
+  "services/teacher-review/index.ts",
+  "tests/b4-6-source-reconciliation.test.ts",
+  "tests/b5-computing-v1.test.ts",
+  "tests/b5-science-v1.test.ts",
+  "tests/outline-visuals.test.ts"
+]

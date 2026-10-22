@@ -1,0 +1,64 @@
+{
+  "nodes": [
+    {
+      "id": "english:6:B.6.1.1",
+      "subject": "english",
+      "grade": 6,
+      "printedGrade": 6,
+      "code": "B.6.1.1",
+      "kind": "content_standard",
+      "parentCode": "B6.1.1",
+      "statement": "Demonstrate understanding of variety of songs",
+      "source": "english",
+      "pages": [
+        176
+      ],
+      "review": "Malformed printed code retained; table and heading association verified."
+    },
+    {
+      "id": "mathematics:6:B6.5.2.2",
+      "subject": "mathematics",
+      "grade": 6,
+      "printedGrade": 6,
+      "code": "B6.5.2.2",
+      "kind": "learning_indicator",
+      "parentCode": "B6.4.1.2",
+      "statement": "Design and administer a questionnaire for collecting data to answer a given question and record the results",
+      "source": "mathematics",
+      "pages": [
+        176
+      ],
+      "review": "Four-part code printed in the indicator column; retained without inventing a replacement."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "english:6:B6.1.1.1.1",
+      "parentCode": "B.6.1.1"
+    },
+    {
+      "id": "english:6:B6.1.1.1.2",
+      "parentCode": "B.6.1.1"
+    }
+  ],
+  "issues": [
+    {
+      "subject": "english",
+      "code": "B.6.1.1",
+      "page": 176,
+      "reason": "Malformed content-standard code printed in source; original retained."
+    },
+    {
+      "subject": "mathematics",
+      "code": "B6.5.2.2",
+      "page": 176,
+      "reason": "Four-part code printed in the learning-indicator column; original retained."
+    },
+    {
+      "subject": "computing",
+      "code": "B4.1",
+      "page": 23,
+      "reason": "Printed strand heading says WORD PROCESSING although the table concerns introductory computing; source heading retained for review."
+    }
+  ]
+}

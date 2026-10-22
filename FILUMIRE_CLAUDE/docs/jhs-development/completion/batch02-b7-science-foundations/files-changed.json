@@ -1,0 +1,92 @@
+{
+  "baseHead": "29854417561714a62024be2b150de9b4a2cd24b3",
+  "sourceFiles": [
+    {
+      "path": "packages/curriculum/ghana-ccp-runtime.ts",
+      "change": "modified_since_preview",
+      "sha256": "a52cc7780190ae69743b7bdda329750d0ebc50547dcefb88b9c5ba06d7fe93f8"
+    },
+    {
+      "path": "packages/curriculum/index.ts",
+      "change": "modified_since_preview",
+      "sha256": "7d8a24e406989fd0a24abbf29db079a893ecd01ba4d9062adc9661e89fca3b52"
+    },
+    {
+      "path": "services/content-store/jhs-representative-preview.ts",
+      "change": "modified_since_preview",
+      "sha256": "5b1394348ade013c2de11d1a1ecfb60abd76112dab57bafe99e8d2a95df02bb8"
+    },
+    {
+      "path": "services/content-store/jhs-preview-units.ts",
+      "change": "modified_since_preview",
+      "sha256": "76101626cd00e5f0b925a860612ac0a2ff9f48679da3fac30aaf32287ab167a9"
+    },
+    {
+      "path": "services/content-store/jhs-learning-builder.ts",
+      "change": "created_this_batch",
+      "sha256": "5746c9424314b8a527a49097790b71e5885185309fcc8daa4c98192f0cd82817"
+    },
+    {
+      "path": "services/content-store/jhs-b7-science-foundations.ts",
+      "change": "created_this_batch",
+      "sha256": "bdd70f5cb5242da8c719056cc6e5ad2e8732c7f1ce09197b849acca5250224fa"
+    },
+    {
+      "path": "services/content-store/jhs-completion-batches.ts",
+      "change": "created_this_batch",
+      "sha256": "ce9c282a570d5f6edc4d0ff23e04e5f549d834cd2635fe2151e3b2fe8b174dad"
+    },
+    {
+      "path": "services/content-store/jhs-validation-fingerprint.ts",
+      "change": "created_this_batch",
+      "sha256": "b8dfc52566f8b3d30ed1f69dd2ac665c2498e931f4409d99a68152df910b4351"
+    },
+    {
+      "path": "tests/fixtures/jhs-journey-runner.ts",
+      "change": "modified_since_preview",
+      "sha256": "a739b117a58a932432bf7e043cce20a4e983f55f7c550a30a72e3d7739e5962a"
+    },
+    {
+      "path": "tests/fixtures/jhs-completion-batch.ts",
+      "change": "created_this_batch",
+      "sha256": "286fbb13c1de78e21ea6953a94954db013569dafb40c4f1d6d39576d7d46eeef"
+    },
+    {
+      "path": "tests/jhs-materials.browser.mjs",
+      "change": "modified_since_preview",
+      "sha256": "acde382facbe69f21f9a415fa558a8ecf7d3f2c59acb2ed8f40e409b9b8b917f"
+    },
+    {
+      "path": "tests/jhs-science-foundations-content.test.ts",
+      "change": "created_this_batch",
+      "sha256": "13bdc307203bfcda5ed6a1cb13606462cfa4f2f949784ea1732f29dee71fdbea"
+    },
+    {
+      "path": "tests/jhs-science-foundations-journey.test.ts",
+      "change": "created_this_batch",
+      "sha256": "ba37cac650ba06bbefd4149943497d6396e80f0560c6556570726575a9217eed"
+    },
+    {
+      "path": "tests/jhs-preview-preservation.test.ts",
+      "change": "created_this_batch",
+      "sha256": "6edffe4d08d382cb0b5f2ff17afb1fbf052dd794e2c25f80e5114cb1fbf442bc"
+    },
+    {
+      "path": "scripts/jhs-preview-source-proof.mjs",
+      "change": "modified_since_preview",
+      "sha256": "80eec9cf4cbea93925a2c3c9b841df47d63d3e872ff04abac1e5631f40eb92dd"
+    },
+    {
+      "path": "scripts/jhs-completion-coverage.ts",
+      "change": "created_this_batch",
+      "sha256": "045d1a7bd4d831187db040f1ebf094e6f52f0181b3d46f6315620e088d0391eb"
+    },
+    {
+      "path": "scripts/validate-jhs-completion-batch.mjs",
+      "change": "created_this_batch",
+      "sha256": "f8cbf96d470b3e530b00130c8127058ca7fa685e602846a06496e7116368a8c0"
+    }
+  ],
+  "documentationAndValidationArtifacts": "docs/jhs-development/completion/",
+  "priorPreviewSnapshotPreserved": true
+}

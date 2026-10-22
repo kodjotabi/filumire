@@ -1,0 +1,181 @@
+{
+  "checkedAt": "2026-10-22T09:43:51.929Z",
+  "sources": [
+    {
+      "subject": "mathematics",
+      "localPath": "C:/FILUMIRE/filumire-batch1/FILUMIRE_WEBSITE/public/curriculum-sources/NaCCA-Mathematics-B4-B6-2019.pdf",
+      "sha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+      "bytes": 2667723,
+      "pdfPages": 183,
+      "sourceUrl": "https://nacca.gov.gh/wp-content/uploads/2019/04/MATHS-UPPER-PRIMARY-B4-B6.pdf",
+      "existingManifestHashMatches": true,
+      "existingManifest": "C:/FILUMIRE/filumire-batch1/FILUMIRE_WEBSITE/src/lib/curriculum/sources.json",
+      "publisherClaim": "NaCCA / Ministry of Education, Ghana",
+      "editionClaim": "September 2019",
+      "gradeRange": "Basic 4–6",
+      "provenanceStatus": "existing local document; checksum agrees with existing repository manifest; official HTTPS not re-downloaded",
+      "coverAndPublicationText": [
+        {
+          "page": 1,
+          "text": "MINISTRY OF EDUCATION\nREPUBLIC OF GHANA\nMATHEMATICS\nCURRICULUM FOR PRIMARY SCHOOLS\n(BASIC 4 - 6)\nSEPTEMBER 2019"
+        },
+        {
+          "page": 2,
+          "text": "Mathematics Curriculum for Primary Schools\nEnquiries and comments on this Curriculum should be addressed to:\nThe Executive Secretary\nNational Council for Curriculum and Assessment (NaCCA)\nMinistry of Education\nP. O. Box CT PM 77\nCantonments\nAccra\nTelephone: 0302909071, 0302909862\nEmail: info@nacca.gov.gh\nWebsite: www.nacca.gov.gh\nii\n© NaCCA, Ministry of Education 2019"
+        },
+        {
+          "page": 3,
+          "text": "FOREWORD\nThe new curriculum for Ghana’s primary schools is standards-based, which is our demonstration of placing learning at the heart of every classroom and ensuring that every\nlearner receives quality education. Provision of accessible quality education for all is non-negotiable if we are to meet the human capital needs of our country, required for\naccelerated sustainable national development. It is for this reason that the new curriculum sets out clearly the learning areas that need to be taught, how they should be\ntaught and how they should be assessed. It provides a set of core competencies and standards that learners are to know, understand and demonstrate as they progress\nthrough the curriculum from one content standard to the other and from one phase to the next. The curriculum and its related teachers’ man ual promote the use of\ninclusive and gender responsive pedagogy within the context of learning-centred teaching methods so that every learner can participate in every learning process and enjoy\nlearning. The curriculum encourages the use of Information and Communication Technologies (ICTs) for teaching and learning – ICTs as teaching and learning materials.\nThe new curriculum has at its heart the acquisition of skills in the 4Rs of Reading, wRiting, aRithmetic and cReativity by all learners. It is expected that at any point of exit\nfrom a formal education, all learners should be equipped with these foundational skills for life, which are also prerequisites for Ghana becoming a learning nation. The\ngraduates from the school system should become functional citizens in the 4Rs and lifelong learners. They should be digital literates, critical thinkers and problem solvers.\nThe education they receive through the study of the learning areas in the curriculum should enable them to collaborate and communicate well with others and be\ninnovative. The graduates from Ghana’s schools should be leaders with a high sense of national and global identity. The curri culum therefore provides a good opportunity\nin its design to develop individuals with the right skills and attitudes to lead the transformation of Ghana into an industrialised learning nation.\nFor this reason, the Ministry of Education expects that learners, as a result of the new knowledge, skills and values they have acquired through the new curriculum, will\nshow a new sense of identity as creative, honest and responsible citizens. These are our core values that underpin the identification and selection of the learning areas for\nthis curriculum. These core values serve as fundamental building blocks for developing into our learners the spirit of teamwork, respect, resilience and the commitment to\nachieving excellence. The Ministry endorses a quality learning experience as an entitlement for each of Ghana’s school -going girl and boy; the curriculum has rightly\nfocused on learning and learning progression. The Ministry has also endorsed accountability as a critical domain for effective workings of standards-based curriculum.\nMore importantly the role of the teacher is to make this curriculum work for the intended purpose - to inculcate in learners the core competencies and values and to\nmake learning happen; improve learning outcomes – and the support that teachers need is duly recognised and endorsed by my Ministry. The Ministry will support the\nimplementation of the curriculum to include capacity development of all teachers in the new curriculum. Teachers matter in the development and delivery of the standards-\nbased curriculum and we will continue to support our teachers on this journey that we have started together to put learning at the centre of what we do best; teach!\nI thank all those who have contributed their time and expertise to the development of this curriculum for primary schools in Ghana.\nDr. Matthew Opoku Prempeh (MP)\nThe Honourable Minister of Education\niii\n© NaCCA, Ministry of Education 2019"
+        }
+      ],
+      "metadata": {
+        "PDFFormatVersion": "1.5",
+        "Language": "en-GB",
+        "EncryptFilterName": null,
+        "IsLinearized": true,
+        "IsAcroFormPresent": false,
+        "IsXFAPresent": false,
+        "IsCollectionPresent": false,
+        "IsSignaturesPresent": false,
+        "Author": "Dela Zumanu",
+        "Creator": "Microsoft® Word 2016",
+        "CreationDate": "D:20190411144413+00'00'",
+        "ModDate": "D:20190411165521+02'00'",
+        "Producer": "3-Heights(TM) PDF Optimization Shell 4.8.25.2 (http://www.pdf-tools.com)"
+      }
+    },
+    {
+      "subject": "english",
+      "localPath": "C:/FILUMIRE/filumire-batch1/FILUMIRE_WEBSITE/public/curriculum-sources/ENGLISH-B4-B6.pdf",
+      "sha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+      "bytes": 1823097,
+      "pdfPages": 246,
+      "sourceUrl": "https://nacca.gov.gh/wp-content/uploads/2019/06/ENGLISH-B4-B6.pdf",
+      "existingManifestHashMatches": true,
+      "existingManifest": "C:/FILUMIRE/filumire-batch1/FILUMIRE_WEBSITE/src/lib/curriculum/sources.json",
+      "publisherClaim": "NaCCA / Ministry of Education, Ghana",
+      "editionClaim": "September 2019",
+      "gradeRange": "Basic 4–6",
+      "provenanceStatus": "existing local document; checksum agrees with existing repository manifest; official HTTPS not re-downloaded",
+      "coverAndPublicationText": [
+        {
+          "page": 1,
+          "text": "GHANA EDUCATION SERVICE\n(MINISTRY OF EDUCATION)\nREPUBLIC OF GHANA\nENGLISH LANGUAGE\nCURRICULUM FOR PRIMARY SCHOOLS\n(BASIC 4 - 6)\nSEPTEMBER 2019"
+        },
+        {
+          "page": 2,
+          "text": "English Language Curriculum for Primary Schools\nEnquiries and comments on this Curriculum should be addressed to:\nThe Executive Secretary\nNational Council for Curriculum and Assessment (NaCCA)\nMinistry of Education\nP. O. Box CT PM 77\nCantonments\nAccra\nTelephone: 0302909071, 0302909862\nEmail: info@nacca.gov.gh\nWebsite: www.nacca.gov.gh"
+        },
+        {
+          "page": 3,
+          "text": "FOREWORD\nThe new curriculum for Ghana’s primary schools is standards-based, which is our demonstration of placing learning at the heart of every classroom and\nensuring that every learner receives quality education. Provision of accessible quality education for all is non-negotiable if we are to meet the human capital\nneeds of our country, required for accelerated sustainable national development. It is for this reason that the new curriculum sets out clearly the learning areas\nthat need to be taught, how they should be taught and how they should be assessed. It provides a set of core competencies and standards that learners are to\nknow, understand and demonstrate as they progress through the curriculum from one content standard to the other and from one phase to the next. The\ncurriculum and its related teachers’ manual promote the use of inclusive and gender responsive pedagogy within the context of learning-centred teaching\nmethods so that every learner can participate in every learning process and enjoy learning. The curriculum encourages the use of Information and\nCommunication Technologies (ICTs) for teaching and learning – ICTs as teaching and learning materials.\nThe new curriculum has at its heart the acquisition of skills in the 4Rs of Reading, wRiting, aRithmetic and cReativity by all learners. It is expected that at any\npoint of exit from a formal education, all learners should be equipped with these foundational skills for life, which are also prerequisites for Ghana becoming a\nlearning nation. The graduates from the school system should become functional citizens in the 4Rs and lifelong learners. They should be digital literates,\ncritical thinkers and problem solvers. The education they receive through the study of the learning areas in the curriculum should enable them to collaborate\nand communicate well with others and be innovative. The graduates from Ghana’s schools should be leaders with a high sense of national and global identity.\nThe curriculum therefore provides a good opportunity in its design to develop individuals with the right skills and attitudes to lead the transformation of Ghana\ninto an industrialised learning nation.\nFor this reason, the Ministry of Education expects that learners, as a result of the new knowledge, skills and values they have acquired through the new\ncurriculum, will show a new sense of identity as creative, honest and responsible citizens. These are our core values that underpin the identification and\nselection of the learning areas for this curriculum. These core values serve as fundamental building blocks for developing into our learners the spirit of\nteamwork, respect, resilience and the commitment to achieving excellence. The Ministry endorses a quality learning experience as an entitlement for each of\nGhana’s school-going girl and boy; the curriculum has rightly focused on learning and learning progression. The Ministry has also endorsed accountability as a\ncritical domain for effective workings of standards-based curriculum.\nMore importantly the role of the teacher is to make this curriculum work for the intended purpose - to inculcate in learners the core competencies and values\nand to make learning happen; improve learning outcomes – and the support that teachers need is duly recognised and endorsed by my Ministry. The Ministry\nwill support the implementation of the curriculum to include capacity development of all teachers in the new curriculum. Teachers matter in the development\nand delivery of the standards-based curriculum and we will continue to support our teachers on this journey that we have started together to put learning at\nthe centre of what we do best; teach!\nI thank all those who have contributed their time and expertise to the development of this curriculum for primary schools in Ghana.\nDr. Matthew Opoku Prempeh (MP)\nThe Honourable Minister of Education\niii\n© NaCCA Ministry of Education 2019"
+        }
+      ],
+      "metadata": {
+        "PDFFormatVersion": "1.6",
+        "Language": "EN-US",
+        "EncryptFilterName": null,
+        "IsLinearized": true,
+        "IsAcroFormPresent": false,
+        "IsXFAPresent": false,
+        "IsCollectionPresent": false,
+        "IsSignaturesPresent": false,
+        "Author": "Dela Zumanu",
+        "Custom": {},
+        "CreationDate": "D:20190520235454-07'00'",
+        "Creator": "Acrobat PDFMaker 19 for Word",
+        "Keywords": "",
+        "ModDate": "D:20190520235558-07'00'",
+        "Producer": "Adobe PDF Library 19.10.131",
+        "Subject": "",
+        "Title": ""
+      }
+    },
+    {
+      "subject": "science",
+      "localPath": "C:/FILUMIRE/filumire-batch1/FILUMIRE_WEBSITE/public/curriculum-sources/NaCCA-Science-B4-B6-2019.pdf",
+      "sha256": "9fd09042246256c1248d6976c4ee82b8b02c910fec771bc797ec2b05320e3c7b",
+      "bytes": 1054891,
+      "pdfPages": 69,
+      "sourceUrl": "https://nacca.gov.gh/wp-content/uploads/2019/04/SCIENCE-UPPER-PRIMARY-B4-B6.pdf",
+      "existingManifestHashMatches": true,
+      "existingManifest": "C:/FILUMIRE/filumire-batch1/FILUMIRE_WEBSITE/src/lib/curriculum/sources.json",
+      "publisherClaim": "NaCCA / Ministry of Education, Ghana",
+      "editionClaim": "September 2019",
+      "gradeRange": "Basic 4–6",
+      "provenanceStatus": "existing local document; checksum agrees with existing repository manifest; official HTTPS not re-downloaded",
+      "coverAndPublicationText": [
+        {
+          "page": 1,
+          "text": "MINISTRY OF EDUCATION\nREPUBLIC OF GHANA\nSCIENCE\nCURRICULUM FOR PRIMARY SCHOOLS\n(BASIC 4 - 6)\nSEPTEMBER 2019"
+        },
+        {
+          "page": 2,
+          "text": "Science Curriculum for Primary Schools\nEnquiries and comments on this Curriculum should be addressed to:\nThe Executive Secretary\nNational Council for Curriculum and Assessment (NaCCA)\nMinistry of Education\nP. O. Box CT PM 77\nCantonments\nAccra\nTelephone: 0302909071, 0302909862\nEmail: info@nacca.gov.gh\nWebsite: www.nacca.gov.gh\n© NaCCA, Ministry of Education 2019 ii"
+        },
+        {
+          "page": 3,
+          "text": "FOREWORD\nThe new curriculum for Ghana’s primary schools is standards-based, which is our demonstration of placing learning at the heart of every classroom and\nensuring that every learner receives quality education. Provision of accessible quality education for all is non-negotiable if we are to meet the human\ncapital needs of our country, required for accelerated sustainable national development. It is for this reason that the new curriculum sets out clearly the\nlearning areas that need to be taught, how they should be taught and how they should be assessed. It provides a set of core competencies and standards\nthat learners are to know, understand and demonstrate as they progress through the curriculum from one content standard to the other and from one\nphase to the next. The curriculum and its related teachers’ manual promote the use of inclusive and gender responsive pedagogy within the context of\nlearning-centred teaching methods so that every learner can participate in every learning process and enjoy learning. The curriculum encourages the use\nof Information and Communication Technologies (ICTs) for teaching and learning – ICTs as teaching and learning materials.\nThe new curriculum has at its heart the acquisition of skills in the 4Rs of Reading, wRiting, aRithmetic and cReativity by all learners. It is expected that at\nany point of exit from a formal education, all learners should be equipped with these foundational skills for life, which are also prerequisites for Ghana\nbecoming a learning nation. The graduates from the school system should become functional citizens in the 4Rs and lifelong learners. They should be\ndigital literates, critical thinkers and problem solvers. The education they receive through the study of the learning areas in the curriculum should enable\nthem to collaborate and communicate well with others and be innovative. The graduates from Ghana’s schools should be leaders with a high sense of\nnational and global identity. The curriculum therefore provides a good opportunity in its design to develop individuals with the right skills and attitudes to\nlead the transformation of Ghana into an industrialised learning nation.\nFor this reason, the Ministry of Education expects that learners, as a result of the new knowledge, skills and values they have acquired through the new\ncurriculum, will show a new sense of identity as creative, honest and responsible citizens. These are our core values that underpin the identification and\nselection of the learning areas for this curriculum. These core values serve as fundamental building blocks for developing into our learners the spirit of\nteamwork, respect, resilience and the commitment to achieving excellence. The Ministry endorses a quality learning experience as an entitlement for\neach of Ghana’s school-going girl and boy; the curriculum has rightly focused on learning and learning progression. The Ministry has also endorsed\naccountability as a critical domain for effective workings of standards-based curriculum.\nMore importantly the role of the teacher is to make this curriculum work for the intended purpose - to inculcate in learners the core competencies and\nvalues and to make learning happen; improve learning outcomes – and the support that teachers need is duly recognised and endorsed by my Ministry.\nThe Ministry will support the implementation of the curriculum to include capacity development of all teachers in the new curriculum. Teachers matter in\nthe development and delivery of the standards-based curriculum and we will continue to support our teachers on this journey that we have started\ntogether to put learning at the centre of what we do best; teach!\nI thank all those who have contributed their time and expertise to the development of this curriculum for primary schools in Ghana.\nDr. Matthew Opoku Prempeh (MP)\nThe Honourable Minister of Education\ni\n© NaCCA, Ministry of Education 2019"
+        }
+      ],
+      "metadata": {
+        "PDFFormatVersion": "1.5",
+        "Language": "en-GB",
+        "EncryptFilterName": null,
+        "IsLinearized": false,
+        "IsAcroFormPresent": false,
+        "IsXFAPresent": false,
+        "IsCollectionPresent": false,
+        "IsSignaturesPresent": false,
+        "Author": "Dela Zumanu",
+        "Creator": "Microsoft® Word 2016",
+        "CreationDate": "D:20190411124601+00'00'",
+        "ModDate": "D:20190411124601+00'00'",
+        "Producer": "Microsoft® Word 2016"
+      }
+    },
+    {
+      "subject": "computing",
+      "localPath": "C:/FILUMIRE/filumire-batch1/FILUMIRE_WEBSITE/public/curriculum-sources/NaCCA-Computing-B4-B6-2019.pdf",
+      "sha256": "d622739de46fdc138508aa82b56a196453581677cd653bcab5f4b3723eb1ecca",
+      "bytes": 1011998,
+      "pdfPages": 76,
+      "sourceUrl": "https://nacca.gov.gh/wp-content/uploads/2019/04/COMPUTING-B4-B6.pdf",
+      "existingManifestHashMatches": true,
+      "existingManifest": "C:/FILUMIRE/filumire-batch1/FILUMIRE_WEBSITE/src/lib/curriculum/sources.json",
+      "publisherClaim": "NaCCA / Ministry of Education, Ghana",
+      "editionClaim": "September 2019",
+      "gradeRange": "Basic 4–6",
+      "provenanceStatus": "existing local document; checksum agrees with existing repository manifest; official HTTPS not re-downloaded",
+      "coverAndPublicationText": [
+        {
+          "page": 1,
+          "text": "MINISTRY OF EDUCATION\nREPUBLIC OF GHANA\nCOMPUTING\nCURRICULUM FOR PRIMARY SCHOOLS\n(BASIC 4 - 6)\nSEPTEMBER 2019\n© NaCCA, Ministry of Education 2019"
+        },
+        {
+          "page": 2,
+          "text": "Computing Curriculum for Primary Schools\nEnquiries and comments on this Curriculum should be addressed to:\nThe Executive Secretary\nNational Council for Curriculum and Assessment (NaCCA)\nMinistry of Education\nP. O. Box CT PM 77\nCantonments\nAccra\nTelephone: 0302909071, 0302909862\nEmail: info@nacca.gov.gh\nWebsite: www.nacca.gov.gh\nii\n© NaCCA, Ministry of Education 2019"
+        },
+        {
+          "page": 3,
+          "text": "FOREWORD\nThe new curriculum for Ghana’s primary schools is standards-based, which is our demonstration of placing learning at the heart of every classroom and\nensuring that every learner receives quality education. Provision of accessible quality education for all is non-negotiable if we are to meet the human capital\nneeds of our country, required for accelerated sustainable national development. It is for this reason that the new curriculum sets out clearly the learning areas\nthat need to be taught, how they should be taught and how they should be assessed. It provides a set of core competencies and standards that learners are to\nknow, understand and demonstrate as they progress through the curriculum from one content standard to the other and from one phase to the next. The\ncurriculum and its related teachers’ manual promote the use of inclusive and gender responsive pedagogy within the context of learning-centred teaching\nmethods so that every learner can participate in every learning process and enjoy learning. The curriculum encourages the use of Information and\nCommunication Technologies (ICTs) for teaching and learning – ICTs as teaching and learning materials.\nThe new curriculum has at its heart the acquisition of skills in the 4Rs of Reading, wRiting, aRithmetic and cReativity by all learners. It is expected that at any\npoint of exit from a formal education, all learners should be equipped with these foundational skills for life, which are also prerequisites for Ghana becoming a\nlearning nation. The graduates from the school system should become functional citizens in the 4Rs and lifelong learners. They should be digital literates,\ncritical thinkers and problem solvers. The education they receive through the study of the learning areas in the curriculum should enable them to collaborate\nand communicate well with others and be innovative. The graduates from Ghana’s schools should be leaders with a high sense of national and global identity.\nThe curriculum therefore provides a good opportunity in its design to develop individuals with the right skills and attitudes to lead the transformation of Ghana\ninto an industrialised learning nation.\nFor this reason, the Ministry of Education expects that learners, as a result of the new knowledge, skills and values they have acquired through the new\ncurriculum, will show a new sense of identity as creative, honest and responsible citizens. These are our core values that underpin the identification and\nselection of the learning areas for this curriculum. These core values serve as fundamental building blocks for developing into our learners the spirit of\nteamwork, respect, resilience and the commitment to achieving excellence. The Ministry endorses a quality learning experience as an entitlement for each of\nGhana’s school-going girl and boy; the curriculum has rightly focused on learning and learning progression. The Ministry has also endorsed accountability as a\ncritical domain for effective workings of standards-based curriculum.\nMore importantly the role of the teacher is to make this curriculum work for the intended purpose - to inculcate in learners the core competencies and values\nand to make learning happen; improve learning outcomes – and the support that teachers need is duly recognised and endorsed by my Ministry. The Ministry\nwill support the implementation of the curriculum to include capacity development of all teachers in the new curriculum. Teachers matter in the development\nand delivery of the standards-based curriculum and we will continue to support our teachers on this journey that we have started together to put learning at\nthe centre of what we do best; teach!\nI thank all those who have contributed their time and expertise to the development of this curriculum for primary schools in Ghana.\nDr. Matthew Opoku Prempeh (MP)\nThe Honourable Minister of Education\niii\n© NaCCA, Ministry of Education 2019"
+        }
+      ],
+      "metadata": {
+        "PDFFormatVersion": "1.5",
+        "Language": "en-GB",
+        "EncryptFilterName": null,
+        "IsLinearized": false,
+        "IsAcroFormPresent": false,
+        "IsXFAPresent": false,
+        "IsCollectionPresent": false,
+        "IsSignaturesPresent": false,
+        "Author": "Pc",
+        "Creator": "Microsoft® Word 2016",
+        "CreationDate": "D:20190411151608+00'00'",
+        "ModDate": "D:20190411151608+00'00'",
+        "Producer": "Microsoft® Word 2016"
+      }
+    }
+  ]
+}

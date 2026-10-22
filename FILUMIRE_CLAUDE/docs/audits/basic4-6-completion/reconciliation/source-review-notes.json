@@ -1,0 +1,24 @@
+[
+  {
+    "subject": "computing",
+    "pdfPage": 23,
+    "issue": "Basic 4 Strand 1 is headed WORD PROCESSING while its indicators concern introductory computing.",
+    "disposition": "Literal source heading retained; curriculum authority/educator review required, no replacement heading invented."
+  },
+  {
+    "subject": "mathematics",
+    "pdfPages": [
+      165,
+      166
+    ],
+    "issue": "No sub-strand heading was extracted at the Basic 6 prism tables.",
+    "disposition": "Source heading remains null and flagged; local navigation title is not presented as a verified source quotation."
+  },
+  {
+    "subject": "mathematics",
+    "pdfPage": 178,
+    "printedCode": "P6.5.2.2.3",
+    "issue": "Unresolved inline source cross-reference; not an indicator declaration.",
+    "disposition": "Recorded in independent printed-code index; not converted into an invented additional indicator."
+  }
+]

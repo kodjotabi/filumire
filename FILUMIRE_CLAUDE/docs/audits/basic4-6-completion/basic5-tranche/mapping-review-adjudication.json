@@ -1,0 +1,3200 @@
+[
+  {
+    "competencyId": "competency-gh-english-b4-1-5-2-1",
+    "grade": 4,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B4.1.5.2.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b4:pdf29:y266",
+        "requirementId": "english:b4:pdf29:y266",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B4.1.5.2.1",
+        "rawPrintedCode": "B4.1.5.2. 1",
+        "pdfPage": 29,
+        "printedPage": "5",
+        "tableContentStandard": "B4.1.5.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "ORAL LANGUAGE",
+          "page": 26
+        },
+        "sourceSubStrand": {
+          "number": 5,
+          "title": "Dramatisation and Role Play",
+          "page": 29
+        },
+        "statement": "Identify moral values in sketches and relate them to real life situations",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Identify moral values in sketches and relate them to real life situations.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b4-1-7-1-1",
+    "grade": 4,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B4.1.7.1.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b4:pdf33:y353",
+        "requirementId": "english:b4:pdf33:y353",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B4.1.7.1",
+        "rawPrintedCode": "B4.1.7.1",
+        "pdfPage": 33,
+        "printedPage": "9",
+        "tableContentStandard": "B4.1.7.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "ORAL LANGUAGE",
+          "page": 26
+        },
+        "sourceSubStrand": {
+          "number": 7,
+          "title": "Listening Comprehension",
+          "page": 33
+        },
+        "statement": "Construct meaning from texts based on knowledge of stress, rhythm and intonation",
+        "sourceFlags": [
+          "nonstandard_indicator_code_length",
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "literal_source_code_distinguished_from_stable_runtime_key",
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Construct meaning from texts based on knowledge of stress, rhythm and intonation.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b4-1-7-1-2",
+    "grade": 4,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B4.1.7.1.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b4:pdf34:y123",
+        "requirementId": "english:b4:pdf34:y123",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B4.1.7.1.2",
+        "rawPrintedCode": "B4.1.7.1.2",
+        "pdfPage": 34,
+        "printedPage": "10",
+        "tableContentStandard": "B4.7.1.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "ORAL LANGUAGE",
+          "page": 26
+        },
+        "sourceSubStrand": {
+          "number": 7,
+          "title": "Listening Comprehension",
+          "page": 33
+        },
+        "statement": "Make connections with events in narrative texts",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Make connections with events in narrative texts.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b4-1-7-1-3",
+    "grade": 4,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B4.1.7.1.3"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b4:pdf34:y203",
+        "requirementId": "english:b4:pdf34:y203",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B4.1.7.1.3",
+        "rawPrintedCode": "B4.1.7.1.3",
+        "pdfPage": 34,
+        "printedPage": "10",
+        "tableContentStandard": "B4.7.1.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "ORAL LANGUAGE",
+          "page": 26
+        },
+        "sourceSubStrand": {
+          "number": 7,
+          "title": "Listening Comprehension",
+          "page": 33
+        },
+        "statement": "Recognise and discuss moral lessons in a story",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Recognise and discuss moral lessons in a story.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b4-1-7-1-4",
+    "grade": 4,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B4.1.7.1.4"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b4:pdf34:y281",
+        "requirementId": "english:b4:pdf34:y281",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B4.1.7.1.4",
+        "rawPrintedCode": "B4.1.7.1.4",
+        "pdfPage": 34,
+        "printedPage": "10",
+        "tableContentStandard": "B4.7.1.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "ORAL LANGUAGE",
+          "page": 26
+        },
+        "sourceSubStrand": {
+          "number": 7,
+          "title": "Listening Comprehension",
+          "page": 33
+        },
+        "statement": "Use background knowledge to aid in understanding and building new knowledge while listening to narrative texts",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 0.9090909090909091,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Use background knowledge to aid understanding and build new knowledge while listening to narrative texts.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b4-1-7-1-5",
+    "grade": 4,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B4.1.7.1.5"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b4:pdf34:y386",
+        "requirementId": "english:b4:pdf34:y386",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B4.1.7.1.5",
+        "rawPrintedCode": "B4.1.7.1.5",
+        "pdfPage": 34,
+        "printedPage": "10",
+        "tableContentStandard": "B4.7.1.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "ORAL LANGUAGE",
+          "page": 26
+        },
+        "sourceSubStrand": {
+          "number": 7,
+          "title": "Listening Comprehension",
+          "page": 33
+        },
+        "statement": "Identify the main idea/gist and details of texts",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Identify the main idea or gist and details of texts.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b4-1-7-1-7",
+    "grade": 4,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B4.1.7.1.7"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b4:pdf35:y121",
+        "requirementId": "english:b4:pdf35:y121",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B4.1.7.1.7",
+        "rawPrintedCode": "B4.1.7.1.7",
+        "pdfPage": 35,
+        "printedPage": "11",
+        "tableContentStandard": "B4.7.1.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "ORAL LANGUAGE",
+          "page": 26
+        },
+        "sourceSubStrand": {
+          "number": 7,
+          "title": "Listening Comprehension",
+          "page": 33
+        },
+        "statement": "Compare and contrast information (two or more ideas) from texts",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Compare and contrast information, including two or more ideas, from texts.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b4-2-7-2-3",
+    "grade": 4,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B4.2.7.2.3"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b4:pdf53:y136",
+        "requirementId": "english:b4:pdf53:y136",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B4.2.7.2.3",
+        "rawPrintedCode": "B4.2.7.2.3",
+        "pdfPage": 53,
+        "printedPage": "29",
+        "tableContentStandard": "B4.2.7.3",
+        "sourceStrand": {
+          "number": 2,
+          "title": "READING",
+          "page": 41
+        },
+        "sourceSubStrand": {
+          "number": 7,
+          "title": "Comprehension",
+          "page": 51
+        },
+        "statement": "Demonstrate awareness of the structure of texts (e.g. introduction, body, conclusion)",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 0.5714285714285714,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Recognise basic text structure including introduction, body and conclusion.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b4-2-9-1-2",
+    "grade": 4,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B4.2.9.1.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b4:pdf56:y123",
+        "requirementId": "english:b4:pdf56:y123",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B4.2.9.1.2",
+        "rawPrintedCode": "B4.2.9.1.2",
+        "pdfPage": 56,
+        "printedPage": "32",
+        "tableContentStandard": "B4.2.8.1",
+        "sourceStrand": {
+          "number": 2,
+          "title": "READING",
+          "page": 41
+        },
+        "sourceSubStrand": {
+          "number": 9,
+          "title": "Fluency",
+          "page": 55
+        },
+        "statement": ". Use recognition strategies to confirm understanding of level-appropriate texts",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 0.625,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Use word-recognition and meaning-monitoring strategies to confirm understanding while reading.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b4-2-10-1-1",
+    "grade": 4,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B4.2.10.1.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b4:pdf56:y282",
+        "requirementId": "english:b4:pdf56:y282",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B4.2.10.1.1",
+        "rawPrintedCode": "B4.2.10.1.1",
+        "pdfPage": 56,
+        "printedPage": "32",
+        "tableContentStandard": "B4.2.10.1",
+        "sourceStrand": {
+          "number": 2,
+          "title": "READING",
+          "page": 41
+        },
+        "sourceSubStrand": {
+          "number": 10,
+          "title": "Summarising",
+          "page": 56
+        },
+        "statement": "Summarise level-appropriate passages/texts orally",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.3333333333333333,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "lexical_overlap_alert_is_not_proof_of_wrong_mapping"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Oral summarising remains a productive-evidence gap even where a quiz recognises a suitable summary.",
+    "currentStatement": "Give an oral summary of a level-appropriate passage or text.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b4-3-4-1-1",
+    "grade": 4,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B4.3.4.1.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b4:pdf63:y136",
+        "requirementId": "english:b4:pdf63:y136",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B4.3.4.1.1.1",
+        "rawPrintedCode": "B4.3.4.1.1. 1",
+        "pdfPage": 63,
+        "printedPage": "39",
+        "tableContentStandard": "B4.3.4.1",
+        "sourceStrand": {
+          "number": 3,
+          "title": "GRAMMAR USAGE AT WORD AND PHRASE LEVELS",
+          "page": 57
+        },
+        "sourceSubStrand": {
+          "number": 4,
+          "title": "Adjectives",
+          "page": 63
+        },
+        "statement": "Use adjectives to make comparison e. g: − fast/slow (Ama is fast but Kofi is slow.) − good/bad − fast/faster − slow/slower",
+        "sourceFlags": [
+          "nonstandard_indicator_code_length",
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 0.75,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "literal_source_code_distinguished_from_stable_runtime_key",
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Use adjectives to make comparisons.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b4-4-14-2-1",
+    "grade": 4,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B4.4.14.2.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b4:pdf81:y277",
+        "requirementId": "english:b4:pdf81:y277",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B4.4.14.2.1",
+        "rawPrintedCode": "B4.4.14.2.1",
+        "pdfPage": 81,
+        "printedPage": "57",
+        "tableContentStandard": "B4.4.14.1",
+        "sourceStrand": {
+          "number": 4,
+          "title": "WRITING",
+          "page": 71
+        },
+        "sourceSubStrand": {
+          "number": 14,
+          "title": "Expository/Informative Writing",
+          "page": 81
+        },
+        "statement": "Write picture events about personal experiences and make radio/TV presentations",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 0.6666666666666666,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Write about picture events connected to personal experiences and present them orally through an appropriate media-style presentation.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b4-number-navigation-001",
+    "grade": 4,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B4.1.1.1.3",
+      "B4.1.1.1.6"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b4:pdf26:y122",
+        "requirementId": "mathematics:b4:pdf26:y122",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B4.1.1.1.3",
+        "rawPrintedCode": "B4.1.1.1.3",
+        "pdfPage": 26,
+        "printedPage": "5",
+        "tableContentStandard": "B4.1.1.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "NUMBER",
+          "page": 23
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "Counting, Representation & Cardinality",
+          "page": 23
+        },
+        "statement": "Identify numbers in different positions around a given number in a number chart",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.25,
+        "humanAlignmentApproval": null
+      },
+      {
+        "occurrenceId": "mathematics:b4:pdf28:y134",
+        "requirementId": "mathematics:b4:pdf28:y134",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B4.1.1.1.6",
+        "rawPrintedCode": "B4.1.1.1.6",
+        "pdfPage": 28,
+        "printedPage": "7",
+        "tableContentStandard": "B4.1.1.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "NUMBER",
+          "page": 23
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "Counting, Representation & Cardinality",
+          "page": 23
+        },
+        "statement": "Skip count forwards and backwards in 50s and 100s up to and from 10000",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.5714285714285714,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "lexical_overlap_alert_is_not_proof_of_wrong_mapping"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Locate neighbouring numbers and skip count forwards and backwards in structured number sequences.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b4-roman-numerals-001",
+    "grade": 4,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B4.1.1.2.1",
+      "B4.1.1.2.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b4:pdf28:y315",
+        "requirementId": "mathematics:b4:pdf28:y315",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B4.1.1.2.1",
+        "rawPrintedCode": "B4.1.1.2.1",
+        "pdfPage": 28,
+        "printedPage": "7",
+        "tableContentStandard": "B4.1.1.2",
+        "sourceStrand": {
+          "number": 1,
+          "title": "NUMBER",
+          "page": 23
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "Counting, Representation & Cardinality",
+          "page": 23
+        },
+        "statement": "Develop an understanding of Roman Numeral system up XXX (i.e. 30)",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.3333333333333333,
+        "humanAlignmentApproval": null
+      },
+      {
+        "occurrenceId": "mathematics:b4:pdf29:y196",
+        "requirementId": "mathematics:b4:pdf29:y196",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B4.1.1.2.2",
+        "rawPrintedCode": "B4.1.1.2.2",
+        "pdfPage": 29,
+        "printedPage": "8",
+        "tableContentStandard": "B4.1.1.2",
+        "sourceStrand": {
+          "number": 1,
+          "title": "NUMBER",
+          "page": 23
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "Counting, Representation & Cardinality",
+          "page": 23
+        },
+        "statement": "Count and convert Hindu Arabic numerals to Roman numerals up to 30 and vice versa",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.625,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "lexical_overlap_alert_is_not_proof_of_wrong_mapping"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Recognise Roman numeral symbols and convert between Roman and Hindu-Arabic numerals up to 30.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b4-fact-families-001",
+    "grade": 4,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B4.1.2.2.1",
+      "B4.1.2.4.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b4:pdf36:y146",
+        "requirementId": "mathematics:b4:pdf36:y146",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B4.1.2.2.1",
+        "rawPrintedCode": "B4.1.2.2.1",
+        "pdfPage": 36,
+        "printedPage": "15",
+        "tableContentStandard": "B4.1.2.2",
+        "sourceStrand": {
+          "number": 1,
+          "title": "NUMBER",
+          "page": 23
+        },
+        "sourceSubStrand": {
+          "number": 2,
+          "title": "Number Operations",
+          "page": 35
+        },
+        "statement": "Apply mental mathematics strategies and number properties, such as skip counting from a known fact using doubling or halving using patterns in the 9s facts using repeated doubling or halving to determine answers for basic multiplication facts to 81 and related division facts",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.6666666666666666,
+        "humanAlignmentApproval": null
+      },
+      {
+        "occurrenceId": "mathematics:b4:pdf38:y133",
+        "requirementId": "mathematics:b4:pdf38:y133",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B4.1.2.4.1",
+        "rawPrintedCode": "B4. 1.2.4.1",
+        "pdfPage": 38,
+        "printedPage": "17",
+        "tableContentStandard": "B4.1.2.4",
+        "sourceStrand": {
+          "number": 1,
+          "title": "NUMBER",
+          "page": 23
+        },
+        "sourceSubStrand": {
+          "number": 2,
+          "title": "Number Operations",
+          "page": 35
+        },
+        "statement": "Determine basic division fact up to 81",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.25,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "lexical_overlap_alert_is_not_proof_of_wrong_mapping"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Use multiplication facts, related division facts and number properties to calculate mentally.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b4-four-operation-problems-001",
+    "grade": 4,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B4.1.2.6.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b4:pdf39:y349",
+        "requirementId": "mathematics:b4:pdf39:y349",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B4.1.2.6.1",
+        "rawPrintedCode": "B4.1.2.6.1",
+        "pdfPage": 39,
+        "printedPage": "18",
+        "tableContentStandard": "B4.1.2.5",
+        "sourceStrand": {
+          "number": 1,
+          "title": "NUMBER",
+          "page": 23
+        },
+        "sourceSubStrand": {
+          "number": 2,
+          "title": "Number Operations",
+          "page": 35
+        },
+        "statement": "Solve multi-step word problems involving the four basic operations",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 0.7777777777777778,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Select and apply the four basic operations to solve multi-step whole-number problems and explain the reasoning.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b4-pattern-error-detection-001",
+    "grade": 4,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B4.2.1.1.3"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b4:pdf51:y375",
+        "requirementId": "mathematics:b4:pdf51:y375",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B4.2.1.1.3",
+        "rawPrintedCode": "B4.2.1.1.3",
+        "pdfPage": 51,
+        "printedPage": "30",
+        "tableContentStandard": "B4.2.1.1",
+        "sourceStrand": {
+          "number": 2,
+          "title": "Algebra",
+          "page": 51
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "Patterns and Relationships",
+          "page": 51
+        },
+        "statement": "Identify the error(s) in a given table or chart",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.2,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "lexical_overlap_alert_is_not_proof_of_wrong_mapping"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Identify and explain errors in numerical patterns represented in tables or charts.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b4-number-patterns-001",
+    "grade": 4,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B4.2.1.1.2",
+      "B4.2.1.3.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b4:pdf51:y309",
+        "requirementId": "mathematics:b4:pdf51:y309",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B4.2.1.1.2",
+        "rawPrintedCode": "B4.2.1.1. 2",
+        "pdfPage": 51,
+        "printedPage": "30",
+        "tableContentStandard": "B4.2.1.1",
+        "sourceStrand": {
+          "number": 2,
+          "title": "Algebra",
+          "page": 51
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "Patterns and Relationships",
+          "page": 51
+        },
+        "statement": "Determine the missing element(s) in a given table or chart",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0,
+        "humanAlignmentApproval": null
+      },
+      {
+        "occurrenceId": "mathematics:b4:pdf53:y304",
+        "requirementId": "mathematics:b4:pdf53:y304",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B4.2.1.3.2",
+        "rawPrintedCode": "B4.2.1.3.2",
+        "pdfPage": 53,
+        "printedPage": "32",
+        "tableContentStandard": "B4.2.1.3",
+        "sourceStrand": {
+          "number": 2,
+          "title": "Algebra",
+          "page": 51
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "Patterns and Relationships",
+          "page": 51
+        },
+        "statement": "Identify and extend the patterns in a table or chart to solve a given problem.",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.25,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "lexical_overlap_alert_is_not_proof_of_wrong_mapping"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Source asks for tables/charts; simple sequence recognition alone does not verify that representation. Keep source association, flag instructional depth.",
+    "currentStatement": "Continue simple increasing and decreasing number patterns by identifying the repeated change.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b4-number-patterns-003",
+    "grade": 4,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B4.2.1.3.1",
+      "B4.2.1.3.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b4:pdf53:y171",
+        "requirementId": "mathematics:b4:pdf53:y171",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B4.2.1.3.1",
+        "rawPrintedCode": "B4.2.1.3.1",
+        "pdfPage": 53,
+        "printedPage": "32",
+        "tableContentStandard": "B4.2.1.3",
+        "sourceStrand": {
+          "number": 2,
+          "title": "Algebra",
+          "page": 51
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "Patterns and Relationships",
+          "page": 51
+        },
+        "statement": "Translate the information in a given problem into a table or char A B",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0,
+        "humanAlignmentApproval": null
+      },
+      {
+        "occurrenceId": "mathematics:b4:pdf53:y304",
+        "requirementId": "mathematics:b4:pdf53:y304",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B4.2.1.3.2",
+        "rawPrintedCode": "B4.2.1.3.2",
+        "pdfPage": 53,
+        "printedPage": "32",
+        "tableContentStandard": "B4.2.1.3",
+        "sourceStrand": {
+          "number": 2,
+          "title": "Algebra",
+          "page": 51
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "Patterns and Relationships",
+          "page": 51
+        },
+        "statement": "Identify and extend the patterns in a table or chart to solve a given problem.",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.25,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "lexical_overlap_alert_is_not_proof_of_wrong_mapping"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Source includes translating a problem into a table/chart. Recognition of a numeric pattern is insufficient productive evidence; review scope without renaming IDs.",
+    "currentStatement": "Use a number pattern rule to solve a simple everyday quantity problem.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-science-b4-2-1-1-1",
+    "grade": 4,
+    "subject": "science",
+    "stableRuntimeCodes": [
+      "B4.2.1.1.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "science:b4:pdf27:y141",
+        "requirementId": "science:b4:pdf27:y141",
+        "sourceId": "science",
+        "sourceSha256": "9fd09042246256c1248d6976c4ee82b8b02c910fec771bc797ec2b05320e3c7b",
+        "printedCode": "B4.2.1.1.1",
+        "rawPrintedCode": "B4.2.1.1.1",
+        "pdfPage": 27,
+        "printedPage": "5",
+        "tableContentStandard": "B4.2.1.1",
+        "sourceStrand": {
+          "number": 2,
+          "title": "CYCLES",
+          "page": 27
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "EARTH SCIENCE",
+          "page": 27
+        },
+        "statement": "Demonstrate understanding of cyclic movements in the environment",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.2,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "lexical_overlap_alert_is_not_proof_of_wrong_mapping"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Recognise and explain environmental movements or events that occur repeatedly in cycles.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-science-b4-2-1-3-1",
+    "grade": 4,
+    "subject": "science",
+    "stableRuntimeCodes": [
+      "B4.2.1.3.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "science:b4:pdf27:y383",
+        "requirementId": "science:b4:pdf27:y383",
+        "sourceId": "science",
+        "sourceSha256": "9fd09042246256c1248d6976c4ee82b8b02c910fec771bc797ec2b05320e3c7b",
+        "printedCode": "B4.2.1.3.1",
+        "rawPrintedCode": "B4.2.1.3.1",
+        "pdfPage": 27,
+        "printedPage": "5",
+        "tableContentStandard": "B4.2.1.3",
+        "sourceStrand": {
+          "number": 2,
+          "title": "CYCLES",
+          "page": 27
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "EARTH SCIENCE",
+          "page": 27
+        },
+        "statement": "Demonstrate the process of evapotranspiration",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "lexical_overlap_alert_is_not_proof_of_wrong_mapping"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Explanation of evapotranspiration is related to the source demonstration but does not by itself verify performing an investigation.",
+    "currentStatement": "Explain evaporation and transpiration and how both contribute water vapour to the atmosphere.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-science-b4-2-2-1-2",
+    "grade": 4,
+    "subject": "science",
+    "stableRuntimeCodes": [
+      "B4.2.2.1.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "science:b4:pdf29:y216",
+        "requirementId": "science:b4:pdf29:y216",
+        "sourceId": "science",
+        "sourceSha256": "9fd09042246256c1248d6976c4ee82b8b02c910fec771bc797ec2b05320e3c7b",
+        "printedCode": "B4.2.2.1.2",
+        "rawPrintedCode": "B4.2.2.1.2",
+        "pdfPage": 29,
+        "printedPage": "7",
+        "tableContentStandard": "B4.2.2.1",
+        "sourceStrand": {
+          "number": 2,
+          "title": "CYCLES",
+          "page": 27
+        },
+        "sourceSubStrand": {
+          "number": 2,
+          "title": "LIFE CYCLES OF ORGANISMS",
+          "page": 29
+        },
+        "statement": ". Examine some common seeds and how they germinate",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.2857142857142857,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "lexical_overlap_alert_is_not_proof_of_wrong_mapping"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Observe common seeds and explain the basic conditions and changes involved in germination.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-science-b4-5-1-1-1",
+    "grade": 4,
+    "subject": "science",
+    "stableRuntimeCodes": [
+      "B4.5.1.1.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "science:b4:pdf35:y142",
+        "requirementId": "science:b4:pdf35:y142",
+        "sourceId": "science",
+        "sourceSha256": "9fd09042246256c1248d6976c4ee82b8b02c910fec771bc797ec2b05320e3c7b",
+        "printedCode": "B4.5.1.1.1",
+        "rawPrintedCode": "B4. 5.1.1.1",
+        "pdfPage": 35,
+        "printedPage": "13",
+        "tableContentStandard": "B4.5.1.1",
+        "sourceStrand": {
+          "number": 5,
+          "title": "HUMANS AND THE ENVIRONMENT",
+          "page": 35
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "PERSONAL HYGIENE AND SANITATION",
+          "page": 35
+        },
+        "statement": "Know how to care for one’s self and the environment",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.16666666666666666,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "lexical_overlap_alert_is_not_proof_of_wrong_mapping"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Identify appropriate ways of caring for oneself and keeping the immediate environment clean.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-computing-b4-folders-001",
+    "grade": 4,
+    "subject": "computing",
+    "stableRuntimeCodes": [
+      "B4.1.2.1.6"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "computing:b4:pdf25:y213",
+        "requirementId": "computing:b4:pdf25:y213",
+        "sourceId": "computing",
+        "sourceSha256": "d622739de46fdc138508aa82b56a196453581677cd653bcab5f4b3723eb1ecca",
+        "printedCode": "B4.1.2.1.6",
+        "rawPrintedCode": "B4.1.2.1.6",
+        "pdfPage": 25,
+        "printedPage": "4",
+        "tableContentStandard": "B4.1.2.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "WORD PROCESSING",
+          "page": 23
+        },
+        "sourceSubStrand": {
+          "number": 2,
+          "title": "INTRODUCTION TO MS-WINDOWS INTERFACE",
+          "page": 24
+        },
+        "statement": "Creating, naming and renaming a folder.",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "lexical_overlap_alert_is_not_proof_of_wrong_mapping"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Creating/naming/renaming are the same source operations despite the lexical alert; actual tool performance remains unverified.",
+    "currentStatement": "Create folders and give them appropriate names, then rename existing folders.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-computing-b4-identify-data-001",
+    "grade": 4,
+    "subject": "computing",
+    "stableRuntimeCodes": [
+      "B4.1.3.1.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "computing:b4:pdf26:y151",
+        "requirementId": "computing:b4:pdf26:y151",
+        "sourceId": "computing",
+        "sourceSha256": "d622739de46fdc138508aa82b56a196453581677cd653bcab5f4b3723eb1ecca",
+        "printedCode": "B4.1.3.1.1",
+        "rawPrintedCode": "B4.1.3.1.1",
+        "pdfPage": 26,
+        "printedPage": "5",
+        "tableContentStandard": "B4.1.3.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "WORD PROCESSING",
+          "page": 23
+        },
+        "sourceSubStrand": {
+          "number": 3,
+          "title": "DATA, SOURCES AND USAGE",
+          "page": 26
+        },
+        "statement": "Use strategies for identifying data in conversation and newspapers.",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.3333333333333333,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "lexical_overlap_alert_is_not_proof_of_wrong_mapping"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Identify examples of data in conversations, newspapers and other familiar sources.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-computing-b4-classify-data-001",
+    "grade": 4,
+    "subject": "computing",
+    "stableRuntimeCodes": [
+      "B4.1.3.1.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "computing:b4:pdf26:y229",
+        "requirementId": "computing:b4:pdf26:y229",
+        "sourceId": "computing",
+        "sourceSha256": "d622739de46fdc138508aa82b56a196453581677cd653bcab5f4b3723eb1ecca",
+        "printedCode": "B4.1.3.1.2",
+        "rawPrintedCode": "B4.1.3.1.2",
+        "pdfPage": 26,
+        "printedPage": "5",
+        "tableContentStandard": "B4.1.3.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "WORD PROCESSING",
+          "page": 23
+        },
+        "sourceSubStrand": {
+          "number": 3,
+          "title": "DATA, SOURCES AND USAGE",
+          "page": 26
+        },
+        "statement": "Use strategies for classifying data into information (i.e. sorting and classifying)",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.3333333333333333,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "lexical_overlap_alert_is_not_proof_of_wrong_mapping"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Sort and classify data so that it can be organised into useful information.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-computing-b4-share-information-001",
+    "grade": 4,
+    "subject": "computing",
+    "stableRuntimeCodes": [
+      "B4.1.3.1.4"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "computing:b4:pdf26:y385",
+        "requirementId": "computing:b4:pdf26:y385",
+        "sourceId": "computing",
+        "sourceSha256": "d622739de46fdc138508aa82b56a196453581677cd653bcab5f4b3723eb1ecca",
+        "printedCode": "B4.1.3.1.4",
+        "rawPrintedCode": "B4.1.3.1.4",
+        "pdfPage": 26,
+        "printedPage": "5",
+        "tableContentStandard": "B4.1.3.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "WORD PROCESSING",
+          "page": 23
+        },
+        "sourceSubStrand": {
+          "number": 3,
+          "title": "DATA, SOURCES AND USAGE",
+          "page": 26
+        },
+        "statement": "Demonstrate Sending and sharing information to and from other gadgets. e.g., radio, fax, telephones calls, SMS etc.",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.3333333333333333,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "lexical_overlap_alert_is_not_proof_of_wrong_mapping"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Demonstrate ways information can be sent and shared using communication technologies and gadgets.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-computing-b4-technological-change-001",
+    "grade": 4,
+    "subject": "computing",
+    "stableRuntimeCodes": [
+      "B4.1.4.1.4"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "computing:b4:pdf29:y135",
+        "requirementId": "computing:b4:pdf29:y135",
+        "sourceId": "computing",
+        "sourceSha256": "d622739de46fdc138508aa82b56a196453581677cd653bcab5f4b3723eb1ecca",
+        "printedCode": "B4.1.4.1.4",
+        "rawPrintedCode": "B4.1.4.1.4",
+        "pdfPage": 29,
+        "printedPage": "8",
+        "tableContentStandard": "B4.2.1.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "WORD PROCESSING",
+          "page": 23
+        },
+        "sourceSubStrand": {
+          "number": 4,
+          "title": "TECHNOLOGY IN THE COMMUNITY (COMMUNICATION)",
+          "page": 28
+        },
+        "statement": "Identify technological changes in the community (e.g. Using automated irrigation for farming, eco-friendly pesticides and manure, etc.)",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 0.25,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Identify examples of technological change in the community and describe how technology can improve familiar activities.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b5-1-6-3-1",
+    "grade": 5,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B5.1.6.3.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b5:pdf102:y292",
+        "requirementId": "english:b5:pdf102:y292",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B5.1.6.3.1",
+        "rawPrintedCode": "B5.1.6.3.1",
+        "pdfPage": 102,
+        "printedPage": "78",
+        "tableContentStandard": "B5.1.6.2",
+        "sourceStrand": {
+          "number": 1,
+          "title": "ORAL LANGUAGE",
+          "page": 95
+        },
+        "sourceSubStrand": {
+          "number": 6,
+          "title": "Conversation - Talking about Oneself, Family, People, Customs,",
+          "page": 101
+        },
+        "statement": "Engage in collaborative conversation on topics such as social issues, values and manners with adults",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Engage in collaborative conversation on topics such as social issues, values and manners with adults.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b5-1-6-3-2",
+    "grade": 5,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B5.1.6.3.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b5:pdf103:y251",
+        "requirementId": "english:b5:pdf103:y251",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B5.1.6.3.2",
+        "rawPrintedCode": "B5.1.6.3.2",
+        "pdfPage": 103,
+        "printedPage": "79",
+        "tableContentStandard": "B5.1.6.2",
+        "sourceStrand": {
+          "number": 1,
+          "title": "ORAL LANGUAGE",
+          "page": 95
+        },
+        "sourceSubStrand": {
+          "number": 6,
+          "title": "Conversation - Talking about Oneself, Family, People, Customs,",
+          "page": 101
+        },
+        "statement": "Demonstrate turn taking in conversation in different topics and follow agreed-upon rules for conversation,",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Demonstrate turn taking in conversation in different topics and follow agreed-upon rules for conversation, e.g. listening to others, speaking one at a time.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b5-1-8-2-1",
+    "grade": 5,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B5.1.8.2.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b5:pdf108:y322",
+        "requirementId": "english:b5:pdf108:y322",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B5.1.8.2.1",
+        "rawPrintedCode": "B5.1.8.2.1",
+        "pdfPage": 108,
+        "printedPage": "84",
+        "tableContentStandard": "B5.1.8.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "Oral Language",
+          "page": 108
+        },
+        "sourceSubStrand": {
+          "number": 8,
+          "title": "Asking and Answering Questions/ Question Tags",
+          "page": 108
+        },
+        "statement": "Use positive tags, negative tags and auxiliaries in speech",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Use positive tags, negative tags and auxiliaries in speech.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b5-2-6-3-1",
+    "grade": 5,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B5.2.6.3.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b5:pdf121:y359",
+        "requirementId": "english:b5:pdf121:y359",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B5.2.6.3.1",
+        "rawPrintedCode": "B5.2.6.3.1",
+        "pdfPage": 121,
+        "printedPage": "97",
+        "tableContentStandard": "B5.2.6.2",
+        "sourceStrand": {
+          "number": 2,
+          "title": "READING",
+          "page": 115
+        },
+        "sourceSubStrand": {
+          "number": 6,
+          "title": "Vocabulary",
+          "page": 120
+        },
+        "statement": "Deduce meaning of words from the word class they belong to and how they relate to one another (synonyms and antonyms).",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Deduce meaning of words from the word class they belong to and how they relate to one another (synonyms and antonyms).",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b5-2-7-2-1",
+    "grade": 5,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B5.2.7.2.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b5:pdf124:y334",
+        "requirementId": "english:b5:pdf124:y334",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B5.2.7.2.1",
+        "rawPrintedCode": "B5.2.7.2.1",
+        "pdfPage": 124,
+        "printedPage": "100",
+        "tableContentStandard": "B5.2.7.1",
+        "sourceStrand": {
+          "number": 2,
+          "title": "Reading",
+          "page": 123
+        },
+        "sourceSubStrand": {
+          "number": 7,
+          "title": "Comprehension",
+          "page": 123
+        },
+        "statement": "Respond to a text with simple judgment",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Respond to a text with simple judgment.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b5-4-3-1-4",
+    "grade": 5,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B5.4.3.1.4"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b5:pdf149:y145",
+        "requirementId": "english:b5:pdf149:y145",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B5.4.3.1.4",
+        "rawPrintedCode": "B5.4.3.1.4",
+        "pdfPage": 149,
+        "printedPage": "125",
+        "tableContentStandard": "B5.4.6.1",
+        "sourceStrand": {
+          "number": 4,
+          "title": "Writing",
+          "page": 144
+        },
+        "sourceSubStrand": {
+          "number": 3,
+          "title": "Paragraph Development",
+          "page": 146
+        },
+        "statement": "Use cohesive devices – pronouns, repetition of vocabulary or grammatical structures to link ideas in a paragraph, e.g. use connectors to link similar ideas, give reasons and add information",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Use cohesive devices – pronouns, repetition of vocabulary or grammatical structures to link ideas in a paragraph, e.g. use connectors to link similar ideas, give reasons and add information.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b5-4-9-2-1",
+    "grade": 5,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B5.4.9.2.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b5:pdf150:y420",
+        "requirementId": "english:b5:pdf150:y420",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B5.4.9.2.1",
+        "rawPrintedCode": "B5.4.9.2.1",
+        "pdfPage": 150,
+        "printedPage": "126",
+        "tableContentStandard": "B5.4.9.1",
+        "sourceStrand": {
+          "number": 4,
+          "title": "Writing",
+          "page": 144
+        },
+        "sourceSubStrand": {
+          "number": 9,
+          "title": "Writing as a Process",
+          "page": 150
+        },
+        "statement": "Develop ideas into a two-paragraph draft without considering the writing conventions, using appropriate linking words within and across paragraphs to aid cohesion and avoid ambiguity, e.g. firstly, then, after",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Develop ideas into a two-paragraph draft without considering the writing conventions, using appropriate linking words within and across paragraphs to aid cohesion and avoid ambiguity, e.g. firstly, then, after.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b5-4-9-3-2",
+    "grade": 5,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B5.4.9.3.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b5:pdf151:y343",
+        "requirementId": "english:b5:pdf151:y343",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B4.4.9.3.2",
+        "rawPrintedCode": "B4.4.9.3.2",
+        "pdfPage": 151,
+        "printedPage": "127",
+        "tableContentStandard": "B5.4.9.3",
+        "sourceStrand": {
+          "number": 4,
+          "title": "Writing",
+          "page": 144
+        },
+        "sourceSubStrand": {
+          "number": 9,
+          "title": "Writing as a Process",
+          "page": 150
+        },
+        "statement": "Edit/proofread draft, checking capitalisation, usage of punctuation and spelling",
+        "sourceFlags": [
+          "printed_grade_differs_from_section",
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "literal_source_code_distinguished_from_stable_runtime_key",
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Edit/proofread draft, checking capitalisation, usage of punctuation and spelling.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b5-4-13-2-1",
+    "grade": 5,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B5.4.13.2.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b5:pdf158:y280",
+        "requirementId": "english:b5:pdf158:y280",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B5.4.13.2.1",
+        "rawPrintedCode": "B5.4.13.2.1",
+        "pdfPage": 158,
+        "printedPage": "134",
+        "tableContentStandard": "B5.4.13.1",
+        "sourceStrand": {
+          "number": 4,
+          "title": "Writing",
+          "page": 144
+        },
+        "sourceSubStrand": {
+          "number": 13,
+          "title": "Persuasive/Argumentative Writing",
+          "page": 158
+        },
+        "statement": "Introduce claims and support them with clear reasons and evidence using credible sources",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Introduce claims and support them with clear reasons and evidence using credible sources.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b5-4-14-2-1",
+    "grade": 5,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B5.4.14.2.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b5:pdf160:y318",
+        "requirementId": "english:b5:pdf160:y318",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B5.4.14.2.1",
+        "rawPrintedCode": "B5.4.14.2.1",
+        "pdfPage": 160,
+        "printedPage": "136",
+        "tableContentStandard": "B5.4.14.1",
+        "sourceStrand": {
+          "number": 4,
+          "title": "Writing",
+          "page": 144
+        },
+        "sourceSubStrand": {
+          "number": 14,
+          "title": "Informative/Expository Writing",
+          "page": 160
+        },
+        "statement": "Write about incidence or events of the day (e.g. any event witnessed on their way to school) and make radio/TV presentations",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 0.875,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Write about incidents or events of the day and make radio/TV presentations.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b5-2-3-1-2",
+    "grade": 5,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B5.2.3.1.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b5:pdf114:y147",
+        "requirementId": "mathematics:b5:pdf114:y147",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B5.2.3.1.2",
+        "rawPrintedCode": "B5.2.3.1.2",
+        "pdfPage": 114,
+        "printedPage": "93",
+        "tableContentStandard": "B5.3.2.2",
+        "sourceStrand": {
+          "number": 2,
+          "title": "ALGEBRA",
+          "page": 105
+        },
+        "sourceSubStrand": {
+          "number": 3,
+          "title": "Variables and Equations",
+          "page": 113
+        },
+        "statement": "Identify the unknown in a problem; represent the problem with an equation; and solve the problem concretely, pictorially or symbolically.",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Learners solve equations using balance scales, drawings or symbols.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b5-2-3-1-3",
+    "grade": 5,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B5.2.3.1.3"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b5:pdf114:y348",
+        "requirementId": "mathematics:b5:pdf114:y348",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B5.2.3.1.3",
+        "rawPrintedCode": "B5.2.3.1.3",
+        "pdfPage": 114,
+        "printedPage": "93",
+        "tableContentStandard": "B5.3.2.2",
+        "sourceStrand": {
+          "number": 2,
+          "title": "ALGEBRA",
+          "page": 105
+        },
+        "sourceSubStrand": {
+          "number": 3,
+          "title": "Variables and Equations",
+          "page": 113
+        },
+        "statement": "Create a problem for a given equation",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Learners write a story problem that matches a given equation.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b5-3-2-2-2",
+    "grade": 5,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B5.3.2.2.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b5:pdf122:y132",
+        "requirementId": "mathematics:b5:pdf122:y132",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B5.3.3.2.2",
+        "rawPrintedCode": "B5.3.3.2.2",
+        "pdfPage": 122,
+        "printedPage": "101",
+        "tableContentStandard": "B5.3.2.2",
+        "sourceStrand": {
+          "number": 3,
+          "title": "GEOMETRY AND MEASUREMENT",
+          "page": 115
+        },
+        "sourceSubStrand": {
+          "number": 2,
+          "title": "Measurement",
+          "page": 118
+        },
+        "statement": "Determine the volume of boxes by finding how many cubes of sizes 1cm each contains",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 0.9,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "literal_source_code_distinguished_from_stable_runtime_key",
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Learners find volume by counting or stacking unit cubes in a box.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b5-3-2-2-4",
+    "grade": 5,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B5.3.2.2.4"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b5:pdf123:y341",
+        "requirementId": "mathematics:b5:pdf123:y341",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B5.3.3.2.4",
+        "rawPrintedCode": "B5.3.3.2.4",
+        "pdfPage": 123,
+        "printedPage": "102",
+        "tableContentStandard": "B5.3.2.2",
+        "sourceStrand": {
+          "number": 3,
+          "title": "GEOMETRY AND MEASUREMENT",
+          "page": 115
+        },
+        "sourceSubStrand": {
+          "number": 2,
+          "title": "Measurement",
+          "page": 118
+        },
+        "statement": "Demonstrate an understanding of capacity by describing the relationship between 3 capacity and volume as well as litre and 10cm 3",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 0.8,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "literal_source_code_distinguished_from_stable_runtime_key",
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Learners explain that capacity is the space a container holds and link 1 litre to 1000 cm3.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-science-b5-2-1-3-1",
+    "grade": 5,
+    "subject": "science",
+    "stableRuntimeCodes": [
+      "B5.2.1.3.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "science:b5:pdf42:y369",
+        "requirementId": "science:b5:pdf42:y369",
+        "sourceId": "science",
+        "sourceSha256": "9fd09042246256c1248d6976c4ee82b8b02c910fec771bc797ec2b05320e3c7b",
+        "printedCode": "B5.2.1.3.1",
+        "rawPrintedCode": "B5.2.1.3.1",
+        "pdfPage": 42,
+        "printedPage": "20",
+        "tableContentStandard": "B5.2.1.2",
+        "sourceStrand": {
+          "number": 2,
+          "title": "CYCLES",
+          "page": 42
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "EARTH SCIENCE",
+          "page": 42
+        },
+        "statement": "Demonstrate evaporation and condensation as important processes of the hydrological (water) cycle",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Show how evaporation turns water into vapour and condensation turns vapour back into drops in the water cycle.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-computing-b5-6-9-1-1",
+    "grade": 5,
+    "subject": "computing",
+    "stableRuntimeCodes": [
+      "B5.6.9.1.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "computing:b5:pdf48:y287",
+        "requirementId": "computing:b5:pdf48:y287",
+        "sourceId": "computing",
+        "sourceSha256": "d622739de46fdc138508aa82b56a196453581677cd653bcab5f4b3723eb1ecca",
+        "printedCode": "B5.6.4.9.1.1",
+        "rawPrintedCode": "B5.6.4.9.1.1",
+        "pdfPage": 48,
+        "printedPage": "27",
+        "tableContentStandard": "B5.6.4.9.1",
+        "sourceStrand": {
+          "number": 6,
+          "title": "INTERNET AND SOCIAL MEDIA",
+          "page": 42
+        },
+        "sourceSubStrand": {
+          "number": 9,
+          "title": "DIGITAL LITERACY",
+          "page": 48
+        },
+        "statement": "Describe private and personal information. Encourage learners to tell you what they know about private and personal information online. Ask leading questions to help them bring out points they could not make out",
+        "sourceFlags": [
+          "nonstandard_indicator_code_length"
+        ],
+        "textualOverlapDiagnostic": 0.5714285714285714,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "literal_source_code_distinguished_from_stable_runtime_key"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Tell private from public information and name ways of staying safe online.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b6-1-1-1-1",
+    "grade": 6,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B6.1.1.1.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b6:pdf176:y183",
+        "requirementId": "english:b6:pdf176:y183",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B6.1.1.1.1",
+        "rawPrintedCode": "B6.1.1.1.1",
+        "pdfPage": 176,
+        "printedPage": "152",
+        "tableContentStandard": "B.6.1.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "ORAL LANGUAGE",
+          "page": 176
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "Songs",
+          "page": 176
+        },
+        "statement": "Relate the central messages in songs to personal experiences",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Relate the central messages in songs to personal experiences.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b6-1-1-1-2",
+    "grade": 6,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B6.1.1.1.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b6:pdf176:y353",
+        "requirementId": "english:b6:pdf176:y353",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B6.1.1.1.2",
+        "rawPrintedCode": "B6.1.1.1.2",
+        "pdfPage": 176,
+        "printedPage": "152",
+        "tableContentStandard": "B.6.1.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "ORAL LANGUAGE",
+          "page": 176
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "Songs",
+          "page": 176
+        },
+        "statement": "C ompose songs around values discussed",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 0.8,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Compose songs around values discussed.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b6-1-5-2-1",
+    "grade": 6,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B6.1.5.2.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b6:pdf179:y331",
+        "requirementId": "english:b6:pdf179:y331",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B6.1.5.2.1",
+        "rawPrintedCode": "B6.1.5.2.1",
+        "pdfPage": 179,
+        "printedPage": "155",
+        "tableContentStandard": "B6.1.5.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "ORAL LANGUAGE",
+          "page": 176
+        },
+        "sourceSubStrand": {
+          "number": 5,
+          "title": "Dramatisation and Role Play",
+          "page": 179
+        },
+        "statement": "Express personal opinion about moral lessons in sketches",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Express personal opinion about moral lessons in sketches.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b6-2-4-1-1",
+    "grade": 6,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B6.2.4.1.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b6:pdf194:y136",
+        "requirementId": "english:b6:pdf194:y136",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B6.2.3.1.1",
+        "rawPrintedCode": "B6.2.3.1.1",
+        "pdfPage": 194,
+        "printedPage": "170",
+        "tableContentStandard": "B6.2.4.1",
+        "sourceStrand": {
+          "number": 2,
+          "title": "Reading",
+          "page": 192
+        },
+        "sourceSubStrand": {
+          "number": 4,
+          "title": "Diphthongs",
+          "page": 194
+        },
+        "statement": "Use words with centering diphthongs ( e.g. / i ǝ , eǝ, Ʊǝ ) to make meaningful sentences",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "literal_source_code_distinguished_from_stable_runtime_key",
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Diphthongs on PDF194 and minimal pairs on PDF193 share the printed code. Page-specific association is essential; no prerequisite-key renumbering.",
+    "currentStatement": "Use words with centering diphthongs (e.g. /iə/, /eə/, /ʊə/) to make meaningful sentences.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b6-2-6-2-1",
+    "grade": 6,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B6.2.6.2.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b6:pdf196:y410",
+        "requirementId": "english:b6:pdf196:y410",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B6.2.6.2.1",
+        "rawPrintedCode": "B6.2.6.2.1",
+        "pdfPage": 196,
+        "printedPage": "172",
+        "tableContentStandard": "B6.2.6.1",
+        "sourceStrand": {
+          "number": 2,
+          "title": "Reading",
+          "page": 192
+        },
+        "sourceSubStrand": {
+          "number": 6,
+          "title": "Vocabulary",
+          "page": 196
+        },
+        "statement": ". Develop a rich vocabulary stock through extensive reading of age-appropriate text; substituting selected nouns verbs and adjectives in a text with synonyms /near synonyms.",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Develop a rich vocabulary through extensive reading, substituting selected nouns, verbs and adjectives in a text with synonyms or near synonyms.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b6-2-8-1-1",
+    "grade": 6,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B6.2.8.1.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b6:pdf201:y419",
+        "requirementId": "english:b6:pdf201:y419",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B6.2.8.1.1",
+        "rawPrintedCode": "B6.2.8.1.1",
+        "pdfPage": 201,
+        "printedPage": "177",
+        "tableContentStandard": "B6.2.7.3",
+        "sourceStrand": {
+          "number": 2,
+          "title": "Reading",
+          "page": 192
+        },
+        "sourceSubStrand": {
+          "number": 7,
+          "title": "Comprehension",
+          "page": 199
+        },
+        "statement": "Read silently and reasonably for meaning from a level-appropriate text",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Read silently and reasonably for meaning from a level-appropriate text.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b6-4-10-1-1",
+    "grade": 6,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B6.4.10.1.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b6:pdf227:uncoded-reflective-writing",
+        "requirementId": "english:b6:pdf227:uncoded-reflective-writing",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": null,
+        "rawPrintedCode": null,
+        "pdfPage": 227,
+        "printedPage": "203",
+        "tableContentStandard": "B6.4.10.1",
+        "sourceStrand": {
+          "number": 4,
+          "title": "Writing",
+          "page": 220
+        },
+        "sourceSubStrand": {
+          "number": 10,
+          "title": "Narrative Writing",
+          "page": 226
+        },
+        "statement": "Reflective Writing A reflective writing explores who you are now and who you were before now. It focuses on a change you have experienced and reflects on how that change makes you unique.",
+        "sourceFlags": [
+          "uncoded_source_activity"
+        ],
+        "textualOverlapDiagnostic": 0.35294117647058826,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "uncoded_activity_preserved_no_indicator_invented"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Narrate situations, express feelings and convey point of view through reflective writing (how things were then, how they are now, and why they changed).",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b6-4-13-2-1",
+    "grade": 6,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B6.4.13.2.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b6:pdf231:y261",
+        "requirementId": "english:b6:pdf231:y261",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B6.4.13.2.1",
+        "rawPrintedCode": "B6.4.13.2.1",
+        "pdfPage": 231,
+        "printedPage": "207",
+        "tableContentStandard": "B6.4.13.1",
+        "sourceStrand": {
+          "number": 4,
+          "title": "Writing",
+          "page": 220
+        },
+        "sourceSubStrand": {
+          "number": 13,
+          "title": "Argumentative/Persuasive Writing",
+          "page": 231
+        },
+        "statement": "Introduce claims and support with clear reasons in order of importance and evidence using credible sources and demonstrate understanding of the topic or text.",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Introduce claims and support with clear reasons in order of importance and evidence using credible sources and demonstrate understanding of the topic or text.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b6-4-13-2-2",
+    "grade": 6,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B6.4.13.2.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b6:pdf231:y355",
+        "requirementId": "english:b6:pdf231:y355",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B6.4.13.2.2",
+        "rawPrintedCode": "B6.4.13.2.2",
+        "pdfPage": 231,
+        "printedPage": "207",
+        "tableContentStandard": "B6.4.13.1",
+        "sourceStrand": {
+          "number": 4,
+          "title": "Writing",
+          "page": 220
+        },
+        "sourceSubStrand": {
+          "number": 13,
+          "title": "Argumentative/Persuasive Writing",
+          "page": 231
+        },
+        "statement": "Use words, phrases, and clauses to clarify the relationships among claim(s) and reasons.",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Use words, phrases, and clauses to clarify the relationships among claim(s) and reasons.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b6-4-14-1-1",
+    "grade": 6,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B6.4.14.1.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b6:pdf232:y321",
+        "requirementId": "english:b6:pdf232:y321",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B6.4.14.1.1",
+        "rawPrintedCode": "B6.4.14.1.1",
+        "pdfPage": 232,
+        "printedPage": "208",
+        "tableContentStandard": "B6.4.13.2",
+        "sourceStrand": {
+          "number": 4,
+          "title": "Writing",
+          "page": 220
+        },
+        "sourceSubStrand": {
+          "number": 14,
+          "title": "Expository /Informative Writing",
+          "page": 232
+        },
+        "statement": "Write short paragraphs to describe incidents. E.g. accidents, fire outbreak.",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Write short paragraphs to describe incidents. E.g. accidents, fire outbreak.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-english-b6-5-5-1-1",
+    "grade": 6,
+    "subject": "english",
+    "stableRuntimeCodes": [
+      "B6.5.5.1.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "english:b6:pdf239:y162",
+        "requirementId": "english:b6:pdf239:y162",
+        "sourceId": "english",
+        "sourceSha256": "31727bc67e6beba32a5687fa6cffca9b41a4d13c5220e236534f1566fc0d8bdd",
+        "printedCode": "B6.5.5.1",
+        "rawPrintedCode": "B6.5.5.1",
+        "pdfPage": 239,
+        "printedPage": "215",
+        "tableContentStandard": "B6.5.5.1",
+        "sourceStrand": {
+          "number": 5,
+          "title": "Using Writing Conventions/ Grammar Usage",
+          "page": 233
+        },
+        "sourceSubStrand": {
+          "number": 5,
+          "title": "Using Qualifying Words-Adjectives",
+          "page": 239
+        },
+        "statement": "Use superlative forms of regular and irregular adjectives to make comparison Revise adjectives by having learners describe various classroom objects and people.",
+        "sourceFlags": [
+          "nonstandard_indicator_code_length",
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 0.875,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "literal_source_code_distinguished_from_stable_runtime_key",
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Use superlative forms of regular and irregular adjectives to make comparisons.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b6-1-2-6-1",
+    "grade": 6,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B6.1.2.6.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b6:pdf149:y224",
+        "requirementId": "mathematics:b6:pdf149:y224",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B6.1.1.6.1",
+        "rawPrintedCode": "B6.1.1.6.1",
+        "pdfPage": 149,
+        "printedPage": "128",
+        "tableContentStandard": "B6.1.2.6",
+        "sourceStrand": {
+          "number": 1,
+          "title": "Number",
+          "page": 135
+        },
+        "sourceSubStrand": {
+          "number": 2,
+          "title": "Number Operations",
+          "page": 144
+        },
+        "statement": "Locate, compare and order sets of integers using the number line and symbols \"< or >\"",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "literal_source_code_distinguished_from_stable_runtime_key",
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Learners place positive and negative integers on a number line and order them.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b6-1-2-6-3",
+    "grade": 6,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B6.1.2.6.3"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b6:pdf151:y178",
+        "requirementId": "mathematics:b6:pdf151:y178",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B6.1.1.4.3",
+        "rawPrintedCode": "B6.1.1.4.3",
+        "pdfPage": 151,
+        "printedPage": "130",
+        "tableContentStandard": "B6.1.2.6",
+        "sourceStrand": {
+          "number": 1,
+          "title": "Number",
+          "page": 135
+        },
+        "sourceSubStrand": {
+          "number": 2,
+          "title": "Number Operations",
+          "page": 144
+        },
+        "statement": "Perform simple multiplication with integers",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "literal_source_code_distinguished_from_stable_runtime_key",
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Learners multiply integers using repeated addition and sign rules.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b6-3-1-1-1",
+    "grade": 6,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B6.3.1.1.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b6:pdf165:y158",
+        "requirementId": "mathematics:b6:pdf165:y158",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B6.3.1.1.1",
+        "rawPrintedCode": "B6.3.1.1.1",
+        "pdfPage": 165,
+        "printedPage": "144",
+        "tableContentStandard": "B6.3.1.1",
+        "sourceStrand": {
+          "number": 3,
+          "title": "Geometry and Measurement",
+          "page": 165
+        },
+        "sourceSubStrand": null,
+        "statement": "Identify examples of rectangular and triangular prisms in the classroom and the community",
+        "sourceFlags": [
+          "source_heading_not_extracted_do_not_invent_title"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "missing_source_heading_remains_unresolved"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Learners find and name rectangular and triangular prisms in their surroundings and describe their faces.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b6-3-1-1-2",
+    "grade": 6,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B6.3.1.1.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b6:pdf166:y144",
+        "requirementId": "mathematics:b6:pdf166:y144",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B6.3.1.1.2",
+        "rawPrintedCode": "B6.3.1.1.2",
+        "pdfPage": 166,
+        "printedPage": "145",
+        "tableContentStandard": "B6.3.1.1",
+        "sourceStrand": {
+          "number": 3,
+          "title": "Geometry and Measurement",
+          "page": 165
+        },
+        "sourceSubStrand": null,
+        "statement": "Construct rectangular and triangular prisms from their nets.",
+        "sourceFlags": [
+          "source_heading_not_extracted_do_not_invent_title"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "missing_source_heading_remains_unresolved"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Learners draw nets, cut and fold them to build prisms.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b6-3-3-5-2",
+    "grade": 6,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B6.3.3.5.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b6:pdf168:y156",
+        "requirementId": "mathematics:b6:pdf168:y156",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B6.3.3.5.1",
+        "rawPrintedCode": "B6.3.3.5.1",
+        "pdfPage": 168,
+        "printedPage": "147",
+        "tableContentStandard": "B6.3.3.5",
+        "sourceStrand": {
+          "number": 3,
+          "title": "Geometry and Measurement",
+          "page": 165
+        },
+        "sourceSubStrand": {
+          "number": 3,
+          "title": "Geometric Reasoning",
+          "page": 167
+        },
+        "statement": "Perform and identify images of a single transformation (i.e. reflection) on 2D shapes in a plane",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "literal_source_code_distinguished_from_stable_runtime_key"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Learners reflect shapes in a mirror line and identify their images.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b6-3-3-5-3",
+    "grade": 6,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B6.3.3.5.3"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b6:pdf171:y122",
+        "requirementId": "mathematics:b6:pdf171:y122",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B6.3.3.5.2",
+        "rawPrintedCode": "B6.3.3.5.2",
+        "pdfPage": 171,
+        "printedPage": "150",
+        "tableContentStandard": "B6.3.3.5",
+        "sourceStrand": {
+          "number": 3,
+          "title": "Geometry and Measurement",
+          "page": 165
+        },
+        "sourceSubStrand": {
+          "number": 3,
+          "title": "Geometric Reasoning",
+          "page": 167
+        },
+        "statement": "Identify images of a single transformation (i.e. reflection and translation) of a 2D shapes in a plane",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "literal_source_code_distinguished_from_stable_runtime_key"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Learners decide whether an image comes from a reflection or a translation.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b6-4-1-2-2",
+    "grade": 6,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B6.4.1.2.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b6:pdf176:y137",
+        "requirementId": "mathematics:b6:pdf176:y137",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "B6.5.2.2",
+        "rawPrintedCode": "B6.5.2.2",
+        "pdfPage": 176,
+        "printedPage": "155",
+        "tableContentStandard": "B6.4.1.2",
+        "sourceStrand": {
+          "number": 4,
+          "title": "Data",
+          "page": 172
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "Data Collection, Organization, Presentation, Interpretation and Analysis",
+          "page": 172
+        },
+        "statement": "Design and administer a questionnaire for collecting data to answer a given question and record the results",
+        "sourceFlags": [
+          "nonstandard_indicator_code_length",
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "literal_source_code_distinguished_from_stable_runtime_key",
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Learners write clear questions, give them to respondents and collect the answers.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-math-b6-4-2-2-3",
+    "grade": 6,
+    "subject": "mathematics",
+    "stableRuntimeCodes": [
+      "B6.4.2.2.3"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "mathematics:b6:pdf182:y153",
+        "requirementId": "mathematics:b6:pdf182:y153",
+        "sourceId": "mathematics",
+        "sourceSha256": "4b4439306ad2fafc07f92ca6061dcbfbde63975549177fde3c69393faf4a427c",
+        "printedCode": "P6.4.2.2.3",
+        "rawPrintedCode": "P6.4.2.2.3",
+        "pdfPage": 182,
+        "printedPage": "161",
+        "tableContentStandard": "B6.4.2.2",
+        "sourceStrand": {
+          "number": 4,
+          "title": "Data",
+          "page": 172
+        },
+        "sourceSubStrand": {
+          "number": 2,
+          "title": "Chance or Probability",
+          "page": 179
+        },
+        "statement": "Explain that the experimental probability approaches the theoretical probability of a particular outcome as the number of trials in an experiment increases",
+        "sourceFlags": [
+          "nonstandard_grade_prefix",
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "literal_source_code_distinguished_from_stable_runtime_key",
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Learners compare results from few and many trials with theoretical probability.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-science-b6-2-1-3-1",
+    "grade": 6,
+    "subject": "science",
+    "stableRuntimeCodes": [
+      "B6.2.1.3.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "science:b6:pdf58:y370",
+        "requirementId": "science:b6:pdf58:y370",
+        "sourceId": "science",
+        "sourceSha256": "9fd09042246256c1248d6976c4ee82b8b02c910fec771bc797ec2b05320e3c7b",
+        "printedCode": "2.1.3.1",
+        "rawPrintedCode": "2.1.3.1",
+        "pdfPage": 58,
+        "printedPage": "36",
+        "tableContentStandard": "B6.2.1.3",
+        "sourceStrand": {
+          "number": 2,
+          "title": "CYCLES",
+          "page": 58
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "EARTH SCIENCE",
+          "page": 58
+        },
+        "statement": "Know the functions of carbon within the environment",
+        "sourceFlags": [
+          "nonstandard_grade_prefix",
+          "nonstandard_indicator_code_length",
+          "printed_grade_differs_from_section",
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "literal_source_code_distinguished_from_stable_runtime_key",
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Describe where carbon is found and how it moves between air, plants, animals and the ground.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-science-b6-2-1-5-2",
+    "grade": 6,
+    "subject": "science",
+    "stableRuntimeCodes": [
+      "B6.2.1.5.2"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "science:b6:pdf59:y233",
+        "requirementId": "science:b6:pdf59:y233",
+        "sourceId": "science",
+        "sourceSha256": "9fd09042246256c1248d6976c4ee82b8b02c910fec771bc797ec2b05320e3c7b",
+        "printedCode": "B6.2.1.5.2",
+        "rawPrintedCode": "B6.2.1.5.2",
+        "pdfPage": 59,
+        "printedPage": "37",
+        "tableContentStandard": "B6.2.1.4",
+        "sourceStrand": {
+          "number": 2,
+          "title": "CYCLES",
+          "page": 58
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "EARTH SCIENCE",
+          "page": 58
+        },
+        "statement": "Demonstrate that air supports burning",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Show with a candle in a jar that burning needs air and explain that the oxygen in air supports burning.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-science-b6-4-3-2-1",
+    "grade": 6,
+    "subject": "science",
+    "stableRuntimeCodes": [
+      "B6.4.3.2.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "science:b6:pdf65:y97",
+        "requirementId": "science:b6:pdf65:y97",
+        "sourceId": "science",
+        "sourceSha256": "9fd09042246256c1248d6976c4ee82b8b02c910fec771bc797ec2b05320e3c7b",
+        "printedCode": "B6.4.3.2.1",
+        "rawPrintedCode": "B6.4.3.2.1",
+        "pdfPage": 65,
+        "printedPage": "43",
+        "tableContentStandard": "B4.4.3.2",
+        "sourceStrand": {
+          "number": 4,
+          "title": "FORCES AND ENERGY",
+          "page": 62
+        },
+        "sourceSubStrand": {
+          "number": 3,
+          "title": "FORCES AND MOVEMENT",
+          "page": 64
+        },
+        "statement": "Identify levers, pulleys, inclined planes as classes of simple machines and cite some common examples",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Name levers, pulleys and inclined planes with common examples and say how they make work easier.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-science-b6-5-3-1-1",
+    "grade": 6,
+    "subject": "science",
+    "stableRuntimeCodes": [
+      "B6.5.3.1.1"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "science:b6:pdf67:y303",
+        "requirementId": "science:b6:pdf67:y303",
+        "sourceId": "science",
+        "sourceSha256": "9fd09042246256c1248d6976c4ee82b8b02c910fec771bc797ec2b05320e3c7b",
+        "printedCode": "5.3.1.1",
+        "rawPrintedCode": "5.3.1.1",
+        "pdfPage": 67,
+        "printedPage": "45",
+        "tableContentStandard": "B6.5.3.1",
+        "sourceStrand": {
+          "number": 5,
+          "title": "HUMANS AND THE ENVIRONMENT",
+          "page": 66
+        },
+        "sourceSubStrand": {
+          "number": 3,
+          "title": "SCIENCE AND INDUSTRY",
+          "page": 67
+        },
+        "statement": "Identify the scientific concepts and principles underlying the operation of some industries",
+        "sourceFlags": [
+          "nonstandard_grade_prefix",
+          "nonstandard_indicator_code_length",
+          "printed_grade_differs_from_section",
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 1,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "literal_source_code_distinguished_from_stable_runtime_key",
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Compared the stored positioned source reference and local topic metadata. No independently demonstrated code replacement is justified. Literal print and all existing review flags are retained; this automated triage does not certify instructional depth, productive evidence or human alignment approval.",
+    "currentStatement": "Link kenkey, gari, salt, soap and cooking oil production to the science involved, such as fermentation and evaporation.",
+    "humanApproval": null
+  },
+  {
+    "competencyId": "competency-gh-computing-b6-1-1-1-3",
+    "grade": 6,
+    "subject": "computing",
+    "stableRuntimeCodes": [
+      "B6.1.1.1.3"
+    ],
+    "sourceReferences": [
+      {
+        "occurrenceId": "computing:b6:pdf51:y320",
+        "requirementId": "computing:b6:pdf51:y320",
+        "sourceId": "computing",
+        "sourceSha256": "d622739de46fdc138508aa82b56a196453581677cd653bcab5f4b3723eb1ecca",
+        "printedCode": "B6.1.1.1.3",
+        "rawPrintedCode": "B6.1.1.1.3",
+        "pdfPage": 51,
+        "printedPage": "30",
+        "tableContentStandard": "B6.1.1.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "INTRODUCTION TO COMPUTING",
+          "page": 51
+        },
+        "sourceSubStrand": {
+          "number": 1,
+          "title": "GENE RATION OF COMPUTERS AND PARTS OF A COMPUTER AND OTHER GADGETS",
+          "page": 51
+        },
+        "statement": "Identify the left, right mouse button, holding of mouse, performing single, double and triple clicking, dragging object and using the scroll wheel",
+        "sourceFlags": [],
+        "textualOverlapDiagnostic": 0.4,
+        "humanAlignmentApproval": null
+      },
+      {
+        "occurrenceId": "computing:b6:pdf52:y279",
+        "requirementId": "computing:b6:pdf52:y279",
+        "sourceId": "computing",
+        "sourceSha256": "d622739de46fdc138508aa82b56a196453581677cd653bcab5f4b3723eb1ecca",
+        "printedCode": "B6.1.1.1.3",
+        "rawPrintedCode": "B6.1.1.1.3",
+        "pdfPage": 52,
+        "printedPage": "31",
+        "tableContentStandard": "B6.1.2.1",
+        "sourceStrand": {
+          "number": 1,
+          "title": "INTRODUCTION TO COMPUTING",
+          "page": 51
+        },
+        "sourceSubStrand": {
+          "number": 2,
+          "title": "INTRODUCTION TO MS-WINDOWS INTERFACE",
+          "page": 52
+        },
+        "statement": "Perform permanent delete or Empty Trash can and restoring files or icons in the recycle bin. Support learners to liken the Recycle bin and its use to the real-world office trash can.",
+        "sourceFlags": [
+          "printed_prefix_differs_from_table_standard"
+        ],
+        "textualOverlapDiagnostic": 0.3,
+        "humanAlignmentApproval": null
+      }
+    ],
+    "investigation": [
+      "printed_hierarchy_conflict_preserved_requires_NaCCA_clarification"
+    ],
+    "disposition": "preserve_existing_ID_and_source_ambiguities",
+    "productionMappingChanged": false,
+    "finding": "Two separate source tasks share B6.1.1.1.3 on PDF51/52. Keep both page-specific references and the existing combined ID; do not discard permanent-delete/restoring scope.",
+    "currentStatement": "Click, drag and scroll with the mouse and tell Recycle Bin delete from permanent delete.",
+    "humanApproval": null
+  }
+]

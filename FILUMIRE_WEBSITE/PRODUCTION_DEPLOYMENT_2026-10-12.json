@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-12",
+  "project": "filumire-website",
+  "projectId": "prj_wgK6IrwedlpjD7Wm8HBaHmdIdDQc",
+  "teamId": "team_ZGp9TfdK3M45ks3ViQZ9WgSW",
+  "deploymentId": "dpl_Dmho6o9p1iktU6iZjf8z7pDcbS3B",
+  "url": "https://filumire-website-fyaiu8dv9-tabicrentsil-6879s-projects.vercel.app",
+  "status": "READY",
+  "sourceFingerprint": "c7b469c3c3ff10be7d4411bcb3f73c8f9581d108fb40601bdff5f4f3b25b62af",
+  "sourceFileCount": 163,
+  "listedSourceHashesMatched": 93,
+  "sourceHashMismatches": 0,
+  "build": "Vercel production build passed (33 seconds)",
+  "routeChecks": {
+    "/": 200,
+    "/contact": 200,
+    "/fr/contact": 200
+  },
+  "contactAvailable": true,
+  "fontChecks": [
+    {
+      "path": "/fonts/montserrat-cyrillic-ext.woff2",
+      "status": 200,
+      "type": "font/woff2"
+    },
+    {
+      "path": "/fonts/montserrat-cyrillic.woff2",
+      "status": 200,
+      "type": "font/woff2"
+    },
+    {
+      "path": "/fonts/montserrat-vietnamese.woff2",
+      "status": 200,
+      "type": "font/woff2"
+    },
+    {
+      "path": "/fonts/montserrat-latin-ext.woff2",
+      "status": 200,
+      "type": "font/woff2"
+    },
+    {
+      "path": "/fonts/montserrat-latin.woff2",
+      "status": 200,
+      "type": "font/woff2"
+    },
+    {
+      "path": "/fonts/kalam-devanagari-400.woff2",
+      "status": 200,
+      "type": "font/woff2"
+    },
+    {
+      "path": "/fonts/kalam-latin-ext-400.woff2",
+      "status": 200,
+      "type": "font/woff2"
+    },
+    {
+      "path": "/fonts/kalam-latin-400.woff2",
+      "status": 200,
+      "type": "font/woff2"
+    },
+    {
+      "path": "/fonts/kalam-devanagari-700.woff2",
+      "status": 200,
+      "type": "font/woff2"
+    },
+    {
+      "path": "/fonts/kalam-latin-ext-700.woff2",
+      "status": 200,
+      "type": "font/woff2"
+    },
+    {
+      "path": "/fonts/kalam-latin-700.woff2",
+      "status": 200,
+      "type": "font/woff2"
+    }
+  ],
+  "emailReceiptVerified": false,
+  "emailTestSent": false,
+  "browserQaVerified": false,
+  "verificationMethod": "Authenticated Vercel HTTP connector; generic public web fetch unavailable",
+  "temporaryVerificationLinkRevoked": true
+}

@@ -40,6 +40,7 @@ import {
 import {
   getPendingTeacherReview,
   markPendingTeacherReviewReviewed,
+  resolveReviewIntervention,
 } from "../../../../../../services/teacher-review";
 
 seedContent();
@@ -202,6 +203,7 @@ export async function POST(
         pendingReview.response,
       clientRequestId:
         pendingReview.id,
+      interventionId: await resolveReviewIntervention(pendingReview),
     };
 
     const assessment =

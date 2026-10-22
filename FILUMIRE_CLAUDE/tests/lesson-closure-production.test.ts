@@ -55,6 +55,44 @@ for (const language of ["en", "fr"]) {
   assert.equal(model.summary.available, true); assert(model.summary.narration.length > 0); assert.equal(model.language, language);
   if (language === "fr") assert.match(model.summary.narration, /suite|nombres|règle/);
 }
+// Next can construct an internal localhost URL even when the browser connects
+// to 127.0.0.1. Match the actual Host, without trusting forwarded host input.
+const previousVercel = process.env.VERCEL;
+try {
+  delete process.env.VERCEL;
+  const originCases: Array<[string, string, Record<string, string>, number]> = [
+    ["loopback Host differs from internal URL", "http://localhost:3228", { host: "127.0.0.1:3228", origin: "http://127.0.0.1:3228", "sec-fetch-site": "same-origin" }, 200],
+    ["localhost", "http://localhost:3228", { host: "localhost:3228", origin: "http://localhost:3228" }, 200],
+    ["hosted same-origin", "https://learner.example.test", { host: "learner.example.test", origin: "https://learner.example.test" }, 200],
+    ["foreign origin", "http://localhost:3228", { host: "127.0.0.1:3228", origin: "https://evil.example" }, 403],
+    ["internal URL must not bypass Host", "http://localhost:3228", { host: "127.0.0.1:3228", origin: "http://localhost:3228" }, 403],
+    ["different port", "http://localhost:3228", { host: "127.0.0.1:3228", origin: "http://127.0.0.1:3229" }, 403],
+    ["different scheme", "http://localhost:3228", { host: "127.0.0.1:3228", origin: "https://127.0.0.1:3228" }, 403],
+    ["cross-site even with matching origin", "http://localhost:3228", { origin: "http://localhost:3228", "sec-fetch-site": "cross-site" }, 403],
+    ["same-site is not same-origin", "https://learner.example.test", { origin: "https://sibling.example.test", "sec-fetch-site": "same-site" }, 403],
+    ["opaque origin", "http://localhost:3228", { origin: "null" }, 403],
+    ["malformed origin", "http://localhost:3228", { origin: "not-an-origin" }, 403],
+    ["forwarded host cannot override Host", "http://localhost:3228", { host: "127.0.0.1:3228", origin: "https://evil.example", "x-forwarded-host": "evil.example", "x-forwarded-proto": "https" }, 403],
+  ];
+  for (const [label, internalUrl, originHeaders, status] of originCases) {
+    const response = await closurePost(new Request(`${internalUrl}/api/learning/closure`, { method: "POST",
+      headers: { "content-type": "application/json", cookie: a.cookie, ...originHeaders }, body: JSON.stringify({ receipt, language: "en" }) }));
+    assert.equal(response.status, status, label);
+    const body = await response.json();
+    if (status === 403) assert.equal(body.code, "invalid_origin", label);
+    else assert.equal(body.competencyId, data.decision.competencyId, label);
+  }
+  process.env.VERCEL = "1";
+  const proxied = await closurePost(new Request("http://localhost/api/learning/closure", { method: "POST",
+    headers: { "content-type": "application/json", cookie: a.cookie, host: "learner.example.test", origin: "https://learner.example.test", "x-forwarded-proto": "https", "sec-fetch-site": "same-origin" },
+    body: JSON.stringify({ receipt, language: "fr" }) }));
+  assert.equal(proxied.status, 200, "trusted deployment protocol follows existing same-origin policy");
+} finally {
+  if (previousVercel === undefined) delete process.env.VERCEL;
+  else process.env.VERCEL = previousVercel;
+}
+assert.equal(JSON.stringify(await getLearnerState(a.learnerId, data.decision.competencyId)), beforeState, "origin checks and summary reads preserve progress");
+assert.equal(JSON.stringify(await getEvidenceForLearner(a.learnerId)), beforeEvidence, "origin checks and summary reads preserve evidence");
 assert.equal((await closurePost(request("/api/learning/closure", { receipt, language: "en" }, b.cookie))).status, 404);
 assert.equal((await closurePost(request("/api/learning/closure", { receipt, language: "en" }, undefined, { "x-filumire-learner-id": a.learnerId }))).status, 401);
 assert.equal((await closurePost(request("/api/learning/closure", { receipt, language: "en", mastery: 1 }, a.cookie))).status, 400);

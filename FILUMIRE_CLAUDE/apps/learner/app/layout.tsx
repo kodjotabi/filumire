@@ -1,21 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Kalam } from "next/font/google";
+import "./local-fonts.css";
 import "./globals.css";
 import "./learner-interface.css";
 import ServiceWorkerRegister from "./ServiceWorkerRegister";
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  display: "swap",
-});
-
-const kalam = Kalam({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  display: "swap",
-  variable: "--font-hand",
-});
+import { PrivatePresentationNotice } from '../components/filumire/PrivatePresentationNotice';
 
 export const metadata: Metadata = {
   title: "FILUMIRE EduTutor",
@@ -46,7 +34,9 @@ export default function LearnerLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.className} ${kalam.variable}`}>
+      <body className="font-montserrat font-hand">
+        {/* Presentation availability is a server runtime setting, read after load so pages stay static. */}
+        <PrivatePresentationNotice />
         {children}
         <ServiceWorkerRegister />
       </body>

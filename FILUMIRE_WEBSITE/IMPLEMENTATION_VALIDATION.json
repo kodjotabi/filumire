@@ -1,0 +1,100 @@
+{
+  "date": "2026-10-11",
+  "localUrl": "http://127.0.0.1:3147",
+  "typescript": "PASS",
+  "productionBuild": "PASS",
+  "tests": {
+    "passed": 33,
+    "failed": 0
+  },
+  "http": {
+    "pages": 35,
+    "localizedPublicRoutes": 20,
+    "links": 117,
+    "images": 21,
+    "generatedAssets": 31,
+    "contactCategoryCases": 14,
+    "curriculumDeepLinks": 24,
+    "deepSwitchQueryPreservation": true
+  },
+  "contact": {
+    "unconfiguredStatus": 503,
+    "validationStatus": 400,
+    "crossOriginStatus": 403,
+    "realDelivery": "UNVERIFIED"
+  },
+  "browserInteractions": "UNVERIFIED: no browser available",
+  "responsiveLayouts": "UNVERIFIED",
+  "coverage": [
+    {
+      "grade": 4,
+      "subjects": {
+        "mathematics": {
+          "standards": 26,
+          "indicators": 71
+        },
+        "english": {
+          "standards": 64,
+          "indicators": 130
+        },
+        "science": {
+          "standards": 18,
+          "indicators": 24
+        },
+        "computing": {
+          "standards": 7,
+          "indicators": 27
+        }
+      }
+    },
+    {
+      "grade": 5,
+      "subjects": {
+        "mathematics": {
+          "standards": 24,
+          "indicators": 67
+        },
+        "english": {
+          "standards": 64,
+          "indicators": 133
+        },
+        "science": {
+          "standards": 23,
+          "indicators": 29
+        },
+        "computing": {
+          "standards": 18,
+          "indicators": 81
+        }
+      }
+    },
+    {
+      "grade": 6,
+      "subjects": {
+        "mathematics": {
+          "standards": 20,
+          "indicators": 43
+        },
+        "english": {
+          "standards": 65,
+          "indicators": 131
+        },
+        "science": {
+          "standards": 21,
+          "indicators": 26
+        },
+        "computing": {
+          "standards": 19,
+          "indicators": 98
+        }
+      }
+    }
+  ],
+  "verificationNotes": 75,
+  "unmatchedAdaptiveReferences": 15,
+  "alignmentMappings": 697,
+  "mappingsWithAuthoredActivities": 695,
+  "verifiedPublicLessons": 0,
+  "unrelatedGitStatusUnchanged": true,
+  "deployment": "NONE"
+}

@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {readFile,stat} from 'node:fs/promises';import {loadTs} from './load-ts.mjs';
+const {localizedAsset}=await import(await loadTs(new URL('../src/lib/localized-assets.ts',import.meta.url)));
+test('each confirmed English graphic selects an existing French equivalent',async()=>{for(const src of ['/product-preview/FILUMIRE-Interface-Page-04.png','/illustrations/learners-clean.svg','/illustrations/4 avatar together.png']){assert.equal(localizedAsset(src,'en'),src);const fr=localizedAsset(src,'fr');assert.notEqual(fr,src);assert.ok((await stat(new URL('../public'+fr,import.meta.url))).size>0);}assert.equal(localizedAsset('/icons/icon-mathematics.png','fr'),'/icons/icon-mathematics.png');});

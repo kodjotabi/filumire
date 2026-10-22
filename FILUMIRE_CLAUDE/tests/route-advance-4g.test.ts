@@ -1,11 +1,11 @@
 import { seedContent } from "../services/content-store/seed";
 import { getContentForCompetency } from "../services/content-store/index";
 import { createInitialLearnerState, getLearnerState, saveLearnerState } from "../services/learner-state/index";
-import { saveEvidence } from "../services/evidence-store/index";
+import { getEvidence, saveEvidence } from "../services/evidence-store/index";
 import { persistenceStore } from "../services/persistence-provider";
 import { getCompetency } from "../packages/curriculum/index";
 import { CONTENT_EXHAUSTED_NEEDS_SUPPORT } from "../services/learner-path/progression";
-import { GET } from "../apps/learner/app/api/learning/route";
+import { currentTopicRoute } from "./fixtures/current-topic-route";
 import type { LearnerCompetencyState, LearningEvidence } from "../packages/domain";
 import { useTinyPilotPool } from "./repro-4a-helpers";
 
@@ -38,8 +38,8 @@ function base(learnerId: string, id: string, extra: Partial<LearnerCompetencySta
   return { ...createInitialLearnerState(learnerId, id).competencies[0], ...extra };
 }
 
-async function get(learnerId: string, competencyId: string) {
-  const response = await GET(new Request(`http://localhost/api/learning?sessionId=session-4g-${Date.now()}&subjectId=${SUBJECT}&competencyId=${competencyId}`, { headers: { "x-filumire-learner-id": learnerId } }));
+async function get(route: Awaited<ReturnType<typeof currentTopicRoute>>, selectedTopic?: string) {
+  const response = await route.get(selectedTopic);
   const body = (await response.json()) as { decision?: { action: string; reasonCode: string; competencyId: string }; content?: { competencyId: string }; nextCompetency?: string; error?: string };
   return { status: response.status, body };
 }
@@ -55,7 +55,8 @@ async function masteryAdvance(): Promise<void> {
   });
   await saveLearnerState({ ...createInitialLearnerState(learnerId, P1), competencies: [done] });
 
-  const { status, body } = await get(learnerId, P1);
+  const route = await currentTopicRoute(learnerId, P1);
+  const { status, body } = await get(route);
   check(status === 200, `mastery advance: route 200 (was 500 before 4G) (${status} ${body.error ?? ""})`);
   check(body.decision?.action === "advance" && body.decision.reasonCode === "MASTERY_RETENTION_TRANSFER_CONFIRMED", `mastery advance: decision (${body.decision?.action}/${body.decision?.reasonCode})`);
   check(!body.content || body.content.competencyId === body.decision?.competencyId, "mastery advance: content belongs to the next competency");
@@ -63,8 +64,14 @@ async function masteryAdvance(): Promise<void> {
   const stored = await getLearnerState(learnerId, body.decision!.competencyId);
   check(stored?.competencies[0].competencyId === body.decision!.competencyId, "mastery advance: next competency is now current");
 
-  const again = await get(learnerId, body.decision!.competencyId);
+  const again = await get(route);
   check(again.status === 200 && again.body.decision?.competencyId === body.decision!.competencyId, `next request works on the new competency (${again.status} ${again.body.decision?.action})`);
+  const evidenceBefore = await getEvidence(learnerId, P1);
+  const revisit = await get(route, P1);
+  check(revisit.status === 200 && revisit.body.decision?.action === "teach" && revisit.body.decision.reasonCode === "TOPIC_REVISIT", "explicit topic selection still teaches a mastered topic again");
+  check(revisit.body.decision?.competencyId === P1 && revisit.body.content?.competencyId === P1, "revisit teaches the selected topic, not its successor");
+  check((await getLearnerState(learnerId, P1))!.competencies.find((item) => item.competencyId === P1)!.masteryEstimate === done.masteryEstimate, "revisit preserves earned mastery");
+  check(JSON.stringify(await getEvidence(learnerId, P1)) === JSON.stringify(evidenceBefore), "revisit creates no assessment evidence");
 }
 
 async function exhaustedAdvance(): Promise<void> {
@@ -79,7 +86,8 @@ async function exhaustedAdvance(): Promise<void> {
   }
   await saveLearnerState({ ...createInitialLearnerState(learnerId, P1), competencies: [base(learnerId, P1, { evidenceCount: 4, masteryEstimate: 0.3, confidence: 0.4, diagnosticState: "insufficient_evidence" })] });
 
-  const { status, body } = await get(learnerId, P1);
+  const route = await currentTopicRoute(learnerId, P1);
+  const { status, body } = await get(route);
   check(status === 200, `exhausted advance: route 200 (${status} ${body.error ?? ""})`);
   check(body.decision?.reasonCode === "CONTENT_EXHAUSTED_NEEDS_SUPPORT", `exhausted advance: decision (${body.decision?.action}/${body.decision?.reasonCode})`);
   const stored = await getLearnerState(learnerId, P1);

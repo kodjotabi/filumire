@@ -140,7 +140,10 @@ export async function fetchDashboardSnapshot(subjectId?: string): Promise<Learni
       headers: getApiHeaders(), cache: "no-store",
     });
   } catch { throw new LearningNetworkError("Unable to reach FILUMIRE."); }
-  if (!response.ok) throw new LearningRequestError("Unable to load dashboard.", response.status);
+  if (!response.ok) {
+    const result = await response.json().catch(() => null);
+    throw new LearningRequestError(result?.error ?? "Unable to load dashboard.", response.status);
+  }
   return response.json();
 }
 

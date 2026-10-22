@@ -1,0 +1,107 @@
+[
+  {
+    "subject": "computing",
+    "grade": 5,
+    "code": "B5.6.9.1.1",
+    "competencyId": "competency-gh-computing-b5-6-9-1-1",
+    "reason": "Adaptive mapping has no matching verified printed requirement in this register."
+  },
+  {
+    "subject": "english",
+    "grade": 5,
+    "code": "B5.1.3.1.1",
+    "competencyId": "competency-gh-english-b5-1-3-1-1",
+    "reason": "Adaptive mapping has no matching verified printed requirement in this register."
+  },
+  {
+    "subject": "english",
+    "grade": 5,
+    "code": "B5.4.9.3.2",
+    "competencyId": "competency-gh-english-b5-4-9-3-2",
+    "reason": "Adaptive mapping has no matching verified printed requirement in this register."
+  },
+  {
+    "subject": "mathematics",
+    "grade": 5,
+    "code": "B5.3.2.2.2",
+    "competencyId": "competency-gh-math-b5-3-2-2-2",
+    "reason": "Adaptive mapping has no matching verified printed requirement in this register."
+  },
+  {
+    "subject": "mathematics",
+    "grade": 5,
+    "code": "B5.3.2.2.4",
+    "competencyId": "competency-gh-math-b5-3-2-2-4",
+    "reason": "Adaptive mapping has no matching verified printed requirement in this register."
+  },
+  {
+    "subject": "english",
+    "grade": 6,
+    "code": "B6.2.4.1.1",
+    "competencyId": "competency-gh-english-b6-2-4-1-1",
+    "reason": "Adaptive mapping has no matching verified printed requirement in this register."
+  },
+  {
+    "subject": "english",
+    "grade": 6,
+    "code": "B6.4.10.1.1",
+    "competencyId": "competency-gh-english-b6-4-10-1-1",
+    "reason": "Adaptive mapping has no matching verified printed requirement in this register."
+  },
+  {
+    "subject": "english",
+    "grade": 6,
+    "code": "B6.5.5.1.1",
+    "competencyId": "competency-gh-english-b6-5-5-1-1",
+    "reason": "Adaptive mapping has no matching verified printed requirement in this register."
+  },
+  {
+    "subject": "mathematics",
+    "grade": 6,
+    "code": "B6.1.2.6.1",
+    "competencyId": "competency-gh-math-b6-1-2-6-1",
+    "reason": "Adaptive mapping has no matching verified printed requirement in this register."
+  },
+  {
+    "subject": "mathematics",
+    "grade": 6,
+    "code": "B6.1.2.6.3",
+    "competencyId": "competency-gh-math-b6-1-2-6-3",
+    "reason": "Adaptive mapping has no matching verified printed requirement in this register."
+  },
+  {
+    "subject": "mathematics",
+    "grade": 6,
+    "code": "B6.3.3.5.3",
+    "competencyId": "competency-gh-math-b6-3-3-5-3",
+    "reason": "Adaptive mapping has no matching verified printed requirement in this register."
+  },
+  {
+    "subject": "mathematics",
+    "grade": 6,
+    "code": "B6.4.1.2.2",
+    "competencyId": "competency-gh-math-b6-4-1-2-2",
+    "reason": "Adaptive mapping has no matching verified printed requirement in this register."
+  },
+  {
+    "subject": "mathematics",
+    "grade": 6,
+    "code": "B6.4.2.2.3",
+    "competencyId": "competency-gh-math-b6-4-2-2-3",
+    "reason": "Adaptive mapping has no matching verified printed requirement in this register."
+  },
+  {
+    "subject": "science",
+    "grade": 6,
+    "code": "B6.2.1.3.1",
+    "competencyId": "competency-gh-science-b6-2-1-3-1",
+    "reason": "Adaptive mapping has no matching verified printed requirement in this register."
+  },
+  {
+    "subject": "science",
+    "grade": 6,
+    "code": "B6.5.3.1.1",
+    "competencyId": "competency-gh-science-b6-5-3-1-1",
+    "reason": "Adaptive mapping has no matching verified printed requirement in this register."
+  }
+]

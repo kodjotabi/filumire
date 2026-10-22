@@ -1,0 +1,2599 @@
+
+=== PHYSICAL PDF PAGE 1 ===
+MINISTRY OF EDUCATION
+REPUBLIC OF GHANA
+SCIENCE
+CURRICULUM FOR PRIMARY SCHOOLS
+(BASIC 4 - 6)
+SEPTEMBER 2019
+
+=== PHYSICAL PDF PAGE 2 ===
+Science Curriculum for Primary Schools
+Enquiries and comments on this Curriculum should be addressed to:
+The Executive Secretary
+National Council for Curriculum and Assessment (NaCCA)
+Ministry of Education
+P. O. Box CT PM 77
+Cantonments
+Accra
+Telephone: 0302909071, 0302909862
+Email: info@nacca.gov.gh
+Website: www.nacca.gov.gh
+© NaCCA, Ministry of Education 2019 ii
+
+=== PHYSICAL PDF PAGE 3 ===
+FOREWORD
+The new curriculum for Ghana’s primary schools is standards-based, which is our demonstration of placing learning at the heart of every classroom and
+ensuring that every learner receives quality education. Provision of accessible quality education for all is non-negotiable if we are to meet the human
+capital needs of our country, required for accelerated sustainable national development. It is for this reason that the new curriculum sets out clearly the
+learning areas that need to be taught, how they should be taught and how they should be assessed. It provides a set of core competencies and standards
+that learners are to know, understand and demonstrate as they progress through the curriculum from one content standard to the other and from one
+phase to the next. The curriculum and its related teachers’ manual promote the use of inclusive and gender responsive pedagogy within the context of
+learning-centred teaching methods so that every learner can participate in every learning process and enjoy learning. The curriculum encourages the use
+of Information and Communication Technologies (ICTs) for teaching and learning – ICTs as teaching and learning materials.
+The new curriculum has at its heart the acquisition of skills in the 4Rs of Reading, wRiting, aRithmetic and cReativity by all learners. It is expected that at
+any point of exit from a formal education, all learners should be equipped with these foundational skills for life, which are also prerequisites for Ghana
+becoming a learning nation. The graduates from the school system should become functional citizens in the 4Rs and lifelong learners. They should be
+digital literates, critical thinkers and problem solvers. The education they receive through the study of the learning areas in the curriculum should enable
+them to collaborate and communicate well with others and be innovative. The graduates from Ghana’s schools should be leaders with a high sense of
+national and global identity. The curriculum therefore provides a good opportunity in its design to develop individuals with the right skills and attitudes to
+lead the transformation of Ghana into an industrialised learning nation.
+For this reason, the Ministry of Education expects that learners, as a result of the new knowledge, skills and values they have acquired through the new
+curriculum, will show a new sense of identity as creative, honest and responsible citizens. These are our core values that underpin the identification and
+selection of the learning areas for this curriculum. These core values serve as fundamental building blocks for developing into our learners the spirit of
+teamwork, respect, resilience and the commitment to achieving excellence. The Ministry endorses a quality learning experience as an entitlement for
+each of Ghana’s school-going girl and boy; the curriculum has rightly focused on learning and learning progression. The Ministry has also endorsed
+accountability as a critical domain for effective workings of standards-based curriculum.
+More importantly the role of the teacher is to make this curriculum work for the intended purpose - to inculcate in learners the core competencies and
+values and to make learning happen; improve learning outcomes – and the support that teachers need is duly recognised and endorsed by my Ministry.
+The Ministry will support the implementation of the curriculum to include capacity development of all teachers in the new curriculum. Teachers matter in
+the development and delivery of the standards-based curriculum and we will continue to support our teachers on this journey that we have started
+together to put learning at the centre of what we do best; teach!
+I thank all those who have contributed their time and expertise to the development of this curriculum for primary schools in Ghana.
+Dr. Matthew Opoku Prempeh (MP)
+The Honourable Minister of Education
+i
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 4 ===
+TABLE OF CONTENTS
+FOREWORD...................................................................................................................................................... Error! Bookmark not defined.
+PHILOSOPHY .................................................................................................................................................... Error! B ookmark not defined.
+GENERAL AIMS ................................................................................................................................................ Error! Bookmark not defined.
+CORE COMPETENC I ES ................................ ................................ ................................ ................................ . Error! Bookmark not defined.
+ORGANISATION OF THE CURRICULUM ........................................................................................................................................................xvii
+SCOPE AND SEQUENCE .............................................................................................................................. Error! Bookmark not defined.
+BASIC 4 ................................................................................................................................................................................................ .............................. 2
+STRAND 2: CYCLES ................................................................................................................................................................................................ ...... 5
+STRAND 3: SYSTEMS ................................................................................................................................................................................................ .... 8
+STRAND 4: FORCES AND ENERGY ................................................................................................................................................................ .... 10
+STRAND 5: HUMANS AND THE ENVIRONMENT ................................................................................................................................ ......... 13
+BASIC 5 ................................................................................................................................................................................................ ........................... 17
+STRAND 1: DIVERSTY OF MATTER ................................................................................................................................................................ ..... 17
+STRAND 2: CYCLES ................................................................................................................................................................................................ ... 20
+STRAND 3: SYSTEMS ................................................................................................................................................................................................ . 23
+STRAND 4: FORCES AND ENERGY ................................................................................................................................................................ .... 25
+STRAND 5: HUMANS AND THE ENVIRONMENT ................................................................................................................................ ......... 29
+BASIC 6 ................................................................................................................................................................................................ ........................... 34
+ii
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 5 ===
+STRAND 1: DIVERSITY OF MATTER ................................................................................................................................................................ .... 34
+STRAND 2: CYCLES ................................................................................................................................................................................................ ... 36
+STRAND 3: SYSTEMS ................................................................................................................................................................................................ . 38
+STRAND 4: FORCES AND ENERGY ................................................................................................................................................................ .... 40
+STRAND 5: HUMANS AND THE ENVIRONMENT ................................................................................................................................ ......... 44
+iii
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 6 ===
+RATIONALE FOR PRIMARY SCIENCE
+Science forms an integral part of our everyday life and it is a universal truth that development is hinged on science. Science and Technology is the
+backbone of social, economic, political, and physical development of a country. It is a never-ending creative process, which serves to promote discovery
+and understanding. It consists of a body of knowledge which attempts to explain and interpret phenomena and experiences. Science has changed our
+lives and it is vital to Ghana’s future development.
+To provide quality science education, teachers must facilitate learning in the science classroom. This will provide the foundations for discovering and
+understanding the world around us and lay the grounds for science and science related studies at higher levels of education. Learners should be
+encouraged to understand how science can be used to explain what is occurring, predict how things will behave and analyse causes and origin of things in
+our environment. The science curriculum has considered the desired outcomes of education for learners at the basic level. Science is also concerned with
+the development of attitudes and therefore it is important for all citizens to be scientifically and technologically literate for sustainable development.
+Science therefore ought to be taught using hands-on and minds-on approaches which learners will find as fun and adopt science as a culture.
+PHILOSOPHY
+Teaching Philosophy
+Ghana believes that an effective science education needed for sustainable development should be inquiry-based. Thus science education must provide
+learners with opportunities to expand, change, enhance and modify the ways in which they view the world. It should be pivoted on learner-centred
+science teaching and learning approaches that engage learners physically and cognitively in the knowledge-acquiring process in a rich and rigorous inquiry-
+driven environment.
+Learning Philosophy
+Science Learning is an active contextualized process of constructing knowledge based on learners’ experiences rather than acquiring it. Learners are
+information constructors who operate as researchers. Teachers serve as facilitators by providing the enabling environment that promotes the
+construction of learners’ own knowledge based on their previous experiences. This makes learning more relevant to the learner and leads to the
+development of critical thinkers and problem solvers.
+GENERAL AIMS
+The curriculum is aimed at developing individuals to become scientifically literate, good problem solvers, have the ability to think creatively and have both
+the confidence and competence to participate fully in Ghanaian society as responsible local and global citizens.
+SUBJECT AIMS
+The science curriculum is designed to help learners to:
+1. Develop the spirit of curiosity, creativity, innovation and critical thinking for investigating and understanding their envir onment.
+iv
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 7 ===
+2. Develop skills, habits of mind and attitudes necessary for scientific inquiry.
+3. Communicate scientific ideas effectively.
+4. Use scientific concepts in explaining their own lives and the world around them.
+5. Live a healthy and quality life.
+6. Develop humane and responsible attitude towards the use of all resources of Ghana and elsewhere.
+7. Show concern and understanding of the interdependence of all living things and the Earth on which they live.
+8. Design activities for exploring and applying scientific ideas and concepts.
+9. Develop skills for using technology to enhance learning.
+10. Use m aterials in their environment in a sustainable manner.
+INSTRUCTIONAL EXPECTATIONS
+1. Guide and facilitate learning by generating discourse among learners and challenging them to accept and share responsibility for their own
+learning based on their unique individual differences.
+2. Select science content, adapt and plan lessons to meet the interests, knowledge, understanding, abilities, and experiences of learners.
+3. Work together as colleagues within and across disciplines and grade levels to develop communities of science learners who exhibit the skills of
+scientific inquiry and the attitudes and social values conducive to science learning.
+4. Use multiple methods and systematically gather data about learners’ understanding and ability, to guide science teaching and learning with
+arrangements to provide feedback to both learners and parents.
+5. Design and manage learning environments that provide students with the time, space, and resources needed for learning science.
+CORE COMPETENC I ES
+The core competences describe a body of skills that teachers at all levels should seek to develop in their learners. They are ways in which teachers and
+learners engage with the subject matter as they learn the subject. The competences presented here describe a connected body of core skills that are
+acquired throughout the processes of teaching and learning.
+Critical Thinking and Problem Solving (CP)
+v
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 8 ===
+This skill develops learners’ cognitive and reasoning abilities to enable them analyse and solve problems. Critical thinking and problem solving skill enables
+learners to draw on their own experiences to analyse situations and choose the most appropriate out of a number of possible solutions. It requires that
+learners embrace the problem at hand, persevere and take responsibility for their own learning.
+Creativity and Innovation (CI)
+Creativity and Innovation promotes the development of entrepreneurial skills in learners’ through their ability to think of new ways of solving
+problems and developing technologies for addressing the problem at hand. It requires ingenuity of ideas, arts, technology and enterprise. Learners
+having this skill are also able to think independently and creatively.
+Communication and Collaboration (CC)
+This competence promotes in learners the skills to make use of languages, symbols and texts to exchange information about themselves and their life
+experiences. Learners actively participate in sharing their ideas. They engage in dialogue with others by listening to and learning from them. They also
+respect and value the views of others.
+Cultural Identity and Global Citizenship (CG)
+This competence involves developing learners to put country and service foremost through an understanding of what it means to be active citizens. This
+is done by inculcating in learners a strong sense of social and economic awareness. Learners make use of the knowledge, skills, competences and attitudes
+acquired to contribute effectively towards the socioeconomic development of the country and on the global stage. Learners build skills to critically
+identify and analyse cultural and global trends that enable them to contribute to the global community.
+Personal Development and Leadership (PL)
+This competence involves improving self-awareness and building self-esteem. It also entails identifying and developing talents, fulfilling dreams and
+aspirations. Learners are able to learn from mistakes and failures of the past. They acquire skills to develop other people to meet their needs. It involves
+recognising the importance of values such as honesty and empathy and seeking the well-being of others. Personal development and leadership enables
+learners to distinguish between right and wrong. The skill helps them to foster perseverance, resilience and self-confidence. PL helps them acquire the
+skill of leadership, self-regulation and responsibility necessary for lifelong learning.
+Digital Literacy (DL)
+Digital Literacy develops learners to discover, acquire knowledge, and communicate through ICT to support their learning. It also makes them use digital
+media responsibly.
+LEARNING DOMAINS (EXPECTED LEARNING BEHAVIOURS)
+A central aspect of this curriculum is the concept of three integral learning domains that should be the basis for instruction and assessment. These are
+vi
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 9 ===
+- Knowledge, Understanding and Application
+- Process Skills
+- Attitudes and Values
+KNOWLEDGE, UNDERSTANDING AND APPLICATION
+Under this domain, learners acquire knowledge through some learning experiences. They may also show understanding of concepts by comparing,
+summarising, re-writing etc. in their own words and constructing meaning from instruction. The learner may also apply the knowledge acquired in some
+new contexts. At a higher level of learning behaviour, the learner may be required to analyse an issue or a problem. At a much more higher level, the
+learner may be required to synthesize knowledge by integrating a number of ideas to formulate a plan, solve a problem, compose a story, or a piece of
+music. Further, the learners may be required to evaluate, estimate and interpret a concept. At the last level, which is the highest, learners may be
+required to create, invent, compose, design and construct. These learning behaviours “knowing ”, “understanding”, “applying”, “analysing”, “synthesising”,
+“evaluating” and “creating” fall under the domain “Knowledge, Understanding and Application”.
+In this curriculum, learning indicators are stated with action verbs to show what the learner should know and be able to do. For example, the learner
+will be able to describe something. Being able to “describe” something after teaching and learning has been completed means that the learner has
+acquired “knowledge”. Being able to explain, summarise, and give examples etc. means that the learner has understood the concept taught.
+Similarly, being able to develop, defend, etc. means that the learner can “apply” the knowledge acquired in some new context. You will note that each of
+the indicators in the curriculum contains an “action verb” that describes the behaviour the learner will be able to demonstrate after teaching and learning
+has taken place. “Knowledge, Understanding and Application” is a domain that should be the prime focus of teaching and learning in schools. Teaching in
+most cases tends to stress on knowledge acquisition to the detriment of other higher level behaviours such as applying knowledge.
+Each action verb in any indicator outlines the underlying expected outcome. Each indicator must be read carefully to know the learning domain towards
+which you have to teach. The focus is to move teaching and learning from the didactic acquisition of “knowledge” where there is fact memorisation,
+heavy reliance on formulae, remembering facts without critiquing them or relating them to real world – surface learning – to a new position called –
+deep learning . Learners are expected to deepen their learning by knowledge application to develop critical thinking skills and to generate creative ideas
+to solve real life problems in their school lives and later in their adult lives. This is the position where learning becomes beneficial to the learner.
+The explanation and the key words involved in the “Knowledge, Understanding and Application” domain are as follows:
+Knowing: The ability to remember, recall, identify, define, describe, list, name, match, state principles, facts and concepts. Knowledge is the
+ability to remember or Recall concepts already learnt and this constitutes the lowest level of learning.
+Understanding: The ability to explain, summarise, translate, rewrite, paraphrase, give examples, generalise, estimate or predict
+consequences based upon a trend. Understanding is generally the ability to grasp the meaning of some concepts that may be
+verbal, pictorial, or symbolic.
+vii
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 10 ===
+Applying: This dimension is also referred to as “Use of Knowledge”. Ability to use knowledge or apply knowledge, apply rules, methods,
+principles, theories, etc. to situations that are new and unfamiliar. It also involves the ability to produce, solve, plan, demonstrate,
+discover etc.
+Analysing: The ability to break down concept/information into its component parts; to differentiate, compare, distinguish, outline, separate,
+identify significant points etc., ability to recognise unstated assumptions and logical fallacies; ability to recognise inferences from
+facts etc.
+Synthesising: The ability to put parts or ideas together to form a new whole. It involves the ability to combine, compile, compose, devise,
+plan, revise, organise, create, generate new ideas and solutions.
+Evaluating: The ability to appraise, compare features of different things and make comments or judgment, contrast, criticise, justify, support,
+discuss, conclude, make recommendations etc. Evaluation refers to the ability to judge the worth or value of some concepts
+based on some criteria.
+Creating: The ability to use information or materials to plan, compose, produce, manufacture or construct other products.
+From the foregoing, creating is the highest form of thinking and learning and is therefore a very important behaviour. This unfortunately, is the
+area where most learners perform poorly. In order to get learners to develop critical thinking, skills beginning right from the lower primary
+level, it is advised that you do your best to help your learners to develop analytic skills as we have said already.
+SKILLS AND PROCESSES
+These are specific activities or tasks that indicate performance or proficiency in the learning of science. They are useful benchmarks for planning lessons,
+developing exemplars and are the core of inquiry-based learning.
+Equipment and apparatus handling
+This is the skill of knowing the functions and limitations of various apparatus, and developing the ability to select and handle them appropriately for
+various tasks.
+viii
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 11 ===
+Observing
+This is the skill of using the senses to gather information about objects or events. This also includes the use of instruments to extend the range of our
+senses.
+Classifying
+This is the skill of grouping objects or events based on common characteristics.
+Comparing
+This is the skill of identifying the similarities and differences between two or more objects, concepts or processes.
+Communicating/Reporting
+This is the skill of transmitting, receiving and presenting information in concise, clear and accurate forms - verbal, written, pictorial, tabular or graphical.
+Predicting
+This is the skill of assessing the likelihood of an outcome based on prior knowledge of how things usually turn out.
+Analysing
+This is the skill of identifying the parts of objects, information or processes, and the patterns and relationships between these parts.
+Generating possibilities
+This is the skill of exploring all the options, possibilities and alternatives beyond the obvious or preferred one.
+Evaluating
+This is the skill of assessing the reasonableness, accuracy and quality of information, processes or ideas. This is also the skill of assessing the quality and
+feasibility of objects.
+Designing
+This is the skill of Visualizing and drawing new objects or gargets from imagination.
+Measuring
+This is the skill of using measuring instruments and equipment for measuring, reading and making observations.
+Interpreting
+ix
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 12 ===
+This is the skill of evaluating data in terms of its worth: good, bad, reliable, unreliable; making inferences and predictions from written or graphical data;
+extrapolating and deriving conclusions. Interpretation is also referred to as “Information Handling”.
+Recording
+This is the skill of drawing or making graphical representation boldly and clearly, well labelled and pertinent to the issue at hand.
+Generalising
+This is the skill of being able to use the conclusions arrived at in an experiment to what could happen in similar situations.
+Designing of Experiments
+This is the skill of developing hypotheses; planning and designing of experiments; persistence in the execution of experimental activities; modification of
+experimental activities where necessary in order to reach conclusions.
+ATTITUDES AND VALUES
+To be effective, competent and reflective citizens, who will be willing and capable of solving personal and societal problems, learners should be exposed
+to situations that challenge them to raise questions and attempt to solve problems. Learners, therefore need to acquire positive attitudes, values and
+psychosocial skills that will enable them participate in debates and take a stand on issues affecting them and others.
+Attitudes
+i. Curiosity :
+The inclination or feeling toward seeking information about how things work in a variety of fields.
+ii. Perseverance :
+The ability to pursue a problem until a satisfying solution is found.
+iii. Flexibility in ideas :
+Willingness to change opinion in the face of more plausible evidence.
+iv. Respect for Evidence :
+Willingness to collect and use data in one’s investigation, and also have respect for data collected by others.
+v. Reflection:
+The habit of critically reviewing ways in which an investigation has been carried out to see possible faults and other ways by which the investigation
+could be improved upon.
+x
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 13 ===
+The teacher should endeavour to ensure that learners cultivate the above scientific attitudes and process skills as a prelude to effective work in
+science.
+Values
+At the heart of this curriculum is the belief in nurturing honest, creative and responsible citizens. As such, every part of this curriculum, including the
+related pedagogy, should be consistent with the following set of values.
+Respect: This includes respect for the nation of Ghana, its institutions and laws and the culture and respect among its citizens and friends of Ghana.
+Diversity: Ghana is a multicultural society in which every citizen enjoys fundamental rights and responsibilities. Learners must be taught to respect
+the views of all persons and to see national diversity as a powerful force for nation development. The curriculum promotes social cohesion.
+Equity: The socio-economic development across the country is uneven. Consequently, it is necessary to ensure an equitable distribution of resources
+based on the unique needs of learners and schools. Ghana’s learners are from diverse backgrounds which require the provision of equal opportunities to
+all, and that, all strive to care for each other.
+Commitment to achieving excellence: Learners must be taught to appreciate the opportunities provided through the curriculum and persist in doing
+their best in whatever field of endeavour as global citizens. The curriculum encourages innovativeness through creative and critical thinking and the use of
+contemporary technology.
+Teamwork/Collaboration: Learners are encouraged to be become committed to team-oriented working and learning environments. This also means
+that learners should have an attitude of tolerance to be able to live peacefully with all persons.
+Truth and Integrity: The curriculum aims to develop learners into individuals who will consistently tell the truth irrespective of the consequences. In
+addition, be morally upright with the attitude of doing the right thing even when no one is watching. Also, be true to themselves and be willing to live the
+values of honesty and compassion. Equally important, is the practice of positive values as part of the ethos or culture of the work place, which includes
+integrity and perseverance. These underpin the learning processes to allow learners to apply skills and competences in the world of work.
+The action verbs provided in the learning domains in each content standard should help you to structure your teaching to achieve the desired learning
+outcomes. Select from the action verbs provided for your teaching, for evaluation exercises and for test construction. Check the learning indicators to
+ensure that you have given the required emphasis to each of the learning domains in your teaching and assessment.
+xi
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 14 ===
+ASSESSMENT
+Assessment is a process of collecting and evaluating information about learners and using the information to make decisions to improve their learning.
+In this curriculum, it is suggested that assessment is used to promote learning. Its purpose is to identify the strengths and weaknesses of learners to
+enable teachers ascertain their learner’s response to instruction.
+Assessment is both formative and summative. Formative assessment is viewed in terms of Assessment as learning and Assessment for learning.
+Assessment as learning: Assessment as learning relates to engaging learners to reflect on the expectations of their learning. Information that learners
+provide the teacher forms the basis for refining teaching-learning strategies. Learners are assisted to play their roles and to take responsibility of their
+own learning to improve performance. Learners are assisted to set their own goals and monitor their progress.
+Assessment for learning : It is an approach used to monitor learner’s progress and achievement. This occurs throughout the learning process. The
+teacher employs assessment for learning to seek and interpret evidence which serves as timely feedback to refine their teaching strategies and improve
+learners’ performance. Learners become actively involved in the learning process and gain confidence in what they are expected to learn.
+Assessment of learning : This is summative assessment. It describes the level learners have attained in the learning, what they know and can do over a
+period of time. The emphasis is to evaluate the learner’s cumulative progress and achievement.
+It must be emphasised that all forms of assessment should be based on the domains of learning. In developing assessment procedures, try to select
+indicators in such a way that you will be able to assess a representative sample from a given strand. Each indicator in the curriculum is considered a
+criterion to be achieved by the learners. When you develop assessment items or questions that are based on a representative sample of the indicators
+taught, the assessment is referred to as a “Criterion-Referenced Assessment”. In many cases, a teacher cannot assess all the indicators taught in a term
+or year. The assessment procedure you use i.e. class assessments, homework, projects etc. must be developed in such a way that the various procedures
+complement one another to provide a representative sample of indicators taught over a period.
+SUGGESTED TIME ALLOCATION
+A total of four periods a week, each period consisting of thirty minutes, is allocated to the teaching of Science at the Upper Primary level. It is
+recommended that the teaching periods be divided as follows:
+Theory: 2 periods per week (two periods of 30 minutes each)
+Practical: 2 periods per week (one double-period)
+xii
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 15 ===
+PEDAGOGICAL APPROACHES
+These include the approaches, methods and strategies for ensuring that every learner benefits from appropriate and relevant teaching and learning
+episodes which are timely assessed and feedback provided to the learner and other stakeholders such as parents and education authorities. It includes the
+type and use of appropriate and relevant teaching and learning resources to ensure that all learners attain the expected level of learning outcomes. The
+curriculum emphasises:
+ The creation of learning-centred classrooms through the use of creative approaches to teaching and learning as strategies to ensuring
+learner empowerment and independent learning.
+ the positioning of inclusion and equity at the centre of quality teaching and learning.
+ the use of differentiation and scaffolding as teaching and learning strategies for ensuring that no learner is left behind
+ the use of Information and Communications Technology (ICT) as a pedagogical tool.
+ the identification of subject specific instructional expectations needed for making learning in the subject relevant to learners
+ the integration of assessment for learning, as learning and of learning into the teaching and learning process and as an accountability
+strategy
+ use questioning techniques that promote deeper learning
+LEARNING-CENTRED PEDAGOGY
+The learner is at the centre of learning. At the heart of the curriculum is an emphasis on learning progression and improvement of learning outcomes for
+Ghana’s young people with a focus on the 4Rs – Reading, wRiting, aRithmetic and cReativity. It is expected that at each curriculum phase, learners would
+be offered the essential learning experiences to progress seamlessly to the next phase. Where there are indications that a learner is not sufficiently ready
+for the next phase a compensatory provision through differentiation should be provided to ensure that such a learner is ready to progress with his/her
+cohort. At the primary school, the progression phases are: pre-primary (KG1 – 2), primary phases (B1 – B3 and B4 to B6).
+The curriculum encourages the creation of a learning-centred classroom with the opportunity for learners to engage in meaningful “hands-on” activities
+that bring home to the learner what they are learning in school and what they know from outside of school. The learning centred classroom is a place for
+the learners to discuss ideas and through the inspiration of the teacher actively engage in looking for answers through working in groups to solve
+problems. This also includes researching for information and analysing and evaluating the information obtained. The aim of the learning-centred classroom
+approach is to develop learner autonomy so that learners can take ownership of their learning. It provides the opportunity for deep and profound
+learning to take place.
+The teacher should create a learning atmosphere that ensures:
+ Learners feel safe and accepted.
+ Learners are given frequent opportunities to interact with varied sources of information, teaching and learning materials and ideas in a variety of
+ways.
+ The teacher assumes the position of a facilitator or coach who: Helps learners to identify a problem suitable for investigation via project work.
+ Problems are connected to the context of the learners’ world so that it presents authentic opportunities for learning.
+xiii
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 16 ===
+ Subject matter around the problem, not the discipline.
+ Learners responsibly define their learning experience and draw up a plan to solve the problem in question.
+ Learners collaborate whilst learning.
+ Demonstrate the results of their learning through a product or performance.
+It is more productive for learners to find answers to their own questions rather than for teachers to provide the answers and their opinions in a learning-
+centred classroom.
+INCLUSION
+Inclusion entails access and learning for all learners, especially, those disadvantaged. All learners are entitled to a broad and balanced curriculum in every
+school in Ghana. The daily learning activities to which learners are exposed should ensure that the learners’ right to equal access to quality education is
+being met. The curriculum suggests a variety of approaches that address learners’ diversity and their special needs in the learning process. These
+approaches when used in lessons, will contribute to the full development of the learning potential of every learner. Learners have individual needs and
+different learning styles, learning experiences and different levels of motivation for learning. Planning, delivery and reflection on daily learning episodes
+should take these differences into consideration. The curriculum therefore promotes:
+ learning that is linked to the learner’s background and to their prior experiences, interests, potential and capacities;
+ learning that is meaningful because it aligns with learners’ ability (e.g. learning that is oriented towards developing general capabilities and solving
+the practical problems of everyday life); and
+ The active involvement of the learners in the selection and organisation of learning experiences, making them aware of their importance in the
+process and also enabling them to assess their own learning outcomes.
+DIFFERENTIATION AND SCAFFOLDING
+This curriculum is to be delivered through the use of creative approaches. Differentiation and Scaffolding are pedagogical approaches to be used within
+the context of the creative approaches.
+Differentiation is a process by which differences between learne rs (learning styles, interest and readiness to learn etc.) are accommodated so that all
+students in a group have best chance of learning. Differentiation could be by task, support and outcome. Differentiation, a s a way of ensuring each
+learner benefits a dequately from the delivery of the curriculum, can be achieved in the classroom through:
+ Task
+ One-on-one support
+ Outcome
+Differentiation by task involves teachers setting different tasks for learners of different ability e.g. in sketching the plan and shape of their classroom
+some leaners could be made to sketch with free hand while others would be made to trace the outline of the plan of the classroom.
+xiv
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 17 ===
+Differentiation by support involves the teacher providing a targeted support to learners who are seen as performing below expected standards or at
+risk of not reaching the expected level of learning outcome. This support may include a referral to a Guidance and Counselling Officer for academic
+support.
+Differentiation by outcome involves the teacher allowing learners to respond at different levels. In this case, identified learners are allowed more time
+to complete a given task.
+Scaffolding in education refers to the use of a variety of instructional techniques aimed at moving learners progressively towards stronger understanding
+and ultimately greater independence in the learning process.
+It involves breaking up the learning episodes, experiences or concepts into smaller parts and then providing learners with the support they need to learn
+each part. The process may require a teacher assigning an excerpt of a longer text to learners to read, engage them to discuss the excerpt to improve
+comprehension of its rationale, then guiding them through the key words/vocabulary to ensure learners have developed a thorough understanding of the
+text before engaging them to read the full text. Common scaffolding strategies available to the teacher include:
+ giving learners a simplified version of a lesson, assignment, or reading, and then gradually increasing the complexity, difficulty, or sophistication
+over time.
+ describing or illustrating a concept, problem, or process in multiple ways to ensure understanding.
+ giving learners an exemplar or model of an assignment, they will be asked to complete.
+ giving learners a vocabulary lesson before they read a difficult text.
+ clearly describing the purpose of a learning activity, the directions learners need to follow, and the learning goals they are expected to achieve.
+ explicitly describing how the new lesson builds on the knowledge and skills learners were taught in a previous lesson.
+INFORMATION AND COMMUNICATION TECHNOLOGY
+ICT has been integrated into this curriculum as a teaching and learning tool to enhance deep and independent learning. Some of the expected outcomes
+that this curriculum aims to achieve through ICT use for teaching and learning are:
+ improved teaching and learning processes.
+ improved consistency and quality of teaching and learning.
+ increased opportunities for more learner-centred pedagogical approaches.
+xv
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 18 ===
+ improved inclusive education practices by addressing inequalities in gender, language, ability.
+ improved collaboration, creativity, higher order thinking skills.
+ enhanced flexibility and differentiated approach of delivery.
+The use of ICT as a teaching and learning tool is to provide learners access to large quantities of information online. It also provides the framework for
+analysing data to investigate patterns and relationships in a geographical context. Once pupils have made their findings, ICT can then help them organize,
+edit and present information in many different ways.
+Learners need to be exposed to the various ICT tools around them including calculators, radios, cameras, phones, television sets and computer and
+related software like Microsoft Office packages – Word, PowerPoints and Excel as teaching and learning tools. The exposure that learners are given at
+the Primary School level to use ICT in exploring learning will build their confidence and will increase their level of motivation to apply ICT use in later
+years, both within and outside of education. ICT use for teaching and learning is expected to enhance the quality and learners’ level of competence in the
+4R
+xvi
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 19 ===
+ORGANISATION OF THE CURRICULUM
+The curriculum has been structured into four columns which are Strands, Sub-strands, Content standards, Indicators and exemplars. A unique annotation
+is used for numbering the learning indicators in the curriculum for the purpose of easy referencing. The annotation is indicated in table 2.
+Example: B4 .2.4.1. 2
+ANNOTATION MEANING / REPRESENTATION
+B4 Year Or Class
+2 Strand Number
+4 Sub-Strand Number
+1 Content Standard Number
+2 Indicator Number
+Strands are the broad areas/sections of the science content to be studied.
+Sub-strands are the topics within each strand under which the content is organised.
+Content standard refers to the pre-determined level of knowledge, skill and/or attitude that a learner attains by a set stage of education.
+Indicator is a clear outcome or milestone that learners have to exhibit in each year to meet the content standard expectation. The indicators represent
+the minimum expected standard in a year.
+Exemplar : support and guidance which clearly explains the expected outcomes of an indicator and suggests what teaching and learning activities could
+take, to support the facilitators/teachers in the delivery of the curriculum.
+xvii
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 20 ===
+ILLUSTRATION
+Class Content Standards Learning Indicators
+Class Content Standards Learning Indicators
+Strand 1: DIVERSITY OF MATTER
+Sub-strand 1: Living and Non-Living Things
+B1 B2 B3 B4
+B1.1.1.1: Show understanding of the B2.1.1.1: Show understanding of B3.1.1.1: Show understanding of B4.1.1.1: Show understanding
+physical features and life processes of the physical features and life the physical features and life of the physical features and
+living things and use this processes of living things and use processes of living things and life processes of living things
+understanding to classify them this understanding to classify use this understanding to and use this understanding to
+them classify them. classify them
+B1.1.1.1.1: Observe and describe different B2.1.1.1.1: Describe the physical B3.1.1.1.1: Group living things into B4.1.1.1.1: Group living things into
+kinds of things in the environment. features of plants (roots, stem, leaves plants and animals based on their plants and animals based on their
+physical features uses
+xviii
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 21 ===
+STRUCTURE
+The science curriculum is structured to cover B4 to B6 under five strands with a number of sub-strands as shown in the table below:
+STRAND B4 B5 B6
+SUB-STRANDS
+Living and Non-Living Things Living and Non-Living Things Living and Non-Living Things
+DIVERSITY OF MATTER
+Materials Materials Materials
+Earth Science Earth Science Earth Science
+CYCLES
+Life Cycles of organisms Life Cycles of organisms Life Cycles of organisms
+The Human Body Systems The Human Body Systems The Human Body Systems
+SYSTEMS The Solar System The Solar system The Solar system
+Ecosystems Ecosystems Ecosystems
+Sources and Forms of Energy Sources and Forms of Energy Sources and Forms of Energy
+FORCES AND ENERGY Electricity and electronics Electricity and Electronics Electricity and Electronics
+Forces and Movement Forces and Movement Forces and Movement
+Personal Hygiene and Sanitation Personal Hygiene and Sanitation Personal Hygiene and Sanitation
+Diseases Diseases Diseases
+HUMANS AND THE
+ENVIRONMENT
+Climate Change Science and Industry Science and Industry
+Climate Change Climate Change
+xix
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 22 ===
+SCOPE AND SEQUENCE
+STRAND SUB-STRANDS B1 B2 B3 B4 B5 B6
+Living and Non-Living Things √ √ √ √ √ √
+DIVERSITY OF MATTER
+Materials √ √ √ √ √ √
+Earth Science √ √ √ √ √ √
+CYCLES
+Life Cycles of Organisms √ √ √ √ √
+The Human Body Systems √ √ √ √ √ √
+SYSTEMS The Solar system √ √ √ √ √
+Ecosystems √ √ √ √ √
+Sources and Forms of Energy √ √ √ √ √ √
+FORCES AND ENERGY
+Electricity and Electronics √ √ √ √ √ √
+Forces and Movement √ √ √ √ √ √
+Personal Hygiene and Sanitation √ √ √ √ √ √
+HUMANS AND THE Diseases √ √ √ √ √ √
+ENVIRONMENT Science and Industry √ √ √ √ √
+Climate Change √ √ √ √ √ √
+xx
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 23 ===
+BASIC 4
+1
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 24 ===
+BASIC 4
+STRAND 1: DIVERSITY OF MATTER
+SUB-STRAND 1: LIVING AND NON-LIVING THINGS
+SUBJECT SPECIFIC
+CONTENT
+PRACTICES AND CORE
+STANDARDS INDICATORS AND EXEMPLARS
+COMPETENCIES
+B4.1.1.1 Understand B4.1.1.1.1 Classify animals into insects, birds, mammals and reptiles Core Competencies
+the physical features  Learners embark on a walk to observe and record names of different kinds of animals in Digital Literacy
+and life processes of their community or show videos and pictures of different kinds of animals. Personal development and
+living things and use  Learners talk about the different animals based on their limbs, body covering, height, shape, leadership
+this understanding to size, where they live, how they move, what they eat. etc. Critical Thinking and
+classify them Problem-Solving
+ Provide flashcards of many different animals to learners in groups.
+ Assist learners to sort the pictures into insects, birds, mammals and reptiles and produce
+Communication and
+animal classification cards or tables.
+Collaboration
+ Learners display and do presentations on their group work.
+Creativity and Innovation
+ Learners to give reasons for their classifications.
+ Ask Learners to identify things which are common to all the different kinds of animals. Subject Specific Practices
+ Assist learners to mould different kinds of animals using suitable materials (such as blu tack, Observing
+clay, cardboard etc.). Analysing
+ Learners draw different kinds of animals (insects, birds, mammals and reptiles). Classifying
+Generalising
+B4.1.1.1.2 Know life processes of animals (movement, nutrition and reproduction)
+ Learners observe videos and pictures depicting movement, nutrition and reproduction in
+animals.
+ Learners describe how various animals (insects, birds, reptiles and mammals) move, feed
+and reproduce.
+ Learners role-play or pantomime movement and nutrition of animals.
+ In groups, learners discuss the importance of movement, nutrition and reproduction to
+animals.
+NB: Teachers should collect and preserve some common animals for presentation.
+2
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 25 ===
+SUBJECT SPECIFIC
+CONTENT
+PRACTICES AND CORE
+STANDARDS INDICATORS AND EXEMPLARS
+COMPETENCIES
+B4.1.1.2 Understand B4.1.1.2.2 Describe the physical appearance of different types of plants (trees, shrubs, Core Competencies
+the differences climbing, creeping) Digital Literacy
+between living things  Take learners out to observe different types of plants. Pictures and videos can also be Creativity and innovation
+and things which have used. Personal development and
+never been alive  Learners describe the physical features of different types of plants (in terms of their leadership
+Communication and
+structure and size).
+Collaboration.
+Project : Learners create a plant album of different types of plants. (shrubs, trees, climbing and
+Critical Thinking and
+creeping plants).
+Problem-Solving
+Subject Specific Practices
+Observing, Communicating
+Manipulating, Creating
+SUB-STRAND 1 B4.1.1.2.3 Describe the physical features of mammals, reptiles, insects and Core Competencies
+CONT’D
+amphibians Digital Literacy
+ Learners observe mammals, reptiles, insects and amphibians through videos and pictures Communication and
+B4.1.1.2 Understand
+(or relevant specimen such as frogs, lizards, cockroaches). Collaboration.
+the differences
+ Learners are guided to use think pair-share to identify and discuss the animals they have Subject Specific Practices
+between living things
+observed. Observing
+and things which have
+Analysing
+ Learners describe the physical features of the animals stated in terms of their limbs, body
+never been alive
+Communicating
+covering, height, shape, size, where they live, how they move and what they eat.
+Classifying
+ Learners, in a matching activity, use flashcards to match specific animals with their
+identified physical features.
+3
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 26 ===
+SUB-STRAND 2: MATERIALS
+SUBJECT SPECIFIC
+CONTENT
+INDICATORS AND EXEMPLARS PRACTICES AND CORE
+STANDARDS
+COMPETENCIES
+B4.1.2.2 Understand B4.1.2.2.1 Identify a liquid-liquid mixture and describe how to separate its Core Competencies
+mixtures, their types, components Critical Thinking and
+formation, uses and  Display different types of liquids for learners to observe, e. g. water, kerosene, cooking Problem-Solving
+ways of separating oil, milk, soft drinks, etc. Personal development and
+them into their leadership
+ Task learners to identify the liquids provided.
+components Communication and
+ In groups, learners mix liquids of the same kind, different kinds and then observe and
+Collaboration.
+record their findings, e.g., vinegar and water, palm oil and water, etc.
+Subject Specific Practices
+ Engage learners in discussion to describe the different types of liquid-liquid mixtures.
+Observing
+[Those which are able to mix uniformly (miscible liquids) and those which are not able to
+Analysing
+mix uniformly (immiscible)].
+Manipulating
+Project : Separation of a mixture of immiscible liquids.
+Learners investigate to separate a mixture of immiscible liquids such as cooking oil and water.
+NB : This activity can be undertaken with the aid of a separating funnel or an improvised version
+of it. Do not bring liquids that are flammable or poisonous to class for this lesson.
+4
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 27 ===
+STRAND 2: CYCLES
+SUB-STRAND 1: EARTH SCIENCE
+SUBJECT SPECIFIC
+CONTENT
+PRACTICES AND CORE
+STANDARDS INDICATORS AND EXEMPLARS
+COMPETENCIES
+B4.2.1.1 Recognise B4.2.1.1.1 Demonstrate understanding of cyclic movements in the environment Core Competencies
+that some events in  Guide learners to build a pendulum (a ball hanging on a string) and let them observe Critical Thinking and
+our environment occur the swinging motion. Problem-Solving
+recurrently Communication and
+ Learners observe the following movements:
+(1) the second hands on an analogue clock Collaboration
+Subject Specific Practices
+(2) merry-go-round
+Observing, Generalizing
+(3) a swinging pendulum,
+(4) movement of their limbs during walking. Analysing, Communicating
+Reporting
+ Assist learners to come out with one thing that is common to all the movements.
+Project : Life Cycle of a Maize Plant
+Learners investigate the life cycle of a maize plant and report on their findings.
+B4.2.1.2 Recognise the B4.2.1.2.1 Identify the objects in the sky during day and night Core Competencies
+relationship between  Ask learners to step outside the classroom and: (a) name the objects in the daytime Personal Development and
+the earth and the sun sky; (b) identify the objects in the night time sky; (c) identify the differences and Leadership
+similarities in day and night sky, (d). answer the question: what happens to the sky in Critical Thinking and
+a 24-hour cycle? Problem-Solving.
+Subject Specific Practices
+ Learners draw Venn diagrams (2 circles then another circle overlapping the two) and
+Analysing
+put in them the things they see in the night sky, day sky and then in both skies and
+display their work on the classroom walls. Evaluating
+Generalising
+ Learners write about the importance of the things they see in the skies.
+B4.2.1.3 Show B4.2.1.3.1 Demonstrate the process of evapotranspiration Core Competencies
+understanding of the  Guide learners are guided to breathe out or blow air onto a transparent surface, e.g. Personal development and
+roles of condensation, a glass or plastic bottle and share their observations. leadership
+evaporation,  Explain to learners that just as humans release water vapour when they respire, so Communication and
+transpiration and do plants when they transpire. Collaboration
+precipitation in the
+ Put learners into groups and give each group a young potted plant, plastic wrap bag
+hydrological (water) Subject Specific Practices
+and a rubber band to undertake the following activities:
+cycle Observing, Manipulating
+(1) Let learners examine the surface of the leaves of the plants and mop off any water
+Analysing and
+droplets on the leaves.
+Communicating
+(2) Tie the plastic wrap bag around the plant up to the stem and leave it for an hour.
+(3) Observe both plant and plastic wrap surfaces.
+(4) Let learners report on what happens.
+5
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 28 ===
+CONTENT SUBJECT SPECIFIC
+STANDARDS INDICATORS AND EXEMPLARS PRACTICES AND CORE
+COMPETENCIES
+B4.2.1.5 Recognise B4.2.1.5.1 Demonstrate ways of making water safe for use Core Competencies
+water and air as  Learners identify the sources of water in the community. Personal development and
+ Learners discuss qualities of good drinking water. leadership
+important natural
+Critical Thinking and
+resources  Provide learners with samples of water from the following sources: rivers, wells,
+Problem-Solving
+lagoons, boreholes, ponds and standpipe, etc.
+Communication and
+ Learners brainstorm on how to make water safe for use.
+Collaboration
+ Learners, in groups, demonstrate the different ways of making water safe. For
+example, filtering, boiling, addition of iodine tablets, use of chlorine, use of water
+filters, addition of alum, etc.
+Subject Specific Practices
+ Learners discuss the dangers of drinking unsafe water.
+Observing, Manipulating
+Note: Teacher to supply materials for this activity.
+Analysing, Communicating
+Precaution : Learners must not taste any of the water samples used in the lesson.
+6
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 29 ===
+SUB-STRAND 2: LIFE CYCLES OF ORGANISMS
+CONTENT SUBJECT SPECIFIC PRACTICES
+STANDARDS INDICATORS AND EXEMPLARS AND CORE COMPETENCIES
+B4.2.2.1 Demonstrate B4.2. 2.1.1. Observe, identify and give functions of the parts of a plant Core Competencies
+understanding of the  Learners, in groups, uproot young plants from the school surroundings for Creativity and innovation
+life cycle of plants a class activity. Personal development and leadership
+ Learners observe, identify and give functions of parts of the plants (roots, Communication and Collaboration
+Critical Thinking and Problem-Solving
+stem, leaves and flower).
+Subject Specific Practices
+ Learners draw annotated diagrams of the plants and display them in class.
+Observing, Classifying
+ Learners relate the functions of the parts to their positions on the plant.
+Analysing
+Evaluating
+B4.2.2.1.2 . Examine some common seeds and how they germinate
+Generalising
+ Review learner’s knowledge that seeds can germinate with or without soil.
+Core Competencies
+ This activity will take some days.
+Personal development and leadership
+Communication and Collaboration
+NB : It is a repeat of the B3 activity but this time, the focus is on the process of
+Critical Thinking and Problem-Solving
+germination.
+Creativity and Innovation
+ Learners will work with beans or maize seeds.
+Subject Specific Practices
+Learners first observe the dry seed coat, then when it absorbs water to
+Manipulating, Observing, Analysing,
+swell rapturing of seed coat, sprouting of the root, sprouting of the stem
+Evaluating, Recording
+and seed leaves, the elongation of the root and stem.
+ Learners follow the process and write reports.
+NB : Report should include diagrams of each stage of germination.
+7
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 30 ===
+STRAND 3: SYSTEMS
+SUB-STRAND 1: THE HUMAN BODY SYSTEMS
+CONTENT SUBJECT SPECIFIC
+INDICATORS AND EXEMPLARS
+STANDARDS PRACTICES AND CORE
+COMPETENCIES
+B4.3.1.1 Recognise that B4.3.1.1.1 Know the organs of the digestive system and their functions Core Competencies
+different parts of the  Show videos, pictures and models of the digestive system. Digital Literacy
+human body work  Learners keenly observe the organs of the digestive system. Creativity and innovation
+interdependently to Personal development and leadership
+ Explain to learners the functions of the various organs in the digestive system.
+perform a specific Communication and Collaboration.
+ Draw a diagram of the digestive system and cut out the various parts of the system into
+function Critical Thinking and Problem-Solving
+flash cards.
+Subject Specific Practices
+ Learners randomly pick the parts of the digestive system on flashcards.
+Observing
+ Learners build the digestive system by arranging the parts in an orderly manner as they
+Manipulating
+appear in the digestive system.
+Analysing
+ Engage learners in an activity to role-play the various parts of the digestive system and
+Generating
+their functions, with the aid of flashcards.
+Communicating
+SUB-STRAND 2: THE SOLAR SYSTEM
+B4.3.2.1.1 Explain that the sun is at the centre of the solar system Core Competencies
+B4.3.2.1 Show an
+Communication and Collaboration
+understanding of the
+ Present learners with a chart, model or video showing the solar system.
+Personal Development and
+orderliness of the sun,
+ Draw the solar system, using different colours to illustrate the different bodies.
+Leadership
+planets and satellites in
+ Guide learners to role-play the stars, planets and satellites in the solar system (different
+Critical Thinking and Problem-Solving
+the solar system, as
+learners assume and role-play the sun, the earth and other planets in the solar system).
+Creativity and Innovation
+well as the important
+ Present the chart of the solar system and help learners identify the sun as being at the
+role of the sun in the
+centre of the solar system.
+Subject Specific Practices
+existence of the solar
+ Learners are guided to identify the benefits of the sun to the solar system.
+Designing Experiment
+system
+Planning
+Project : Learners mould stars, planets and satellites in the solar system .
+Observing
+Recording
+Analysing
+8
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 31 ===
+SUB-STRAND 3: ECOSYSTEM
+CONTENT SUBJECT SPECIFIC
+STANDARDS INDICATORS AND EXEMPLARS PRACTICES AND CORE
+COMPETENCIES
+B4.3.3.1.1 Explain the concept of ecosystem Core Competencies
+B4.3.3.1 Show
+ Learners role-play a typical family setup, showing how everyone is Cultural identity and Global
+understanding and
+interdependent. Citizenship
+appreciation of the
+ Learners identify the role of each member of their family, e.g. father, Personal development and
+interactions and
+leadership
+interdependencies of mother, siblings. The key lesson is to understand that everybody in the
+group is important and depend on one another. Critical Thinking and Problem-
+organisms in an
+Solving
+ecosystem  Teacher mentions a habitat and the learners mention which plants, animals,
+Creativity and Innovation
+and other organisms live there (Use games).
+ Show pictures and videos of forest settings having trees, grass, a stream, soil,
+Subject Specific Practices
+fishes, rodents, frogs, etc. to explain to learners what an ecosystem looks
+Observing
+like.
+Manipulating
+ Learners discuss the importance of every element/member of a given
+Predicting
+ecosystem, e.g. frogs, weeds, soil and fish in a pond.
+Analysing
+ Brainstorm with learners to come out with responses to what happens
+Generalising
+when a member of the system is removed.
+Communicating
+ Assist learners to realise that it causes imbalance in the ecosystem. Relate
+the concept to everyday life, e.g. the destruction of the forest through
+galamsey and the felling of trees bring about imbalances in the environment.
+ Learners cite examples of ecosystems in their community and suggest ways
+of preserving them.
+9
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 32 ===
+STRAND 4: FORCES AND ENERGY
+SUB-STRAND 1: SOURCES AND FORMS OF ENERGY
+CONTENT SUBJECT SPECIFIC
+STANDARDS INDICATORS AND EXEMPLARS PRACTICES AND CORE
+COMPETENCIES
+B4.4.1.1 Demonstrate B4.4.1.1.1 Identify the effect of heat on the change of state of substances Core Competencies
+understanding of the  Guide learners through simple activities to identify effects of heat on Personal development and
+concept of energy, its substances (use liquids and solids, e.g. water, shea butter, candles, etc.). leadership
+various forms, sources Communication and Collaboration.
+ Learners demonstrate evaporation by boiling water and discuss their
+and how to transform experiences. Critical Thinking and Problem-
+and conserve it Solving
+Subject Specific Practices
+Note: let learners measure the quantity of the water before and after boiling
+Observing
+to show the effect of heat on water.
+Manipulating
+Analysing
+ Elaborate on learners’ ideas to explain how the escaping vapour can be
+Recording
+changed into water (through the loss of heat).
+Measuring
+Communicating
+SUB-STRAND 2 : ELECTRICITY AND ELECTRONICS
+B4.4.2.1 Demonstrate B4.4.2.1.1 Identify the uses of electricity Core Competencies
+knowledge of  Begin by asking learners what they use to iron their school uniforms. Digital Literacy
+generation of Creativity and innovation
+ Use simple activities to demonstrate uses of electricity, (e.g. providing light,
+electricity, its Personal development and
+powering TVs, mobile phones, cooking, heating water, etc.)
+transmission and leadership
+ Learners draw things in the home and at school that use electricity.
+transformation into Communication and Collaboration.
+other forms Critical Thinking and Problem-
+Project : Electricity Generation
+Solving
+Learners, in groups, generate electricity from fruit cells (orange, lime, tomatoes,
+Subject Specific Practices
+potatoes and apple) and fuel cells, e.g. water.
+Analysing
+Generalising
+Communicating
+Manipulating
+Recording
+10
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 33 ===
+SUBJECT SPECIFIC
+CONTENT INDICATORS AND EXEMPLARS PRACTICES AND CORE
+STANDARDS COMPETENCIES
+B4.4.2.1 Demonstrate B4.4.2.1.2 Describe ways of conserving electricity Core Competencies
+knowledge of  Learners explain why their parents put off the lights, television and other Personal Development and
+generation of electrical appliances when leaving the house in the morning. leadership
+electricity, its  Discuss with learners what happens when electrical gadgets such as heaters Cultural identity and Global
+transmission and Citizenship
+and pressing irons are left on when leaving the house.
+transformation into Communication and Collaboration.
+ Learners work in groups to discuss activities that contribute to wastage of
+other forms Critical Thinking and Problem-
+electricity.
+Solving
+ Based on their responses, facilitate a discussion on ways of conserving
+Subject Specific Practices
+electricity.
+Observing; Analysing; Evaluating
+ Learners present their ideas to class for discussion.
+Generalising, Communicating
+Interpreting, Measuring
+Project : Monitoring electricity consumption in the home and at school.
+Generalising, Recording
+Learners record the amount of electricity consumed in their homes or at school
+over a period of three (3) months and report on their findings.
+B4.4.2.2 Know the B4.4.2.2.1 Identify the basic components of electronic circuits Core Competencies
+functions and  Learners are put into groups and each group is provided with connecting Digital Literacy
+assemblage of basic wires, batteries (dry cells), switches and LEDs (of different colours). Personal development and
+electronics leadership
+ Learners are assisted to identify the various components provided.
+components Communication and Collaboration.
+ Learners observe a demonstration on how to connect the components to
+Critical Thinking and Problem-
+light the LED.
+Solving
+ Learners are guided to connect the components to make the LED produce Creativity and Innovation
+light.
+Subject Specific Practices
+ Engage learners to discuss the use of each component
+Observing
+ Learners draw the circuits they have connected.
+Manipulating
+Analysing
+ Learners suggest other materials that can be used in the absence of the
+Generalising
+connecting wire.
+Communicating
+ Learners act as electrons flowing in a circuit through the classroom. Learners
+act out the role of various components (resistor, capacitor, etc) in the circuit.
+NB : Build a stock of electronic components from discarded electronic gadgets
+such as radio and TV sets.
+11
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 34 ===
+SUB-STRAND 3: FORCES AND MOVEMENT
+CONTENT SUBJECT SPECIFIC
+STANDARDS INDICATORS AND EXEMPLARS PRACTICES AND CORE
+COMPETENCIES
+B4.4.3.1 Know that B4.4.3.1.1 Demonstrate understanding of elastic and compressional forces Core Competencies
+movement is caused by and their everyday applications Cultural identity and Global
+applied forces due to  Learners bring catapults, rubber bands, springs and bicycle pumps to class. Citizenship
+the release of stored  Guide learners to demonstrate different effects of forces, e.g. by kicking a Personal development and
+energy ball in different directions, pushing a table, crumpling a piece of paper or leadership
+stopping a moving toy. Communication and Collaboration.
+Critical Thinking and Problem-
+ Engage learners in activities to demonstrate elastic and compression forces
+Solving
+using the materials brought to class.
+Subject Specific Practices
+ Learners to discuss how elastic and compressional forces are applied in
+Observing
+everyday life.
+Manipulating
+Predicting
+Analysing
+Generalising
+Communicating
+12
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 35 ===
+STRAND 5: HUMANS AND THE ENVIRONMENT
+SUB-STRAND 1: PERSONAL HYGIENE AND SANITATION
+CONTENT SUBJECT SPECIFIC
+INDICATORS AND EXEMPLARS
+STANDARDS PRACTICES AND CORE
+COMPETENCIES
+B4. 5.1.1.1 Know how to care for one’s self and the environment Core Competencies
+B4.5.1.1 Recognise the
+ Learners brainstorm in groups and share ideas with the whole class on Critical thinking and Problem-Solving
+importance of personal
+what they do to maintain personal hygiene. Collaboration and communication.
+hygiene
+Personal Development and
+ Learners write their ideas on flashcards (ideas may include bathing twice
+daily, cleaning the teeth, cutting their finger nails, washing their towels, Leadership
+sweeping their classrooms, etc.).
+Subject Specific Practices
+ Brainstorm with learners on what will happen if they do not take good care
+Analysing
+of their bodies.
+Predicting
+ Learners are assigned to investigate materials that can be used to enhance
+Evaluating
+personal hygiene (to brush the teeth, clean the armpit or bath).
+Core Competencies
+Digital Literacy
+B4. 5.1.1.2 Describe ways of sustaining the environment through waste
+Creativity and innovation
+management
+Personal development and
+ Learners watch pictures and videos on how to sustain the environment,
+leadership
+including separating waste.
+Communication and Collaboration
+ Engage learners in groups to mention the types of waste they produce in
+Critical Thinking and Problem-
+the home and at school, e.g. paper, rubber, bottles, etc.
+Solving
+ Write learners’ ideas on the board and let them brainstorm on what will
+happen if the wastes they produce are not separated.
+Subject Specific Practices
+ Evaluate learners by asking them to perform individual tasks, e.g. by writing
+Observing, Designing experiment,
+down four practical ways of sustaining the environment.
+Analysing, Generalising
+Generating
+Project : Design Litterbins to hold different forms of waste.
+Learners make or mould litterbins and other equipment from suitable materials for
+holding different types of waste.
+13
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 36 ===
+SUB-STRAND 2: DISEASES
+CONTENT SUBJECT SPECIFIC
+STANDARDS INDICATORS AND EXEMPLARS PRACTICES AND CORE
+COMPETENCIES
+B4.5.2.1.1 Identify causes, symptoms and prevention of measles Core Competencies
+B4.5.2.1 Know
+ Learners watch pictures, videos or charts on causes, symptoms and Critical thinking and Problem-Solving
+common diseases of
+prevention of measles or invite a health personnel or School Health Collaboration and communication.
+humans; causes,
+Education Programme (SHEP) coordinator to give a talk on measles. Personal Development and
+symptoms, effects and
+Leadership
+prevention
+Digital literacy
+ In pairs, learners answer the following questions based on the pictures and
+Subject Specific Practices
+videos: (1) What causes measles? (2) What are the symptoms of measles?
+Analysing
+(3) What should be done if someone is exposed to measles? (4) What are
+Predicting
+the ways of preventing the spread of measles?
+Evaluating
+Project : Learners develop concept maps to show the causes, symptoms and prevention
+of measles. Learners develop posters to talk about how they can prevent measles.
+B4.5.2.1.2. Demonstrate understanding of the causes, symptoms and
+Core Competencies
+prevention of food-borne diseases
+Critical thinking and Problem-Solving
+ Learners watch pictures and videos on causes, symptoms and prevention of
+Collaboration and communication.
+food borne diseases.
+Personal Development and
+ Invite a health personnel, SHEP coordinator or personnel from the Food
+Leadership
+and Drugs Authority (FDA) to give a talk on food-borne diseases.
+Digital literacy
+ In pairs, let learners respond to the following questions:
+(1). What causes food-borne diseases? (2). What are the symptoms of Subject Specific Practices
+food-borne diseases? (3). What should be done if someone contracts a Observing
+food-borne disease? Evaluating
+ In pairs, learners give examples of food-borne diseases in their localities, i.e. Generating
+cholera, diarrhoea, typhoid fever, etc. Analysing
+ Learners predict what will happen when someone contracts a food-borne
+disease.
+ Evaluate learners by asking them to prepare posters on the prevention and
+control of food-borne.
+14
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 37 ===
+SUB-STRAND 4: CLIMATE CHANGE
+CONTENT INDICATORS AND EXEMPLARS SUBJECT SPECIFIC PRACTICES
+STANDARDS AND CORE COMPETENCIES
+B4.5.4.1.1 Explain that burning is one of the causes of climate change Core Competencies
+B4.5.4.1 Know that
+ Learners watch pictures and videos or charts showing burning of fossil fuel and Critical thinking and Problem-Solving
+climate change is one of
+changing weather pattern. Collaboration and communication.
+the most important
+ Narrate to learners a story of a bush fire and the effect it has on humans, plants, Personal Development and Leadership
+environmental issues
+Creativity and Innovation
+facing the world today animals and property.
+ Learners, in groups discuss what happens when burning occurs.
+Subject Specific Practices
+ Learners present their ideas, i.e. burning brings out smoke, makes air dirty or
+Observing
+unclean, etc.
+Predicting
+ Brainstorm with learners on what will happen if there is continuous burning of
+Evaluating
+vegetation and waste.
+Analysing
+ Evaluate learners by asking them to design posters on the effect of burning on
+Generalising
+climate change.
+15
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 38 ===
+BASIC 5
+16
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 39 ===
+BASIC 5
+STRAND 1: DIVERSTY OF MATTER
+SUB-STRAND 1: LIVING AND NON-LIVING THINGS
+SUBJECT SPECIFIC
+CONTENT STANDARDS INDICATORS AND EXEMPLARS PRACTICES AND CORE
+COMPETENCIES
+B5.1.1.1 Understand the B5.1.1.1.1 Know the life processes of living things (growth, sensitivity to the Core Competencies
+physical features and life environment, respiration and excretion) Digital Literacy
+processes of living things  Learners go outside the classroom to observe and identify various living and non-living Creativity and innovation
+and use this things and discuss their observation. Personal development and
+understanding to classify leadership
+ Engage learners to watch pictures or animated videos of different living things (e.g. birds,
+them Communication and Collaboration.
+insects, trees, reptiles, mammals, etc.) and comment on them.
+Critical Thinking and Problem-
+ Ask learners to identify the names of the living things from the video.
+Solving
+ Use relevant examples and illustrations to demonstrate or explain sensitivity, respiration
+and excretion as life processes.
+Subject Specific Practices
+ Learners go on a nature walk to observe sensitivity in the mimosa plant when touched.
+Observing
+ Assist learners to understand growth by observing a seedling and a mature plant of the
+Analysing
+same kind.
+Generalising
+ Let learners breathe air in and out to demonstrate respiration.
+Evaluating
+NB : Plants show movement within their parts and animals move from place to place.
+Project : Learners plant a seed and observe its growth pattern.
+B5.1.1.2 Demonstrate B5.1.1.2.1 Compare the differences among things that are living, dead and things that Core Competencies
+understanding of the have never been alive Digital Literacy
+differences between living  Assemble living things (e.g. plants, insects, etc.), non-living things (e.g. firewood, pencils, Creativity and innovation
+things, non-living things, paper, etc.) and things that have never lived (rocks, soil, water, etc.) for class activities. Personal development and
+and things which have leadership
+never been alive NB: Wear protectives when gathering specimen. Communication and Collaboration
+Critical Thinking and Problem-
+Solving
+ Learners observe and comment on the samples.
+ Learners, in an activity, classify the provided specimen as (1) Things that are alive (2) Once
+Subject Specific Practices
+alive or (3) Never been alive.
+Observing, Analysing, Generalising,
+Learners are guided to compare the differences among things that are alive, once alive or
+Evaluating
+never been alive.
+ Learners explain why they (learners) are classified as living things.
+17
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 40 ===
+SUB-STRAND 2: MATERIALS
+CONTENT SUBJECT SPECIFIC PRACTICES
+STANDARDS INDICATORS AND EXEMPLARS AND CORE COMPETENCIES
+B5.1.2.1 Recognise B5.1.2.1.1 Classify everyday materials based on their properties (soft, hard, rough, Core Competencies
+materials as important smooth, opaque, transparent and bendable) Communication and Collaboration
+resources for providing Creativity and innovation
+ Learners are asked to collect and bring a variety of everyday materials from the home,
+human needs Personal development and leadership
+school and community. Examples should include cotton wool, pieces of cloth, pieces of
+Critical Thinking and Problem-Solving
+paper, cardboard, wood, plastics, polythene bags (coloured and transparent), soil
+Subject Specific Practices
+samples, marbles (rough and smooth) chalk, crayon, pen and straw.
+Observing
+ Learners are assisted to sort and group the materials based on texture (hard or soft),
+Manipulating
+and size (big or small).
+Analysing
+ Demonstrate by assisting learners to group materials into those that we can see
+Evaluating
+through (transparent) and those that we cannot see through (opaque).
+Generalising
+ Learners sort the materials into those that can bend and those that cannot bend.
+Classifying
+ Learners feel and draw materials that are hard, soft, smooth, etc.
+ Learners are tasked to display their drawings in class for discussion.
+ Learners are assisted to know that the properties of a given material enable it to be
+used for making certain products, e.g. clay is used for making pots because it can be
+moulded without breaking. raffia palm is used in basketry because it can bend easily.
+ Learners work in groups to classify different materials based on various similarities
+and differences.
+Project : Learners use different materials to create new items such as paper fans, toy cars, toy planes,
+cooking pans, hats and earthenware pots and bowls and exhibit their work.
+B5.1.2.2 Know that B5.1.2.2.1 Know that some changes are reversible, while others cannot be reversed Core Competencies
+substances can exist in  Provide substances such as candle wax, shea butter, water, paper and a source of heat. Personal development and leadership
+different physical states Communication and Collaboration.
+ In groups learners undertake the following activities (e.g. melting of candle wax,
+(solid, liquid, gas). Many Subject Specific Practices
+melting of ice, melting of shea butter, heating of water, crumpling of paper, melting of
+substances can be Observing
+plastics, burning of paper, burning of wood, etc.).
+changed from one state Manipulating
+ Learners, in their groups, talk about their observations.
+to another by heating or Analysing
+cooling  Assist learners to classify the activities as (1) lead to the formation of a new thing, (2) Generalising
+Classifying
+no new thing formed.
+ Assist learners to understand that changes where no new thing is formed are
+reversible, while changes where new things are formed are usually not reversible.
+NB : Hazardous chemicals and solutions should not be used.
+18
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 41 ===
+CONTENT
+SUBJECT SPECIFIC PRACTICES
+INDICATORS AND EXEMPLARS
+STANDARDS
+AND CORE COMPETENCIES
+B5.1.2.3 Understand B5.1.2.3.1 Demonstrate formation and separation of mixtures (solid-liquid and Core Competencies
+mixtures, the types, liquid-liquid mixtures) Personal development and leadership
+formation, uses and  Display some solid and liquid substances for learners to observe, e.g. water, common Communication and Collaboration
+ways of separating them salt, vinegar, sugar, sand, cooking oil and soft drinks. Critical Thinking and Problem-Solving
+into their components Subject Specific Practices
+ Put learners in groups and ask them to add each of the substances to a separate
+quantity of water whilst stirring and observe what happens. Observing
+Manipulating
+ Learners describe the material combinations they have produced, i.e. as solid-liquid
+Analysing
+mixture, liquid-liquid mixture or a solution.
+Generating
+ Learners find out the difference between a mixture of sand and water and a mixture of
+Reporting
+salt and water.
+ Learners also differentiate between the mixture of water and soft drink and the
+mixture of water and cooking oil.
+ Put learners into groups to demonstrate how to recover the salt from the salt
+solution.
+ Assist learners to separate different solid-liquid mixtures and liquid-liquid mixtures
+using separation methods such as filtration, evaporation, sieving and use of separating
+funnel.
+Project : Separation of solid- liquid mixture
+Learners separate a mixture of sand and water using appropriate materials.
+NB : Improvised separation equipment can be used to effectively separate various mixtures
+19
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 42 ===
+STRAND 2: CYCLES
+SUB-STRAND 1: EARTH SCIENCE
+CONTENT SUBJECT SPECIFIC PRACTICES
+INDICATORS AND EXEMPLARS
+STANDARDS AND CORE COMPETENCIES
+B5.2.1.1 Recognise B5.2.1.1.1 Know how day and night are formed Core Competencies
+that some events in  Assemble materials such as polystyrene (plastic) balls, football, ice-cream stick, Creativity and innovation
+our environment torch, pen and globe. Cultural identity and Global Citizenship
+occur recurrently  Learners are assisted to understand the terms, rotation and axis using a ball. Personal development and leadership
+Communication and Collaboration.
+ Explain how the motion of the earth causes day and night, with the aid of a
+Subject Specific Practices
+globe.
+Observing
+ Learners observe a demonstration of day and night, using appropriate materials,
+Designing Experiment
+e.g. globe of the earth, blu tac, and lamp without shade and a dark room.
+Manipulating
+ Learners, in their groups, demonstrate the formation of day and night using,
+Analysing
+polystyrene balls, ice-cream stick, torch, pen and globe.
+Representing
+ Learners explain how day and night come about and draw diagrams to represent
+their work.
+B5.2.1.2 Recognise B5.2.1.2.1 Describe the benefits of the sun to the earth Core Competencies
+the relationship  Put learners into groups to discuss the benefits the earth derives from the sun. Personal development and leadership
+between the earth  Learners, in their groups, present their findings. These may include the following; Communication and Collaboration.
+and the sun the sun provides warmth to the earth, light for plants to grow well, provides day Critical Thinking and Problem-Solving
+and night cycles and energy. Subject Specific Practices
+Analysing, Evaluating
+ Learners brainstorm on what will happen if there was no sun.
+Communicating
+Project : Importance of the sun to plant growth. Designing Experiment
+Learners demonstrate the importance of sunlight to the growth of plants.
+B5.2.1.3.1 Demonstrate evaporation and condensation as important processes
+B5.2.1.3 Show of the hydrological (water) cycle Core Competencies
+understanding of the  Learners recite poems and rhymes involving the environment and water . Critical Thinking and Problem-Solving
+roles of condensation,  In groups, learners demonstrate evaporation and condensation, e.g. learners observe
+Creativity and Innovation
+evaporation, water drying off their wet hands (evaporation), covering water with a lid and
+Personal Development and Leadership
+transpiration and observing water droplets on the lid after some time (evaporation & condensation).
+Communication and Collaboration
+precipitation in the  Demonstrate evaporation by heating water until it boils (to be done by the teacher),
+Subject Specific Practices
+hydrological (water) then covering the boiling water with a sheet of transparent glass. Water vapour
+Observing, Experimenting,
+cycle condenses on transparent glass (condensation).
+Recording, Generalising
+ Learners are assisted to understand how evaporation and condensation lead to the
+formation of rain.
+ Display pictures or simple diagrams of the water cycle showing evaporation and
+condensation.
+20
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 43 ===
+CONTENT SUBJECT SPECIFIC PRACTICES
+STANDARDS INDICATORS AND EXEMPLARS AND CORE COMPETENCIES
+B5.2.1.3.2 Know how clouds are formed
+B5.2.1.3 Show
+understanding of the  Review composition of air with learners. This should include water vapour.
+ Ask learners the question: what are clouds? And assists learners to come out Core Competencies
+roles of condensation,
+Creativity and innovation
+evaporation, with this explanation: clouds consist of many tiny water droplets resulting from
+the condensation of water vapour into liquid water or ice. Personal development and leadership
+transpiration and
+Communication and Collaboration.
+precipitation in the  Explain that upward vertical motion of air through the atmosphere cools water
+Critical Thinking and Problem-Solving
+hydrological (water) vapour to form clouds.
+cycle  Learners demonstrate formation of clouds in a bottle.
+Subject Specific Practices
+CONT’D
+ Learners explain why clouds are not formed close to the surface of the ground.
+Manipulating, Analysing
+Evaluating, Communicating
+B5.2.1.4 Demonstrate B5.2.1.4.1 Describe the uses of carbon dioxide and its effects on humans and Core Competencies
+understanding of how life on earth Personal development and leadership
+carbon and nitrogen  Learners mention the components of air (this should include carbon dioxide). Communication and Collaboration.
+are cycled in nature  Learners are assisted in groups to answer the following questions : What is Critical Thinking and Problem-Solving
+carbon dioxide? What is carbon dioxide used for? How does carbon dioxide get
+Subject Specific Practices
+into the environment? Does carbon dioxide have adverse health effects? Does
+Analysing
+carbon dioxide have adverse effects on the environment?
+Evaluating
+ Learners are assisted to identify some common uses of carbon dioxide such as
+Communication
+for making fire extinguishers, fizzy drinks and for the process of food preparation
+in plants.
+B5.2.1.5 Recognise B5.2.1.5.1 Identify human activities that make water unsuitable for human use Core Competencies
+water and air as  Begin by discussing the qualities of good drinking water and dangers of using Critical Thinking and Problem-Solving
+important natural unsafe water. Cultural Identity and Global
+resources Citizenship
+ Learners, in groups, identify human activities that make water unsuitable for use,
+Personal development and leadership
+e.g. toxic waste disposal, sewage disposal, deforestation, mining, littering,
+Communication and Collaboration
+pesticides, herbicides and fertilizer application and agricultural practices.
+Creativity and Innovation
+ Learners brainstorm to come out with ways of preventing, minimizing and
+controlling water pollution.
+Subject Specific Practices
+Project: Task learners to work in groups to create concept maps on the causes, control
+Analysing, Predicting, Analysing
+and prevention of water pollution.
+Evaluating, Communicating
+21
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 44 ===
+CONTENT INDICATORS AND EXEMPLARS SUBJECT SPECIFIC PRACTICES
+STANDARDS AND CORE COMPETENCIES
+B5.2.1.5 Recognise B5.2.1.5.2 Know how to make and keep air clean in our environment Core Competencies
+water and air as  Find out from learners what they understand by clean air and review things that Critical Thinking and Problem-Solving
+important natural pollute air (make air unclean) such as smoke from factories, car exhausts, bush Cultural Identity and Global
+resources burning and dust from construction sites and untarred roads. Citizenship
+Personal development and leadership
+ Lead discussions to come out with the do’s and don’ts that will make or keep air
+clean in our homes and surrounding environment (planting of trees and grass and Communication and Collaboration
+Creativity and Innovation
+avoiding frequent and uncontrolled burning).
+ Learners are assigned to design a concept map on the causes, prevention and
+Subject Specific Practices
+control of air pollution.
+Analysing, Predicting, Analysing
+ Learners draw and use a Future’s Wheel to trace the effects of water pollution
+Evaluating, Communicating
+on the environment.
+SUB-STRAND 2: LIFE CYCLES OF ORGANISMS
+B5.2.2.1 Demonstrate B5.2.2.1.1 Relate structure of the parts of a plant (leaves, stem, root, flower) Core Competencies
+understanding of life to the functions they perform Personal development and leadership
+cycle of a plant  Discuss functions of parts of plants with learners. Communication and Collaboration.
+ Learners go on a nature walk to uproot young plants from school surroundings Critical Thinking and Problem-Solving
+and bring them to class. Subject Specific Practices
+Observing
+ Learners, in groups, observe parts of the plants and relate them to the functions
+Manipulating
+they perform, e.g. the thin and large surface area of leaves and the presence of
+Analysing
+green colouring matter enhance their work. The roots are for anchorage and
+Evaluating
+absorption of nutrients from the soil. The stem supports the upper part of the
+Generalising
+plant; conduct water and minerals from the roots to the leaves; carry food from
+leaves to other parts of the plant.
+ Learners draw and colour a plant and label the parts.
+B5.2. 2.1.2 Compare the differences in germination of bean and maize seeds Core Competencies
+ Learners are assisted to review the previous knowledge on seed germination. Personal Development and leadership
+Communication and Collaboration.
+ Put learners in groups and provide them with dry beans and maize seeds.
+Critical Thinking and Problem-Solving
+ Learners are assisted to plant the bean and maize seeds using transparent
+Subject Specific Practices
+containers and soil.
+Observing, Manipulating,
+ Learners are guided to observe (1) the dry seed (2) when it absorbs water and
+Analysing, Classifying, Generalising
+swells (3) rapturing of the seed coat (4) sprouting of the root (5) sprouting of
+the stem and seed leaves (6) the elongation of the root and stem.
+ Learners find out where the seed leaves (cotyledons) remain, inside the soil or
+above the soil.
+NB: This activity will take some days.
+22
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 45 ===
+STRAND 3: SYSTEMS
+SUB-STRAND1: THE HUMAN BODY SYSTEMS
+CONTENT SUBJECT SPECIFIC
+STANDARDS INDICATORS AND EXEMPLARS PRACTICES AND CORE
+COMPETENCIES
+B5.3.1.1.1 Know the parts of the respiratory system in humans Core Competencies
+B5.3.1.1 Recognise
+ Introduce the lesson with songs on the parts of the body, e.g. head, shoulders, Digital Literacy
+that different parts of
+knees and toes . Personal development and leadership
+the human body work
+Communication and Collaboration.
+interdependently to  Ask learners to breathe in and out for some time.
+Critical Thinking and Problem-Solving
+perform a specific  Relate the act of breathing to the respiratory system and guide learners to
+Creativity and Innovation
+function identify the organs of the system using charts or models.
+Subject Specific Practices
+ Use role-play to guide learners to identify the functions of each part (different
+Observing
+learners assume and role-play the functions of parts of the respiratory system,
+Analysing
+e.g. Ama is the lungs and Amina is the diaphragm).
+Classifying
+ Engage learners in an activity to design a breathing model using plastic bags,
+Communicating
+balloons, rubber bands and polythene bags.
+Designing
+ Learners draw and label the respiratory system and state its function.
+Interpreting
+ Learners are tasked to find out the diseases and lifestyles that affect the
+respiratory system adversely.
+Project : Assist learners to design an improvised breathing apparatus using plastics .
+SUB-STRAND 2: THE SOLAR SYSTEM
+B5.3.2.1.1 Identify the components of the solar system (sun, earth, moon, Core Competencies
+B5.3.2.1 Show
+other planets, satellite) Digital Literacy
+understanding of the
+Personal development and leadership
+orderliness of the sun,  Present learners with a chart, model or video depicting the solar system or draw
+Communication and Collaboration.
+planets and satellites the solar system on the board, using different colours to illustrate the different
+in the solar system, as bodies.
+well as the important  Learners recite the poem, “I see the moon, and the moon sees me”.
+role of the sun in the
+ Initiate a discussion on the importance of the sun to life on earth.
+existence of the solar
+ Explain to the learners that the earth orbits (moves around) the sun, leading to
+system
+changes in seasons (it takes a year for the earth to move around the sun).
+ Learners are made to understand that heavenly bodies that move around the sun
+are called planets.
+ Learners observe the planet Venus, the brightest object in the sky before sunset
+or several hours after sunrise.
+ Learners are guided to role- play the sun and the planets in the solar system.
+ Share folktales about the sun and moon with learners.
+23
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 46 ===
+CONTENT SUBJECT SPECIFIC
+STANDARDS INDICATORS AND EXEMPLARS PRACTICES AND CORE
+COMPETENCIES
+B5.3.2.1 Show  Learners should understand that all the planets move around the sun.
+understanding of the  Learners to observe the planet Venus, the brightest object in the sky before
+orderliness of the sun,
+sunset or several hours after sunrise.
+planets and satellites in
+Project : Planning, designing and making a model of the Solar System
+the solar system, as
+Learners build a model of the solar system using suitable materials such as blu
+well as the important
+tack, clay, cardboard and wood. etc.
+role of the sun in the
+existence of the solar
+system
+CONT’D
+SUB-STRAND 3: ECOSYSTEM
+B5.3.3.1.1 Know how various organisms are adapted to survive in their Core Competencies
+B5.3.3.1 Show
+habitat Critical Thinking and Problem-
+understanding of
+ Begin the lesson with a matching activity using flashcards (write the names of Solving
+ecosystem,
+different organisms on flashcards and a list of habitats on another set of Personal development and
+interdependency of
+flashcards for learners to match with). leadership
+organisms in an
+Communication and
+ecosystem and  Learners explain why a bird cannot live in water.
+Collaboration
+appreciate the  Learners discuss various habitats of animals and plants.
+interactions  Brainstorm with learners to come out with the meaning of the term habitat.
+Subject Specific Practices
+ Learners are asked to give examples of animals that live in water, land and
+Analysing
+trees.
+Evaluating
+ Learners are assisted to discuss how various organisms adapt to their habitat,
+Generalising
+e.g. what enables fish to live in rivers, birds to live on trees?
+Designing
+Project : Designing a habitat
+Interpreting
+Learners plan, design and make a model of a habitat using card board, paper, blu tack
+and clay to show the homes of some animals.
+24
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 47 ===
+STRAND 4: FORCES AND ENERGY
+SUB-STRAND 1: SOURCES AND FORMS OF ENERGY
+CONTENT INDICATORS AND EXEMPLARS SUBJECT SPECIFIC
+STANDARDS PRACTICES AND CORE
+COMPETENCIES
+B5.4.1.1 Demonstrate B5.4.1.1.1 Explain how energy is transformed from one form to another Core Competencies
+understanding of the  Explore learners’ previous knowledge on the forms of energy (e.g. Electrical, heat, Personal development and
+concept of energy, its light, sound). leadership
+various forms and Communication and
+ Use some common devices (e.g. torch, radio, television, etc.) to demonstrate
+sources and the ways transformation of energy. Collaboration.
+in which it can be Critical Thinking and Problem-
+ Learners discuss energy transformations that take place in the school, e.g. ringing
+transformed and Solving
+of bell, beating of gong-gong, drumming, etc.
+conserved Subject Specific Practices
+ In groups, learner’s identity other forms of energy transformations in the school
+Observing, Manipulating,
+community and present their findings for discussion in the class.
+Analysing, Evaluating,
+ Learners design a flow chart to explain how energy from the sun is transformed
+Classifying, Designing and
+into energy for walking.
+Interpreting
+B5.4.1.1.2 Know how to use electricity efficiently in the home
+ Learners mention names of things that use electricity in the home. Core Competencies
+ Brainstorm with learners to come out with how they use the electrical gadgets. Critical Thinking and Problem-
+ Learners talk about what will happen if electrical gadgets are not switched off when Solving
+not in use. Cultural identity and global
+citizenship.
+ Elaborate on and link learners’ ideas with the issue of power outages and crisis
+Personal development and
+which come as a result of the efficient use of electricity in our homes and
+leadership
+industries.
+Communication and
+ Learners, in a think-pair-share activity, identify how they can use electricity
+Collaboration.
+efficiently in the home, community and school. e.g. ironing in bulk, putting off
+Subject Specific Practices
+television sets and freezers when ironing, using energy-efficient bulbs and other
+Analysing, Evaluating
+electrical gadgets with higher energy efficient ratings: (more stars imply higher
+Manipulating
+energy efficiency).
+25
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 48 ===
+SUBJECT SPECIFIC
+CONTENT
+INDICATORS AND EXEMPLARS PRACTICES AND CORE
+STANDARDS
+COMPETENCIES
+B5.4.1.2 Show B5.4.1.2.1 Show the relationship between heat and temperature Core Competencies
+understanding of the  Review previous lesson on temperature with learners. Personal development and
+concept of heat  In a group discussion, learners find out what will happen when heat is applied to a leadership
+energy in terms of its substance or lost from a substance, e.g. when a substance is placed in the sun for a Communication and
+importance, effects, while or when a substance is put in a fridge. Collaboration
+sources and transfer Subject Specific Practices
+ Learners undertake an activity of placing objects such as metal plates, pieces of
+from one medium to Observing
+stone in the sun.
+another Manipulating
+ Learners initially touch the objects to feel their degree of warmness before they
+Analysing
+are put in the sun.
+Generalising
+ After 20 minutes, learners touch the objects again and feel the difference in
+temperature.
+ Learners should then place the stones or metals in a bowl of water and afterwards,
+touch again to determine whether they become hotter or colder.
+ Elaborate on learners’ ideas, emphasising heat as the factor that changes
+temperature.
+ Summarise lesson by explaining to learners that when heat is lost, temperature
+reduces, when heat is gained, temperature increases.
+B1.4.1.2.2 Measure and record temperature using thermometer
+Core Competencies
+ Guide learners, in groups, to produce their own improvised thermometers using
+Critical Thinking and Problem-
+plastic bottles, plastic straws, dyes and water.
+Solving
+ If available, bring clinical and laboratory thermometers to class.
+Personal development and
+ Learners recall their previous knowledge on the concept, “temperature”.
+leadership
+ Learners discuss the relationship between hotness and coldness in terms of heat
+Communication and
+transfer, (when an object loses heat, it cools and when it gains heat, it becomes
+Collaboration
+warm or hot).
+Subject Specific Practices
+ Learners identify the instrument used for measuring the amount of heat in a body
+Analysing
+and give examples of places where the thermometer is used.
+Evaluating
+ Learners are assisted to use the clinical thermometer to measure and record their Classifying
+body temperatures and the laboratory thermometer to measure the temperature Observing
+of warm water. Recording
+Manipulating
+26
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 49 ===
+SUB-STRAND 2: ELECTRICITY AND ELECTRONICS
+CONTENT SUBJECT SPECIFIC
+STANDARDS INDICATORS AND EXEMPLARS PRACTICES AND CORE
+COMPETENCIES
+B5.4.2.1 B5.4.2.1.1 Identify the components of an electric circuit and their functions Core Competencies
+Demonstrate  Begin by asking learners what comes into their minds when they hear the term, Creativity and innovation
+knowledge of ‘electric circuit’ Personal development and
+generation of leadership
+ Learners watch pictures and videos of simple electrical circuits and how they work.
+electricity, its Communication and
+ Learners, in groups, construct simple electric circuits using connecting wire, dry
+transmission and Collaboration
+cells and a bulb/LED to light up the bulb.
+transformation into Subject Specific Practices
+ Assist learners to identify the components and their uses.
+other forms Observing
+ Learners find out other materials that can be used in place of dry cells, connecting
+Manipulating
+wires and bulb.
+Analysing
+Evaluating
+Project: Learners build an LED lantern using the above circuit and plastic bottle.
+Communicating
+27
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 50 ===
+SUB STRAND 3: FORCES AND MOVEMENT
+SUBJECT SPECIFIC
+CONTENT INDICATORS AND EXEMPLARS PRACTICES AND CORE
+STANDARDS COMPETENCIES
+B5.4.3.1 Know that B5.4.3.1.1 Explain the term, “friction”, its effects and applications Core Competencies
+movement is caused  Review the previous lesson on forces with learners. Creativity and innovation
+by applied forces Personal development and
+ Learners recall some examples of forces and their effects/applications.
+due to the release of leadership
+ Learners explain why cars usually drive slowly on wet roads.
+stored energy Communication and
+ Task them to explain what happens when one accidentally step into an oil spill on
+Collaboration.
+the floor.
+Critical Thinking and Problem-
+ Ask learners these questions: What is friction? What does it do? How does it
+Solving
+work?
+ Then discuss their prior knowledge of the topic.
+Subject Specific Practices
+ Learners rub their palms together for several sections and talk about what they
+Observing
+notice.
+Manipulating
+ Explain to learners that the warmth they feel is caused by a force called friction
+Predicting
+and that friction is the force that opposes the movement of two surfaces against
+Analysing
+each other.
+Evaluating
+ Some learners remove their shoes to show the shrunken heels/soles as an example
+Generalising
+of the effect of friction between the sole of the shoe and the ground which one
+Communicating
+walks on.
+Designing
+ Emphasise the fact that it is because of the friction between the shoes and the
+ground that we do not fall whilst walking or running.
+ Explain to learners again that on a rainy day or on a smooth/polished surface,
+friction is reduced, which means the shoes of the one walking or the tyres of the
+car are not firmly gripped to the ground or the road because friction has reduced.
+Thus, this is what causes people to fall or slip on oily or wet surfaces.
+Project : Investigating the effect of friction
+Learners demonstrate the effect of friction by using a toy car on rough and smooth
+surfaces.
+28
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 51 ===
+STRAND 5: HUMANS AND THE ENVIRONMENT
+SUB-STRAND 1: PERSONAL HYGIENE AND SANITATION
+SUBJECT SPECIFIC
+CONTENT INDICATORS AND EXEMPLARS PRACTICES AND CORE
+STANDARDS COMPETENCIES
+B5.5.1.1.1 Know why it is important to wash clothes regularly Core Competencies
+B5.5.1.1 Recognise
+ Engage learners in groups to discuss among themselves what items are needed to Critical thinking and Problem-
+the importance of
+wash their clothes and underwear. Solving
+personal hygiene
+ Groups present their ideas to the whole class. Collaboration and
+communication.
+ Present to learners, real items (soap, water, dirty clothes, etc.) needed to wash
+Personal Development and
+clothes and underwear and demonstrate how washing is done.
+Leadership
+ Learners demonstrate how washing is done (a learner from each group).
+Digital literacy
+ Engage learners to watch a video or pictures showing other methods of washing
+Creativity and Innovation
+clothes and underwear, apart from the hands.
+Subject Specific Practices
+ In pairs, learners share ideas on what will happen if they don’t wash their clothes
+Observing
+and underwear regularly.
+Manipulating
+ Guide learners to design personal roster for washing their clothes, indicating the
+Analysing
+days and times which they will use to wash their dirty clothes.
+Evaluating
+Designing
+Creating
+B5.5.1.2.1 Know how to keep washrooms clean Core Competencies
+B5.5.1.2 Identify,
+ Learners watch pictures and videos on how to keep washrooms clean. Critical thinking and Problem-
+discuss and
+ Engage them in a discussion on how to keep the lavatory clean. Solving
+appreciate the
+Collaboration and
+natural and human  Emphasise such key points as: flushing immediately after use, urinating directly in
+Communication.
+features of the the toilet bowl, keeping used tissues in waste containers rather than throwing
+Personal Development and
+environment and them on the floor, regularly removing used tissues and burning them.
+Leadership
+the need to keep the  Learners investigate the risks associated with the use of dirty washrooms.
+Digital literacy
+environment clean
+ Evaluate learners by asking them to design a poster to be pasted in their school’s
+washroom.
+Subject Specific Practices
+Observing
+Analysing
+Evaluating
+29
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 52 ===
+SUBJECT SPECIFIC
+CONTENT INDICATORS AND EXEMPLARS PRACTICES AND CORE
+STANDARDS COMPETENCIES
+B5.5.1.2 Identify, B5.5.1.2.2 Demonstrate how to clean the environment regularly Core Competencies
+discuss and  Assemble various items for cleaning the environment. Critical thinking and Problem-
+appreciate the  Begin the lesson with a song on cleanliness. Solving
+natural and human Cultural Identity and Global
+ Take the learners on a trip to observe tidy and untidy parts of the nearby
+features of the Citizenship
+community or show different pictures depicting clean and unclean environments.
+environment and Collaboration and
+ Engage learners to discuss how to make the unclean environments as clean as those
+the need to keep communication.
+that are clean.
+the environment Personal Development and
+ Learners discuss some materials that are used for cleaning the home, the school and
+clean Leadership
+the community.
+Creativity and Innovation
+ Demonstrate to learners the correct way of using the cleaning tools, e.g. brooms,
+rags, ceiling brush, dustpans and dustbins. Subject Specific Practices
+ Learners are assisted to know the need to keep the environment clean. Observing, Manipulating,
+ Engage learners to use local cleaning tools to clean the classroom and the school Analysing, Evaluating, Designing,
+environment. Interpreting, Communicating
+Project :
+Learners design posters to create awareness on the need to keep the school, home and
+Community clean and exhibit their work in the school .
+NB : Teachers are encouraged to form an environmental awareness club in the class
+after this lesson.
+SUB-STRAND 2 : DISEASES
+B5.5.2.1 Know B5.5.2.1.1 Explain the causes, symptoms and control of chicken pox Core Competencies
+common diseases  Learners watch pictures, videos or charts on causes, symptoms and control of Critical thinking and Problem-
+of humans; causes, chicken pox or invite a health personnel or School Health Education Programme Solving
+symptoms, effects (SHEP) coordinator to give a talk on chicken pox. Collaboration and
+and prevention communication.
+ In pairs, learners answer the following questions based on the pictures and video: (1)
+Personal Development and
+What causes chicken pox? (2) What are the symptoms of chicken pox? (3) What
+Leadership
+should be done if someone has chicken pox? (4) What are the ways of preventing
+Digital literacy
+the spread of chicken pox?
+Subject Specific Practices
+Project : Learners develop a concept map to trace the causes, symptoms and prevention of
+Analysing, Evaluating
+chicken pox.
+Designing, Interpreting
+30
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 53 ===
+SUB-STRAND 2 : DISEASES
+SUBJECT SPECIFIC
+CONTENT
+INDICATORS AND EXEMPLARS PRACTICES AND CORE
+STANDARDS
+COMPETENCIES
+B5.5.2.1.2 Identify causes, symptoms and prevention of cholera Core Competencies
+B5.5.2.1 Know
+ Learners watch pictures and videos or images showing the causes, symptoms and Critical thinking and Problem-
+common diseases
+prevention of cholera. Solving
+of humans; causes,
+Collaboration and
+symptoms, effects  Invite a local health officer or SHEP coordinator to give a presentation on cholera to
+communication.
+and prevention the learners.
+Personal Development and
+ Engage learners, in groups, to discuss the causes of cholera, using everyday
+Leadership
+scenarios, e.g. eating contaminated food and living in a dirty environment.
+Digital literacy
+ Learners are provided one large cardboard for all the groups to write different ideas
+Subject Specific Practices
+on the causes, prevention and symptoms of cholera.
+Analysing
+ Learners display the cardboard in the classroom.
+Generating
+SUB STRAND 3: SCIENCE AND INDUSTRY
+B5.5.3.1.1 Identify the raw materials used in some local industries (kenkey Core Competencies
+B5.5.3.1 Recognise
+production, gari production, ceramic and pottery production) Critical thinking and Problem-
+the impact of
+ Take learners to a local gari, kenkey, shea butter, cooking oil, blacksmith, basketry, Solving
+science and
+carpentry or pottery production site or show videos of such ventures. Collaboration and
+technology in
+ Learners observe critically and identify the raw materials used in the various communication.
+society
+Personal Development and
+industries.
+Leadership
+ Engage the learners in a matching activity to match some local products with their
+Digital literacy
+raw materials.
+Subject Specific Practices
+Observing
+Project : Designing an Industry.
+Analysing
+Learners plan and design a factory in their locality, showing the raw materials they use and
+Evaluating
+the finished products.
+Planning
+Designing
+Interpreting
+31
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 54 ===
+SUB-STRAND 4: CLIMATE CHANGE
+CONTENT INDICATORS AND EXEMPLARS SUBJECT SPECIFIC
+STANDARDS PRACTICES AND CORE
+COMPETENCIES
+B5.5.4.1 Know that B5.5.4.1.1 Identify the impact of deforestation on climate change Core Competencies
+climate change is  Put learners into groups and let them discuss the importance of trees in the Critical thinking and Problem-
+one of the most environment. Solving
+important  Take them on a trip around the school environs and help them to appreciate Collaboration and communication
+environmental Personal Development and
+the importance of trees such as provision of shade, food, fresh air, production
+issues facing the of rain, etc. Leadership
+world today Digital literacy
+ Learners brainstorm on what will happen if people continuously cut down
+Subject Specific Practices
+trees.
+Observing
+ Engage each group to present their ideas to the whole class and re-shape their
+Analysing
+ideas by writing all key points on tree-felling and its impact to the environment
+Evaluating
+as well as its long-term effect on the climate.
+ Learners brainstorm on what measures to take to stop people from tree-
+cutting.
+ Learners are assisted to plant trees in their school environment and at strategic
+locations within the community.
+ Learners are supervised to take good care of the trees they plant.
+32
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 55 ===
+BASIC 6
+33
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 56 ===
+BASIC 6
+STRAND 1: DIVERSITY OF MATTER
+SUB-STRAND 1: LIVING AND NON-LIVING THINGS
+CONTENT SUBJECT SPECIFIC
+STANDARDS INDICATORS AND EXEMPLARS PRACTICES AND CORE
+COMPETENCIES
+B6.1.1.1 Show B6.1.1.1.1 Classify plants based on their root system Core Competencies
+understanding of the  Review previous lesson on parts of a plant with learners (stem, root, leaves and Critical thinking and Problem-
+physical features flowers). Solving
+and life processes of  Learners uproot young plants (e.g. grass, beans, mango, cassava and sweet Communication and
+living things and use Collaboration
+potato) and bring to class.
+this understanding Creativity and Innovation
+ Learners are shown pictures of the root systems of different plants.
+to classify them
+ Learners observe and identify the similarities and differences between the roots
+Subject Specific
+of the various plants.
+Competencies
+ Task learners to put the plants into two main groups based on the similarities in
+Observing
+their roots system.
+Communicating
+ Learners give reasons for their classifications.
+Planning
+ Build the vocabulary of learners by explaining to them the two main root systems
+Analysing
+of plants, namely; tap roots and fibrous roots.
+Designing
+ Learners to mould tap root and fibrous root using blu tack and display for
+Interpreting
+discussion.
+SUB-STRAND 2: MATERIALS
+B6.1.2.1 Recognise B6.1.2.1.1 Know the general properties of metals such as lustre, malleability, Core Competencies
+materials as conductivity and ductility Critical thinking and Problem-
+important resources  Learners, in groups, gather different objects such as ruler, erasers, exercise Solving
+for providing human books, comb, plastic bowls, connecting wires, cups, plates, cooking pans, roofing Digital Literacy
+needs sheets, iron nails, pins, etc. Communication & Collaboration
+ Learners classify the various materials as metals or non-metals based on the
+following properties: lustre, malleability, conductivity and ductility. Subject Specific Practices
+Observing
+ Learners give reasons for their classification.
+Communicating
+ Relate the lesson to everyday activities that involve the use of metals.
+Analysing
+ Given a piece of aluminium foil and a drinking straw, learners describe how they
+Generalising
+will use conductivity to classify them as metals or non-metals.
+ Learners design and make simple machines with metals.
+34
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 57 ===
+CONTENT INDICATORS AND EXEMPLARS SUBJECT SPECIFIC PRACTICES
+STANDARDS AND CORE COMPETENCIES
+B6.1.2.1 Recognise B6.1.2.1.2 Investigate the uses of metals in everyday life and link the uses
+materials as to their properties
+important resources  Display different objects made from metals.
+for providing human
+ Engage learners in groups to write names of the objects and present their
+needs answers in class.
+ Learners, through discussion, come out with uses of metals by observing
+CONT’D
+the objects displayed in class or from a video (these include farm tools,
+jewellery, ornaments, cars, bridges, metallic spoons).
+ Link the use of the metal to its property, e.g. copper is used to make wires
+because it conducts electricity, aluminium is used to make roofing sheets
+because it is malleable.
+ Relate the lesson to everyday life to promote curiosity.
+B6.1.2.2 Understand B6.1.2.2.1 Examine some uses of mixtures in everyday life Core Competencies
+mixtures, the types  Review previous lesson on mixtures with learners. Critical thinking and Problem-Solving
+of formation, uses Digital Literacy
+ Learners watch videos and pictures of different types of mixtures.
+and ways of Communication and Collaboration
+ Provide samples of materials and guide learners to produce mixtures such
+separating them
+as salt solution, sugar solution, concrete, sand and water.
+into their Subject Specific Competencies
+ In groups, learners investigate the daily uses and applications of mixtures,
+components Observing, Communicating
+e.g. salt solution, sugar solution, concrete, gari and beans.
+Analysing
+ Engage learners to write the names of the components of the mixtures
+stated.
+ Learners mention other examples of mixtures and their daily uses.
+35
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 58 ===
+STRAND 2: CYCLES
+SUB-STRAND 1: EARTH SCIENCE
+SUBJECT SPECIFIC
+CONTENT INDICATORS AND EXEMPLARS PRACTICES AND CORE
+STANDARDS COMPETENCIES
+B6.2.1.1.1 Describe the relative sizes of the earth and sun and their Core Competencies
+B6.2.1.1 Recognise
+importance Critical thinking and Problem-
+the relationship
+Solving
+between the earth
+ Prior to the lesson, task learners to investigate the relative size of the sun in
+Communication and Collaboration
+and the sun
+relation to its function in the solar system.
+ Each group presents a report in class for discussion.
+Subject Specific Practices
+ Learners answer the following questions: (1) Which is bigger, the sun or the
+Designing Experiment
+earth? (2) Which of the two bodies move, the sun or the earth?
+Planning, Communicating
+ Evaluate learners by asking: “if the earth was bigger than the sun, how would
+Observing
+that affect the length of day and night?”
+Analysing
+B6.2.1.2.1 Explain how rain falls from clouds Core Competencies
+B6.2.1.2 Show
+ Review formation of clouds with learners. Communication and Collaboration
+understanding of the
+Personal Development and
+roles of  Lead learners to explain the terms: “evaporation, condensation, dew point, ice,
+Leadership
+condensation, cloud, gravity and precipitation”.
+evaporation,  Learners, in an activity, design a model showing the formation of raindrops
+Subject Specific Practices
+transpiration and around tiny spots of dust or smoke and falling from high parts of a cloud.
+Observing
+precipitation in the  Explain that not all clouds result in rainfall.
+Planning
+hydrological (water)
+cycle
+2.1.3.1 Know the functions of carbon within the environment Core Competencies
+B6.2.1.3
+ Review previous lesson on the functions of carbon dioxide with learners. Communication and Collaboration
+Demonstrate
+ Learners are assisted to discuss the following questions: (1) materials in the Personal Development and
+understanding of
+environment that contain carbon; (2) the role of carbon in those materials. Leadership
+how carbon and
+nitrogen are cycled  Learners use role-play to understand the function of carbon within the
+Subject Specific Practices
+in nature environment, e.g. the function of carbon in relation to pencils, charcoal, food
+Observing
+and carbon dioxide.
+Planning
+36
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 59 ===
+CONTENT SUBJECT SPECIFIC
+STANDARDS INDICATORS AND EXEMPLARS PRACTICES AND CORE
+COMPETENCIES
+B6.2.1.4.1 Investigate ways of conserving water in the home, school and Core Competencies
+B6.2.1.4 Recognise
+community Communication and Collaboration
+water and air as
+ Discuss qualities of good drinking water and ways of making water safe for use Personal Development and
+important natural
+with learners, e.g. sedimentation, boiling, filtration, adding alum, etc. Leadership
+resources
+ Learners identify activities in the home that require the use of water.
+Subject Specific Practices
+ Learners write various activities which portray the right use of water in the
+Observing
+home and other activities that show the wastage of water.
+Planning
+ Discuss ways of using water wisely and efficiently in the home and community
+with learners.
+ Learners create a flyer or posters on water conservation with cut-out pictures
+and phrases on how to conserve water.
+B6.2.1.5.2 Demonstrate that air supports burning
+ Review composition of air and the uses of the components
+ Learners, in groups, use simple experiments to show that air supports burning,
+using a lighted candle and a glass jar (or an improvised jar).
+SUB-STRAND 2: LIFE CYCLES OF ORGANISMS
+B6.2.2.1 B6.2.2.1.1 Know the materials needed for the survival of plants in the Core Competencies
+Demonstrate environment (water, carbon dioxide, oxygen, sunlight) Communication and Collaboration
+understanding of the  Review previous lesson on composition and uses of air. Critical Thinking and Problem-
+life cycle of a plant Solving
+ Prior to the lesson, learners investigate the materials required for plant survival.
+ Learners present their findings on the materials required for plant survival.
+Subject Specific Practices
+ Using annotated diagrams, learners show sources and point of entry of the
+Observing
+essential materials into the plants.
+Recording
+ Learners are guided to conduct an experiment to show the effect of water on
+Analysing
+plants’ survival.
+Planning
+ Learners are assigned to find out the specific functions of oxygen, carbon
+Designing
+dioxide, sunlight and water in the survival of plants.
+Manipulating
+B6.2.2.1.2 Observe the life cycle of a plant (okra or maize plant) Measuring
+ Guide learners to plant viable maize and okra seeds and care for them until Evaluating
+they bear fruits.
+ Learners observe the growing plants weekly and record the changes that take
+place until other viable seeds are produced.
+ Learners write a report based on their observations.
+37
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 60 ===
+STRAND 3: SYSTEMS
+SUB-STRAND 1: THE HUMAN BODY SYSTEMS
+SUBJECT SPECIFIC
+CONTENT INDICATORS AND EXEMPLARS PRACTICES AND CORE
+STANDARDS COMPETENCIES
+B6.3.1.1.1 Explain the functions of organs in the excretory system of humans Core Competencies
+B6.3.1.1 Recognise
+ Engage learners to review the functions of some human organs. Communication and
+that different parts of
+Collaboration
+the human body work  Learners explain the need for activities such as breathing, urinating and sweating.
+Personal Development and
+interdependently to  With the aid of videos, charts or models, assist learners to identify the organs of
+Leadership
+perform a specific the excretory system of humans (kidneys, lungs, skin, liver).
+Creativity and Innovation
+function  Learners, in an activity, match the parts of the excretory system with their
+excretory products.
+Subject Specific Practices
+ Build vocabulary of learners by explaining key biological terms such as urea,
+Planning
+kidney, lungs and excretion.
+Observing Communicating
+ Learners are provided with materials such as blu tack or clay to mould the kidney
+of humans.
+Recording
+NB : The lesson should mainly focus on the kidneys, lungs, skin, and their excretory
+Analysing
+products.
+Evaluating,
+SUB-STRAND 2: THE SOLAR SYSTEM
+B6.3.2.1.1: Explain the difference between a star, a planet and a satellite Core Competencies
+B6.3.2.1 Show
+ Show videos, models or pictures of the solar system and engage learners to Digital Literacy
+understanding of the
+identify the planets in the system. Personal development and
+motion of bodies in
+leadership
+the solar system  Draw the solar system on the board, using different colours to illustrate the
+Communication and
+different bodies.
+Collaboration
+ Learners tell what they see when they view the sky during the night and during
+day time?
+Subject Specific Practices
+ Based on their answers, use the chart to explain that a star is a heavenly body that
+Observing
+produces its own light and is stationary (does not move).
+Analysing
+ Using the solar system as an example, guide learners to understand that a planet is
+Evaluating
+a body that moves around a star (e.g. the earth and the other planets move
+Generalising
+around the sun).
+ Similarly, explain to learners that a satellite is a smaller body that moves around a
+bigger one, e.g. the moon is a satellite of the earth.
+ Engage learners in a game that mimics the solar system (e.g. place a chair at the
+centre of the football field with one learner to represent the sun. Now ask 8
+learners to go around the chair in circles to represent the planets).
+38
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 61 ===
+SUBJECT SPECIFIC
+CONTENT INDICATORS AND EXEMPLARS PRACTICES AND CORE
+STANDARDS COMPETENCIES
+SUB-STRAND 3: ECOSYSTEM
+B6.3.3.1.1 Investigate various interactions in an ecosystem and the effect on Core Competencies
+B6.3.3.1 Show
+humans Critical thinking and Problem-
+understanding of
+ Show learners pictures of different ecosystems. Solving
+ecosystems,
+Communication and
+interdependency of  Learners observe different ecosystems in the field such as a small bush or pond.
+Collaboration
+organisms in an  Engage learners to brainstorm to come out with possible interactions that occur in
+Personal Development and
+ecosystem and the given ecosystem.
+Leadership
+appreciate the  Learners work in groups to draw or design different ecosystems in the classroom.
+interactions
+ Learners observe each of the ecosystems and identify some possible interactions
+Subject Specific Practices
+that can take place within each ecosystem they have designed.
+Designing
+ Guide learners to discuss the effects of interactions (hunting, farming and predation)
+Planning
+on humans and other living things within a given ecosystem.
+Observing
+Analysing
+39
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 62 ===
+STRAND 4: FORCES AND ENERGY
+SUB-STRAND 1: SOURCES AND FORMS OF ENERGY
+SUBJECT SPECIFIC
+CONTENT INDICATORS AND EXEMPLARS PRACTICES AND
+STANDARDS CORE
+COMPETENCIES
+B6.4.1.1 B6.4.1.1.1 Compare renewable and non-renewable sources of energy Core Competencies
+Demonstrate Critical thinking and
+understanding of  Begin by asking the following questions: (1) what is energy? (2) Where does energy come Problem-Solving
+the concept of from? (answers to this question may include the sun, batteries, food, firewood and Communication and
+energy, its hydroelectric power and thermal plants) Collaboration
+various forms
+ Show pictures and videos of different sources of energy such as the sun, batteries, food and
+and sources and Subject Specific
+water.
+the ways in Practices
+ Learners work in groups to identify sources of energy and sort them into sources that are
+which it can be Planning
+not depleted when used (solar, wind and hydro sources) and those that are depleted after
+transformed and Observing
+use (firewood, batteries, food, gasoline, diesel, kerosene, etc.).
+conserved Analysing
+ Learners present their responses on flashcards for a general discussion in class.
+Synthesising
+ Assist learners to build their vocabulary by introducing and explaining the terms, “renewable”
+Generating
+and “non-renewable” sources of energy and give examples of such sources.
+B6.4.1.2 Show B6.4.1.2.1 Measure the temperature of a body using a thermometer Core Competencies
+understanding of  Assist learners to reflect on their previous knowledge on heat and temperature (temperature Critical thinking and
+the concept of refers to the degree of hotness of a body). Problem-Solving
+heat energy in  Provide clinical and laboratory thermometers or show pictures of different types of Communication and
+terms of its Collaboration
+thermometers.
+importance, Personal development and
+ Learners identify the equipment and where and when it is used.
+effects, sources leadership
+ Guide learners, in groups, to produce their own improvised thermometers using plastic
+and transfer
+bottles, plastic straws, dyes and water.
+from one Subject Specific
+ Some learners share experiences of how their body temperatures were measured on a visit
+medium to Practices
+to a health centre.
+another Planning
+ Learners demonstrate the use of thermometers to measure temperature of their bodies and
+Observing
+that of warm water
+Recording
+Measuring
+NB : Let learners be aware of the precautions in using the clinical and laboratory thermometers.
+Generating
+40
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 63 ===
+SUB-STRAND 2: ELECTRICITY AND ELECTRONICS
+SUBJECT SPECIFIC
+CONTENT INDICATORS AND EXEMPLARS PRACTICES AND CORE
+STANDARDS COMPETENCIES
+B6.4.2.1 B6.4.2.1.1 Construct an electric circuit and know the functions of its
+Demonstrate components
+knowledge of  Engage learners to discuss the basic components of an electric circuit (use video Core Competencies
+generation of demonstrations where available). Critical thinking and Problem-
+electricity, its  Note that the basic components are the battery (dry cell), bulb, connecting wire, Solving
+transmission and switch/key, etc. Communication and
+transformation Collaboration
+ Learners mention the roles of the components of the electric circuit.
+into other forms
+ Learners, in groups, provide them with the electrical components and assist them to
+Subject Specific Practices
+construct a functional simple electric circuit.
+Planning
+ Learners draw the circuits they have constructed.
+Observing
+Manipulating
+B6.4.2.1.2 Identify the symbols used in representing various components in a given
+Generating
+circuit diagram
+ Identify and match basic components of an electric circuit with their symbols.
+ Learners, in groups, draw simple circuit diagrams using symbols of the components
+(switch, connecting wires, battery, electrical bulb).
+
+B6.4.2.1.3 Know conductors, semi-conductors and insulators
+Core Competencies
+ Gather items such as bulbs, battery, electric wires.
+Critical thinking and Problem-
+ Brainstorm with learners on the meaning of the terms “ conductors”, “semi-conductors”
+Solving
+and “insulators” with examples.
+Communication and
+ Learners are provided the following materials (spoons, foils, drinking straw, plastic
+Collaboration
+materials, piece of wood, glass rod, leather, nails, keys, pencils, pens, LEDs, diodes, etc.)
+for an activity.
+Subject Specific Practices
+ Connect a simple electrical circuit (an open circuit) using a bulb, battery and connecting
+Planning
+wire.
+Observing
+ Learners use the open circuit to classify the materials provided as conductors, semi-
+Manipulating
+conductors and insulators. Communicating
+ Learners explain why the electrical wires in their homes are coated with plastics Generating
+41
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 64 ===
+SUBJECT SPECIFIC
+CONTENT
+INDICATORS AND EXEMPLARS PRACTICES AND CORE
+STANDARDS
+COMPETENCIES
+B6. 4.2.2 Know B6.4.2.2.1 Construct an electronic circuit using battery, connecting wire and LED Core Competencies
+the functions and Critical thinking and Problem-
+ Put learners into mixed ability groups for this activity.
+assemblage of Solving
+ Provide learners with connecting wires, LED and battery.
+basic electronic Communication and
+components  Learners, in their groups, connect a series circuit comprising an LED, 3V battery, a Collaboration
+switch, to light the LED. Personal development and
+ Learners discuss what they did to light the LED. leadership
+ Learners are tasked to draw the electronic circuit and label the parts. Subject Specific Practices
+Planning, Observing
+NB : Build a stock of electronic components from discarded electronic gadgets such as radio Manipulating
+and TV sets, phone chargers and flashlights. Evaluating
+Communicating
+Generating
+SUB STRAND 3: FORCES AND MOVEMENT
+B6.4.3.1 Know B6.4.3.1.1 Recognise the relationship between energy and forces Core Competencies
+that movement is  Learners form different groups to undertake activities on application of forces, e.g. Critical thinking and Problem-
+caused by applied pulling items across a distance, lifting up loads of different weights. Solving
+forces due to the  Learners brainstorm on the relationship between energy and forces, e.g. why is it more Communication and
+release of stored difficult to lift a table than a book? Collaboration
+energy Creativity and innovation
+ Lead learners to explain that when a force acts on an object, it first needs to overcome
+the weight of the object before it can make the object move in the direction of the
+force. Thus, it is easier to pull a lighter object than a heavier one.
+Subject Specific Practices
+ Relate this to the need to apply more energy/effort in our daily activities to be
+successful (Weeding with a cutlass, cutting a tree etc.).
+Planning, Observing
+Manipulating, Communicating,
+NB : The greater the force exerted on a body/machine, the greater the work done .
+Generating
+42
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 65 ===
+SUBJECT SPECIFIC
+CONTENT
+INDICATORS AND EXEMPLARS PRACTICES AND CORE
+STANDARDS
+COMPETENCIES
+B4.4.3.2 B6.4.3.2.1 Identify levers, pulleys, inclined planes as classes of simple machines and Personal Development and
+Recognise some cite some common examples Leadership
+simple machines Communication and
+used for making  Lead learners to visit various workplaces where levers, pulleys or inclined planes are Collaboration
+work easier, used in their work or show pictures of different classes of simple machines. Creativity and innovation
+analyse their  Learners talk about their experiences on the visit.
+advantages and  Learners are shown examples of simple machines (screw drivers, pliers, scissors, wheel
+know their uses barrow, shovel, hammer, spanners, axe, rake, cutlass, hoe, mattock, crowbar, claw Subject Specific Practices
+hammer, screws, wooden board, to identify and classify them as levers, pulleys or
+inclined planes). Planning, Observing
+ Learners demonstrate proper ways of using simple machines. Manipulating
+Project : Design and Make Simple Machines
+Learners design and make simple machine of their choice from suitable materials such as
+bamboo, wood, cardboard, plastics, paper and straws.
+43
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 66 ===
+STRAND 5: HUMANS AND THE ENVIRONMENT
+SUB-STRAND 1: PERSONAL HYGIENE AND SANITATION
+SUBJECT SPECIFIC
+CONTENT
+INDICATORS AND EXEMPLARS PRACTICES AND CORE
+STANDARDS
+COMPETENCIES
+B6.5.1.1.1 Identify the causes and effects of foul body odour on humans and how it Core Competencies
+B6.5.1.1
+can be prevented Critical thinking and Problem-
+Recognise the
+ Learners, in groups, discuss the causes of body odour. Solving
+importance of
+Collaboration and
+personal hygiene  Prepare personal hygiene cards/posters for each learner in the group to write one
+communication.
+cause of foul body odour and how it can be prevented.
+Personal Development and
+ Learners pair-share their ideas and present to the whole class.
+Leadership
+ Present real items or materials that can be used to prevent foul body (lime, lemon,
+Digital literacy
+deodorant, etc.) odour to learners in class and demonstrate their correct use.
+ Evaluate learners by letting them plan and design a project on how to eliminate foul
+body odour.
+Subject Specific Practices
+NB : Activities should include the use of lime and lemon for cleaning the armpit, regular
+Designing Experiment
+bathing and cutting of hair and nails).
+Planning
+Observing
+B6.5.1.1.2 Describe ways of minimising waste
+Manipulating
+ Learners watch pictures and videos showing and describing ways of minimising waste in
+Evaluating
+the environment.
+Communicating
+ In groups, learners discuss and come out with ideas to minimise waste in their
+Generating
+classroom, school environment, homes and their communities.
+ Each group discusses measures of minimising waste in the classroom, school
+environment, home, market, at the bus station, hospitals, church, mosque, beach, etc.
+ Learners present their ideas to the whole class.
+ Evaluate learners by assisting each group design a poster.
+Project ; Designing litterbins
+Learners plan, design and make their own litterbins for use in the class and school
+community.
+44
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 67 ===
+SUB-STRAND 2: DISEASES
+SUBJECT SPECIFIC
+CONTENT
+INDICATORS AND EXEMPLARS PRACTICES AND CORE
+STANDARDS
+COMPETENCIES
+B6.5.2.1 B6.5.2.1.1 Explain the causes, symptoms and prevention of Eczema Core Competencies
+Demonstrate  Learners watch pictures of people suffering from eczema. Critical thinking and Problem-
+knowledge of  In groups, learners come out with the possible causes, symptoms and prevention. Solving
+common diseases of Collaboration and
+ Allow group presentations and write learners’ ideas on the board.
+humans; causes, communication.
+ Invite health personnel to give a talk on eczema and other common skin diseases.
+symptoms, effects Personal Development and
+and prevention Leadership
+B6.5.2.1.2 Know how to prevent meningitis
+Digital literacy
+ Learners watch videos or pictures on the causes and prevention of meningitis.
+Subject Specific Practices
+ Gather relevant charts on meningitis from a health centre and engage learners in a
+presentation on how to prevent it. Observing
+Communicating
+ Invite a health personnel or the SHEP coordinator to give a presentation on
+Generating
+meningitis
+SUB-STRAND 3: SCIENCE AND INDUSTRY
+B6.5.3.1 Recognise 5.3.1.1 Identify the scientific concepts and principles underlying the Core Competencies
+the impact of operation of some industries Digital literacy
+science and  Learners watch a video of kenkey and salt production processes. Critical thinking and Problem-
+technology on  Learners go on a study visit to a local business venture such as kenkey, soap, salt Solving
+society Cultural identity and global
+production, cooking oil, or gari production centre.
+citizenship
+ Learners must observe the activities and interact with people at the workplace.
+Collaboration and
+ Engage learners, in groups, to discuss and identify the key scientific principles
+communication
+underlying the operations of the industries visited.
+Subject Specific Practices
+ Build vocabulary of learners by explaining key terms such as evaporation, salting-out,
+Designing Experiment
+fermentation and saponification.
+Planning
+Observing
+Project
+Generating
+Give learners a project to work in groups to produce yoghurt, kenkey or soap based on the
+experiences from their study visits.
+45
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 68 ===
+SUB-STRAND 4: CLIMATE CHANGE
+SUBJECT SPECIFIC
+CONTENT
+INDICATORS AND EXEMPLARS PRACTICES AND CORE
+STANDARDS
+COMPETENCIES
+B6.5.4.1.1 Know the effects of climate change on humans Core Competencies
+B6.5.4.1 Know that
+ Learners are assigned to find out from their parents or elderly people what the Digital literacy
+climate change is
+weather situation has been since 2000. Critical thinking and Problem-
+one of the most
+Solving
+important  Learners share their information with the whole class.
+Collaboration and
+environmental  Show pictures and videos displaying activities that contribute to climate change and
+communication.
+issues facing the the associated effects on the earth.
+Personal Development and
+world today.  Stress the effects of climate change on weather conditions such as drought,
+Leadership
+flooding, increase in temperature, etc.
+ Learners are engaged in a think-pair-share activity to come out with ways of
+Subject Specific Practices
+controlling the causes of climate change.
+Designing Experiment
+ Guide learners to design a concept map on climate change, showing its causes,
+Planning
+effects and prevention.
+Observing
+ Build the vocabulary of learners by explaining terms such as climate change,
+Communicating
+drought, flooding and temperature.
+Generating
+ Engage learners in an awareness campaign on climate change issues in the school
+Analysing
+and nearby community, using placards, posters and banners.
+Evaluating
+ Learners work in groups to plant and nurture trees at vantage points in the school
+environment.
+ Learners predict what will happen if there are no trees in the world.
+46
+© NaCCA, Ministry of Education 2019
+
+=== PHYSICAL PDF PAGE 69 ===
+SCIENCE SUBJECT PANEL MEMBERS AND REVIEWERS
+NAME INSTITUTION
+Writing panels
+Prof Anthony Krueger Department of Science Education, UCC
+Prof Leonard Amekudzi Dept of Physics, KNUST
+Mr Antwi-Aning NaCCA-NEAU
+Mercy Nyamekye NaCCA
+Olivia Opare Science Education Unit, GES
+Saddik A. Mohammed Ga South Municipal Education Office
+Cosmos Eminah NaCCA
+Expert Reviewers
+Prof. John K. Eminah UEW
+Dr. Fiifi Mensah UCC
+Curriculum Adviser
+Dr. Sam K. Awuku
+Supervisor
+Felicia Boakye-Yiadom (Mrs) NaCCA, Outgoing Acting Executive Secretary
+Dr. Prince H. Armah NaCCA, Incoming Acting Executive Secretary
+47
+© NaCCA, Ministry of Education 2019

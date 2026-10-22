@@ -1,0 +1,13 @@
+node_modules/
+.next/
+.local-backups/
+.env*
+!.env.example
+*.tsbuildinfo
+coverage/
+test-results/
+playwright-report/
+
+# Private persistent development billing records and test artifacts
+.data/
+tmp/subscriptions-tests-*/

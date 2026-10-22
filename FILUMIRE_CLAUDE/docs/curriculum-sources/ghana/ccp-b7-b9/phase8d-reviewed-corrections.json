@@ -1,0 +1,26 @@
+{
+  "policy": "Only source-supported transcriptions and candidate classifications; never a publisher code correction. Original raw text is retained.",
+  "candidate_decisions": {},
+  "statements": {
+    "8:mathematics:pdf173:row1": {
+      "statement": "Establish the relationship between the hypotenuse ‘c’ and the two other sides ‘a’ and ‘b’ of a right-angled triangle (i.e. a² + b² = c²) and use it to solve problems.",
+      "reason": "Visual transcription restores superscript order disrupted by PDF text positioning; no mathematical/source correction.",
+      "evidence": "phase8d-review/mathematics-pdf173.png"
+    },
+    "8:mathematics:pdf179:row1": {
+      "statement": "Add, subtract and find the scalar multiplication of vectors in the component form.",
+      "reason": "Rendered bold statement ends before the following non-bold E.g1 exemplar.",
+      "evidence": "phase8d-review/mathematics-pdf179.png"
+    },
+    "9:mathematics:pdf200:row2": {
+      "statement": "Explain the identities/rules of surds",
+      "reason": "Rendered bold indicator heading ends before the separate Rule 1 through Rule 5 formula table; formula text remains in the complete cell.",
+      "evidence": "phase8d-review/mathematics-pdf200.png"
+    },
+    "9:mathematics:pdf247:row1": {
+      "statement": "Organise and analyse data and interpret the results using the descriptive statistics (i.e. minimum, maximum, measures of central tendency and range) to answer a given question.",
+      "reason": "Rendered bold indicator heading ends before the non-bold Refer to E.g. 1 instruction; that instruction remains in the cell.",
+      "evidence": "phase8d-review/b9-mathematics-headers-5.png"
+    }
+  }
+}

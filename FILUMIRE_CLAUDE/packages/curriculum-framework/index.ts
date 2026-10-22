@@ -1,4 +1,5 @@
-﻿import { GHANA_B4_SCIENCE_ADAPTIVE_SPECS } from "../curriculum/ghana-b4-science-adaptive";
+import { isPrivateJhsEnabled, privateJhsGrade, privateJhsSubject } from '../curriculum/jhs-private-policy';
+import { GHANA_B4_SCIENCE_ADAPTIVE_SPECS } from "../curriculum/ghana-b4-science-adaptive";
 import { GHANA_B4_COMPUTING_ADAPTIVE_SPECS } from "../curriculum/ghana-b4-computing-adaptive";
 import { GHANA_B5_SCIENCE_PUBLISHED_SPECS } from "../curriculum/ghana-b5-science-adaptive";
 import { getGhanaB5ScienceNodes } from "./ghana-b5-science";
@@ -17,6 +18,25 @@ import { getGhanaB5EnglishNodes } from "./ghana-b5-english";
 import { GHANA_B6_ENGLISH_PUBLISHED_SPECS } from "../curriculum/ghana-b6-english-adaptive";
 import { getGhanaB6EnglishNodes } from "./ghana-b6-english";
 import type { CompetencyId } from "../domain";
+import { GHANA_B4_ENGLISH_PRODUCTION_SPECS } from "../curriculum/ghana-b4-english-production";
+import { GHANA_B4_MATHEMATICS_ADAPTIVE_SPECS } from "../curriculum/ghana-b4-mathematics-adaptive";
+import { getGhanaB4EnglishNodes } from "./ghana-b4-english";
+import { GHANA_B89_CCP_REGISTRY } from "./ghana-b89-ccp";
+import { GHANA_CCP_RUNTIME_ID } from '../curriculum/ghana-ccp-runtime';
+import {
+  GHANA_B7_CCP_REGISTRY,
+  CURRICULUM_VERSION_GHANA_CCP_2020_ID,
+  PHASE_GHANA_JHS_CCP_ID,
+  GRADE_GHANA_BASIC_7_CCP_ID,
+  type CurriculumSourceProvenance,
+  type FrameworkCompetencyRegistration,
+  type CurriculumSourceIssue,
+} from "./ghana-b7-ccp";
+export { CURRICULUM_VERSION_GHANA_CCP_2020_ID, PHASE_GHANA_JHS_CCP_ID, GRADE_GHANA_BASIC_7_CCP_ID };
+export type { FrameworkCompetencyRegistration, CurriculumSourceIssue, CurriculumSourceProvenance };
+
+const jhsSubjects = [...GHANA_B7_CCP_REGISTRY.subjects, ...GHANA_B89_CCP_REGISTRY.subjects];
+const jhsRegistrations = [...GHANA_B7_CCP_REGISTRY.competencies, ...GHANA_B89_CCP_REGISTRY.competencies];
 
 import {
   GHANA_MATH_PILOT_CURRICULUM_ID,
@@ -89,6 +109,7 @@ export interface CurriculumVersion {
   curriculumId: CurriculumId;
   name: string;
   isActive: boolean;
+  runtimeFrameworkId?: string;
 }
 
 export interface Phase {
@@ -103,6 +124,8 @@ export interface FrameworkGrade {
   phaseId: PhaseId;
   name: string;
   order: number;
+  learnerVisibility?: "visible" | "hidden";
+  supportStatus?: "unsupported";
 }
 
 /*
@@ -131,6 +154,10 @@ export interface CurriculumNode {
   description?: string;
   sourceReference?: string;
   order: number;
+  source?: CurriculumSourceProvenance;
+  officialTitle?: string | null;
+  structuralKey?: string;
+  reviewFlags?: string[];
 }
 
 export interface ResolvedCurriculumContext {
@@ -333,6 +360,13 @@ const curricula: Curriculum[] = [
 
 const curriculumVersions: CurriculumVersion[] = [
   {
+    id: CURRICULUM_VERSION_GHANA_CCP_2020_ID,
+    curriculumId: CURRICULUM_GHANA_ID,
+    name: "Ghana NaCCA Common Core Programme (September 2020)",
+    runtimeFrameworkId: GHANA_CCP_RUNTIME_ID,
+    isActive: false,
+  },
+  {
     id: CURRICULUM_VERSION_GHANA_PILOT_V1_ID,
     curriculumId: CURRICULUM_GHANA_ID,
     name: "Ghana curriculum representation v1",
@@ -341,6 +375,7 @@ const curriculumVersions: CurriculumVersion[] = [
 ];
 
 const phases: Phase[] = [
+  { id: PHASE_GHANA_JHS_CCP_ID, curriculumVersionId: CURRICULUM_VERSION_GHANA_CCP_2020_ID, name: "Junior High School (Common Core Programme)", order: 2 },
   {
     id: PHASE_GHANA_BASIC_EDUCATION_ID,
     curriculumVersionId:
@@ -351,6 +386,8 @@ const phases: Phase[] = [
 ];
 
 const grades: FrameworkGrade[] = [
+  ...[8, 9].map(order => ({ id: `level-gh-basic-${order}-ccp`, phaseId: PHASE_GHANA_JHS_CCP_ID, name: `Basic ${order}`, order, learnerVisibility: "hidden" as const, supportStatus: "unsupported" as const })),
+  { id: GRADE_GHANA_BASIC_7_CCP_ID, phaseId: PHASE_GHANA_JHS_CCP_ID, name: "Basic 7", order: 7, learnerVisibility: "hidden", supportStatus: "unsupported" },
   {
     id: GRADE_GHANA_BASIC_4_ID,
     phaseId: PHASE_GHANA_BASIC_EDUCATION_ID,
@@ -372,6 +409,7 @@ const grades: FrameworkGrade[] = [
 ];
 
 const subjects: FrameworkSubject[] = [
+  ...jhsSubjects,
   {
     id: SUBJECT_GHANA_BASIC4_MATH_ID,
     gradeId: GRADE_GHANA_BASIC_4_ID,
@@ -459,6 +497,7 @@ const subjects: FrameworkSubject[] = [
 ];
 
 const subjectCapabilities: SubjectCapability[] = [
+  ...jhsSubjects.map((subject) => ({ subjectId: subject.id, status: "unsupported" as const, notes: "Source framework registered only. No CCP learner placement, lessons or assessments are activated." })),
   {
     subjectId: SUBJECT_GHANA_BASIC4_MATH_ID,
     status: "partial",
@@ -534,6 +573,8 @@ const subjectCapabilities: SubjectCapability[] = [
 ];
 
 const curriculumNodes: CurriculumNode[] = [
+  ...GHANA_B7_CCP_REGISTRY.nodes,
+  ...GHANA_B89_CCP_REGISTRY.nodes,
   /*
    * Compatibility pilot nodes
    */
@@ -674,6 +715,7 @@ const curriculumNodes: CurriculumNode[] = [
   ...getGhanaB4MathematicsAdditionalNodes(
     SUBJECT_GHANA_BASIC4_MATH_ID,
   ),
+  ...getGhanaB4EnglishNodes(SUBJECT_GHANA_BASIC4_ENGLISH_ID),
 
   ...getGhanaB4ScienceNodes(
     SUBJECT_GHANA_BASIC4_SCIENCE_ID,
@@ -708,6 +750,7 @@ const curriculumNodes: CurriculumNode[] = [
 ];
 
 const competencyMappings: CurriculumCompetencyMapping[] = [
+  ...jhsRegistrations.map((registration) => ({ id: `mapping-${registration.id}`, curriculumNodeId: registration.curriculumNodeId, competencyId: registration.id, relationship: "direct" as const })),
   /*
    * Legacy compatibility mappings
    */
@@ -779,6 +822,20 @@ const competencyMappings: CurriculumCompetencyMapping[] = [
       "competency-gh-math-b4-number-patterns-003",
     relationship: "supports",
   },
+  ...GHANA_B4_ENGLISH_PRODUCTION_SPECS.map((spec) => ({
+    id: `mapping-gh-b4-english-${spec.code.toLowerCase().replace(/\./g, "-")}`,
+    curriculumNodeId: `node-gh-b4-english-${spec.code.toLowerCase()}`,
+    competencyId: spec.competencyId,
+    relationship: "direct" as const,
+  })),
+  ...GHANA_B4_MATHEMATICS_ADAPTIVE_SPECS.flatMap((spec) =>
+    spec.indicatorMappings.map((indicator) => ({
+      id: `mapping-gh-b4-math-${spec.competencyId}-${indicator.code.toLowerCase().replace(/\./g, "-")}`,
+      curriculumNodeId: `node-gh-b4-math-${indicator.code.toLowerCase()}`,
+      competencyId: spec.competencyId,
+      relationship: indicator.relationship,
+    })),
+  ),
   ...GHANA_B4_SCIENCE_ADAPTIVE_SPECS
     .filter((spec) => spec.code !== "B4.1.1.1.1")
     .map((spec) => ({
@@ -895,9 +952,9 @@ export function getCurriculum(
 export function getCurriculumVersion(
   curriculumVersionId: CurriculumVersionId,
 ): CurriculumVersion | undefined {
-  return curriculumVersions.find(
-    (version) => version.id === curriculumVersionId,
-  );
+  const version = curriculumVersions.find(version => version.id === curriculumVersionId);
+  return version && isPrivateJhsEnabled() && version.id === CURRICULUM_VERSION_GHANA_CCP_2020_ID
+    ? { ...version, isActive: true } : version;
 }
 
 export function getPhase(
@@ -911,9 +968,9 @@ export function getPhase(
 export function getFrameworkGrade(
   gradeId: FrameworkGradeId,
 ): FrameworkGrade | undefined {
-  return grades.find(
-    (grade) => grade.id === gradeId,
-  );
+  const grade = grades.find(grade => grade.id === gradeId);
+  return grade && privateJhsGrade(gradeId)
+    ? { ...grade, learnerVisibility: 'visible', supportStatus: undefined } : grade;
 }
 
 export function getFrameworkSubject(
@@ -951,9 +1008,9 @@ export function getCurriculumNodesForSubject(
 export function getSubjectCapability(
   subjectId: FrameworkSubjectId,
 ): SubjectCapability | undefined {
-  return subjectCapabilities.find(
-    (capability) => capability.subjectId === subjectId,
-  );
+  const capability = subjectCapabilities.find(capability => capability.subjectId === subjectId);
+  return capability && privateJhsSubject(subjectId)
+    ? { ...capability, status: 'partial', notes: 'Private draft scope; educator and French approval pending.' } : capability;
 }
 
 export function resolveCurriculumContext(
@@ -1030,8 +1087,13 @@ export function getDefaultLearnerLearningContext(): {
 export function getInitialCompetencyIdForResolvedContext(
   resolved: ResolvedCurriculumContext,
 ): CompetencyId | undefined {
+  if (
+    !resolved.curriculumVersion.isActive ||
+    resolved.grade.learnerVisibility === "hidden" ||
+    resolved.grade.supportStatus === "unsupported"
+  ) return undefined;
   return getInitialCompetencyForCurriculumSubjectLevel(
-    resolved.curriculum.id,
+    resolved.curriculumVersion.runtimeFrameworkId ?? resolved.curriculum.id,
     resolved.subject.id,
     resolved.grade.id,
   )?.id;
@@ -1048,6 +1110,10 @@ export function getAvailableSubjectsForGrade(
   curriculumVersionId: CurriculumVersionId,
   gradeId: FrameworkGradeId,
 ): FrameworkSubject[] {
+  const version = getCurriculumVersion(curriculumVersionId);
+  const grade = getFrameworkGrade(gradeId);
+  // Structural resolution remains available to curriculum tooling. Learner availability fails closed.
+  if (!version?.isActive || !grade || grade.learnerVisibility === "hidden" || grade.supportStatus === "unsupported") return [];
   return getSubjectsForGrade(gradeId).filter((subject) => {
     if (
       getSubjectCapability(subject.id)?.status ===
@@ -1105,6 +1171,19 @@ export function getSupportedGradesForCurriculumVersion(
 }
 
 // ---- Layer 2 accessors ----
+
+/** Source registrations are intentionally separate from the teachable runtime registry. */
+export function getFrameworkCompetencyRegistration(competencyId: CompetencyId): FrameworkCompetencyRegistration | undefined {
+  return jhsRegistrations.find((registration) => registration.id === competencyId);
+}
+
+export function getFrameworkCompetencyRegistrationsForSubject(subjectId: FrameworkSubjectId): FrameworkCompetencyRegistration[] {
+  return jhsRegistrations.filter((registration) => registration.subjectId === subjectId);
+}
+
+export function getCurriculumSourceIssue(issueId: string): CurriculumSourceIssue | undefined {
+  return GHANA_B7_CCP_REGISTRY.sourceIssues.find((issue) => issue.id === issueId) ?? GHANA_B89_CCP_REGISTRY.sourceIssues.find((issue) => issue.id === issueId);
+}
 
 export function getCompetencyMappingsForNode(
   curriculumNodeId: CurriculumNodeId,

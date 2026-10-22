@@ -1,0 +1,16 @@
+FILUMIRE_CLAUDE/packages/curriculum-framework/ghana-b5-computing.ts
+FILUMIRE_CLAUDE/packages/curriculum-framework/ghana-b5-science.ts
+FILUMIRE_CLAUDE/packages/curriculum/ghana-b5-computing-adaptive.ts
+FILUMIRE_CLAUDE/packages/curriculum/ghana-b5-computing-runtime.ts
+FILUMIRE_CLAUDE/packages/curriculum/ghana-b5-science-adaptive.ts
+FILUMIRE_CLAUDE/services/content-store/authored-index-b5-computing.ts
+FILUMIRE_CLAUDE/services/content-store/authored-index-b5-science.ts
+FILUMIRE_CLAUDE/services/content-store/ghana-b4-computing-authored-data-collection-tools.ts
+FILUMIRE_CLAUDE/services/content-store/ghana-b4-english-authored-eng-proper-common-nouns.ts
+FILUMIRE_CLAUDE/services/content-store/ghana-b5-science-authored-life-processes.ts
+FILUMIRE_CLAUDE/tests/b5-computing-v1.test.ts
+FILUMIRE_CLAUDE/tests/b5-science-v1.test.ts
+FILUMIRE_CLAUDE/tests/outline-visuals.test.ts
+FILUMIRE_CLAUDE/tests/b4-framework-registration.test.ts
+.claude/launch.json
+FILUMIRE_CLAUDE/tests/b7-existing-curriculum-regression.test.ts

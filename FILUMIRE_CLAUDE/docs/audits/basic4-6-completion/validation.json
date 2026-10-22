@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-22",
+  "branch": "feat/basic4-6-completion",
+  "scope": "selected learning and regression suites, not repository-wide/payment-inclusive validation",
+  "environment": {
+    "persistence": "memory",
+    "database": "unreachable loopback port 1",
+    "browserOrigin": "http://127.0.0.1:3276",
+    "accounts": "fictional isolated memory-only fixtures"
+  },
+  "existingSuites": {
+    "runner": "node scripts/run-offline-suites.mjs <suite names>",
+    "passed": 37,
+    "failed": 0,
+    "names": [
+      "b4-framework-registration", "b7-existing-curriculum-regression",
+      "b4-science-adaptive-coverage", "b4-computing-adaptive-coverage",
+      "b4-english-adaptive-coverage", "b4-mathematics-adaptive-coverage",
+      "b5-science-v1", "b6-science-v1", "b5-computing-v1", "b6-computing-v1",
+      "b5-mathematics-v1", "b6-mathematics-v1", "b5-english-v1", "b6-english-v1",
+      "immediate-correction", "teaching-first-journey", "mastery-v1",
+      "retention-transfer-negative-gate", "spaced-revision", "spaced-revision-subjects",
+      "learning-continuity-api", "offline-shell-v1", "pending-submission-client",
+      "full-adaptive-progression", "no-premature-advancement", "curriculum-navigation",
+      "selected-topic-lesson-integration", "teacher-trusted-review", "outline-visuals",
+      "option-order-4e", "b5-b6-english-runtime", "time-aware-retention-v1",
+      "time-aware-retention-engine-v1", "learner-ui-runtime-integrity",
+      "production-learner-journey", "grade-aware-subject-selection", "learning-language"
+    ]
+  },
+  "sampledApiJourneys": {
+    "commands": ["node --import tsx scripts/audit-basic4-6-journeys.ts", "node --import tsx scripts/audit-basic4-6-journeys.ts --perfect"],
+    "passed": 48,
+    "failed": 0,
+    "distinctCompetencies": 12,
+    "scope": "12 grade/subject first competencies, both languages, two response scenarios; mocked 31-day review boundary; not every competency",
+    "evidence": "journey-results.json"
+  },
+  "existingBrowserMatrix": {
+    "command": "node --import tsx tests/learner-interface-repairs.browser.mjs",
+    "passed": 24,
+    "failed": 0,
+    "scope": "all 12 subject/grade combinations; mobile EN 390px and desktop FR 1280px; correction, retry, language switch, summary and continuation",
+    "evidence": "browser/interface-repairs-results.json"
+  },
+  "newOfflineBrowserAudit": {
+    "command": "node scripts/audit-basic4-6-offline.browser.mjs",
+    "passed": 1,
+    "failed": 1,
+    "reproduced": true,
+    "failure": "French offline reload hides root HTML via global [lang=fr] selector; computed document display none",
+    "answerQueueAndReconnect": "passed for EN and FR; exactly one new server evidence and no duplicate on another online event",
+    "evidence": "browser/offline-results.json"
+  },
+  "productionBuild": {
+    "command": "npm.cmd run build:learner",
+    "status": "passed",
+    "warning": "Next.js infers ancestor workspace root because dependencies and lockfiles exist in parent and isolated worktree; no config changed"
+  },
+  "rootTypescript": {
+    "command": "node ../../../node_modules/typescript/bin/tsc --noEmit --pretty false",
+    "status": "failed",
+    "errors": 3,
+    "files": ["tests/b4-framework-registration.test.ts:92", "tests/immediate-correction.test.ts:219", "tests/immediate-correction.test.ts:220"],
+    "evidence": "typescript.log",
+    "baselineStatus": "both test files match inherited hashes; no suppression or repair"
+  },
+  "sourceRetrieval": { "retrieved": 0, "attempted": 4, "status": "official HTTPS PDF retrieval unavailable", "evidence": "source-retrieval.json" },
+  "notVerified": [
+    "complete official NaCCA indicator denominator and PDF page alignment",
+    "educator and French-language approval",
+    "all 862 competency-specific end-to-end journeys",
+    "live database persistence, restart/resume and reconnect conflicts",
+    "assistive technology, real-device and classroom usability",
+    "full offline curriculum/adaptive progression (not implemented by current shell design)",
+    "integration of separate Phase 8E repair branch",
+    "repository-wide/payment-inclusive validation; six blocked payment tests remain a separate branch dependency"
+  ]
+}

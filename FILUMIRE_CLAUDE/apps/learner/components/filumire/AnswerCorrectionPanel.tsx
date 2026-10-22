@@ -8,6 +8,7 @@ export type CorrectionPhase = "explain" | "retry" | "done";
 
 const copy = {
   en: {
+    correctedTitle: "You corrected your mistake.",
     title: "Not quite yet. Let’s fix it together.", chose: "You chose:", why: "Why this answer is not right", idea: "The key idea",
     noExplanation: "This answer does not match what the question asks. Read the question again slowly and think about the key idea below.",
     retry: "Try the question again", retryHint: "Choose a different answer below. Your first answer is crossed out.",
@@ -19,6 +20,7 @@ const copy = {
     more: "Read more",
   },
   fr: {
+    correctedTitle: "Tu as corrigé ton erreur.",
     title: "Pas encore tout à fait. Corrigeons ensemble.", chose: "Tu as choisi :", why: "Pourquoi cette réponse n’est pas juste", idea: "L’idée clé",
     noExplanation: "Cette réponse ne correspond pas à ce que demande la question. Relis la question lentement et pense à l’idée clé ci-dessous.",
     retry: "Réessayer la question", retryHint: "Choisis une autre réponse ci-dessous. Ta première réponse est barrée.",
@@ -67,7 +69,7 @@ export function AnswerCorrectionPanel({ correction, phase, language, busy, onRet
   // Reads what is shown first: the short explanation and key idea.
   const spoken = [correction.explanation ? correction.explanation.short?.trim() || correction.explanation.body : t.noExplanation, correction.concept && (correction.concept.short?.trim() || correction.concept.body)].filter(Boolean).join(" ");
   return <section className={`answerCorrection ${outcome ?? "incorrect"}`} aria-labelledby="answer-correction-title" data-phase={phase}>
-    <h2 id="answer-correction-title" ref={heading} tabIndex={-1}>{t.title}</h2>
+    <h2 id="answer-correction-title" ref={heading} tabIndex={-1}>{phase === "done" && outcome === "correct" ? t.correctedTitle : t.title}</h2>
     <p className="chosen">{t.chose} <q>{correction.chosen}</q></p>
     {phase === "explain" ? teaching : <details className="again"><summary>{t.again}</summary>{teaching}</details>}
     {phase === "explain" && speechLanguage && <ReadAloudControls learnerId={learnerId} text={spoken} language={speechLanguage} surface="correction" />}

@@ -1,0 +1,11 @@
+import { resolve } from 'node:path';
+const arg = name => process.argv[process.argv.indexOf(name) + 1];
+process.env.FILUMIRE_PLAYWRIGHT_MODULE = arg('--playwright');
+process.env.FILUMIRE_CHROMIUM_PATH = arg('--chromium');
+process.env.FILUMIRE_PERSISTENCE = 'memory';
+process.env.DATABASE_URL = 'postgres://offline:offline@127.0.0.1:1/offline';
+process.env.FILUMIRE_TEST_URL = 'http://127.0.0.1:3291';
+process.env.FILUMIRE_NAVIGATION_ARTIFACTS = resolve(`docs/jhs-development/integration/primary-browser-${Date.now()}`);
+delete process.env.FILUMIRE_JHS_MODE;
+if (process.argv.includes('--offline')) await import('../scripts/audit-basic4-6-offline.browser.mjs');
+else await import('./learner-interface-repairs.browser.mjs');

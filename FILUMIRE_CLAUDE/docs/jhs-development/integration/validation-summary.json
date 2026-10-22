@@ -1,0 +1,92 @@
+{
+  "capturedAt": "2026-10-22T17:26:44.927Z",
+  "branch": "feat/jhs7-9-development",
+  "head": "29854417561714a62024be2b150de9b4a2cd24b3",
+  "sourceScope": {
+    "mapped": 625,
+    "privateAuthoredJourneys": 42,
+    "unauthoredHidden": 583,
+    "educatorApproved": 0,
+    "frenchApproved": 0,
+    "publiclyActive": 0
+  },
+  "regressions": {
+    "securityIntegrity": {
+      "passed": 49,
+      "failed": 0,
+      "command": "node scripts/run-offline-suites.mjs"
+    },
+    "targetedJhsPrimaryRetentionAccounts": {
+      "passed": 20,
+      "failed": 0
+    },
+    "adaptiveAuthenticationLanguage": {
+      "passed": 10,
+      "failed": 0
+    },
+    "evidence": "Observed successful exit status and suite summaries in the task execution record; full reproduction commands are in CLAUDE-INTEGRATION-AUDIT.md"
+  },
+  "api": {
+    "passed": 168,
+    "failed": 0,
+    "path": "journeys.json",
+    "scope": "42 journeys x two languages x two due-retention outcomes; fictional trusted reviews and 31 simulated days"
+  },
+  "browser": {
+    "passed": 80,
+    "failed": 0,
+    "jhs": {
+      "passed": 48,
+      "path": "browser/c44550b/results.json"
+    },
+    "primary": {
+      "passed": 24,
+      "path": "primary-browser-1792689390350/interface-repairs-results.json"
+    },
+    "offline": {
+      "passed": 4,
+      "path": "primary-browser-1792689495186/offline-results.json"
+    },
+    "finalScopeLayout": {
+      "passed": 4,
+      "path": "browser/dfb1903/results.json"
+    }
+  },
+  "typescript": {
+    "rootPassed": true,
+    "learnerPassed": true,
+    "incremental": false
+  },
+  "productionBuild": {
+    "passed": true,
+    "command": "npm.cmd run build",
+    "cwd": "apps/learner",
+    "buildId": "AOsgTzgZueiAQXW4D22QR",
+    "node": "v24.20.0",
+    "next": "15.5.23",
+    "fonts": "11 unmodified existing font files are self-hosted with provenance, hashes and OFL notice",
+    "normalNextConfiguration": true
+  },
+  "productionServer": {
+    "startupPassed": true,
+    "origin": "http://127.0.0.1:3291",
+    "launcher": "scripts/start-jhs-private.ps1",
+    "memoryOnly": true,
+    "fictionalAccountsOnly": true
+  },
+  "preservation": {
+    "primarySubjectsFingerprintPassed": 12,
+    "originalWorkingFilesUnchanged": 2417,
+    "details": "files-changed.json"
+  },
+  "limits": [
+    "Independent educator/French approval pending",
+    "Database durability, schema compatibility and hosting protection require independent verification before any deployment",
+    "Full cold-start offline JHS curriculum delivery not established",
+    "Memory state does not survive server restart"
+  ],
+  "committed": false,
+  "merged": false,
+  "pushed": false,
+  "deployed": false
+}

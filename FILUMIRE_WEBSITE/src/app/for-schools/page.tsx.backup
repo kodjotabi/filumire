@@ -1,0 +1,164 @@
+import Link from "next/link";
+import { FILUMIRE_CONFIG } from "@/lib/constants";
+import { SITE_CONTENT } from "@/lib/content";
+
+export const metadata = {
+  title: "For Schools & Educators | FILUMIRE",
+  description: "Teacher-in-the-loop adaptive learning infrastructure that provides classroom diagnostic maps, supports offline computer labs, and empowers educators.",
+};
+
+export default function ForSchoolsPage() {
+  const content = SITE_CONTENT.en.audiences.schools;
+
+  return (
+    <>
+      <section className="site-section site-section-alt" style={{ paddingBottom: "48px" }}>
+        <div className="site-container">
+          <div className="section-heading-center" style={{ marginBottom: "24px" }}>
+            <span className="section-eyebrow">Institutional Partnership</span>
+            <h1 className="section-title">Teacher-in-the-Loop Educational Infrastructure</h1>
+            <p className="section-subtitle">
+              FILUMIRE is designed to assist and elevate teachers, not replace them. We provide educators with clear, actionable diagnostic data to focus precious classroom time where it matters most.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 3 Core School Capabilities */}
+      <section className="site-section">
+        <div className="site-container">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "28px", marginBottom: "56px" }}>
+            <div className="pillar-card" style={{ textAlign: "left", alignItems: "flex-start" }}>
+              <div style={{
+                width: "56px",
+                height: "56px",
+                background: "var(--ui-blue-tint)",
+                borderRadius: "14px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "24px",
+                marginBottom: "16px"
+              }}>
+                🧭
+              </div>
+              <h3 className="pillar-title">Diagnostic Grouping</h3>
+              <p className="pillar-desc">
+                Automatically identifies clusters of students who share the exact same underlying misconception (e.g., place value regrouping or fraction comparison), enabling targeted small-group teaching.
+              </p>
+            </div>
+
+            <div className="pillar-card" style={{ textAlign: "left", alignItems: "flex-start" }}>
+              <div style={{
+                width: "56px",
+                height: "56px",
+                background: "var(--ui-green-tint)",
+                borderRadius: "14px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "24px",
+                marginBottom: "16px"
+              }}>
+                ⚡
+              </div>
+              <h3 className="pillar-title">Full Teacher Authority</h3>
+              <p className="pillar-desc">
+                Teachers retain ultimate control. You can set syllabus pacing, assign specific review topics, override system recommendations, and record qualitative classroom observations.
+              </p>
+            </div>
+
+            <div className="pillar-card" style={{ textAlign: "left", alignItems: "flex-start" }}>
+              <div style={{
+                width: "56px",
+                height: "56px",
+                background: "var(--ui-amber-tint)",
+                borderRadius: "14px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "24px",
+                marginBottom: "16px"
+              }}>
+                📶
+              </div>
+              <h3 className="pillar-title">Lab &amp; Offline Sync</h3>
+              <p className="pillar-desc">
+                Built for real classroom realities: works smoothly in computer labs with limited bandwidth or intermittent power. Sessions run offline and sync evidence reliably when reconnected.
+              </p>
+            </div>
+          </div>
+
+          {/* Teacher Portal Preview Block */}
+          <div style={{
+            background: "#ffffff",
+            border: "1px solid var(--ui-line)",
+            borderRadius: "var(--radius-lg)",
+            padding: "48px 40px",
+            boxShadow: "var(--shadow-card)",
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "48px",
+            alignItems: "center"
+          }}>
+            <div>
+              <span className="section-eyebrow section-eyebrow-green">Teacher Portal</span>
+              <h2 style={{ fontSize: "32px", fontWeight: "800", color: "var(--ui-ink)", marginBottom: "16px" }}>
+                Classroom Intelligence at Your Fingertips
+              </h2>
+              <p style={{ fontSize: "16px", color: "var(--ui-ink-soft)", lineHeight: "1.6", marginBottom: "24px" }}>
+                Log in to review class rosters, prioritize struggling learners, inspect evidence records, and approve retention checks—all aligned to national Ghana Basic 4–6 standards.
+              </p>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "12px", marginBottom: "32px" }}>
+                <li style={{ display: "flex", gap: "10px", fontSize: "15px", color: "var(--ui-ink)" }}>
+                  <span style={{ color: "var(--ui-green)", fontWeight: "800" }}>&check;</span>
+                  <span>Review Priority Queue for learners needing human intervention</span>
+                </li>
+                <li style={{ display: "flex", gap: "10px", fontSize: "15px", color: "var(--ui-ink)" }}>
+                  <span style={{ color: "var(--ui-green)", fontWeight: "800" }}>&check;</span>
+                  <span>View misconception frequency across your entire class</span>
+                </li>
+                <li style={{ display: "flex", gap: "10px", fontSize: "15px", color: "var(--ui-green)", fontWeight: "700" }}>
+                  <span>&check;</span>
+                  <span>Export and print evidence summaries for parent consultations</span>
+                </li>
+              </ul>
+
+              <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+                <a
+                  href={FILUMIRE_CONFIG.destinations.teacherPortal}
+                  className="btn btn-primary btn-lg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Access Teacher Portal &rarr;
+                </a>
+                <Link href="/contact?inquiry=school-pilot" className="btn btn-outline btn-lg">
+                  Request School Pilot
+                </Link>
+              </div>
+            </div>
+
+            <div style={{ background: "var(--ui-blue-tint)", padding: "32px", borderRadius: "var(--radius-md)", border: "1px solid var(--ui-line)" }}>
+              <h4 style={{ fontSize: "18px", fontWeight: "800", color: "var(--ui-brand)", marginBottom: "12px" }}>
+                School Pilot Programme (2026/2027)
+              </h4>
+              <p style={{ fontSize: "14px", color: "var(--ui-ink)", lineHeight: "1.6", marginBottom: "16px" }}>
+                We are actively partnering with select primary schools in Ghana and across the sub-region for structured pilot implementations. Pilots include:
+              </p>
+              <ul style={{ fontSize: "13.5px", color: "var(--ui-ink-soft)", lineHeight: "1.6", paddingLeft: "18px", marginBottom: "20px" }}>
+                <li>Teacher orientation and pedagogical workflow training.</li>
+                <li>Setup of computer lab or shared tablet offline synchronization.</li>
+                <li>Comprehensive diagnostic baseline and progress analytics.</li>
+                <li>Direct technical support and ongoing curriculum alignment.</li>
+              </ul>
+              <Link href="/contact?inquiry=school-pilot" className="btn btn-green" style={{ width: "100%" }}>
+                Apply to Join the School Pilot &rarr;
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}

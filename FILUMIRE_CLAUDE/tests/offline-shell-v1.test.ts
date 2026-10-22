@@ -112,11 +112,14 @@ const req = (url: string, method = "GET", mode = "cors") => ({
 {
   const w = makeWorker(async () => ok());
   await (await w.caches.open("filumire-shell-v0-static")).put("x", ok());
+  await (await w.caches.open("filumire-shell-v1-static")).put("http://localhost/offline.html", ok("OLD FRENCH OFFLINE PAGE"));
   await (await w.caches.open("someone-elses-cache")).put("y", ok());
   await fire(w.handlers, "install", {});
   await fire(w.handlers, "activate", {});
   const names = [...w.stores.keys()];
   assert.ok(!names.includes("filumire-shell-v0-static"));
+  assert.ok(!names.includes("filumire-shell-v1-static"), "the old offline page must be invalidated for existing installations");
+  assert.notEqual(await (await w.caches.match("/offline.html"))!.text(), "OLD FRENCH OFFLINE PAGE");
   assert.ok(names.includes("someone-elses-cache"));
 }
 

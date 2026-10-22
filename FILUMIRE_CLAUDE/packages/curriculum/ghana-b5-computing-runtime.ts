@@ -30,7 +30,7 @@ export const GHANA_B5_COMPUTING_SUBSTRANDS: SubStrand[] = [...usedSubStrands].ma
 }));
 
 export const GHANA_B5_COMPUTING_STANDARDS: ContentStandard[] = [...usedStandards].map((code) => ({
-  id: standardId(code), subStrandId: subStrandId(code.split(".").slice(0, 3).join(".")), title: standardTitles[code] ?? code,
+  id: standardId(code), subStrandId: subStrandId(code === "B5.6.4.9.1" ? "B5.6.9" : code.split(".").slice(0, 3).join(".")), title: code === "B5.6.4.9.1" ? "Demonstrate proficiency in Digital Literacy" : standardTitles[code] ?? code,
   description: `Ghana Basic 5 Computing content standard ${code}.`,
 }));
 

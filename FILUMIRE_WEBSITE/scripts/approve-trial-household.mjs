@@ -1,0 +1,13 @@
+// Local operator tool only: does not connect to external services or charge money.
+import { DatabaseSync } from 'node:sqlite';
+import { resolve } from 'node:path';
+import { existsSync } from 'node:fs';
+import { createHmac } from 'node:crypto';
+const [email,reference]=process.argv.slice(2);
+if(process.env.VERCEL==='1'||process.env.VERCEL_ENV==='production'||process.env.FILUMIRE_SUBSCRIPTIONS_ENABLED!=='true'||process.env.FILUMIRE_BILLING_STORAGE!=='sqlite-local')throw new Error('Local development review is not enabled.');
+const secret=process.env.FILUMIRE_AUTH_SECRET,reviewer=process.env.FILUMIRE_TRIAL_REVIEWER;
+if(!secret||secret.length<32||!reviewer||!email||!reference||!/^[a-zA-Z0-9_-]{8,100}$/.test(reference))throw new Error('Supply a reviewer identity, configured secret, parent email and an approved opaque household reference. Do not use national IDs or phone numbers.');
+const path=resolve('.data/subscriptions.sqlite');if(!existsSync(path))throw new Error('Create the local parent account and request eligibility review first.');
+const key=createHmac('sha256',secret).update('household:v1:'+reference).digest('hex');
+const db=new DatabaseSync(path);db.exec('PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;');
+try{db.exec('BEGIN IMMEDIATE');const household=db.prepare('SELECT h.id,h.eligibility_key FROM filumire_households h JOIN filumire_auth_user u ON u.id=h.parent_id WHERE u.email=? AND u."emailVerified"=true AND h.eligibility_requested_at IS NOT NULL').get(email.toLowerCase());if(!household)throw new Error('No verified parent with a requested review was found.');if(household.eligibility_key&&household.eligibility_key!==key)throw new Error('The household already has a different eligibility record.');if(db.prepare('SELECT eligibility_key FROM filumire_trial_uses WHERE eligibility_key=? OR household_id=?').get(key,household.id))throw new Error('This household trial has already been used.');db.prepare("UPDATE filumire_households SET eligibility_key=?,eligibility_approved_at=strftime('%Y-%m-%dT%H:%M:%fZ','now') WHERE id=?").run(key,household.id);db.exec('CREATE TABLE IF NOT EXISTS filumire_trial_reviews(household_id TEXT PRIMARY KEY,reviewer TEXT NOT NULL,reviewed_at TEXT NOT NULL)');db.prepare("INSERT INTO filumire_trial_reviews(household_id,reviewer,reviewed_at) VALUES (?,?,strftime('%Y-%m-%dT%H:%M:%fZ','now')) ON CONFLICT(household_id) DO UPDATE SET reviewer=excluded.reviewer,reviewed_at=excluded.reviewed_at").run(household.id,reviewer);db.exec('COMMIT');console.log('Local household eligibility approved. The trial has not started.');}catch(error){db.exec('ROLLBACK');throw error;}finally{db.close();}
