@@ -64,15 +64,29 @@ refuses("database_owner_role", () => checkDeployment({ ...prod, DATABASE_URL: `p
 refuses("production_commit_not_approved", () => checkDeployment({ ...prod, FILUMIRE_APPROVED_PRODUCTION_SHA: "other" }));
 refuses("production_commit_not_approved", () => checkDeployment({ ...prod, FILUMIRE_APPROVED_PRODUCTION_SHA: undefined }));
 refuses("production_branch_not_approved", () => checkDeployment({ ...prod, VERCEL_GIT_COMMIT_REF: "feature-x" }));
-// Basic 7–9 private presentation is local rehearsal only, whatever the value or target.
-refuses("jhs_mode_on_vercel", () => checkDeployment({ ...prod, FILUMIRE_JHS_MODE: "private-presentation" }));
-refuses("jhs_mode_on_vercel", () => checkDeployment({ ...preview, FILUMIRE_JHS_MODE: "private-presentation" }));
-refuses("jhs_mode_on_vercel", () => checkDeployment({ ...preview, FILUMIRE_JHS_MODE: "off" }));
-ok(() => assert.equal(checkDeployment({ FILUMIRE_JHS_MODE: "private-presentation" }).mode, "local"));
 // Private review: a valid 1-5 entry reviewer list, closed registration, no external identity.
 const reviewers = { FILUMIRE_ACCESS_MODE: "reviewers", FILUMIRE_REVIEWER_EMAILS: "g1@example.test:guardian,g2@example.test:guardian,g3@example.test:guardian,t1@example.test:teacher,t2@example.test:teacher" };
 ok(() => assert.equal(checkDeployment({ ...prod, ...reviewers }).mode, "production"));
 ok(() => assert.equal(checkDeployment({ ...preview, ...reviewers }).mode, "preview"));
+// Basic 7–9 private presentation (owner decision 23 Oct 2026): local rehearsal, a Preview (behind
+// Vercel Authentication), or Production only in private reviewer mode. Never public Production.
+const jhs = { FILUMIRE_JHS_MODE: "private-presentation" };
+ok(() => assert.equal(checkDeployment({ ...jhs }).mode, "local"));
+ok(() => assert.equal(checkDeployment({ ...preview, ...jhs }).mode, "preview"));
+ok(() => assert.equal(checkDeployment({ ...preview, ...reviewers, ...jhs }).mode, "preview"));
+ok(() => assert.equal(checkDeployment({ ...prod, ...reviewers, ...jhs }).mode, "production"));
+refuses("jhs_mode_requires_reviewer_mode", () => checkDeployment({ ...prod, ...jhs }));
+refuses("jhs_mode_requires_reviewer_mode", () => checkDeployment({ ...prod, ...jhs, FILUMIRE_ACCESS_MODE: undefined, FILUMIRE_REVIEWER_EMAILS: reviewers.FILUMIRE_REVIEWER_EMAILS }));
+refuses("jhs_mode_requires_reviewer_mode", () => checkDeployment({ ...prod, ...jhs, FILUMIRE_ACCESS_MODE: "everyone" }));
+refuses("reviewer_list_invalid", () => checkDeployment({ ...prod, ...jhs, FILUMIRE_ACCESS_MODE: "reviewers" }));
+refuses("reviewer_mode_with_open_registration", () => checkDeployment({ ...prod, ...reviewers, ...jhs, FILUMIRE_ACCOUNT_REGISTRATION: "open" }));
+for (const value of ["off", "on", "true", "Private-Presentation", " private-presentation"]) {
+  refuses("jhs_mode_unknown", () => checkDeployment({ ...preview, FILUMIRE_JHS_MODE: value }));
+  refuses("jhs_mode_unknown", () => checkDeployment({ ...prod, ...reviewers, FILUMIRE_JHS_MODE: value }));
+}
+// The other Production rules still apply with Basic 7–9 on.
+refuses("production_commit_not_approved", () => checkDeployment({ ...prod, ...reviewers, ...jhs, FILUMIRE_APPROVED_PRODUCTION_SHA: "other" }));
+refuses("production_memory_mode", () => checkDeployment({ ...prod, ...reviewers, ...jhs, FILUMIRE_PERSISTENCE: "memory" }));
 refuses("unknown_access_mode", () => checkDeployment({ ...prod, FILUMIRE_ACCESS_MODE: "everyone" }));
 for (const list of [undefined, "", `${reviewers.FILUMIRE_REVIEWER_EMAILS},s6@example.test:teacher`, "g1@example.test", "g1@example.test:admin",
   "g1@example.test:learner", "not-an-email:guardian", "g1@example.test:guardian,G1@EXAMPLE.TEST:teacher"]) {

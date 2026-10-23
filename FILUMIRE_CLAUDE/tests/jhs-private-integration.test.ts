@@ -45,13 +45,36 @@ const before = await getLearnerLearningContext(learner);
 await assert.rejects(placeLearnerInCurriculum(stranger, learner, target));
 await assert.rejects(placeLearnerInCurriculum(guardian, learner, { ...target, gradeId: 'level-gh-basic-8-ccp' }));
 assert.deepEqual(await getLearnerLearningContext(learner), before);
-// Local rehearsal only: any Vercel deployment (Production or Preview) refuses.
-for (const vercel of [{ VERCEL_ENV: 'production' }, { VERCEL_ENV: 'preview' }, { VERCEL: '1' }]) {
+// Hosted presentation (owner decision 23 Oct 2026): off on public Production, on an unknown or
+// development Vercel environment, and on Vercel without an environment; on for a Preview and for
+// Production in private reviewer mode.
+for (const vercel of [
+  { VERCEL: '1', VERCEL_ENV: 'production' },
+  { VERCEL_ENV: 'production' },
+  { VERCEL: '1', VERCEL_ENV: 'production', FILUMIRE_ACCESS_MODE: 'everyone' },
+  { VERCEL: '1', VERCEL_ENV: 'development' },
+  { VERCEL: '1' },
+]) {
   Object.assign(process.env, vercel);
   assert.equal(isPrivateJhsEnabled(), false, JSON.stringify(vercel));
   assert.deepEqual(getSupportedGradesForCurriculumVersion('curriculum-version-gh-nacca-ccp-2020'), []);
   for (const key of Object.keys(vercel)) delete process.env[key];
 }
+for (const vercel of [
+  { VERCEL: '1', VERCEL_ENV: 'preview' },
+  { VERCEL: '1', VERCEL_ENV: 'production', FILUMIRE_ACCESS_MODE: 'reviewers' },
+]) {
+  Object.assign(process.env, vercel);
+  assert.equal(isPrivateJhsEnabled(), true, JSON.stringify(vercel));
+  assert.ok(getSupportedGradesForCurriculumVersion('curriculum-version-gh-nacca-ccp-2020').length > 0, JSON.stringify(vercel));
+  for (const key of Object.keys(vercel)) delete process.env[key];
+}
+// Only the exact value switches it on, wherever it runs.
+for (const value of ['on', 'true', 'Private-Presentation']) {
+  process.env.FILUMIRE_JHS_MODE = value;
+  assert.equal(isPrivateJhsEnabled(), false, value);
+}
+process.env.FILUMIRE_JHS_MODE = 'private-presentation';
 assert.equal(isPrivateJhsEnabled(), true);
 
 // Rollback: switching the presentation off strands nothing silently. The stored

@@ -32,7 +32,8 @@ const validReviewerList = value => {
  * - Preview may use memory mode; if it uses PostgreSQL, the host must be allow-listed for Preview
  *   and must not be a Production host;
  * - Production builds only the approved commit from the approved branch;
- * - the Basic 7–9 private presentation (FILUMIRE_JHS_MODE) is local rehearsal only: any value refuses;
+ * - the Basic 7–9 private presentation (FILUMIRE_JHS_MODE) accepts only "private-presentation", on a
+ *   Preview (behind Vercel Authentication) or on Production in private reviewer mode; anything else refuses;
  * - private review (FILUMIRE_ACCESS_MODE=reviewers) needs a valid reviewer list, closed general
  *   registration and no external identity provider.
  * Outside Vercel (local builds and tests) the guard does nothing.
@@ -42,7 +43,10 @@ export function checkDeployment(env) {
   const target = env.VERCEL_ENV;
   if (target !== "production" && target !== "preview") refuse("unknown_vercel_environment");
   if (Object.keys(env).some(key => key.startsWith("FLPREVIEW_"))) refuse("owner_credentials_present");
-  if (env.FILUMIRE_JHS_MODE) refuse("jhs_mode_on_vercel");
+  if (env.FILUMIRE_JHS_MODE) {
+    if (env.FILUMIRE_JHS_MODE !== "private-presentation") refuse("jhs_mode_unknown");
+    if (target === "production" && env.FILUMIRE_ACCESS_MODE !== "reviewers") refuse("jhs_mode_requires_reviewer_mode");
+  }
   if (env.FILUMIRE_ACCESS_MODE && env.FILUMIRE_ACCESS_MODE !== "reviewers") refuse("unknown_access_mode");
   if (env.FILUMIRE_ACCESS_MODE === "reviewers") {
     if (!validReviewerList(env.FILUMIRE_REVIEWER_EMAILS)) refuse("reviewer_list_invalid");
