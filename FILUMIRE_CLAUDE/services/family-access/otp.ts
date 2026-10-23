@@ -26,7 +26,9 @@ export class MockSmsProvider implements SmsProvider {
   }
 }
 export function localFamilyAccessEnabled(): boolean {
-  return process.env.FILUMIRE_LOCAL_FAMILY_ACCESS === "mock" &&
+  // Phone accounts cannot be on the private-review email list.
+  return process.env.FILUMIRE_ACCESS_MODE !== "reviewers" &&
+    process.env.FILUMIRE_LOCAL_FAMILY_ACCESS === "mock" &&
     process.env.NODE_ENV !== "production" &&
     !process.env.VERCEL && !process.env.VERCEL_ENV &&
     (process.env.FILUMIRE_PERSISTENCE ?? "memory") === "memory";

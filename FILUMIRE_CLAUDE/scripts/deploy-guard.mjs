@@ -11,6 +11,19 @@ export class DeployGuardError extends Error { constructor(code) { super(code); t
 const refuse = code => { throw new DeployGuardError(code); };
 const hosts = value => new Set((value ?? "").split(",").map(h => h.trim().toLowerCase()).filter(Boolean));
 const OWNER_ROLE = /(^|_)owner$|^postgres$|^neondb_owner$/i;
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Same rules as services/account reviewerList(): 1-5 "email:guardian|teacher" entries, no duplicates.
+const validReviewerList = value => {
+  const entries = (value ?? "").split(",").map(entry => entry.trim()).filter(Boolean);
+  if (entries.length < 1 || entries.length > 5) return false;
+  const seen = new Set();
+  for (const entry of entries) {
+    const at = entry.lastIndexOf(":"), email = entry.slice(0, at).trim().toLowerCase(), role = entry.slice(at + 1).trim().toLowerCase();
+    if (at < 0 || !["guardian", "teacher"].includes(role) || email.length > 254 || !EMAIL.test(email) || seen.has(email)) return false;
+    seen.add(email);
+  }
+  return true;
+};
 
 /**
  * Rules for a Vercel build:
@@ -19,7 +32,9 @@ const OWNER_ROLE = /(^|_)owner$|^postgres$|^neondb_owner$/i;
  * - Preview may use memory mode; if it uses PostgreSQL, the host must be allow-listed for Preview
  *   and must not be a Production host;
  * - Production builds only the approved commit from the approved branch;
- * - the Basic 7–9 private presentation (FILUMIRE_JHS_MODE) is local rehearsal only: any value refuses.
+ * - the Basic 7–9 private presentation (FILUMIRE_JHS_MODE) is local rehearsal only: any value refuses;
+ * - private review (FILUMIRE_ACCESS_MODE=reviewers) needs a valid reviewer list, closed general
+ *   registration and no external identity provider.
  * Outside Vercel (local builds and tests) the guard does nothing.
  */
 export function checkDeployment(env) {
@@ -28,6 +43,12 @@ export function checkDeployment(env) {
   if (target !== "production" && target !== "preview") refuse("unknown_vercel_environment");
   if (Object.keys(env).some(key => key.startsWith("FLPREVIEW_"))) refuse("owner_credentials_present");
   if (env.FILUMIRE_JHS_MODE) refuse("jhs_mode_on_vercel");
+  if (env.FILUMIRE_ACCESS_MODE && env.FILUMIRE_ACCESS_MODE !== "reviewers") refuse("unknown_access_mode");
+  if (env.FILUMIRE_ACCESS_MODE === "reviewers") {
+    if (!validReviewerList(env.FILUMIRE_REVIEWER_EMAILS)) refuse("reviewer_list_invalid");
+    if (env.FILUMIRE_ACCOUNT_REGISTRATION === "open") refuse("reviewer_mode_with_open_registration");
+    if (Object.keys(env).some(key => key.startsWith("FILUMIRE_EXTERNAL_AUTH_") && env[key])) refuse("reviewer_mode_with_external_identity");
+  }
 
   const persistence = env.FILUMIRE_PERSISTENCE ?? "memory";
   if (persistence !== "memory" && persistence !== "postgres") refuse("unknown_persistence");

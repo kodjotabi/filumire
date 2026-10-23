@@ -18,6 +18,8 @@ export const metadata: Metadata = {
     title: "FILUMIRE",
     statusBarStyle: "default",
   },
+  // A private review is never indexed. Read at build time; Vercel builds with the runtime environment.
+  ...(process.env.FILUMIRE_ACCESS_MODE === "reviewers" ? { robots: { index: false, follow: false } } : {}),
 };
 
 export const viewport: Viewport = {

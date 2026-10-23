@@ -127,6 +127,101 @@ export function normaliseEmail(value: unknown): string {
   return email;
 }
 
+/*
+ * Private review: FILUMIRE_ACCESS_MODE=reviewers limits accounts to
+ * the owner's list FILUMIRE_REVIEWER_EMAILS ("email:guardian,email:teacher",
+ * at most five entries, one account and one role each). Only listed
+ * adults may register or sign in, and learners only when the guardian
+ * who created them is listed. Refusals reuse the ordinary errors, so
+ * nobody can learn who is on the list. An invalid list admits no one.
+ */
+export const MAX_REVIEWERS = 5;
+
+type ReviewerRole = Exclude<AccountKind, "learner">;
+
+export function reviewerModeActive(): boolean {
+  return process.env.FILUMIRE_ACCESS_MODE === "reviewers";
+}
+
+/** The parsed list, or undefined when it is invalid (fail closed). */
+export function reviewerList(): ReadonlyMap<string, ReviewerRole> | undefined {
+  const entries = (process.env.FILUMIRE_REVIEWER_EMAILS ?? "")
+    .split(",")
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+  const list = new Map<string, ReviewerRole>();
+
+  if (entries.length === 0 || entries.length > MAX_REVIEWERS) {
+    return undefined;
+  }
+
+  for (const entry of entries) {
+    const separator = entry.lastIndexOf(":");
+    const role = entry.slice(separator + 1).trim().toLowerCase();
+
+    if (separator < 0 || (role !== "guardian" && role !== "teacher")) {
+      return undefined;
+    }
+
+    let email: string;
+    try {
+      email = normaliseEmail(entry.slice(0, separator));
+    } catch {
+      return undefined;
+    }
+
+    if (list.has(email)) {
+      return undefined;
+    }
+
+    list.set(email, role);
+  }
+
+  return list;
+}
+
+function isListedReviewer(email: string, role: ReviewerRole): boolean {
+  return reviewerList()?.get(email) === role;
+}
+
+/* After a correct password: is this principal allowed in during a private review? */
+async function isReviewerPrincipal(
+  principalId: string,
+  accountKind: AccountKind,
+): Promise<boolean> {
+  let adultPrincipalId = principalId;
+  let adultKind: AccountKind = accountKind;
+
+  if (accountKind === "learner") {
+    const access = await listAuthorizedLearnersForPrincipal(principalId);
+    const learnerId = access.find((entry) => entry.relationshipType === "self")?.learnerId;
+    const profile = learnerId ? await accountStore.getLearnerProfile(learnerId) : undefined;
+
+    if (!profile) {
+      return false;
+    }
+
+    adultPrincipalId = profile.createdByPrincipalId;
+    adultKind = "guardian";
+  }
+
+  const adult = await accountStore.getCredentialByPrincipal(adultPrincipalId);
+
+  return (
+    adult !== undefined &&
+    adult.accountKind === adultKind &&
+    adultKind !== "learner" &&
+    isListedReviewer(adult.loginIdentifier, adultKind)
+  );
+}
+
+/* Registration gate for an adult account of the given role. */
+function mayRegister(email: string, role: ReviewerRole): boolean {
+  return reviewerModeActive()
+    ? isListedReviewer(email, role)
+    : isRegistrationOpen();
+}
+
 export function normaliseUsername(value: unknown): string {
   const username =
     typeof value === "string" ? value.trim().toLowerCase() : "";
@@ -233,14 +328,15 @@ export interface GuardianRegistrationInput {
 export async function registerGuardian(
   input: GuardianRegistrationInput,
 ): Promise<{ principalId: string }> {
-  if (!isRegistrationOpen()) {
+  const email = normaliseEmail(input.email);
+
+  if (!mayRegister(email, "guardian")) {
     throw new AccountValidationError(
       "registration",
       "New accounts are not open yet.",
     );
   }
 
-  const email = normaliseEmail(input.email);
   const password = validatePassword(
     input.password,
     GUARDIAN_PASSWORD_MIN_LENGTH,
@@ -292,14 +388,15 @@ export interface TeacherRegistrationInput {
 export async function registerTeacher(
   input: TeacherRegistrationInput,
 ): Promise<{ principalId: string }> {
-  if (!isRegistrationOpen()) {
+  const email = normaliseEmail(input.email);
+
+  if (!mayRegister(email, "teacher")) {
     throw new AccountValidationError(
       "registration",
       "New accounts are not open yet.",
     );
   }
 
-  const email = normaliseEmail(input.email);
   const password = validatePassword(
     input.password,
     GUARDIAN_PASSWORD_MIN_LENGTH,
@@ -614,6 +711,14 @@ export async function authenticateWithPassword(
       );
     }
 
+    throw new InvalidCredentialsError();
+  }
+
+  // Private review: an unlisted account fails exactly like a wrong password.
+  if (
+    reviewerModeActive() &&
+    !(await isReviewerPrincipal(credential.principalId, credential.accountKind))
+  ) {
     throw new InvalidCredentialsError();
   }
 

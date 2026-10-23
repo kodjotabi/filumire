@@ -22,7 +22,7 @@ export const OFFLINE_SECURITY_SUITES = [
   "learning-continuity-api", "production-learner-journey", "grade-aware-subject-selection",
   // Principals, sessions and learner access
   "principal-auth-session", "principal-identity", "principal-learner-access", "principal-resolution",
-  "adult-supervision", "adult-signout", "account-client-signout",
+  "adult-supervision", "adult-signout", "account-client-signout", "reviewer-access",
   // Teachers
   "teacher-authorization", "teacher-summary-api", "teacher-trusted-review", "teacher-review-end-to-end",
   "teacher-pending-review", "learner-pending-teacher-review", "teacher-professional-notes",

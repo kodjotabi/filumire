@@ -748,7 +748,9 @@ class PostgresAccountStore implements AccountStore {
   async createTeacherLinkCode(code: NewTeacherLinkCode) {
     await db.transaction(async (tx) => {
       // Serialize replacement/cancellation even when no code exists yet.
-      await tx.execute(sql`SELECT id FROM learners WHERE id = ${code.learnerId} FOR NO KEY UPDATE`);
+      // An advisory lock, not a row lock: learners is append-only for the
+      // app role, and FOR NO KEY UPDATE would need UPDATE on it.
+      await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtext(${code.learnerId}), hashtext('teacher-link-code'))`);
       await tx
         .update(teacherLinkCodes)
         .set({ revokedAt: new Date() })
@@ -768,7 +770,7 @@ class PostgresAccountStore implements AccountStore {
 
   async revokeTeacherLinkCodes(learnerId: string) {
     await db.transaction(async (tx) => {
-      await tx.execute(sql`SELECT id FROM learners WHERE id = ${learnerId} FOR NO KEY UPDATE`);
+      await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtext(${learnerId}), hashtext('teacher-link-code'))`);
       await tx.update(teacherLinkCodes).set({ revokedAt: new Date() }).where(
         and(
           eq(teacherLinkCodes.learnerId, learnerId),

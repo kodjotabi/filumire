@@ -69,6 +69,17 @@ refuses("jhs_mode_on_vercel", () => checkDeployment({ ...prod, FILUMIRE_JHS_MODE
 refuses("jhs_mode_on_vercel", () => checkDeployment({ ...preview, FILUMIRE_JHS_MODE: "private-presentation" }));
 refuses("jhs_mode_on_vercel", () => checkDeployment({ ...preview, FILUMIRE_JHS_MODE: "off" }));
 ok(() => assert.equal(checkDeployment({ FILUMIRE_JHS_MODE: "private-presentation" }).mode, "local"));
+// Private review: a valid 1-5 entry reviewer list, closed registration, no external identity.
+const reviewers = { FILUMIRE_ACCESS_MODE: "reviewers", FILUMIRE_REVIEWER_EMAILS: "g1@example.test:guardian,g2@example.test:guardian,g3@example.test:guardian,t1@example.test:teacher,t2@example.test:teacher" };
+ok(() => assert.equal(checkDeployment({ ...prod, ...reviewers }).mode, "production"));
+ok(() => assert.equal(checkDeployment({ ...preview, ...reviewers }).mode, "preview"));
+refuses("unknown_access_mode", () => checkDeployment({ ...prod, FILUMIRE_ACCESS_MODE: "everyone" }));
+for (const list of [undefined, "", `${reviewers.FILUMIRE_REVIEWER_EMAILS},s6@example.test:teacher`, "g1@example.test", "g1@example.test:admin",
+  "g1@example.test:learner", "not-an-email:guardian", "g1@example.test:guardian,G1@EXAMPLE.TEST:teacher"]) {
+  refuses("reviewer_list_invalid", () => checkDeployment({ ...prod, ...reviewers, FILUMIRE_REVIEWER_EMAILS: list }));
+}
+refuses("reviewer_mode_with_open_registration", () => checkDeployment({ ...prod, ...reviewers, FILUMIRE_ACCOUNT_REGISTRATION: "open" }));
+refuses("reviewer_mode_with_external_identity", () => checkDeployment({ ...prod, ...reviewers, FILUMIRE_EXTERNAL_AUTH_ISSUER: "https://idp.example.test" }));
 
 // ---- Guarded apply (test databases only)
 const { checkTarget, planApply, approvalCode, DENIED_ENDPOINTS } = await import("../scripts/apply-migrations.mjs");
