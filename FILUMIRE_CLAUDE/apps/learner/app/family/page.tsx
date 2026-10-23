@@ -6,7 +6,7 @@ import { FormEvent, useCallback, useEffect, useState } from "react";
 import { AccountSecurity } from "../../components/filumire/AccountSecurity";
 import { AccountShell } from "../../components/filumire/AccountShell";
 import { TeacherAccess } from "../../components/filumire/TeacherAccess";
-import { GuardianPlacement } from "../../components/filumire/GuardianPlacement";
+import { GuardianPlacement, placementSubjectName } from "../../components/filumire/GuardianPlacement";
 import { TutoringRecovery } from "../../components/filumire/TutoringRecovery";
 import { LEARNER_AVATARS } from "../../components/filumire/avatars";
 import { LEARNER_GRADES } from "../../components/filumire/grades";
@@ -19,11 +19,13 @@ import {
   clearLearnerProfileFromDevice,
   destinationFor,
   fetchAccount,
+  fetchPlacementChoices,
   selectLearner,
   setLearnerPassword,
   signOut,
   type Account,
   type AccountLearner,
+  type PlacementOptions,
 } from "../../services/account-client";
 
 /*
@@ -64,6 +66,8 @@ const TEXT = {
     hide: "Hide",
     grade: "Class",
     gradeLater: "Choose later",
+    subject: "Subject",
+    draftNote: "Private preview: available bilingual activities only. Full curriculum coverage and educational approval remain pending.",
     language: "Learning language",
     consent: "I agree to FILUMIRE keeping this learner's profile and learning records, as described in the privacy notice, so they can continue learning and I can follow their progress.",
     notice: "Privacy notice",
@@ -104,6 +108,8 @@ const TEXT = {
     hide: "Masquer",
     grade: "Classe",
     gradeLater: "Choisir plus tard",
+    subject: "Matière",
+    draftNote: "Aperçu privé : activités bilingues disponibles uniquement. Le programme complet et la validation pédagogique restent en attente.",
     language: "Langue d'apprentissage",
     consent: "J'accepte que FILUMIRE conserve le profil et les données d'apprentissage de cet apprenant, comme décrit dans la notice de confidentialité, pour qu'il puisse continuer à apprendre et que je puisse suivre ses progrès.",
     notice: "Notice de confidentialité",
@@ -259,6 +265,10 @@ export default function FamilyPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [gradeId, setGradeId] = useState("");
+  // Server class list; only replaces the primary list when it offers
+  // Basic 7-9 (private presentation on), so the default form is unchanged.
+  const [choices, setChoices] = useState<PlacementOptions["choices"] | null>(null);
+  const [subjectId, setSubjectId] = useState("");
   const [learnerLanguage, setLearnerLanguage] = useState<Language | "">("");
   const [consent, setConsent] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -292,6 +302,9 @@ export default function FamilyPage() {
     }
 
     setAccount(current);
+    fetchPlacementChoices()
+      .then((result) => setChoices(result.choices.some((choice) => choice.draft) ? result.choices : null))
+      .catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -311,6 +324,8 @@ export default function FamilyPage() {
     );
   }
 
+  const draftChoice = choices?.find((choice) => choice.draft && choice.gradeId === gradeId);
+
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setBusy(true);
@@ -323,6 +338,7 @@ export default function FamilyPage() {
         username,
         password,
         gradeId: gradeId || undefined,
+        ...(draftChoice ? { curriculumVersionId: draftChoice.curriculumVersionId, subjectId } : {}),
         preferredLanguage: learnerLanguage || language,
         consentsToLearnerData: consent,
       });
@@ -333,6 +349,7 @@ export default function FamilyPage() {
       setUsernameEdited(false);
       setPassword("");
       setGradeId("");
+      setSubjectId("");
       setConsent(false);
       setWelcome(false);
       setAccount(await fetchAccount());
@@ -484,15 +501,41 @@ export default function FamilyPage() {
               <div className="fmRow">
                 <div className="acField">
                   <label htmlFor="add-grade">{t.grade}</label>
-                  <select id="add-grade" value={gradeId} onChange={(event) => setGradeId(event.target.value)}>
+                  <select
+                    id="add-grade"
+                    value={gradeId}
+                    onChange={(event) => {
+                      const next = choices?.find((choice) => choice.draft && choice.gradeId === event.target.value);
+                      setGradeId(event.target.value);
+                      setSubjectId(next?.subjects[0]?.id ?? "");
+                    }}
+                  >
                     <option value="">{t.gradeLater}</option>
-                    {LEARNER_GRADES.map((grade) => (
-                      <option key={grade.id} value={grade.id}>
-                        {grade.name[language]}
-                      </option>
-                    ))}
+                    {choices
+                      ? choices.map((choice) => (
+                          <option key={choice.gradeId} value={choice.gradeId}>
+                            {choice.name}
+                          </option>
+                        ))
+                      : LEARNER_GRADES.map((grade) => (
+                          <option key={grade.id} value={grade.id}>
+                            {grade.name[language]}
+                          </option>
+                        ))}
                   </select>
                 </div>
+                {draftChoice && (
+                  <div className="acField">
+                    <label htmlFor="add-subject">{t.subject}</label>
+                    <select id="add-subject" value={subjectId} onChange={(event) => setSubjectId(event.target.value)}>
+                      {draftChoice.subjects.map((subject) => (
+                        <option key={subject.id} value={subject.id}>
+                          {placementSubjectName(subject, language)}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
                 <div className="acField">
                   <label htmlFor="add-language">{t.language}</label>
                   <select
@@ -505,6 +548,7 @@ export default function FamilyPage() {
                   </select>
                 </div>
               </div>
+              {draftChoice && <p className="acHelp">{t.draftNote}</p>}
 
               <label className="acCheck">
                 <input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} />

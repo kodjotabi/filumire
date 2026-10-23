@@ -48,6 +48,10 @@ export interface PlacementOptions {
 export function fetchLearnerPlacement(learnerId: string) {
   return request<PlacementOptions>(`/api/account/learners/${encodeURIComponent(learnerId)}/placement`);
 }
+/** Classes for the add-learner form; includes Basic 7-9 only while the private presentation is on. */
+export function fetchPlacementChoices() {
+  return request<Pick<PlacementOptions, 'choices'>>('/api/account/placement-choices');
+}
 export function placeLearner(learnerId: string, target: { curriculumVersionId: string; gradeId: string; subjectId: string }) {
   return request(`/api/account/learners/${encodeURIComponent(learnerId)}/placement`, { body: target });
 }
@@ -279,6 +283,9 @@ export interface NewLearner {
   password: string;
   preferredLanguage: Language;
   gradeId?: string;
+  /** Set together with subjectId for a class outside the primary curriculum (Basic 7-9). */
+  curriculumVersionId?: string;
+  subjectId?: string;
   consentsToLearnerData: boolean;
 }
 

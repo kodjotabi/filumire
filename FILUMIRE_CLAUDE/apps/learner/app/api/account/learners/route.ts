@@ -1,6 +1,7 @@
 import { addLearnerForGuardian } from "../../../../../../services/account";
 import { resolveSignedInSession } from "../../../../../../services/identity";
 import { requireSupportedGrade, setLearnerGrade } from "../../../../../../services/learner-context";
+import { placeLearnerInCurriculum, requirePlacementTarget } from "../../../../../../services/learner-context/placement";
 
 import {
   checkRateLimits,
@@ -31,8 +32,24 @@ export async function POST(request: Request) {
     // The class is optional here (the learner can choose it during
     // onboarding), but one that is sent must be valid before the
     // learner is created.
+    // A class from another curriculum version (Basic 7-9 while the
+    // private presentation is on) also needs its subject, and goes
+    // through the same placement check as the Class and subject form.
+    const placement =
+      body.curriculumVersionId === undefined || body.curriculumVersionId === ""
+        ? undefined
+        : {
+            curriculumVersionId: String(body.curriculumVersionId),
+            gradeId: String(body.gradeId ?? ""),
+            subjectId: String(body.subjectId ?? ""),
+          };
+
+    if (placement) {
+      requirePlacementTarget(placement);
+    }
+
     const gradeId =
-      body.gradeId === undefined || body.gradeId === ""
+      placement || body.gradeId === undefined || body.gradeId === ""
         ? undefined
         : await requireSupportedGrade(undefined, body.gradeId);
 
@@ -45,7 +62,9 @@ export async function POST(request: Request) {
       consentsToLearnerData: body.consentsToLearnerData,
     });
 
-    if (gradeId) {
+    if (placement) {
+      await placeLearnerInCurriculum(session.principalId, learner.learnerId, placement);
+    } else if (gradeId) {
       await setLearnerGrade(learner.learnerId, gradeId, "guardian");
     }
 

@@ -11,11 +11,11 @@ export interface CurriculumPlacement {
   subjectId: string;
 }
 
-export async function getLearnerPlacementOptions(principalId: string, learnerId: string) {
-  const access = await getPrincipalLearnerAccess(principalId, learnerId, 'guardian');
-  if (access?.status !== 'active') throw new LearnerContextValidationError('An active guardian relationship is required for curriculum placement.');
+/** The classes a guardian may choose: primary always, Basic 7-9 only while the private presentation is on.
+ * Not learner-specific, so the add-learner form can offer the same list before a learner exists. */
+export function getPlacementChoices() {
   seedContent();
-  const choices = ['curriculum-version-gh-pilot-v1', 'curriculum-version-gh-nacca-ccp-2020'].flatMap(curriculumVersionId =>
+  return ['curriculum-version-gh-pilot-v1', 'curriculum-version-gh-nacca-ccp-2020'].flatMap(curriculumVersionId =>
     getSupportedGradesForCurriculumVersion(curriculumVersionId).map(grade => ({
       curriculumVersionId, gradeId: grade.id, name: grade.name,
       draft: grade.id.endsWith('-ccp'),
@@ -24,16 +24,17 @@ export async function getLearnerPlacementOptions(principalId: string, learnerId:
         availableTopics: getCompetenciesForSubject(subject.id).length,
       })),
     })));
-  return { choices, current: await getLearnerLearningContext(learnerId) };
 }
 
-/** An authenticated guardian chooses a supported context. No evidence/state is migrated.
- * Inactive CCP versions and unsupported subjects fail before any persistence write.
- * Existing primary placement remains available as the return path.
- */
-export async function placeLearnerInCurriculum(principalId: string, learnerId: string, target: CurriculumPlacement) {
+export async function getLearnerPlacementOptions(principalId: string, learnerId: string) {
   const access = await getPrincipalLearnerAccess(principalId, learnerId, 'guardian');
   if (access?.status !== 'active') throw new LearnerContextValidationError('An active guardian relationship is required for curriculum placement.');
+  return { choices: getPlacementChoices(), current: await getLearnerLearningContext(learnerId) };
+}
+
+/** Throws unless the target has a compatible learning journey; writes nothing.
+ * Lets the add-learner route refuse a bad class before the learner is created. */
+export function requirePlacementTarget(target: CurriculumPlacement) {
   seedContent();
   const resolved = resolveCurriculumContext(target.curriculumVersionId, target.gradeId, target.subjectId);
   if (!resolved || !getAvailableSubjectsForGrade(target.curriculumVersionId, target.gradeId).some(s => s.id === target.subjectId)) {
@@ -44,6 +45,17 @@ export async function placeLearnerInCurriculum(principalId: string, learnerId: s
   if (!initial || initial.learningLevelId !== target.gradeId || initial.subjectId !== target.subjectId || initial.curriculumFrameworkId !== (resolved.curriculumVersion.runtimeFrameworkId ?? resolved.curriculum.id)) {
     throw new LearnerContextValidationError('The target has no compatible learning journey.');
   }
+  return initial;
+}
+
+/** An authenticated guardian chooses a supported context. No evidence/state is migrated.
+ * Inactive CCP versions and unsupported subjects fail before any persistence write.
+ * Existing primary placement remains available as the return path.
+ */
+export async function placeLearnerInCurriculum(principalId: string, learnerId: string, target: CurriculumPlacement) {
+  const access = await getPrincipalLearnerAccess(principalId, learnerId, 'guardian');
+  if (access?.status !== 'active') throw new LearnerContextValidationError('An active guardian relationship is required for curriculum placement.');
+  const initial = requirePlacementTarget(target);
   const previous = await getLearnerLearningContext(learnerId);
   const previousDefinition = previous?.activeCompetencyId ? getCompetency(previous.activeCompetencyId) : undefined;
   const retainFocus = previous?.curriculumVersionId === target.curriculumVersionId && previous.gradeId === target.gradeId && previous.activeSubjectId === target.subjectId && previousDefinition?.subjectId === target.subjectId && previousDefinition.learningLevelId === target.gradeId && previousDefinition.curriculumFrameworkId === initial.curriculumFrameworkId;

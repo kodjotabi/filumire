@@ -6,7 +6,7 @@ import type { Language } from './language';
 import { subjectLabel } from './subjects';
 
 /** Server subject names are English; French uses the shared discipline labels. */
-function placementSubjectName(subject: { id: string; name: string }, language: Language): string {
+export function placementSubjectName(subject: { id: string; name: string }, language: Language): string {
   const discipline = subject.id.match(/english|mathematics|science|computing/)?.[0];
   return language === 'fr' && discipline ? subjectLabel(discipline, 'fr') : subject.name;
 }
