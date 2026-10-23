@@ -25,12 +25,17 @@ export default function HomePage() {
                 {content.hero.subhead}
               </p>
 
+              {/* Main entry to the learner app: kept large and first so learners cannot miss it. */}
+              <AccessLink role="learner" className="learner-app-cta">
+                <span className="learner-app-cta-icon" aria-hidden="true">&#9654;</span>
+                <span className="learner-app-cta-text">
+                  <span className="learner-app-cta-title">Open the Learner App</span>
+                  <span className="learner-app-cta-subtitle">Learners start here</span>
+                </span>
+                <span className="learner-app-cta-arrow" aria-hidden="true">&rarr;</span>
+              </AccessLink>
+
               <div className="hero-cta-group">
-                <AccessLink role="learner" 
-                  className="btn btn-primary btn-lg"
-                >
-                  {content.hero.primaryCta} &rarr;
-                </AccessLink>
                 <Link href="/how-it-works" className="btn btn-outline btn-lg">
                   {content.hero.secondaryCta}
                 </Link>

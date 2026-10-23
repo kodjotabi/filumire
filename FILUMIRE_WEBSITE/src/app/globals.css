@@ -2211,3 +2211,18 @@ html[lang="fr"] .step-name-fr { display:none; }
 /* Contact uses the site's form controls without an outer card. */
 .contact-form-card.contact-form-simple { max-width:640px; margin-inline:auto; padding:0; border:0; border-radius:0; box-shadow:none; background:transparent; }
 .contact-form-simple form > .btn { align-self:flex-start; }
+
+/* Homepage learner-app entry: the most prominent control in the hero. */
+.learner-app-cta { display:flex; align-items:center; gap:16px; width:100%; max-width:520px; box-sizing:border-box; margin:0 0 20px; padding:18px 22px; background:#087938; color:#fff; border-radius:16px; text-decoration:none; box-shadow:0 10px 24px rgba(8,121,56,.35); border:3px solid #fff; outline:3px solid #087938; transition:background .15s ease, transform .15s ease; }
+.learner-app-cta:hover { background:#05632d; transform:translateY(-2px); color:#fff; }
+.learner-app-cta:focus-visible { outline:4px solid var(--ui-ink); outline-offset:3px; }
+.learner-app-cta-icon { flex:0 0 auto; display:grid; place-items:center; width:52px; height:52px; border-radius:50%; background:#fff; color:#087938; font-size:22px; padding-left:4px; box-sizing:border-box; }
+.learner-app-cta-text { display:flex; flex-direction:column; flex:1 1 auto; min-width:0; }
+.learner-app-cta-title { font-size:24px; font-weight:800; line-height:1.2; }
+.learner-app-cta-subtitle { font-size:15px; opacity:.92; margin-top:2px; }
+.learner-app-cta-arrow { flex:0 0 auto; font-size:28px; font-weight:700; }
+@media (max-width:600px) {
+  .learner-app-cta { max-width:none; padding:16px; gap:12px; }
+  .learner-app-cta-icon { width:44px; height:44px; font-size:18px; }
+  .learner-app-cta-title { font-size:20px; }
+}

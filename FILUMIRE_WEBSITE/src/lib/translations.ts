@@ -383,6 +383,8 @@ export const FRENCH: Record<string, string> = {
   "Contact Us": "Nous contacter",
   "Portals": "Accès",
   "Learner Access": "Accès des élèves",
+  "Open the Learner App": "Ouvrir l’application élève",
+  "Learners start here": "Les élèves commencent ici",
   "Parent Access": "Accès des parents",
   "Teacher Access": "Accès des enseignants",
   "FILUMIRE Educational Community": "La communauté éducative FILUMIRE",
