@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { askFiluHref } from "../../services/dashboard-navigation";
 
+import type { AgeBand } from "./ageBand";
+
 export type LearnerNavItem =
   | "home"
   | "learning"
@@ -19,6 +21,8 @@ type LearnerBottomNavProps = {
    * at every width (single flowing pages such as sign-in).
    */
   variant?: "app" | "inline";
+  /* Basic 7-9 labels only; the same destinations. */
+  band?: AgeBand;
 };
 
 function NavIcon({ name }: { name: string }) {
@@ -66,9 +70,11 @@ export function LearnerBottomNav({
   language = "en",
   variant = "app",
   subjectId,
+  band = "primary",
 }: LearnerBottomNavProps) {
   const subjectQuery = subjectId ? `&subjectId=${encodeURIComponent(subjectId)}` : "";
   // \u00AD soft hyphens: long one-word labels break cleanly only when a phone menu slot is too narrow.
+  const junior = band === "junior-high";
   const items = [
     {
       key: "home" as const,
@@ -80,8 +86,8 @@ export function LearnerBottomNav({
       key: "learning" as const,
       label:
         language === "fr"
-          ? "Appren\u00ADtissage"
-          : "My Learning",
+          ? junior ? "Matières" : "Appren\u00ADtissage"
+          : junior ? "Subjects" : "My Learning",
       href: `/dashboard?lang=${language}&view=learning${subjectQuery}`,
       icon: "learning",
     },
@@ -98,8 +104,8 @@ export function LearnerBottomNav({
       key: "challenges" as const,
       label:
         language === "fr"
-          ? "Défis"
-          : "Chal\u00ADlenges",
+          ? junior ? "Objectifs" : "Défis"
+          : junior ? "Goals" : "Chal\u00ADlenges",
       href: `/dashboard?lang=${language}&view=challenges${subjectQuery}`,
       icon: "challenges",
     },

@@ -1,0 +1,513 @@
+/*
+ * Age-appropriate presentation (components/filumire/ageBand.ts).
+ * 1. Answer feedback: Jelly Star (Basic 4-6) and the academic note (Basic 7-9).
+ * 2. Basic 7-9 theme: every rule is scoped to [data-age-band="junior-high"],
+ *    which no page sets until JUNIOR_HIGH_INTERFACE_READY, so Basic 4-6
+ *    pages are unchanged.
+ * Motion is removed under prefers-reduced-motion.
+ */
+
+:root {
+  --jelly-mint: #c6f6df;
+  --jelly-mint-ink: #075c3b;
+  --jelly-gold: #f4b400;
+  --jelly-peach: #ffe4d4;
+  --jelly-peach-line: #f7bfa1;
+  --jelly-peach-ink: #8a3d14;
+}
+
+/* ---------- 1. Answer feedback ---------- */
+
+.answerFeedback {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  color: var(--filumire-text);
+}
+
+.answerFeedback p {
+  margin: 0;
+}
+
+.answerFeedbackBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.answerFeedbackSound {
+  align-self: flex-start;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  min-height: 36px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.75);
+  color: inherit;
+}
+
+.answerFeedbackSound[aria-pressed="false"] {
+  opacity: 0.7;
+}
+
+/* Basic 4-6: Jelly Star */
+
+.answerFeedback.jelly {
+  padding: 12px 12px 12px 10px;
+  border: 2px solid var(--filumire-border);
+  border-radius: 18px;
+  background: #f7fafc;
+}
+
+.answerFeedback.jelly .answerFeedbackTitle {
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.answerFeedback.jelly .answerFeedbackMessage {
+  margin-top: 3px;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.answerFeedbackStar {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+}
+
+.answerFeedback.jelly.correct {
+  border-color: var(--jelly-gold);
+  background: var(--jelly-mint);
+  color: var(--jelly-mint-ink);
+  box-shadow:
+    0 0 0 4px rgba(244, 180, 0, 0.22),
+    0 8px 26px rgba(42, 196, 128, 0.35);
+  animation: jellyBoxBounce 0.7s cubic-bezier(0.28, 1.6, 0.5, 1) both, jellyGlow 2.4s ease-in-out 0.7s 2;
+}
+
+.answerFeedback.jelly.correct .jellyStar {
+  animation: jellyStarPop 0.8s cubic-bezier(0.28, 1.7, 0.5, 1) both, jellyStarJiggle 1.6s ease-in-out 0.8s 2;
+}
+
+.answerFeedback.jelly.incorrect {
+  border-color: var(--jelly-peach-line);
+  background: var(--jelly-peach);
+  color: var(--jelly-peach-ink);
+  animation: jellyBoxWobble 0.6s ease-in-out both;
+}
+
+.answerFeedback.jelly.incorrect .jellyStar {
+  transform-origin: 50% 90%;
+  animation: jellyStarDroop 1.1s ease-out 0.15s both, jellyStarFade 1.4s ease-in 1.9s forwards;
+}
+
+.answerFeedback.jelly.partial,
+.answerFeedback.jelly.pending-review {
+  border-color: #f0d29c;
+  background: #fff8ea;
+}
+
+.answerFeedback.jelly.partial .jellyStar,
+.answerFeedback.jelly.pending-review .jellyStar {
+  animation: jellyStarPop 0.6s ease-out both;
+}
+
+.answerFeedbackContinue {
+  margin-top: 10px;
+  min-height: 40px;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--filumire-navy);
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+@keyframes jellyBoxBounce {
+  0% { transform: scale(0.94); }
+  45% { transform: scale(1.03); }
+  70% { transform: scale(0.99); }
+  100% { transform: scale(1); }
+}
+
+@keyframes jellyGlow {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(244, 180, 0, 0.22), 0 8px 26px rgba(42, 196, 128, 0.35); }
+  50% { box-shadow: 0 0 0 7px rgba(244, 180, 0, 0.32), 0 10px 34px rgba(42, 196, 128, 0.5); }
+}
+
+@keyframes jellyStarPop {
+  0% { transform: scale(0.2) rotate(-20deg); opacity: 0; }
+  60% { transform: scale(1.18) rotate(6deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+@keyframes jellyStarJiggle {
+  0%, 100% { transform: scale(1, 1) translateY(0); }
+  20% { transform: scale(1.08, 0.92) translateY(2px); }
+  40% { transform: scale(0.94, 1.06) translateY(-5px); }
+  60% { transform: scale(1.03, 0.97) translateY(0); }
+}
+
+@keyframes jellyBoxWobble {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px) rotate(-0.6deg); }
+  40% { transform: translateX(4px) rotate(0.5deg); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(2px); }
+}
+
+@keyframes jellyStarDroop {
+  0% { transform: translateY(-6px) rotate(0); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(6px) rotate(14deg) scale(0.92, 0.86); opacity: 1; }
+}
+
+@keyframes jellyStarFade {
+  from { transform: translateY(6px) rotate(14deg) scale(0.92, 0.86); opacity: 1; }
+  to { transform: translateY(10px) rotate(16deg) scale(0.86, 0.8); opacity: 0.25; }
+}
+
+/* Basic 7-9: quiet academic note */
+
+.answerFeedback.academic {
+  padding: 10px 12px 10px 14px;
+  border: 1px solid var(--jh-line, #d8dee8);
+  border-radius: 10px;
+  background: #ffffff;
+  animation: academicIn 0.18s ease-out both;
+}
+
+.answerFeedbackMark {
+  align-self: stretch;
+  flex: 0 0 auto;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--jh-muted, #5b6b82);
+}
+
+.answerFeedback.academic.correct .answerFeedbackMark { background: var(--jh-mastery, #0f766e); }
+.answerFeedback.academic.incorrect .answerFeedbackMark { background: var(--jh-goal, #b7791f); }
+
+.answerFeedback.academic .answerFeedbackTitle {
+  color: var(--jh-ink, #0f2540);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.answerFeedback.academic .answerFeedbackMessage {
+  margin-top: 2px;
+  color: var(--jh-muted, #5b6b82);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.answerFeedback.academic .answerFeedbackContinue {
+  margin-top: 8px;
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 1px solid var(--jh-line, #d8dee8);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--jh-brand, #0b3a75);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.answerFeedback.academic .answerFeedbackSound {
+  width: 30px;
+  height: 30px;
+  min-height: 30px;
+  border-color: var(--jh-line, #d8dee8);
+  color: var(--jh-muted, #5b6b82);
+}
+
+@keyframes academicIn {
+  from { opacity: 0; transform: translateY(-2px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* The answered question: the learner's own choice changes colour. Only
+   the chosen option is marked, so the correct option is never revealed. */
+
+.answeredOptions {
+  margin: 10px 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.answeredOptions .option.dimmed {
+  opacity: 0.55;
+}
+
+.answeredOptions .option.answered {
+  align-items: center;
+  justify-content: space-between;
+  border-width: 2px;
+  font-weight: 700;
+}
+
+.answeredOptions .option.answered.correct {
+  border-color: var(--jelly-gold);
+  background: var(--jelly-mint);
+  color: var(--jelly-mint-ink);
+  box-shadow: 0 0 0 3px rgba(244, 180, 0, 0.2);
+  animation: jellyBoxBounce 0.7s cubic-bezier(0.28, 1.6, 0.5, 1) both;
+}
+
+.answeredOptions .option.answered.incorrect,
+.answeredOptions .option.answered.partial {
+  border-color: var(--jelly-peach-line);
+  background: var(--jelly-peach);
+  color: var(--jelly-peach-ink);
+  animation: jellyBoxWobble 0.6s ease-in-out both;
+}
+
+.answeredTag {
+  flex: 0 0 auto;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+  font-size: 0.72rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .answerFeedback,
+  .answerFeedback .jellyStar,
+  .answeredOptions .option.answered {
+    animation: none !important;
+  }
+
+  .answerFeedback.jelly.incorrect .jellyStar {
+    transform: translateY(4px) rotate(12deg);
+  }
+}
+
+/* ---------- 2. Basic 7-9 theme (hidden until ready) ---------- */
+
+[data-age-band="junior-high"] {
+  --jh-ink: #0f2540;
+  --jh-muted: #5b6b82;
+  --jh-brand: #0b3a75;
+  --jh-accent: #1f5fbf;
+  --jh-mastery: #0f766e;
+  --jh-goal: #b7791f;
+  --jh-line: #d8dee8;
+  --jh-surface: #ffffff;
+  --jh-bg: #f3f5f8;
+  --filumire-text: var(--jh-ink);
+  --filumire-navy: var(--jh-brand);
+  --ui-ink: var(--jh-ink);
+  --ui-ink-soft: var(--jh-muted);
+  --ui-blue: var(--jh-accent);
+  --ui-green: var(--jh-mastery);
+  background: var(--jh-bg);
+}
+
+/* Dashboard */
+[data-age-band="junior-high"] .homeScreen .homeNote,
+[data-age-band="junior-high"] .homeScreen .homeContinueArt,
+[data-age-band="junior-high"] .homeScreen .homeFooter img {
+  display: none;
+}
+
+[data-age-band="junior-high"] .homeScreen .homeGreeting { min-height: 0; padding-bottom: 6px; }
+[data-age-band="junior-high"] .homeScreen .homeGreeting h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.2px; }
+[data-age-band="junior-high"] .homeScreen .homeGreeting p { font-size: 13.5px; }
+
+[data-age-band="junior-high"] .homeScreen .homeContinue {
+  border: 1px solid var(--jh-line);
+  border-radius: 12px;
+  background: var(--jh-surface);
+  color: var(--jh-ink);
+}
+[data-age-band="junior-high"] .homeScreen .homeContinue::before { display: none; }
+[data-age-band="junior-high"] .homeScreen .homeContinueHead > div { max-width: none; }
+[data-age-band="junior-high"] .homeScreen .homeContinueHead h2 { color: var(--jh-ink); font-size: 19px; font-weight: 700; }
+[data-age-band="junior-high"] .homeScreen .homeContinueHead p { color: var(--jh-muted); }
+[data-age-band="junior-high"] .homeScreen .homeEyebrow { color: var(--jh-muted); letter-spacing: 0.06em; text-transform: uppercase; font-size: 11px; font-weight: 700; }
+[data-age-band="junior-high"] .homeScreen .homeTrack,
+[data-age-band="junior-high"] .homeScreen .homeTrackMeta { width: 100%; }
+[data-age-band="junior-high"] .homeScreen .homeTrack { height: 6px; background: var(--jh-line); }
+[data-age-band="junior-high"] .homeScreen .homeCta {
+  height: 40px;
+  border-radius: 8px;
+  background: var(--jh-brand);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+[data-age-band="junior-high"] .homeScreen .homeSubject,
+[data-age-band="junior-high"] .homeScreen .homeTile {
+  border: 1px solid var(--jh-line);
+  border-left: 3px solid var(--accent, var(--jh-accent));
+  border-radius: 10px;
+  background: var(--jh-surface);
+}
+[data-age-band="junior-high"] .homeScreen .homeSubjectText strong,
+[data-age-band="junior-high"] .homeScreen .homeTile strong { font-weight: 700; }
+[data-age-band="junior-high"] .homeScreen .homeSectionHead h2 { font-size: 16px; font-weight: 700; letter-spacing: 0; }
+
+/* Mastery panel (rendered only for Basic 7-9) */
+.masteryPanel {
+  margin-top: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--jh-line);
+  border-radius: 12px;
+  background: var(--jh-surface);
+  color: var(--jh-ink);
+}
+.masteryPanelHead { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.masteryPanelHead h2 { margin: 0; font-size: 16px; font-weight: 700; }
+.masteryOverall { display: flex; align-items: center; gap: 8px; }
+.masteryOverall span { display: grid; }
+.masteryOverall strong { font-size: 17px; font-weight: 700; }
+.masteryOverall small { color: var(--jh-muted); font-size: 11px; }
+.masteryRows { display: grid; gap: 12px; margin: 10px 0 0; padding: 0; list-style: none; }
+.masteryRowHead { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; }
+.masteryRowHead strong { font-weight: 700; }
+.masteryRowHead span { color: var(--jh-muted); }
+.masteryBar { position: relative; height: 6px; margin-top: 6px; border-radius: 3px; background: var(--jh-line); }
+.masteryBarFill { position: absolute; inset: 0 auto 0 0; border-radius: 3px; background: var(--accent, var(--jh-mastery)); }
+.masteryBarGoal { position: absolute; top: -3px; width: 2px; height: 12px; margin-left: -1px; border-radius: 1px; background: var(--jh-goal); }
+.masteryGoal { margin: 5px 0 0; color: var(--jh-muted); font-size: 12px; }
+.masteryNote { margin: 12px 0 0; padding-top: 10px; border-top: 1px solid var(--jh-line); color: var(--jh-muted); font-size: 11.5px; line-height: 1.4; }
+
+/* Learning page (styled-jsx classes carry a hash, so these selectors are kept more specific) */
+main.page[data-age-band="junior-high"] .learnBody .learnBanner {
+  border: 1px solid var(--jh-line);
+  border-radius: 10px;
+  background: var(--jh-surface);
+}
+main.page[data-age-band="junior-high"] .learnBody .lessonHero img { display: none; }
+main.page[data-age-band="junior-high"] .learnBody .lessonHero h1 { max-width: none; font-size: 18px; font-weight: 700; }
+main.page[data-age-band="junior-high"] .learnBody .lessonHero h1::after { width: 40px; height: 2px; transform: none; background: var(--jh-accent); }
+main.page[data-age-band="junior-high"] .learnBody .card { border: 1px solid var(--jh-line); border-radius: 10px; box-shadow: none; }
+main.page[data-age-band="junior-high"] .learnBody .card h2 { font-size: 18px; font-weight: 700; }
+main.page[data-age-band="junior-high"] .learnBody .card .options .option { border-radius: 8px; border-color: var(--jh-line); }
+main.page[data-age-band="junior-high"] .learnBody .card .options .option:has(input:checked) {
+  border-color: var(--jh-accent);
+  background: #eef4fc;
+}
+main.page[data-age-band="junior-high"] .learnBody .card .options .option input { accent-color: var(--jh-accent); }
+main.page[data-age-band="junior-high"] .learnBody .primary-button.primary-button {
+  border-radius: 8px;
+  background: var(--jh-brand);
+  font-size: 16px;
+  font-weight: 600;
+}
+main.page[data-age-band="junior-high"] .learnBody .learningStage .stageDot { border-radius: 6px; }
+
+/* Answered question on /learn: a quiet mark instead of the bounce */
+main.page[data-age-band="junior-high"] .answeredOptions .option.answered {
+  border-width: 1px;
+  border-left-width: 4px;
+  background: var(--jh-surface);
+  color: var(--jh-ink);
+  box-shadow: none;
+  font-weight: 600;
+  animation: academicIn 0.18s ease-out both;
+}
+main.page[data-age-band="junior-high"] .answeredOptions .option.answered.correct { border-color: var(--jh-mastery); background: #eef8f6; }
+main.page[data-age-band="junior-high"] .answeredOptions .option.answered.incorrect,
+main.page[data-age-band="junior-high"] .answeredOptions .option.answered.partial { border-color: var(--jh-goal); background: #fcf5e9; }
+main.page[data-age-band="junior-high"] .answeredOptions .answeredTag { border: 1px solid var(--jh-line); border-radius: 6px; color: var(--jh-muted); font-weight: 600; }
+
+/* Independent lesson layout: no mascot art around the lesson */
+main.page[data-age-band="junior-high"] .learnBody .teachFoot img,
+main.page[data-age-band="junior-high"] .learnFooter img { display: none; }
+main.page[data-age-band="junior-high"] .learnBody .lessonHero small { color: var(--jh-muted); letter-spacing: 0.06em; text-transform: uppercase; font-size: 11px; font-weight: 700; }
+main.page[data-age-band="junior-high"] .learnBody .card .lesson-body { font-size: 15px; line-height: 1.55; }
+
+/* Navigation: compact labels, one accent */
+[data-age-band="junior-high"] .filumireBottomNav { box-shadow: 0 -1px 0 var(--jh-line); }
+[data-age-band="junior-high"] .filumireBottomNav .filumireNavItem { font-size: 10.5px; font-weight: 600; letter-spacing: 0.01em; }
+[data-age-band="junior-high"] .filumireBottomNav .filumireNavItemActive::after { left: 30%; right: 30%; height: 2px; }
+
+/* Progress, Challenges, Profile and Ask FILU: no cartoon art or quotes,
+   flat bordered panels, measured headings (styled-jsx classes carry a
+   hash, so these selectors start at main.learnerPage) */
+main.learnerPage[data-age-band="junior-high"] .homeFooter img,
+main.learnerPage[data-age-band="junior-high"] .progressPage .pHero img,
+main.learnerPage[data-age-band="junior-high"] .progressPage .pBubble,
+main.learnerPage[data-age-band="junior-high"] .progressPage .pGrowNote,
+main.learnerPage[data-age-band="junior-high"] .progressPage .pQuote,
+main.learnerPage[data-age-band="junior-high"] .challengesPage .cToday img,
+main.learnerPage[data-age-band="junior-high"] .challengesPage .cQuote,
+main.learnerPage[data-age-band="junior-high"] .profilePage .prQuote,
+main.learnerPage[data-age-band="junior-high"] .askPage .fHeroArt,
+main.learnerPage[data-age-band="junior-high"] .askPage .fChat img {
+  display: none;
+}
+
+main.learnerPage[data-age-band="junior-high"] .progressPage .pHero,
+main.learnerPage[data-age-band="junior-high"] .askPage .fHero { min-height: 0; padding-bottom: 4px; }
+
+main.learnerPage[data-age-band="junior-high"] .progressPage .pHero h1,
+main.learnerPage[data-age-band="junior-high"] .challengesPage .cHead h1,
+main.learnerPage[data-age-band="junior-high"] .profilePage .prWho h1,
+main.learnerPage[data-age-band="junior-high"] .askPage .fHero h1 {
+  color: var(--jh-ink);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+main.learnerPage[data-age-band="junior-high"] .progressPage .pOverall,
+main.learnerPage[data-age-band="junior-high"] .progressPage .pCard,
+main.learnerPage[data-age-band="junior-high"] .progressPage .pGrowing,
+main.learnerPage[data-age-band="junior-high"] .progressPage .pList,
+main.learnerPage[data-age-band="junior-high"] .challengesPage .cToday,
+main.learnerPage[data-age-band="junior-high"] .challengesPage .cRow,
+main.learnerPage[data-age-band="junior-high"] .challengesPage .cBadge,
+main.learnerPage[data-age-band="junior-high"] .profilePage .prStats > div,
+main.learnerPage[data-age-band="junior-high"] .profilePage .prList,
+main.learnerPage[data-age-band="junior-high"] .askPage .fTopic,
+main.learnerPage[data-age-band="junior-high"] .askPage .fMode,
+main.learnerPage[data-age-band="junior-high"] .askPage .fBubble {
+  border: 1px solid var(--jh-line);
+  border-radius: 10px;
+  background: var(--jh-surface);
+  box-shadow: none;
+}
+
+main.learnerPage[data-age-band="junior-high"] .progressPage .pChip { border-radius: 6px; }
+main.learnerPage[data-age-band="junior-high"] .challengesPage .cStart,
+main.learnerPage[data-age-band="junior-high"] .profilePage .prEdit {
+  border-radius: 8px;
+  background: var(--jh-brand);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Achievements read as milestones: a small square mark, no medals */
+main.learnerPage[data-age-band="junior-high"] .challengesPage .cBadge { opacity: 1; color: var(--jh-muted); }
+main.learnerPage[data-age-band="junior-high"] .challengesPage .cBadge.on { border-color: var(--jh-mastery); color: var(--jh-ink); }
+main.learnerPage[data-age-band="junior-high"] .challengesPage .cMedal { width: 22px; height: 22px; border-radius: 6px; background: var(--jh-line); }
+main.learnerPage[data-age-band="junior-high"] .challengesPage .cBadge.on .cMedal { background: var(--jh-mastery); }
+
+main.learnerPage[data-age-band="junior-high"] .askPage .fMode.on { border-color: var(--jh-accent); background: #eef4fc; }
+main.learnerPage[data-age-band="junior-high"] .askPage .fBubble small { color: var(--jh-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+
+main.learnerPage[data-age-band="junior-high"] .progressPage .pHead h2,
+main.learnerPage[data-age-band="junior-high"] .challengesPage .cSecHead h2,
+main.learnerPage[data-age-band="junior-high"] .profilePage .prList h2,
+main.learnerPage[data-age-band="junior-high"] .askPage .fHelp h2 {
+  color: var(--jh-ink);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0;
+}

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./local-fonts.css";
 import "./globals.css";
 import "./learner-interface.css";
+import "./age-interface.css";
 import ServiceWorkerRegister from "./ServiceWorkerRegister";
 import { PrivatePresentationNotice } from '../components/filumire/PrivatePresentationNotice';
 

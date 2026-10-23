@@ -28,6 +28,8 @@ import { askFiluHref, dashboardView, navItemForView, setupDestination, setupRedi
 import { LearnerHeader } from "../../components/filumire/LearnerHeader";
 import { LearnerLoadingState } from "../../components/filumire/LearnerLoadingState";
 import { SubjectGrid } from "../../components/filumire/SubjectGrid";
+import { useAgeBand } from "../../components/filumire/ageBand";
+import { MasteryGoalsPanel } from "../../components/filumire/MasteryGoalsPanel";
 import { fetchLearningOverview, type LearningOverview } from "../../services/learning-client";
 import { SubjectPage } from "../../components/filumire/SubjectPage";
 import { ProgressPage } from "../../components/filumire/ProgressPage";
@@ -188,6 +190,7 @@ function LearnerDashboardView() {
   const [overview, setOverview] = useState<LearningOverview | null>(null);
   const [overviewState, setOverviewState] = useState<OverviewState>("loading");
   const [overviewAttempt, setOverviewAttempt] = useState(0);
+  const ageBand = useAgeBand(overview);
 
   useEffect(() => {
     try {
@@ -581,7 +584,7 @@ function LearnerDashboardView() {
   }
 
   return (
-    <main className={onboarding ? "learnerPage learnerUi learnerOnboarding" : "learnerPage learnerUi"} lang={language} data-appearance={appearance}>
+    <main className={onboarding ? "learnerPage learnerUi learnerOnboarding" : "learnerPage learnerUi"} lang={language} data-appearance={appearance} data-age-band={ageBand}>
       <a className="filumireSkipLink" href="#learner-main">
         {language === "fr" ? "Aller au contenu" : "Skip to content"}
       </a>
@@ -648,6 +651,7 @@ function LearnerDashboardView() {
         {accountChecked && viewState === "ready" && view === "ask-filu" && overview && (
           <div className="learnerContent homeScreen">
             <AskFiluPage
+              band={ageBand}
               conversationScope={signedInLearner?.learnerId}
               conversationContext={overview.activeSubjectId}
               language={language}
@@ -903,6 +907,10 @@ function LearnerDashboardView() {
                   </Link>
                 </section>
 
+                {ageBand === "junior-high" && (
+                  <MasteryGoalsPanel subjects={subjects} counts={overview?.subjects} language={language} />
+                )}
+
                 <section className="homeToday">
                   <div className="homeSectionHead">
                     <h2>{homeText.today}</h2>
@@ -1122,6 +1130,7 @@ function LearnerDashboardView() {
               <div className="learnerContent homeScreen">
                 <ProgressPage
                   language={language}
+                  band={ageBand}
                   overview={overview}
                   overviewState={overviewState}
                   onRetry={retryOverview}
@@ -1139,11 +1148,12 @@ function LearnerDashboardView() {
               </div>
             )}
 
-            {view === "challenges" && (<div className="learnerContent homeScreen"><ChallengesPage language={language} overview={overview} overviewState={overviewState} onRetry={retryOverview} renderIcon={(key) => <SubjectIcon name={key} />} current={{ subjectId: data?.progress.subjectId ?? "", subjectName, title: competencyTitle, done: completedCompetencies, total: competencyCount, startHref: learnHref }} /></div>)}
+            {view === "challenges" && (<div className="learnerContent homeScreen"><ChallengesPage language={language} band={ageBand} overview={overview} overviewState={overviewState} onRetry={retryOverview} renderIcon={(key) => <SubjectIcon name={key} />} current={{ subjectId: data?.progress.subjectId ?? "", subjectName, title: competencyTitle, done: completedCompetencies, total: competencyCount, startHref: learnHref }} /></div>)}
 
       {view === "profile" && (
         <div className="learnerContent homeScreen">
           <ProfilePage
+            band={ageBand}
             learnerId={signedInLearner?.learnerId}
             language={language}
             onLanguage={(value) => {
@@ -1178,7 +1188,7 @@ function LearnerDashboardView() {
         </div>
 
         {account && view !== "profile" && <LearnerSignOut language={language} />}
-        {!onboarding && <LearnerBottomNav active={navItemForView(view)} language={language} subjectId={assistantSubjectId} />}
+        {!onboarding && <LearnerBottomNav active={navItemForView(view)} language={language} subjectId={assistantSubjectId} band={ageBand} />}
       </div>
 
       <style jsx>{`

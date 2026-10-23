@@ -19,6 +19,8 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { LearningRequestOrder, restoreLearningActivity, submitPendingAnswer, acknowledgeCurrentActivity, checkKnowledgeFirstForActivity } from "../../services/learning-continuity";
 import { completionPercent, correctionFor, stageIndicators, evaluatedFeedback, type ActivityFeedback } from "../../services/learning-presentation";
 import { AnswerCorrectionPanel, type CorrectionPhase } from "../../components/filumire/AnswerCorrectionPanel";
+import { useAgeBand } from "../../components/filumire/ageBand";
+import { isFeedbackOutcome, JellyStarFeedback } from "../../components/filumire/JellyStarFeedback";
 import { useLessonClosure } from "../../services/use-lesson-closure";
 import { isTeachingFirstStep as isIntroductionStep } from "../../services/lesson-closure-client";
 import { LessonClosureCard } from "../../components/filumire/LessonClosureCard";
@@ -393,6 +395,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
   const operationBusy = useRef(false);
   const closureContinueBusy = useRef(false);
   const [learnOverview, setLearnOverview] = useState<LearningOverview | null>(null);
+  const ageBand = useAgeBand(learnOverview);
   const [language] = useLanguage();
   const [subjectId, setSubjectId] = useState<string | null>(null);
   const learnerAvatar = useLearnerAvatar();
@@ -874,6 +877,17 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
     }
   }, [assessmentFeedback]);
 
+  /*
+   * Continue on the Jelly Star feedback: closes it and moves focus to the
+   * step FILUMIRE already chose. Nothing is sent to the server.
+   */
+  function continueFromFeedback() {
+    setAssessmentFeedback(null);
+    window.requestAnimationFrame(() => {
+      document.querySelector<HTMLElement>(".options input:not(:disabled), .primary-button, .nextButton")?.focus();
+    });
+  }
+
   const askSubjectId = subjectId ?? data?.progress.subjectId;
   // A lesson opened without ?subjectId (Home's "Continue Learning") still
   // belongs to a subject: "All topics" must open that subject's topic list.
@@ -888,7 +902,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
      navigation so there is always a way back. */
   if (loading || !data) {
     return (
-      <main className="page learnerUi" lang={language} data-appearance={appearance}>
+      <main className="page learnerUi" lang={language} data-appearance={appearance} data-age-band={ageBand}>
         <a className="filumireSkipLink" href="#learn-main">
           {language === "fr" ? "Aller au contenu" : "Skip to content"}
         </a>
@@ -938,7 +952,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
             )}
           </div>
 
-          <LearnerBottomNav active="learning" language={language} subjectId={askSubjectId} />
+          <LearnerBottomNav active="learning" language={language} subjectId={askSubjectId} band={ageBand} />
         </div>
 
         <style jsx>{`
@@ -1062,7 +1076,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
   const topicsHref = withLang(backHref, language);
 
   return (
-    <main className="page learnerUi" lang={language} data-appearance={appearance}>
+    <main className="page learnerUi" lang={language} data-appearance={appearance} data-age-band={ageBand}>
       <a className="filumireSkipLink" href="#learn-main">
         {language === "fr" ? "Aller au contenu" : "Skip to content"}
       </a>
@@ -1197,7 +1211,20 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
           </div>
         )}
 
-          {assessmentFeedback && (
+          {assessmentFeedback && isFeedbackOutcome(assessmentFeedback.outcome) && (
+            <div ref={feedbackRef} tabIndex={-1} className="answerFeedbackHost">
+              <small>{tr(language, "Feedback on your submitted activity")}: {assessmentFeedback.title || tr(language, "Your submitted answer")}</small>
+              <JellyStarFeedback
+                key={`${assessmentFeedback.outcome}-${assessmentFeedback.assessmentItemId ?? ""}`}
+                outcome={assessmentFeedback.outcome}
+                band={ageBand}
+                language={language}
+                onContinue={continueFromFeedback}
+              />
+              {assessmentFeedback.assessmentItemId !== data.content?.assessmentItemId && <small>{tr(language, "The following activity is your next learning step.")}</small>}
+            </div>
+          )}
+          {assessmentFeedback && !isFeedbackOutcome(assessmentFeedback.outcome) && (
             <div ref={feedbackRef} tabIndex={-1} className={`assessment-feedback ${assessmentFeedback.outcome}`} role="status" aria-live="polite">
               <div className="feedback-icon" aria-hidden="true">{feedbackIcon(assessmentFeedback.outcome)}</div>
               <div className="feedback-content">
@@ -1332,6 +1359,16 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
           )}
 
           {/* Below the question, above its options: explain, re-teach, then retry. */}
+          {/* Jelly Star mood for the correction: sad while FILU explains, happy or sad after the one retry.
+              The panel keeps its own buttons, so the star has no Continue. Outcome only, never the answer. */}
+          {activeCorrection && activeCorrection.phase !== "retry" && (
+            <JellyStarFeedback
+              key={`correction-${activeCorrection.phase}-${activeCorrection.value.retryOutcome ?? "incorrect"}-${activeCorrection.value.assessmentItemId}`}
+              outcome={activeCorrection.phase === "done" && activeCorrection.value.retryOutcome === "correct" ? "correct" : "incorrect"}
+              band={ageBand}
+              language={language}
+            />
+          )}
           {activeCorrection && <AnswerCorrectionPanel correction={activeCorrection.value} phase={activeCorrection.phase} language={language} busy={submitting}
             learnerId={data.learnerState.learnerId} speechLanguage={data.content?.language}
             onRetry={() => {
@@ -1535,7 +1572,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
         </footer>
 
         <LearnerSignOut language={language} />
-        <LearnerBottomNav active="learning" language={language} subjectId={askSubjectId} />
+        <LearnerBottomNav active="learning" language={language} subjectId={askSubjectId} band={ageBand} />
       </div>
 
       <style jsx>{`

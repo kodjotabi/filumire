@@ -5,6 +5,7 @@ import type { CSSProperties, ReactNode } from "react";
 
 import type { LearningOverview } from "../../services/learning-client";
 import { completionPercent } from "../../services/learning-presentation";
+import type { AgeBand } from "./ageBand";
 import { subjectLabel, toFilumireSubjects } from "./subjects";
 import { computeAchievements } from "./achievements";
 
@@ -22,6 +23,7 @@ type ChallengesPageProps = {
     total: number;
     startHref: string;
   };
+  band?: AgeBand;
 };
 
 const COLORS: Record<string, string> = {
@@ -70,6 +72,34 @@ const TEXT = {
   },
 } as const;
 
+/* Basic 7-9 wording: goals and milestones; the same three criteria. */
+const JUNIOR_TEXT = {
+  en: {
+    title: "Goals",
+    intro: "Work towards mastery, one topic at a time.",
+    today: "Current goal",
+    todaySub: "Master this topic next.",
+    start: "Continue topic",
+    more: "Other subjects",
+    rowSub: "Topics mastered",
+    achievements: "Milestones",
+    earned: "Reached",
+    locked: "Not reached",
+  },
+  fr: {
+    title: "Objectifs",
+    intro: "Avance vers la maîtrise, un sujet à la fois.",
+    today: "Objectif actuel",
+    todaySub: "Maîtrise ce sujet ensuite.",
+    start: "Continuer le sujet",
+    more: "Autres matières",
+    rowSub: "Sujets maîtrisés",
+    achievements: "Étapes",
+    earned: "Atteinte",
+    locked: "Pas encore atteinte",
+  },
+} as const;
+
 export function ChallengesPage({
   language,
   overview,
@@ -77,8 +107,9 @@ export function ChallengesPage({
   onRetry,
   renderIcon,
   current,
+  band = "primary",
 }: ChallengesPageProps) {
-  const t = TEXT[language];
+  const t = band === "junior-high" ? { ...TEXT[language], ...JUNIOR_TEXT[language] } : TEXT[language];
 
   if (!overview) {
     return (

@@ -96,7 +96,8 @@ $tests = @(
     "tests/content-integrity-4e.test.ts",
     "tests/route-advance-4g.test.ts",
     "tests/learner-journey-route-4h.test.ts",
-    "tests/interface-completion.test.ts"
+    "tests/interface-completion.test.ts",
+    "tests/age-interface.test.ts"
 )
 
 foreach ($test in $tests) {

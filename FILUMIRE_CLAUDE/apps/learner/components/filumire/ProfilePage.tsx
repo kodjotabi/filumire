@@ -7,6 +7,7 @@ import { AdditionalSettings } from "./AdditionalSettings";
 import { VoiceSelection } from "./VoiceSelection";
 import { completionPercent } from "../../services/learning-presentation";
 import { signOut } from "../../services/account-client";
+import type { AgeBand } from "./ageBand";
 
 type Stat = { total: number; completed: number; tracked: number };
 
@@ -26,6 +27,7 @@ type Props = {
   guardianSession?: boolean;
   onAvatar?: (avatarId: string) => void | Promise<void>;
   onSignOut?: () => Promise<void>;
+  band?: AgeBand;
 };
 
 const text = {
@@ -91,6 +93,12 @@ const text = {
   },
 };
 
+/* Basic 7-9 wording: the same three figures. */
+const juniorText = {
+  en: { edit: "Edit name", ach: "Milestones", prog: "Mastery", active: "Subjects in progress", settings: "Settings", name: "Name", lang: "Language" },
+  fr: { edit: "Modifier le nom", ach: "Étapes", prog: "Maîtrise", active: "Matières en cours", settings: "Paramètres", name: "Nom", lang: "Langue" },
+};
+
 export default function ProfilePage({
   learnerId,
   language,
@@ -103,8 +111,9 @@ export default function ProfilePage({
   guardianSession,
   onAvatar,
   onSignOut,
+  band = "primary",
 }: Props) {
-  const t = text[language];
+  const t = band === "junior-high" ? { ...text[language], ...juniorText[language] } : text[language];
   const avatarSrc = useLearnerAvatar();
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(name);

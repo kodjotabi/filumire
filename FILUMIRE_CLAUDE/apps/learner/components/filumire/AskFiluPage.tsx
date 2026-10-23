@@ -6,6 +6,7 @@ import { FiluConversation } from "./FiluConversation";
 import type { ConversationContextResponse } from "../../../../packages/ai/conversation";
 import { subjectLabel } from "./subjects";
 import { completionPercent } from "../../services/learning-presentation";
+import type { AgeBand } from "./ageBand";
 
 type Element = { type: string; text: string };
 
@@ -24,6 +25,7 @@ type Props = {
   lessonHref?: string;
   conversationScope?: string;
   conversationContext?: string;
+  band?: AgeBand;
 };
 
 
@@ -74,6 +76,39 @@ const text = {
   },
 };
 
+/* Basic 7-9 wording: a study aid, not a buddy; the same help modes. */
+const juniorText = {
+  en: {
+    intro: "Explanations, hints and worked examples for your current topic.",
+    goals: "topics mastered",
+    how: "What do you need?",
+    choose: "Choose the kind of help.",
+    explain: "Explain",
+    explainSub: "A clearer explanation",
+    hint: "Hint",
+    hintSub: "A clue, not the answer",
+    understand: "Another approach",
+    understandSub: "Worked example or task",
+    tryThis: "Worked example",
+    none: "No help is written for this step yet.",
+  },
+  fr: {
+    intro: "Explications, indices et exemples pour ton sujet actuel.",
+    goals: "sujets maîtrisés",
+    how: "De quoi as-tu besoin ?",
+    choose: "Choisis le type d'aide.",
+    explain: "Expliquer",
+    explainSub: "Une explication plus claire",
+    hint: "Indice",
+    hintSub: "Une piste, pas la réponse",
+    understand: "Autre approche",
+    understandSub: "Exemple ou tâche",
+    tryThis: "Exemple",
+    none: "Aucune aide n'est encore rédigée pour cette étape.",
+  },
+};
+
+
 export function AskFiluPage({
   language,
   subjectName,
@@ -82,8 +117,9 @@ export function AskFiluPage({
   lessonHref,
   conversationScope,
   conversationContext,
+  band = "primary",
 }: Props) {
-  const t = text[language];
+  const t = band === "junior-high" ? { ...text[language], ...juniorText[language] } : text[language];
   const percent = completionPercent(subjectProgress);
   const contextKey = conversationContext ?? `${subjectName}:${topic}`;
   const [filuContext, setFiluContext] = useState<{ key: string; value: ConversationContextResponse } | null>(null);

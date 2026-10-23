@@ -5,6 +5,7 @@ import type { CSSProperties, ReactNode } from "react";
 
 import type { LearningOverview } from "../../services/learning-client";
 import { completionPercent, estimatePercent } from "../../services/learning-presentation";
+import type { AgeBand } from "./ageBand";
 import { subjectLabel, toFilumireSubjects } from "./subjects";
 
 type ProgressPageProps = {
@@ -23,6 +24,7 @@ type ProgressPageProps = {
     learnHref: string;
   };
   renderIcon: (key: string) => ReactNode;
+  band?: AgeBand;
 };
 
 const COLORS: Record<string, string> = {
@@ -115,6 +117,52 @@ const TEXT = {
   },
 } as const;
 
+/* Basic 7-9 wording: same figures, mastery language. */
+const JUNIOR_TEXT = {
+  en: {
+    title: "Progress",
+    intro: "Your mastery across subjects.",
+    overall: "Overall mastery",
+    across: "Topics mastered, all subjects",
+    onTrack: "Based on topics mastered so far.",
+    subjects: "Subjects",
+    viewAll: "All subjects",
+    good: "Strong",
+    learning: "In progress",
+    growing: "Next goal",
+    growingBody: "Each topic you master raises your overall mastery.",
+    strengths: "Strongest subjects",
+    strengthsSub: "Highest mastery so far:",
+    keepUp: "Maintain this level.",
+    noStrengths: "Master a topic to see your strongest subjects.",
+    noFocus: "Start a subject to see your focus areas.",
+    focus: "Focus areas",
+    focusSub: "Lowest mastery among started subjects:",
+    youCan: "Plan your next session here.",
+  },
+  fr: {
+    title: "Progression",
+    intro: "Ta maîtrise dans chaque matière.",
+    overall: "Maîtrise globale",
+    across: "Sujets maîtrisés, toutes matières",
+    onTrack: "Selon les sujets maîtrisés jusqu’ici.",
+    subjects: "Matières",
+    viewAll: "Toutes les matières",
+    good: "Solide",
+    learning: "En cours",
+    growing: "Prochain objectif",
+    growingBody: "Chaque sujet maîtrisé augmente ta maîtrise globale.",
+    strengths: "Matières les plus solides",
+    strengthsSub: "Meilleure maîtrise jusqu’ici :",
+    keepUp: "Maintiens ce niveau.",
+    noStrengths: "Maîtrise un sujet pour voir tes matières les plus solides.",
+    noFocus: "Commence une matière pour voir tes priorités.",
+    focus: "Priorités",
+    focusSub: "Maîtrise la plus faible parmi les matières commencées :",
+    youCan: "Prévois ta prochaine séance ici.",
+  },
+} as const;
+
 export function ProgressPage({
   language,
   overview,
@@ -122,8 +170,9 @@ export function ProgressPage({
   onRetry,
   current,
   renderIcon,
+  band = "primary",
 }: ProgressPageProps) {
-  const t = TEXT[language];
+  const t = band === "junior-high" ? { ...TEXT[language], ...JUNIOR_TEXT[language] } : TEXT[language];
 
   if (!overview) {
     return (
