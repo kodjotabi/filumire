@@ -33,15 +33,15 @@ const check = (fn: () => void) => {
   checks += 1;
 };
 
-/* ---- band selection: Basic 7-9 stays hidden ---- */
-check(() => assert.equal(JUNIOR_HIGH_INTERFACE_READY, false, "Basic 7-9 interface must stay hidden until its curriculum is ready."));
+/* ---- band selection follows the server's private presentation gate ---- */
+check(() => assert.equal(JUNIOR_HIGH_INTERFACE_READY, false, "JHS stays off unless the server enables private presentation."));
 
 for (const grade of [4, 5, 6]) {
   check(() => assert.equal(ageBandForGrade(`level-gh-basic-${grade}-pilot`), "primary"));
   check(() => assert.equal(ageBandForGrade(`level-gh-basic-${grade}-pilot`, undefined, true), "primary"));
 }
 for (const grade of [7, 8, 9]) {
-  check(() => assert.equal(ageBandForGrade(`level-gh-basic-${grade}-pilot`), "primary", `Basic ${grade} must see primary while hidden.`));
+  check(() => assert.equal(ageBandForGrade(`level-gh-basic-${grade}-pilot`), "primary", `Basic ${grade} stays hidden by default.`));
   check(() => assert.equal(ageBandForGrade(`level-gh-basic-${grade}-pilot`, undefined, true), "junior-high"));
 }
 check(() => assert.equal(basicGradeNumber(undefined, "Basic 8"), 8));
@@ -51,15 +51,31 @@ check(() => assert.equal(ageBandForGrade(undefined, undefined, true), "primary")
 
 check(() =>
   assert.equal(
-    resolveAgeBand({ gradeId: "level-gh-basic-5-pilot", previewParam: "junior-high", isProduction: true }),
+    resolveAgeBand({ gradeId: "level-gh-basic-5-pilot", presentationEnabled: true }),
     "primary",
-    "The preview parameter must be ignored in production.",
+    "The private presentation flag never changes a Basic 4-6 band.",
   ),
 );
-check(() =>
-  assert.equal(resolveAgeBand({ gradeId: "level-gh-basic-5-pilot", previewParam: "junior-high", isProduction: false }), "junior-high"),
-);
-check(() => assert.equal(resolveAgeBand({ gradeId: "level-gh-basic-8-pilot", previewParam: null, isProduction: false }), "primary"));
+for (const grade of [7, 8, 9]) {
+  check(() => assert.equal(resolveAgeBand({ gradeId: `level-gh-basic-${grade}-pilot`, presentationEnabled: false }), "primary"));
+  check(() => assert.equal(resolveAgeBand({ gradeId: `level-gh-basic-${grade}-pilot`, presentationEnabled: true }), "junior-high"));
+}
+
+/* Guardian grade selection is server-supported; learner self-setup stays B4-6. */
+const family = read("apps/learner/app/family/page.tsx");
+check(() => assert.match(family, /fetchPlacementChoices\(\)/));
+check(() => assert.match(family, /choices\s*\?\s*choices\.map/));
+check(() => assert.match(family, /LEARNER_GRADES\.map/));
+const setup = read("apps/learner/components/filumire/SetupClassField.tsx");
+check(() => assert.match(setup, /LEARNER_GRADES\.map/));
+const ageBandSource = read("apps/learner/components/filumire/ageBand.ts");
+check(() => assert.match(ageBandSource, /fetch\("\/api\/presentation-scope"/));
+check(() => assert.doesNotMatch(ageBandSource, /URLSearchParams|previewParam/));
+
+/* The READY Preview's login already has a >=44px touch target on phones and 48px at tablet widths. */
+const loginPage = read("apps/learner/app/login/page.tsx");
+check(() => assert.match(loginPage, /\.signInButton, \.createButton \{ min-height: 44px;/));
+check(() => assert.match(loginPage, /@media \(min-width: 768px\)[\s\S]*?\.signInButton, \.createButton \{ height: 48px;/));
 
 /* ---- feedback copy: encouraging, never an answer ---- */
 const outcomes: FeedbackOutcome[] = ["correct", "incorrect", "partial", "pending-review"];

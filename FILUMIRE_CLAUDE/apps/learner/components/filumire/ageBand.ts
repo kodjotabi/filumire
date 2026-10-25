@@ -3,10 +3,9 @@
  * changes grade registration, placement, curriculum or adaptive logic.
  *
  * primary      Basic 4-6 (and any grade not listed below)
- * junior-high  Basic 7-9, hidden until their curriculum and lessons are
- *              ready (JUNIOR_HIGH_INTERFACE_READY). Until then every
- *              learner sees the primary interface. Development builds can
- *              preview it with ?ageBand=junior-high.
+ * junior-high  Basic 7-9, shown only when the server's private presentation
+ *              gate is enabled. The server remains authoritative; a URL
+ *              parameter or client-side setting cannot enable this band.
  */
 import { useEffect, useState } from "react";
 
@@ -47,37 +46,59 @@ export function ageBandForGrade(
 export function resolveAgeBand(options: {
   gradeId?: string | null;
   gradeName?: string | null;
-  previewParam?: string | null;
-  isProduction: boolean;
+  presentationEnabled?: boolean;
 }): AgeBand {
-  if (!options.isProduction) {
-    if (options.previewParam === "junior-high") return "junior-high";
-    if (options.previewParam === "primary") return "primary";
-  }
-
-  return ageBandForGrade(options.gradeId, options.gradeName);
+  return ageBandForGrade(
+    options.gradeId,
+    options.gradeName,
+    options.presentationEnabled === true,
+  );
 }
 
-/*
- * Band for the current page, from the learner overview. The preview
- * parameter is read after mount so server and client render the same
- * first frame.
- */
+/* Read the same server-side gate that controls grade and content registration. */
 export function useAgeBand(
   overview: { gradeId?: string; gradeName?: string } | null | undefined,
 ): AgeBand {
-  const [previewParam, setPreviewParam] = useState<string | null>(null);
+  const gradeId = overview?.gradeId ?? "";
+  const gradeName = overview?.gradeName ?? "";
+  const gradeKey = `${gradeId}:${gradeName}`;
+  const gradeNumber = basicGradeNumber(gradeId, gradeName);
+  const isJuniorHigh = gradeNumber !== null && JUNIOR_HIGH_GRADES.has(gradeNumber);
+  const [presentation, setPresentation] = useState<{
+    gradeKey: string;
+    enabled: boolean;
+  } | null>(null);
 
   useEffect(() => {
-    setPreviewParam(
-      new URLSearchParams(window.location.search).get("ageBand"),
-    );
-  }, []);
+    if (!isJuniorHigh) {
+      setPresentation(null);
+      return;
+    }
+
+    const controller = new AbortController();
+    fetch("/api/presentation-scope", {
+      cache: "no-store",
+      credentials: "same-origin",
+      signal: controller.signal,
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Presentation scope unavailable");
+        return response.json() as Promise<{ enabled?: boolean }>;
+      })
+      .then((scope) => {
+        setPresentation({ gradeKey, enabled: scope.enabled === true });
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) setPresentation({ gradeKey, enabled: false });
+      });
+
+    return () => controller.abort();
+  }, [gradeKey, isJuniorHigh]);
 
   return resolveAgeBand({
-    gradeId: overview?.gradeId,
-    gradeName: overview?.gradeName,
-    previewParam,
-    isProduction: process.env.NODE_ENV === "production",
+    gradeId,
+    gradeName,
+    presentationEnabled:
+      isJuniorHigh && presentation?.gradeKey === gradeKey && presentation.enabled,
   });
 }
