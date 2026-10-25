@@ -1,0 +1,35 @@
+import assert from 'node:assert/strict';
+import manifest from '../packages/curriculum/jhs-private-manifest.json';
+import baseline from './fixtures/production-restricted-manifest.json';
+import approved from '../packages/curriculum/jhs-approved-manifest.json';
+import {JHS_APPROVED_RELEASE} from '../services/content-store/jhs-approved-content';
+import {validateApprovedJhsRelease} from '../services/content-store/jhs-release-guard';
+import {CCP_SOURCE_REGISTRATIONS,getCcpBlockingSourceIssueIds} from '../packages/curriculum/ghana-ccp-runtime';
+import {getCompetency} from '../packages/curriculum';
+import {getAllContent} from '../services/content-store';
+import {seedContent} from '../services/content-store/seed';
+import {jhsValidationFingerprint} from '../services/content-store/jhs-validation-fingerprint';
+import {createInitialLearnerState,saveLearnerState,getLearnerState} from '../services/learner-state';
+import {buildIntegrationPacket} from './fixtures/jhs-required-performance';
+assert.equal(process.env.FILUMIRE_PERSISTENCE,'memory');
+assert.deepEqual(manifest,baseline);assert.equal(manifest.length,42);
+assert.deepEqual(approved,[]);assert.deepEqual(JHS_APPROVED_RELEASE.units,[]);
+const live=new Set(manifest.map(m=>m.competencyId)),blocked=CCP_SOURCE_REGISTRATIONS.filter(r=>getCcpBlockingSourceIssueIds(r.sourceIssueIds).length),pending=CCP_SOURCE_REGISTRATIONS.filter(r=>!getCcpBlockingSourceIssueIds(r.sourceIssueIds).length&&!live.has(r.id));
+assert.equal(blocked.length,39);assert.equal(pending.length,544);
+const saved=createInitialLearnerState('fictional-release-preservation',manifest[0].competencyId);saved.competencies[0].masteryEstimate=.63;saved.competencies[0].evidenceCount=7;await saveLearnerState(saved);
+const before=structuredClone(await getLearnerState(saved.learnerId,manifest[0].competencyId));
+delete process.env.FILUMIRE_JHS_MODE;seedContent();
+for(const row of [...pending,...blocked])assert.equal(getCompetency(row.id),undefined);
+process.env.FILUMIRE_JHS_MODE='private-presentation';seedContent();const records=getAllContent();
+assert.equal(records.filter(r=>live.has(r.competencyId)).length,1848);
+for(const row of manifest)assert.equal(jhsValidationFingerprint(getCompetency(row.competencyId)!,records),row.contentFingerprint);
+for(const row of [...pending,...blocked]){assert.equal(getCompetency(row.id),undefined);assert(!records.some(c=>c.competencyId===row.id));}
+assert.deepEqual(await getLearnerState(saved.learnerId,manifest[0].competencyId),before);
+// Synthetic proposed approvals remain in memory and never enter the catalogue.
+const b=buildIntegrationPacket().bundles[0],unit={competency:b.competency,content:b.content,candidateSha256:b.bundleSha256,fingerprint:b.bundleSha256,approvals:[]};
+const scope=[{competencyId:b.id,gradeId:b.gradeId,subjectId:b.subjectId,contentFingerprint:b.bundleSha256}],release={schemaVersion:1 as const,version:'fictional-test-only',units:[unit]};
+assert.throws(()=>validateApprovedJhsRelease(release,scope),/approvals/);
+assert.throws(()=>validateApprovedJhsRelease(release,[]),/scope/);
+assert.throws(()=>validateApprovedJhsRelease({...release,units:[{...unit,competency:{...unit.competency,id:blocked[0].id}}]},scope),/Ineligible/);
+assert.throws(()=>validateApprovedJhsRelease({...release,units:[{...unit,competency:{...unit.competency,id:manifest[0].competencyId}}]},scope),/Ineligible/);
+console.log('PASS pinned 42 topics/1848 records, 544 pending/39 blocked excluded, empty dual approval gate and unchanged saved learner progress.');

@@ -13,6 +13,7 @@ import { seedContent } from "../content-store/seed";
 import { generateInstruction } from ".";
 import type { ConversationLanguage, TutoringConversationContext } from "../../packages/ai/conversation";
 import { independentConceptualExplanations } from "../../packages/ai/conceptual-explanations";
+import {buildProtectedHelp,type ProtectedHelp} from './instructional-assistance';
 
 export interface TrustedConversationContext {
   fingerprint: string;
@@ -21,6 +22,8 @@ export interface TrustedConversationContext {
   topicTitle?: string;
   // Server-only policy. Never sent to a provider or the client as assessment data.
   safeConceptualExplanations?: string[];
+  // Local,answer-screened instructional help. Never assessment data or provider input.
+  protectedHelp?: ProtectedHelp;
   // An unanswered scored activity exists only in unrelated topics. The current
   // topic is not protected, but built-in explanations still need clearing.
   otherTopicsOpen?: boolean;
@@ -136,6 +139,9 @@ export async function loadConversationContext(learnerId: string, language: Conve
     ? independentConceptualExplanations(assessmentPools.flatMap(pool => pool.map(content =>
       JSON.stringify([content.title, content.body, content.metadata?.options, content.metadata?.expectedResponse,
         content.metadata?.targetSubskills, content.metadata?.successCriteria])))) : [];
+  const protectedHelp=assessmentProtected&&!recovery.pendingTeacherReview&&protectedActivities.length>0&&
+    protectedActivities.every(item=>item.type!=='teacher_review'&&getCompetency(item.competencyId))&&assessmentPools.every(pool=>pool.length>0)
+    ?buildProtectedHelp(`${competency.title} ${competency.subjectId}`,assessmentPools.flat(),language):undefined;
   const teaching: Array<{ type: string; text: string }> = [];
   let teachingSource: { id: string; title: string } | undefined;
   if (!assessmentProtected) {
@@ -175,9 +181,10 @@ export async function loadConversationContext(learnerId: string, language: Conve
   return {
     topicTitle,
     safeConceptualExplanations,
+    protectedHelp,
     otherTopicsOpen,
     protectingTopicTitle,
-    fingerprint: createHash("sha256").update(JSON.stringify({ context, state, active, recovery: recovery.fingerprint, safeConceptualExplanations, otherTopicsOpen })).digest("hex"),
+    fingerprint: createHash("sha256").update(JSON.stringify({ context, state, active, recovery: recovery.fingerprint, safeConceptualExplanations, protectedHelp, otherTopicsOpen })).digest("hex"),
     assessmentProtected,
     providerContext: {
       language,

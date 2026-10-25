@@ -18,7 +18,7 @@ const copy = {
     question: "Your question for FILU", placeholder: "What would you like help with?", send: "Send", retry: "Retry", clear: "Clear conversation",
     loading: "FILU is preparing a response…", chat: "Conversation with FILU", you: "You", mock: "FILU",
     explain: "Explain this", hint: "Give me a hint", example: "Show an example", practice: "Let me practise", simpler: "Make it simpler", actions: "Ways FILU can help", edit: "Edit question",
-    protected: "A scored question is waiting in your lesson. FILU will not give its answer. Answer it in the lesson, then FILU can explain everything.",
+    protected: "Your scored answer stays your own. FILU can explain ideas,offer a different example and give non-revealing hints.",
     practising: "Practice in this chat does not change your marks or progress.",
     slow: "FILU is taking too long to answer. Your question is kept: press Retry.",
     unavailable: "Open a lesson first so FILU can use your learning context.", network: "Your question has not received a response. Check your connection, then retry.",
@@ -32,7 +32,7 @@ const copy = {
     question: "Ta question pour FILU", placeholder: "Sur quoi voudrais-tu de l’aide ?", send: "Envoyer", retry: "Réessayer", clear: "Effacer la conversation",
     loading: "FILU prépare une réponse…", chat: "Conversation avec FILU", you: "Toi", mock: "FILU",
     explain: "Explique-moi", hint: "Donne-moi un indice", example: "Montre un exemple", practice: "Je veux m'entraîner", simpler: "Explique plus simplement", actions: "Comment FILU peut aider", edit: "Modifier la question",
-    protected: "Une question notée t'attend dans ta leçon. FILU ne donnera pas sa réponse. Réponds-y dans la leçon, puis FILU pourra tout t'expliquer.",
+    protected: "Ta réponse évaluée reste la tienne. FILU peut expliquer les idées,proposer un autre exemple et donner des indices sans révéler la réponse.",
     practising: "L'entraînement dans cette conversation ne change ni tes notes ni ta progression.",
     slow: "FILU met trop de temps à répondre. Ta question est gardée : appuie sur Réessayer.",
     unavailable: "Ouvre d’abord une leçon pour que FILU utilise ton contexte d’apprentissage.", network: "Ta question n’a pas reçu de réponse. Vérifie ta connexion, puis réessaie.",
@@ -73,9 +73,10 @@ export function FiluConversation({ language, scope: learnerId, contextKey, onCon
   }, [scope, language, onContext]);
 
   useEffect(() => {
+    const requestGuard = guard.current;
     setConversation(scope ? readConversation(scope) : { scope: "", expiresAt: 0 });
     setDraft(""); setError(""); setBusy(false); setRetryAt(0); busyRef.current = false;
-    return () => { guard.current.invalidate(); controller.current?.abort(); };
+    return () => { requestGuard.invalidate(); controller.current?.abort(); };
   }, [scope]);
   useEffect(() => {
     if (!conversation.expiresAt || !scope) return;

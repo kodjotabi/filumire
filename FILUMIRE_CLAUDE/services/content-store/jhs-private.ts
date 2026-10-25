@@ -5,6 +5,8 @@ import { JHS_PREVIEW_COMPETENCIES, JHS_REPRESENTATIVE_CONTENT } from './jhs-repr
 import { JHS_COMPLETION_BATCHES } from './jhs-completion-batches';
 import { jhsValidationFingerprint } from './jhs-validation-fingerprint';
 import { saveContent } from './index';
+import { JHS_APPROVED_RELEASE } from './jhs-approved-content';
+import { validateApprovedJhsRelease } from './jhs-release-guard';
 
 // Set only after one fully successful verification in this module instance; the
 // pinned sources are static, so later seeds re-register and re-save without re-hashing.
@@ -17,8 +19,11 @@ export function seedPrivateJhsContent(): void {
     for (const content of verified.records) saveContent(content);
     return;
   }
-  const definitions = [...JHS_PREVIEW_COMPETENCIES, ...JHS_COMPLETION_BATCHES.flatMap(batch => batch.competencies)];
-  const records = [...JHS_REPRESENTATIVE_CONTENT, ...JHS_COMPLETION_BATCHES.flatMap(batch => batch.content)];
+  // Validate the complete new release before registering either old or new scope.
+  // Empty approval files preserve the existing 42-topic snapshot exactly.
+  const approved = validateApprovedJhsRelease(JHS_APPROVED_RELEASE);
+  const definitions = [...JHS_PREVIEW_COMPETENCIES, ...JHS_COMPLETION_BATCHES.flatMap(batch => batch.competencies), ...approved.competencies];
+  const records = [...JHS_REPRESENTATIVE_CONTENT, ...JHS_COMPLETION_BATCHES.flatMap(batch => batch.content), ...approved.content];
   // Verify the entire scope before changing runtime availability. New drafts are excluded.
   const selected = PRIVATE_JHS_SCOPE.map(row => {
     const competency = definitions.find(item => item.id === row.competencyId);

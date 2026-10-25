@@ -10,6 +10,7 @@ import {
 import { CurriculumConversationProvider } from "../../packages/ai/curriculum-conversation";
 import { conversationSafety, privateQuestionLabel, safetyReply } from "../../packages/ai/conversation-safety";
 import { conceptualExplanation } from "../../packages/ai/conceptual-explanations";
+import {instructionalAction} from './instructional-assistance';
 
 const MAX_BODY_BYTES = 64 * 1024;
 const MAX_HISTORY_CHARS = 12000;
@@ -145,18 +146,18 @@ export function createConversationHandler(overrides: Partial<Dependencies> = {})
       const generate = async (): Promise<ConversationResponse> => {
         let reply: string;
         let practice: ConversationPractice | undefined;
-        // Say where the waiting question is and when full help comes back.
-        const waitingTitle = context.assessmentProtected ? context.protectingTopicTitle : undefined;
         const guidedRefusal = body.language === "fr"
-          ? `${waitingTitle ? `Une question notée t'attend dans ta leçon « ${waitingTitle} ». ` : "Une question notée t'attend dans tes leçons. "}Pour que ta réponse reste la tienne, je ne peux pas donner ni valider de réponse à une activité évaluée, ni expliquer ce qui pourrait y répondre. Relis la consigne, réfléchis à la règle que tu as apprise, puis envoie ta réponse dans la leçon. Ensuite, je pourrai tout t'expliquer avec des exemples.`
-          : `${waitingTitle ? `A scored question is waiting for you in your lesson “${waitingTitle}”. ` : "A scored question is waiting for you in your lessons. "}So that your answer stays your own, I cannot give or mark an answer to a scored activity, or explain anything that would answer it. Read the question again, think about the rule you learned, then send your answer in the lesson. After that, I can explain everything with examples.`;
+          ? "Je ne peux pas donner ni valider la réponse de ton activité évaluée. Demande une explication,un autre exemple ou un indice pour réfléchir toi-même ;envoie ta réponse dans la leçon."
+          : "I cannot give or mark the answer to your scored activity. Ask for an explanation,a different example or a hint to help you think;submit your own answer in the lesson.";
         const concept = safety ? undefined : conceptualExplanation(body.question, body.language);
         if (safety) {
           reply = safetyReply(safety, body.language);
         } else if (context.assessmentProtected) {
           // Never pass learner prompts, transcript, assessment content, options,
           // answer keys or rubrics to a provider during a scored/uncertain activity.
-          reply = concept && context.safeConceptualExplanations?.includes(concept.id) ? concept.reply : guidedRefusal;
+          const action=instructionalAction(body.question);
+          reply = action&&context.protectedHelp?.[action] ? context.protectedHelp[action]!
+            :concept && context.safeConceptualExplanations?.includes(concept.id) ? concept.reply : guidedRefusal;
         } else if (context.otherTopicsOpen && concept && !context.safeConceptualExplanations?.includes(concept.id)) {
           // The current topic is unprotected, but this built-in explanation could
           // answer a question still open in another topic.

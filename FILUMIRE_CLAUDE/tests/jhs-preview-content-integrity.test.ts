@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { assertJhsAutomaticBank } from './fixtures/jhs-automatic-bank';
 import { getAllCompetencies, getCompetency, registerIsolatedJhsPreviewCompetency, getStrand, getSubStrand, getContentStandard, getLearningIndicator } from '../packages/curriculum';
 import { getAvailableSubjectsForGrade } from '../packages/curriculum-framework';
 import { JHS_PREVIEW_COMPETENCIES, JHS_PREVIEW_SOURCES, JHS_REPRESENTATIVE_CONTENT } from '../services/content-store/jhs-representative-preview';
@@ -8,21 +9,22 @@ import { installRepresentativePreview } from './fixtures/jhs-representative-prev
 const before = getAllCompetencies();
 assert.equal(JHS_PREVIEW_COMPETENCIES.length, 14);
 assert.equal(new Set(JHS_PREVIEW_SOURCES.map(s => `${s.gradeId}:${s.subjectId}`)).size, 12);
-assert.equal(new Set(JHS_REPRESENTATIVE_CONTENT.map(c => c.id)).size, 364);
-assert.equal(JHS_REPRESENTATIVE_CONTENT.length, 364);
+assert.equal(new Set(JHS_REPRESENTATIVE_CONTENT.map(c => c.id)).size, 616);
+assert.equal(JHS_REPRESENTATIVE_CONTENT.length, 616);
 assert.throws(() => registerIsolatedJhsPreviewCompetency(JHS_PREVIEW_COMPETENCIES[0]), /isolated/);
 for (const s of JHS_PREVIEW_SOURCES) {
+  assertJhsAutomaticBank(JHS_REPRESENTATIVE_CONTENT.filter(c => c.competencyId === s.id));
   assert.equal(getCompetency(s.id), undefined);
   assert.deepEqual(getAvailableSubjectsForGrade(s.curriculumVersionId, s.gradeId), []);
   for (const language of ['en', 'fr'] as const) {
     const records = JHS_REPRESENTATIVE_CONTENT.filter(c => c.competencyId === s.id && c.language === language);
-    assert.equal(records.length, 13);
+    assert.equal(records.length, 22);
     for (const record of records) {
       assert(record.body.trim().length > 20);
       assert.equal(record.metadata?.educatorApproval, 'pending'); assert.equal(record.metadata?.frenchApproval, 'pending');
       assert.equal(record.metadata?.sourceDocumentSha256, s.source.sha256);
       if (record.type === 'practice') assert.equal(record.metadata?.evidenceIndependence, 'guided');
-      if (record.metadata?.assessmentPurpose && record.metadata.assessmentPurpose !== 'retention') {
+      if (record.metadata?.evidenceRole === 'optional_teacher_extension') {
         assert.equal(record.metadata.evaluationMethod, 'trusted_rubric_evaluation');
         assert.equal(record.assessmentStrategy, 'constructed_response');
         assert.equal(record.metadata.options, undefined, 'Independent performance is not certified by selecting an option');
@@ -50,4 +52,4 @@ for (const original of MATERIALS_COMPETENCIES) {
 process.env.VERCEL = '1';
 assert.throws(() => registerIsolatedJhsPreviewCompetency(JHS_PREVIEW_COMPETENCIES[0]), /isolated/);
 delete process.env.VERCEL;
-console.log('PASS 14 indicators / 12 combinations / 364 bilingual records, guided evidence, teacher-only performance, source hierarchy, negative preview gates and unchanged primary policies');
+console.log('PASS 14 indicators / 12 combinations / 616 bilingual records, automatic assessment, optional teacher extensions, source hierarchy and unchanged primary policies');

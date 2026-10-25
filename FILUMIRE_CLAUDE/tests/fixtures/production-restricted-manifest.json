@@ -1,0 +1,254 @@
+[
+  {
+    "competencyId": "competency-gh-english-b7-nacca2020-p038-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-english-ccp",
+    "contentFingerprint": "8110c1796d59326b160c9efebcd2a4a82e5a89ce721334a634537728681baf7c"
+  },
+  {
+    "competencyId": "competency-gh-mathematics-b7-nacca2020-p034-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-mathematics-ccp",
+    "contentFingerprint": "0ddd57c47113b96f493fc665b18a47b939049e289d136e0ff2a0609fc0fd93c6"
+  },
+  {
+    "competencyId": "competency-gh-computing-b7-nacca2020-p031-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-computing-ccp",
+    "contentFingerprint": "dd31849345db148a31f22bf73ac78f716152510dcd4b923b7d1c96efd2ce88bf"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p039-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "30f7552296f8efcab1d287f0a12caa570e61c0cc3eaa2a96cd36143c6b8186fd"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p040-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "e254fc09f7a1c9f07d4474a9f3ae7521cf280f8655f6d0462a45333c7bb0ab62"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p040-r02",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "210017052c73ec833de397439df99d5783878d902b09dc91b99403833541dc7b"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p041-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "38d42fa3d0f92b0584e828eddc0d4aab7c7ac6b6e83f7144facee0402fa8f274"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p042-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "9d6adc8180237cf1d077a7f2eebc88ce6daa37f83b7758e600b9d72baf75144c"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p043-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "a72be005259c14312c0033ebb3902a8386c364723a59a14d0547cb9a1979f652"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p044-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "e431492710d3d2b805080f210717b7f1e650fb8d722bd4c0c5b5aea48b162415"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p045-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "25b684e93e4208c809f3792cab5228b981bfd1d2b2d01053a74a5eb4c278987e"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p046-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "67df00f7beeafeb15c63efcb6de3c8ba9b6fd1d504541e355002c3ae69185463"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p047-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "bad4a33fea470424a31b2217a1ec5cab05d9a7b84f1ad51aaf67b3a442256f0e"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p048-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "00a89002a515d843de5393d5081b2baa58fe80f48b505d3074ec640603e591fe"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p048-r02",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "b0dcdedb9a76cdba4f7ee662b4b1583e2c6734e206a1e3d994eb9e26b38143fa"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p049-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "4e945720e9717fd020164f95d7ed2474662e385eecd6c247664e8477ec656652"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p050-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "b33b48e7e2361e75dd99423920bd0b5e059609b1280b7f71ab9071f61a952e1c"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p051-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "11ec3f4f689d5535b007ce9b4000ea966d3bcd8d3010472b1d629bb54c192dca"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p052-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "e98ca93924dfe466fdc2c66178c264c5549872acab25afc62efebdbee8e98fe7"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p053-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "ce5ba618ff5d79bea519e7d45a9aac5b7627c63b4f5a22964eed95774e11a92a"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p054-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "4773f4edbf8f2dfc0c09a1958900476fe4fc42ae4cf7f7823ba772d2d7af8cab"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p055-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "fdab77cec6f6668fec7742a4a39bbc6203a515c45dcc712380ea39a6a87308af"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p056-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "ae1d291e6cc9fc666baa8ac55befafa5858441380b747301b308e1a5e3a47453"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p057-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "819ebe79b5dbcb6d240443c6405cd387575ccd84aa94d0072d0743e563b8de4a"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p058-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "46ac18184eaedd4572f79d8d1480b3c6cf7464c3d9b31d049139cac6e610bf5a"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p060-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "af62e985f3089cf9005348b4a49da9809b03a9b9189929935c482b625b0f3a65"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p061-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "f3f89edb8b6ad0ccbac5826d82216a49f951355e86fef1d25c118e40627342d4"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p062-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "19ba62598d7139059103d8a99d7d4c5e0e0e1d13d3ad4e781b18f2155065d8a7"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p063-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "6fcefdb0896ec13ae13b47e8fbcd924fe1c4f01e58340b29100e63a6f06fc7f6"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p064-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "f63a28b0b3272a914955ba77fcfa5febecff7f11c3dd49cb1812fac349b6071b"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p065-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "cd236cb98316f284c9b5aa2c723542b0febcd97c5d0f3c795b81798e66afe1a9"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p066-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "975cc706fc6dbffa5011edaaf22a47f9b45a1e151137d2a973d4da009bf63d70"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p067-r01",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "19cca7e88a8f40eb1ac69569458b65cc66b962a76ffd892062b1fe12cd4187f5"
+  },
+  {
+    "competencyId": "competency-gh-science-b7-nacca2020-p067-r02",
+    "gradeId": "level-gh-basic-7-ccp",
+    "subjectId": "subject-gh-basic7-science-ccp",
+    "contentFingerprint": "a478e4ea455bcc02be47b810cd6174286c444934bfb37b575bd70c4d08b271f7"
+  },
+  {
+    "competencyId": "competency-gh-english-b8-nacca2020-p074-r01",
+    "gradeId": "level-gh-basic-8-ccp",
+    "subjectId": "subject-gh-basic8-english-ccp",
+    "contentFingerprint": "638e26585a429c5de9106a8a68ff2399fd250177c53ce2648063bab204991a4e"
+  },
+  {
+    "competencyId": "competency-gh-mathematics-b8-nacca2020-p120-r01",
+    "gradeId": "level-gh-basic-8-ccp",
+    "subjectId": "subject-gh-basic8-mathematics-ccp",
+    "contentFingerprint": "931a92c0f7bce3300a1757a7aca1968c12ccfe7af349f7b33768428692311008"
+  },
+  {
+    "competencyId": "competency-gh-computing-b8-nacca2020-p054-r01",
+    "gradeId": "level-gh-basic-8-ccp",
+    "subjectId": "subject-gh-basic8-computing-ccp",
+    "contentFingerprint": "c5b0d9beafe21d1355a2fde2d3934f570c7a3d3b01d10d960f31d54c5c83463d"
+  },
+  {
+    "competencyId": "competency-gh-science-b8-nacca2020-p091-r01",
+    "gradeId": "level-gh-basic-8-ccp",
+    "subjectId": "subject-gh-basic8-science-ccp",
+    "contentFingerprint": "f659788a7375b50bce27d7be3334923a900f5d9ee9dafa239b6fb2e2ee8a39f5"
+  },
+  {
+    "competencyId": "competency-gh-english-b9-nacca2020-p106-r01",
+    "gradeId": "level-gh-basic-9-ccp",
+    "subjectId": "subject-gh-basic9-english-ccp",
+    "contentFingerprint": "467a8862b895111406defadd8786444d9fdfa46171dc7ffae737d0b01f8818db"
+  },
+  {
+    "competencyId": "competency-gh-mathematics-b9-nacca2020-p195-r01",
+    "gradeId": "level-gh-basic-9-ccp",
+    "subjectId": "subject-gh-basic9-mathematics-ccp",
+    "contentFingerprint": "6513bce1ac3ac686d9b56d97acfd4dd2793eb733c7988754eb8eaf1806b76c05"
+  },
+  {
+    "competencyId": "competency-gh-computing-b9-nacca2020-p070-r02",
+    "gradeId": "level-gh-basic-9-ccp",
+    "subjectId": "subject-gh-basic9-computing-ccp",
+    "contentFingerprint": "2ff33e168da42ed72f6b348e0fa5b82038828da9836e5703eb39b960185b9575"
+  },
+  {
+    "competencyId": "competency-gh-science-b9-nacca2020-p124-r02",
+    "gradeId": "level-gh-basic-9-ccp",
+    "subjectId": "subject-gh-basic9-science-ccp",
+    "contentFingerprint": "f4def2466cab6d59e31fb766d70f63b2a5ca04dfee606abd9d8a0baa7e5ff3d6"
+  }
+]

@@ -97,19 +97,19 @@ async function main(): Promise<void> {
   assert.equal(reviewerModeActive(), true);
   setEnv("FILUMIRE_REVIEWER_EMAILS", FIVE);
   const parsed = reviewerList();
-  assert(parsed && parsed.size === MAX_REVIEWERS && MAX_REVIEWERS === 5);
+  assert(parsed && parsed.size === 5 && MAX_REVIEWERS === 6);
   assert.equal(parsed.get(G2), "guardian", "case and whitespace are normalised");
   assert.deepEqual([...parsed.values()].sort(), ["guardian", "guardian", "guardian", "teacher", "teacher"]);
   for (const invalid of [
     undefined, "", " , ",
-    `${FIVE}${email("sixth")}:teacher`,
+    `${FIVE}${email("sixth")}:teacher,${email("seventh")}:guardian`,
     `${G1}`, `${G1}:`, `${G1}:admin`, `${G1}:learner`, `not-an-email:guardian`, `:guardian`,
     `${G1}:guardian,${G1.toUpperCase()}:teacher`,
   ]) {
     setEnv("FILUMIRE_REVIEWER_EMAILS", invalid);
     assert.equal(reviewerList(), undefined, `invalid list ${JSON.stringify(invalid)} fails closed`);
   }
-  pass("list parsing: 3 guardians + 2 teachers accepted; empty, >5, roleless, wrong role, malformed and duplicate lists rejected");
+  pass("list parsing: 3 guardians + 2 teachers accepted; empty, >6, roleless, wrong role, malformed and duplicate lists rejected");
 
   // 2. Registration: listed email in its listed role only; refusals identical to "closed".
   setEnv("FILUMIRE_REVIEWER_EMAILS", FIVE);
@@ -124,7 +124,7 @@ async function main(): Promise<void> {
   ] as const) {
     assert.deepEqual(await body(await registerAs(kind, address)), closedBody, `${why} looks exactly like closed registration`);
   }
-  setEnv("FILUMIRE_REVIEWER_EMAILS", `${FIVE}${email("sixth")}:teacher`);
+  setEnv("FILUMIRE_REVIEWER_EMAILS", `${FIVE}${email("sixth")}:teacher,${email("seventh")}:guardian`);
   assert.deepEqual(await body(await registerAs("guardian", G3)), closedBody, "invalid list admits no registration");
   setEnv("FILUMIRE_REVIEWER_EMAILS", FIVE);
   pass("registration: only listed emails in their listed role; every refusal identical to closed registration");
@@ -148,6 +148,25 @@ async function main(): Promise<void> {
   const t1Cookie = cookieFrom(await signIn(T1));
   assert.equal((await redeemTeacherCode(request("/api/account/teacher-links", { code }, t1Cookie))).status, 201);
   pass("listed guardian links a listed teacher with a one-time code");
+
+  // Production's supplemental reviewer must retain adult and learner access.
+  const SIXTH = email("supplemental");
+  setEnv("FILUMIRE_REVIEWER_EMAILS_ADDITIONAL", `${SIXTH}:guardian`);
+  const sixth = await registerAs("guardian", SIXTH);
+  assert.equal(sixth.status, 201);
+  const sixthLearner = await addFictionalLearner(cookieFrom(sixth), "sixthkid");
+  assert.equal((await signIn(SIXTH)).status, 200);
+  assert.equal((await signIn(sixthLearner.username)).status, 200);
+  assert.equal((await signIn(G1)).status, 200, "base reviewer remains authorised");
+  for (const additional of [`${G1}:guardian`, `${SIXTH}:guardian,${email("seventh")}:teacher`, `${SIXTH}:admin`]) {
+    setEnv("FILUMIRE_REVIEWER_EMAILS_ADDITIONAL", additional);
+    assert.equal(reviewerList(), undefined);
+    assert.deepEqual(await body(await signIn(SIXTH)), wrongPassword);
+  }
+  setEnv("FILUMIRE_REVIEWER_EMAILS_ADDITIONAL", undefined);
+  assert.deepEqual(await body(await signIn(SIXTH)), wrongPassword);
+  assert.deepEqual(await body(await signIn(sixthLearner.username)), wrongPassword);
+  pass("supplemental reviewer and learner retain access; duplicates, multiple additions, invalid roles and removal fail closed");
 
   // 5. Removing a reviewer or breaking the list locks them out at the next sign-in.
   setEnv("FILUMIRE_REVIEWER_EMAILS", `${G2}:guardian,${G3}:guardian,${T1}:teacher,${T2}:teacher`);

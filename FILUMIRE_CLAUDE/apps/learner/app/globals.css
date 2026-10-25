@@ -1054,7 +1054,7 @@ a {
     right: 16px;
   }
 
-  /* My Learning (laptop): subjects row, then the recommendation */
+  /* My Learning keeps the recommendation before the subject cards. */
   .learningView .homeSubjects {
     margin-top: 0;
   }
@@ -1209,16 +1209,16 @@ a {
     font-size: 28px;
   }
 
-  /* My Learning (desktop): subjects 2x2 beside the recommendation */
+  /* Same full-width rhythm as Home;recommendation precedes the subjects. */
   .learnerShell .learnerContent.homeScreen.learningView {
     display: grid;
-    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-    grid-template-rows: auto auto 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
     gap: 22px 32px;
   }
 
   .learningView .homeSubjects {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     align-content: start;
   }
 
@@ -1230,6 +1230,23 @@ a {
   .learningView .learningNextItem {
     padding-right: 160px;
   }
+}
+
+/* Scoped to My Learning;the established Home page styling stays intact. */
+.learningView .homeSubjects { grid-template-columns: minmax(0, 1fr); }
+.learningView .homeSubject { min-width: 0; }
+.learningView .homeSubjectText strong {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+@media (min-width: 600px) {
+  .learningView .homeSubjects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .learningView .homeSubjects { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .learningView .homeSubjectText strong { font-size: clamp(13px, 1.15vw, 17px); }
 }
 
 /* ------------------------------------------------------------------

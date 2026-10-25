@@ -1,4 +1,5 @@
 import manifest from './jhs-private-manifest.json';
+import approvedManifest from './jhs-approved-manifest.json';
 
 /** Server-only opt-in for the Basic 7-9 private presentation (owner decision 23 Oct 2026):
  * - local rehearsal (no Vercel variables);
@@ -12,10 +13,10 @@ export function isPrivateJhsEnabled(): boolean {
   if (process.env.VERCEL_ENV === 'preview') return true;
   return process.env.VERCEL_ENV === 'production' && process.env.FILUMIRE_ACCESS_MODE === 'reviewers';
 }
-export const PRIVATE_JHS_SCOPE = manifest;
+export const PRIVATE_JHS_SCOPE = [...manifest,...approvedManifest];
 export function privateJhsGrade(id: string): boolean {
-  return isPrivateJhsEnabled() && manifest.some(row => row.gradeId === id);
+  return isPrivateJhsEnabled() && PRIVATE_JHS_SCOPE.some(row => row.gradeId === id);
 }
 export function privateJhsSubject(id: string): boolean {
-  return isPrivateJhsEnabled() && manifest.some(row => row.subjectId === id);
+  return isPrivateJhsEnabled() && PRIVATE_JHS_SCOPE.some(row => row.subjectId === id);
 }

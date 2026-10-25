@@ -1,7 +1,8 @@
 "use client";
-import Link from "next/link";
 import { ProgressStatus, ProgressBreakdown } from "../../components/filumire/ProgressStatus";
 import { PROGRESS_TEXT } from "../../../../services/learner-progress/reporting";
+import {PerformanceEvidenceForm} from '../../components/filumire/PerformanceEvidenceForm';
+import type {PerformanceAttestation} from '../../../../services/teacher-review/jhs-performance';
 import { AdultHeader, AdultRoleSwitch, adultRole } from "../../components/filumire/AdultRoleSwitch";
 import { useLanguage, type Language } from "../../components/filumire/language";
 import { TeacherLinkLearner } from "../../components/filumire/TeacherLinkLearner";
@@ -276,8 +277,8 @@ function errorMessage(error: unknown, t: Translate = identity): string {
 
 export default function TeacherPage() {
   const [language, setLanguage] = useLanguage();
-  const t: Translate = (text) =>
-    language === "fr" ? (TEACHER_FR[text] ?? text) : text;
+  const t = useCallback<Translate>((text) =>
+    language === "fr" ? (TEACHER_FR[text] ?? text) : text, [language]);
   const [viewState, setViewState] =
     useState<ViewState>("loading");
   // A built-in teacher account (names its learners and may link
@@ -482,6 +483,7 @@ export default function TeacherPage() {
     observationOutcome,
     runSubmission,
     selectedCompetency,
+    t,
   ]);
 
   const saveNote = useCallback(async () => {
@@ -515,6 +517,7 @@ export default function TeacherPage() {
     noteType,
     runSubmission,
     selectedCompetency,
+    t,
   ]);
 
   const submitAction = useCallback(async () => {
@@ -549,18 +552,21 @@ export default function TeacherPage() {
     data?.selectedLearnerId,
     runSubmission,
     selectedCompetency,
+    t,
   ]);
 
   const reviewPendingItem = useCallback(
     async (
       reviewId: string,
       outcome: TeacherReviewOutcome,
+      performanceEvidence?: PerformanceAttestation,
     ) => {
       await runSubmission(
         () =>
           submitTeacherReview({
             reviewId,
             outcome,
+            performanceEvidence,
           }),
         `${t("Review recorded as")} ${label(
           outcome,
@@ -1102,7 +1108,7 @@ export default function TeacherPage() {
                             <div>{review.response}</div>
                           </div>
 
-                          <div className="review-actions">
+                          {review.evidenceRequirements ? <PerformanceEvidenceForm language={language} busy={busy} requirements={review.evidenceRequirements} onReview={(outcome,evidence)=>reviewPendingItem(review.id,outcome,evidence)} /> : <div className="review-actions">
                             {REVIEW_OUTCOMES.map(
                               (outcome) => (
                                 <button
@@ -1121,7 +1127,7 @@ export default function TeacherPage() {
                                 </button>
                               ),
                             )}
-                          </div>
+                          </div>}
                         </article>
                       ),
                     )}

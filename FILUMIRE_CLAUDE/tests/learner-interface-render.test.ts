@@ -26,12 +26,10 @@ for (const language of ["en", "fr"] as const) {
   assert.match(loading, /role="status"/); assert.match(loading, /aria-busy="true"/);
   assert.match(loading, language === "fr" ? /Préparation de ton apprentissage/ : /Preparing your learning/);
   const audio = renderToStaticMarkup(React.createElement(ReadAloudControls, { learnerId: "fictional-a", language, text: "Fictional text.", surface: "summary" }));
-  assert.match(audio, language === "fr" ? /Audio de ce résumé/ : /Audio for this summary/);
-  assert.match(audio, language === "fr" ? /Options audio/ : /Audio options/);
-  assert.match(audio, /<details>/); assert.match(audio, /<summary>/);
-  const speedId = audio.match(/<select id="([^"]+-speed)"/)?.[1];
-  assert(speedId && audio.includes(`for="${speedId}"`));
-  assert.match(audio, /aria-pressed="false"/); assert.match(audio, /disabled=""/);
+  assert.match(audio, language === "fr" ? /Texte seulement/ : /Text only/);
+  assert.match(audio, /role="note"/);
+  assert.match(audio, new RegExp('lang="' + language + '"'));
+  assert(!audio.includes('<audio') && !audio.includes('<button'), "SSR cannot offer playback before confirming a local voice");
   const chat = renderToStaticMarkup(React.createElement(FiluConversation, { language }));
   assert.match(chat, /aria-describedby="filu-privacy-notice"/); assert.match(chat, /id="filu-question"/);
   assert.match(chat, /aria-busy="false"/); assert.match(chat, /disabled=""/);

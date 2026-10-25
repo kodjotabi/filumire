@@ -125,7 +125,7 @@ function partA(): void {
   check(totals["subject-gh-basic6-english-pilot"] === 134, `B6 English 134/134 (${totals["subject-gh-basic6-english-pilot"]})`);
   check(totals["subject-gh-basic5-english-pilot"] + totals["subject-gh-basic6-english-pilot"] === 268, "English 268/268");
   check(totals["subject-gh-basic-4-mathematics-pilot"] === getCompetenciesForSubject("subject-gh-basic-4-mathematics-pilot").length, "B4 Maths whole subject (array-order inversion handled by prerequisites)");
-  check(totals["subject-gh-basic5-computing-pilot"] === 79, "B5 Computing 79/79");
+  check(totals["subject-gh-basic5-computing-pilot"] === 82, "B5 Computing 82/82");
 
   /* B5 English is NOT complete after 2/134. */
   const b5 = initialOf("subject-gh-basic5-english-pilot");

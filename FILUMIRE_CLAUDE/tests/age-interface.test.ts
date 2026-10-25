@@ -26,7 +26,7 @@ const { MasteryGoalsPanel, nextMasteryGoal } = await import("../apps/learner/com
 const { SUBJECT_PRESENTATION } = await import("../apps/learner/components/filumire/subjects");
 
 const root = process.cwd();
-const read = (file: string) => fs.readFileSync(path.join(root, file), "utf8");
+const read = (file: string) => fs.readFileSync(path.join(root, file), "utf8").replaceAll("\r\n", "\n");
 let checks = 0;
 const check = (fn: () => void) => {
   fn();

@@ -17,6 +17,7 @@ const SERVER_ONLY_METADATA = [
   "expectedResponse",
   "diagnosticRules",
   "rubricCriteria",
+  "rubricAnswerGuide",
   "misconceptionPatterns",
 ] as const;
 

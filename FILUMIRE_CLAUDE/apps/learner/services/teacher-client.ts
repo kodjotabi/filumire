@@ -50,6 +50,7 @@ export interface TeacherSubjectSummary {
 }
 
 export interface PendingTeacherReview {
+  evidenceRequirements?: {observation:boolean;originalWriting:boolean;artefact:boolean};
   id: string;
   learnerId: string;
   competencyId: string;
@@ -181,6 +182,7 @@ export type TeacherReviewOutcome =
   | "observed";
 
 export interface TeacherReviewSubmission {
+  performanceEvidence?: import('../../../services/teacher-review/jhs-performance').PerformanceAttestation;
   reviewId: string;
   outcome: TeacherReviewOutcome;
 }

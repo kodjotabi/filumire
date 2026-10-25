@@ -202,6 +202,7 @@ export async function submitTeacherReview(
   input: {
     reviewId: string;
     outcome: TeacherReviewOutcome;
+    performanceEvidence?: import('./teacher-review/jhs-performance').PerformanceAttestation;
   },
 ): Promise<unknown> {
   const response = await fetch(

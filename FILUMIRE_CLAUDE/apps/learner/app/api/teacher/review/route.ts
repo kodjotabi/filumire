@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import {requireJhsPerformanceEvidence,JhsPerformanceEvidenceError} from '../../../../../../services/teacher-review/jhs-performance';
+import {recordPilotMeasurementEvent,getPilotMeasurementEvents} from '../../../../../../services/pilot-measurement';
 
 import type {
   AssessmentSubmission,
@@ -46,6 +48,7 @@ import {
 seedContent();
 
 type TeacherReviewBody = {
+  performanceEvidence?: unknown;
   reviewId?: string;
   outcome?:
     | "correct"
@@ -86,7 +89,7 @@ export async function POST(
 
     if (
       !isNonEmptyString(body.reviewId) ||
-      !body.outcome
+      !body.outcome || !['correct','incorrect','partial','skipped','observed'].includes(body.outcome)
     ) {
       return jsonError(
         "Pending review and outcome are required.",
@@ -206,20 +209,36 @@ export async function POST(
       interventionId: await resolveReviewIntervention(pendingReview),
     };
 
+    if(assessmentContent.metadata?.reviewEvidencePolicy==='jhs-required-performance-v1'&&!submission.interventionId)return jsonError('A matching server-recorded assessment delivery is required.',409);
+    const performance = requireJhsPerformanceEvidence(assessmentContent.metadata,body.performanceEvidence,body.outcome);
+    if(performance){
+      const delivery=(await getPilotMeasurementEvents(pendingReview.learnerId)).filter(e=>e.metadata.source==='assessment-delivery-v1'&&e.metadata.interventionId===submission.interventionId&&e.metadata.assessmentItemId===pendingReview.assessmentItemId&&e.metadata.contentId===assessmentContent.id&&e.createdAt<=pendingReview.submittedAt).sort((a,b)=>b.createdAt.localeCompare(a.createdAt))[0];
+      if(!delivery||Date.parse(performance.evidence.performedAt)<Math.floor(Date.parse(delivery.createdAt)/1000)*1000||Date.parse(performance.evidence.performedAt)>Date.parse(pendingReview.submittedAt))return jsonError('The performance date must fall between its server delivery and submission.',400);
+      const recorded=await recordPilotMeasurementEvent({learnerId:pendingReview.learnerId,competencyId:pendingReview.competencyId,sessionId:pendingReview.sessionId,eventType:'response_submitted',clientRequestId:`jhs-review-${pendingReview.id}`,metadata:{source:'jhs-required-performance-v1',teacherPrincipalId:principalId,reviewId:pendingReview.id,evidenceSha256:performance.digest,attestation:JSON.stringify(performance.evidence)}});
+      if(recorded.duplicate){
+        const prior=(await getPilotMeasurementEvents(pendingReview.learnerId)).find(e=>e.id===recorded.event.id);
+        if(prior?.metadata.evidenceSha256!==performance.digest||prior.metadata.teacherPrincipalId!==principalId)return jsonError('This review already has a different teacher attestation.',409);
+      }
+    }
     const assessment =
       await evaluateAssessment(
         submission,
         expectedResponse,
         assessmentContent.id,
-        assessmentContent.metadata,
+        performance?{...assessmentContent.metadata,evidenceIndependence:performance.independence}:assessmentContent.metadata,
         {
           outcome: body.outcome,
           evaluatorType: "teacher",
           evaluatorId: principalId,
           evaluationPolicyVersion:
-            "teacher-review-v1",
+            performance?`teacher-review-jhs-v1:${performance.digest}`:"teacher-review-v1",
         },
       );
+
+    // A later review date must not turn an earlier performance into delayed
+    // retention evidence. Keep review time in the audit event, performance time
+    // on the learning evidence consumed by the adaptive engine.
+    if(performance)assessment.evidence.timestamp=performance.evidence.performedAt;
 
     const {
       learnerState,
@@ -272,6 +291,7 @@ export async function POST(
       learnerState,
     });
   } catch (error) {
+    if(error instanceof JhsPerformanceEvidenceError)return jsonError(error.message,400);
     if (
       error instanceof Error &&
       error.message.includes(

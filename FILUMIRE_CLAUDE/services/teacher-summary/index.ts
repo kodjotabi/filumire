@@ -12,6 +12,7 @@ import { getLearnerLearningContext } from '../learner-context';
 import { buildLearnerProgress, getCompetencyProgressRows, type LearnerProgress } from '../learner-progress';
 import { classifyProgress, type LearningProgressStatus } from '../learner-progress/reporting';
 import type { PendingTeacherReviewRecord } from "../persistence";
+import {getContentForCompetency} from '../content-store';
 import { getEvidenceForLearner } from "../evidence-store";
 import {
   getPendingTeacherReviews,
@@ -167,7 +168,7 @@ export interface TeacherLearnerSummary {
   learnerId: string;
   subjects: TeacherSubjectSummary[];
   attentionQueue: TeacherCompetencySummary[];
-  pendingReviews: PendingTeacherReviewRecord[];
+  pendingReviews: Array<PendingTeacherReviewRecord & {evidenceRequirements?:{observation:boolean;originalWriting:boolean;artefact:boolean}}>;
   pendingReviewCount: number;
   updatedAt?: string;
   /*
@@ -558,7 +559,10 @@ export async function buildTeacherLearnerSummary(
     learnerId,
     subjects,
     attentionQueue,
-    pendingReviews,
+    pendingReviews: pendingReviews.map(review=>{
+      const metadata=getContentForCompetency(review.competencyId).find(c=>c.assessmentItemId===review.assessmentItemId)?.metadata;
+      return metadata?.reviewEvidencePolicy==='jhs-required-performance-v1'?{...review,evidenceRequirements:{observation:metadata.requiresObservation==='true',originalWriting:metadata.requiresOriginalWriting==='true',artefact:metadata.requiresArtefact==='true'}}:review;
+    }),
     pendingReviewCount: pendingReviews.length,
     updatedAt,
     masteryMeasures,

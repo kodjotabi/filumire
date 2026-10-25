@@ -17,8 +17,9 @@ const coverage = new Map<string, boolean>();
 
 /*
  * Spaced revision runs for a subject of a supported grade once every
- * topic of that subject and grade has authored, automatically scored
- * retention questions in both English and French. A subject without
+ * topic of that subject and grade has authored retention questions in
+ * both languages: automatic items or approved required teacher-review
+ * banks with the explicit performance evidence policy. A subject without
  * that coverage keeps immediate retention checks. No scheduler or
  * stored review queue: due dates are derived from learner state.
  */
@@ -38,7 +39,9 @@ export function subjectSupportsSpacedRevision(subjectId: string, gradeId: string
         isOnAdaptivePath(content) &&
         content.metadata?.assessmentPurpose === "retention" &&
         content.metadata.expectedResponse !== undefined &&
-        content.metadata.evaluationMethod !== "trusted_rubric_evaluation")));
+        (content.metadata.evaluationMethod !== "trusted_rubric_evaluation" ||
+          (content.metadata.reviewEvidencePolicy==='jhs-required-performance-v1'&&
+           content.metadata.educatorApproval==='approved'&&content.metadata.frenchApproval==='approved')))));
   coverage.set(key, supported);
   return supported;
 }

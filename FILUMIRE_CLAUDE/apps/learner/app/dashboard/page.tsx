@@ -315,12 +315,13 @@ function LearnerDashboardView() {
             : "unavailable",
       );
     }
-  }, [selectedSubjectId, searchKey, tutoringView, tutorAccountReady, tutorLearnerId]);
+  }, [selectedSubjectId, tutoringView, tutorAccountReady, tutorLearnerId]);
 
   useEffect(() => {
+    const order = requestOrder.current;
     load();
-    return () => requestOrder.current.invalidate();
-  }, [load]);
+    return () => order.invalidate();
+  }, [load, searchKey]);
 
   useEffect(() => {
     if (!data || viewState !== "ready") return;
@@ -341,6 +342,9 @@ function LearnerDashboardView() {
 
   // Subjects for the learner's grade, as returned by the server.
   const subjects = toFilumireSubjects(overview?.availableSubjects);
+  // Display order only:the server remains authoritative for availability.
+  const learningOrder = ["science", "computing", "mathematics", "english"];
+  const learningSubjects = [...subjects].sort((a,b) => learningOrder.indexOf(a.key)-learningOrder.indexOf(b.key));
   // In setup, the subjects of the class being chosen.
   const setupSubjects = toFilumireSubjects(setupSubjectsFor(overview, chosenGrade));
   const currentSubject = findFilumireSubject(subjects, data?.progress.subjectId);
@@ -443,9 +447,6 @@ function LearnerDashboardView() {
   const learnHref =
     `/learn?lang=${language}`;
   const assistantSubjectId = selectedSubjectId ?? data?.progress.subjectId;
-  const assistantLessonHref = assistantSubjectId
-    ? `${learnHref}&subjectId=${encodeURIComponent(assistantSubjectId)}`
-    : learnHref;
 
   function saveLearnerProfile() {
     try {
@@ -1034,8 +1035,30 @@ function LearnerDashboardView() {
 
                     {subjectsNotice()}
 
+                    <section className="learningNext">
+                      <h2>{language === "fr" ? "Suivant recommandé" : "Recommended Next"}</h2>
+                      <p className="learningNextSub">{language === "fr" ? "Selon ton apprentissage récent" : "Based on your recent learning"}</p>
+                      <div className={`learningNextItem ${currentSubject?.key ?? "english"}`}>
+                        <span className="homeSubjectIcon">
+                          <SubjectIcon name={currentSubject?.key ?? "english"} />
+                        </span>
+                        <div>
+                          <span className="learningNextTag">{subjectLabel(subjectName, language)}</span>
+                          <strong>{competencyTitle}</strong>
+                        </div>
+                        <span className="learningNextNote" aria-hidden="true">{language === "fr" ? "Tu peux le faire !" : "You can do this!"}</span>
+                        <img className="learningNextArt" src={learnerAvatarSrc} alt="" />
+                      </div>
+                      <Link href={learnHref} className="learningStart">
+                        {language === "fr" ? "Commencer" : "Start Learning"}
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M5 12h14M13 6l6 6-6 6" />
+                        </svg>
+                      </Link>
+                    </section>
+
                     <div className="homeSubjects">
-                      {subjects.map((subject) => {
+                      {learningSubjects.map((subject) => {
                         const isCurrent = currentSubject?.key === subject.key;
                         const st = overview?.subjects[subject.subjectId];
                         const total = st?.total ?? 0;
@@ -1081,27 +1104,7 @@ function LearnerDashboardView() {
                       })}
                     </div>
 
-                    <section className="learningNext">
-                      <h2>{language === "fr" ? "Suivant recommandé" : "Recommended Next"}</h2>
-                      <p className="learningNextSub">{language === "fr" ? "Selon ton apprentissage récent" : "Based on your recent learning"}</p>
-                      <div className={`learningNextItem ${currentSubject?.key ?? "english"}`}>
-                        <span className="homeSubjectIcon">
-                          <SubjectIcon name={currentSubject?.key ?? "english"} />
-                        </span>
-                        <div>
-                          <span className="learningNextTag">{subjectLabel(subjectName, language)}</span>
-                          <strong>{competencyTitle}</strong>
-                        </div>
-                        <span className="learningNextNote" aria-hidden="true">{language === "fr" ? "Tu peux le faire !" : "You can do this!"}</span>
-                        <img className="learningNextArt" src={learnerAvatarSrc} alt="" />
-                      </div>
-                      <Link href={learnHref} className="learningStart">
-                        {language === "fr" ? "Commencer" : "Start Learning"}
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="M5 12h14M13 6l6 6-6 6" />
-                        </svg>
-                      </Link>
-                    </section>
+
 
                     <section className="homeFooter hand">
                   <img src="/images/home/landscape%20footer.png" alt="" />

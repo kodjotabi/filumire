@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { assertJhsAutomaticBank } from './fixtures/jhs-automatic-bank';
 import fs from 'node:fs';
 import { getJhsCompletionBatch } from '../services/content-store/jhs-completion-batches';
 import { getCompetency, getAllCompetencies } from '../packages/curriculum';
@@ -8,10 +9,11 @@ import { installCompletionBatch } from './fixtures/jhs-completion-batch';
 const batch = getJhsCompletionBatch('batch03-b7-science-systems');
 const pages = [53,54,55,56,57,58,60,61,62];
 assert.equal(batch.sources.length, 9); assert.deepEqual(batch.sources.map(s=>s.source.pdfPages[0]), pages);
-assert.equal(batch.content.length, 234); assert.equal(new Set(batch.content.map(c=>c.id)).size,234);
+assert.equal(batch.content.length, 396); assert.equal(new Set(batch.content.map(c=>c.id)).size,396);
 assert(!batch.sources.some(s=>JHS_PREVIEW_SOURCES.some(p=>p.id===s.id)));
 const proof = JSON.parse(fs.readFileSync(`docs/jhs-development/completion/${batch.id}/source-review/results.json`,'utf8'));
 for (const source of batch.sources) {
+  assertJhsAutomaticBank(batch.content.filter(c=>c.competencyId===source.id));
   assert.equal(getCompetency(source.id),undefined);
   assert.deepEqual(getAvailableSubjectsForGrade(source.curriculumVersionId,source.gradeId),[]);
   const pageProof = proof.find((p:any)=>p.competencyId===source.id);
@@ -21,12 +23,12 @@ for (const source of batch.sources) {
   assert.equal(getFrameworkCompetencyRegistration(source.id)?.officialCode,source.officialCode);
   for (const language of ['en','fr'] as const) {
     const records=batch.content.filter(c=>c.competencyId===source.id&&c.language===language);
-    assert.equal(records.length,13); assert.equal(records.filter(c=>c.metadata?.evaluationMethod==='trusted_rubric_evaluation').length,6);
+    assert.equal(records.length,22); assert.equal(records.filter(c=>c.metadata?.evaluationMethod==='trusted_rubric_evaluation').length,6);
     for (const record of records) {
       assert(record.body.trim().length>20,record.id); assert.equal(record.metadata?.curriculumNodeCode,source.officialCode);
       assert.equal(record.metadata?.educatorApproval,'pending'); assert.equal(record.metadata?.frenchApproval,'pending');
       if(record.type==='practice') assert.equal(record.metadata?.evidenceIndependence,'guided');
-      if(record.metadata?.assessmentPurpose&&record.metadata.assessmentPurpose!=='retention') {
+      if(record.metadata?.evidenceRole==='optional_teacher_extension') {
         assert.equal(record.assessmentStrategy,'constructed_response'); assert.equal(record.metadata.evaluationMethod,'trusted_rubric_evaluation');
         assert.equal(record.metadata.options,undefined); assert(JSON.parse(record.metadata.rubricCriteria).length>=2);
       }
@@ -47,4 +49,4 @@ Object.defineProperty(process.env,'NODE_ENV',{value:'test',writable:true,configu
 process.env.FILUMIRE_JHS_PREVIEW='test-only'; installCompletionBatch(batch.id);
 assert.deepEqual(getAllCompetencies().filter(c=>before.some(b=>b.id===c.id)),before);
 process.env.VERCEL='1'; assert.throws(()=>installCompletionBatch(batch.id),/Isolated/); delete process.env.VERCEL;
-console.log('PASS nine source-backed systems indicators / 234 bilingual records, continuation pages, literal ecosystem code, practical/model review and hidden activation gates');
+console.log('PASS nine source-backed systems indicators / 396 bilingual records, automatic understanding checks, preserved practical/model rubrics, source pages and hidden activation gates');

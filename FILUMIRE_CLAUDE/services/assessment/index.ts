@@ -570,6 +570,13 @@ export async function evaluateAssessment(
     JSON.stringify(submission.response) ===
     JSON.stringify(expectedResponse);
 
+  if(metadata?.reviewEvidencePolicy==='jhs-required-performance-v1'&&metadata.evidenceIndependence==='independent'&&!trustedEvaluation){
+    throw new Error('Required JHS performance cannot be evaluated by exact match.');
+  }
+  if(metadata?.reviewEvidencePolicy==='jhs-required-performance-v1'&&trustedEvaluation&&(trustedEvaluation.evaluatorType!=='teacher'||!/^teacher-review-jhs-v1:[a-f0-9]{64}$/.test(trustedEvaluation.evaluationPolicyVersion))){
+    throw new Error('Required JHS performance needs a teacher attestation provenance digest.');
+  }
+
   if (trustedEvaluation) {
     validateTrustedAssessmentEvaluation(
       trustedEvaluation,

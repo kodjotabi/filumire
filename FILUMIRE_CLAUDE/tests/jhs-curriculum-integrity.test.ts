@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { assertJhsAutomaticBank } from './fixtures/jhs-automatic-bank';
 import fs from "node:fs";
 import { createHash } from "node:crypto";
 import { MATERIALS_BATCH_CONTENT, MATERIALS_SOURCES, MATERIALS_COMPETENCIES } from "../services/content-store/ghana-b7-science-materials-batch";
@@ -22,8 +23,8 @@ const lineage = JSON.parse(fs.readFileSync("docs/jhs-development/lineage-manifes
 for (const input of lineage.records.filter((r: any) => r.role === "Phase8A_to_8D_mapping_input")) {
   assert.equal(createHash("sha256").update(fs.readFileSync(input.path)).digest("hex"), input.sha256, `${input.path}: exact source mapping and unresolved issues unchanged`);
 }
-assert.equal(MATERIALS_BATCH_CONTENT.length, 78);
-assert.equal(new Set(MATERIALS_BATCH_CONTENT.map(c => c.id)).size, 78);
+assert.equal(MATERIALS_BATCH_CONTENT.length, 132);
+assert.equal(new Set(MATERIALS_BATCH_CONTENT.map(c => c.id)).size, 132);
 seedContent();
 assert(MATERIALS_SOURCES.every(s => !getAllCompetencies().some(c => c.id === s.id)));
 assert(MATERIALS_SOURCES.every(s => !getAllContent().some(c => c.competencyId === s.id)));
@@ -33,14 +34,15 @@ for (const source of MATERIALS_SOURCES) {
   assert.deepEqual(source.sourceIssueIds, []);
   assert(all.some(r => r.proposed_competency_id === source.id && r.source.original_printed_code === source.officialCode));
   const contents = MATERIALS_BATCH_CONTENT.filter(c => c.competencyId === source.id);
+  assertJhsAutomaticBank(contents);
   for (const language of ["en", "fr"]) {
     const items = contents.filter(c => c.language === language);
-    assert.equal(items.length, 13);
+    assert.equal(items.length, 22);
     assert.equal(items.filter(c => c.metadata?.evaluationMethod === "trusted_rubric_evaluation").length, 6);
     for (const item of items) {
       assert.equal(item.metadata?.educatorApproval, "pending");
       if (item.type === "practice") assert.equal(item.metadata?.evidenceIndependence, "guided");
-      if (["diagnostic", "reassessment", "transfer"].includes(item.metadata?.assessmentPurpose ?? "")) {
+      if (item.metadata?.evidenceRole === 'optional_teacher_extension') {
         assert.equal(item.metadata?.evaluationMethod, "trusted_rubric_evaluation");
         assert.equal(item.metadata?.options, undefined);
       }
@@ -59,4 +61,4 @@ process.env.FILUMIRE_BASIC7_PILOT = "test-only";
 installMaterialsBatch();
 assert.equal(JSON.stringify(getAllCompetencies().filter(c => !MATERIALS_SOURCES.some(s => s.id === c.id))), previous, "every pre-existing runtime definition is unchanged");
 assert.throws(installMaterialsBatch, /already installed/);
-console.log("PASS 625 source IDs, four PDF checksums, original mapping files/flags, hidden publication, 78 bilingual records, 14 reused pilot records and unchanged legacy definitions");
+console.log("PASS 625 source IDs, source checksums/mappings, hidden publication, 132 bilingual records, automatic banks, retained teacher extensions and 14 reused pilot records");

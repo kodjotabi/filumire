@@ -88,7 +88,7 @@ for (const value of ["off", "on", "true", "Private-Presentation", " private-pres
 refuses("production_commit_not_approved", () => checkDeployment({ ...prod, ...reviewers, ...jhs, FILUMIRE_APPROVED_PRODUCTION_SHA: "other" }));
 refuses("production_memory_mode", () => checkDeployment({ ...prod, ...reviewers, ...jhs, FILUMIRE_PERSISTENCE: "memory" }));
 refuses("unknown_access_mode", () => checkDeployment({ ...prod, FILUMIRE_ACCESS_MODE: "everyone" }));
-for (const list of [undefined, "", `${reviewers.FILUMIRE_REVIEWER_EMAILS},s6@example.test:teacher`, "g1@example.test", "g1@example.test:admin",
+for (const list of [undefined, "", `${reviewers.FILUMIRE_REVIEWER_EMAILS},s6@example.test:teacher,s7@example.test:guardian`, "g1@example.test", "g1@example.test:admin",
   "g1@example.test:learner", "not-an-email:guardian", "g1@example.test:guardian,G1@EXAMPLE.TEST:teacher"]) {
   refuses("reviewer_list_invalid", () => checkDeployment({ ...prod, ...reviewers, FILUMIRE_REVIEWER_EMAILS: list }));
 }
