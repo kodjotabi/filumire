@@ -55,6 +55,8 @@ export interface AdultLearnerSummary {
   confidencePercent: number;
   evidenceCount: number;
   readyForAdvancement: boolean;
+  progressStatus?: import("../../../services/learner-progress/reporting").LearningProgressStatus;
+  assessmentScopeNote?: string;
   retentionStatus?: string;
   transferStatus?: string;
   needsSupport?: string;
@@ -74,7 +76,7 @@ export interface LearnerProgress {
   gradeName: string;
   lastActiveAt?: string;
   activity: { answersRecorded: number };
-  mastery: { masteredCompetencies: number; inProgressCompetencies: number };
+  mastery: { masteredCompetencies: number; inProgressCompetencies: number; understandingMasteredCompetencies?: number; provisionalCompetencies?: number };
   curriculum: { masteredCompetencies: number; totalCompetencies: number; percent: number };
   subjects: Array<{
     subjectId: string;
@@ -82,6 +84,8 @@ export interface LearnerProgress {
     discipline: string;
     totalCompetencies: number;
     masteredCompetencies: number;
+    understandingMasteredCompetencies?: number;
+    provisionalCompetencies?: number;
     inProgressCompetencies: number;
     answersRecorded: number;
   }>;

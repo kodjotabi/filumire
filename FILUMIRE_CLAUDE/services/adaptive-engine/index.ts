@@ -34,6 +34,10 @@ import {
 } from "../content-store";
 
 import {
+  isOnAdaptivePath,
+} from "../content-store/evidence-role";
+
+import {
   getEvidence,
 } from "../evidence-store";
 import { readAssessmentRecovery } from "../edututor/assessment-recovery";
@@ -60,6 +64,7 @@ import {
 import {
   createPathCurriculum,
 } from "../learner-path/curriculum";
+import { prerequisiteReturnTargets } from "../learner-path/repair-scope";
 
 import {
   choosePrerequisiteRepair,
@@ -551,12 +556,14 @@ export async function makeAdaptiveDecision(
       options.now ?? new Date(),
     );
 
+  const repairReturnTargets = await prerequisiteReturnTargets(request.learnerId, competency.competencyId, allCompetencyStates);
   let nextChoice =
     chooseNextCompetency({
       currentCompetencyId:
         competency.competencyId,
       states: allCompetencyStates,
       currentCompleted: true,
+      repairReturnTargets,
       timeAware,
       retryable: retryableNeedsSupport,
     });
@@ -741,6 +748,7 @@ export async function makeAdaptiveDecision(
      */
     nextChoice =
       chooseNextCompetency({
+        repairReturnTargets,
         currentCompetencyId:
           competency.competencyId,
         states: allCompetencyStates.map((item) =>
@@ -1273,6 +1281,7 @@ async function findRetryableNeedsSupport(
     const usable = getContentForCompetency(state.competencyId).some(
       (content) =>
         Boolean(content.assessmentItemId) &&
+        isOnAdaptivePath(content) &&
         content.metadata?.assessmentPurpose !== "retention" &&
         content.metadata?.assessmentPurpose !== "transfer" &&
         (exposures.get(content.assessmentItemId!) ?? 0) <

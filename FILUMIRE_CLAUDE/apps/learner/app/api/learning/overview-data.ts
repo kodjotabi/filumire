@@ -1,5 +1,4 @@
 import {
-  getCompetenciesForSubject,
   getCompetency,
 } from "../../../../../packages/curriculum";
 import {
@@ -11,7 +10,8 @@ import {
   getAvailableSubjectsForContext,
   getOrCreateLearnerLearningContext,
 } from "../../../../../services/learner-context";
-import { getCompetencyProgressRows } from "../../../../../services/learner-progress";
+import { getCompetencyProgressRows, summariseSubjects } from "../../../../../services/learner-progress";
+import { classifyProgress } from "../../../../../services/learner-progress/reporting";
 import { buildRevisionSummaries, primaryRevision } from "../../../../../services/learner-path/revision";
 import { subjectTopics, type NavigationLanguage } from "../../../../../services/curriculum-navigation";
 
@@ -28,6 +28,8 @@ type SubjectSummary = {
   total: number;
   tracked: number;
   completed: number;
+  understandingOnly: number;
+  provisional: number;
   started: boolean;
 };
 
@@ -52,11 +54,13 @@ export async function buildLearningOverview(
   const { rows: latest } = await getCompetencyProgressRows(learnerId);
 
   const subjects: Record<string, SubjectSummary> = {};
-  availableSubjects.forEach((subject) => {
-    subjects[subject.id] = {
-      total: getCompetenciesForSubject(subject.id).length,
+  summariseSubjects(availableSubjects, latest).forEach((subject) => {
+    subjects[subject.subjectId] = {
+      total: subject.totalCompetencies,
       tracked: 0,
-      completed: 0,
+      completed: subject.masteredCompetencies,
+      understandingOnly: subject.understandingMasteredCompetencies,
+      provisional: subject.provisionalCompetencies,
       started: false,
     };
   });
@@ -66,14 +70,15 @@ export async function buildLearningOverview(
     const row = subjectId ? subjects[subjectId] : undefined;
     if (!row) return;
     row.tracked += 1;
-    if (entry.mastered) row.completed += 1;
     if (entry.evidenceCount > 0) row.started = true;
   });
 
   const areas = areasSubjectId && subjects[areasSubjectId]
     ? subjectTopics(areasSubjectId, language).map((topic) => {
         const row = latest.get(topic.id);
-        const status = row?.mastered
+        const definition = getCompetency(topic.id);
+        const progressStatus = classifyProgress(row, definition?.assessmentScope);
+        const status: "completed" | "inprogress" | "new" = progressStatus === "mastered"
           ? "completed"
           : row && row.evidenceCount > 0
             ? "inprogress"
@@ -83,6 +88,8 @@ export async function buildLearningOverview(
           title: topic.title,
           description: getCompetency(topic.id)?.description ?? "",
           status,
+          progressStatus,
+          assessmentScope: definition?.assessmentScope ?? "full",
           sequence: topic.sequence,
           strand: topic.strand,
           subStrand: topic.subStrand,

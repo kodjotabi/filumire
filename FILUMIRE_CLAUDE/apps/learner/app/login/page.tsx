@@ -46,6 +46,7 @@ const TEXT = {
     greeting: "Great to see you again!",
     intro: ["Sign in to continue your learning", "journey with FILUMIRE."],
     signIn: "Sign In",
+    registeredTitle: "Already registered? Sign In",
     cardIntro: "Enter your details to continue.",
     identity: "Email (parents and teachers) or username (learners)",
     identityPlaceholder: "Email or username",
@@ -60,6 +61,7 @@ const TEXT = {
     newTitle: "New to FILUMIRE?",
     newBody: "Parents and guardians create the family account, then add each learner.",
     create: "Create Account",
+    createFirstTime: "Create Account — First-Time Users",
     localTitle: "Local testing",
     localBody:
       "Development build only. Opens FILUMIRE as the built-in test learner (in-memory data, reset when the server restarts). This is not a real sign-in and never appears in production.",
@@ -78,6 +80,7 @@ const TEXT = {
     greeting: "Ravi de te revoir !",
     intro: ["Connecte-toi pour continuer", "ton parcours avec FILUMIRE."],
     signIn: "Connexion",
+    registeredTitle: "Déjà inscrit ? Connexion",
     cardIntro: "Saisis tes informations pour continuer.",
     identity: "E-mail (parents et enseignants) ou identifiant (apprenants)",
     identityPlaceholder: "E-mail ou identifiant",
@@ -92,6 +95,7 @@ const TEXT = {
     newTitle: "Nouveau sur FILUMIRE ?",
     newBody: "Les parents et tuteurs créent le compte famille, puis ajoutent chaque apprenant.",
     create: "Créer un compte",
+    createFirstTime: "Créer un compte — Première visite",
     localTitle: "Test local",
     localBody:
       "Version de développement uniquement. Ouvre FILUMIRE avec l'apprenant de test intégré (données en mémoire, effacées au redémarrage du serveur). Ce n'est pas une vraie connexion et cela n'apparaît jamais en production.",
@@ -105,8 +109,6 @@ const TEXT = {
 export default function LoginPage() {
   const router = useRouter();
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [language, setLanguage] = useLanguage();
@@ -133,6 +135,12 @@ export default function LoginPage() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
+    // Read native field values so password-manager autofill also works when
+    // the browser does not dispatch a React change event.
+    const fields = new FormData(form);
+    const login = String(fields.get("identity") ?? "").trim();
+    const password = String(fields.get("password") ?? "");
 
     if (!login.trim() || !password) {
       setMessage(t.missing);
@@ -155,7 +163,8 @@ export default function LoginPage() {
         applyLearnerProfileToDevice(learner);
       }
 
-      setPassword("");
+      const passwordField = form.elements.namedItem("password");
+      if (passwordField instanceof HTMLInputElement) passwordField.value = "";
       router.push(destinationFor(account, language, new URLSearchParams(window.location.search).get("returnTo")));
     } catch (error) {
       setMessage(accountErrorMessage(error, language));
@@ -205,11 +214,21 @@ export default function LoginPage() {
         </div>
       </section>
 
+      <section className="newAccount" aria-labelledby="create-account-title">
+        <h2 id="create-account-title">{t.create}</h2>
+        <p>{t.newBody}</p>
+        <Link href={`/register?lang=${language}`} className="createButton">
+          {t.createFirstTime} <ArrowRight />
+        </Link>
+        <a className="createButton subscriptionLink" href={publicSiteHref("/pricing", language)}>{language === "fr" ? "Abonnement" : "Subscription"}</a>
+        <p className="subscriptionAvailability">{language === "fr" ? "Consulte les tarifs. Le paiement et les droits d’abonnement connectés ne sont pas disponibles dans cet aperçu." : "View pricing information. Payments and connected subscription access are not available in this preview."}</p>
+      </section>
+
       <section className="signInCard" id="sign-in" aria-labelledby="sign-in-title">
-        <h2 id="sign-in-title">{t.signIn}</h2>
+        <h2 id="sign-in-title">{t.registeredTitle}</h2>
         <p className="cardIntro">{t.cardIntro}</p>
 
-        <form onSubmit={handleSubmit}>
+        <form id="filumire-sign-in-form" method="post" autoComplete="on" onSubmit={handleSubmit}>
           <label htmlFor="filumire-identity">{t.identity}</label>
           <div className="field">
             <svg className="fieldIcon" viewBox="0 0 24 24" aria-hidden="true">
@@ -222,10 +241,9 @@ export default function LoginPage() {
               type="text"
               autoComplete="username"
               autoCapitalize="none"
+              autoCorrect="off"
               spellCheck={false}
               placeholder={t.identityPlaceholder}
-              value={login}
-              onChange={(event) => setLogin(event.target.value)}
               required
             />
           </div>
@@ -242,8 +260,6 @@ export default function LoginPage() {
               type={passwordVisible ? "text" : "password"}
               autoComplete="current-password"
               placeholder={t.password}
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
               required
             />
             <button
@@ -277,16 +293,6 @@ export default function LoginPage() {
         </form>
       </section>
 
-      <section className="newAccount">
-        <h2>{t.newTitle}</h2>
-        <p>{t.newBody}</p>
-        <a className="createButton subscriptionLink" href={publicSiteHref("/pricing", language)}>{language === "fr" ? "Abonnement" : "Subscription"}</a>
-        <p className="subscriptionAvailability">{language === "fr" ? "Consulte les tarifs. Le paiement et les droits d’abonnement connectés ne sont pas disponibles dans cet aperçu." : "View pricing information. Payments and connected subscription access are not available in this preview."}</p>
-        <Link href={`/register?lang=${language}`} className="createButton">
-          {t.create} <ArrowRight />
-        </Link>
-      </section>
-
       {LOCAL_TESTING ? (
         <section className="localTesting" aria-label={t.localTitle}>
           <h2>{t.localTitle}</h2>
@@ -311,7 +317,9 @@ export default function LoginPage() {
 
 
       <style>{`
-        .loginPage .subscriptionLink { margin-top: 12px; text-decoration: none; }
+        .loginPage .subscriptionLink { margin-top: 12px; text-decoration: none; background: transparent; color: var(--ui-blue); border: 1px solid var(--ui-line); }
+        .loginPage .newAccount > .createButton { height: auto; min-height: 48px; line-height: 1.35; text-align: center; }
+        .newAccount .btnArrow { flex: none; }
         .loginPage .loginPublicHome { align-self: flex-start; margin: 16px 24px 0; box-shadow: inset 0 0 0 2px #d6e2f5; }
         .loginPage .subscriptionAvailability { max-width: 48ch; margin: 12px auto; padding-inline: 12px; font-size: 14px; line-height: 1.5; }
         @media (max-width: 359px) { .loginPage .topbar { gap: 8px; padding-inline: 16px; } }
@@ -331,7 +339,7 @@ export default function LoginPage() {
         .heroTitle span { color: var(--ui-brand); }
         .heroGreeting { margin: 6px 24px 0; color: var(--ui-ink); font-size: 14px; line-height: 1.2; font-weight: 500; }
         .heroIntro { margin: 8px 24px 0; color: var(--ui-ink); font-size: 10.5px; line-height: 1.55; font-weight: 500; }
-        .signInCard { width: 342px; margin: 0 auto; padding: 10px; border-radius: 16px; background: var(--ui-blue-tint); box-sizing: border-box; }
+        .signInCard { width: 342px; margin: 8px auto 0; padding: 10px; border-radius: 16px; background: var(--ui-blue-tint); box-sizing: border-box; }
         .signInCard h2, .newAccount h2 { margin: 0; color: var(--ui-ink); font-size: 20px; line-height: 1.2; font-weight: 800; }
         .cardIntro, .newAccount p { margin: 4px 0 10px; color: var(--ui-ink-soft); font-size: 12px; line-height: 1.35; font-weight: 500; }
         form label { display: block; margin: 10px 0 5px; color: var(--ui-ink); font-size: 12px; font-weight: 700; }
@@ -414,8 +422,8 @@ export default function LoginPage() {
             grid-template-columns: minmax(40px, 1fr) minmax(0, 672px) minmax(428px, 528px) minmax(40px, 1fr);
             grid-template-areas:
               "top top top top"
-              ". hero card ."
               ". hero new ."
+              ". hero card ."
               ". hero local ."
               ". hero . ."
               "land land land land"
@@ -431,8 +439,8 @@ export default function LoginPage() {
           .heroIntro { margin: 12px 0 0; font-size: 16px; }
           .heroFrame { margin-top: 20px; border-radius: 28px; }
           .signInCard, .newAccount, .localTesting { width: auto; margin-left: 48px; margin-right: 0; }
-          .signInCard { grid-area: card; margin-top: 40px; }
-          .newAccount { grid-area: new; }
+          .signInCard { grid-area: card; margin-top: 14px; }
+          .newAccount { grid-area: new; margin-top: 40px; }
           .localTesting { grid-area: local; }
           .landscape { grid-area: land; height: clamp(120px, 12vw, 180px); margin-top: 48px; }
           .landscape p { top: 16px; font-size: 15px; }

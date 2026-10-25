@@ -28,7 +28,7 @@ export const OFFLINE_SECURITY_SUITES = [
   "teacher-pending-review", "learner-pending-teacher-review", "teacher-professional-notes",
   "controlled-teacher-actions", "controlled-teacher-actions-api", "teacher-write-origin",
   // Families, parents and messaging
-  "parent-teacher-communication-api", "family-access-api", "family-subscriptions", "family-phone-otp",
+  "parent-teacher-communication-api", "family-access-api", "family-subscriptions", "family-phone-otp", "learner-removal",
   "jhs-add-learner",
   // Tutoring, lesson closure and safeguarding
   "tutoring-conversation-identity", "tutoring-conversation-api", "tutoring-recovery",

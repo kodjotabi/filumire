@@ -643,6 +643,12 @@ export class PostgresPersistenceStore
     return rows.length > 0;
   }
 
+  async revokeAllLearnerAccess(learnerId: string): Promise<void> {
+    await db.update(principalLearnerAccess)
+      .set({ status: "revoked", updatedAt: new Date() })
+      .where(eq(principalLearnerAccess.learnerId, learnerId));
+  }
+
   async revokePrincipalLearnerAccess(
     principalId: string,
     learnerId: string,

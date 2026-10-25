@@ -2,6 +2,7 @@
 
 import type { LearnerProgress } from "../../services/adult-client";
 import type { Language } from "./language";
+import { ProgressBreakdown } from "./ProgressStatus";
 import {
   isFilumireSubjectKey,
   SUBJECT_PRESENTATION,
@@ -21,7 +22,7 @@ const TEXT = {
     mastered: (n: number) => (n === 1 ? "1 topic mastered" : `${n} topics mastered`),
     inProgress: (n: number) => (n === 1 ? "1 topic in progress" : `${n} topics in progress`),
     masteryNote:
-      "A topic counts as mastered only when FILUMIRE judges the learner ready to move on from it.",
+      "Full mastery requires confirmed readiness and assessment of the whole topic. Understanding-only and provisional progress are counted separately.",
     curriculum: "Through the class",
     ofTotal: (m: number, t: number) => `${m} of ${t} topics mastered`,
     curriculumNote: "Mastered topics out of every topic FILUMIRE offers for this class.",
@@ -41,7 +42,7 @@ const TEXT = {
     mastered: (n: number) => (n <= 1 ? `${n} thème maîtrisé` : `${n} thèmes maîtrisés`),
     inProgress: (n: number) => (n <= 1 ? `${n} thème en cours` : `${n} thèmes en cours`),
     masteryNote:
-      "Un thème n’est compté comme maîtrisé que lorsque FILUMIRE juge l’apprenant prêt à passer à la suite.",
+      "La maîtrise complète exige une progression confirmée et l’évaluation de tout le sujet. La compréhension seule et la progression provisoire sont comptées séparément.",
     curriculum: "Dans la classe",
     ofTotal: (m: number, t: number) =>
       `${m} thème${m > 1 ? "s" : ""} maîtrisé${m > 1 ? "s" : ""} sur ${t}`,
@@ -109,7 +110,9 @@ export function ParentProgress({
 
         <div className="ppTile">
           <h3>{t.mastery}</h3>
-          <strong>{t.mastered(progress.mastery.masteredCompetencies)}</strong>
+          <ProgressBreakdown language={language} full={progress.mastery.masteredCompetencies}
+            understandingOnly={progress.mastery.understandingMasteredCompetencies}
+            provisional={progress.mastery.provisionalCompetencies} />
           <span>{t.inProgress(progress.mastery.inProgressCompetencies)}</span>
           <p>{t.masteryNote}</p>
         </div>
@@ -163,6 +166,9 @@ export function ParentProgress({
                       )}
                     </em>
                   </div>
+                  <ProgressBreakdown language={language} full={subject.masteredCompetencies}
+                    understandingOnly={subject.understandingMasteredCompetencies}
+                    provisional={subject.provisionalCompetencies} />
                   <div
                     className="ppBar small"
                     role="progressbar"

@@ -5,6 +5,7 @@ import { getLearnerStates } from "../learner-state-store";
 import { getLearnerInterventions, isAwaitingInstructionCheck } from "../intervention-store";
 import { getEvidenceForLearner } from "../evidence-store";
 import { getContentForCompetency } from "../content-store";
+import { isOnAdaptivePath } from "../content-store/evidence-role";
 import { seedContent } from "../content-store/seed";
 import { readAssessmentRecovery } from "../edututor/assessment-recovery";
 import { getCurrentCompetencyForSubject, type LearnerLearningContextRecord } from "../learner-context";
@@ -34,6 +35,7 @@ export function subjectSupportsSpacedRevision(subjectId: string, gradeId: string
     competencies.every(item => (["en", "fr"] as const).every(language =>
       getContentForCompetency(item.id, language).some(content =>
         content.assessmentItemId &&
+        isOnAdaptivePath(content) &&
         content.metadata?.assessmentPurpose === "retention" &&
         content.metadata.expectedResponse !== undefined &&
         content.metadata.evaluationMethod !== "trusted_rubric_evaluation")));

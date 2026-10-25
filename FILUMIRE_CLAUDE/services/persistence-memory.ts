@@ -425,6 +425,16 @@ export class MemoryPersistenceStore
     return false;
   }
 
+  async revokeAllLearnerAccess(learnerId: string): Promise<void> {
+    const now = new Date().toISOString();
+    for (const record of principalLearnerAccessRecords.values()) {
+      if (record.learnerId === learnerId) {
+        record.status = "revoked";
+        record.updatedAt = now;
+      }
+    }
+  }
+
   async revokePrincipalLearnerAccess(
     principalId: string,
     learnerId: string,

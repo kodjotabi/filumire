@@ -10,6 +10,7 @@ import {
   type FrameworkSubject,
 } from "../../packages/curriculum-framework";
 import { getCompetency } from "../../packages/curriculum";
+import { isRepairCandidate, isAuthorisedRepair } from "../learner-path/repair-scope";
 
 export type { GradeSetBy, LearnerLearningContextRecord };
 
@@ -122,7 +123,8 @@ export function getCurrentCompetencyForSubject(
 ): string | undefined {
   if (
     context.activeCompetencyId &&
-    getCompetency(context.activeCompetencyId)?.subjectId === subjectId
+    (getCompetency(context.activeCompetencyId)?.subjectId === subjectId ||
+      (context.activeSubjectId === subjectId && isRepairCandidate(context, context.activeCompetencyId)))
   ) {
     return context.activeCompetencyId;
   }
@@ -290,10 +292,12 @@ export async function updateActiveCompetency(
   );
 
   const competency = getCompetency(competencyId);
+  const sameGradeSubject = competency && findAvailableSubject(context, competency.subjectId);
+  const repair = competency && !sameGradeSubject && await isAuthorisedRepair(context, competencyId);
 
   if (
     !competency ||
-    !findAvailableSubject(context, competency.subjectId)
+    (!sameGradeSubject && !repair)
   ) {
     throw new LearnerContextValidationError(
       "Competency is not available for the learner's grade.",
@@ -302,14 +306,14 @@ export async function updateActiveCompetency(
 
   if (
     context.activeCompetencyId === competencyId &&
-    context.activeSubjectId === competency.subjectId
+    context.activeSubjectId === (repair ? context.activeSubjectId : competency.subjectId)
   ) {
     return;
   }
 
   await saveLearnerLearningContext({
     ...context,
-    activeSubjectId: competency.subjectId,
+    activeSubjectId: repair ? context.activeSubjectId : competency.subjectId,
     activeCompetencyId: competencyId,
     updatedAt: new Date().toISOString(),
   });

@@ -20,6 +20,7 @@ import {
   destinationFor,
   fetchAccount,
   fetchPlacementChoices,
+  removeLearner,
   selectLearner,
   setLearnerPassword,
   signOut,
@@ -55,6 +56,11 @@ const TEXT = {
     savePassword: "Save password",
     passwordSaved: "New password saved. Give it to your learner.",
     cancel: "Cancel",
+    remove: "Remove Learner",
+    removing: "Removing…",
+    removeWarning: "Remove this learner? Their sign-in and all linked access will stop. Learning records will be retained. You cannot undo this here.",
+    confirmRemoval: "I confirm removal of this learner.",
+    removed: "Learner removed.",
     addTitle: "Add a learner",
     addLead: "Use a first name or nickname. FILUMIRE does not ask for a child's surname, birthday, email or school.",
     name: "First name or nickname",
@@ -97,6 +103,11 @@ const TEXT = {
     savePassword: "Enregistrer le mot de passe",
     passwordSaved: "Nouveau mot de passe enregistré. Communique-le à ton apprenant.",
     cancel: "Annuler",
+    remove: "Retirer l’apprenant",
+    removing: "Suppression…",
+    removeWarning: "Retirer cet apprenant ? Sa connexion et tous les accès liés seront désactivés. Les données d’apprentissage seront conservées. Cette action ne peut pas être annulée ici.",
+    confirmRemoval: "Je confirme le retrait de cet apprenant.",
+    removed: "Apprenant retiré.",
     addTitle: "Ajouter un apprenant",
     addLead: "Utilise un prénom ou un surnom. FILUMIRE ne demande ni le nom de famille, ni la date de naissance, ni l'e-mail, ni l'école d'un enfant.",
     name: "Prénom ou surnom",
@@ -142,10 +153,12 @@ function LearnerCard({
   learner,
   language,
   onOpen,
+  onRemoved,
 }: {
   learner: AccountLearner;
   language: Language;
   onOpen: (learner: AccountLearner) => Promise<void>;
+  onRemoved: (learnerId: string) => void;
 }) {
   const t = TEXT[language];
   const [opening, setOpening] = useState(false);
@@ -154,6 +167,24 @@ function LearnerCard({
   const [message, setMessage] = useState("");
   const [ok, setOk] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [removing, setRemoving] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
+
+  async function confirmRemove(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!confirmed || busy) return;
+    setBusy(true);
+    setMessage("");
+    try {
+      await removeLearner(learner.learnerId);
+      onRemoved(learner.learnerId);
+    } catch (error) {
+      setOk(false);
+      setMessage(accountErrorMessage(error, language));
+    } finally {
+      setBusy(false);
+    }
+  }
 
   async function open() {
     setOpening(true);
@@ -200,6 +231,7 @@ function LearnerCard({
           </p>
         </div>
       </div>
+      <fieldset disabled={busy || opening} style={{ border: 0, padding: 0, margin: 0, minWidth: 0 }}>
       <div className="acActions">
         <button type="button" className="acButton" onClick={open} disabled={opening} aria-busy={opening}>
           {opening ? t.opening : t.open}
@@ -247,6 +279,24 @@ function LearnerCard({
         language={language}
       />
       <TutoringRecovery learnerId={learner.learnerId} language={language} />
+      {!removing ? (
+        <button type="button" className="acButton quiet" onClick={() => { setRemoving(true); setConfirmed(false); setMessage(""); }}>
+          {t.remove}
+        </button>
+      ) : (
+        <form className="acForm" onSubmit={confirmRemove} aria-label={`${t.remove}: ${learner.displayName}`}>
+          <p><strong>{learner.displayName}</strong> — {t.removeWarning}</p>
+          <label>
+            <input type="checkbox" required checked={confirmed} onChange={(event) => setConfirmed(event.target.checked)} />
+            {t.confirmRemoval}
+          </label>
+          <div className="acActions">
+            <button type="submit" className="acButton" disabled={!confirmed || busy} aria-busy={busy}>{busy ? t.removing : t.remove}</button>
+            <button type="button" className="acButton quiet" onClick={() => { setRemoving(false); setConfirmed(false); }}>{t.cancel}</button>
+          </div>
+        </form>
+      )}
+      </fieldset>
     </li>
   );
 }
@@ -422,6 +472,11 @@ export default function FamilyPage() {
                     learner={learner}
                     language={language}
                     onOpen={openLearner}
+                    onRemoved={(learnerId) => {
+                      setAccount((current) => current ? { ...current, learners: current.learners.filter((entry) => entry.learnerId !== learnerId), activeLearnerId: current.activeLearnerId === learnerId ? null : current.activeLearnerId } : current);
+                      setOk(true);
+                      setMessage(t.removed);
+                    }}
                   />
                 ))}
               </ul>

@@ -4,6 +4,7 @@ import { db, pool } from "../database";
 import {
   accountCredentials,
   accountProfiles,
+  authSessions,
   guardianConsentRecords,
   learnerProfiles,
   learners,
@@ -133,6 +134,7 @@ export interface FailedSignInPolicy {
 }
 
 export interface AccountStore {
+  removeLearnerAccount(guardianPrincipalId: string, learnerId: string): Promise<boolean>;
   createGuardianAccount(account: NewGuardianAccount): Promise<void>;
   createLearnerAccount(account: NewLearnerAccount): Promise<void>;
   getCredentialByLogin(
@@ -202,6 +204,27 @@ export interface AccountStore {
  * persistence store so the rest of FILUMIRE sees them.
  */
 class MemoryAccountStore implements AccountStore {
+  private removedLearners = new Set<string>();
+
+  async removeLearnerAccount(guardianPrincipalId: string, learnerId: string): Promise<boolean> {
+    const profile = this.learnerProfiles.get(learnerId);
+    const access = await persistenceStore.getPrincipalLearnerAccess(guardianPrincipalId, learnerId, "guardian");
+    const guardian = await this.getCredentialByPrincipal(guardianPrincipalId);
+    if (guardian?.accountKind !== "guardian" || guardian.status !== "active" ||
+        profile?.createdByPrincipalId !== guardianPrincipalId || access?.status !== "active" || this.removedLearners.has(learnerId)) return false;
+    this.removedLearners.add(learnerId);
+    // Retain profiles and learning history; revoke every route back into this learner.
+    await this.revokeTeacherLinkCodes(learnerId);
+    await persistenceStore.revokeAllLearnerAccess(learnerId);
+    if (profile.signInPrincipalId) {
+      for (const credential of this.credentials.values()) {
+        if (credential.principalId === profile.signInPrincipalId) credential.status = "disabled";
+      }
+      await persistenceStore.revokeOtherPrincipalAuthSessions(profile.signInPrincipalId, undefined, new Date().toISOString());
+    }
+    return true;
+  }
+
   private credentials = new Map<string, AccountCredentialRecord>();
   private profiles = new Map<string, AccountProfileRecord>();
   private learnerProfiles = new Map<string, LearnerProfileRecord>();
@@ -542,6 +565,32 @@ function consentValues(record: GuardianConsentRecord) {
  * principal, learner or access link behind.
  */
 class PostgresAccountStore implements AccountStore {
+  async removeLearnerAccount(guardianPrincipalId: string, learnerId: string): Promise<boolean> {
+    return db.transaction(async (tx) => {
+      // Serialize with teacher-code redemption without requiring UPDATE on
+      // the retained learners table (the deployed app role has SELECT/INSERT).
+      await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${`filumire-learner-access:${learnerId}`}, 0))`);
+      const [profile] = await tx.select().from(learnerProfiles)
+        .where(and(eq(learnerProfiles.learnerId, learnerId), eq(learnerProfiles.createdByPrincipalId, guardianPrincipalId)))
+        .for("update");
+      if (!profile) return false;
+      const [guardian] = await tx.select().from(accountCredentials)
+        .where(and(eq(accountCredentials.principalId, guardianPrincipalId), eq(accountCredentials.accountKind, "guardian"), eq(accountCredentials.status, "active")));
+      const [access] = await tx.select().from(principalLearnerAccess)
+        .where(and(eq(principalLearnerAccess.principalId, guardianPrincipalId), eq(principalLearnerAccess.learnerId, learnerId), eq(principalLearnerAccess.relationshipType, "guardian")))
+        .for("update");
+      if (!guardian || access?.status !== "active") return false;
+      const now = new Date();
+      await tx.update(principalLearnerAccess).set({ status: "revoked", updatedAt: now }).where(eq(principalLearnerAccess.learnerId, learnerId));
+      await tx.update(teacherLinkCodes).set({ revokedAt: now }).where(eq(teacherLinkCodes.learnerId, learnerId));
+      if (profile.signInPrincipalId) {
+        await tx.update(accountCredentials).set({ status: "disabled", updatedAt: now }).where(eq(accountCredentials.principalId, profile.signInPrincipalId));
+        await tx.update(authSessions).set({ status: "revoked", revokedAt: now, updatedAt: now }).where(eq(authSessions.principalId, profile.signInPrincipalId));
+      }
+      return true;
+    });
+  }
+
   async createGuardianAccount(account: NewGuardianAccount): Promise<void> {
     try {
       await db.transaction(async (tx) => {
@@ -790,6 +839,10 @@ class PostgresAccountStore implements AccountStore {
     const at = new Date(now);
 
     return db.transaction(async (tx) => {
+      const [code] = await tx.select({ learnerId: teacherLinkCodes.learnerId })
+        .from(teacherLinkCodes).where(eq(teacherLinkCodes.codeHash, codeHash));
+      if (!code) return undefined;
+      await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${`filumire-learner-access:${code.learnerId}`}, 0))`);
       // Claiming the code and checking its guardian happen in one
       // transaction, so a code can never be used twice.
       const [claimed] = await tx

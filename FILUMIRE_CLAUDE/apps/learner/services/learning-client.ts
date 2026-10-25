@@ -65,6 +65,10 @@ export type LearningResponse = {
   };
 
   progress: {
+    progressStatus?: import("../../../services/learner-progress/reporting").LearningProgressStatus;
+    assessmentScope?: "full" | "understanding_only";
+    understandingOnlyCompetencies?: number;
+    provisionalCompetencies?: number;
     learnerId: string;
     activeCompetencyId?: string;
     competencyCount: number;
@@ -420,7 +424,7 @@ export type LearningOverview = {
   gradeSubjects?: Record<string, AvailableSubject[]>;
   subjects: Record<
     string,
-    { total: number; tracked: number; completed: number; started: boolean }
+    { total: number; tracked: number; completed: number; started: boolean; understandingOnly?: number; provisional?: number }
   >;
   areasSubjectId: string;
   areas: Array<{
@@ -428,6 +432,8 @@ export type LearningOverview = {
     title: string;
     description: string;
     status: "completed" | "inprogress" | "new";
+    progressStatus?: import("../../../services/learner-progress/reporting").LearningProgressStatus;
+    assessmentScope?: "full" | "understanding_only";
     /* Phase 2: learning-sequence position and place in the curriculum (absent from older servers). */
     sequence?: number;
     strand?: CurriculumPlace;

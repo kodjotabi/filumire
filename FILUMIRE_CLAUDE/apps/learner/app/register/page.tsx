@@ -89,9 +89,6 @@ export default function RegisterPage() {
   const router = useRouter();
   const [language, setLanguage] = useLanguage();
   const t = TEXT[language];
-  const [displayName, setDisplayName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [preferredLanguage, setPreferredLanguage] = useState<"en" | "fr" | "">("");
   const [role, setRole] = useState<"guardian" | "teacher">("guardian");
@@ -116,15 +113,17 @@ export default function RegisterPage() {
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
+    const fields = new FormData(form);
     setBusy(true);
     setMessage("");
     setInvalidField(undefined);
 
     try {
       const details = {
-        displayName,
-        email,
-        password,
+        displayName: String(fields.get("displayName") ?? ""),
+        email: String(fields.get("email") ?? ""),
+        password: String(fields.get("password") ?? ""),
         preferredLanguage: preferredLanguage || language,
         acceptsNotice,
       };
@@ -135,7 +134,8 @@ export default function RegisterPage() {
         await registerGuardian({ ...details, confirmsGuardian });
       }
 
-      setPassword("");
+      const passwordField = form.elements.namedItem("password");
+      if (passwordField instanceof HTMLInputElement) passwordField.value = "";
       router.push(
         teacher
           ? `/teacher?lang=${preferredLanguage || language}`
@@ -193,19 +193,18 @@ export default function RegisterPage() {
         <h2 id="register-form-title" className="visuallyHidden">
           {teacher ? t.teacherCreate : t.create}
         </h2>
-        <form className="acForm" onSubmit={submit} noValidate>
+        <form className="acForm" method="post" autoComplete="on" onSubmit={submit} noValidate>
           <div className="acField" data-invalid={invalidField === "displayName"}>
             <label htmlFor="reg-name">{t.yourName}</label>
             <input
               id="reg-name"
+              name="displayName"
               type="text"
               autoComplete="name"
               maxLength={40}
               required
-              value={displayName}
               aria-describedby="reg-name-help"
               aria-invalid={invalidField === "displayName"}
-              onChange={(event) => setDisplayName(event.target.value)}
             />
             <p id="reg-name-help" className="acHelp">{t.yourNameHelp}</p>
           </div>
@@ -214,16 +213,16 @@ export default function RegisterPage() {
             <label htmlFor="reg-email">{t.email}</label>
             <input
               id="reg-email"
+              name="email"
               type="email"
               autoComplete="email"
               autoCapitalize="none"
+              autoCorrect="off"
               spellCheck={false}
               maxLength={254}
               required
-              value={email}
               aria-describedby="reg-email-help"
               aria-invalid={invalidField === "email"}
-              onChange={(event) => setEmail(event.target.value)}
             />
             <p id="reg-email-help" className="acHelp">{t.emailHelp}</p>
           </div>
@@ -233,15 +232,14 @@ export default function RegisterPage() {
             <div style={{ display: "flex", gap: 8 }}>
               <input
                 id="reg-password"
+                name="password"
                 type={showPassword ? "text" : "password"}
                 autoComplete="new-password"
                 minLength={8}
                 maxLength={128}
                 required
-                value={password}
                 aria-describedby="reg-password-help"
                 aria-invalid={invalidField === "password"}
-                onChange={(event) => setPassword(event.target.value)}
               />
               <button
                 type="button"

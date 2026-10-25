@@ -76,7 +76,8 @@ export type AccountErrorField =
   | "avatarId"
   | "preferredLanguage"
   | "linkCode"
-  | "registration";
+  | "registration"
+  | "confirmation";
 
 export class AccountValidationError extends Error {
   constructor(
@@ -102,6 +103,20 @@ export class AccountLockedError extends Error {
 }
 
 export class AccountForbiddenError extends Error {}
+
+export async function removeLearnerForGuardian(
+  guardianPrincipalId: string,
+  learnerId: string,
+  confirmation: unknown,
+): Promise<void> {
+  await requireGuardianOf(guardianPrincipalId, learnerId);
+  if (confirmation !== true) {
+    throw new AccountValidationError("confirmation", "Confirm removal of this learner.");
+  }
+  if (!(await accountStore.removeLearnerAccount(guardianPrincipalId, learnerId))) {
+    throw new AccountForbiddenError("This learner cannot be removed by this account.");
+  }
+}
 
 /*
  * Registration is always available in development and tests.
@@ -130,12 +145,12 @@ export function normaliseEmail(value: unknown): string {
 /*
  * Private review: FILUMIRE_ACCESS_MODE=reviewers limits accounts to
  * the owner's list FILUMIRE_REVIEWER_EMAILS ("email:guardian,email:teacher",
- * at most five entries, one account and one role each). Only listed
+ * plus one optional supplemental entry, at most six in total). Only listed
  * adults may register or sign in, and learners only when the guardian
  * who created them is listed. Refusals reuse the ordinary errors, so
  * nobody can learn who is on the list. An invalid list admits no one.
  */
-export const MAX_REVIEWERS = 5;
+export const MAX_REVIEWERS = 6;
 
 type ReviewerRole = Exclude<AccountKind, "learner">;
 
@@ -145,13 +160,17 @@ export function reviewerModeActive(): boolean {
 
 /** The parsed list, or undefined when it is invalid (fail closed). */
 export function reviewerList(): ReadonlyMap<string, ReviewerRole> | undefined {
-  const entries = (process.env.FILUMIRE_REVIEWER_EMAILS ?? "")
+  const baseEntries = (process.env.FILUMIRE_REVIEWER_EMAILS ?? "")
     .split(",")
     .map((entry) => entry.trim())
     .filter(Boolean);
+  // Keep the original protected list intact; validate the combined list.
+  const additionalEntries = (process.env.FILUMIRE_REVIEWER_EMAILS_ADDITIONAL ?? "")
+    .split(",").map(entry => entry.trim()).filter(Boolean);
+  const entries = [...baseEntries, ...additionalEntries];
   const list = new Map<string, ReviewerRole>();
 
-  if (entries.length === 0 || entries.length > MAX_REVIEWERS) {
+  if (baseEntries.length === 0 || additionalEntries.length > 1 || entries.length > MAX_REVIEWERS) {
     return undefined;
   }
 

@@ -11,6 +11,7 @@ import {
   type LearnerLearningContextRecord,
 } from "../learner-context";
 import { getLearnerStates } from "../learner-state-store";
+import { classifyProgress } from "./reporting";
 
 /*
  * One read-only roll-up of a learner's progress, shared by the
@@ -27,12 +28,19 @@ import { getLearnerStates } from "../learner-state-store";
  *
  * Nothing here computes or changes mastery; it only counts the
  * engine's own decisions.
+ *
+ * Basic 7-9 Step 0: a topic whose indicator FILUMIRE assesses for
+ * understanding only (assessmentScope) is counted apart, never as a
+ * mastered competency. A topic acquired but not yet confirmed by
+ * retention (masteredAt without readiness) is provisional progress.
  */
 
 export interface CompetencyProgressRow {
   evidenceCount: number;
   mastered: boolean;
   masteryEstimate: number;
+  /* Mastery gate met, retention not yet confirmed. */
+  provisional?: boolean;
 }
 
 export interface SubjectProgress {
@@ -41,7 +49,11 @@ export interface SubjectProgress {
   discipline: string;
   totalCompetencies: number;
   masteredCompetencies: number;
+  /* Readiness confirmed, but only the understanding part is assessed. */
+  understandingMasteredCompetencies: number;
+  /* Started; includes provisionalCompetencies. */
   inProgressCompetencies: number;
+  provisionalCompetencies: number;
   answersRecorded: number;
 }
 
@@ -54,7 +66,9 @@ export interface LearnerProgress {
   };
   mastery: {
     masteredCompetencies: number;
+    understandingMasteredCompetencies: number;
     inProgressCompetencies: number;
+    provisionalCompetencies: number;
   };
   curriculum: {
     masteredCompetencies: number;
@@ -85,6 +99,7 @@ export async function getCompetencyProgressRows(
       const known = rows.get(competency.competencyId);
       const evidenceCount = competency.evidenceCount ?? 0;
       const mastered = Boolean(competency.readinessState?.readyForAdvancement);
+      const provisional = !mastered && Boolean(competency.masteredAt);
 
       if (
         !known ||
@@ -95,6 +110,7 @@ export async function getCompetencyProgressRows(
           evidenceCount: Math.max(evidenceCount, known?.evidenceCount ?? 0),
           mastered: mastered || Boolean(known?.mastered),
           masteryEstimate: competency.masteryEstimate ?? 0,
+          provisional: !(mastered || known?.mastered) && (provisional || Boolean(known?.provisional)),
         });
       }
     }
@@ -114,19 +130,26 @@ export function summariseSubjects(
       discipline: subject.discipline,
       totalCompetencies: getCompetenciesForSubject(subject.id).length,
       masteredCompetencies: 0,
+      understandingMasteredCompetencies: 0,
       inProgressCompetencies: 0,
+      provisionalCompetencies: 0,
       answersRecorded: 0,
     };
 
     rows.forEach((row, competencyId) => {
-      if (getCompetency(competencyId)?.subjectId !== subject.id) return;
+      const competency = getCompetency(competencyId);
+      if (competency?.subjectId !== subject.id) return;
 
       progress.answersRecorded += row.evidenceCount;
 
-      if (row.mastered) {
+      const status = classifyProgress(row, competency.assessmentScope);
+      if (status === "understanding_only") {
+        progress.understandingMasteredCompetencies += 1;
+      } else if (status === "mastered") {
         progress.masteredCompetencies += 1;
       } else if (row.evidenceCount > 0) {
         progress.inProgressCompetencies += 1;
+        if (row.provisional) progress.provisionalCompetencies += 1;
       }
     });
 
@@ -164,7 +187,9 @@ export async function buildLearnerProgress(
     },
     mastery: {
       masteredCompetencies,
+      understandingMasteredCompetencies: sum((subject) => subject.understandingMasteredCompetencies),
       inProgressCompetencies: sum((subject) => subject.inProgressCompetencies),
+      provisionalCompetencies: sum((subject) => subject.provisionalCompetencies),
     },
     curriculum: {
       masteredCompetencies,

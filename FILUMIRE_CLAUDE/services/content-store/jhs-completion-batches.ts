@@ -4,6 +4,7 @@ import type { CompetencyDefinition } from '../../packages/curriculum';
 import type { LearningContent } from '../../packages/content';
 import { competency as existingPolicy } from './ghana-b7-materials-pilot';
 import { buildJhsContent } from './jhs-learning-builder';
+import { automateJhsCompetencies, automateJhsContent } from './jhs-automatic-assessment';
 import { B7_SCIENCE_FOUNDATIONS } from './jhs-b7-science-foundations';
 import { B7_SCIENCE_SYSTEMS } from './jhs-b7-science-systems';
 import { B7_SCIENCE_ENERGY } from './jhs-b7-science-energy';
@@ -15,16 +16,16 @@ function batch(id: string, units: typeof B7_SCIENCE_FOUNDATIONS) {
     if (!source || getCcpBlockingSourceIssueIds(source.sourceIssueIds).length) throw new Error(`Unresolved source cannot be authored: ${unit.id}`);
     return source;
   });
-  const competencies: CompetencyDefinition[] = sources.map((source, i) => ({
+  const competencies: CompetencyDefinition[] = automateJhsCompetencies(sources.map((source, i) => ({
     ...existingPolicy, id: source.id, curriculumFrameworkId: GHANA_CCP_RUNTIME_ID, educationSystemId: GHANA_CCP_EDUCATION_SYSTEM_ID,
     learningLevelId: source.gradeId, subjectId: source.subjectId, strandId: source.hierarchy.strandId, subStrandId: source.hierarchy.subStrandId,
     contentStandardId: source.hierarchy.contentStandardId, learningIndicatorId: source.curriculumNodeId, title: source.title, description: source.title,
     prerequisiteCompetencyIds: [], successorCompetencyIds: [], relatedCompetencyIds: [],
     subskills: units[i].subskills!, misconceptions: [units[i].misconception!],
-  }));
-  const content: LearningContent[] = buildJhsContent(units, sources, competencies).map(item => ({ ...item,
+  })));
+  const content: LearningContent[] = automateJhsContent(buildJhsContent(units, sources, competencies).map(item => ({ ...item,
     metadata: { ...item.metadata, authoringStatus: 'draft_subject_batch', batchId: id, educatorApproval: 'pending', frenchApproval: 'pending' },
-  }));
+  })), competencies).map(item => ({ ...item, metadata: { ...item.metadata, batchId: id } }));
   return { id, units, sources, competencies, content };
 }
 export const JHS_COMPLETION_BATCHES = [

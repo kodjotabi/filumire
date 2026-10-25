@@ -211,6 +211,8 @@ export interface PersistenceStore {
     learnerId: string,
   ): Promise<boolean>;
 
+  revokeAllLearnerAccess(learnerId: string): Promise<void>;
+
   revokePrincipalLearnerAccess(
     principalId: string,
     learnerId: string,

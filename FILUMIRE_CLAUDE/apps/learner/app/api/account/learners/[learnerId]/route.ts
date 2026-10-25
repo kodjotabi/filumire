@@ -1,4 +1,4 @@
-import { updateLearnerProfileFor } from "../../../../../../../services/account";
+import { removeLearnerForGuardian, updateLearnerProfileFor } from "../../../../../../../services/account";
 import { resolveSignedInSession } from "../../../../../../../services/identity";
 import {
   LearnerContextValidationError,
@@ -8,6 +8,21 @@ import {
 } from "../../../../../../../services/learner-context";
 
 import { errorResponse, json, readJsonBody } from "../../http";
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ learnerId: string }> },
+) {
+  try {
+    const session = await resolveSignedInSession(request);
+    const { learnerId } = await params;
+    const body = await readJsonBody(request);
+    await removeLearnerForGuardian(session.principalId, learnerId, body.confirmRemoval);
+    return json({ removed: true });
+  } catch (error) {
+    return errorResponse(error, "learner removal");
+  }
+}
 
 /*
  * Updates a learner's profile (name, avatar, language), grade and

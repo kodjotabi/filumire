@@ -303,6 +303,14 @@ export interface LearnerProfileChange {
   completeOnboarding?: boolean;
 }
 
+export async function removeLearner(learnerId: string): Promise<void> {
+  await request(`/api/account/learners/${encodeURIComponent(learnerId)}`, {
+    method: "DELETE",
+    body: { confirmRemoval: true },
+  });
+  clearLearnerProfileFromDevice();
+}
+
 export async function updateLearnerProfile(
   learnerId: string,
   change: LearnerProfileChange,

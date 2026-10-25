@@ -8,6 +8,9 @@ import type {
 } from "../../packages/domain";
 import { getLearnerStates } from "../learner-state-store";
 import { seedContent } from '../content-store/seed';
+import { getLearnerLearningContext } from '../learner-context';
+import { buildLearnerProgress, getCompetencyProgressRows, type LearnerProgress } from '../learner-progress';
+import { classifyProgress, type LearningProgressStatus } from '../learner-progress/reporting';
 import type { PendingTeacherReviewRecord } from "../persistence";
 import { getEvidenceForLearner } from "../evidence-store";
 import {
@@ -114,6 +117,8 @@ export interface TeacherProgressHistoryItem {
   interventionId?: string;
 }
 export interface TeacherCompetencySummary {
+  progressStatus: LearningProgressStatus;
+  assessmentScope: 'full' | 'understanding_only';
   competencyId: string;
   competencyTitle: string;
   subjectId: string;
@@ -158,6 +163,7 @@ export interface TeacherSubjectSummary {
 }
 
 export interface TeacherLearnerSummary {
+  progress?: LearnerProgress;
   learnerId: string;
   subjects: TeacherSubjectSummary[];
   attentionQueue: TeacherCompetencySummary[];
@@ -253,10 +259,12 @@ export async function buildTeacherLearnerSummary(
   learnerId: string,
 ): Promise<TeacherLearnerSummary> {
   seedContent();
-  const [learnerStates, pendingReviews] =
+  const [learnerStates, pendingReviews, context, progressRows] =
     await Promise.all([
       getLearnerStates(learnerId),
       getPendingTeacherReviews(learnerId),
+      getLearnerLearningContext(learnerId),
+      getCompetencyProgressRows(learnerId),
     ]);
 
   const competencyMap =
@@ -354,6 +362,8 @@ export async function buildTeacherLearnerSummary(
           );
 
       competencyMap.set(state.competencyId, {
+        progressStatus: classifyProgress(progressRows.rows.get(state.competencyId), competency.assessmentScope),
+        assessmentScope: competency.assessmentScope ?? 'full',
         competencyId: state.competencyId,
         competencyTitle: competency.title,
         subjectId: competency.subjectId,
@@ -544,6 +554,7 @@ export async function buildTeacherLearnerSummary(
   });
 
   return {
+    progress: context ? await buildLearnerProgress(learnerId, context) : undefined,
     learnerId,
     subjects,
     attentionQueue,

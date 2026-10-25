@@ -12,10 +12,12 @@ const refuse = code => { throw new DeployGuardError(code); };
 const hosts = value => new Set((value ?? "").split(",").map(h => h.trim().toLowerCase()).filter(Boolean));
 const OWNER_ROLE = /(^|_)owner$|^postgres$|^neondb_owner$/i;
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-// Same rules as services/account reviewerList(): 1-5 "email:guardian|teacher" entries, no duplicates.
-const validReviewerList = value => {
-  const entries = (value ?? "").split(",").map(entry => entry.trim()).filter(Boolean);
-  if (entries.length < 1 || entries.length > 5) return false;
+// Same rules as services/account reviewerList(): 1-6 combined "email:guardian|teacher" entries, at most one supplemental entry, no duplicates.
+const validReviewerList = (value, additional) => {
+  const baseEntries = (value ?? "").split(",").map(entry => entry.trim()).filter(Boolean);
+  const additionalEntries = (additional ?? "").split(",").map(entry => entry.trim()).filter(Boolean);
+  const entries = [...baseEntries, ...additionalEntries];
+  if (!baseEntries.length || additionalEntries.length > 1 || entries.length > 6) return false;
   const seen = new Set();
   for (const entry of entries) {
     const at = entry.lastIndexOf(":"), email = entry.slice(0, at).trim().toLowerCase(), role = entry.slice(at + 1).trim().toLowerCase();
@@ -49,7 +51,7 @@ export function checkDeployment(env) {
   }
   if (env.FILUMIRE_ACCESS_MODE && env.FILUMIRE_ACCESS_MODE !== "reviewers") refuse("unknown_access_mode");
   if (env.FILUMIRE_ACCESS_MODE === "reviewers") {
-    if (!validReviewerList(env.FILUMIRE_REVIEWER_EMAILS)) refuse("reviewer_list_invalid");
+    if (!validReviewerList(env.FILUMIRE_REVIEWER_EMAILS, env.FILUMIRE_REVIEWER_EMAILS_ADDITIONAL)) refuse("reviewer_list_invalid");
     if (env.FILUMIRE_ACCOUNT_REGISTRATION === "open") refuse("reviewer_mode_with_open_registration");
     if (Object.keys(env).some(key => key.startsWith("FILUMIRE_EXTERNAL_AUTH_") && env[key])) refuse("reviewer_mode_with_external_identity");
   }

@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import { ProgressStatus, ProgressBreakdown } from "../../components/filumire/ProgressStatus";
+import { PROGRESS_TEXT } from "../../../../services/learner-progress/reporting";
 import { AdultHeader, AdultRoleSwitch, adultRole } from "../../components/filumire/AdultRoleSwitch";
 import { useLanguage, type Language } from "../../components/filumire/language";
 import { TeacherLinkLearner } from "../../components/filumire/TeacherLinkLearner";
@@ -783,6 +785,13 @@ export default function TeacherPage() {
                 </div>
               </section>
 
+              {data.summary.progress ? <section className="card">
+                <h2>{t("Learning progression")}</h2>
+                <ProgressBreakdown language={language} full={data.summary.progress.mastery.masteredCompetencies}
+                  understandingOnly={data.summary.progress.mastery.understandingMasteredCompetencies}
+                  provisional={data.summary.progress.mastery.provisionalCompetencies} />
+              </section> : null}
+
               {data.summary.masteryMeasures && (
                 <section className="card">
                   <div className="section-label">
@@ -791,11 +800,14 @@ export default function TeacherPage() {
                   <h2>
                     {t("How solid is this learner's mastery?")}
                   </h2>
+                  <p className="section-text">{language === "fr"
+                    ? "Ces mesures d’acquisition incluent les sujets évalués pour la compréhension seule et ceux dont la progression reste à confirmer."
+                    : "These acquisition measures include understanding-only topics and topics whose progress is still to be confirmed."}</p>
 
                   <div className="detail-grid">
                     <div>
                       <span className="detail-label">
-                        {t("Topics mastered")}
+                        {language === "fr" ? "Sujets acquis (confirmation à suivre)" : "Topics acquired (confirmation may remain)"}
                       </span>
                       <strong>
                         {data.summary.masteryMeasures.competenciesMastered}
@@ -1154,10 +1166,9 @@ export default function TeacherPage() {
                       {t("Learning progression")}
                     </span>
                         <strong>
-                          {selectedCompetency.readyForAdvancement
-                            ? t("Ready")
-                            : t("Not yet ready")}
+                          <ProgressStatus status={selectedCompetency.progressStatus} language={language} />
                         </strong>
+                        {selectedCompetency.assessmentScope === "understanding_only" ? <p>{PROGRESS_TEXT[language].scopeNote}</p> : null}
                       </div>
                       <div>
                         <span className="detail-label">

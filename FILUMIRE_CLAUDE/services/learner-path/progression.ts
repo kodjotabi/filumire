@@ -41,6 +41,7 @@ export const NEEDS_SUPPORT_RETRY_GAP_MS = 24 * 60 * 60 * 1000;
 
 export type NextCompetencyReason =
   | "SUCCESSOR_PREREQUISITES_MET"
+  | "PREREQUISITE_REPAIR_COMPLETED"
   | "RESUME_UNFINISHED_COMPETENCY"
   | "RETURN_TO_NEEDS_SUPPORT_COMPETENCY"
   | "NEXT_COMPETENCY_UNLOCKED"
@@ -217,6 +218,8 @@ export function chooseNextCompetency(input: {
    */
   currentCompleted: boolean;
   timeAware?: boolean;
+  /* Server-derived requesting topics for a bounded cross-grade repair. */
+  repairReturnTargets?: readonly CompetencyId[];
 
   /*
    * Exhausted competencies that may be retried now (gap passed and
@@ -231,6 +234,13 @@ export function chooseNextCompetency(input: {
       reasonCode: "NO_ELIGIBLE_COMPETENCY_NEEDS_SUPPORT",
       pathComplete: false,
     };
+  }
+
+  if (input.repairReturnTargets?.length) {
+    const target = input.currentCompleted && input.repairReturnTargets.find(id => id !== current.id && getCompetency(id));
+    return target
+      ? { competencyId: target, reasonCode: "PREREQUISITE_REPAIR_COMPLETED", pathComplete: false }
+      : { reasonCode: "NO_ELIGIBLE_COMPETENCY_NEEDS_SUPPORT", pathComplete: false };
   }
 
   const curriculum = createPathCurriculum(

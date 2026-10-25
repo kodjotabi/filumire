@@ -9,6 +9,8 @@ import {getPrincipalAuthSession} from '../auth-session';
 import {getPilotMeasurementEvents,recordPilotMeasurementEvent} from '../pilot-measurement';
 import {accountStore} from '../account/store';
 import {AccountForbiddenError} from '../account';
+import {getContentForCompetency} from '../content-store';
+import {OPTIONAL_TEACHER_EXTENSION} from '../content-store/evidence-role';
 
 const SOURCE='guardian-tutor-recovery-v1';
 type Binding={id:string;competencyId:string;sessionId:string;startedAt:string};
@@ -32,7 +34,11 @@ function readProof(event:PilotMeasurementEventRecord):Proof|undefined{
 export async function readAssessmentRecovery(learnerId:string){
  const events=await getPilotMeasurementEvents(learnerId);
  const pendingReviews=await persistenceStore.getPendingTeacherReviews(learnerId);
- const pendingTeacherReview=pendingReviews.some(review=>review.status==='pending');
+ // Work waiting for an optional teacher extension review (Basic 7-9 Step 0) is not
+ // on the learner's adaptive path, so it does not hold tutoring back. Unknown items stay protected.
+ const optional=(review:{competencyId:string;assessmentItemId:string})=>getContentForCompetency(review.competencyId)
+  .find(item=>item.assessmentItemId===review.assessmentItemId)?.metadata?.evidenceRole===OPTIONAL_TEACHER_EXTENSION;
+ const pendingTeacherReview=pendingReviews.some(review=>review.status==='pending'&&!optional(review));
  const proofs=events.flatMap(event=>{const proof=readProof(event);return proof?[proof]:[];});
  const sessions=new Map<string,Awaited<ReturnType<typeof getPrincipalAuthSession>>>();
  async function live(sessionId:string){

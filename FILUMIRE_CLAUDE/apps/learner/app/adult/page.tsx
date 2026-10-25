@@ -5,6 +5,7 @@ import { fetchAccount, type Account } from "../../services/account-client";
 import { useLanguage, type Language } from "../../components/filumire/language";
 import { LEARNER_GRADES } from "../../components/filumire/grades";
 import { ParentProgress } from "../../components/filumire/ParentProgress";
+import { ProgressStatus } from "../../components/filumire/ProgressStatus";
 
 import {
   useCallback,
@@ -450,6 +451,8 @@ export default function AdultSupervisionPage() {
                     <p className="section-text">
                       {t.estimateNote}
                     </p>
+                    {data.summary.progressStatus ? <p><ProgressStatus status={data.summary.progressStatus} language={language} /></p> : null}
+                    {data.summary.assessmentScopeNote ? <p className="section-text">{data.summary.assessmentScopeNote}</p> : null}
 
                     {data.summary.nextFocus && (
                       <div className="parent-focus">

@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { ProgressStatus, ProgressBreakdown } from "./ProgressStatus";
+import { PROGRESS_TEXT, type LearningProgressStatus } from "../../../../services/learner-progress/reporting";
 import type { CSSProperties, ReactNode } from "react";
 
 import type { LearningOverview } from "../../services/learning-client";
@@ -21,6 +23,8 @@ type ProgressPageProps = {
     confidence: number;
     evidenceCount: number;
     readiness: boolean;
+    progressStatus?: LearningProgressStatus;
+    assessmentScope?: "full" | "understanding_only";
     learnHref: string;
   };
   renderIcon: (key: string) => ReactNode;
@@ -213,7 +217,7 @@ export function ProgressPage({
       | "good"
       | "learning"
       | "fresh";
-    return { subject, total, done, percent, tone };
+    return { subject, total, done, percent, tone, understandingOnly: stats?.understandingOnly ?? 0, provisional: stats?.provisional ?? 0 };
   });
 
   const totalAll = rows.reduce((sum, row) => sum + row.total, 0);
@@ -275,6 +279,9 @@ export function ProgressPage({
           <small>
             {doneAll} / {totalAll} {t.mastered}
           </small>
+          <ProgressBreakdown language={language} full={doneAll}
+            understandingOnly={rows.reduce((sum, row) => sum + row.understandingOnly, 0)}
+            provisional={rows.reduce((sum, row) => sum + row.provisional, 0)} />
         </div>
       </section>
 
@@ -302,13 +309,14 @@ export function ProgressPage({
           <div className="pMasteryMeta">
             <span>{t.confidence}: {confidencePercent === null ? "—" : `${confidencePercent}%`}</span>
             <span className={`pChip ${current.readiness ? "good" : "learning"}`}>
-              {current.readiness ? t.ready : t.building}
+              {current.progressStatus ? <ProgressStatus status={current.progressStatus} language={language} /> : current.readiness ? t.ready : t.building}
             </span>
             <span>
               {current.evidenceCount} {t.answers}
             </span>
           </div>
           <p>{t.masteryHelp}</p>
+          {current.assessmentScope === "understanding_only" ? <p>{PROGRESS_TEXT[language].scopeNote}</p> : null}
           <Link href={current.learnHref} className="pMasteryLink">
             {t.practise} <span aria-hidden="true">{"→"}</span>
           </Link>
@@ -323,7 +331,7 @@ export function ProgressPage({
           </Link>
         </div>
         <div className="pGrid">
-          {rows.map(({ subject, percent, tone, done, total }) => (
+          {rows.map(({ subject, percent, tone, done, total, understandingOnly, provisional }) => (
             <Link
               key={subject.key}
               href={`/dashboard?lang=${language}&view=learning&subjectId=${subject.subjectId}`}
@@ -356,6 +364,9 @@ export function ProgressPage({
                 <span className={`pChip ${tone}`}>{t[tone]}</span>
                 <small>{done} / {total} {t.mastered}</small>
               </span>
+              <div style={{ gridColumn: "1 / -1", minWidth: 0 }}>
+                <ProgressBreakdown language={language} full={done} understandingOnly={understandingOnly} provisional={provisional} />
+              </div>
             </Link>
           ))}
         </div>

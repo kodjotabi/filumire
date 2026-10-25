@@ -230,6 +230,15 @@ export interface CompetencyDefinition {
   subskills: string[];
   misconceptions: string[];
 
+  /*
+   * "understanding_only": FILUMIRE assesses the understanding the
+   * indicator needs, but not the performance it also asks for (a
+   * conversation, fieldwork or a practical). Mastery of such a topic
+   * is reported as understanding mastered, never as the full
+   * indicator. Absent means the full indicator is assessed.
+   */
+  assessmentScope?: "full" | "understanding_only";
+
   difficulty: number;
 
   masteryRequirements: {
@@ -1236,14 +1245,19 @@ export function getInitialCompetencyForCurriculumSubjectLevel(
   subjectId: SubjectId,
   learningLevelId: LearningLevelId,
 ): CompetencyDefinition | undefined {
-  return getCompetenciesForCurriculumSubjectLevel(
+  const candidates = getCompetenciesForCurriculumSubjectLevel(
     curriculumFrameworkId,
     subjectId,
     learningLevelId,
-  ).find(
+  );
+  const candidateIds = new Set(candidates.map(competency => competency.id));
+  // Select a root within the published class/subject. External foundations are
+  // checked during learning, including when only part of a curriculum is loaded.
+  return candidates.find(
     (competency) =>
       competency.prerequisiteCompetencyIds.length === 0,
-  );
+  ) ?? candidates.find(competency =>
+    competency.prerequisiteCompetencyIds.every(id => !candidateIds.has(id)));
 }
 
 export function getAllSubjects(): Subject[] {

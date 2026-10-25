@@ -12,6 +12,10 @@ import {
   getContentForCompetency,
 } from "../content-store";
 
+import {
+  isOnAdaptivePath,
+} from "../content-store/evidence-role";
+
 function getPreferredTeachingStrategies(
   action: AdaptiveAction,
 ): InstructionalStrategy[] {
@@ -173,6 +177,11 @@ function getQuestionPool(
   content: LearningContent,
 ): QuestionPool | undefined {
   if (!content.assessmentItemId) {
+    return undefined;
+  }
+
+  /* Optional teacher extensions and retired items are never chosen. */
+  if (!isOnAdaptivePath(content)) {
     return undefined;
   }
 

@@ -1141,6 +1141,8 @@ function LearnerDashboardView() {
                     confidence: data.progress.confidence,
                     evidenceCount: data.progress.evidenceCount,
                     readiness: data.progress.readiness,
+                    progressStatus: data.progress.progressStatus,
+                    assessmentScope: data.progress.assessmentScope,
                     learnHref,
                   }}
                   renderIcon={(key) => <SubjectIcon name={key} />}

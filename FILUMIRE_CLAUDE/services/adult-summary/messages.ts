@@ -21,6 +21,8 @@ export interface SummaryMessages {
   interventionFocus: Record<InterventionType, string>;
   retention: Record<"retained" | "not_retained" | "pending", string>;
   transfer: Record<"demonstrated" | "not_demonstrated" | "pending", string>;
+  /* Basic 7-9 Step 0: shown for a topic assessed for understanding only. */
+  understandingOnly: string;
   topicFallback: string;
   quote: (topic: string) => string;
   home: {
@@ -84,6 +86,7 @@ export const SUMMARY_MESSAGES: Record<SummaryLanguage, SummaryMessages> = {
       not_demonstrated: "The learner needs more practice using this learning in different situations.",
       pending: "FILUMIRE is checking whether this learning can be used in a new situation.",
     },
+    understandingOnly: "FILUMIRE checks the understanding this topic needs. The practical or spoken part of the topic is not observed by FILUMIRE, so it is not counted as fully mastered.",
     topicFallback: "this learning",
     quote: (topic) => topic,
     home: {
@@ -181,6 +184,7 @@ export const SUMMARY_MESSAGES: Record<SummaryLanguage, SummaryMessages> = {
       not_demonstrated: "L'apprenant a besoin de plus d'entraînement pour utiliser cet apprentissage dans des situations différentes.",
       pending: "FILUMIRE vérifie si cet apprentissage peut être utilisé dans une situation nouvelle.",
     },
+    understandingOnly: "FILUMIRE vérifie la compréhension dont ce sujet a besoin. La partie pratique ou orale du sujet n'est pas observée par FILUMIRE ; elle n'est donc pas comptée comme entièrement maîtrisée.",
     topicFallback: "cet apprentissage",
     quote: (topic) => `« ${topic} »`,
     home: {

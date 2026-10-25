@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ProgressStatus } from "./ProgressStatus";
 import type { ReactNode } from "react";
 
 import type { LearningOverview } from "../../services/learning-client";
@@ -214,7 +215,7 @@ export function SubjectPage({
                 <strong>{area.title}</strong>
                 {current ? <small>{t.here}</small> : null}
               </div>
-              <span className="subjectAreaPill">{t.status[area.status]}</span>
+              <span className="subjectAreaPill" style={{ flex: "0 1 45%", minWidth: 0, overflowWrap: "anywhere" }}>{area.progressStatus ? <ProgressStatus status={area.progressStatus} language={language} /> : t.status[area.status]}</span>
             </Link>
           </li>
         );

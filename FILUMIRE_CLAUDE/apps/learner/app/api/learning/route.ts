@@ -2,6 +2,8 @@
 import { getCompetenciesForSubject as getSubjectCompetencies } from "../../../../../packages/curriculum";
 import { createHash } from "node:crypto";
 import { supportsSpacedRevision } from "../../../../../services/learner-path/revision";
+import { progressForState } from "../../../../../services/learner-progress/reporting";
+import { isAuthorisedRepair } from "../../../../../services/learner-path/repair-scope";
 import { getIntervention } from "../../../../../services/intervention-store";
 import { getEvidence } from "../../../../../services/evidence-store";
 import { getPilotMeasurementEvents } from "../../../../../services/pilot-measurement";
@@ -143,13 +145,12 @@ function buildProgress(
     ReturnType<typeof createInitialLearnerState>
   >,
   language: string | undefined = learnerState.language,
+  activeCompetencyId?: string,
 ) {
   const competencies = learnerState.competencies;
-  const activeCompetency = competencies[0];
-  const completedCompetencies = competencies.filter(
-    (competency) =>
-      competency.readinessState?.readyForAdvancement,
-  ).length;
+  const activeCompetency = competencies.find(c => c.competencyId === activeCompetencyId) ?? competencies[0];
+  const statuses = competencies.map(c => progressForState(c, getCompetency(c.competencyId)?.assessmentScope));
+  const completedCompetencies = statuses.filter(status => status === "mastered").length;
   const masteryEstimate =
     activeCompetency?.masteryEstimate ?? 0;
   const confidence =
@@ -173,6 +174,10 @@ function buildProgress(
       activeCompetency?.competencyId,
     competencyCount: competencies.length,
     completedCompetencies,
+    understandingOnlyCompetencies: statuses.filter(status => status === "understanding_only").length,
+    provisionalCompetencies: statuses.filter(status => status === "provisional").length,
+    progressStatus: progressForState(activeCompetency, activeCompetencyDefinition?.assessmentScope),
+    assessmentScope: activeCompetencyDefinition?.assessmentScope ?? "full",
     masteryEstimate,
     confidence,
     evidenceCount:
@@ -356,8 +361,8 @@ async function resolveProductionCompetencyId(
 
     if (
       !requestedCompetency ||
-      requestedCompetency.subjectId !==
-        resolved.subject.id
+      (requestedCompetency.subjectId !== resolved.subject.id &&
+        !await isAuthorisedRepair(context, requestedCompetencyId))
     ) {
       throw new Error(
         "Unknown curriculum selection.",
@@ -374,8 +379,8 @@ async function resolveProductionCompetencyId(
 
     if (
       activeCompetency &&
-      activeCompetency.subjectId ===
-        resolved.subject.id
+      (activeCompetency.subjectId === resolved.subject.id ||
+        await isAuthorisedRepair(context, activeCompetency.id))
     ) {
       return activeCompetency.id;
     }
@@ -722,7 +727,7 @@ export async function GET(
       const empty = { learnerId: identity.learnerId, competencies: [] };
       const learnerState = state ?? empty;
       // The page's language, without saving it: this view stays read-only.
-      const progress = state ? buildProgress(state, (await resolveLearningLanguage(request, identity.learnerId)) ?? state.language) : {
+      const progress = state ? buildProgress(state, (await resolveLearningLanguage(request, identity.learnerId)) ?? state.language, context.activeCompetencyId) : {
         learnerId: identity.learnerId, competencyCount: 0, completedCompetencies: 0,
         masteryEstimate: 0, confidence: 0, evidenceCount: 0, readiness: false, percent: 0,
         subjectId: context.activeSubjectId,
@@ -977,7 +982,7 @@ export async function POST(
         !getAvailableSubjectsForContext(context).some(
           (subject) =>
             subject.id === competencySubjectId,
-        )
+        ) && !await isAuthorisedRepair(context, body.competencyId)
       ) {
         return notFoundResponse(
           "Unknown curriculum selection.",

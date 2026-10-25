@@ -3,6 +3,7 @@ import type { CompetencyDefinition } from "../../packages/curriculum";
 import { GHANA_B7_CCP_REGISTRY } from "../../packages/curriculum-framework/ghana-b7-ccp";
 import { pilotContent, competency as pilotCompetency } from "./ghana-b7-materials-pilot";
 import { buildTopic, type Text, type Lesson, type Question } from "./authored-builder";
+import { automateJhsCompetencies, automateJhsContent } from "./jhs-automatic-assessment";
 
 // Authored, unpublished batch. No production seed or application entry imports it.
 // Preserve page/row IDs and reuse the first pilot's teaching, not a second lesson.
@@ -11,14 +12,14 @@ export const MATERIALS_SOURCES = ["science:pdf39:row1", "science:pdf40:row1", "s
   if (!source || source.sourceIssueIds.length) throw new Error(`Unresolved Materials source: ${id}`);
   return source;
 });
-export const MATERIALS_COMPETENCIES: CompetencyDefinition[] = MATERIALS_SOURCES.map((source, i) => ({
+export const MATERIALS_COMPETENCIES: CompetencyDefinition[] = automateJhsCompetencies(MATERIALS_SOURCES.map((source, i) => ({
   ...pilotCompetency, id: source.id, title: source.title, description: source.title,
   learningIndicatorId: source.curriculumNodeId, contentStandardId: source.hierarchy.contentStandardId,
   subskills: i === 0 ? [...pilotCompetency.subskills] : i === 1 ? ["explain-liquid-uses", "report-community-observations", "justify-liquid-conservation"] : ["explain-solid-uses", "justify-material-conservation", "make-and-evaluate-solid-model"],
   misconceptions: i === 0 ? [...pilotCompetency.misconceptions] : ["confuses-use-with-property", "unsupported-conservation-claim"],
   // Reuse current test-pilot policies only; these are not NaCCA-specified thresholds.
   prerequisiteCompetencyIds: [], successorCompetencyIds: [], relatedCompetencyIds: [],
-}));
+})));
 const t = (en: string, fr: string): Text => ({ en, fr });
 const tasks = [
   [t("Independently make a dated observation table for safely available stone, water and air. Record texture, appearance, colour and shape; write 'not observed' where appropriate. Classify each, explain differences and give local examples. Show the real observations to your teacher.", "Réalise seul un tableau d'observations daté pour une pierre, de l'eau et de l'air accessibles sans danger. Note texture, aspect, couleur et forme ; indique « non observé » si nécessaire. Classe chaque matière, explique les différences et donne des exemples locaux. Montre tes vraies observations à l'enseignant."), t("Observe a new safe solid, liquid and evidence of a gas with permission. Independently explain which properties support each classification, distinguishing material from container. Do not invent observations.", "Avec autorisation, observe un nouveau solide, un liquide et un indice de gaz sans danger. Justifie seul chaque classement par les propriétés, en distinguant matière et récipient. N'invente pas d'observations."), t("Revisit your observation table independently. Explain one correction using the actual material and justify why colour alone cannot determine state.", "Reprends seul ton tableau. Justifie une correction avec la vraie matière et explique pourquoi la couleur seule ne détermine pas l'état."), t("Prepare a fresh comparison of safe materials, with labelled columns, observed properties and an explanation of their states. A teacher must inspect your work and discussion.", "Prépare une nouvelle comparaison de matières sûres avec colonnes légendées, propriétés observées et explication des états. L'enseignant doit examiner ton travail et ta discussion.")],
@@ -48,7 +49,7 @@ const units = [undefined, {
   options: [[t("Wood can support a chair because suitable wood is rigid", "Un bois adapté peut soutenir une chaise car il est rigide"), t("Every solid is suitable for every object", "Tous les solides conviennent à tous les objets"), t("Colour alone proves usefulness", "La couleur seule prouve l'utilité")], [t("A proposed arrangement, with limits that must be explained", "Une disposition proposée dont il faut expliquer les limites"), t("That a real building is safe", "Qu'un vrai bâtiment est sûr"), t("That the model is suitable housing for an animal", "Que le modèle convient pour loger un animal")], [t("Clean reusable material and teacher-approved tools", "Des matières propres réutilisables et des outils autorisés"), t("Unknown sharp waste", "Des déchets coupants inconnus"), t("Mains electrical parts", "Des pièces électriques du secteur")]],
 }];
 
-export const MATERIALS_BATCH_CONTENT: LearningContent[] = MATERIALS_SOURCES.flatMap((source, i) => {
+const MATERIALS_TEACHER_CONTENT: LearningContent[] = MATERIALS_SOURCES.flatMap((source, i) => {
   const unit = units[i];
   const topic = { competencyId: source.id, slug: `jhs-materials-p${source.source.pdfPages[0]}-${i}`, level: "b7", version: "jhs-materials-1", source: `${source.source.url}#page=${source.source.pdfPages[0]}; SHA-256 ${source.source.sha256}`, defaultCode: source.officialCode };
   const lessons: Lesson[] = unit ? [
@@ -83,3 +84,6 @@ export const MATERIALS_BATCH_CONTENT: LearningContent[] = MATERIALS_SOURCES.flat
         rubricCriteria: JSON.stringify(item.language === "en" ? ["Inspect the actual observations, report or product requested; invented or unfinished work is insufficient.", "Check scientific explanations against the observations and checked information sources where required.", "Verify an independent explanation and acknowledge group or adult support; copied/guided work is insufficient.", "For model/table tasks inspect the actual labelled product and its limits; an option selection cannot establish performance."] : ["Examiner les vraies observations, le rapport ou le produit demandé ; un travail inventé ou inachevé ne suffit pas.", "Vérifier les explications scientifiques avec les observations et les sources consultées lorsque requises.", "Vérifier l'explication autonome et préciser les aides ; un travail copié ou guidé ne suffit pas.", "Examiner le vrai tableau ou modèle légendé et ses limites ; un choix de réponse ne démontre pas la réalisation."]), rubricStatus: "authored_pending_educator_review" } };
   });
 });
+
+// Step 0: the automatic adaptive path; teacher tasks above become optional extensions.
+export const MATERIALS_BATCH_CONTENT: LearningContent[] = automateJhsContent(MATERIALS_TEACHER_CONTENT, MATERIALS_COMPETENCIES);

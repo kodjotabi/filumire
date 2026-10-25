@@ -21,6 +21,7 @@ import {
 } from "../learner-progress";
 
 import { SUMMARY_MESSAGES, type SummaryLanguage, type SummaryMessages } from "./messages";
+import { progressForState, type LearningProgressStatus } from "../learner-progress/reporting";
 
 export const PARENT_HOME_EXPERIENCE_VERSION =
   "parent-home-v1";
@@ -75,6 +76,9 @@ export interface AdultLearnerSummary {
   confidencePercent: number;
   evidenceCount: number;
   readyForAdvancement: boolean;
+  /* Present when the topic is assessed for understanding only. */
+  assessmentScopeNote?: string;
+  progressStatus?: LearningProgressStatus;
   retentionStatus?: string;
   transferStatus?: string;
   needsSupport?: string;
@@ -354,7 +358,7 @@ export async function buildAdultLearnerSummary(
   }
 
   const activeCompetency =
-    learnerState.competencies[0];
+    learnerState.competencies.find(c => c.competencyId === context?.activeCompetencyId) ?? learnerState.competencies[0];
 
   const competencyDefinition = getCompetency(
     activeCompetency.competencyId,
@@ -451,9 +455,13 @@ export async function buildAdultLearnerSummary(
     ),
     evidenceCount:
       activeCompetency.evidenceCount,
+    progressStatus: progressForState(activeCompetency, competencyDefinition?.assessmentScope),
     readyForAdvancement:
       activeCompetency.readinessState
         ?.readyForAdvancement ?? false,
+    ...(competencyDefinition?.assessmentScope === "understanding_only"
+      ? { assessmentScopeNote: messages.understandingOnly }
+      : {}),
     retentionStatus:
       friendlyRetentionStatus(
         messages,
