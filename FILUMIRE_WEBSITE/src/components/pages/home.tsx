@@ -62,7 +62,7 @@ export default function HomePage() {
                 <div className="hero-proof-text">
                   <strong>Ghana NaCCA Curriculum Focus</strong>
                   <br />
-                  Primary Basic 4, 5 &amp; 6 &bull; Educational Design
+                  Primary Basic 4, 5 &amp; 6 &bull; JHS 1, 2 &amp; 3
                 </div>
               </div>
             </div>

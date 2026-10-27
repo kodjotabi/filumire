@@ -32,7 +32,7 @@ export function Footer(_props: { locale?: Locale }) {
         <div className="footer-nav-grid">
           {/* Brand Column */}
           <div className="footer-brand-col">
-            <Link href="/" className="brand-link">
+            <Link href="/ghana" className="brand-link">
               <img
                 src="/brand/filumire-logo-white.svg"
                 alt="FILUMIRE"

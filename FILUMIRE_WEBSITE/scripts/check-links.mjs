@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 const base = new URL(process.argv[2] || "http://127.0.0.1:3147");
-const english = ["/", "/how-it-works", "/curriculum", "/for-families", "/for-schools", "/about", "/contact", "/access", "/partners", "/privacy"];
+const english = ["/", "/ghana", "/cote-divoire", "/nigeria", "/how-it-works", "/curriculum", "/for-families", "/for-schools", "/about", "/contact", "/access", "/partners", "/privacy"];
 const routes = english.flatMap(path => [path, path === "/" ? "/fr" : "/fr" + path]);
 const decode = value => value.replaceAll("&amp;", "&").replaceAll("&#x27;", "'").replaceAll("&quot;", '"');
 const pages = new Map();
@@ -37,8 +37,14 @@ for (const path of routes) {
   for (const match of html.matchAll(/<a\b[^>]*\bhref="([^"]*)"[^>]*>/g)) links.add(decode(match[1]));
   for (const match of html.matchAll(/(?:src|href)="([^" ]+\.(?:js|css|woff2))(?:\?[^" ]*)?"/g)) assets.add(decode(match[1]));
   for (const match of html.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g)) images.add(decode(match[1]));
-  assert.match(html, /aria-controls="primary-navigation"/);
-  assert.match(html, /id="primary-navigation"/);
+  if (["/", "/cote-divoire", "/nigeria"].includes(path.replace(/^\/fr(?=\/|$)/, "") || "/")) {
+    // International pages: own header with operational EN/FR switch and real country navigation.
+    assert.match(html, /class="intl-header"/, path + " needs the international header");
+    assert.match(html, /data-language-switch="true"/, path + " needs the language switch");
+  } else {
+    assert.match(html, /aria-controls="primary-navigation"/);
+    assert.match(html, /id="primary-navigation"/);
+  }
   assert.doesNotMatch(html, /app\.filumire\.example\.com|Your inquiry has been received|Endpoint status: Connected|FranÃ§ais|â€¢|Â©/);
 }
 let internal = 0;

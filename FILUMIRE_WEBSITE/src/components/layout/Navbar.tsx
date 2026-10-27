@@ -60,7 +60,7 @@ export function Navbar() {
       </div>
       <div className="site-container">
         <div className="site-header">
-          <Link href="/" className="brand-link" onClick={closeMenu}>
+          <Link href="/ghana" className="brand-link" onClick={closeMenu}>
             <img src="/brand/filumire-f.svg" alt="" className="brand-mark-img" width="28" height="28" style={{background:"white", borderRadius:"50%", padding:8, width:44, height:44, flexShrink:0}} /><img src="/brand/filumire-logo-blue.svg" alt="FILUMIRE home" className="brand-logo-img" width="190" height="42" />
           </Link>
           <nav aria-label="Main navigation">

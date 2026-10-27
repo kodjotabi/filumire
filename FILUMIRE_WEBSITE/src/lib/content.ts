@@ -46,7 +46,7 @@ export const SITE_CONTENT = {
       subhead: "FILUMIRE is an EduTutor and adaptive learning project for African learners, designed to understand learning gaps and support children, families and teachers.",
       primaryCta: "Explore Learner Access",
       secondaryCta: "Explore How It Works",
-      taglineBadge: "Made for Africa • Ghana Primary B4–B6",
+      taglineBadge: "Made for Africa • Ghana Primary B4–B6 • JHS 1–3",
     },
     pillars: [
       {

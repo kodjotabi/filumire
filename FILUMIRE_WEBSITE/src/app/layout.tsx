@@ -3,9 +3,11 @@ import { headers } from "next/headers";
 import type { Metadata } from "next";
 import "./fonts.css";
 import "./globals.css";
+import "./international.css";
 import { LanguageState } from "@/components/LanguageState";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SiteFrame } from "@/components/layout/SiteFrame";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin()),
@@ -43,9 +45,7 @@ export default async function RootLayout({
       </head>
       <body>
         <LanguageState />
-        <Navbar />
-        <main id="main-content" tabIndex={-1} style={{ flex: "1 0 auto" }}>{children}</main>
-        <Footer locale={locale} />
+        <SiteFrame header={<Navbar />} footer={<Footer locale={locale} />}>{children}</SiteFrame>
       </body>
     </html>
   );
