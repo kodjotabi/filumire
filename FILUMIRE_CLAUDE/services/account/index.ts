@@ -583,6 +583,36 @@ export async function removeTeacherFromLearner(
   await revokePrincipalLearnerAccess(teacherPrincipalId, learnerId, "teacher");
 }
 
+/*
+ * A teacher stops teaching a learner. Only the teacher's own link
+ * ends: the learner, the guardian, other teachers and every learning
+ * record are untouched, and the guardian can link the teacher again
+ * with a new code.
+ */
+export async function leaveLearnerAsTeacher(
+  teacherPrincipalId: string,
+  learnerId: string,
+  confirmation: unknown,
+): Promise<void> {
+  await requireTeacher(teacherPrincipalId);
+
+  if (confirmation !== true) {
+    throw new AccountValidationError("confirmation", "Confirm that you want to stop teaching this learner.");
+  }
+
+  const access = await getPrincipalLearnerAccess(
+    teacherPrincipalId,
+    learnerId,
+    "teacher",
+  );
+
+  if (access?.status !== "active") {
+    throw new AccountForbiddenError("This learner is not linked to you.");
+  }
+
+  await revokePrincipalLearnerAccess(teacherPrincipalId, learnerId, "teacher");
+}
+
 async function requireGuardian(principalId: string): Promise<void> {
   const credential = await accountStore.getCredentialByPrincipal(principalId);
 

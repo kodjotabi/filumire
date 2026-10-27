@@ -6,6 +6,7 @@ import type {PerformanceAttestation} from '../../../../services/teacher-review/j
 import { AdultHeader, AdultRoleSwitch, adultRole } from "../../components/filumire/AdultRoleSwitch";
 import { useLanguage, type Language } from "../../components/filumire/language";
 import { TeacherLinkLearner } from "../../components/filumire/TeacherLinkLearner";
+import { TeacherLeaveLearner } from "../../components/filumire/TeacherLeaveLearner";
 import { AccountSecurity } from "../../components/filumire/AccountSecurity";
 import { accountErrorMessage, fetchAccount, signOut, type Account } from "../../services/account-client";
 
@@ -389,6 +390,11 @@ export default function TeacherPage() {
     setAccount(await fetchAccount().catch(() => account));
     // In the background, so the link form and its message stay.
     await load(learnerId, null, true);
+  }
+
+  async function afterLeave() {
+    setAccount(await fetchAccount().catch(() => account));
+    await load();
   }
 
   const selectedCompetency = useMemo(() => {
@@ -1823,6 +1829,18 @@ export default function TeacherPage() {
                 onLinked={(learnerId) => void afterLink(learnerId)}
               />
             ) : null}
+            {data?.selectedLearnerId && (
+              <TeacherLeaveLearner
+                key={data.selectedLearnerId}
+                language={language}
+                learnerId={data.selectedLearnerId}
+                learnerName={learnerName(
+                  data.selectedLearnerId,
+                  Math.max(0, data.learners.findIndex((learner) => learner.learnerId === data.selectedLearnerId)),
+                )}
+                onLeft={() => void afterLeave()}
+              />
+            )}
             <AccountSecurity language={language} minLength={8} />
             <button
               type="button"
