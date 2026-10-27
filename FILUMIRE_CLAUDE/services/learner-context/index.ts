@@ -11,8 +11,20 @@ import {
 } from "../../packages/curriculum-framework";
 import { getCompetency } from "../../packages/curriculum";
 import { isRepairCandidate, isAuthorisedRepair } from "../learner-path/repair-scope";
+import { seedPrivateJhsContent } from "../content-store/jhs-private";
 
 export type { GradeSetBy, LearnerLearningContextRecord };
+
+/*
+ * Basic 7-9 classes exist only once the private presentation's
+ * scope is registered. A route that checks a class before anything
+ * has loaded content (a cold server instance) would otherwise
+ * refuse them. Registration does nothing while the presentation is
+ * off, and repeating it is harmless.
+ */
+function registerPresentationClasses(): void {
+  seedPrivateJhsContent();
+}
 
 /*
  * Raised when a requested grade, subject or competency does not
@@ -42,6 +54,7 @@ export async function requireSupportedGrade(
     context?.curriculumVersionId ??
     getDefaultLearnerLearningContext().curriculumVersionId;
 
+  registerPresentationClasses();
   if (!isSupportedGrade(curriculumVersionId, gradeId)) {
     throw new LearnerContextValidationError("Unsupported grade.");
   }
@@ -172,6 +185,7 @@ export async function setLearnerGrade(
     learnerId,
   );
 
+  registerPresentationClasses();
   if (
     !isSupportedGrade(
       context.curriculumVersionId,
