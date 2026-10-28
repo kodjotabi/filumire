@@ -40,7 +40,7 @@ test("subjects match the learner app: four active, eight JHS Curriculum Review, 
  assert.equal(site.SUBJECT_COPY.en.review,"Curriculum Review");assert.equal(site.SUBJECT_COPY.fr.review,"Programme en préparation");
  const icons=await read("../src/components/site/icons.tsx");
  for(const subject of [...site.ACTIVE_SUBJECTS,...site.REVIEW_SUBJECTS.jhs])assert.ok(icons.includes(`name === "${subject.key}"`),subject.key+" has an icon");
- const app=await read("../../FILUMIRE_CLAUDE/apps/learner/components/filumire/subjectCatalogue.ts");
+ const app=(await read("../../FILUMIRE_CLAUDE/apps/learner/components/filumire/subjectCatalogue.ts")).replaceAll("\\u00AD","\u00AD");
  for(const subject of site.REVIEW_SUBJECTS.jhs){assert.ok(app.includes(`"${subject.key}"`));assert.ok(app.includes(`en: "${subject.name.en}", fr: "${subject.name.fr}"`),subject.key+" has the learner app's names");}
 });
 

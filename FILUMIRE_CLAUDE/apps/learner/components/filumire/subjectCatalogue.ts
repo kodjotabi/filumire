@@ -37,7 +37,7 @@ const JUNIOR_HIGH_REVIEW_SUBJECTS: readonly ReviewSubject[] = [
   { key: "french", name: { en: "French", fr: "Français" } },
   { key: "arabic", name: { en: "Arabic", fr: "Arabe" } },
   { key: "creative-arts-design", name: { en: "Creative Arts and Design", fr: "Arts créatifs et design" } },
-  { key: "career-technology", name: { en: "Career Technology", fr: "Technologie professionnelle" } },
+  { key: "career-technology", name: { en: "Career Technology", fr: "Technologie profession\u00ADnelle" } },
   { key: "social-studies", name: { en: "Social Studies", fr: "Études sociales" } },
   { key: "rme", name: { en: "Religious and Moral Education", fr: "Éducation religieuse et morale" } },
   { key: "physical-health-education", name: { en: "Physical and Health Education", fr: "Éducation physique et à la santé" } },
