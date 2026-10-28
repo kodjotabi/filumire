@@ -26,12 +26,14 @@ function ArrowRight() {
 }
 
 /*
- * Built-in FILUMIRE sign-in (services/account): parents and
- * guardians sign in with their email address, learners with the
+ * Built-in FILUMIRE sign-in (services/account): parents, guardians
+ * and teachers sign in with their email address, learners with the
  * username their parent chose. After sign-in a learner goes to
  * their learning (or first-time setup), a guardian to the family
- * page. Local development builds also keep a clearly labelled way
- * in as the built-in test learner.
+ * page, a teacher to the teacher workspace. New parents and new
+ * teachers each have their own create-account button. Local
+ * development builds also keep a clearly labelled way in as the
+ * built-in test learner.
  */
 const LOCAL_TESTING = process.env.NODE_ENV !== "production";
 
@@ -47,7 +49,7 @@ const TEXT = {
     intro: ["Sign in to continue your learning", "journey with FILUMIRE."],
     signIn: "Sign In",
     registeredTitle: "Already registered? Sign In",
-    cardIntro: "Enter your details to continue.",
+    cardIntro: "Learners, parents and teachers all sign in here.",
     identity: "Email (parents and teachers) or username (learners)",
     identityPlaceholder: "Email or username",
     signingIn: "Signing in…",
@@ -59,9 +61,10 @@ const TEXT = {
     hidePassword: "Hide password",
     forgotLink: "Forgot your password?",
     newTitle: "New to FILUMIRE?",
-    newBody: "Parents and guardians create the family account, then add each learner.",
+    newBody: "Parents and guardians create the family account, then add each learner. Teachers create their own account.",
     create: "Create Account",
-    createFirstTime: "Create Account — First-Time Users",
+    createParent: "I'm a parent or guardian",
+    createTeacher: "I'm a teacher",
     localTitle: "Local testing",
     localBody:
       "Development build only. Opens FILUMIRE as the built-in test learner (in-memory data, reset when the server restarts). This is not a real sign-in and never appears in production.",
@@ -81,7 +84,7 @@ const TEXT = {
     intro: ["Connecte-toi pour continuer", "ton parcours avec FILUMIRE."],
     signIn: "Connexion",
     registeredTitle: "Déjà inscrit ? Connexion",
-    cardIntro: "Saisis tes informations pour continuer.",
+    cardIntro: "Apprenants, parents et enseignants se connectent ici.",
     identity: "E-mail (parents et enseignants) ou identifiant (apprenants)",
     identityPlaceholder: "E-mail ou identifiant",
     signingIn: "Connexion…",
@@ -93,9 +96,10 @@ const TEXT = {
     hidePassword: "Masquer le mot de passe",
     forgotLink: "Mot de passe oublié ?",
     newTitle: "Nouveau sur FILUMIRE ?",
-    newBody: "Les parents et tuteurs créent le compte famille, puis ajoutent chaque apprenant.",
+    newBody: "Les parents et tuteurs créent le compte famille, puis ajoutent chaque apprenant. Les enseignants créent leur propre compte.",
     create: "Créer un compte",
-    createFirstTime: "Créer un compte — Première visite",
+    createParent: "Je suis parent ou tuteur",
+    createTeacher: "Je suis enseignant ou enseignante",
     localTitle: "Test local",
     localBody:
       "Version de développement uniquement. Ouvre FILUMIRE avec l'apprenant de test intégré (données en mémoire, effacées au redémarrage du serveur). Ce n'est pas une vraie connexion et cela n'apparaît jamais en production.",
@@ -218,7 +222,10 @@ export default function LoginPage() {
         <h2 id="create-account-title">{t.create}</h2>
         <p>{t.newBody}</p>
         <Link href={`/register?lang=${language}`} className="createButton">
-          {t.createFirstTime} <ArrowRight />
+          {t.createParent} <ArrowRight />
+        </Link>
+        <Link href={`/register?lang=${language}&role=teacher`} className="createButton teacherCreate">
+          {t.createTeacher} <ArrowRight />
         </Link>
         <a className="createButton subscriptionLink" href={publicSiteHref("/pricing", language)}>{language === "fr" ? "Abonnement" : "Subscription"}</a>
         <p className="subscriptionAvailability">{language === "fr" ? "Consulte les tarifs. Le paiement et les droits d’abonnement connectés ne sont pas disponibles dans cet aperçu." : "View pricing information. Payments and connected subscription access are not available in this preview."}</p>
@@ -317,6 +324,7 @@ export default function LoginPage() {
 
 
       <style>{`
+        .loginPage .teacherCreate { margin-top: 8px; }
         .loginPage .subscriptionLink { margin-top: 12px; text-decoration: none; background: transparent; color: var(--ui-blue); border: 1px solid var(--ui-line); }
         .loginPage .newAccount > .createButton { height: auto; min-height: 48px; line-height: 1.35; text-align: center; }
         .newAccount .btnArrow { flex: none; }
