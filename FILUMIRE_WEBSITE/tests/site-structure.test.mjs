@@ -89,6 +89,13 @@ test("pricing stays hidden until payments are live",async()=>{
  for(const file of ["ParentAccount.tsx","LegacyParentAccount.tsx"])assert.match(await read("../src/components/subscriptions/"+file),/paymentsLive\(\) \? <Link[^>]*\/pricing/);
 });
 
+test("the learner app's pricing links redirect to family support until payments are live",async()=>{
+ const config=await read("../next.config.ts");
+ assert.match(config,/if \(process\.env\.NEXT_PUBLIC_FILUMIRE_PAYMENTS_LIVE !== "true"\) \{\s*MOVED\.push\(\["\/pricing", "\/contact\?inquiry=family"\]\);\s*\}/);
+ assert.ok(config.indexOf("MOVED.push")<config.indexOf("const nextConfig"),"added before the config reads MOVED");
+ assert.match(await read("../src/lib/inquiries.ts"),/"family":"Parent & family support"/);
+});
+
 test("retired pages redirect to their replacements in both languages",async()=>{
  const config=await read("../next.config.ts");
  for(const [from,to] of [["/for-families","/parents"],["/for-schools","/schools"],["/curriculum","/subjects"],["/access","/contact"],["/partners","/about#work-with-us"]]){

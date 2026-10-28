@@ -106,7 +106,12 @@ for (const [from, to] of [["/for-families", "/parents"], ["/for-schools", "/scho
   assert.equal(response.status, 307, prefix + from + " redirects");
   assert.equal(new URL(response.headers.get("location"), base).href, new URL(prefix + to, base).href, prefix + from + " goes to " + prefix + to);
 }
-for (const prefix of ["", "/fr"]) assert.equal((await fetch(new URL(prefix + "/pricing", base))).status, 404, prefix + "/pricing is hidden");
+// While payments are off, the learner app's pricing links (/pricing, /fr/pricing, possibly with ?lang) reach family support.
+for (const [from, to] of [["/pricing", "/contact?inquiry=family"], ["/pricing?lang=en", "/contact?lang=en&inquiry=family"]]) for (const prefix of ["", "/fr"]) {
+  const response = await fetch(new URL(prefix + from, base), { redirect: "manual" });
+  assert.equal(response.status, 307, prefix + from + " redirects while payments are off");
+  assert.equal(new URL(response.headers.get("location"), base).href, new URL(prefix + to, base).href, prefix + from + " goes to " + prefix + to);
+}
 const sitemap = await fetch(new URL("/sitemap.xml",base));
 assert.equal(sitemap.status,200);
 const xml=await sitemap.text();
