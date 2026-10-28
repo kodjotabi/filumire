@@ -111,3 +111,13 @@ test("public scope claims use the approved wording and never present JHS as full
  const app=await read("../../FILUMIRE_CLAUDE/apps/learner/components/filumire/subjectCatalogue.ts");
  assert.match(app,/status: "Programme en préparation"/);assert.doesNotMatch(app,/Programme en revue/);
 });
+
+/* Owner decision (28 Oct 2026): claims state only what can be shown today. */
+test("French, curriculum-review and class-setup claims stay precise",()=>{
+ const en=JSON.stringify(pages).match(/"[^"]*\bFrench\b[^"]*"/g).filter(s=>/learn|use|works|app/i.test(s)&&!/French lessons/.test(s)&&!/^"(English and French|English or French)"$/.test(s));
+ assert.deepEqual(en,[],"every English claim about using FILUMIRE in French notes that French lessons are being prepared");
+ assert.match(pages.HOME_COPY.en.trust[1].text,/^New subjects open to learners only after their curriculum has been reviewed\.$/);
+ assert.match(pages.HOW_COPY.en.steps[0].text,/^A parent, or the learner, chooses the class\./);
+ assert.match(pages.HOW_COPY.fr.steps[0].text,/^Un parent, ou l’élève lui-même, choisit la classe/);
+ assert.ok(!pages.HOME_COPY.en.facts.includes("English and French"));
+});
