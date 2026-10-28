@@ -12,12 +12,13 @@ const refuse = code => { throw new DeployGuardError(code); };
 const hosts = value => new Set((value ?? "").split(",").map(h => h.trim().toLowerCase()).filter(Boolean));
 const OWNER_ROLE = /(^|_)owner$|^postgres$|^neondb_owner$/i;
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-// Same rules as services/account reviewerList(): 1-6 combined "email:guardian|teacher" entries, at most one supplemental entry, no duplicates.
+// Same rules as services/account reviewerList(): 1-20 combined "email:guardian|teacher" entries, at most one supplemental entry, no duplicates.
+const MAX_REVIEWERS = 20;
 const validReviewerList = (value, additional) => {
   const baseEntries = (value ?? "").split(",").map(entry => entry.trim()).filter(Boolean);
   const additionalEntries = (additional ?? "").split(",").map(entry => entry.trim()).filter(Boolean);
   const entries = [...baseEntries, ...additionalEntries];
-  if (!baseEntries.length || additionalEntries.length > 1 || entries.length > 6) return false;
+  if (!baseEntries.length || additionalEntries.length > 1 || entries.length > MAX_REVIEWERS) return false;
   const seen = new Set();
   for (const entry of entries) {
     const at = entry.lastIndexOf(":"), email = entry.slice(0, at).trim().toLowerCase(), role = entry.slice(at + 1).trim().toLowerCase();

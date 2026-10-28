@@ -145,12 +145,14 @@ export function normaliseEmail(value: unknown): string {
 /*
  * Private review: FILUMIRE_ACCESS_MODE=reviewers limits accounts to
  * the owner's list FILUMIRE_REVIEWER_EMAILS ("email:guardian,email:teacher",
- * plus one optional supplemental entry, at most six in total). Only listed
+ * plus one optional supplemental entry, at most twenty in total). Only listed
  * adults may register or sign in, and learners only when the guardian
  * who created them is listed. Refusals reuse the ordinary errors, so
  * nobody can learn who is on the list. An invalid list admits no one.
+ * One email holds one role; a reviewer who needs both roles uses a
+ * second address (e.g. name+teacher@…) as a second entry.
  */
-export const MAX_REVIEWERS = 6;
+export const MAX_REVIEWERS = 20;
 
 type ReviewerRole = Exclude<AccountKind, "learner">;
 
