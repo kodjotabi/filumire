@@ -120,8 +120,11 @@
   .learnerUi .subjectCurrentBody, .learnerUi .fTopic { flex-wrap: wrap; }
 }
 @media (max-width: 1023px) {
-  /* Keep navigation in flow while a text field or voice selector has focus. */
-  .learnerUi:has(textarea:focus, input:focus, select:focus) .filumireBottomNav { position: relative; bottom: auto; }
+  /* Keep navigation in flow while a text field or voice selector has focus, and
+     while a form is in use or a text box holds unsent text. Pressing Send moves
+     focus off the text box; if the bar returned to the bottom edge at that moment
+     it would cover Send and swallow the press (Ask FILU at 320px). */
+  .learnerUi:has(textarea:focus, input:focus, select:focus, form:focus-within, textarea:not(:placeholder-shown)) .filumireBottomNav { position: relative; bottom: auto; }
 }
 @media (min-width: 768px) {
   .learnerUi .homeSubjects { grid-template-columns: repeat(4, minmax(0, 1fr)); }
