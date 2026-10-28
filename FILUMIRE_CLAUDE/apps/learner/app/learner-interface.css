@@ -214,3 +214,17 @@
 .learnerUi[data-appearance="dark"] .learnerShell .filuConversation .filuError { background: #432032; color: #ffd1da; }
 .learnerUi[data-appearance="dark"] .learnerShell .filuConversation .quickAction { background: #203752; color: #e5efff; border-color: #839fbe; }
 .learnerUi[data-appearance="dark"] .learnerShell .filuConversation .message.user > div { background: #1d4a3f; color: #e5efff; border-color: #6fbfa6; }
+
+/* Curriculum Review subject cards (home, junior-high): compact, muted, not interactive. */
+.learnerUi .homeScreen .homeReview { margin-top: 14px; }
+.learnerUi .homeScreen .homeReview h3 { margin: 0 4px 8px; color: var(--ui-ink-soft); font-size: .875rem; font-weight: 700; line-height: 1.4; }
+.learnerUi .homeScreen .homeReviewList { margin: 0; padding: 0; list-style: none; }
+.learnerUi .homeScreen .homeSubject.review { --accent: #7d8fab; --tint: #eef2f7; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 10px; row-gap: 0; min-height: 0; padding: 10px 12px; border-radius: 14px; cursor: default; }
+.learnerUi .homeScreen .homeSubject.review:hover { transform: none; box-shadow: none; }
+.learnerUi .homeScreen .homeSubject.review .homeSubjectIcon { width: 36px; height: 36px; }
+.learnerUi .homeScreen .homeSubject.review .homeSubjectIcon svg { width: 20px; height: 20px; }
+.learnerUi .homeScreen .homeSubject.review .homeSubjectText { padding-right: 0; }
+.learnerUi .homeScreen .homeSubject.review .homeSubjectText strong { font-size: .8125rem; line-height: 1.3; }
+.learnerUi .homeScreen .homeSubject.review .reviewChip { grid-column: 1 / -1; justify-self: start; max-width: 100%; white-space: normal; display: inline-block; margin-top: 8px; padding: 1px 8px; border: 1px solid var(--ui-line); border-radius: 99px; background: #ffffff; color: var(--ui-ink-soft); font-size: .6875rem; font-weight: 700; line-height: 1.5; }
+.learnerUi[data-appearance="dark"] .homeScreen .homeSubject.review .reviewChip { background: transparent; border-color: #58718e; color: #bdcee4; }
+.learnerUi .homeScreen .homeSubject.review .homeSubjectText strong { overflow-wrap: break-word; hyphens: auto; }
