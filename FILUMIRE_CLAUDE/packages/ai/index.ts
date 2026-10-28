@@ -53,6 +53,8 @@ export interface GovernedInstructionalRequest {
     title: string;
     body: string;
     assessmentItemId?: string;
+    /* True when the item is answered by choosing one of its options. */
+    presentsOptions?: boolean;
   };
   instructionalContext: string;
   /*
@@ -279,6 +281,15 @@ function strategyElement(
   }
 }
 
+const FREE_RESPONSE_MODES = new Set([
+  "short_answer",
+  "constructed_response",
+  "worked_solution",
+  "explanation",
+  "oral_response",
+  "observed_performance",
+]);
+
 function responsePrompt(
   request: GovernedInstructionalRequest,
 ): GovernedInstructionalElement | undefined {
@@ -297,6 +308,16 @@ function responsePrompt(
     oral_response: p.oral,
     observed_performance: p.observed,
   }[request.decision.responseMode ?? ""];
+
+  /*
+   * The engine chooses a response mode from its evidence, but the item
+   * delivered decides what the learner can do. A free-response prompt
+   * ("Give a short answer in your own words") above answer options
+   * contradicts the screen, so such items are asked to choose instead.
+   */
+  if (request.content?.presentsOptions && FREE_RESPONSE_MODES.has(request.decision.responseMode ?? "")) {
+    return { type: "next_prompt", text: p.multipleChoice };
+  }
 
   return text ? { type: "next_prompt", text } : undefined;
 }
