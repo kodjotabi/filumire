@@ -18,6 +18,16 @@ export interface EduTutorServiceRequest {
   instructionalContext: string;
 }
 
+/* Options are stored as a JSON array of strings (see the learn page). */
+function hasAnswerOptions(value?: string): boolean {
+  try {
+    const parsed: unknown = value ? JSON.parse(value) : [];
+    return Array.isArray(parsed) && parsed.some(item => typeof item === "string" && item.trim() !== "");
+  } catch {
+    return false;
+  }
+}
+
 export async function generateInstruction(
   request: EduTutorServiceRequest,
 ): Promise<EduTutorResponse> {
@@ -94,6 +104,8 @@ export async function generateInstruction(
           body: request.content.body,
           assessmentItemId:
             request.content.assessmentItemId,
+          presentsOptions:
+            hasAnswerOptions(request.content.metadata?.options),
         }
       : undefined,
     instructionalContext:

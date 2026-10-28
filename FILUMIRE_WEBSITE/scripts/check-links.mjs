@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 const base = new URL(process.argv[2] || "http://127.0.0.1:3147");
-const english = ["/", "/how-it-works", "/curriculum", "/for-families", "/for-schools", "/about", "/contact", "/access", "/partners", "/privacy"];
+const english = ["/", "/how-it-works", "/subjects", "/learners", "/parents", "/schools", "/about", "/contact", "/privacy", "/ghana", "/cote-divoire", "/nigeria"];
 const routes = english.flatMap(path => [path, path === "/" ? "/fr" : "/fr" + path]);
 const decode = value => value.replaceAll("&amp;", "&").replaceAll("&#x27;", "'").replaceAll("&quot;", '"');
 const pages = new Map();
@@ -37,8 +37,11 @@ for (const path of routes) {
   for (const match of html.matchAll(/<a\b[^>]*\bhref="([^"]*)"[^>]*>/g)) links.add(decode(match[1]));
   for (const match of html.matchAll(/(?:src|href)="([^" ]+\.(?:js|css|woff2))(?:\?[^" ]*)?"/g)) assets.add(decode(match[1]));
   for (const match of html.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g)) images.add(decode(match[1]));
+  // One shared header on every page: navigation with its menu control and an operational EN/FR switch.
   assert.match(html, /aria-controls="primary-navigation"/);
   assert.match(html, /id="primary-navigation"/);
+  assert.match(html, /data-language-switch="true"/);
+  assert.match(html, /class="fs-footer"/);
   assert.doesNotMatch(html, /app\.filumire\.example\.com|Your inquiry has been received|Endpoint status: Connected|FranÃ§ais|â€¢|Â©/);
 }
 let internal = 0;
@@ -86,7 +89,7 @@ for (const prefix of ["", "/fr"]) for (const category of categories) {
     assert.ok(!visible.includes('id="inquiry-' + id + '"'), "Removed control " + id);
   assert.doesNotMatch(visible, /contact-details-card|email-contact-actions|webmail-options|href="mailto:|<select\b/);
   assert.ok(visible.includes('id="inquiry-form"'), "Existing form anchor retained");
-  for (const label of prefix ? ["Votre nom", "Votre adresse de courriel", "Votre message", "Envoyer le message"] : ["Your name", "Your email address", "Your message", "Send Message"])
+  for (const label of prefix ? ["Votre nom", "Votre adresse e-mail", "Votre message", "Envoyer le message"] : ["Your name", "Your email address", "Your message", "Send Message"])
     assert.ok(visible.includes(label), "Localized form label: " + label);
 }
 
@@ -97,6 +100,13 @@ for (const prefix of ["", "/fr"]) {
  assert.ok(html.includes(prefix ? "Revenir à l’accueil" : "Return home"));
  assert.ok(html.includes('<html lang="'+(prefix?"fr":"en")+'"'));
 }
+// Retired pages redirect (query kept) and pricing stays hidden until payments are live.
+for (const [from, to] of [["/for-families", "/parents"], ["/for-schools", "/schools"], ["/curriculum", "/subjects"], ["/access", "/contact"], ["/partners", "/about#work-with-us"], ["/for-schools?inquiry=teacher", "/schools?inquiry=teacher"]]) for (const prefix of ["", "/fr"]) {
+  const response = await fetch(new URL(prefix + from, base), { redirect: "manual" });
+  assert.equal(response.status, 307, prefix + from + " redirects");
+  assert.equal(new URL(response.headers.get("location"), base).href, new URL(prefix + to, base).href, prefix + from + " goes to " + prefix + to);
+}
+for (const prefix of ["", "/fr"]) assert.equal((await fetch(new URL(prefix + "/pricing", base))).status, 404, prefix + "/pricing is hidden");
 const sitemap = await fetch(new URL("/sitemap.xml",base));
 assert.equal(sitemap.status,200);
 const xml=await sitemap.text();

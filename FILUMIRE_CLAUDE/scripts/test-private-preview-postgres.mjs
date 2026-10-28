@@ -16,7 +16,9 @@ try {
   if (who.db !== "filumire_test" || who.role !== "filumire_test_user" || who.superuser) throw new Error("Unexpected test database identity.");
 } finally { await client.end(); }
 const root = fileURLToPath(new URL("../", import.meta.url));
-const suites = ["account-registration-journey", "teacher-linking", "auth-rate-limit", "principal-auth-session", "learner-progress", "learning-language", "api-auth-postgres-lifecycle"];
+const suites = ["account-registration-journey", "teacher-linking", "auth-rate-limit", "principal-auth-session", "learner-progress", "api-auth-postgres-lifecycle"];
+// learning-language uses the development identity header, which is memory-only
+// (services/identity developmentIdentityEnabled); it runs in the offline catalogue.
 const selected = process.argv[3] ? suites.filter(suite => suite === process.argv[3]) : suites;
 if (!selected.length) throw new Error("Unknown test suite.");
 for (const suite of selected) {

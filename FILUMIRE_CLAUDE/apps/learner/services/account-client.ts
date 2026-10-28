@@ -277,6 +277,14 @@ export async function linkTeacherToLearner(
   return request("/api/account/teacher-links", { body: { code } });
 }
 
+/* Teacher: stop teaching a learner. Only this teacher's link ends. */
+export async function leaveLearnerAsTeacher(learnerId: string): Promise<void> {
+  await request(`/api/account/teacher-links/${encodeURIComponent(learnerId)}`, {
+    method: "DELETE",
+    body: { confirmRemoval: true },
+  });
+}
+
 export interface NewLearner {
   displayName: string;
   username: string;

@@ -120,8 +120,11 @@
   .learnerUi .subjectCurrentBody, .learnerUi .fTopic { flex-wrap: wrap; }
 }
 @media (max-width: 1023px) {
-  /* Keep navigation in flow while a text field or voice selector has focus. */
-  .learnerUi:has(textarea:focus, input:focus, select:focus) .filumireBottomNav { position: relative; bottom: auto; }
+  /* Keep navigation in flow while a text field or voice selector has focus, and
+     while a form is in use or a text box holds unsent text. Pressing Send moves
+     focus off the text box; if the bar returned to the bottom edge at that moment
+     it would cover Send and swallow the press (Ask FILU at 320px). */
+  .learnerUi:has(textarea:focus, input:focus, select:focus, form:focus-within, textarea:not(:placeholder-shown)) .filumireBottomNav { position: relative; bottom: auto; }
 }
 @media (min-width: 768px) {
   .learnerUi .homeSubjects { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -174,6 +177,18 @@
   .learnerUi .filumireLearnerHeader .filumirePublicHome span { display: none; }
   .learnerUi:has(.filumireBottomNav) .filumireLearnerHeader :is(.filumireAskFilu, .filumireSetupAskFilu) { display: none; }
   .learnerUi .filumireLearnerHeader :is(.filumireHeaderLogo, .filumireSetupLogo) img { width: 104px; }
+}
+/* Narrow phones (320px): Back, logo, website link, language and avatar do not fit
+   on one row. Back shows only its arrow (the word stays its accessible name)
+   and the logo is a little smaller, so no header control overlaps another. */
+@media (max-width: 380px) {
+  .learnerUi .filumireLearnerHeader .filumireBack { position: relative; min-width: var(--learner-touch, 44px); justify-content: center; padding-inline: 8px; }
+  .learnerUi .filumireLearnerHeader .filumireBack > span:not(.filumireBackArrow) {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+  .learnerUi .filumireLearnerHeader :is(.filumireHeaderLogo, .filumireSetupLogo) img { width: 88px; }
+}
+@media (max-width: 767px) {
 
   /* Continue Learning card: the subject and topic never run under the avatar. */
   .learnerUi .homeScreen .homeContinueArt { width: 72px; height: 72px; right: 12px; }
@@ -199,3 +214,17 @@
 .learnerUi[data-appearance="dark"] .learnerShell .filuConversation .filuError { background: #432032; color: #ffd1da; }
 .learnerUi[data-appearance="dark"] .learnerShell .filuConversation .quickAction { background: #203752; color: #e5efff; border-color: #839fbe; }
 .learnerUi[data-appearance="dark"] .learnerShell .filuConversation .message.user > div { background: #1d4a3f; color: #e5efff; border-color: #6fbfa6; }
+
+/* Curriculum Review subject cards (home, junior-high): compact, muted, not interactive. */
+.learnerUi .homeScreen .homeReview { margin-top: 14px; }
+.learnerUi .homeScreen .homeReview h3 { margin: 0 4px 8px; color: var(--ui-ink-soft); font-size: .875rem; font-weight: 700; line-height: 1.4; }
+.learnerUi .homeScreen .homeReviewList { margin: 0; padding: 0; list-style: none; }
+.learnerUi .homeScreen .homeSubject.review { --accent: #7d8fab; --tint: #eef2f7; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 10px; row-gap: 0; min-height: 0; padding: 10px 12px; border-radius: 14px; cursor: default; }
+.learnerUi .homeScreen .homeSubject.review:hover { transform: none; box-shadow: none; }
+.learnerUi .homeScreen .homeSubject.review .homeSubjectIcon { width: 36px; height: 36px; }
+.learnerUi .homeScreen .homeSubject.review .homeSubjectIcon svg { width: 20px; height: 20px; }
+.learnerUi .homeScreen .homeSubject.review .homeSubjectText { padding-right: 0; }
+.learnerUi .homeScreen .homeSubject.review .homeSubjectText strong { font-size: .8125rem; line-height: 1.3; }
+.learnerUi .homeScreen .homeSubject.review .reviewChip { grid-column: 1 / -1; justify-self: start; max-width: 100%; white-space: normal; display: inline-block; margin-top: 8px; padding: 1px 8px; border: 1px solid var(--ui-line); border-radius: 99px; background: #ffffff; color: var(--ui-ink-soft); font-size: .6875rem; font-weight: 700; line-height: 1.5; }
+.learnerUi[data-appearance="dark"] .homeScreen .homeSubject.review .reviewChip { background: transparent; border-color: #58718e; color: #bdcee4; }
+.learnerUi .homeScreen .homeSubject.review .homeSubjectText strong { overflow-wrap: break-word; hyphens: auto; }

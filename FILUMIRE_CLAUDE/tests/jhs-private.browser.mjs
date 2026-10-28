@@ -93,33 +93,54 @@ try {
         reply = next(); await page.locator('.assessment button.primary-button').click();
         assert.equal((await (await reply).json()).assessment.evidence.independence, 'guided');
         await page.locator('.answerCorrection .result.correct').waitFor();
-        await page.locator('.answerCorrection button.primary').click();
-        // Continue the real learner flow, including a lesson-closure card if offered.
-        for (let n = 0; n < 12 && !await page.locator('#learner-response').isVisible(); n++) {
-          if (await page.locator('.closureCard').isVisible()) {
-            const buttons = page.locator('.closureCard button'); await buttons.last().click();
-          } else if (await page.locator('.nextButton').isVisible()) await page.locator('.nextButton').click();
-          else if (await page.locator('.lessonPanel > .primary-button').isVisible()) await page.locator('.lessonPanel > .primary-button').click();
-          else break;
-          await page.waitForLoadState('networkidle');
-        }
-        await page.locator('#learner-response').fill('FICTIONAL AUDIT RESPONSE: demonstrates review routing only; no real practical or oral achievement.');
-        reply = next(); await page.locator('.assessment button.primary-button').click();
-        const pending = await (await reply).json();
-        assert.equal(pending.pendingTeacherReview.status, 'pending');
         const before = (await fixture(`/api/adult/summary?learnerId=${learnerId}`, undefined, guardian.cookie)).data.summary;
         assert.equal(before.progress.gradeId, gradeId);
-        const pendingSummary = (await fixture(`/api/teacher/summary?learnerId=${learnerId}`, undefined, teacher.cookie)).data.summary;
-        assert.equal(pendingSummary.pendingReviewCount, 1);
-        // Verify the real teacher screen exposes the submitted work and records a decision.
-        await tp.goto(`${origin}/teacher?lang=${language}`);
-        if (discipline !== 'english') await tp.locator('.learner-list button').filter({ hasText: name }).click();
-        const reviewItem = tp.locator('.review-item').filter({ hasText: 'FICTIONAL AUDIT RESPONSE' });
-        await reviewItem.waitFor();
-        const reviewed = tp.waitForResponse(r => new URL(r.url()).pathname === '/api/teacher/review' && r.request().method() === 'POST');
-        await reviewItem.locator('button').first().click();
-        assert.equal((await reviewed).status(), 200);
+        await page.locator('.answerCorrection button.primary').click();
+        // Continue the real learner flow (lesson-closure cards and further guided
+        // practice included) until an automatic multiple-choice check is delivered.
+        // Since Step 0, teacher-reviewed tasks are optional extensions that are
+        // never on the learner's adaptive path.
+        // The shown item is identified by its options (displayed shuffled): the authored
+        // items of this topic whose option set is exactly the one on screen.
+        const authoredItems = getContentForCompetency(delivered.content.competencyId);
+        const optionsOf = c => { try { const o = c.metadata?.options; return Array.isArray(o) ? o : JSON.parse(o); } catch { return []; } };
+        async function shownItem() {
+          const values = await page.locator('input[name="answer"]').evaluateAll(inputs => inputs.map(input => input.value));
+          const same = c => { const o = optionsOf(c); return o.length === values.length && o.every(v => values.includes(v)); };
+          // Items can share an option set (e.g. Solid/Liquid/Gas), so the shown question text decides.
+          const text = (await page.locator('main').innerText()).replace(/\s+/g, ' ');
+          const matches = authoredItems.filter(c => c.language === language && same(c) && values.includes(c.metadata?.expectedResponse)
+            && text.includes(c.body.replace(/\s+/g, ' ').trim()));
+          assert(matches.length && new Set(matches.map(c => c.metadata.expectedResponse)).size === 1, `shown item identifies one correct option: ${JSON.stringify(values)} matched ${matches.length}`);
+          return { index: values.indexOf(matches[0].metadata.expectedResponse), assessment: matches.every(c => c.type === 'assessment') };
+        }
+        let shown;
+        for (let n = 0; n < 20; n++) {
+          await page.waitForLoadState('networkidle');
+          assert.equal(await page.locator('#learner-response').count(), 0, 'no teacher-reviewed task on the adaptive path');
+          const radios = page.locator('input[name="answer"]:not(:disabled)');
+          if (await radios.count() && (shown = await shownItem()).assessment) break;
+          if (await radios.count()) {
+            await page.locator('input[name="answer"]').nth(shown.index).check();
+            await page.locator('.assessment button.primary-button').click();
+          } else if (await page.locator('.closureCard').isVisible()) await page.locator('.closureCard button').last().click();
+          else if (await page.locator('.answerCorrection button.primary').isVisible()) await page.locator('.answerCorrection button.primary').click();
+          else if (await page.locator('.nextButton').isVisible()) await page.locator('.nextButton').click();
+          else if (await page.locator('.lessonPanel > .primary-button').isVisible()) await page.locator('.lessonPanel > .primary-button').click();
+          else break;
+        }
+        assert(shown?.assessment, 'an automatic check is delivered');
+        await page.locator('input[name="answer"]').nth(shown.index).check();
+        reply = next(); await page.locator('.assessment button.primary-button').click();
+        const checked = await (await reply).json();
+        assert.equal(checked.assessment.result.correct, true);
+        assert.equal(checked.pendingTeacherReview, undefined, 'automatic evidence needs no teacher review');
+        result.automaticCheck = checked.assessment.evidence.independence;
+        // The real teacher screen shows the linked learner with nothing awaiting review.
         assert.equal((await fixture(`/api/teacher/summary?learnerId=${learnerId}`, undefined, teacher.cookie)).data.summary.pendingReviewCount, 0);
+        await tp.goto(`${origin}/teacher?lang=${language}`);
+        if (discipline === 'english') await tp.getByText(name).first().waitFor();
+        else await tp.locator('.learner-list button').filter({ hasText: name }).click();
         await gp.goto(`${origin}/adult?learnerId=${learnerId}&lang=${language}`);
         if (discipline !== 'english') await gp.locator('.learner-list button').filter({ hasText: name }).click();
         await gp.locator('.ppCard').waitFor();
@@ -134,7 +155,9 @@ try {
         await page.goto(learningUrl); await page.locator('.lesson-body').waitFor();
         const resumed = await context.request.get(`${origin}/api/learning?dashboard=1`);
         assert.equal(resumed.status(), 200);
-        assert((await resumed.json()).progress.evidenceCount > 0);
+        // Passing the automatic check may advance the active topic, so look up the practised one.
+        const practised = (await resumed.json()).learnerState.competencies.find(c => c.competencyId === delivered.content.competencyId);
+        assert(practised?.evidenceCount > 0, 'recorded work on the practised topic survives sign-out');
         result.reviewedWorkResumedAfterLogin = true;
         // The disclosure is fetched after load, so pages stay static.
         await page.locator('.privatePresentationNotice').waitFor();

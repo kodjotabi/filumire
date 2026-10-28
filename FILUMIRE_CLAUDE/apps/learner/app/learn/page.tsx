@@ -763,11 +763,8 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
         // A connectivity failure never marks correctness,
         // updates mastery, or creates evidence locally. The
         // answer is only preserved for a trusted server retry.
-        const queued: PendingAssessmentSubmission = {
-          ...submissionBody,
-          queuedAt: new Date().toISOString(),
-        };
-
+        // Keep the record queued before sending: one answer has one
+        // queuedAt, so a later language change or restore sees it unchanged.
         writePendingSubmission(queued);
         setPending(queued);
         markOffline();
