@@ -16,10 +16,11 @@ function app(entry: "start" | "login" | "parent" | "teacher", locale: Locale): A
 }
 const withLabel = (action: Action, label: string, variant?: Action["variant"]): Action => ({ ...action, label, variant });
 
+/* The learner app's own boy and girl (owner-supplied transparent originals, 28 Oct 2026). */
 function Mascot({ which, className }: { which: "boy" | "girl"; className?: string }) {
   return which === "boy"
-    ? <img className={className} src="/illustrations/international/mascot-boy-green-book.webp" alt="" width="525" height="510" decoding="async" />
-    : <img className={className} src="/illustrations/international/mascot-girl-yellow-book.webp" alt="" width="470" height="490" decoding="async" />;
+    ? <img className={className} src="/illustrations/learners/boy-green-book.png" alt="" width="1283" height="1226" decoding="async" />
+    : <img className={className} src="/illustrations/learners/girl-purple-book.png" alt="" width="1285" height="1224" decoding="async" />;
 }
 
 function AudienceIcon({ kind }: { kind: "learners" | "parents" | "schools" }) {
