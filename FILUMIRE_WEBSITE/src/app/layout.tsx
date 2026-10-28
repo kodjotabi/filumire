@@ -3,24 +3,24 @@ import { headers } from "next/headers";
 import type { Metadata } from "next";
 import "./fonts.css";
 import "./globals.css";
-import "./international.css";
+import "./site.css";
 import { LanguageState } from "@/components/LanguageState";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import { SiteHeader } from "@/components/site/SiteHeader";
+import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteFrame } from "@/components/layout/SiteFrame";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin()),
-  title: "FILUMIRE | Personalised Learning for Africa",
+  title: "FILUMIRE | Personal learning for every child",
   description:
-    "Discover FILUMIRE’s EduTutor and adaptive learning approach for African children, with information for families, teachers, schools and potential partners.",
+    "FILUMIRE is a personal tutor for children in Africa that follows the national curriculum, adapts to every answer and is guided by FILU.",
   keywords: [
     "FILUMIRE",
     "EduTutor",
     "Adaptive Learning Africa",
     "Ghana Curriculum",
     "NaCCA",
-    "Primary Education",
+    "Basic 4–9",
     "African Learning Intelligence",
     "FILU",
   ],
@@ -45,7 +45,7 @@ export default async function RootLayout({
       </head>
       <body>
         <LanguageState />
-        <SiteFrame header={<Navbar />} footer={<Footer locale={locale} />}>{children}</SiteFrame>
+        <SiteFrame header={<SiteHeader />} footer={<SiteFooter />}>{children}</SiteFrame>
       </body>
     </html>
   );

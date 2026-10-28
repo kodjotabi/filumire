@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { localizeHref, type Locale } from '@/lib/locale';
 import { learnerDestination } from '@/lib/learner-navigation';
+import { paymentsLive } from '@/lib/payments';
 import styles from './subscriptions.module.css';
 export function ParentAccount({locale}:{locale:Locale}) {
  const fr=locale==='fr';
@@ -12,6 +13,6 @@ export function ParentAccount({locale}:{locale:Locale}) {
   <h2>{fr ? 'État des abonnements' : 'Subscription status'}</h2>
   <p className={styles.notice}>{fr ? 'Les paiements et la liaison des abonnements aux accès apprenants ne sont pas opérationnels. Aucun paiement, essai ou abonnement ne peut être activé depuis cette page. Paystack reste en mode test.' : 'Payments and subscription access are not operational. This page cannot activate a payment, trial or subscription. Paystack remains in test mode.'}</p>
   <p>{fr ? 'Les anciens comptes et dossiers de facturation sont conservés. Ils ne se connectent pas automatiquement au compte éducatif.' : 'Existing billing accounts and records are preserved. They are not automatically linked to educational accounts.'}</p>
-  <Link className="btn btn-outline" href={localizeHref('/pricing',locale)}>{fr ? 'Voir les informations tarifaires' : 'View pricing information'}</Link>
+  {paymentsLive() ? <Link className="btn btn-outline" href={localizeHref('/pricing',locale)}>{fr ? 'Voir les informations tarifaires' : 'View pricing information'}</Link> : null}
  </div></section>;
 }

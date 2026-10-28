@@ -3,6 +3,7 @@ import { LearnerProgress } from './LearnerProgress';
 import Link from 'next/link';
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import { localizeHref, type Locale } from '@/lib/locale';
+import { paymentsLive } from '@/lib/payments';
 import { SUBSCRIPTION_COPY } from '@/lib/subscriptions/copy';
 import { PLANS } from '@/lib/subscriptions/plans';
 import styles from './subscriptions.module.css';
@@ -164,7 +165,7 @@ export function LegacyParentAccount({ locale }: {
     } }
     return <section className={`site-section ${styles.accountSection}`}><div className="site-container">
  <h1 className="section-title">{t.accountTitle}</h1><p className={styles.notice}>{t.preview}</p>
- <div className={styles.actions}><Link className="btn btn-outline" href={localizeHref('/pricing', locale)}>{t.plansLink}</Link><Link className="btn btn-outline" href={localizeHref('/contact?inquiry=family', locale)}>{t.contact}</Link></div>
+ <div className={styles.actions}>{paymentsLive() ? <Link className="btn btn-outline" href={localizeHref('/pricing', locale)}>{t.plansLink}</Link> : null}<Link className="btn btn-outline" href={localizeHref('/contact?inquiry=family', locale)}>{t.contact}</Link></div>
  <p role="status" aria-live="polite" className={message ? styles.message : undefined}>{busy ? t.busy : message}</p>
  {!available && !busy && <p className={styles.notice}>{t.setup}</p>}
  {token && !view && <div className={styles.panel}><p>{t.authIntro}</p><button className="btn btn-primary" disabled={busy || !available} onClick={complete}>{t.confirmLink}</button></div>}

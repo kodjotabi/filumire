@@ -13,28 +13,22 @@ try {
   await context.route('**/*',route=>['127.0.0.1','localhost'].includes(new URL(route.request().url()).hostname)?route.continue():route.abort());
   const page=await context.newPage(); page.setDefaultTimeout(45000);
   const prefix=language==='fr'?'/fr':'';
-  const label=language==='fr'?'Espace apprenant':'Learner Portal';
+  const label=language==='fr'?'Commencer':'Start learning';
   const home=website+(prefix||'/');
-  const expected=fallback?prefix+'/access#learner':learner+'/?lang='+language;
-  for(const path of ['', '/how-it-works','/curriculum','/for-families','/for-schools','/about','/contact','/access','/partners','/privacy','/pricing']) {
+  const expected=fallback?prefix+'/contact#learner':learner+'/?lang='+language;
+  for(const path of ['', '/how-it-works','/subjects','/learners','/parents','/schools','/about','/contact','/privacy','/ghana']) {
    await page.goto(website+prefix+(path||'/'),{waitUntil:'domcontentloaded'});
-   const portal=page.locator('.header-actions').getByRole('link',{name:label,exact:true,includeHidden:true});
+   const portal=page.locator('.fs-header-actions').getByRole('link',{name:label,exact:true,includeHidden:true});
    await portal.waitFor({state:'attached'}); assert.equal(await portal.getAttribute('href'),expected);
-   assert.equal(await page.locator('header .brand-link').getAttribute('href'),prefix||'/');
+   assert.equal(await page.locator('header .fs-brand').getAttribute('href'),prefix||'/');
    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'horizontal overflow');
   }
-  async function openPortal() {
-   if(width<=1100) {
-    await page.locator('.mobile-menu-toggle').click();
-    assert.equal(await page.locator('.mobile-menu-toggle').getAttribute('aria-expanded'),'true');
-    const portal=page.locator('#primary-navigation .mobile-nav-actions').getByRole('link',{name:label,exact:true});
-    assert.equal(await portal.getAttribute('href'),expected); await portal.click();
-   } else await page.locator('.header-actions').getByRole('link',{name:label,exact:true}).click();
-  }
-  await page.goto(home); await page.locator('header .brand-link').click(); await page.waitForURL(home);
+  // The Start learning button stays in the header bar at every width.
+  async function openPortal() { await page.locator('.fs-header-actions').getByRole('link',{name:label,exact:true}).click(); }
+  await page.goto(home); await page.locator('header .fs-brand').click(); await page.waitForURL(home);
   await openPortal();
   if(fallback) {
-   await page.waitForURL(website+prefix+'/access#learner');
+   await page.waitForURL(website+prefix+'/contact#learner');
    await page.locator('#learner').waitFor();
    assert.equal(new URL(page.url()).origin,website);
   } else {
@@ -73,7 +67,7 @@ try {
    assert.equal((await context.request.get(learner+'/api/session/me')).status(),200,'existing session remains authenticated');
    assert.equal((await post('/api/session/logout',{})).status(),200);
   }
-  console.log(JSON.stringify({result:'PASS',width,language,mode:fallback?'missing_destination':'two_way_and_session',publicPages:11}));
+  console.log(JSON.stringify({result:'PASS',width,language,mode:fallback?'missing_destination':'two_way_and_session',publicPages:10}));
   await context.close();
  }
 }finally {await browser.close();}
