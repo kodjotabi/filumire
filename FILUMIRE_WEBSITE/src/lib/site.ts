@@ -50,7 +50,7 @@ export const SHELL_COPY = {
     help: "Aide et contact",
     menuOpen: "Ouvrir le menu",
     menuClose: "Fermer le menu",
-    tagline: "Apprendre aujourd’hui, réussir demain.",
+    tagline: "Apprendre aujourd’hui pour un avenir plus radieux.",
     footerAbout: "FILUMIRE est un compagnon d’apprentissage personnalisé pour les enfants d’Afrique, conçu à partir du programme scolaire national et guidé par FILU.",
     footerExplore: "Découvrir",
     footerAudiences: "Pour vous",

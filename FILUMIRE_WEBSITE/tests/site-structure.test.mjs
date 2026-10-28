@@ -121,3 +121,12 @@ test("French, curriculum-review and class-setup claims stay precise",()=>{
  assert.match(pages.HOW_COPY.fr.steps[0].text,/^Un parent, ou l’élève lui-même, choisit la classe/);
  assert.ok(!pages.HOME_COPY.en.facts.includes("English and French"));
 });
+
+/* Owner decision (28 Oct 2026): the footer tagline is the learner app's, in both languages. */
+test("footer tagline matches the learner app's home footer in English and French",async()=>{
+ const app=await read("../../FILUMIRE_CLAUDE/apps/learner/app/dashboard/page.tsx");
+ const line=app.match(/<section className="homeFooter[^"]*">[\s\S]*?<p>\{language === "fr" \? "([^"]+)" : "([^"]+)"\}<\/p>/);
+ assert.ok(line,"learner home footer tagline found");
+ assert.equal(site.SHELL_COPY.fr.tagline,line[1]);
+ assert.equal(site.SHELL_COPY.en.tagline,line[2]);
+});
