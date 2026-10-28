@@ -27,6 +27,14 @@ const validReviewerList = (value, additional) => {
   }
   return true;
 };
+// Same formats as services/account/reviewers.ts reviewerAllRolesUntil(): YYYY-MM-DD or ISO date-time with a zone.
+const validAccessUntil = value => {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    const start = Date.parse(`${value}T00:00:00Z`);
+    return !Number.isNaN(start) && new Date(start).toISOString().slice(0, 10) === value;
+  }
+  return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:\d{2})$/.test(value) && !Number.isNaN(Date.parse(value));
+};
 
 /**
  * Rules for a Vercel build:
@@ -38,7 +46,9 @@ const validReviewerList = (value, additional) => {
  * - the Basic 7–9 private presentation (FILUMIRE_JHS_MODE) accepts only "private-presentation", on a
  *   Preview (behind Vercel Authentication) or on Production in private reviewer mode; anything else refuses;
  * - private review (FILUMIRE_ACCESS_MODE=reviewers) needs a valid reviewer list, closed general
- *   registration and no external identity provider.
+ *   registration and no external identity provider;
+ * - the all-roles test period (FILUMIRE_REVIEWER_ACCESS_UNTIL) needs reviewer mode and a valid date,
+ *   so a mistyped value refuses the build instead of silently granting nothing.
  * Outside Vercel (local builds and tests) the guard does nothing.
  */
 export function checkDeployment(env) {
@@ -51,6 +61,11 @@ export function checkDeployment(env) {
     if (target === "production" && env.FILUMIRE_ACCESS_MODE !== "reviewers") refuse("jhs_mode_requires_reviewer_mode");
   }
   if (env.FILUMIRE_ACCESS_MODE && env.FILUMIRE_ACCESS_MODE !== "reviewers") refuse("unknown_access_mode");
+  const accessUntil = (env.FILUMIRE_REVIEWER_ACCESS_UNTIL ?? "").trim();
+  if (accessUntil) {
+    if (env.FILUMIRE_ACCESS_MODE !== "reviewers") refuse("reviewer_access_until_without_reviewer_mode");
+    if (!validAccessUntil(accessUntil)) refuse("reviewer_access_until_invalid");
+  }
   if (env.FILUMIRE_ACCESS_MODE === "reviewers") {
     if (!validReviewerList(env.FILUMIRE_REVIEWER_EMAILS, env.FILUMIRE_REVIEWER_EMAILS_ADDITIONAL)) refuse("reviewer_list_invalid");
     if (env.FILUMIRE_ACCOUNT_REGISTRATION === "open") refuse("reviewer_mode_with_open_registration");

@@ -39,6 +39,9 @@ export interface Account {
   preferredLanguage: Language;
   learners: AccountLearner[];
   activeLearnerId: string | null;
+  /* Both adult views for a listed reviewer during the all-roles test period (server decides). */
+  roles?: Array<"guardian" | "teacher">;
+  allRolesUntil?: string;
 }
 
 export interface PlacementOptions {

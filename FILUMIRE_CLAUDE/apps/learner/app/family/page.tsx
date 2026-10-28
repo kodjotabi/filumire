@@ -81,6 +81,8 @@ const TEXT = {
     adding: "Adding…",
     added: (name: string, username: string) => `${name} can now sign in with the username “${username}” and the password you chose.`,
     progress: "See progress and messages",
+    teacherWorkspace: "Open the teacher workspace",
+    reviewerUntil: (date: string) => `Review access: parent, teacher and learner views with this account until ${date}.`,
     signOut: "Sign out",
   },
   fr: {
@@ -128,6 +130,8 @@ const TEXT = {
     adding: "Ajout…",
     added: (name: string, username: string) => `${name} peut maintenant se connecter avec l'identifiant « ${username} » et le mot de passe choisi.`,
     progress: "Voir les progrès et les messages",
+    teacherWorkspace: "Ouvrir l’espace enseignant",
+    reviewerUntil: (date: string) => `Accès de relecture : espaces parent, enseignant et apprenant avec ce compte jusqu’au ${date}.`,
     signOut: "Se déconnecter",
   },
 };
@@ -627,10 +631,22 @@ export default function FamilyPage() {
 
           <AccountSecurity language={language} minLength={8} />
 
+          {account?.roles?.includes("teacher") && account.allRolesUntil ? (
+            <p className="acHelp">
+              {/* The end is exclusive; show the last included minute (31 Dec 23:59, not 1 Jan 00:00). */}
+              {t.reviewerUntil(new Date(Date.parse(account.allRolesUntil) - 60_000).toLocaleString(language === "fr" ? "fr-FR" : "en-GB", { dateStyle: "long", timeStyle: "short", timeZone: "UTC" }) + " UTC")}
+            </p>
+          ) : null}
+
           <div className="acActions">
             <Link href={`/adult?lang=${language}`} className="acButton secondary">
               {t.progress}
             </Link>
+            {account?.roles?.includes("teacher") ? (
+              <Link href={`/teacher?lang=${language}`} className="acButton secondary">
+                {t.teacherWorkspace}
+              </Link>
+            ) : null}
             <button type="button" className="acButton quiet" onClick={leave} disabled={busy} aria-busy={busy}>
               {t.signOut}
             </button>

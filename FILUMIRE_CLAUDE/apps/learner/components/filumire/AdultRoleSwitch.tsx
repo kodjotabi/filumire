@@ -44,6 +44,11 @@ const TEXT = {
  */
 export type AdultRole = "guardian" | "teacher" | "none" | undefined;
 
+/* A guardian account that may also use the teacher workspace (server-provided roles). */
+export function alsoTeacher(account: Account | null | undefined): boolean {
+  return account?.accountKind === "guardian" && account.roles?.includes("teacher") === true;
+}
+
 export function adultRole(account: Account | null | undefined): AdultRole {
   if (account === undefined) return undefined;
   if (account?.accountKind === "guardian" || account?.accountKind === "teacher") {
@@ -149,15 +154,19 @@ function AdultSignOut({ language }: { language: Language }) {
  * Moves a signed-in adult between their own pages: a guardian
  * between the family page and the parent view, a teacher to the
  * workspace. Nothing is shown until the account is known, or when
- * nobody is signed in. The switch only navigates.
+ * nobody is signed in. The switch only navigates. A guardian who may
+ * also teach (a reviewer in the all-roles test period) gets the
+ * workspace too; the server still checks every teacher request.
  */
 export function AdultRoleSwitch({
   active,
   role,
+  alsoTeacher = false,
   language = "en",
 }: {
   active: "parent" | "teacher";
   role: AdultRole;
+  alsoTeacher?: boolean;
   language?: Language;
 }) {
   const t = TEXT[language];
@@ -176,6 +185,15 @@ export function AdultRoleSwitch({
           >
             {t.parent}
           </Link>
+          {alsoTeacher ? (
+            <Link
+              href={`/teacher?lang=${language}`}
+              className={active === "teacher" ? "active" : undefined}
+              aria-current={active === "teacher" ? "page" : undefined}
+            >
+              {t.teacher}
+            </Link>
+          ) : null}
         </>
       ) : (
         <Link
