@@ -50,7 +50,9 @@ try {
   results.push({width,language,realBackend:true,...geometry});
   if(fixed){assert(geometry.questionTop>=-1,'new question must remain visible');assert(geometry.replyTop>=-1,'beginning of response must not be scrolled out');}
   const responseText=await page.locator('.message.assistant p').first().textContent(); assert.equal(responseText,lastResponse.messages.find(m=>m.role==='assistant').text);
-  const audio=page.locator('.message.assistant .readAloud').last(); await audio.locator('summary').click();
+  // Read-aloud controls need a device-local voice for the reply's language; without one the app shows its text-only note instead.
+  const hasVoice=await page.evaluate(async lang=>{for(let i=0;i<20&&!speechSynthesis.getVoices().length;i++)await new Promise(r=>setTimeout(r,100));return speechSynthesis.getVoices().some(v=>v.localService&&v.lang.toLowerCase().startsWith(lang))},language);
+  const audio=page.locator(hasVoice?'.message.assistant .readAloud':'.message.assistant .readAloudTextOnly').last(); if(hasVoice) await audio.locator('summary').click(); else await audio.waitFor();
   const overlap=await audio.evaluate(el=>el.getBoundingClientRect().top < el.previousElementSibling.getBoundingClientRect().bottom);assert.equal(overlap,false,'voice controls must follow response text');
   if(fixed){
    longBoundary=true;
@@ -62,7 +64,7 @@ try {
     return {questionTop:questions[questions.length-1].getBoundingClientRect().top-box.top,replyTop:replies[replies.length-1].querySelector('p').getBoundingClientRect().top-box.top};
    });
    assert(latest.questionTop>=-1 && latest.replyTop>=-1,'long turn must start at its question and reply beginning');
-   const lastAudio=page.locator('.message.assistant .readAloud').last();await lastAudio.locator('summary').click();
+   const lastAudio=page.locator(hasVoice?'.message.assistant .readAloud':'.message.assistant .readAloudTextOnly').last();if(hasVoice)await lastAudio.locator('summary').click();else await lastAudio.waitFor();
    assert.equal(await lastAudio.evaluate(el=>el.getBoundingClientRect().top < el.previousElementSibling.getBoundingClientRect().bottom),false);
    await page.locator('.transcript').evaluate(log=>log.scrollTop=log.scrollHeight);
    const endVisible=await lastAudio.evaluate(el=>el.getBoundingClientRect().bottom<=el.closest('.transcript').getBoundingClientRect().bottom+1);
