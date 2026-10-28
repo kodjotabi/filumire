@@ -26,6 +26,17 @@ import {
   type LinkedTeacher,
 } from "./store";
 
+import {
+  EMAIL_PATTERN,
+  isListedReviewer,
+  MAX_REVIEWERS,
+  reviewerAllRolesUntil,
+  reviewerHasAllRoles,
+  reviewerList,
+  reviewerModeActive,
+  type ReviewerRole,
+} from "./reviewers";
+
 export {
   LoginIdentifierTakenError,
   type AccountKind,
@@ -61,7 +72,6 @@ export const MAX_LEARNERS_PER_GUARDIAN = 10;
 const LOCKOUT_THRESHOLD = 5;
 const LOCKOUT_MINUTES = 15;
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const USERNAME_PATTERN = /^[a-z0-9][a-z0-9._-]{2,23}$/;
 const AVATAR_PATTERN = /^[a-z0-9-]{1,16}$/;
 
@@ -142,68 +152,14 @@ export function normaliseEmail(value: unknown): string {
   return email;
 }
 
-/*
- * Private review: FILUMIRE_ACCESS_MODE=reviewers limits accounts to
- * the owner's list FILUMIRE_REVIEWER_EMAILS ("email:guardian,email:teacher",
- * plus one optional supplemental entry, at most twenty in total). Only listed
- * adults may register or sign in, and learners only when the guardian
- * who created them is listed. Refusals reuse the ordinary errors, so
- * nobody can learn who is on the list. An invalid list admits no one.
- * One email holds one role; a reviewer who needs both roles uses a
- * second address (e.g. name+teacher@…) as a second entry.
- */
-export const MAX_REVIEWERS = 20;
-
-type ReviewerRole = Exclude<AccountKind, "learner">;
-
-export function reviewerModeActive(): boolean {
-  return process.env.FILUMIRE_ACCESS_MODE === "reviewers";
-}
-
-/** The parsed list, or undefined when it is invalid (fail closed). */
-export function reviewerList(): ReadonlyMap<string, ReviewerRole> | undefined {
-  const baseEntries = (process.env.FILUMIRE_REVIEWER_EMAILS ?? "")
-    .split(",")
-    .map((entry) => entry.trim())
-    .filter(Boolean);
-  // Keep the original protected list intact; validate the combined list.
-  const additionalEntries = (process.env.FILUMIRE_REVIEWER_EMAILS_ADDITIONAL ?? "")
-    .split(",").map(entry => entry.trim()).filter(Boolean);
-  const entries = [...baseEntries, ...additionalEntries];
-  const list = new Map<string, ReviewerRole>();
-
-  if (baseEntries.length === 0 || additionalEntries.length > 1 || entries.length > MAX_REVIEWERS) {
-    return undefined;
-  }
-
-  for (const entry of entries) {
-    const separator = entry.lastIndexOf(":");
-    const role = entry.slice(separator + 1).trim().toLowerCase();
-
-    if (separator < 0 || (role !== "guardian" && role !== "teacher")) {
-      return undefined;
-    }
-
-    let email: string;
-    try {
-      email = normaliseEmail(entry.slice(0, separator));
-    } catch {
-      return undefined;
-    }
-
-    if (list.has(email)) {
-      return undefined;
-    }
-
-    list.set(email, role);
-  }
-
-  return list;
-}
-
-function isListedReviewer(email: string, role: ReviewerRole): boolean {
-  return reviewerList()?.get(email) === role;
-}
+// Private review list and the all-roles test period: ./reviewers.ts.
+export {
+  MAX_REVIEWERS,
+  reviewerAllRolesUntil,
+  reviewerHasAllRoles,
+  reviewerList,
+  reviewerModeActive,
+};
 
 /* After a correct password: is this principal allowed in during a private review? */
 async function isReviewerPrincipal(
@@ -452,12 +408,19 @@ export async function registerTeacher(
   return { principalId };
 }
 
-async function requireTeacher(principalId: string): Promise<void> {
+/* A teacher account, or a listed reviewer's guardian account during the all-roles test period. */
+async function requireTeacher(principalId: string): Promise<"teacher" | "reviewer"> {
   const credential = await accountStore.getCredentialByPrincipal(principalId);
 
-  if (credential?.accountKind !== "teacher") {
-    throw new AccountForbiddenError("Only a teacher account can do this.");
+  if (credential?.accountKind === "teacher") {
+    return "teacher";
   }
+
+  if (credential && reviewerHasAllRoles(credential.loginIdentifier, credential.accountKind)) {
+    return "reviewer";
+  }
+
+  throw new AccountForbiddenError("Only a teacher account can do this.");
 }
 
 const TEACHER_LINK_CODE_DAYS = 7;
@@ -529,7 +492,7 @@ export async function linkTeacherWithCode(
   teacherPrincipalId: string,
   code: unknown,
 ): Promise<AccountLearnerSummary> {
-  await requireTeacher(teacherPrincipalId);
+  const as = await requireTeacher(teacherPrincipalId);
 
   const learnerId = await accountStore.redeemTeacherLinkCode(
     hashLinkCode(normaliseLinkCode(code)),
@@ -538,7 +501,16 @@ export async function linkTeacherWithCode(
     new Date().toISOString(),
   );
 
-  if (!learnerId) {
+  // A reviewer in the all-roles period teaches only learners they created:
+  // another family's code is spent and undone, with the usual message.
+  const ownLearner = as === "teacher" || (learnerId !== undefined &&
+    (await getPrincipalLearnerAccess(teacherPrincipalId, learnerId, "guardian"))?.status === "active");
+
+  if (learnerId && !ownLearner) {
+    await revokePrincipalLearnerAccess(teacherPrincipalId, learnerId, "teacher");
+  }
+
+  if (!learnerId || !ownLearner) {
     throw new AccountValidationError(
       "linkCode",
       "That code cannot be used. It may have expired or already been used.",
@@ -809,6 +781,10 @@ export interface AccountSummary {
   displayName?: string;
   preferredLanguage: AccountLanguage;
   learners: AccountLearnerSummary[];
+  /* Adult views this account may open; both for a reviewer in the all-roles period. */
+  roles?: ReviewerRole[];
+  /* When the all-roles period ends (ISO), so the pages can say so. */
+  allRolesUntil?: string;
 }
 
 async function summariseLearner(
@@ -847,6 +823,9 @@ export async function describeAccount(
     const learnerIds = access
       .filter((entry) => entry.relationshipType === "guardian")
       .map((entry) => entry.learnerId);
+    const until = reviewerHasAllRoles(credential.loginIdentifier, credential.accountKind)
+      ? reviewerAllRolesUntil()
+      : undefined;
 
     return {
       principalId,
@@ -856,6 +835,9 @@ export async function describeAccount(
       learners: await Promise.all(
         learnerIds.map((learnerId) => summariseLearner(learnerId, true)),
       ),
+      ...(until !== undefined
+        ? { roles: ["guardian", "teacher"] as ReviewerRole[], allRolesUntil: new Date(until).toISOString() }
+        : {}),
     };
   }
 

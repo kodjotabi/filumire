@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { AdultHeader, AdultRoleSwitch, adultRole } from "../../components/filumire/AdultRoleSwitch";
+import { AdultHeader, AdultRoleSwitch, adultRole, alsoTeacher } from "../../components/filumire/AdultRoleSwitch";
 import { fetchAccount, type Account } from "../../services/account-client";
 import { useLanguage, type Language } from "../../components/filumire/language";
 import { LEARNER_GRADES } from "../../components/filumire/grades";
@@ -331,7 +331,7 @@ export default function AdultSupervisionPage() {
         {language === "fr" ? "Aller au contenu" : "Skip to content"}
       </a>
       <AdultHeader active="parent" role={role} language={language} onLanguage={setLanguage} />
-      <AdultRoleSwitch active="parent" role={role} language={language} />
+      <AdultRoleSwitch active="parent" role={role} alsoTeacher={alsoTeacher(account)} language={language} />
       <div className="shell" id="adult-main">
         <div className="brand-subtitle">{t.subtitle}</div>
 
