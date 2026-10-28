@@ -7,6 +7,7 @@ import { POST as redeemTeacherCode } from "../apps/learner/app/api/account/teach
 import { POST as login } from "../apps/learner/app/api/session/login/route";
 import { MAX_REVIEWERS, reviewerList, reviewerModeActive } from "../services/account";
 import { resetRateLimits } from "../services/account/rate-limit";
+import { isListedReviewer } from "../services/account/reviewers";
 import { localFamilyAccessEnabled } from "../services/family-access/otp";
 
 /*
@@ -116,13 +117,19 @@ async function main(): Promise<void> {
   for (const invalid of [
     undefined, "", " , ",
     OVER_CAP,
-    `${G1}`, `${G1}:`, `${G1}:admin`, `${G1}:learner`, `not-an-email:guardian`, `:guardian`,
-    `${G1}:guardian,${G1.toUpperCase()}:teacher`,
+    `not-an-email`, `${G1}:`, `${G1}:admin`, `${G1}:learner`, `not-an-email:guardian`, `:guardian`,
+    `${G1}:guardian,${G1.toUpperCase()}:teacher`, `${G1},${G1.toUpperCase()}:guardian`,
   ]) {
     setEnv("FILUMIRE_REVIEWER_EMAILS", invalid);
     assert.equal(reviewerList(), undefined, `invalid list ${JSON.stringify(invalid)} fails closed`);
   }
-  pass("list parsing: 3 guardians + 2 teachers and exactly 20 entries accepted; empty, >20, roleless, wrong role, malformed and duplicate lists rejected");
+  // A role-less entry is a test-period reviewer: parsed, but admitted nowhere without a period.
+  setEnv("FILUMIRE_REVIEWER_ACCESS_UNTIL", "");
+  setEnv("FILUMIRE_REVIEWER_EMAILS", ` ${G1.toUpperCase()} `);
+  assert.equal(reviewerList()?.get(G1), "all");
+  assert.equal(isListedReviewer(G1, "guardian"), false, "role-less entry without a period admits no one");
+  assert.equal(isListedReviewer(G1, "teacher"), false, "role-less entry without a period admits no one");
+  pass("list parsing: 3 guardians + 2 teachers and exactly 20 entries accepted; empty, >20, wrong role, malformed and duplicate lists rejected; role-less closed without a period");
 
   // 2. Registration: listed email in its listed role only; refusals identical to "closed".
   setEnv("FILUMIRE_REVIEWER_EMAILS", FIVE);

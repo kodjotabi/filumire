@@ -192,6 +192,21 @@ async function isReviewerPrincipal(
   );
 }
 
+/*
+ * Every signed-in request during a private review: an account that is
+ * no longer admitted (email removed, test period over) loses its open
+ * sessions at once instead of keeping them until they time out.
+ * Principals without a sign-in credential are not reviewer accounts.
+ */
+export async function principalMayStaySignedIn(principalId: string): Promise<boolean> {
+  if (!reviewerModeActive()) {
+    return true;
+  }
+
+  const credential = await accountStore.getCredentialByPrincipal(principalId);
+  return credential === undefined || isReviewerPrincipal(principalId, credential.accountKind);
+}
+
 /* Registration gate for an adult account of the given role. */
 function mayRegister(email: string, role: ReviewerRole): boolean {
   return reviewerModeActive()
