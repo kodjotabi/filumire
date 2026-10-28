@@ -233,6 +233,11 @@ try {
       await ui("dashboard");
       await page.locator(".homeCta").click();
       await page.waitForURL(url => url.pathname === "/learn");
+      // Teaching-first: a new topic opens on its lesson, not a question.
+      await page.locator(".lesson-body").waitFor();
+      assert.equal(await page.locator('input[type="radio"]').count(), 0);
+      await ui("learning-lesson");
+      await page.locator(".checkFirst button").click();
       await page.locator('input[type="radio"]').first().waitFor();
       await ui("learning-activity");
       await page.goto(`${origin}/dashboard?lang=${lang}`);
