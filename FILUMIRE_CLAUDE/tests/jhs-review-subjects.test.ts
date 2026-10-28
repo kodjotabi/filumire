@@ -1,6 +1,6 @@
 /*
- * Curriculum Review subject cards on the learner home (junior-high only).
- * Presentation-only checks: the sourced CCP list, no duplicates with
+ * Curriculum Review subject cards on the learner home (Basic 4-6 and 7-9).
+ * Presentation-only checks: the sourced NaCCA lists, no duplicates with
  * server subjects, an icon for every card, and guards that the cards are
  * not links and leave the active subject cards and gating unchanged.
  */
@@ -36,10 +36,35 @@ const CCP_REVIEW_KEYS = [
   "rme",
   "physical-health-education",
 ];
+/* NaCCA B4-B6 subjects without the four active ones; no Our World Our People (ceased 2024/2025), no Arabic. */
+const PRIMARY_REVIEW_KEYS = ["history", "creative-arts", "rme", "physical-education", "french", "ghanaian-language"];
 const active = ["english", "mathematics", "science", "computing"].map((discipline) => ({ discipline }));
 
-/* ---- the list ---- */
-check(() => assert.deepEqual(reviewSubjectsFor("primary", active), [], "Basic 4-6 has no review cards until its list is sourced."));
+/* ---- the lists ---- */
+check(() => assert.deepEqual(reviewSubjectsFor("primary", active).map((s) => s.key), PRIMARY_REVIEW_KEYS));
+check(() => assert.deepEqual(reviewSubjectsFor("primary", null).map((s) => s.key), PRIMARY_REVIEW_KEYS));
+check(() =>
+  assert.deepEqual(
+    reviewSubjectsFor("primary", [...active, { discipline: "history" }]).map((s) => s.key),
+    PRIMARY_REVIEW_KEYS.filter((key) => key !== "history"),
+    "A primary subject the server offers is never also shown as a review card.",
+  ),
+);
+check(() =>
+  assert.deepEqual(
+    reviewSubjectsFor("primary", active).map((s) => s.name.fr),
+    ["Histoire", "Arts créatifs", "Éducation religieuse et morale", "Éducation physique", "Français", "Langue ghanéenne"],
+  ),
+);
+for (const key of PRIMARY_REVIEW_KEYS) {
+  check(() => assert.ok(!(key in SUBJECT_PRESENTATION), `${key} must not be an active presentation key.`));
+}
+for (const subject of reviewSubjectsFor("primary", active)) {
+  check(() => {
+    const markup = renderToStaticMarkup(createElement(SubjectIcon, { name: subject.key }));
+    assert.match(markup, /<g>/, `${subject.key} needs an icon.`);
+  });
+}
 check(() => assert.deepEqual(reviewSubjectsFor("junior-high", active).map((s) => s.key), CCP_REVIEW_KEYS));
 check(() => assert.deepEqual(reviewSubjectsFor("junior-high", null).map((s) => s.key), CCP_REVIEW_KEYS));
 check(() =>

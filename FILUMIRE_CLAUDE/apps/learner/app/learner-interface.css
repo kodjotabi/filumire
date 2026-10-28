@@ -215,7 +215,7 @@
 .learnerUi[data-appearance="dark"] .learnerShell .filuConversation .quickAction { background: #203752; color: #e5efff; border-color: #839fbe; }
 .learnerUi[data-appearance="dark"] .learnerShell .filuConversation .message.user > div { background: #1d4a3f; color: #e5efff; border-color: #6fbfa6; }
 
-/* Curriculum Review subject cards (home, junior-high): compact, muted, not interactive. */
+/* Curriculum Review subject cards (home, Basic 4-9): compact, muted, not interactive. */
 .learnerUi .homeScreen .homeReview { margin-top: 14px; }
 .learnerUi .homeScreen .homeReview h3 { margin: 0 4px 8px; color: var(--ui-ink-soft); font-size: .875rem; font-weight: 700; line-height: 1.4; }
 .learnerUi .homeScreen .homeReviewList { margin: 0; padding: 0; list-style: none; }

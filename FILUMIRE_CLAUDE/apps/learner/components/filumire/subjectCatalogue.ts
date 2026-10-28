@@ -12,7 +12,15 @@
  * (same list in the English, Science and Computing CCP documents).
  * Languages are split into the four languages the CCP names.
  *
- * Primary (Basic 4-6): empty until the owner supplies the sourced list.
+ * Source (primary, Basic 4-6): NaCCA, https://nacca.gov.gh/curriculum/
+ * (read 28 Oct 2026), the subjects of the Standards-Based Curriculum
+ * implemented from September 2019 for Key Phase 3 (B4-B6); cross-checked
+ * with the National Pre-tertiary Education Curriculum Framework (NaCCA,
+ * May 2018), section 10.2 and the B4-B6 period allocation.
+ * Literacy is split into its subjects (English is active; Ghanaian
+ * Language and French are listed). Our World Our People is left out: the
+ * same page says it ceases as a separate primary subject from the
+ * 2024/2025 academic year. Arabic is not a B4-B6 subject.
  */
 import type { AgeBand } from "./ageBand";
 
@@ -24,7 +32,10 @@ export type ReviewSubjectKey =
   | "career-technology"
   | "social-studies"
   | "rme"
-  | "physical-health-education";
+  | "physical-health-education"
+  | "history"
+  | "creative-arts"
+  | "physical-education";
 
 export type ReviewSubject = {
   key: ReviewSubjectKey;
@@ -43,8 +54,18 @@ const JUNIOR_HIGH_REVIEW_SUBJECTS: readonly ReviewSubject[] = [
   { key: "physical-health-education", name: { en: "Physical and Health Education", fr: "Éducation physique et à la santé" } },
 ];
 
+/* In the order of NaCCA's subject list, without the active subjects. */
+const PRIMARY_REVIEW_SUBJECTS: readonly ReviewSubject[] = [
+  { key: "history", name: { en: "History", fr: "Histoire" } },
+  { key: "creative-arts", name: { en: "Creative Arts", fr: "Arts créatifs" } },
+  { key: "rme", name: { en: "Religious and Moral Education", fr: "Éducation religieuse et morale" } },
+  { key: "physical-education", name: { en: "Physical Education", fr: "Éducation physique" } },
+  { key: "french", name: { en: "French", fr: "Français" } },
+  { key: "ghanaian-language", name: { en: "Ghanaian Language", fr: "Langue ghanéenne" } },
+];
+
 const REVIEW_SUBJECTS: Readonly<Record<AgeBand, readonly ReviewSubject[]>> = {
-  primary: [],
+  primary: PRIMARY_REVIEW_SUBJECTS,
   "junior-high": JUNIOR_HIGH_REVIEW_SUBJECTS,
 };
 
