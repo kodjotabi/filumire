@@ -19,6 +19,10 @@ import {
 } from "../principal";
 
 import {
+  principalMayStaySignedIn,
+} from "../account";
+
+import {
   ensureDevelopmentAdultAccess,
 } from "../development-fixtures";
 
@@ -217,6 +221,11 @@ async function verifyProductionSessionToken(
 
     if (!validAuthSession) {
       throw new Error("Invalid server session.");
+    }
+
+    // Private review: a reviewer whose access ended is signed out now.
+    if (!(await principalMayStaySignedIn(principalId))) {
+      throw new Error("Reviewer access ended.");
     }
 
     await renewPrincipalAuthSession(

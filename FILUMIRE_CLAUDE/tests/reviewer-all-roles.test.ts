@@ -188,7 +188,8 @@ async function main(): Promise<void> {
   assert.equal((await teacherSees(allCookie, kid)).oneStatus, 403, "invalid date: off");
   setEnv("FILUMIRE_REVIEWER_ACCESS_UNTIL", FUTURE);
   setEnv("FILUMIRE_REVIEWER_EMAILS", `${OTHER}:guardian,${TEACHER}:teacher`);
-  assert.equal((await teacherSees(allCookie, kid)).oneStatus, 403, "email removed from the list: off");
+  assert.equal((await teacherSees(allCookie, kid)).oneStatus, 401, "email removed from the list: open session refused");
+  assert.notEqual((await sessionMe(get("/api/session/me", allCookie))).status, 200, "email removed: parent view refused too");
   setEnv("FILUMIRE_REVIEWER_EMAILS", LIST);
   pass("removing the email or an invalid date also ends teacher access");
 
@@ -202,6 +203,49 @@ async function main(): Promise<void> {
   assert.equal(code({ ...base, FILUMIRE_REVIEWER_ACCESS_UNTIL: "2026-02-31" }), "reviewer_access_until_invalid");
   assert.equal(code({ ...base, FILUMIRE_ACCESS_MODE: "", FILUMIRE_REVIEWER_ACCESS_UNTIL: "2026-12-31" }), "reviewer_access_until_without_reviewer_mode");
   pass("deploy guard refuses an invalid date or a period without reviewer mode");
+
+  // 8. Role-less reviewers (owner decision 28 Oct 2026: "no roles"): admitted with every role only during
+  //    the period; when it ends they cannot sign in and their open sessions stop working at once.
+  const OPEN = email("open"), OPEN_TEACHER = email("openteacher");
+  setEnv("FILUMIRE_REVIEWER_EMAILS", `${LIST},${OPEN}`);
+  setEnv("FILUMIRE_REVIEWER_EMAILS_ADDITIONAL", OPEN_TEACHER);
+  setEnv("FILUMIRE_REVIEWER_ACCESS_UNTIL", FUTURE);
+  await registerAs("guardian", OPEN);
+  await registerAs("teacher", OPEN_TEACHER);
+  const openCookie = await signIn(OPEN);
+  assert.deepEqual((await account(openCookie)).roles, ["guardian", "teacher"], "role-less reviewer is parent + teacher");
+  const openKid = await addFictionalLearner(openCookie, "openkid");
+  assert.equal(await redeem(openCookie, await codeFor(openCookie, openKid)), 201);
+  assert.deepEqual(await teacherSees(openCookie, openKid), { listed: true, oneStatus: 200 });
+  const openTeacherCookie = await signIn(OPEN_TEACHER);
+  const openKidCookie = await signIn(`openkid${run}`.slice(0, 24));
+  pass("role-less reviewer during the period: registers, signs in, parent + teacher, own learner signs in");
+
+  setEnv("FILUMIRE_REVIEWER_ACCESS_UNTIL", PAST);
+  for (const cookie of [openCookie, openTeacherCookie, openKidCookie]) {
+    assert.notEqual((await sessionMe(get("/api/session/me", cookie))).status, 200, "open session ends with the period");
+  }
+  for (const identifier of [OPEN, OPEN_TEACHER, `openkid${run}`.slice(0, 24)]) {
+    await resetRateLimits();
+    assert.equal((await login(request("/api/session/login", { login: identifier, password: PASSWORD }))).status, 401, `${identifier} refused after the period`);
+  }
+  await resetRateLimits();
+  const late = await register(request("/api/account/register", {
+    email: email("late"), password: PASSWORD, displayName: "Fictional late", preferredLanguage: "en", acceptsNotice: true, confirmsGuardian: true,
+  }));
+  assert.equal(late.status, 403, "no registration after the period");
+  assert.equal((await account(allCookie)).accountKind, "guardian", "role-listed reviewers keep their own access");
+  setEnv("FILUMIRE_REVIEWER_ACCESS_UNTIL", undefined);
+  assert.notEqual((await sessionMe(get("/api/session/me", openCookie))).status, 200, "no date: role-less reviewers stay out");
+  pass("period over: role-less reviewers and their learners signed out and refused; role-listed reviewers unchanged");
+
+  assert.equal(code({ ...base, FILUMIRE_REVIEWER_EMAILS: `${LIST},${OPEN}` }), "roleless_reviewers_without_end_date");
+  assert.equal(code({ ...base, FILUMIRE_REVIEWER_EMAILS: `${LIST},${OPEN}`, FILUMIRE_REVIEWER_ACCESS_UNTIL: "2027-01-20" }), "ok");
+  assert.equal(code({ ...base, FILUMIRE_REVIEWER_EMAILS: LIST, FILUMIRE_REVIEWER_EMAILS_ADDITIONAL: OPEN }), "roleless_reviewers_without_end_date");
+  assert.equal(code({ ...base, FILUMIRE_REVIEWER_EMAILS: `${LIST},not-an-email`, FILUMIRE_REVIEWER_ACCESS_UNTIL: "2027-01-20" }), "reviewer_list_invalid");
+  setEnv("FILUMIRE_REVIEWER_EMAILS", LIST);
+  setEnv("FILUMIRE_REVIEWER_EMAILS_ADDITIONAL", "");
+  pass("deploy guard: role-less reviewers need an end date; malformed role-less entries refused");
 
   console.log("PASS reviewer all-roles test period");
 }
