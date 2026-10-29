@@ -147,36 +147,32 @@ export default function HomePage() {
 
         <div className="languages" role="group" aria-labelledby="choose-language">
 
+          {/* Buttons in the public website's style: filled for the first
+              choice, outlined for the second. */}
           <Link
             href="/login?lang=en"
-            className="language"
+            className="language languagePrimary"
             lang="en"
             onClick={() => chooseLanguage("en")}
           >
-            <img
-              src="/images/home/english%20main.svg"
-              alt=""
-            />
             <span className="languageText">
               <strong>English</strong>
               <small>Learn in English.</small>
             </span>
+            <span className="languageArrow" aria-hidden="true">&rarr;</span>
           </Link>
 
           <Link
             href="/login?lang=fr"
-            className="language"
+            className="language languageSecondary"
             lang="fr"
             onClick={() => chooseLanguage("fr")}
           >
-            <img
-              src="/images/home/french%20main.svg"
-              alt=""
-            />
             <span className="languageText">
               <strong>Fran&ccedil;ais</strong>
               <small>Apprendre en fran&ccedil;ais.</small>
             </span>
+            <span className="languageArrow" aria-hidden="true">&rarr;</span>
           </Link>
 
         </div>
@@ -193,59 +189,66 @@ export default function HomePage() {
 
       </section>
 
+      {/* The landscape is artwork only; the footer text sits on a solid
+          band below it, as on the public website. */}
       <footer className="footer">
         <img
           src="/images/home/landscape%20footer.png"
           alt=""
         />
-        <p className="future">{t.future}</p>
+        <div className="footerBand">
+          <p className="future">{t.future}</p>
 
-        <span className="copyright">
-          &copy; 2026 FILUMIRE. {t.rights}
-        </span>
+          <span className="copyright">
+            &copy; 2026 FILUMIRE. {t.rights}
+          </span>
 
-        <span className="footerTag">
-          {t.tag}
-        </span>
+          <span className="footerTag">
+            {t.tag}
+          </span>
+        </div>
       </footer>
 
       <style>{`
         .home { width: 100%; max-width: 390px; min-height: 844px; margin: 0 auto; overflow: hidden; background: #ffffff; color: #093375; font-family: inherit; }
-        .content { width: 100%; margin: 0 auto; padding-top: 5px; text-align: center; }
-        h1 { margin: 0; color: #093375; font-size: 28px; line-height: 1.15; font-weight: 800; letter-spacing: -0.5px; }
+        /* Phone: the public website's type scale, colours, 16px gutters and
+           pill buttons, so the website and the app read as one product. */
+        .content { width: 100%; margin: 0 auto; padding: 8px 16px 0; text-align: left; }
+        h1 { margin: 12px 0 0; color: #093375; font-size: 36px; line-height: 1.08; font-weight: 800; letter-spacing: -0.5px; }
         h1 strong { color: #0357c3; font-weight: 800; }
-        .tagline { margin: 3px 0 0; color: #093375; font-size: 17.5px; line-height: 1.2; font-weight: 400; }
-        .learners { display: block; width: 100%; height: auto; margin: 4px 0 3px; }
-        .intro { margin: 0 auto; color: #093375; font-size: 13.5px; line-height: 1.25; font-weight: 500; }
-        .choose { margin: 14px 0 9px; color: #334b81; font-size: 14px; line-height: 1.2; font-weight: 700; }
-        .languages { width: min(342px, calc(100% - 32px)); margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
-        .language { position: relative; display: block; width: 100%; text-decoration: none; color: #093375; }
-        .language > img { display: block; width: 100%; height: auto; }
-        .languageText { position: absolute; left: 22.5%; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
-        .languageText strong { color: #093375; font-size: 14px; line-height: 1.1; font-weight: 700; }
-        .languageText small { margin-top: 2px; color: #093375; font-size: 13.5px; line-height: 1.1; font-weight: 500; }
-        .features { width: min(358px, calc(100% - 16px)); margin: 13px auto 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
-        .feature { min-width: 0; text-align: center; color: #093375; }
-        .feature img { display: block; width: 48px; height: 48px; object-fit: contain; margin: 0 auto 4px; }
-        .feature strong { display: block; white-space: nowrap; font-size: 9.5px; line-height: 1.15; font-weight: 700; }
-        .feature span { display: block; margin-top: 2px; font-size: 9.5px; line-height: 1.15; font-weight: 400; }
-        .footer { position: relative; width: 100%; margin-top: 19px; }
+        .tagline { margin: 8px 0 0; color: #093375; font-size: 18px; line-height: 1.35; font-weight: 600; }
+        .learners { display: block; width: 100%; height: auto; margin: 16px 0 8px; }
+        .intro { margin: 0; color: #093375; font-size: 16px; line-height: 1.6; font-weight: 400; }
+        .intro br { display: none; }
+        .choose { margin: 20px 0 12px; color: #093375; font-size: 17.6px; line-height: 1.3; font-weight: 800; }
+        .languages { width: 100%; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+        .language { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 56px; padding: 8px 22px; border: 2px solid #0357c3; border-radius: 999px; text-decoration: none; }
+        .languagePrimary { background: #0357c3; color: #ffffff; }
+        .languageSecondary { background: #ffffff; color: #0357c3; }
+        .language:focus-visible { outline: 3px solid #fabc07; outline-offset: 3px; }
+        .languageText { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; text-align: left; }
+        .languageText strong { color: inherit; font-size: 16px; line-height: 1.25; font-weight: 700; }
+        .languageText small { color: inherit; font-size: 13px; line-height: 1.3; font-weight: 500; opacity: .88; }
+        .languageArrow { flex: none; font-size: 18px; line-height: 1; font-weight: 700; }
+        .features { width: 100%; margin: 24px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .feature { min-width: 0; padding: 12px; border-radius: 16px; background: #f2f7fd; text-align: left; color: #093375; }
+        .feature img { display: block; width: 40px; height: 40px; object-fit: contain; margin: 0 0 6px; }
+        .feature strong { display: block; font-size: 14px; line-height: 1.25; font-weight: 800; }
+        .feature span { display: block; margin-top: 2px; font-size: 13px; line-height: 1.35; font-weight: 400; }
+        .footer { width: 100%; margin-top: 28px; }
         .footer > img { display: block; width: 100%; height: auto; }
-        .future { position: absolute; top: 13px; left: 0; right: 0; margin: 0; z-index: 1; text-align: center; color: #093375; font-size: 8px; line-height: 1; font-weight: 600; }
-        .future::after { content: ""; display: block; width: 40px; height: 3px; margin: 3px auto 0; background: #fbd668; transform: rotate(-3deg); }
-        .copyright, .footerTag { position: absolute; bottom: 8px; color: rgba(255,255,255,.92); line-height: 1; font-weight: 400; }
-        .copyright { left: 24px; font-size: 8.5px; }
-        .footerTag { right: 23px; font-size: 6.5px; letter-spacing: .9px; }
+        .footerBand { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; padding: 16px; background: #062b5c; color: #ffffff; }
+        .future { flex-basis: 100%; margin: 0; color: #ffffff; font-size: 15px; line-height: 1.3; font-weight: 700; }
+        .future::after { content: ""; display: block; width: 40px; height: 3px; margin: 6px 0 0; background: #fabc07; transform: rotate(-3deg); }
+        .copyright, .footerTag { color: rgba(255,255,255,.85); font-size: 12px; line-height: 1.4; font-weight: 400; }
+        .footerTag { font-weight: 600; letter-spacing: 1.5px; }
         @media (min-width: 391px) { .home { box-shadow: 0 0 0 1px #e5e5e5; } }
-        .wideTopbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; padding: 8px 16px; background: #123f78; }
+        .wideTopbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; padding: 8px 16px; background: #08448b; }
         .wideLogo { display: inline-flex; flex: none; }
         .wideLogo img { display: block; width: 118px; height: auto; }
         .wideActions .filumireLangToggle, .wideActions .filumirePublicHome { display: none; }
-        .wideAdultLink { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; max-width: 168px; padding: 6px 12px; border: 1px solid rgba(255,255,255,.35); border-radius: 22px; color: #ffffff; font-size: 12px; line-height: 1.2; font-weight: 700; text-align: left; text-decoration: none; }
+        .wideAdultLink { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; max-width: 176px; padding: 6px 14px; border: 2px solid rgba(255,255,255,.85); border-radius: 999px; color: #ffffff; font-size: 13px; line-height: 1.2; font-weight: 700; text-align: left; text-decoration: none; }
         .wideAdultLink svg { width: 20px; height: 20px; flex: none; fill: currentColor; }
-        @media (max-width: 380px) { .feature strong { white-space: normal; } }
-        /* The longer French copyright wraps before reaching the tagline on the narrowest phones. */
-        @media (max-width: 359px) { .home[lang="fr"] .copyright { max-width: calc(50% - 36px); line-height: 1.2; } }
 
         /* Tablet: full-width page, real header, centred column */
         @media (min-width: 768px) {
@@ -256,30 +259,29 @@ export default function HomePage() {
           .wideAdultLink { gap: 10px; max-width: none; padding: 8px 18px; border-radius: 999px; font-size: 14px; }
           .wideAdultLink:hover { background: rgba(255,255,255,.1); }
           .wideAdultLink svg { width: 22px; height: 22px; flex: none; fill: currentColor; }
-          .home .content { flex: 1; width: min(640px, calc(100% - 64px)); padding-top: 40px; }
-          .home h1 { font-size: 40px; }
+          .home .content { flex: 1; width: min(640px, calc(100% - 64px)); padding: 40px 0 0; text-align: center; }
+          .home h1 { margin-top: 0; font-size: 40px; }
           .home .tagline { margin-top: 6px; font-size: 21px; }
           .home .learners { max-width: 560px; margin: 18px auto 14px; }
           .home .intro { font-size: 17px; line-height: 1.45; }
           .home .choose { margin: 26px 0 14px; font-size: 17px; }
-          .home .languages { width: 420px; gap: 12px; }
-          .home .language { border-radius: 16px; transition: transform 140ms ease; }
+          .home .languages { width: 420px; margin: 0 auto; gap: 12px; }
+          .home .language { transition: transform 140ms ease; }
           .home .language:hover { transform: translateY(-2px); }
-          .home .languageText { left: 22.5%; }
           .home .languageText strong { font-size: 18px; }
-          .home .languageText small { margin-top: 4px; font-size: 16px; }
-          .home .features { width: 100%; margin-top: 40px; gap: 14px; }
-          .home .feature { padding: 18px 10px; border-radius: 18px; background: #f2f7fd; }
-          .home .feature img { width: 60px; height: 60px; margin-bottom: 10px; }
-          .home .feature strong { white-space: normal; font-size: 14px; }
+          .home .languageText small { margin-top: 2px; font-size: 15px; }
+          .home .features { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 40px; gap: 14px; }
+          .home .feature { padding: 18px 10px; border-radius: 18px; text-align: center; }
+          .home .feature img { width: 60px; height: 60px; margin: 0 auto 10px; }
+          .home .feature strong { font-size: 14px; }
           .home .feature span { margin-top: 4px; font-size: 13px; line-height: 1.3; }
-          .home .footer { height: clamp(150px, 20vw, 260px); margin-top: 48px; overflow: hidden; }
-          .home .footer > img { height: 100%; object-fit: cover; object-position: center 15%; }
-          .home .future { top: 22px; font-size: 14px; }
-          .home .future::after { width: 56px; height: 4px; margin-top: 5px; }
-          .home .copyright, .home .footerTag { bottom: 16px; }
-          .home .copyright { left: max(32px, calc((100% - 1200px) / 2)); font-size: 13px; }
-          .home .footerTag { right: max(32px, calc((100% - 1200px) / 2)); font-size: 11px; letter-spacing: 2px; }
+          .home .footer { margin-top: 48px; }
+          .home .footer > img { height: clamp(150px, 20vw, 260px); object-fit: cover; object-position: center 15%; }
+          .home .footerBand { padding: 20px max(32px, calc((100% - 1200px) / 2)); }
+          .home .future { font-size: 16px; }
+          .home .future::after { width: 56px; height: 4px; }
+          .home .copyright { font-size: 13px; }
+          .home .footerTag { letter-spacing: 2px; }
         }
 
         /* Laptop and desktop: welcome and language choice beside the
@@ -308,7 +310,7 @@ export default function HomePage() {
         }
 
         /* Overhaul: language switch, list resets, French wrapping */
-        .homeLangMobile { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 6px 16px 4px; }
+        .homeLangMobile { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 6px 0 4px; }
         .homeLangMobile .filumirePublicHome { box-shadow: inset 0 0 0 2px #d6e2f5; }
         .features { padding: 0; list-style: none; }
         .home[lang="fr"] .feature strong { white-space: normal; }
