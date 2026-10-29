@@ -133,7 +133,7 @@ const PHRASES = {
     errorAnalysis: (_topic?: string) => "Regarde ta dernière réponse. Qu’est-ce qui n’allait pas ?",
     retrieval: (_topic?: string) => "Essaie de t’en souvenir avant de regarder un exemple.",
     mixed: (_topic?: string) => "Montre ce que tu sais d’une autre façon.",
-    multipleChoice: "Choisis la bonne réponse.",
+    multipleChoice: "Choisis la meilleure réponse.",
     shortAnswer: "Écris une réponse courte avec tes propres mots.",
     constructed: "Écris ta réponse et montre ton raisonnement.",
     workedSolution: "Résous-le étape par étape.",
@@ -312,7 +312,7 @@ function responsePrompt(
   /*
    * The engine chooses a response mode from its evidence, but the item
    * delivered decides what the learner can do. A free-response prompt
-   * ("Give a short answer in your own words") above answer options
+   * ("Write a short answer in your own words") above answer options
    * contradicts the screen, so such items are asked to choose instead.
    */
   if (request.content?.presentsOptions && FREE_RESPONSE_MODES.has(request.decision.responseMode ?? "")) {

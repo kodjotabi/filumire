@@ -32,7 +32,7 @@ const copy = {
     question: "Ta question pour FILU", placeholder: "Sur quoi voudrais-tu de l’aide ?", send: "Envoyer", retry: "Réessayer", clear: "Effacer la conversation",
     loading: "FILU prépare une réponse…", chat: "Conversation avec FILU", you: "Toi", mock: "FILU",
     explain: "Explique-moi", hint: "Donne-moi un indice", example: "Montre un exemple", practice: "Je veux m'entraîner", simpler: "Explique plus simplement", actions: "Comment FILU peut aider", edit: "Modifier la question",
-    protected: "Ta réponse évaluée reste la tienne. FILU peut expliquer les idées,proposer un autre exemple et donner des indices sans révéler la réponse.",
+    protected: "Ta réponse évaluée reste la tienne. FILU peut expliquer les idées, proposer un autre exemple et donner des indices sans révéler la réponse.",
     practising: "L'entraînement dans cette conversation ne change ni tes notes ni ta progression.",
     slow: "FILU met trop de temps à répondre. Ta question est gardée : appuie sur Réessayer.",
     unavailable: "Ouvre d’abord une leçon pour que FILU utilise ton contexte d’apprentissage.", network: "Ta question n’a pas reçu de réponse. Vérifie ta connexion, puis réessaie.",

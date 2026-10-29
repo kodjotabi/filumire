@@ -196,6 +196,11 @@ function tr(language: Language, text: string): string {
   return translateLearnerError(text, language) ?? (language === "fr" ? (FR_TEXT[text] ?? text) : text);
 }
 
+/* French writes 10 000 with a space; keep each number's digit groups on one line. */
+function keepDigitGroups(text: string): string {
+  return text.replace(/(\d) (?=\d{3}(?!\d))/g, "$1 ");
+}
+
 function actionLabel(
   action: string,
 ): string {
@@ -1254,7 +1259,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
 
           {assessmentFeedback && isFeedbackOutcome(assessmentFeedback.outcome) && (
             <div ref={feedbackRef} tabIndex={-1} className="answerFeedbackHost">
-              <small>{tr(language, "Feedback on your submitted activity")}: {assessmentFeedback.title || tr(language, "Your submitted answer")}</small>
+              <small>{tr(language, "Feedback on your submitted activity")}{language === "fr" ? " :" : ":"} {assessmentFeedback.title || tr(language, "Your submitted answer")}</small>
               <JellyStarFeedback
                 key={`${assessmentFeedback.outcome}-${assessmentFeedback.assessmentItemId ?? ""}`}
                 outcome={assessmentFeedback.outcome}
@@ -1269,7 +1274,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
             <div ref={feedbackRef} tabIndex={-1} className={`assessment-feedback ${assessmentFeedback.outcome}`} role="status" aria-live="polite">
               <div className="feedback-icon" aria-hidden="true">{feedbackIcon(assessmentFeedback.outcome)}</div>
               <div className="feedback-content">
-                <small>{tr(language, "Feedback on your submitted activity")}: {assessmentFeedback.title || tr(language, "Your submitted answer")}</small>
+                <small>{tr(language, "Feedback on your submitted activity")}{language === "fr" ? " :" : ":"} {assessmentFeedback.title || tr(language, "Your submitted answer")}</small>
                 <div className="feedback-title">{tr(language, feedbackTitle(assessmentFeedback.outcome))}</div>
                 <div className="feedback-message">{tr(language, feedbackMessage(assessmentFeedback.outcome))}</div>
                 {assessmentFeedback.assessmentItemId !== data.content?.assessmentItemId && <small>{tr(language, "The following activity is your next learning step.")}</small>}
@@ -1321,7 +1326,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
               </h2>
 
               <div className="lesson-body" lang={data.content.language}>
-                {data.content.body}
+                {keepDigitGroups(data.content.body)}
               </div>
               {data.content.language && <ReadAloudControls learnerId={data.learnerState.learnerId} text={data.content.body} language={data.content.language} surface={hasAssessment ? "question" : "lesson"} />}
 
@@ -2280,7 +2285,8 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
           position: relative;
           display: flex;
           flex: 1;
-          min-height: 52px;
+          /* As tall as the avatar, so it never covers the lesson text above. */
+          min-height: 84px;
           align-items: flex-end;
           padding-bottom: 10px;
         }
@@ -2426,6 +2432,10 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
             padding: 20px 24px 0;
           }
 
+          .teachFoot {
+            min-height: 104px;
+          }
+
           .teachFoot img {
             height: 104px;
           }
@@ -2515,8 +2525,9 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
             gap: 14px;
           }
 
+          /* 18px keeps "Mathématiques" on one line in the narrow side column. */
           .bannerText h1 {
-            font-size: 20px;
+            font-size: 18px;
           }
 
           .bannerText p {

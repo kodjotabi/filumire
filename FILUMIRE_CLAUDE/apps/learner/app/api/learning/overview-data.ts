@@ -86,7 +86,9 @@ export async function buildLearningOverview(
         return {
           id: topic.id,
           title: topic.title,
-          description: getCompetency(topic.id)?.description ?? "",
+          // Competency descriptions are authored in English only; a French
+          // overview shows none rather than an English sentence.
+          description: language === "en" ? getCompetency(topic.id)?.description ?? "" : "",
           status,
           progressStatus,
           assessmentScope: definition?.assessmentScope ?? "full",
