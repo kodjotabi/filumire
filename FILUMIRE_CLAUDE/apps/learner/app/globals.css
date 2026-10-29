@@ -536,7 +536,8 @@ a {
 .homeScreen .new .subjectAreaIcon { background: var(--ui-blue); }
 .homeScreen .subjectAreaIcon svg { width: 18px; height: 18px; fill: currentColor; }
 .homeScreen .subjectArea > div { min-width: 0; flex: 1; }
-.homeScreen .subjectArea strong { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--ui-ink); font-size: 14px; font-weight: 800; line-height: 1.2; }
+/* Competency titles are curriculum text: shown in full, wrapped at spaces. */
+.homeScreen .subjectArea strong { display: block; hyphens: manual; color: var(--ui-ink); font-size: 14px; font-weight: 800; line-height: 1.2; }
 .homeScreen .subjectArea small { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; margin-top: 2px; color: var(--ui-ink-soft); font-size: 11.5px; line-height: 1.25; }
 .homeScreen .subjectAreaPill { flex: none; padding: 4px 10px; border-radius: 99px; color: var(--ui-ink); font-size: 11px; font-weight: 700; }
 .homeScreen .completed .subjectAreaPill { background: color-mix(in srgb, var(--ui-green) 18%, #ffffff); }
