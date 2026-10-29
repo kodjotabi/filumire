@@ -26,10 +26,10 @@ try {
    assert.equal(await page.locator('header .fs-brand').getAttribute('href'),prefix||'/');
    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'horizontal overflow');
   }
-  // Start learning is in the header bar from 480px; on narrower phones it is in the menu.
+  // Start learning is in the header bar from 768px; on phones it is in the hero and the menu.
   async function openPortal() {
    await page.goto(website+prefix+'/ghana');
-   if(width<480){await page.locator('.fs-menu-toggle').click();await page.locator('.fs-nav-start').click();}
+   if(width<768){await page.locator('.fs-menu-toggle').click();await page.locator('.fs-nav-start').click();}
    else await page.locator('.fs-header-actions').getByRole('link',{name:label,exact:true}).click();
   }
   await page.goto(website+prefix+'/ghana'); await page.locator('header .fs-brand').click(); await page.waitForURL(home);

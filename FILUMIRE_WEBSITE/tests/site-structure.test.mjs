@@ -28,6 +28,8 @@ test("the original landing page at /, with the full site behind Choose Your Coun
  assert.match(header,/languageSwitch\("fs-lang fs-lang-desktop"\)/);assert.match(header,/languageSwitch\("fs-lang"\)/);
  const css=await read("../src/app/site.css");
  assert.match(css,/\.fs-lang-desktop \{ display: inline-flex; \}/,"EN/FR stays visible in the header bar at every width");
+ assert.match(css,/@media \(max-width: 767px\) \{\s*\.fs-header-actions > \.fs-btn-start \{ display: none; \}\s*\.fs-nav-start \{ display: inline-flex; \}/,"phone header: no duplicate Start learning; it stays in the hero and the menu");
+ assert.match(header,/className="fs-btn fs-btn-start fs-nav-start"/);
 });
 
 test("the site says plainly that a bilingual website is not French lessons",()=>{

@@ -64,7 +64,8 @@
 .fs-lang-desktop { display: inline-flex; }
 .fs-nav-lang { display: flex; align-items: center; gap: 12px; color: rgba(255, 255, 255, 0.85); font-weight: 600; }
 .fs-nav-start { display: none; }
-@media (max-width: 479px) {
+/* Phones: the bar holds only the logo, EN/FR and the menu; Start learning is the hero's button and is also in the menu. */
+@media (max-width: 767px) {
   .fs-header-actions > .fs-btn-start { display: none; }
   .fs-nav-start { display: inline-flex; }
 }
