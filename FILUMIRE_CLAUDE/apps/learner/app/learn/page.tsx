@@ -1058,6 +1058,50 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
 
   const teachView = showContinue && action !== "diagnose";
 
+  /*
+   * On a plain question the answer prompt ("Choose the best answer.")
+   * labels the choices and FILU's tips go below them, so the question
+   * and its choices sit together. Tips already on screen (the lesson
+   * text, the heading) are not repeated.
+   */
+  const questionLayout = hasAssessment && !activeCorrection;
+  const instructionElements = data.instruction?.structured?.elements ?? [];
+  const answerPrompt = questionLayout
+    ? instructionElements.find((element) => element.type === "next_prompt")?.text
+    : undefined;
+  const heading = tr(language, needsSupportPause ? "You have done all you can here for now." : actionLabel(action));
+  const tips = instructionElements.filter((element) =>
+    element.text.trim() !== (data.content?.body ?? "").trim() &&
+    (teachView || element.text.trim() !== heading) &&
+    (hasAssessment || element.type !== "next_prompt") &&
+    !(answerPrompt && element.type === "next_prompt"));
+  const tutorBlock = tips.length > 0 ? (
+    <div className="tutor-message">
+      <span className="tipIcon" aria-hidden="true">
+        <BulbIcon />
+      </span>
+      <div className="instruction-elements">
+        {tips.map((element, index) => (
+          <section
+            key={`${element.type}-${index}`}
+            className="instruction-element"
+          >
+            <p>{element.text}</p>
+          </section>
+        ))}
+      </div>
+    </div>
+  ) : instructionElements.length === 0 && data.instruction?.content ? (
+    <div className="tutor-message">
+      <span className="tipIcon" aria-hidden="true">
+        <BulbIcon />
+      </span>
+      <p>
+        {data.instruction.content}
+      </p>
+    </div>
+  ) : null;
+
   /* Teaching-first (Phase 1): offered only on a new topic's introduction. */
   const canCheckFirst =
     teachView && isIntroductionStep(data.decision);
@@ -1285,36 +1329,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
             </>
           )}
 
-          {data.instruction?.structured?.elements?.length ? (
-            <div className="tutor-message">
-              <span className="tipIcon" aria-hidden="true">
-                <BulbIcon />
-              </span>
-              <div className="instruction-elements">
-                {/* A response prompt ("Give a short answer ...") only makes sense when there is a question to answer; teaching cards only have Next. */}
-                {data.instruction.structured.elements.filter((element) => element.text.trim() !== (data.content?.body ?? "").trim() && (hasAssessment || element.type !== "next_prompt")).map(
-                  (element, index) => (
-                    <section
-                      key={`${element.type}-${index}`}
-                      className="instruction-element"
-                    >
-
-                      <p>{element.text}</p>
-                    </section>
-                  ),
-                )}
-              </div>
-            </div>
-          ) : data.instruction?.content ? (
-            <div className="tutor-message">
-              <span className="tipIcon" aria-hidden="true">
-                <BulbIcon />
-              </span>
-              <p>
-                {data.instruction.content}
-              </p>
-            </div>
-          ) : null}
+          {!questionLayout && tutorBlock}
 
           {requiresTrustedEvaluation && !pending && !awaitingReview && (
             <div className="assessment">
@@ -1377,7 +1392,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
           {hasAssessment && !pending && (!activeCorrection || retrying) && (
             <fieldset className="assessment">
               <legend className="assessment-label">
-                {tr(language, "Your answer")}
+                {answerPrompt ?? tr(language, "Your answer")}
                 <span className="visuallyHidden">
                   {" – "}
                   {tr(language, "Choose one answer")}
@@ -1442,6 +1457,8 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
               </button>
             </fieldset>
           )}
+
+          {questionLayout && tutorBlock}
 
           {showContinue && !teachView && (
             <button
@@ -2095,8 +2112,8 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
 
         .options {
           display: grid;
-          gap: 8px;
-          margin: 10px 0;
+          gap: 6px;
+          margin: 6px 0 8px;
         }
 
         .option {
