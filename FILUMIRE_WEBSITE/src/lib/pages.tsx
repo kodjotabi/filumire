@@ -2,7 +2,7 @@ import { Pricing } from '@/components/subscriptions/Pricing';
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Privacy from "@/components/pages/privacy";
-import { AboutPage, ComingSoonPage, GhanaPage, HelpPage, HomePage, HowItWorksPage, LearnersPage, ParentsPage, SchoolsPage, SubjectsPage } from "@/components/site/pages";
+import { AboutPage, ComingSoonPage, GhanaPage, HelpPage, HowItWorksPage, LandingPage, LearnersPage, ParentsPage, SchoolsPage, SubjectsPage } from "@/components/site/pages";
 import { notFound } from "next/navigation";
 import { translateTree } from "./translate";
 import { localizeHref, type Locale } from "./locale";
@@ -10,7 +10,7 @@ import { PAGE_META } from "./site-pages";
 import { paymentsLive } from "./payments";
 
 const pages: Record<string, (props: { locale: Locale }) => ReactNode> = {
- "/": HomePage, "/how-it-works": HowItWorksPage, "/subjects": SubjectsPage, "/learners": LearnersPage, "/parents": ParentsPage,
+ "/": LandingPage, "/how-it-works": HowItWorksPage, "/subjects": SubjectsPage, "/learners": LearnersPage, "/parents": ParentsPage,
  "/schools": SchoolsPage, "/about": AboutPage, "/ghana": GhanaPage,
 };
 

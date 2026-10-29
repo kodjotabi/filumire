@@ -21,7 +21,9 @@ export function SiteFooter() {
   return (
     <footer className="fs-footer">
       <div className="fs-landscape">
-        <img src="/illustrations/landscapefooter.png" alt="" width="1600" height="582" loading="lazy" decoding="async" />
+        <div className="fs-landscape-art">
+          <img src="/illustrations/landscapefooter.png" alt="" width="1600" height="582" loading="lazy" decoding="async" />
+        </div>
         <p className="fs-tagline">{copy.tagline}</p>
       </div>
       <div className="fs-footer-body">
@@ -32,6 +34,7 @@ export function SiteFooter() {
             </Link>
             <p>{copy.footerAbout}</p>
             <Link href={localizeHref(currentHref, other)} hrefLang={other} lang={other} data-language-switch="true" className="fs-footer-lang">{copy.otherLanguage}</Link>
+            <p className="fs-footer-note">{copy.languageNote}</p>
           </div>
           {columns.map((column) => (
             <div key={column.title}>

@@ -38,6 +38,8 @@ export const SHELL_COPY = {
     privacy: "Website privacy",
     copyright: "© 2026 FILUMIRE. All rights reserved.",
     otherLanguage: "Français",
+    languageNote: "This website is in English and French. Lessons are in English for now; French lessons are being prepared.",
+    languageMenu: "Language",
   },
   fr: {
     home: "Accueil FILUMIRE",
@@ -59,6 +61,8 @@ export const SHELL_COPY = {
     privacy: "Confidentialité du site",
     copyright: "© 2026 FILUMIRE. Tous droits réservés.",
     otherLanguage: "English",
+    languageNote: "Ce site est en français et en anglais. Les leçons sont pour l’instant en anglais ; les leçons en français sont en préparation.",
+    languageMenu: "Langue",
   },
 } satisfies Bilingual<Record<string, string>>;
 
@@ -89,11 +93,13 @@ export const COUNTRIES = [
 export type CountryId = (typeof COUNTRIES)[number]["id"];
 
 /*
- * Subjects, matching the learner app: the four active subjects use the app's
- * colours and icons; Curriculum Review subjects are presentation only.
- * JHS review list source: Ghana NaCCA Common Core Programme (B7-B9),
- * "Learning Areas", front matter p. ix of the CCP subject documents.
- * The Basic 4-6 review list stays empty until its source is confirmed.
+ * Subjects, matching the learner app: the four core subjects are served
+ * across Basic 4–9 and use the app's colours and icons. Curriculum Review
+ * subjects are presentation only: additional subjects being prepared for
+ * mainstream release in each band. Both review lists are the learner app's
+ * (apps/learner/components/filumire/subjectCatalogue.ts), with its sources:
+ * B4-B6 from NaCCA's Standards-Based Curriculum subject list, B7-B9 from
+ * the Common Core Programme "Learning Areas", front matter p. ix.
  */
 export const ACTIVE_SUBJECTS = [
   {
@@ -131,7 +137,14 @@ export const ACTIVE_SUBJECTS = [
 ] as const;
 
 export const REVIEW_SUBJECTS = {
-  primary: [],
+  primary: [
+    { key: "history", name: { en: "History", fr: "Histoire" } },
+    { key: "creative-arts", name: { en: "Creative Arts", fr: "Arts créatifs" } },
+    { key: "rme", name: { en: "Religious and Moral Education", fr: "Éducation religieuse et morale" } },
+    { key: "physical-education", name: { en: "Physical Education", fr: "Éducation physique" } },
+    { key: "french", name: { en: "French", fr: "Français" } },
+    { key: "ghanaian-language", name: { en: "Ghanaian Language", fr: "Langue ghanéenne" } },
+  ],
   jhs: [
     { key: "ghanaian-language", name: { en: "Ghanaian Language", fr: "Langue ghanéenne" } },
     { key: "french", name: { en: "French", fr: "Français" } },
@@ -145,6 +158,6 @@ export const REVIEW_SUBJECTS = {
 } as const satisfies Record<"primary" | "jhs", readonly { key: string; name: Bilingual<string> }[]>;
 
 export const SUBJECT_COPY = {
-  en: { review: "Curriculum Review", reviewMeaning: "Curriculum Review means the subject is being prepared and checked by educators before learners can open it." },
-  fr: { review: "Programme en préparation", reviewMeaning: "« Programme en préparation » : la matière est en cours d’élaboration et de vérification par des enseignants avant d’être ouverte aux élèves." },
+  en: { review: "Curriculum Review", reviewMeaning: "English Language, Mathematics, Science and Computing are available across Basic 4–9. Subjects marked Curriculum Review are additional subjects that educators are preparing and checking for Basic 4–6 and Basic 7–9 before learners can open them." },
+  fr: { review: "Programme en préparation", reviewMeaning: "L’anglais, les mathématiques, les sciences et l’informatique sont proposés du Basic 4 au Basic 9. Les matières marquées « Programme en préparation » sont des matières supplémentaires que des enseignants élaborent et vérifient pour le Basic 4 à 6 et le Basic 7 à 9, avant leur ouverture aux élèves." },
 } satisfies Bilingual<Record<string, string>>;

@@ -10,15 +10,46 @@ import type { Bilingual } from "./site";
 
 type Item = { title: string; text: string };
 
+/*
+ * The international landing page at / (restored from e6f56983, 27 Oct 2026):
+ * each language shows the other as its subtitle and second CTA line.
+ */
+export const LANDING_COPY = {
+  en: {
+    home: "FILUMIRE international home",
+    login: "Parent / Teacher Login",
+    madeForAfrica: "Made for Africa",
+    headline: ["Learning that ", "understands", " every child."],
+    subtitle: ["Un apprentissage", "qui comprend chaque enfant."],
+    ctaPrimary: "Choose Your Country",
+    ctaSecondary: "Choisissez votre pays",
+    dialogTitle: "Choose your country",
+    dialogIntro: "Select your country to continue to its FILUMIRE website.",
+    close: "Close",
+  },
+  fr: {
+    home: "Accueil international FILUMIRE",
+    login: "Connexion parent / enseignant",
+    madeForAfrica: "Pensé pour l’Afrique",
+    headline: ["Un apprentissage qui ", "comprend", " chaque enfant."],
+    subtitle: ["Learning that", "understands every child."],
+    ctaPrimary: "Choisissez votre pays",
+    ctaSecondary: "Choose Your Country",
+    dialogTitle: "Choisissez votre pays",
+    dialogIntro: "Sélectionnez votre pays pour accéder à son site FILUMIRE.",
+    close: "Fermer",
+  },
+} satisfies Bilingual<Record<string, unknown>>;
+
+/* FILUMIRE in Ghana (/ghana): the full site experience behind the landing page. */
 export const HOME_COPY = {
   en: {
-    eyebrow: "Made for Africa",
-    headline: ["Learning that ", "understands", " every child."],
-    lead: "FILUMIRE is a personal tutor that follows Ghana’s curriculum, adapts to every answer and works in the browser on a phone, tablet or computer.",
+    eyebrow: "Ghana · Basic 4–9",
+    headline: ["Personal learning for every child in ", "Ghana", "."],
+    lead: "FILUMIRE is a personal tutor for Basic 4–6 and Basic 7–9 (JHS 1–3). It follows Ghana’s national curriculum in English Language, Mathematics, Science and Computing, adapts to every answer and works in the browser on a phone, tablet or computer.",
     primary: "Start learning",
     secondary: "Parent or teacher log in",
     facts: ["Basic 4 through JHS 3", "Follows Ghana’s curriculum", "Guided by FILU"],
-    countriesTitle: "Where FILUMIRE is available",
     howEyebrow: "How it works",
     howTitle: "Three steps to learning that lasts",
     steps: [
@@ -30,7 +61,6 @@ export const HOME_COPY = {
     subjectsEyebrow: "Subjects",
     subjectsTitle: "Four core subjects across Basic 4–9",
     subjectsLead: "FILUMIRE serves Basic 4–9 in English Language, Mathematics, Science and Computing. Additional curriculum subjects for Basic 4–6 and Basic 7–9 are being prepared for mainstream release.",
-    reviewHeading: "Also in the Ghana JHS curriculum",
     subjectsLink: "Explore the subjects",
     filuEyebrow: "Meet FILU",
     filuTitle: "A friendly guide inside every lesson",
@@ -50,20 +80,19 @@ export const HOME_COPY = {
       { title: "Follows the national standards", text: "Lessons for Basic 4–6 follow Ghana’s Standards-Based Curriculum; Basic 7–9 lessons follow the Common Core Programme. Four core subjects are served across Basic 4–9." },
       { title: "Curriculum review comes first", text: "New subjects open to learners only after their curriculum has been reviewed." },
       { title: "Familiar to children", text: "Examples use names, places and Ghana cedis that children recognise." },
-      { title: "English and French", text: "The app can be used in English or French. French lessons are being prepared." },
+      { title: "English and French", text: "This website and the app’s screens can be used in English or French. Lessons are in English for now; French lessons are being prepared." },
     ] as Item[],
     finalTitle: "Ready to start learning?",
     finalText: "Open FILUMIRE in your browser and pick up where you left off.",
     finalSecondary: "Talk to us",
   },
   fr: {
-    eyebrow: "Pensé pour l’Afrique",
-    headline: ["Un apprentissage qui ", "comprend", " chaque enfant."],
-    lead: "FILUMIRE est un tuteur personnel qui suit le programme scolaire du Ghana, s’adapte à chaque réponse et s’utilise dans le navigateur, sur téléphone, tablette ou ordinateur.",
+    eyebrow: "Ghana · Basic 4 à 9",
+    headline: ["Un apprentissage personnalisé pour chaque enfant au ", "Ghana", "."],
+    lead: "FILUMIRE est un tuteur personnel pour le Basic 4 à 6 et le Basic 7 à 9 (JHS 1 à 3). Il suit le programme national du Ghana en anglais, mathématiques, sciences et informatique, s’adapte à chaque réponse et s’utilise dans le navigateur, sur téléphone, tablette ou ordinateur.",
     primary: "Commencer",
     secondary: "Connexion parent ou enseignant",
     facts: ["De Basic 4 à JHS 3", "Conforme au programme du Ghana", "Avec FILU pour guide"],
-    countriesTitle: "FILUMIRE dans votre pays",
     howEyebrow: "Comment ça marche",
     howTitle: "Trois étapes pour des acquis durables",
     steps: [
@@ -75,7 +104,6 @@ export const HOME_COPY = {
     subjectsEyebrow: "Matières",
     subjectsTitle: "Quatre matières principales du Basic 4 au Basic 9",
     subjectsLead: "FILUMIRE propose l’anglais, les mathématiques, les sciences et l’informatique du Basic 4 au Basic 9. D’autres matières du programme, pour le Basic 4 à 6 et le Basic 7 à 9, sont en préparation pour leur ouverture aux élèves.",
-    reviewHeading: "Également au programme du JHS au Ghana",
     subjectsLink: "Voir toutes les matières",
     filuEyebrow: "Faites connaissance avec FILU",
     filuTitle: "Un guide bienveillant dans chaque leçon",
@@ -92,10 +120,10 @@ export const HOME_COPY = {
     trustEyebrow: "Fondé sur le programme officiel",
     trustTitle: "Ancré dans le programme national du Ghana",
     trust: [
-      { title: "Conforme aux normes nationales", text: "Les leçons de Basic 4 à 6 suivent le programme national du Ghana fondé sur les normes. Celles du JHS 1 à 3, conçues à partir du Common Core Programme, se préparent à une ouverture complète." },
+      { title: "Conforme aux normes nationales", text: "Les leçons de Basic 4 à 6 suivent le programme national du Ghana fondé sur les normes ; celles de Basic 7 à 9 suivent le Common Core Programme. Quatre matières principales sont proposées du Basic 4 au Basic 9." },
       { title: "Le programme examiné d’abord", text: "Une nouvelle matière n’est ouverte aux élèves qu’après l’examen de son programme." },
       { title: "Des repères familiers", text: "Les exemples s’appuient sur des prénoms, des lieux et des montants en cedis que les enfants connaissent." },
-      { title: "En anglais ou en français", text: "L’application s’utilise en anglais ou en français. Les leçons en français sont en préparation." },
+      { title: "En anglais ou en français", text: "Ce site et les écrans de l’application s’utilisent en anglais ou en français. Les leçons sont pour l’instant en anglais ; les leçons en français sont en préparation." },
     ] as Item[],
     finalTitle: "Prêts à commencer ?",
     finalText: "Ouvrez FILUMIRE dans votre navigateur et reprenez là où vous en étiez.",
@@ -232,12 +260,13 @@ export const SUBJECTS_COPY = {
   en: {
     eyebrow: "Subjects",
     title: "Subjects and curriculum",
-    lead: "Built for learners from Basic 4 through JHS 3, following Ghana’s national curriculum. Learning experiences for Basic 4–6, with JHS 1–3 being prepared for full release.",
+    lead: "Built for learners from Basic 4 through JHS 3, following Ghana’s national curriculum. English Language, Mathematics, Science and Computing are available across Basic 4–9, and additional subjects are being prepared for both grade bands.",
     primaryTitle: "Basic 4–6",
-    primaryNote: "Ghana Standards-Based Curriculum (NaCCA, 2019)",
+    primaryNote: "Ghana Standards-Based Curriculum (NaCCA, 2019) · Four core subjects available",
     jhsTitle: "JHS 1–3 (Basic 7–9)",
     jhsNote: "Ghana Common Core Programme (NaCCA) · Four core subjects available",
-    reviewHeading: "Also in the JHS curriculum",
+    reviewPrimary: "Additional subjects being prepared for Basic 4–6",
+    reviewJhs: "Additional subjects being prepared for Basic 7–9",
     reviewTitle: "What “Curriculum Review” means",
     sourcesTitle: "Curriculum documents (Basic 4–6)",
     sources: ["English Language", "Mathematics", "Science", "Computing"],
@@ -246,12 +275,13 @@ export const SUBJECTS_COPY = {
   fr: {
     eyebrow: "Matières",
     title: "Matières et programme",
-    lead: "Conçu pour les élèves de Basic 4 à JHS 3, selon le programme national du Ghana. Des parcours d’apprentissage pour Basic 4 à 6 ; le JHS 1 à 3 se prépare à une ouverture complète.",
+    lead: "Conçu pour les élèves de Basic 4 à JHS 3, selon le programme national du Ghana. L’anglais, les mathématiques, les sciences et l’informatique sont proposés du Basic 4 au Basic 9, et d’autres matières sont en préparation pour les deux cycles.",
     primaryTitle: "Basic 4–6",
-    primaryNote: "Programme national du Ghana fondé sur les normes (NaCCA, 2019)",
+    primaryNote: "Programme national du Ghana fondé sur les normes (NaCCA, 2019) · Quatre matières principales disponibles",
     jhsTitle: "JHS 1–3 (Basic 7–9)",
     jhsNote: "Common Core Programme du Ghana (NaCCA) · Quatre matières principales disponibles",
-    reviewHeading: "Également au programme du JHS",
+    reviewPrimary: "Matières supplémentaires en préparation pour le Basic 4 à 6",
+    reviewJhs: "Matières supplémentaires en préparation pour le Basic 7 à 9",
     reviewTitle: "Que signifie « Programme en préparation » ?",
     sourcesTitle: "Documents officiels du programme (Basic 4–6, en anglais)",
     sources: ["Anglais", "Mathématiques", "Sciences", "Informatique"],
@@ -353,30 +383,20 @@ export const ABOUT_COPY = {
 
 export const GHANA_COPY = {
   en: {
-    eyebrow: "Ghana",
-    title: "FILUMIRE in Ghana",
-    lead: "Built for learners from Basic 4 through JHS 3, following the NaCCA national curriculum. Learning experiences for Basic 4–6, with JHS 1–3 being prepared for full release.",
     startTitle: "Getting started",
     start: [
       { title: "Families", text: "Create a family account, add your children and choose each child’s class." },
       { title: "Learners", text: "Sign in with the username your family created and start your first lesson." },
       { title: "Teachers", text: "Ask families for their teacher code to follow your learners’ progress." },
     ] as Item[],
-    primary: "Start learning",
-    secondary: "For Schools",
   },
   fr: {
-    eyebrow: "Ghana",
-    title: "FILUMIRE au Ghana",
-    lead: "Conçu pour les élèves de Basic 4 à JHS 3, conformément au programme national de la NaCCA. Des parcours d’apprentissage pour Basic 4 à 6 ; le JHS 1 à 3 se prépare à une ouverture complète.",
     startTitle: "Pour commencer",
     start: [
       { title: "Familles", text: "Créez un compte famille, ajoutez vos enfants et indiquez la classe de chacun." },
       { title: "Élèves", text: "Connecte-toi avec l’identifiant créé par ta famille et commence ta première leçon." },
       { title: "Enseignants", text: "Demandez aux familles leur code enseignant pour suivre les progrès de vos élèves." },
     ] as Item[],
-    primary: "Commencer",
-    secondary: "Pour les écoles",
   },
 } satisfies Bilingual<Record<string, unknown>>;
 
@@ -431,16 +451,16 @@ export const HELP_COPY = {
 /* Page titles and descriptions for metadata (EN, FR). */
 export const PAGE_META: Record<string, Bilingual<{ title: string; description: string }>> = {
   "/": {
-    en: { title: "Personal learning for every child", description: "FILUMIRE is a personal tutor built for learners from Basic 4 through JHS 3. It follows Ghana’s curriculum, adapts to every answer and is guided by FILU." },
-    fr: { title: "Un apprentissage personnalisé pour chaque enfant", description: "FILUMIRE est un tuteur personnel conçu pour les élèves de Basic 4 à JHS 3. Il suit le programme du Ghana, s’adapte à chaque réponse et est guidé par FILU." },
+    en: { title: "Learning that understands every child", description: "FILUMIRE is a personal tutor made for Africa. Choose your country to continue: Ghana, from Basic 4 through JHS 3, with Côte d’Ivoire and Nigeria coming soon." },
+    fr: { title: "Un apprentissage qui comprend chaque enfant", description: "FILUMIRE est un tuteur personnel pensé pour l’Afrique. Choisissez votre pays : le Ghana, de Basic 4 à JHS 3, puis bientôt la Côte d’Ivoire et le Nigeria." },
   },
   "/how-it-works": {
     en: { title: "How it works", description: "How FILUMIRE checks understanding, responds to mistakes and makes learning last." },
     fr: { title: "Comment ça marche", description: "Comment FILUMIRE vérifie la compréhension, agit sur les erreurs et rend les acquis durables." },
   },
   "/subjects": {
-    en: { title: "Subjects and curriculum", description: "English, Mathematics, Science and Computing for Basic 4–6, with JHS 1–3 being prepared for full release, and the subjects in Curriculum Review." },
-    fr: { title: "Matières et programme", description: "Anglais, mathématiques, sciences et informatique pour Basic 4 à 6, le JHS 1 à 3 en préparation pour une ouverture complète, et les matières en préparation." },
+    en: { title: "Subjects and curriculum", description: "English Language, Mathematics, Science and Computing across Basic 4–9, and the additional subjects being prepared for both grade bands." },
+    fr: { title: "Matières et programme", description: "Anglais, mathématiques, sciences et informatique du Basic 4 au Basic 9, et les matières supplémentaires en préparation pour les deux cycles." },
   },
   "/learners": {
     en: { title: "For Learners", description: "Short lessons, help from FILU, stars and challenges: learning made for you." },
@@ -467,8 +487,8 @@ export const PAGE_META: Record<string, Bilingual<{ title: string; description: s
     fr: { title: "Confidentialité du site", description: "Comment le site public de FILUMIRE traite les messages et les liens vers l’application d’apprentissage." },
   },
   "/ghana": {
-    en: { title: "FILUMIRE in Ghana", description: "Built for learners from Basic 4 through JHS 3, following the NaCCA national curriculum." },
-    fr: { title: "FILUMIRE au Ghana", description: "Conçu pour les élèves de Basic 4 à JHS 3, conformément au programme national de la NaCCA." },
+    en: { title: "FILUMIRE in Ghana", description: "A personal tutor for Basic 4 through JHS 3: English Language, Mathematics, Science and Computing, following the NaCCA national curriculum and guided by FILU." },
+    fr: { title: "FILUMIRE au Ghana", description: "Un tuteur personnel de Basic 4 à JHS 3 : anglais, mathématiques, sciences et informatique, conformément au programme national de la NaCCA, avec FILU pour guide." },
   },
   "/cote-divoire": {
     en: { title: "Côte d’Ivoire: coming soon", description: "FILUMIRE is preparing lessons for Côte d’Ivoire." },

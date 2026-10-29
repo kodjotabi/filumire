@@ -71,8 +71,9 @@ export function SiteHeader() {
               </ul>
             </li>
             <li className="fs-nav-extra fs-nav-actions">
-              {languageSwitch("fs-lang")}
+              <div className="fs-nav-lang"><span>{copy.languageMenu}</span>{languageSwitch("fs-lang")}</div>
               <a href={loginHref} className="fs-btn fs-btn-ghost"><UserIcon className="fs-btn-icon" />{copy.login}</a>
+              <a href={startHref} className="fs-btn fs-btn-start fs-nav-start">{copy.start}</a>
             </li>
           </ul>
         </nav>
