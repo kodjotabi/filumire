@@ -27,9 +27,9 @@ assert.equal(await prompt("short_answer", true), "Choose the best answer.");
 assert.equal(await prompt("short_answer", true, "fr"), "Choisis la meilleure réponse.");
 assert.equal(await prompt("oral_response", true), "Choose the best answer.");
 // Free-text items keep the engine's chosen mode.
-assert.equal(await prompt("short_answer", false), "Give a short answer in your own words.");
-assert.equal(await prompt("short_answer", undefined), "Give a short answer in your own words.");
+assert.equal(await prompt("short_answer", false), "Write a short answer in your own words.");
+assert.equal(await prompt("short_answer", undefined), "Write a short answer in your own words.");
 // Authored option-based modes keep their own wording.
-assert.equal(await prompt("classification", true), "Place each item in the correct group.");
+assert.equal(await prompt("classification", true), "Put each item in the right group.");
 assert.equal(await prompt("multiple_choice", true), "Choose the best answer.");
 console.log("PASS mc-response-prompt: option items are asked to choose; other modes unchanged");

@@ -66,7 +66,7 @@ const QUESTIONS: Question[] = [
     purpose: "diagnostic",
     title: { en: "Choose the symbol", fr: "Choisir le symbole" },
     body: { en: "Which symbol makes 35,410 __ 35,401 true?", fr: "Quel symbole rend 35 410 __ 35 401 vrai ?" },
-    options: { en: [" >", "<", "=", "≤"], fr: [" >", "<", "=", "≤"] },
+    options: { en: [">", "<", "=", "≤"], fr: [">", "<", "=", "≤"] },
     answer: 0,
     rules: { 1: ["thinks_the_number_with_bigger_digits_is_larger", "misconception"], 2: ["thinks_the_symbol_points_to_the_larger_number", "misconception"], 3: ["thinks_a_number_with_more_nines_is_larger", "misconception"] },
     code: "B5.1.1.1.4",

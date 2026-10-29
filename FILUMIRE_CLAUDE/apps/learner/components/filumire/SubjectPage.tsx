@@ -96,10 +96,10 @@ const TEXT: Record<
       computing: "Créer. Résoudre. Appartenir.",
     },
     note: {
-      english: "Les mots ouvrent l'avenir!",
-      mathematics: "Les nombres ouvrent l'avenir!",
-      science: "La curiosité ouvre l'avenir!",
-      computing: "Les idées ouvrent l'avenir!",
+      english: "Les mots ouvrent l'avenir !",
+      mathematics: "Les nombres ouvrent l'avenir !",
+      science: "La curiosité ouvre l'avenir !",
+      computing: "Les idées ouvrent l'avenir !",
     },
   },
 };

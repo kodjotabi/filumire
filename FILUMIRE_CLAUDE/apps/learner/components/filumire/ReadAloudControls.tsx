@@ -11,8 +11,8 @@ export const speechCopy = {
   fr: { read: "Écouter", replay: "Réécouter", pause: "Pause", resume: "Reprendre", stop: "Arrêter", mute: "Couper le son", unmute: "Activer le son", speed: "Vitesse de lecture", missing: "Ta voix enregistrée n’est pas disponible sur cet appareil. Choisis une autre voix.", choose: "Choisis une voix française d’Afrique dans ton profil pour écouter.", textOnly: "Texte seulement : cet appareil n’a pas de voix française qui fonctionne sur l’appareil, donc FILUMIRE ne lit pas à voix haute.", remote: "Cette voix n’est pas confirmée comme locale à ton appareil. Elle ne peut pas lire le texte d’apprentissage.", error: "Le son n’a pas pu être lu. Tu peux réessayer ; ton apprentissage est conservé.", muted: "Le son est coupé.", local: "Le son utilise une voix locale. Le genre et l’accent ne sont pas garantis." },
 };
 const audioLabels = {
-  en: { options: "Audio options", lesson: "Audio for this lesson", summary: "Audio for this summary", question: "Audio for this question", filu: "Audio for this FILU response", correction: "Audio for FILU’s correction", preview: "Voice preview" },
-  fr: { options: "Options audio", lesson: "Audio de cette leçon", summary: "Audio de ce résumé", question: "Audio de cette question", filu: "Audio de cette réponse FILU", correction: "Audio de la correction de FILU", preview: "Aperçu de la voix" },
+  en: { options: "Voice settings", lesson: "Audio for this lesson", summary: "Audio for this summary", question: "Audio for this question", filu: "Audio for this FILU response", correction: "Audio for FILU’s correction", preview: "Voice preview" },
+  fr: { options: "Réglages de la voix", lesson: "Audio de cette leçon", summary: "Audio de ce résumé", question: "Audio de cette question", filu: "Audio de cette réponse FILU", correction: "Audio de la correction de FILU", preview: "Aperçu de la voix" },
 };
 /** Receives displayed, server-sanitised text only. Never looks at assessment keys. */
 export function ReadAloudControls({ learnerId, text, language, surface }: { learnerId?: string; text: string; language: "en" | "fr"; surface: SpeechSurface }) {
@@ -48,21 +48,26 @@ export function ReadAloudControls({ learnerId, text, language, surface }: { lear
     browserSpeechPlayback.stop();
     saveBrowserVoicePreference(learnerId, { voiceId, language, rate: preference?.rate ?? 1, muted: preference?.muted ?? false });
   }
+  const status = !voice ? t.missing : voice.localService !== true ? t.remote : preference?.muted ? t.muted : state.owner === owner && state.status === "error" ? t.error : "";
+  // Compact by default: one Read aloud button; voice, mute and speed fold away.
   return <div className="readAloud" role="group" aria-label={audioLabels[language][surface]} lang={language}>
-    {surface !== "preview" && <label htmlFor={`${id}-voice`}>{language === "fr" ? "Voix de lecture" : "Reading voice"}
-      <select id={`${id}-voice`} value={voice?.localService === true ? browserVoiceId(voice) : ""} disabled={!localVoices.length} onChange={(event) => chooseVoice(event.target.value)}>
-        <option value="" disabled>{language === "fr" ? "Choisis une voix africaine" : "Choose an African voice"}</option>
-        <VoiceOptions voices={localVoices} language={language} label={(item) => `${item.name} (${item.lang})`} />
-      </select>
-    </label>}
-    <button type="button" disabled={!enabled} onClick={read}>{active ? t.replay : t.read}</button>
+    <button type="button" className="raMain" disabled={!enabled} onClick={read}>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" /><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11" /></svg>
+      {active ? t.replay : t.read}
+    </button>
     {active && <><button type="button" onClick={state.status === "paused" ? browserSpeechPlayback.resume : browserSpeechPlayback.pause}>{state.status === "paused" ? t.resume : t.pause}</button>
     <button type="button" onClick={browserSpeechPlayback.stop}>{t.stop}</button></>}
     <details><summary>{audioLabels[language].options}</summary><div className="audioOptions">
+      {surface !== "preview" && <label htmlFor={`${id}-voice`}>{language === "fr" ? "Voix de lecture" : "Reading voice"}
+        <select id={`${id}-voice`} value={voice?.localService === true ? browserVoiceId(voice) : ""} disabled={!localVoices.length} onChange={(event) => chooseVoice(event.target.value)}>
+          <option value="" disabled>{language === "fr" ? "Choisis une voix africaine" : "Choose an African voice"}</option>
+          <VoiceOptions voices={localVoices} language={language} label={(item) => `${item.name} (${item.lang})`} />
+        </select>
+      </label>}
       <button type="button" disabled={!preference} aria-pressed={preference?.muted ?? false} onClick={() => update(preference?.rate ?? 1, !preference?.muted)}>{preference?.muted ? t.unmute : t.mute}</button>
       <label htmlFor={`${id}-speed`}>{t.speed}<select id={`${id}-speed`} value={preference?.rate ?? 1} disabled={!preference} onChange={(event) => update(Number(event.target.value), preference?.muted ?? false)}>{[0.5, 0.75, 1, 1.25, 1.5].map((rate) => <option key={rate} value={rate}>{rate}×</option>)}</select></label>
     </div></details>
-    <p role="status">{!voice ? t.missing : voice.localService !== true ? t.remote : preference?.muted ? t.muted : state.owner === owner && state.status === "error" ? t.error : ""}</p>
-    <style jsx>{`.readAloud { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 12px 0; } button, select { min-height: 44px; font: inherit; padding: 8px; border: 1px solid #b5d4c5; border-radius: 8px; background: #f7fcf9; color: #24463b; } button:disabled { opacity: .6; } label { display: flex; align-items: center; gap: 8px; } p { flex-basis: 100%; font-size: 14px; margin: 0; } :focus-visible { outline: 3px solid #277dca; outline-offset: 3px; }`}</style>
+    <p role="status" className={status ? "" : "raQuiet"}>{status}</p>
+    <style jsx>{`.readAloud { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 6px 0; } button, select { min-height: 36px; font: inherit; font-size: 14px; padding: 4px 12px; border: 1px solid #b5d4c5; border-radius: 999px; background: #f7fcf9; color: #24463b; } .raMain { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; } select { border-radius: 8px; } button:disabled { opacity: .6; } label { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; } summary { display: flex; align-items: center; min-height: 36px; padding: 0 6px; font-size: 13px; color: #24463b; cursor: pointer; } .audioOptions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 6px 0 2px; } p { flex-basis: 100%; font-size: 13px; margin: 0; } .raQuiet { display: none; } :focus-visible { outline: 3px solid #277dca; outline-offset: 3px; }`}</style>
   </div>;
 }
