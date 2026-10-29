@@ -137,3 +137,14 @@ test("footer tagline matches the learner app's home footer in English and French
  assert.equal(site.SHELL_COPY.fr.tagline,line[1]);
  assert.equal(site.SHELL_COPY.en.tagline,line[2]);
 });
+
+test("mascots are the learner app's boy and girl as transparent PNGs, with matching intrinsic sizes",async()=>{
+ const source=await read("../src/components/site/pages.tsx");
+ for(const [file,w,h] of [["boy-green-book.png",1283,1226],["girl-purple-book.png",1285,1224]]){
+  assert.match(source,new RegExp(`src="/illustrations/learners/${file.replace(".","\\.")}" alt="" width="${w}" height="${h}"`),file);
+  const png=await readFile(new URL("../public/illustrations/learners/"+file,import.meta.url));
+  assert.equal(png.subarray(1,4).toString(),"PNG",file);
+  assert.deepEqual([png.readUInt32BE(16),png.readUInt32BE(20),png[25]],[w,h,6],file+" size and RGBA");
+ }
+ assert.doesNotMatch(source,/illustrations\/international\//,"retired cut-outs are not used");
+});
