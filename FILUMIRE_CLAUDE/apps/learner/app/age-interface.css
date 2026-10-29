@@ -406,6 +406,8 @@ main.page[data-age-band="junior-high"] .learnBody .card .options .option input {
 main.page[data-age-band="junior-high"] .learnBody .primary-button.primary-button {
   border-radius: 8px;
   background: var(--jh-brand);
+  /* The base button's navy text would otherwise sit on this navy background. */
+  color: #ffffff;
   font-size: 16px;
   font-weight: 600;
 }

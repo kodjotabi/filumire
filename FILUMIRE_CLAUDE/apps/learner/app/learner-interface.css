@@ -15,6 +15,8 @@
   scroll-padding-block: 24px 112px;
 }
 .learnerUi :where(button, input, select, textarea) { font-family: inherit; }
+/* Titles (competency names, headings) wrap between words, never mid-word. */
+.learnerUi :where(h1, h2, h3, strong, summary, .bannerText p) { hyphens: manual; }
 .learnerUi .learnerSignOut { min-width: 0; max-width: 100%; }
 .learnerUi .learnerSignOutButton { padding: 8px 12px; border: 1px solid currentColor; border-radius: 12px; background: transparent; color: white; font: inherit; cursor: pointer; }
 .learnerUi .learnerSignOut p { max-width: 30ch; margin: 8px 0; color: white; line-height: 1.5; }
