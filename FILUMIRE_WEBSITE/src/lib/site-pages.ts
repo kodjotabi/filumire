@@ -1,9 +1,9 @@
 /*
  * FILUMIRE public website page copy (EN/FR). Claims here describe what
  * the learner app does today; keep them in step with the product.
- * Scope wording (owner decision, 27 Oct 2026): "Built for learners from
- * Basic 4 through JHS 3"; where availability matters, "Learning experiences
- * for Basic 4–6, with JHS 1–3 being prepared for full release".
+ * Owner-confirmed offering (29 Oct 2026): English Language, Mathematics,
+ * Science and Computing are served across Basic 4–9. Additional subjects
+ * for both Basic 4–6 and Basic 7–9 are under curriculum review.
  * French is written for Francophone readers, not translated word for word.
  */
 import type { Bilingual } from "./site";
@@ -28,8 +28,8 @@ export const HOME_COPY = {
     ] as Item[],
     howLink: "See how FILUMIRE works",
     subjectsEyebrow: "Subjects",
-    subjectsTitle: "Four subjects today, the whole curriculum in view",
-    subjectsLead: "Learning experiences in English, Mathematics, Science and Computing for Basic 4–6, with JHS 1–3 being prepared for full release. The other JHS subjects are in Curriculum Review.",
+    subjectsTitle: "Four core subjects across Basic 4–9",
+    subjectsLead: "FILUMIRE serves Basic 4–9 in English Language, Mathematics, Science and Computing. Additional curriculum subjects for Basic 4–6 and Basic 7–9 are being prepared for mainstream release.",
     reviewHeading: "Also in the Ghana JHS curriculum",
     subjectsLink: "Explore the subjects",
     filuEyebrow: "Meet FILU",
@@ -47,7 +47,7 @@ export const HOME_COPY = {
     trustEyebrow: "Built on the curriculum",
     trustTitle: "Rooted in Ghana’s national curriculum",
     trust: [
-      { title: "Follows the national standards", text: "Lessons follow Ghana’s Standards-Based Curriculum for Basic 4–6. JHS 1–3 lessons, built on the Common Core Programme, are being prepared for full release." },
+      { title: "Follows the national standards", text: "Lessons for Basic 4–6 follow Ghana’s Standards-Based Curriculum; Basic 7–9 lessons follow the Common Core Programme. Four core subjects are served across Basic 4–9." },
       { title: "Curriculum review comes first", text: "New subjects open to learners only after their curriculum has been reviewed." },
       { title: "Familiar to children", text: "Examples use names, places and Ghana cedis that children recognise." },
       { title: "English and French", text: "The app can be used in English or French. French lessons are being prepared." },
@@ -73,8 +73,8 @@ export const HOME_COPY = {
     ] as Item[],
     howLink: "Découvrir notre approche",
     subjectsEyebrow: "Matières",
-    subjectsTitle: "Quatre matières pour commencer, tout le programme en perspective",
-    subjectsLead: "Anglais, mathématiques, sciences et informatique : des parcours d’apprentissage pour Basic 4 à 6, tandis que le JHS 1 à 3 se prépare à une ouverture complète. Les autres matières du JHS sont en préparation.",
+    subjectsTitle: "Quatre matières principales du Basic 4 au Basic 9",
+    subjectsLead: "FILUMIRE propose l’anglais, les mathématiques, les sciences et l’informatique du Basic 4 au Basic 9. D’autres matières du programme, pour le Basic 4 à 6 et le Basic 7 à 9, sont en préparation pour leur ouverture aux élèves.",
     reviewHeading: "Également au programme du JHS au Ghana",
     subjectsLink: "Voir toutes les matières",
     filuEyebrow: "Faites connaissance avec FILU",
@@ -236,7 +236,7 @@ export const SUBJECTS_COPY = {
     primaryTitle: "Basic 4–6",
     primaryNote: "Ghana Standards-Based Curriculum (NaCCA, 2019)",
     jhsTitle: "JHS 1–3 (Basic 7–9)",
-    jhsNote: "Ghana Common Core Programme (NaCCA) · Being prepared for full release",
+    jhsNote: "Ghana Common Core Programme (NaCCA) · Four core subjects available",
     reviewHeading: "Also in the JHS curriculum",
     reviewTitle: "What “Curriculum Review” means",
     sourcesTitle: "Curriculum documents (Basic 4–6)",
@@ -250,7 +250,7 @@ export const SUBJECTS_COPY = {
     primaryTitle: "Basic 4–6",
     primaryNote: "Programme national du Ghana fondé sur les normes (NaCCA, 2019)",
     jhsTitle: "JHS 1–3 (Basic 7–9)",
-    jhsNote: "Common Core Programme du Ghana (NaCCA) · En préparation pour une ouverture complète",
+    jhsNote: "Common Core Programme du Ghana (NaCCA) · Quatre matières principales disponibles",
     reviewHeading: "Également au programme du JHS",
     reviewTitle: "Que signifie « Programme en préparation » ?",
     sourcesTitle: "Documents officiels du programme (Basic 4–6, en anglais)",
