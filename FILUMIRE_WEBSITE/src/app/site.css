@@ -279,7 +279,7 @@
 /* ---------- Footer ---------- */
 .fs-footer { color: #fff; }
 .fs-landscape { position: relative; background: var(--fs-sky); }
-.fs-landscape img { display: block; width: 100%; height: auto; max-height: 260px; object-fit: cover; object-position: bottom; }
+.fs-landscape img { display: block; width: 100%; height: clamp(80px, 10vw, 132px); object-fit: cover; object-position: bottom; }
 .fs-tagline { padding: 14px var(--fs-gutter); background: var(--fs-header); font-family: 'Kalam', 'Kalam Fallback', cursive; font-size: 1.25rem; font-weight: 700; text-align: center; }
 .fs-footer-body { padding: 48px 0 28px; background: var(--fs-deep); }
 .fs-footer-grid { display: grid; gap: 32px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
