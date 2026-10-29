@@ -16,3 +16,9 @@ docs/curriculum-sources/**/*-node-statements-clean.txt
 
 # Local secrets (e.g. .env.postgres-test.local for the filumire_test database)
 .env.*.local
+
+# Dependencies, build output, local handoff (never commit)
+node_modules/
+.next/
+docs/handoff/
+/handoff/
