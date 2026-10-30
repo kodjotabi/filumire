@@ -7,6 +7,9 @@ import {
   persistenceStore,
 } from "../persistence-provider";
 
+import { accountStore } from "../account/store";
+import { reviewerHasAllRoles } from "../account/reviewers";
+
 export async function resolveOrCreatePrincipalForExternalIdentity(
   providerNamespace: string,
   providerSubject: string,
@@ -31,16 +34,38 @@ export async function createPrincipalLearnerAccess(
   );
 }
 
+/*
+ * A teacher relationship counts for a teacher account, or for a
+ * principal without a sign-in credential (external identities). Any
+ * other account holds one only as a listed reviewer during the
+ * all-roles test period: when the period ends or the email leaves the
+ * list, the relationship stops counting everywhere at once.
+ */
+async function teacherRelationshipCounts(principalId: string): Promise<boolean> {
+  const credential = await accountStore.getCredentialByPrincipal(principalId);
+  return (
+    credential === undefined ||
+    credential.accountKind === "teacher" ||
+    reviewerHasAllRoles(credential.loginIdentifier, credential.accountKind)
+  );
+}
+
 export async function getPrincipalLearnerAccess(
   principalId: string,
   learnerId: string,
   relationshipType: PrincipalLearnerRelationshipType,
 ): Promise<PrincipalLearnerAccessRecord | undefined> {
-  return persistenceStore.getPrincipalLearnerAccess(
+  const record = await persistenceStore.getPrincipalLearnerAccess(
     principalId,
     learnerId,
     relationshipType,
   );
+
+  if (record && relationshipType === "teacher" && !(await teacherRelationshipCounts(principalId))) {
+    return undefined;
+  }
+
+  return record;
 }
 
 export async function listLearnersForPrincipal(

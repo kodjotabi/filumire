@@ -3,7 +3,7 @@ import { ProgressStatus, ProgressBreakdown } from "../../components/filumire/Pro
 import { PROGRESS_TEXT } from "../../../../services/learner-progress/reporting";
 import {PerformanceEvidenceForm} from '../../components/filumire/PerformanceEvidenceForm';
 import type {PerformanceAttestation} from '../../../../services/teacher-review/jhs-performance';
-import { AdultHeader, AdultRoleSwitch, adultRole } from "../../components/filumire/AdultRoleSwitch";
+import { AdultHeader, AdultRoleSwitch, adultRole, alsoTeacher } from "../../components/filumire/AdultRoleSwitch";
 import { useLanguage, type Language } from "../../components/filumire/language";
 import { TeacherLinkLearner } from "../../components/filumire/TeacherLinkLearner";
 import { TeacherLeaveLearner } from "../../components/filumire/TeacherLeaveLearner";
@@ -377,7 +377,7 @@ export default function TeacherPage() {
       .catch(() => setAccount(null));
   }, [load]);
 
-  const teacherAccount = account?.accountKind === "teacher";
+  const teacherAccount = account?.accountKind === "teacher" || alsoTeacher(account);
 
   function learnerName(learnerId: string, index: number): string {
     return (
@@ -648,7 +648,7 @@ export default function TeacherPage() {
         {language === "fr" ? "Aller au contenu" : "Skip to content"}
       </a>
       <AdultHeader active="teacher" role={adultRole(account)} language={language} onLanguage={setLanguage} />
-      <AdultRoleSwitch active="teacher" role={adultRole(account)} language={language} />
+      <AdultRoleSwitch active="teacher" role={adultRole(account)} alsoTeacher={alsoTeacher(account)} language={language} />
       <div className="shell" id="teacher-main">
         <div className="teacherTitle">{t("Teacher Workspace")}</div>
         {data?.summary && (

@@ -21,8 +21,8 @@ export const OFFLINE_SECURITY_SUITES = [
   "pilot-session-hardening", "pilot-storage-hardening", "pilot-concurrency-hardening",
   "learning-continuity-api", "production-learner-journey", "grade-aware-subject-selection",
   // Principals, sessions and learner access
-  "principal-auth-session", "principal-identity", "principal-learner-access", "principal-resolution",
-  "adult-supervision", "adult-signout", "account-client-signout", "reviewer-access",
+  "principal-auth-session", "principal-identity", "principal-learner-access", "principal-resolution", "session-check-unavailable",
+  "adult-supervision", "adult-signout", "account-client-signout", "reviewer-access", "reviewer-all-roles",
   // Teachers
   "teacher-authorization", "teacher-summary-api", "teacher-trusted-review", "teacher-review-end-to-end",
   "teacher-pending-review", "learner-pending-teacher-review", "teacher-professional-notes",

@@ -21,7 +21,8 @@ const copy = {
     protected: "Your scored answer stays your own. FILU can explain ideas,offer a different example and give non-revealing hints.",
     practising: "Practice in this chat does not change your marks or progress.",
     slow: "FILU is taking too long to answer. Your question is kept: press Retry.",
-    unavailable: "Open a lesson first so FILU can use your learning context.", network: "Your question has not received a response. Check your connection, then retry.",
+    unavailable: "Open a lesson first so FILU can use your learning context.",
+    noLearner: "FILU could not confirm who is learning. Reload the page, or sign in again.", network: "Your question has not received a response. Check your connection, then retry.",
     provider: "FILU could not prepare a response. Please retry.", auth: "Your session has ended. Sign in again to continue.",
     changed: "Your lesson or conversation session changed. Send your question again using the current context.",
     rate: "Please wait before retrying. Too many questions were sent.", expired: "This conversation has expired. You can start a new one.",
@@ -35,7 +36,8 @@ const copy = {
     protected: "Ta réponse évaluée reste la tienne. FILU peut expliquer les idées, proposer un autre exemple et donner des indices sans révéler la réponse.",
     practising: "L'entraînement dans cette conversation ne change ni tes notes ni ta progression.",
     slow: "FILU met trop de temps à répondre. Ta question est gardée : appuie sur Réessayer.",
-    unavailable: "Ouvre d’abord une leçon pour que FILU utilise ton contexte d’apprentissage.", network: "Ta question n’a pas reçu de réponse. Vérifie ta connexion, puis réessaie.",
+    unavailable: "Ouvre d’abord une leçon pour que FILU utilise ton contexte d’apprentissage.",
+    noLearner: "FILU n’a pas pu confirmer qui apprend. Recharge la page ou reconnecte-toi.", network: "Ta question n’a pas reçu de réponse. Vérifie ta connexion, puis réessaie.",
     provider: "FILU n’a pas pu préparer de réponse. Réessaie.", auth: "Ta session est terminée. Reconnecte-toi pour continuer.",
     changed: "Ta leçon ou ta session de conversation a changé. Envoie à nouveau ta question avec le contexte actuel.",
     rate: "Attends avant de réessayer. Trop de questions ont été envoyées.", expired: "Cette conversation a expiré. Tu peux en commencer une nouvelle.",
@@ -165,7 +167,7 @@ export function FiluConversation({ language, scope: learnerId, contextKey, onCon
       {/* The conversation comes first and the question box follows it, as in
           any chat: a reply always appears just above where the learner types. */}
       <div className="transcript" ref={log} role="log" aria-live="polite" aria-relevant="additions text" aria-busy={busy} tabIndex={0}>
-        <p className="transcriptIntro">{scope ? t.intro : t.unavailable}</p>
+        <p className="transcriptIntro">{scope ? t.intro : t.noLearner}</p>
         {current.response?.messages.map((message, index) => (
           <article ref={!current.pending && index === latestQuestionIndex ? latestQuestion : undefined} className={`message ${message.role}`} key={`${index}-${message.role}`} lang={message.language}>
             {message.role === "assistant" && <FiluAvatar className="conversationAvatar" />}

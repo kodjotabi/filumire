@@ -12,20 +12,29 @@ const refuse = code => { throw new DeployGuardError(code); };
 const hosts = value => new Set((value ?? "").split(",").map(h => h.trim().toLowerCase()).filter(Boolean));
 const OWNER_ROLE = /(^|_)owner$|^postgres$|^neondb_owner$/i;
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-// Same rules as services/account reviewerList(): 1-20 combined "email:guardian|teacher" entries, at most one supplemental entry, no duplicates.
+// Same rules as services/account reviewerList(): 1-20 combined "email:guardian|teacher" or role-less "email" entries,
+// at most one supplemental entry, no duplicates.
 const MAX_REVIEWERS = 20;
+const reviewerEntries = (value, additional) => [value, additional].map(list => (list ?? "").split(",").map(entry => entry.trim()).filter(Boolean));
 const validReviewerList = (value, additional) => {
-  const baseEntries = (value ?? "").split(",").map(entry => entry.trim()).filter(Boolean);
-  const additionalEntries = (additional ?? "").split(",").map(entry => entry.trim()).filter(Boolean);
+  const [baseEntries, additionalEntries] = reviewerEntries(value, additional);
   const entries = [...baseEntries, ...additionalEntries];
   if (!baseEntries.length || additionalEntries.length > 1 || entries.length > MAX_REVIEWERS) return false;
   const seen = new Set();
   for (const entry of entries) {
-    const at = entry.lastIndexOf(":"), email = entry.slice(0, at).trim().toLowerCase(), role = entry.slice(at + 1).trim().toLowerCase();
-    if (at < 0 || !["guardian", "teacher"].includes(role) || email.length > 254 || !EMAIL.test(email) || seen.has(email)) return false;
+    const at = entry.lastIndexOf(":"), email = (at < 0 ? entry : entry.slice(0, at)).trim().toLowerCase(), role = at < 0 ? "all" : entry.slice(at + 1).trim().toLowerCase();
+    if (!["guardian", "teacher", "all"].includes(role) || email.length > 254 || !EMAIL.test(email) || seen.has(email)) return false;
     seen.add(email);
   }
   return true;
+};
+// Same formats as services/account/reviewers.ts reviewerAllRolesUntil(): YYYY-MM-DD or ISO date-time with a zone.
+const validAccessUntil = value => {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    const start = Date.parse(`${value}T00:00:00Z`);
+    return !Number.isNaN(start) && new Date(start).toISOString().slice(0, 10) === value;
+  }
+  return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:\d{2})$/.test(value) && !Number.isNaN(Date.parse(value));
 };
 
 /**
@@ -38,7 +47,10 @@ const validReviewerList = (value, additional) => {
  * - the Basic 7–9 private presentation (FILUMIRE_JHS_MODE) accepts only "private-presentation", on a
  *   Preview (behind Vercel Authentication) or on Production in private reviewer mode; anything else refuses;
  * - private review (FILUMIRE_ACCESS_MODE=reviewers) needs a valid reviewer list, closed general
- *   registration and no external identity provider.
+ *   registration and no external identity provider;
+ * - the all-roles test period (FILUMIRE_REVIEWER_ACCESS_UNTIL) needs reviewer mode and a valid date,
+ *   so a mistyped value refuses the build instead of silently granting nothing; role-less reviewer
+ *   entries need that date.
  * Outside Vercel (local builds and tests) the guard does nothing.
  */
 export function checkDeployment(env) {
@@ -51,8 +63,15 @@ export function checkDeployment(env) {
     if (target === "production" && env.FILUMIRE_ACCESS_MODE !== "reviewers") refuse("jhs_mode_requires_reviewer_mode");
   }
   if (env.FILUMIRE_ACCESS_MODE && env.FILUMIRE_ACCESS_MODE !== "reviewers") refuse("unknown_access_mode");
+  const accessUntil = (env.FILUMIRE_REVIEWER_ACCESS_UNTIL ?? "").trim();
+  if (accessUntil) {
+    if (env.FILUMIRE_ACCESS_MODE !== "reviewers") refuse("reviewer_access_until_without_reviewer_mode");
+    if (!validAccessUntil(accessUntil)) refuse("reviewer_access_until_invalid");
+  }
   if (env.FILUMIRE_ACCESS_MODE === "reviewers") {
     if (!validReviewerList(env.FILUMIRE_REVIEWER_EMAILS, env.FILUMIRE_REVIEWER_EMAILS_ADDITIONAL)) refuse("reviewer_list_invalid");
+    // Role-less reviewers exist only for the test period; without an end date they would be admitted nowhere.
+    if (!accessUntil && reviewerEntries(env.FILUMIRE_REVIEWER_EMAILS, env.FILUMIRE_REVIEWER_EMAILS_ADDITIONAL).flat().some(entry => !entry.includes(":"))) refuse("roleless_reviewers_without_end_date");
     if (env.FILUMIRE_ACCOUNT_REGISTRATION === "open") refuse("reviewer_mode_with_open_registration");
     if (Object.keys(env).some(key => key.startsWith("FILUMIRE_EXTERNAL_AUTH_") && env[key])) refuse("reviewer_mode_with_external_identity");
   }

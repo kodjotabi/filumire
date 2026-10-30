@@ -2317,7 +2317,9 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
 
         .nextButton {
           margin-top: 0;
-          background: #1677ff;
+          /* White on brand blue (6.6:1); the inherited navy on #1677ff was 3.3:1. */
+          background: var(--ui-brand, #0357c3);
+          color: #ffffff;
         }
 
         .learnFooter {

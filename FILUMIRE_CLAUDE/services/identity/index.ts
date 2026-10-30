@@ -19,6 +19,10 @@ import {
 } from "../principal";
 
 import {
+  principalMayStaySignedIn,
+} from "../account";
+
+import {
   ensureDevelopmentAdultAccess,
 } from "../development-fixtures";
 
@@ -51,10 +55,32 @@ async function mayLearnAs(
   learnerId: string,
 ): Promise<boolean> {
   for (const relationshipType of ["self", "guardian"] as const) {
-    const access = await getPrincipalLearnerAccess(principalId, learnerId, relationshipType);
+    const access = await readSessionStore(() => getPrincipalLearnerAccess(principalId, learnerId, relationshipType));
     if (access?.status === "active") return true;
   }
   return false;
+}
+
+/*
+ * The session store could not be read (for example, the database has no
+ * free connections). The request is refused, but it is not a sign-out:
+ * account and tutoring endpoints answer 503 and keep the session. The
+ * message avoids "authentication" and "identity", which some routes map to 401.
+ */
+export class SessionCheckUnavailableError extends Error {
+  constructor() {
+    super("Session check is temporarily unavailable.");
+    this.name = "SessionCheckUnavailableError";
+  }
+}
+
+async function readSessionStore<T>(read: () => Promise<T>): Promise<T> {
+  try {
+    return await read();
+  } catch (error) {
+    console.error("FILUMIRE session check failed:", error);
+    throw new SessionCheckUnavailableError();
+  }
 }
 
 const PRODUCTION_SESSION_COOKIE =
@@ -174,6 +200,51 @@ async function verifyProductionSessionToken(
     );
   }
 
+  const { principalId, sessionId, learnerId } =
+    await verifyProductionSessionClaims(token, secret);
+
+  // The token is genuine from here on. A session store that cannot
+  // be read is refused as unavailable, never as a sign-out.
+  const validAuthSession =
+    await readSessionStore(() =>
+      isPrincipalAuthSessionValid(
+        sessionId,
+        principalId,
+      ),
+    );
+
+  if (!validAuthSession) {
+    throw new Error(
+      "Unauthenticated request: invalid production session.",
+    );
+  }
+
+  // Private review: a reviewer whose access ended is signed out now.
+  if (!(await readSessionStore(() => principalMayStaySignedIn(principalId)))) {
+    throw new Error(
+      "Unauthenticated request: invalid production session.",
+    );
+  }
+
+  await readSessionStore(() =>
+    renewPrincipalAuthSession(
+      sessionId,
+      principalId,
+    ),
+  );
+
+  return { principalId, sessionId, learnerId };
+}
+
+/* Signature, issuer, audience, expiry and claim shape: any failure is unauthenticated. */
+async function verifyProductionSessionClaims(
+  token: string,
+  secret: string,
+): Promise<{
+  principalId: string;
+  sessionId: string;
+  learnerId?: string;
+}> {
   try {
     const { payload } = await jwtVerify(
       token,
@@ -203,28 +274,13 @@ async function verifyProductionSessionToken(
       throw new Error("Invalid claims.");
     }
 
-    const principalId = payload.sub;
-    const sessionId = payload.sid;
-    const learnerId = learnerBound
-      ? (payload.learner_id as string)
-      : undefined;
-
-    const validAuthSession =
-      await isPrincipalAuthSessionValid(
-        sessionId,
-        principalId,
-      );
-
-    if (!validAuthSession) {
-      throw new Error("Invalid server session.");
-    }
-
-    await renewPrincipalAuthSession(
-      sessionId,
-      principalId,
-    );
-
-    return { principalId, sessionId, learnerId };
+    return {
+      principalId: payload.sub,
+      sessionId: payload.sid,
+      learnerId: learnerBound
+        ? (payload.learner_id as string)
+        : undefined,
+    };
   } catch {
     throw new Error(
       "Unauthenticated request: invalid production session.",

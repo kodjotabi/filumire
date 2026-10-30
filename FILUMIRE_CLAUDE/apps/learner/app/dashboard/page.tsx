@@ -207,8 +207,11 @@ function LearnerDashboardView() {
     }
   }, []);
 
+  const [accountAttempt, setAccountAttempt] = useState(0);
   useEffect(() => {
-    if (!hasAccountSession()) {
+    // Production always asks the server: the readable marker can be
+    // missing (any 401 clears it) while the HttpOnly session is valid.
+    if (!hasAccountSession() && process.env.NODE_ENV !== "production") {
       setAccountChecked(true);
       return;
     }
@@ -243,7 +246,7 @@ function LearnerDashboardView() {
       alive = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [accountAttempt]);
 
   const signedInLearner = activeLearner(account);
   // Required first-time setup: every other view redirects back to it,
@@ -275,6 +278,15 @@ function LearnerDashboardView() {
   const tutoringView = view === "ask-filu";
   const tutorAccountReady = !tutoringView || accountChecked;
   const tutorLearnerId = tutoringView ? signedInLearner?.learnerId : undefined;
+  // Ask FILU needs the learner's identity. The overview has just proved
+  // the session, so one failed account lookup is retried instead of
+  // leaving FILU silently disabled.
+  const accountRetried = useRef(false);
+  useEffect(() => {
+    if (!tutoringView || !overview || !accountChecked || signedInLearner || accountRetried.current) return;
+    accountRetried.current = true;
+    setAccountAttempt((attempt) => attempt + 1);
+  }, [tutoringView, overview, accountChecked, signedInLearner]);
   const load = useCallback(async () => {
     if (!tutorAccountReady) return;
     const ticket = requestOrder.current.begin();
