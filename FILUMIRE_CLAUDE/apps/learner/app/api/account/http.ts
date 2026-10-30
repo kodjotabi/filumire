@@ -18,6 +18,7 @@ import {
   getProductionSessionCookie,
   getSignedInMarkerClearCookie,
   getSignedInMarkerCookie,
+  SessionCheckUnavailableError,
 } from "../../../../../services/identity";
 
 import { LearnerContextValidationError } from "../../../../../services/learner-context";
@@ -227,6 +228,14 @@ export function errorResponse(
     return json(
       { error: error.message, code: "bad_request" },
       { status: 400 },
+    );
+  }
+
+  // The session store could not be read: refuse without signing out.
+  if (error instanceof SessionCheckUnavailableError) {
+    return json(
+      { error: "Sign-in is temporarily unavailable. Please try again.", code: "session_unavailable" },
+      { status: 503, headers: { "retry-after": "5" } },
     );
   }
 
