@@ -196,6 +196,11 @@ function tr(language: Language, text: string): string {
   return translateLearnerError(text, language) ?? (language === "fr" ? (FR_TEXT[text] ?? text) : text);
 }
 
+/* French writes 10 000 with a space; keep each number's digit groups on one line. */
+function keepDigitGroups(text: string): string {
+  return text.replace(/(\d) (?=\d{3}(?!\d))/g, "$1 ");
+}
+
 function actionLabel(
   action: string,
 ): string {
@@ -1058,6 +1063,50 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
 
   const teachView = showContinue && action !== "diagnose";
 
+  /*
+   * On a plain question the answer prompt ("Choose the best answer.")
+   * labels the choices and FILU's tips go below them, so the question
+   * and its choices sit together. Tips already on screen (the lesson
+   * text, the heading) are not repeated.
+   */
+  const questionLayout = hasAssessment && !activeCorrection;
+  const instructionElements = data.instruction?.structured?.elements ?? [];
+  const answerPrompt = questionLayout
+    ? instructionElements.find((element) => element.type === "next_prompt")?.text
+    : undefined;
+  const heading = tr(language, needsSupportPause ? "You have done all you can here for now." : actionLabel(action));
+  const tips = instructionElements.filter((element) =>
+    element.text.trim() !== (data.content?.body ?? "").trim() &&
+    (teachView || element.text.trim() !== heading) &&
+    (hasAssessment || element.type !== "next_prompt") &&
+    !(answerPrompt && element.type === "next_prompt"));
+  const tutorBlock = tips.length > 0 ? (
+    <div className="tutor-message">
+      <span className="tipIcon" aria-hidden="true">
+        <BulbIcon />
+      </span>
+      <div className="instruction-elements">
+        {tips.map((element, index) => (
+          <section
+            key={`${element.type}-${index}`}
+            className="instruction-element"
+          >
+            <p>{element.text}</p>
+          </section>
+        ))}
+      </div>
+    </div>
+  ) : instructionElements.length === 0 && data.instruction?.content ? (
+    <div className="tutor-message">
+      <span className="tipIcon" aria-hidden="true">
+        <BulbIcon />
+      </span>
+      <p>
+        {data.instruction.content}
+      </p>
+    </div>
+  ) : null;
+
   /* Teaching-first (Phase 1): offered only on a new topic's introduction. */
   const canCheckFirst =
     teachView && isIntroductionStep(data.decision);
@@ -1210,7 +1259,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
 
           {assessmentFeedback && isFeedbackOutcome(assessmentFeedback.outcome) && (
             <div ref={feedbackRef} tabIndex={-1} className="answerFeedbackHost">
-              <small>{tr(language, "Feedback on your submitted activity")}: {assessmentFeedback.title || tr(language, "Your submitted answer")}</small>
+              <small>{tr(language, "Feedback on your submitted activity")}{language === "fr" ? " :" : ":"} {assessmentFeedback.title || tr(language, "Your submitted answer")}</small>
               <JellyStarFeedback
                 key={`${assessmentFeedback.outcome}-${assessmentFeedback.assessmentItemId ?? ""}`}
                 outcome={assessmentFeedback.outcome}
@@ -1225,7 +1274,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
             <div ref={feedbackRef} tabIndex={-1} className={`assessment-feedback ${assessmentFeedback.outcome}`} role="status" aria-live="polite">
               <div className="feedback-icon" aria-hidden="true">{feedbackIcon(assessmentFeedback.outcome)}</div>
               <div className="feedback-content">
-                <small>{tr(language, "Feedback on your submitted activity")}: {assessmentFeedback.title || tr(language, "Your submitted answer")}</small>
+                <small>{tr(language, "Feedback on your submitted activity")}{language === "fr" ? " :" : ":"} {assessmentFeedback.title || tr(language, "Your submitted answer")}</small>
                 <div className="feedback-title">{tr(language, feedbackTitle(assessmentFeedback.outcome))}</div>
                 <div className="feedback-message">{tr(language, feedbackMessage(assessmentFeedback.outcome))}</div>
                 {assessmentFeedback.assessmentItemId !== data.content?.assessmentItemId && <small>{tr(language, "The following activity is your next learning step.")}</small>}
@@ -1277,7 +1326,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
               </h2>
 
               <div className="lesson-body" lang={data.content.language}>
-                {data.content.body}
+                {keepDigitGroups(data.content.body)}
               </div>
               {data.content.language && <ReadAloudControls learnerId={data.learnerState.learnerId} text={data.content.body} language={data.content.language} surface={hasAssessment ? "question" : "lesson"} />}
 
@@ -1285,36 +1334,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
             </>
           )}
 
-          {data.instruction?.structured?.elements?.length ? (
-            <div className="tutor-message">
-              <span className="tipIcon" aria-hidden="true">
-                <BulbIcon />
-              </span>
-              <div className="instruction-elements">
-                {/* A response prompt ("Give a short answer ...") only makes sense when there is a question to answer; teaching cards only have Next. */}
-                {data.instruction.structured.elements.filter((element) => element.text.trim() !== (data.content?.body ?? "").trim() && (hasAssessment || element.type !== "next_prompt")).map(
-                  (element, index) => (
-                    <section
-                      key={`${element.type}-${index}`}
-                      className="instruction-element"
-                    >
-
-                      <p>{element.text}</p>
-                    </section>
-                  ),
-                )}
-              </div>
-            </div>
-          ) : data.instruction?.content ? (
-            <div className="tutor-message">
-              <span className="tipIcon" aria-hidden="true">
-                <BulbIcon />
-              </span>
-              <p>
-                {data.instruction.content}
-              </p>
-            </div>
-          ) : null}
+          {!questionLayout && tutorBlock}
 
           {requiresTrustedEvaluation && !pending && !awaitingReview && (
             <div className="assessment">
@@ -1377,7 +1397,7 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
           {hasAssessment && !pending && (!activeCorrection || retrying) && (
             <fieldset className="assessment">
               <legend className="assessment-label">
-                {tr(language, "Your answer")}
+                {answerPrompt ?? tr(language, "Your answer")}
                 <span className="visuallyHidden">
                   {" – "}
                   {tr(language, "Choose one answer")}
@@ -1442,6 +1462,8 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
               </button>
             </fieldset>
           )}
+
+          {questionLayout && tutorBlock}
 
           {showContinue && !teachView && (
             <button
@@ -2095,8 +2117,8 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
 
         .options {
           display: grid;
-          gap: 8px;
-          margin: 10px 0;
+          gap: 6px;
+          margin: 6px 0 8px;
         }
 
         .option {
@@ -2263,7 +2285,8 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
           position: relative;
           display: flex;
           flex: 1;
-          min-height: 52px;
+          /* As tall as the avatar, so it never covers the lesson text above. */
+          min-height: 84px;
           align-items: flex-end;
           padding-bottom: 10px;
         }
@@ -2411,6 +2434,10 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
             padding: 20px 24px 0;
           }
 
+          .teachFoot {
+            min-height: 104px;
+          }
+
           .teachFoot img {
             height: 104px;
           }
@@ -2500,8 +2527,9 @@ function LearnPageContent({ selectedTopicId }: { selectedTopicId: string | null 
             gap: 14px;
           }
 
+          /* 18px keeps "Mathématiques" on one line in the narrow side column. */
           .bannerText h1 {
-            font-size: 20px;
+            font-size: 18px;
           }
 
           .bannerText p {
