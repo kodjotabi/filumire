@@ -1,5 +1,5 @@
 import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
-import { resolveRequestIdentity, type RequestIdentity } from "../identity";
+import { resolveRequestIdentity, SessionCheckUnavailableError, type RequestIdentity } from "../identity";
 import { consumeRateLimit } from "../account/rate-limit";
 import { loadConversationContext, type TrustedConversationContext } from "./conversation-context";
 import {
@@ -104,7 +104,11 @@ export function createConversationHandler(overrides: Partial<Dependencies> = {})
       if ((origin && origin !== expectedOrigin.origin) || request.headers.get("sec-fetch-site") === "cross-site") throw new ConversationError("invalid_origin", 403);
       let identity: RequestIdentity;
       try { identity = await deps.identity(request); }
-      catch { throw new ConversationError("unauthenticated", 401); }
+      catch (error) {
+        // An unreadable session store is not a sign-out: the learner keeps the session and retries.
+        if (error instanceof SessionCheckUnavailableError) throw new ConversationError("temporarily_unavailable", 503);
+        throw new ConversationError("unauthenticated", 401);
+      }
       if (!identity.authenticated || !identity.learnerId) throw new ConversationError("unauthenticated", 401);
       signingKey(); // Production configuration must be valid before any provider work.
       const body = await readRequest(request);
@@ -207,7 +211,7 @@ export async function getConversationContext(request: Request): Promise<Response
   try {
     let identity: RequestIdentity;
     try { identity = await resolveRequestIdentity(request); }
-    catch { return json({ code: "unauthenticated" }, 401); }
+    catch (error) { return error instanceof SessionCheckUnavailableError ? json({ code: "temporarily_unavailable" }, 503) : json({ code: "unauthenticated" }, 401); }
     if (!identity.authenticated || !identity.learnerId) return json({ code: "unauthenticated" }, 401);
     const language = new URL(request.url).searchParams.get("language");
     if (language !== "en" && language !== "fr") return json({ code: "invalid_request" }, 400);

@@ -17,12 +17,17 @@ export const pool = new Pool({
   // when the database cannot be reached.
   connectionTimeoutMillis: 5000,
 
-  // Release idle database connections after
-  // a controlled period.
-  idleTimeoutMillis: 30000,
+  // Release idle database connections quickly:
+  // warm serverless instances must not hold them.
+  idleTimeoutMillis: 10000,
 
-  // Keep the pool bounded.
-  max: 10,
+  // Each Vercel instance has its own pool, and the
+  // filumire_app role allows 20 connections in all
+  // (scripts/create-app-role.mjs). 10 per instance
+  // exhausted it in Production on 29 Oct 2026; 3
+  // leaves room for several warm instances.
+  // Requests beyond 3 wait, up to connectionTimeoutMillis.
+  max: 3,
 
   // Rotate long-lived connections.
   maxLifetimeSeconds: 300,
