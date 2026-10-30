@@ -46,7 +46,7 @@
   min-height: clamp(64px, calc(6.3 * var(--s)), 106px);
   padding: 8px clamp(16px, calc(6 * var(--s)), 104px);
 }
-.intl-brand { display: inline-flex; flex-shrink: 0; border-radius: 8px; }
+.intl-brand { display: inline-flex; align-items: center; min-height: 44px; flex-shrink: 0; border-radius: 8px; }
 .intl-brand img { display: block; height: clamp(40px, calc(5 * var(--s)), 84px); width: auto; aspect-ratio: 577 / 180; }
 .intl-header-actions { position: relative; display: flex; align-items: center; gap: clamp(10px, calc(1.6 * var(--s)), 24px); }
 .intl-lang {
@@ -54,7 +54,7 @@
   border: 1.5px solid rgba(255, 255, 255, .55);
 }
 .intl-lang a {
-  min-width: 44px; min-height: 36px; padding: 0 14px;
+  min-width: 44px; min-height: 44px; padding: 0 14px;
   display: inline-flex; align-items: center; justify-content: center;
   border-radius: 999px; color: #fff; font-weight: 700; font-size: 15px; text-decoration: none;
 }
@@ -91,7 +91,7 @@
 .intl-menu a:hover { background: #eaf3ff; }
 .intl-menu-lang { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 6px; padding: 10px 14px 4px; border-top: 1px solid #e3ecf8; color: var(--intl-navy); font-weight: 600; }
 .intl-menu .intl-lang-menu { border-color: #b9cfee; }
-.intl-menu .intl-lang-menu a { min-height: 40px; padding: 0 12px; color: var(--intl-navy); gap: 0; }
+.intl-menu .intl-lang-menu a { min-height: 44px; padding: 0 12px; color: var(--intl-navy); gap: 0; }
 .intl-menu .intl-lang-menu a.is-active { background: var(--intl-header); color: #fff; }
 
 /* Hero */
@@ -231,7 +231,7 @@ html[lang="fr"] .intl-headline { font-size: clamp(2.3rem, calc(3.5 * var(--s)), 
 @media (max-width: 719px) {
   .intl-login { display: none; }
   .intl-menu-toggle { display: inline-block; }
-  .intl-lang a { min-width: 40px; padding: 0 10px; font-size: 14px; }
+  .intl-lang a { padding: 0 10px; font-size: 14px; }
   .intl-header-actions { gap: 8px; }
   /* Phones: CTA sits ~75% of its height lower (owner review 26 Oct); same total height, so the centred layout does not shift. */
   .intl-cta-wrap { margin-top: 20px; padding-bottom: 4px; }
@@ -241,7 +241,7 @@ html[lang="fr"] .intl-headline { font-size: clamp(2.3rem, calc(3.5 * var(--s)), 
 }
 @media (max-width: 359px) {
   .intl-brand img { height: 34px; }
-  .intl-lang a { min-width: 36px; padding: 0 8px; }
+  .intl-lang a { padding: 0 8px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .intl-cta, .intl-country { transition: none; }
