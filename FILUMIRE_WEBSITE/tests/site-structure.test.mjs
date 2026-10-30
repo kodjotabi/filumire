@@ -10,16 +10,45 @@ const site=await load("../src/lib/site.ts");
 const pages=await load("../src/lib/site-pages.ts");
 const {PAGE_ROUTES}=await load("../src/lib/locale.ts");
 
-test("one brand homepage at / with the full information architecture",async()=>{
+/* Restored 29 Oct 2026: the original landing page (e6f56983) opens filumire.com; the overhaul's homepage content is /ghana behind Choose Your Country. */
+test("the original landing page at /, with the full site behind Choose Your Country",async()=>{
  assert.deepEqual([...PAGE_ROUTES],["/","/how-it-works","/subjects","/learners","/parents","/schools","/about","/contact","/privacy","/ghana","/cote-divoire","/nigeria"]);
  assert.deepEqual(site.NAV_LINKS.map(link=>link.href),["/how-it-works","/subjects","/learners","/parents","/schools","/about"]);
  const router=await read("../src/lib/pages.tsx");
- assert.match(router,/"\/": HomePage/);
- assert.doesNotMatch(router,/International|CountryChooser/);
+ assert.match(router,/"\/": LandingPage/);assert.match(router,/"\/ghana": GhanaPage/);
  const frame=await read("../src/components/layout/SiteFrame.tsx");
- assert.doesNotMatch(frame,/international/i,"every page shares one header and footer");
+ assert.match(frame,/pathname === "\/" \|\| pathname === "\/fr"/,"only the landing page brings its own header and footer");
+ const landing=await read("../src/components/site/Landing.tsx");
+ for(const part of ['className="intl-headline"','className="intl-cta"','id="choose-country"','className="intl-landscape"','data-language-switch="true"','id="landing-menu"'])assert.ok(landing.includes(part),part);
+ assert.equal((landing.match(/languageSwitch\(/g)||[]).length,2,"EN/FR in the header bar and in the phone menu");
+ assert.deepEqual(pages.LANDING_COPY.en.headline,["Learning that ","understands"," every child."]);
+ assert.equal(pages.LANDING_COPY.en.ctaPrimary,"Choose Your Country");assert.equal(pages.LANDING_COPY.fr.ctaPrimary,"Choisissez votre pays");
  const header=await read("../src/components/site/SiteHeader.tsx");
  assert.match(header,/id="primary-navigation"/);assert.match(header,/aria-controls="primary-navigation"/);assert.match(header,/data-language-switch="true"/);
+ assert.match(header,/languageSwitch\("fs-lang fs-lang-desktop"\)/);assert.match(header,/languageSwitch\("fs-lang"\)/);
+ const css=await read("../src/app/site.css");
+ assert.match(css,/\.fs-lang-desktop \{ display: inline-flex; \}/,"EN/FR stays visible in the header bar at every width");
+ assert.match(css,/@media \(max-width: 767px\) \{\s*\.fs-header-actions > \.fs-btn-start \{ display: none; \}\s*\.fs-nav-start \{ display: inline-flex; \}/,"phone header: no duplicate Start learning; it stays in the hero and the menu");
+ assert.match(header,/className="fs-btn fs-btn-start fs-nav-start"/);
+});
+
+test("the site says plainly that a bilingual website is not French lessons",()=>{
+ assert.match(site.SHELL_COPY.en.languageNote,/English and French.*Lessons are in English for now; French lessons are being prepared\./);
+ assert.match(site.SHELL_COPY.fr.languageNote,/Les leçons sont pour l’instant en anglais ; les leçons en français sont en préparation\./);
+});
+
+test("Meet FILU is a compact avatar and speech bubble in Montserrat",async()=>{
+ const css=await read("../src/app/site.css"),source=await read("../src/components/site/pages.tsx");
+ assert.match(source,/<figure className="fs-filu-intro">/);assert.doesNotMatch(source+css,/fs-filu-card|fs-filu-large/);
+ assert.match(css,/\.fs-filu-avatar \{[^}]*width: 72px; height: 72px;/);
+ assert.match(css,/\.fs-bubble \{[^}]*font-family: var\(--font-sans\);[^}]*font-size: 1rem;/);
+ assert.match(await read("../src/app/globals.css"),/--font-sans: 'Montserrat'/);
+});
+
+test("the footer landscape shows the hills, not the artwork's flat navy",async()=>{
+ const css=await read("../src/app/site.css");
+ assert.match(css,/\.fs-landscape-art \{ overflow: hidden; aspect-ratio: 1600 \/ 326; \}/);
+ assert.doesNotMatch(css,/object-position: bottom/);
 });
 
 test("countries: Ghana covers Basic 4 through JHS 3, the others are coming soon",()=>{
@@ -33,19 +62,19 @@ test("countries: Ghana covers Basic 4 through JHS 3, the others are coming soon"
  assert.equal(pages.SOON_COPY.fr.title("Nigeria"),"FILUMIRE au Nigeria");
 });
 
-test("subjects match the learner app: four active, eight JHS Curriculum Review, none for Basic 4–6 yet",async()=>{
+test("subjects match the learner app: four core subjects, Curriculum Review subjects for Basic 4–6 and Basic 7–9",async()=>{
  assert.deepEqual(site.ACTIVE_SUBJECTS.map(s=>s.key),["english","mathematics","science","computing"]);
  assert.deepEqual(site.REVIEW_SUBJECTS.jhs.map(s=>s.key),["ghanaian-language","french","arabic","creative-arts-design","career-technology","social-studies","rme","physical-health-education"]);
- assert.deepEqual(site.REVIEW_SUBJECTS.primary,[]);
+ assert.deepEqual(site.REVIEW_SUBJECTS.primary.map(s=>s.key),["history","creative-arts","rme","physical-education","french","ghanaian-language"]);
  assert.equal(site.SUBJECT_COPY.en.review,"Curriculum Review");assert.equal(site.SUBJECT_COPY.fr.review,"Programme en préparation");
  const icons=await read("../src/components/site/icons.tsx");
- for(const subject of [...site.ACTIVE_SUBJECTS,...site.REVIEW_SUBJECTS.jhs])assert.ok(icons.includes(`name === "${subject.key}"`),subject.key+" has an icon");
+ for(const subject of [...site.ACTIVE_SUBJECTS,...site.REVIEW_SUBJECTS.primary,...site.REVIEW_SUBJECTS.jhs])assert.ok(icons.includes(`name === "${subject.key}"`),subject.key+" has an icon");
  const app=(await read("../../FILUMIRE_CLAUDE/apps/learner/components/filumire/subjectCatalogue.ts")).replaceAll("\\u00AD","\u00AD");
- for(const subject of site.REVIEW_SUBJECTS.jhs){assert.ok(app.includes(`"${subject.key}"`));assert.ok(app.includes(`en: "${subject.name.en}", fr: "${subject.name.fr}"`),subject.key+" has the learner app's names");}
+ for(const subject of [...site.REVIEW_SUBJECTS.primary,...site.REVIEW_SUBJECTS.jhs]){assert.ok(app.includes(`"${subject.key}"`));assert.ok(app.includes(`en: "${subject.name.en}", fr: "${subject.name.fr}"`),subject.key+" has the learner app's names");}
 });
 
 /* Same keys and shapes in both languages; French differs except for names and grade labels. */
-const SAME_ALLOWED=new Set(["Ghana","Basic 4–6","JHS 1–3 (Basic 7–9)","Parents","FILUMIRE","Nigeria","Côte d’Ivoire"]);
+const SAME_ALLOWED=new Set(["Ghana","Basic 4–6","JHS 1–3 (Basic 7–9)","Parents","FILUMIRE","Nigeria","Côte d’Ivoire","."]);
 function compare(en,fr,path,same){
  if(typeof en==="function"){assert.equal(typeof fr,"function",path);return;}
  if(typeof en==="string"){assert.equal(typeof fr,"string",path);assert.ok(fr.trim(),path+" is empty in French");if(en===fr&&!SAME_ALLOWED.has(en)&&!en.startsWith("/"))same.push(path+": "+en);return;}
@@ -57,7 +86,7 @@ test("every page and shell copy is complete in English and French",()=>{
  const same=[];
  for(const [name,value] of Object.entries({...site,...pages}))if(value&&typeof value==="object"&&"en" in value&&"fr" in value)compare(value.en,value.fr,name,same);
  for(const [path,meta] of Object.entries(pages.PAGE_META))compare(meta.en,meta.fr,"PAGE_META"+path,same);
- for(const list of [site.NAV_LINKS,site.COUNTRIES,site.ACTIVE_SUBJECTS,site.REVIEW_SUBJECTS.jhs])for(const item of list)for(const field of ["label","name","summary"])if(item[field])compare(item[field].en,item[field].fr,field,same);
+ for(const list of [site.NAV_LINKS,site.COUNTRIES,site.ACTIVE_SUBJECTS,site.REVIEW_SUBJECTS.primary,site.REVIEW_SUBJECTS.jhs])for(const item of list)for(const field of ["label","name","summary"])if(item[field])compare(item[field].en,item[field].fr,field,same);
  assert.deepEqual(same,[],"untranslated strings");
  for(const path of PAGE_ROUTES)assert.ok(pages.PAGE_META[path],path+" has metadata");
 });
@@ -105,16 +134,24 @@ test("retired pages redirect to their replacements in both languages",async()=>{
  assert.match(config,/source: "\/fr" \+ from, destination: "\/fr" \+ to/);
 });
 
-/* Owner decision (27 Oct 2026): public scope is Basic 4–9, without implying JHS content is fully released. */
-test("public scope claims use the approved wording and never present JHS as fully released",async()=>{
- const general="Built for learners from Basic 4 through JHS 3",precise="Learning experiences for Basic 4–6, with JHS 1–3 being prepared for full release";
- assert.ok(pages.SUBJECTS_COPY.en.lead.startsWith(general));assert.ok(pages.SUBJECTS_COPY.en.lead.includes(precise));
- assert.ok(pages.GHANA_COPY.en.lead.startsWith(general));assert.ok(pages.GHANA_COPY.en.lead.includes(precise));
- assert.match(pages.HOME_COPY.en.subjectsLead,/for Basic 4–6, with JHS 1–3 being prepared for full release/);
- assert.match(pages.SUBJECTS_COPY.en.jhsNote,/Being prepared for full release/);assert.match(pages.SUBJECTS_COPY.fr.jhsNote,/En préparation pour une ouverture complète/);
- for(const locale of ["fr"])for(const copy of [pages.SUBJECTS_COPY,pages.GHANA_COPY])assert.match(copy[locale].lead,/de Basic 4 à JHS 3.*le JHS 1 à 3 se prépare à une ouverture complète/s);
+/*
+ * Owner-confirmed offering (29 Oct 2026, replaces the 27 Oct wording): English Language,
+ * Mathematics, Science and Computing are served across Basic 4–9 (Basic 4–6 and Basic 7–9 /
+ * JHS 1–3); Curriculum Review subjects are additional subjects being prepared for both bands.
+ */
+test("public scope claims: four core subjects across Basic 4–9, additional subjects being prepared for both bands",async()=>{
+ assert.match(pages.HOME_COPY.en.subjectsTitle,/^Four core subjects across Basic 4–9$/);
+ assert.match(pages.HOME_COPY.en.subjectsLead,/serves Basic 4–9 in English Language, Mathematics, Science and Computing\. Additional curriculum subjects for Basic 4–6 and Basic 7–9 are being prepared/);
+ assert.match(pages.HOME_COPY.fr.subjectsLead,/l’anglais, les mathématiques, les sciences et l’informatique du Basic 4 au Basic 9/);
+ assert.match(pages.SUBJECTS_COPY.en.lead,/English Language, Mathematics, Science and Computing are available across Basic 4–9, and additional subjects are being prepared for both grade bands\./);
+ assert.match(pages.SUBJECTS_COPY.fr.lead,/proposés du Basic 4 au Basic 9, et d’autres matières sont en préparation pour les deux cycles\./);
+ for(const locale of ["en","fr"]){assert.match(pages.SUBJECTS_COPY[locale].primaryNote,/Four core subjects available|Quatre matières principales disponibles/);assert.match(pages.SUBJECTS_COPY[locale].jhsNote,/Four core subjects available|Quatre matières principales disponibles/);}
+ assert.match(site.SUBJECT_COPY.en.reviewMeaning,/for Basic 4–6 and Basic 7–9/);assert.match(site.SUBJECT_COPY.fr.reviewMeaning,/pour le Basic 4 à 6 et le Basic 7 à 9/);
  const all=JSON.stringify({site:{COUNTRIES:site.COUNTRIES,SHELL_COPY:site.SHELL_COPY,SUBJECT_COPY:site.SUBJECT_COPY},pages});
- assert.doesNotMatch(all,/Basic 4–9|ready for Basic|Programme en revue/);
+ assert.doesNotMatch(all,/prepared for full release|being prepared for full|ouverture complète|JHS 1–3 being prepared|ready for Basic|Programme en revue|Also in the (Ghana )?JHS curriculum/);
+ const components=await read("../src/components/site/pages.tsx");
+ assert.equal((components.match(/band: "primary", heading/g)||[]).length,2,"Basic 4–6 review subjects on /ghana and /subjects");
+ assert.equal((components.match(/band: "jhs", heading/g)||[]).length,2,"Basic 7–9 review subjects on /ghana and /subjects");
  const app=await read("../../FILUMIRE_CLAUDE/apps/learner/components/filumire/subjectCatalogue.ts");
  assert.match(app,/status: "Programme en préparation"/);assert.doesNotMatch(app,/Programme en revue/);
 });

@@ -54,7 +54,7 @@ export function SubjectIcon({ name }: { name: string }) {
           <path className="cutline" d="M16.5 9.5c-.75 1.2-1.5 1.2-2.25 0s-1.5-1.2-2.25 0-1.5 1.2-2.25 0-1.5-1.2-2.25 0" />
         </g>
       )}
-      {name === "creative-arts-design" && (
+      {(name === "creative-arts-design" || name === "creative-arts") && (
         <g>
           <path d="M12 3a9 9 0 0 0 0 18c1.1 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-.9.8-1.7 1.8-1.7h2.1A4.3 4.3 0 0 0 21 11c0-4.4-4-8-9-8z" />
           {[[7.5, 11.5], [9.5, 7.5], [14.5, 7.5], [17, 11]].map(([x, y]) => (
@@ -81,7 +81,13 @@ export function SubjectIcon({ name }: { name: string }) {
           <path d="M12 20.3l-1.3-1.2C6 14.9 3 12.1 3 8.6A4.6 4.6 0 0 1 7.6 4c1.7 0 3.3.8 4.4 2.1A5.8 5.8 0 0 1 16.4 4 4.6 4.6 0 0 1 21 8.6c0 3.5-3 6.3-7.7 10.5z" />
         </g>
       )}
-      {name === "physical-health-education" && (
+      {name === "history" && (
+        <g>
+          <path d="M6 3h12v1.8h-1.2v2.4c0 1.9-1.1 3.6-2.8 4.8 1.7 1.2 2.8 2.9 2.8 4.8v2.4H18V21H6v-1.8h1.2v-2.4c0-1.9 1.1-3.6 2.8-4.8-1.7-1.2-2.8-2.9-2.8-4.8V4.8H6z" />
+          <path className="cut" d="M9.2 17.6c0-1.6 1.2-2.8 2.8-3.6 1.6.8 2.8 2 2.8 3.6v1.6H9.2z" />
+        </g>
+      )}
+      {(name === "physical-health-education" || name === "physical-education") && (
         <g>
           <circle cx="12" cy="12" r="9" />
           <path className="cut" d="M12 8.2l3.2 2.3-1.2 3.8h-4l-1.2-3.8z" />

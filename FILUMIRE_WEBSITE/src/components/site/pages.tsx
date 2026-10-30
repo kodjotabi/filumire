@@ -7,6 +7,7 @@ import { ABOUT_COPY, GHANA_COPY, HELP_COPY, HOME_COPY, HOW_COPY, LEARNERS_COPY, 
 import { ContactInquiry } from "@/components/ContactInquiry";
 import { Actions, Avatars, CtaBand, FeatureGrid, PageHero, Section, SectionHead, Steps, SubjectGrid, type Action } from "./parts";
 import { Arrow, Check, FiluMark, Stroke } from "./icons";
+import { Landing } from "./Landing";
 
 /* Learner-app entry points; without an approved app URL they fall back to the sign-in help. */
 function app(entry: "start" | "login" | "parent" | "teacher", locale: Locale): Action {
@@ -33,8 +34,19 @@ function AudienceIcon({ kind }: { kind: "learners" | "parents" | "schools" }) {
   );
 }
 
-export function HomePage({ locale }: { locale: Locale }) {
+/* The original landing page at / and /fr, with the learner app's boy and girl. */
+export function LandingPage({ locale }: { locale: Locale }) {
+  return <Landing locale={locale} boy={<Mascot which="boy" />} girl={<Mascot which="girl" />} />;
+}
+
+/*
+ * FILUMIRE in Ghana: the full site experience a visitor reaches from the
+ * landing page's Choose Your Country (the 28 Oct overhaul homepage content).
+ */
+export function GhanaPage({ locale }: { locale: Locale }) {
   const copy = HOME_COPY[locale];
+  const subjects = SUBJECTS_COPY[locale];
+  const ghana = GHANA_COPY[locale];
   const [before, accent, after] = copy.headline;
   return (
     <>
@@ -56,42 +68,30 @@ export function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className="fs-countries" id="countries" aria-labelledby="countries-title">
-        <div className="fs-container">
-          <h2 id="countries-title" className="fs-countries-title">{copy.countriesTitle}</h2>
-          <ul>
-            {COUNTRIES.map((country) => (
-              <li key={country.id}>
-                <Link href={localizeHref(country.href, locale)} className={"fs-country-card" + (country.status === "coming-soon" ? " is-soon" : "")}>
-                  <span><strong>{country.name[locale]}</strong><span>{country.summary[locale]}</span></span>
-                  <Arrow />
-                </Link>
-              </li>
-            ))}
-          </ul>
+      <Section tone="white" id="subjects" labelledBy="ghana-subjects">
+        <div className="fs-section-head is-center">
+          <p className="fs-eyebrow">{copy.subjectsEyebrow}</p>
+          <h2 id="ghana-subjects">{copy.subjectsTitle}</h2>
+          <p className="fs-section-lead">{copy.subjectsLead}</p>
         </div>
-      </section>
+        <SubjectGrid locale={locale} review={[{ band: "primary", heading: subjects.reviewPrimary }, { band: "jhs", heading: subjects.reviewJhs }]} />
+        <p className="fs-note">{SUBJECT_COPY[locale].reviewMeaning}</p>
+        <p className="fs-more"><Link href={localizeHref("/subjects", locale)}>{copy.subjectsLink}<Arrow /></Link></p>
+      </Section>
 
-      <Section tone="white">
+      <Section tone="sky">
         <SectionHead eyebrow={copy.howEyebrow} title={copy.howTitle} center />
         <Steps items={copy.steps} />
         <p className="fs-more"><Link href={localizeHref("/how-it-works", locale)}>{copy.howLink}<Arrow /></Link></p>
       </Section>
 
-      <Section tone="sky">
-        <SectionHead eyebrow={copy.subjectsEyebrow} title={copy.subjectsTitle} lead={copy.subjectsLead} center />
-        <SubjectGrid locale={locale} band="jhs" reviewHeading={copy.reviewHeading} />
-        <p className="fs-note">{SUBJECT_COPY[locale].reviewMeaning}</p>
-        <p className="fs-more"><Link href={localizeHref("/subjects", locale)}>{copy.subjectsLink}<Arrow /></Link></p>
-      </Section>
-
       <Section tone="white">
         <div className="fs-filu-block">
-          <div className="fs-filu-card" aria-hidden="true">
-            <FiluMark className="fs-filu-large" />
-            <p className="fs-bubble">{copy.filuSays}</p>
-          </div>
-          <div>
+          <figure className="fs-filu-intro">
+            <FiluMark className="fs-filu-avatar" />
+            <figcaption className="fs-bubble">{copy.filuSays}</figcaption>
+          </figure>
+          <div className="fs-filu-text">
             <SectionHead eyebrow={copy.filuEyebrow} title={copy.filuTitle} lead={copy.filuText} />
             <ul className="fs-ticks">
               {copy.filuPoints.map((point) => <li key={point}><Check />{point}</li>)}
@@ -120,6 +120,11 @@ export function HomePage({ locale }: { locale: Locale }) {
       <Section tone="white">
         <SectionHead eyebrow={copy.trustEyebrow} title={copy.trustTitle} center />
         <FeatureGrid items={copy.trust} />
+      </Section>
+
+      <Section tone="sky">
+        <SectionHead title={ghana.startTitle} center />
+        <Steps items={ghana.start} />
       </Section>
 
       <CtaBand locale={locale} title={copy.finalTitle} text={copy.finalText} actions={[withLabel(app("start", locale), copy.primary, "light"), { label: copy.finalSecondary, href: "/contact", variant: "secondary" }]} />
@@ -200,14 +205,14 @@ export function SubjectsPage({ locale }: { locale: Locale }) {
           <h2 id="basic-4-6-title">{copy.primaryTitle}</h2>
           <p>{copy.primaryNote}</p>
         </div>
-        <SubjectGrid locale={locale} band="primary" />
+        <SubjectGrid locale={locale} review={[{ band: "primary", heading: copy.reviewPrimary }]} />
       </Section>
       <Section tone="sky" id="jhs-1-3" labelledBy="jhs-1-3-title">
         <div className="fs-band-head">
           <h2 id="jhs-1-3-title">{copy.jhsTitle}</h2>
           <p>{copy.jhsNote}</p>
         </div>
-        <SubjectGrid locale={locale} band="jhs" reviewHeading={copy.reviewHeading} />
+        <SubjectGrid locale={locale} review={[{ band: "jhs", heading: copy.reviewJhs }]} />
         <div className="fs-panel fs-panel-small">
           <h3>{copy.reviewTitle}</h3>
           <p>{SUBJECT_COPY[locale].reviewMeaning}</p>
@@ -294,30 +299,6 @@ export function AboutPage({ locale }: { locale: Locale }) {
   );
 }
 
-export function GhanaPage({ locale }: { locale: Locale }) {
-  const copy = GHANA_COPY[locale];
-  const subjects = SUBJECTS_COPY[locale];
-  const actions: Action[] = [withLabel(app("start", locale), copy.primary), { label: copy.secondary, href: "/schools", variant: "secondary" }];
-  return (
-    <>
-      <PageHero locale={locale} eyebrow={copy.eyebrow} title={copy.title} lead={copy.lead} actions={actions} art={<Mascot which="girl" className="fs-page-mascot" />} />
-      <Section tone="white" labelledBy="ghana-primary">
-        <div className="fs-band-head"><h2 id="ghana-primary">{subjects.primaryTitle}</h2><p>{subjects.primaryNote}</p></div>
-        <SubjectGrid locale={locale} band="primary" />
-      </Section>
-      <Section tone="sky" labelledBy="ghana-jhs">
-        <div className="fs-band-head"><h2 id="ghana-jhs">{subjects.jhsTitle}</h2><p>{subjects.jhsNote}</p></div>
-        <SubjectGrid locale={locale} band="jhs" reviewHeading={subjects.reviewHeading} />
-      </Section>
-      <Section tone="white">
-        <SectionHead title={copy.startTitle} center />
-        <Steps items={copy.start} />
-      </Section>
-      <CtaBand locale={locale} title={copy.title} text={copy.lead} actions={[withLabel(app("start", locale), copy.primary, "light")]} />
-    </>
-  );
-}
-
 export function ComingSoonPage({ locale, country }: { locale: Locale; country: Exclude<CountryId, "ghana"> }) {
   const copy = SOON_COPY[locale];
   const name = COUNTRIES.find((item) => item.id === country)!.name[locale];
@@ -327,7 +308,7 @@ export function ComingSoonPage({ locale, country }: { locale: Locale; country: E
       eyebrow={copy.eyebrow}
       title={copy.title(name)}
       lead={copy.text(name)}
-      actions={[{ label: copy.back, href: "/#countries" }, { label: copy.contact, href: "/contact", variant: "secondary" }]}
+      actions={[{ label: copy.back, href: "/#choose-country" }, { label: copy.contact, href: "/contact", variant: "secondary" }]}
       art={<Mascot which="boy" className="fs-page-mascot" />}
     />
   );

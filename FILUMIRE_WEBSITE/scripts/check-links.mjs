@@ -37,11 +37,18 @@ for (const path of routes) {
   for (const match of html.matchAll(/<a\b[^>]*\bhref="([^"]*)"[^>]*>/g)) links.add(decode(match[1]));
   for (const match of html.matchAll(/(?:src|href)="([^" ]+\.(?:js|css|woff2))(?:\?[^" ]*)?"/g)) assets.add(decode(match[1]));
   for (const match of html.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g)) images.add(decode(match[1]));
-  // One shared header on every page: navigation with its menu control and an operational EN/FR switch.
-  assert.match(html, /aria-controls="primary-navigation"/);
-  assert.match(html, /id="primary-navigation"/);
+  // The landing page (/ and /fr) has its own header, Choose Your Country and landscape band;
+  // every other page shares the site header (navigation and menu control) and footer. Both carry EN/FR.
+  if (path === "/" || path === "/fr") {
+    assert.match(html, /aria-controls="landing-menu"/);
+    assert.match(html, /aria-controls="choose-country"/);
+    assert.match(html, /class="intl-landscape"/);
+  } else {
+    assert.match(html, /aria-controls="primary-navigation"/);
+    assert.match(html, /id="primary-navigation"/);
+    assert.match(html, /class="fs-footer"/);
+  }
   assert.match(html, /data-language-switch="true"/);
-  assert.match(html, /class="fs-footer"/);
   assert.doesNotMatch(html, /app\.filumire\.example\.com|Your inquiry has been received|Endpoint status: Connected|FranÃ§ais|â€¢|Â©/);
 }
 let internal = 0;

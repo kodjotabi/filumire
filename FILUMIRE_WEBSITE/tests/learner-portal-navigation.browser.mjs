@@ -16,16 +16,23 @@ try {
   const label=language==='fr'?'Commencer':'Start learning';
   const home=website+(prefix||'/');
   const expected=fallback?prefix+'/contact#learner':learner+'/?lang='+language;
-  for(const path of ['', '/how-it-works','/subjects','/learners','/parents','/schools','/about','/contact','/privacy','/ghana']) {
-   await page.goto(website+prefix+(path||'/'),{waitUntil:'domcontentloaded'});
+  // The landing page (/) has its own header; every other page has the site header.
+  await page.goto(home,{waitUntil:'domcontentloaded'});
+  assert.equal(await page.locator('header .intl-brand').getAttribute('href'),prefix||'/');
+  for(const path of ['/how-it-works','/subjects','/learners','/parents','/schools','/about','/contact','/privacy','/ghana']) {
+   await page.goto(website+prefix+path,{waitUntil:'domcontentloaded'});
    const portal=page.locator('.fs-header-actions').getByRole('link',{name:label,exact:true,includeHidden:true});
    await portal.waitFor({state:'attached'}); assert.equal(await portal.getAttribute('href'),expected);
    assert.equal(await page.locator('header .fs-brand').getAttribute('href'),prefix||'/');
    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'horizontal overflow');
   }
-  // The Start learning button stays in the header bar at every width.
-  async function openPortal() { await page.locator('.fs-header-actions').getByRole('link',{name:label,exact:true}).click(); }
-  await page.goto(home); await page.locator('header .fs-brand').click(); await page.waitForURL(home);
+  // Start learning is in the header bar from 768px; on phones it is in the hero and the menu.
+  async function openPortal() {
+   await page.goto(website+prefix+'/ghana');
+   if(width<768){await page.locator('.fs-menu-toggle').click();await page.locator('.fs-nav-start').click();}
+   else await page.locator('.fs-header-actions').getByRole('link',{name:label,exact:true}).click();
+  }
+  await page.goto(website+prefix+'/ghana'); await page.locator('header .fs-brand').click(); await page.waitForURL(home);
   await openPortal();
   if(fallback) {
    await page.waitForURL(website+prefix+'/contact#learner');
