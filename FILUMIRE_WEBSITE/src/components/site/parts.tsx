@@ -83,9 +83,11 @@ export function Steps({ items }: { items: { title: string; text: string }[] }) {
   );
 }
 
-/* Active subjects as the learner app shows them, then Curriculum Review subjects for the band. */
-export function SubjectGrid({ locale, band, reviewHeading }: { locale: Locale; band: "primary" | "jhs"; reviewHeading?: string }) {
-  const review = REVIEW_SUBJECTS[band];
+/*
+ * The four core subjects as the learner app shows them, then the Curriculum
+ * Review subjects of each requested band (greyed out, never links).
+ */
+export function SubjectGrid({ locale, review = [] }: { locale: Locale; review?: { band: "primary" | "jhs"; heading: string }[] }) {
   return (
     <div className="fs-subjects">
       <ul className="fs-subject-grid">
@@ -97,11 +99,11 @@ export function SubjectGrid({ locale, band, reviewHeading }: { locale: Locale; b
           </li>
         ))}
       </ul>
-      {review.length > 0 && reviewHeading ? (
-        <>
-          <h3 className="fs-review-heading">{reviewHeading}</h3>
+      {review.map(({ band, heading }) => (
+        <div key={band} className="fs-review">
+          <h3 className="fs-review-heading">{heading}</h3>
           <ul className="fs-subject-grid fs-review-grid">
-            {review.map((subject) => (
+            {REVIEW_SUBJECTS[band].map((subject) => (
               <li key={subject.key} className="fs-subject review">
                 <span className="fs-subject-icon"><SubjectIcon name={subject.key} /></span>
                 <h4>{subject.name[locale]}</h4>
@@ -109,8 +111,8 @@ export function SubjectGrid({ locale, band, reviewHeading }: { locale: Locale; b
               </li>
             ))}
           </ul>
-        </>
-      ) : null}
+        </div>
+      ))}
     </div>
   );
 }

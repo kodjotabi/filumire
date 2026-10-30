@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import "./fonts.css";
 import "./globals.css";
 import "./site.css";
+import "./landing.css";
 import { LanguageState } from "@/components/LanguageState";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";

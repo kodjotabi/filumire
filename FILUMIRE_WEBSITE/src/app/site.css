@@ -60,7 +60,15 @@
 .fs-lang { display: inline-flex; padding: 3px; border: 1.5px solid rgba(255, 255, 255, 0.55); border-radius: 999px; }
 .fs-lang a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 36px; padding: 0 12px; border-radius: 999px; color: #fff; font-weight: 700; font-size: 0.875rem; text-decoration: none; }
 .fs-lang a.is-active { background: #fff; color: var(--fs-header); }
-.fs-lang-desktop { display: none; }
+/* EN / FR stays in the header bar at every width, and is repeated in the phone menu. */
+.fs-lang-desktop { display: inline-flex; }
+.fs-nav-lang { display: flex; align-items: center; gap: 12px; color: rgba(255, 255, 255, 0.85); font-weight: 600; }
+.fs-nav-start { display: none; }
+/* Phones: the bar holds only the logo, EN/FR and the menu; Start learning is the hero's button and is also in the menu. */
+@media (max-width: 767px) {
+  .fs-header-actions > .fs-btn-start { display: none; }
+  .fs-nav-start { display: inline-flex; }
+}
 .fs-menu-toggle { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; border: 1.5px solid rgba(255, 255, 255, 0.55); color: #fff; }
 .fs-menu-toggle span, .fs-menu-toggle span::before, .fs-menu-toggle span::after { display: block; width: 20px; height: 2px; border-radius: 2px; background: currentColor; content: ""; transition: transform 160ms ease, opacity 160ms ease; }
 .fs-menu-toggle span { position: relative; }
@@ -105,7 +113,7 @@
   .fs-nav > ul > li > a { min-height: 44px; padding: 0 10px; font-size: 0.95rem; white-space: nowrap; }
   .fs-nav-extra { display: none; }
   .fs-header-actions { margin-left: 0; gap: 12px; }
-  .fs-country, .fs-lang-desktop { display: inline-flex; }
+  .fs-country { display: inline-flex; }
   .fs-country summary span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   .fs-menu-toggle { display: none; }
 }
@@ -137,7 +145,7 @@
 .fs-hero-grid { display: grid; gap: 24px; align-items: end; }
 .fs-hero-copy { padding-bottom: 8px; }
 .fs-pill { display: inline-flex; padding: 6px 14px; border-radius: 999px; background: #fff; color: var(--fs-brand); font-size: 0.85rem; font-weight: 800; box-shadow: 0 2px 8px rgba(9, 51, 117, 0.08); }
-.fs-hero h1 { margin-top: 16px; color: var(--fs-ink); font-size: clamp(2.25rem, 8vw, 4rem); font-weight: 800; line-height: 1.08; letter-spacing: -0.03em; }
+.fs-hero h1 { margin-top: 16px; color: var(--fs-ink); font-size: clamp(1.85rem, 7vw, 3.5rem); font-weight: 800; line-height: 1.08; letter-spacing: -0.03em; }
 .fs-accent { position: relative; display: inline-block; color: var(--fs-brand); }
 .fs-accent-stroke { position: absolute; left: 0; right: 0; bottom: -0.12em; width: 100%; height: 0.22em; color: var(--fs-yellow); }
 .fs-facts { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 22px 0 0; padding: 0; list-style: none; color: var(--fs-ink); font-weight: 600; font-size: 0.95rem; }
@@ -152,18 +160,6 @@
   .fs-hero-copy { padding-bottom: 64px; }
   .fs-mascot { max-width: 300px; }
 }
-
-/* ---------- Countries strip ---------- */
-.fs-countries { padding: 28px 0; background: #fff; border-bottom: 1px solid var(--fs-line); }
-.fs-countries-title { margin-bottom: 14px; color: var(--fs-ink); font-size: 1.1rem; font-weight: 800; }
-.fs-countries ul { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
-.fs-country-card { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; padding: 12px 18px; border: 1.5px solid var(--fs-line); border-radius: 16px; color: var(--fs-ink); text-decoration: none; background: #fff; }
-.fs-country-card > span { display: grid; gap: 2px; }
-.fs-country-card > span > span { color: var(--fs-ink-soft); font-size: 0.9rem; }
-.fs-country-card svg { width: 20px; height: 20px; flex: none; color: var(--fs-brand); }
-.fs-country-card:not(.is-soon) { border-color: var(--ui-green); background: var(--ui-green-tint); }
-.fs-country-card:hover { box-shadow: var(--fs-shadow); }
-@media (min-width: 768px) { .fs-countries ul { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
 /* ---------- Steps and features ---------- */
 .fs-steps, .fs-features, .fs-audiences, .fs-help-cards, .fs-sources { display: grid; gap: 16px; margin: 0; padding: 0; list-style: none; }
@@ -192,6 +188,7 @@
 .fs-subject-icon .line { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
 .fs-subject h3 { margin-top: 12px; font-size: 1.1rem; font-weight: 800; }
 .fs-subject p { margin-top: 6px; color: var(--fs-ink-soft); font-size: 0.9rem; line-height: 1.5; }
+.fs-review + .fs-review .fs-review-heading { margin-top: 24px; }
 .fs-review-heading { margin: 28px 0 12px; color: var(--fs-ink-soft); font-size: 1rem; font-weight: 700; }
 .fs-subject.review { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 10px; padding: 12px; }
 .fs-subject.review .fs-subject-icon { width: 38px; height: 38px; }
@@ -209,16 +206,29 @@
 .fs-filu svg { display: block; fill: currentColor; }
 .fs-filu .cut { fill: var(--fs-header); }
 .fs-filu .cutline { fill: none; stroke: var(--fs-header); stroke-width: 1.4; stroke-linecap: round; }
-.fs-filu-block { display: grid; gap: 32px; align-items: center; }
-.fs-filu-card { position: relative; display: grid; place-items: center; min-height: 260px; padding: 32px; border-radius: 28px; background: linear-gradient(160deg, var(--fs-header), var(--fs-deep)); color: #fff; }
-.fs-filu-large svg { width: 140px; height: 140px; color: #fff; }
-.fs-bubble { margin-top: 18px; padding: 10px 18px; border-radius: 18px; background: #fff; color: var(--fs-ink); font-family: 'Kalam', 'Kalam Fallback', cursive; font-size: 1.25rem; font-weight: 700; text-align: center; }
+/*
+ * Meet FILU: a compact introduction (FILU's avatar and speech bubble side by
+ * side on a soft sky card) next to the text, instead of a large navy panel.
+ */
+.fs-filu-block { display: grid; gap: 28px; align-items: center; max-width: 1040px; margin: 0 auto; }
+.fs-filu-intro { display: flex; align-items: center; gap: 16px; width: 100%; max-width: 420px; margin: 0 auto; padding: 18px; border: 1px solid var(--fs-line); border-radius: 22px; background: var(--fs-sky); }
+.fs-filu-avatar { display: grid; flex: none; place-items: center; width: 72px; height: 72px; border-radius: 50%; background: var(--fs-header); box-shadow: 0 6px 16px rgba(8, 68, 139, 0.22); }
+.fs-filu-avatar svg { width: 42px; height: 42px; color: #fff; }
+.fs-bubble { position: relative; flex: 1; min-width: 0; margin: 0; padding: 12px 16px; border: 1px solid var(--fs-line); border-radius: 16px; background: #fff; color: var(--fs-ink); font-family: var(--font-sans); font-size: 1rem; font-weight: 700; line-height: 1.4; box-shadow: 0 2px 8px rgba(9, 51, 117, 0.06); }
+.fs-bubble::before { position: absolute; left: -7px; top: 50%; width: 12px; height: 12px; border-left: 1px solid var(--fs-line); border-bottom: 1px solid var(--fs-line); background: #fff; content: ""; transform: translateY(-50%) rotate(45deg); }
+.fs-filu-text .fs-section-head { margin-bottom: 20px; }
 .fs-filu-small { display: inline-grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--fs-header); }
 .fs-filu-small svg { width: 32px; height: 32px; color: #fff; }
 .fs-ticks { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
 .fs-ticks li { display: flex; gap: 10px; align-items: flex-start; color: var(--fs-ink); font-weight: 600; }
 .fs-ticks svg { width: 22px; height: 22px; flex: none; color: var(--ui-green); }
-@media (min-width: 900px) { .fs-filu-block { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 56px; } }
+@media (min-width: 900px) { .fs-filu-block { grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 56px; } }
+@media (max-width: 399px) {
+  .fs-filu-intro { gap: 12px; padding: 14px; }
+  .fs-filu-avatar { width: 56px; height: 56px; }
+  .fs-filu-avatar svg { width: 32px; height: 32px; }
+  .fs-bubble { padding: 10px 12px; font-size: 0.95rem; }
+}
 
 /* ---------- Audiences ---------- */
 .fs-audience { display: flex; flex-direction: column; }
@@ -278,11 +288,22 @@
 
 /* ---------- Footer ---------- */
 .fs-footer { color: #fff; }
+/*
+ * Landscape: the artwork's hills only (its top 56%; the rest of the PNG is
+ * flat navy), as on the landing page, so no empty blue band is shown. The
+ * tagline sits on the artwork's own navy, then the footer links follow.
+ */
 .fs-landscape { position: relative; background: var(--fs-sky); }
-.fs-landscape img { display: block; width: 100%; height: auto; max-height: 260px; object-fit: cover; object-position: bottom; }
-.fs-tagline { padding: 14px var(--fs-gutter); background: var(--fs-header); font-family: 'Kalam', 'Kalam Fallback', cursive; font-size: 1.25rem; font-weight: 700; text-align: center; }
-.fs-footer-body { padding: 48px 0 28px; background: var(--fs-deep); }
-.fs-footer-grid { display: grid; gap: 32px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.fs-landscape-art { overflow: hidden; aspect-ratio: 1600 / 326; }
+.fs-landscape-art img { display: block; width: 100%; max-width: none; height: auto; mix-blend-mode: multiply; }
+.fs-tagline { position: relative; margin-top: -2px; padding: 4px var(--fs-gutter) 14px; background: #023d8b; font-family: 'Kalam', 'Kalam Fallback', cursive; font-size: clamp(1.05rem, 2.6vw, 1.25rem); font-weight: 700; line-height: 1.35; text-align: center; }
+@media (max-width: 719px) {
+  .fs-landscape-art { aspect-ratio: 1600 / 420; }
+  .fs-landscape-art img { width: 130%; margin-left: -15%; }
+}
+.fs-footer-body { padding: 36px 0 24px; background: var(--fs-deep); }
+.fs-footer-grid { display: grid; gap: 24px 20px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.fs-footer-brand .fs-footer-note { max-width: 420px; margin-top: 10px; color: rgba(255, 255, 255, 0.72); font-size: 0.875rem; line-height: 1.55; }
 .fs-footer-brand { grid-column: 1 / -1; }
 .fs-footer-brand img { height: 44px; width: auto; aspect-ratio: 577 / 180; }
 .fs-footer-brand p { max-width: 420px; margin-top: 14px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; }
@@ -292,7 +313,7 @@
 .fs-footer ul a { display: inline-flex; align-items: center; min-height: 40px; color: rgba(255, 255, 255, 0.85); text-decoration: none; }
 .fs-footer ul a:hover { color: #fff; text-decoration: underline; }
 .fs-footer :focus-visible { outline: 3px solid var(--fs-yellow); outline-offset: 2px; }
-.fs-footer-bottom { margin-top: 36px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.16); color: rgba(255, 255, 255, 0.7); font-size: 0.875rem; }
+.fs-footer-bottom { margin-top: 28px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.16); color: rgba(255, 255, 255, 0.7); font-size: 0.875rem; }
 @media (min-width: 1024px) {
   .fs-footer-grid { grid-template-columns: minmax(0, 1.6fr) repeat(4, minmax(0, 1fr)); }
   .fs-footer-brand { grid-column: auto; }
@@ -327,7 +348,7 @@
   .fs-header-inner { gap: 8px; }
   .fs-brand img { height: 34px; }
   .fs-header-actions { gap: 8px; }
-  .fs-btn-start { padding: 8px 12px; font-size: 0.875rem; }
+  .fs-lang a { min-width: 40px; padding: 0 10px; }
 }
 
 /* Four cards sit as 2 x 2, then one row of four, rather than leaving an orphan. */
@@ -339,4 +360,19 @@
   .fs-subject { padding: 14px; }
   .fs-subject h3 { font-size: 1rem; }
   .fs-subject p { font-size: 0.85rem; }
+}
+@media (max-width: 599px) { .fs-hero .fs-lead { font-size: 1rem; line-height: 1.6; } }
+
+/* Phones: core subjects as one-column rows; review cards stack the icon above the name, so no word is split. */
+@media (max-width: 479px) {
+  .fs-subject-grid:not(.fs-review-grid) { grid-template-columns: minmax(0, 1fr); }
+  .fs-subject:not(.review) { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 14px; align-items: start; }
+  .fs-subject:not(.review) .fs-subject-icon { grid-row: span 2; width: 46px; height: 46px; }
+  .fs-subject:not(.review) .fs-subject-icon svg { width: 24px; height: 24px; }
+  .fs-subject:not(.review) h3 { margin-top: 0; }
+  .fs-subject.review { grid-template-columns: minmax(0, 1fr); row-gap: 8px; align-items: start; }
+  .fs-subject.review .fs-subject-icon { width: 34px; height: 34px; }
+  .fs-subject.review .fs-subject-icon svg { width: 19px; height: 19px; }
+  .fs-subject.review h4 { hyphens: manual; }
+  .fs-chip { margin-top: 0; }
 }
