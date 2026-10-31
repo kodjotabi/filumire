@@ -296,7 +296,7 @@
 .fs-landscape { position: relative; background: var(--fs-sky); }
 .fs-landscape-art { overflow: hidden; aspect-ratio: 1600 / 326; }
 .fs-landscape-art img { display: block; width: 100%; max-width: none; height: auto; mix-blend-mode: multiply; }
-.fs-tagline { position: relative; margin-top: -2px; padding: 4px var(--fs-gutter) 14px; background: #023d8b; font-family: 'Kalam', 'Kalam Fallback', cursive; font-size: clamp(1.05rem, 2.6vw, 1.25rem); font-weight: 700; line-height: 1.35; text-align: center; }
+.fs-tagline { position: relative; margin-top: -2px; padding: 4px var(--fs-gutter) 14px; background: #023d8b; font-family: var(--font-sans); font-size: clamp(1.05rem, 2.6vw, 1.25rem); font-weight: 700; line-height: 1.35; text-align: center; }
 @media (max-width: 719px) {
   .fs-landscape-art { aspect-ratio: 1600 / 420; }
   .fs-landscape-art img { width: 130%; margin-left: -15%; }

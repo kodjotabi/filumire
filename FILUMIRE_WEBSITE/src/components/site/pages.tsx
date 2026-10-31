@@ -3,7 +3,7 @@ import Link from "next/link";
 import { localizeHref, type Locale } from "@/lib/locale";
 import { learnerDestination } from "@/lib/learner-navigation";
 import { COUNTRIES, SUBJECT_COPY, type CountryId } from "@/lib/site";
-import { ABOUT_COPY, GHANA_COPY, HELP_COPY, HOME_COPY, HOW_COPY, LEARNERS_COPY, PARENTS_COPY, SCHOOLS_COPY, SOON_COPY, SUBJECTS_COPY } from "@/lib/site-pages";
+import { ABOUT_COPY, GHANA_COPY, HELP_COPY, HOME_COPY, HOW_COPY, LEARNERS_COPY, PARENTS_COPY, SCHOOLS_COPY, SOON_COPY, SUBJECTS_COPY, SUBSCRIPTION_INFO_COPY } from "@/lib/site-pages";
 import { ContactInquiry } from "@/components/ContactInquiry";
 import { Actions, Avatars, CtaBand, FeatureGrid, PageHero, Section, SectionHead, Steps, SubjectGrid, type Action } from "./parts";
 import { Arrow, Check, FiluMark, Stroke } from "./icons";
@@ -311,6 +311,25 @@ export function ComingSoonPage({ locale, country }: { locale: Locale; country: E
       actions={[{ label: copy.back, href: "/#choose-country" }, { label: copy.contact, href: "/contact", variant: "secondary" }]}
       art={<Mascot which="boy" className="fs-page-mascot" />}
     />
+  );
+}
+
+/* Subscription information while payments are off: no plans or prices are shown until they are approved. */
+export function SubscriptionInfoPage({ locale }: { locale: Locale }) {
+  const copy = SUBSCRIPTION_INFO_COPY[locale];
+  return (
+    <>
+      <PageHero
+        locale={locale}
+        eyebrow={copy.eyebrow}
+        title={copy.title}
+        lead={copy.lead}
+        actions={[{ label: copy.family, href: "/contact?inquiry=family" }, { label: copy.schools, href: "/contact?inquiry=school-pilot", variant: "secondary" }]}
+      />
+      <Section tone="white">
+        <FeatureGrid items={copy.points} />
+      </Section>
+    </>
   );
 }
 

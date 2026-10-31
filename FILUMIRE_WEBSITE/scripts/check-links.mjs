@@ -113,11 +113,13 @@ for (const [from, to] of [["/for-families", "/parents"], ["/for-schools", "/scho
   assert.equal(response.status, 307, prefix + from + " redirects");
   assert.equal(new URL(response.headers.get("location"), base).href, new URL(prefix + to, base).href, prefix + from + " goes to " + prefix + to);
 }
-// While payments are off, the learner app's pricing links (/pricing, /fr/pricing, possibly with ?lang) reach family support.
-for (const [from, to] of [["/pricing", "/contact?inquiry=family"], ["/pricing?lang=en", "/contact?lang=en&inquiry=family"]]) for (const prefix of ["", "/fr"]) {
+// While payments are off, the learner app's Subscription links (/pricing, /fr/pricing, possibly with ?lang) open subscription information without prices.
+for (const from of ["/pricing", "/pricing?lang=en"]) for (const prefix of ["", "/fr"]) {
   const response = await fetch(new URL(prefix + from, base), { redirect: "manual" });
-  assert.equal(response.status, 307, prefix + from + " redirects while payments are off");
-  assert.equal(new URL(response.headers.get("location"), base).href, new URL(prefix + to, base).href, prefix + from + " goes to " + prefix + to);
+  assert.equal(response.status, 200, prefix + from + " is a page of its own");
+  const html = await response.text();
+  assert.ok(html.includes(prefix ? "Les abonnements FILUMIRE" : "FILUMIRE subscriptions"), prefix + from + " shows subscription information");
+  assert.ok(!html.includes("GH₵"), prefix + from + " shows no unapproved price");
 }
 const sitemap = await fetch(new URL("/sitemap.xml",base));
 assert.equal(sitemap.status,200);
