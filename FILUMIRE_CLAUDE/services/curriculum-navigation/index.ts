@@ -5,10 +5,12 @@ import {
   getSubStrand,
   type CompetencyDefinition,
 } from "../../packages/curriculum";
+import { getCcpBlockingSourceIssueIds } from "../../packages/curriculum/ghana-ccp-runtime";
 import {
   getCurriculumNode,
   getCurriculumNodesForCompetency,
   getCurriculumNodesForSubject,
+  getFrameworkCompetencyRegistrationsForSubject,
   type CurriculumNode,
 } from "../../packages/curriculum-framework";
 import { getContentForCompetency } from "../content-store";
@@ -83,6 +85,7 @@ function place(
   order: number,
   language: NavigationLanguage,
 ): CurriculumPlace {
+  title = plainTitle(title);
   const french = language === "fr" ? FRENCH_TITLES[title] : undefined;
   return {
     key,
@@ -91,6 +94,11 @@ function place(
     language: french ? "fr" : "en",
     order,
   };
+}
+
+/* Source titles keep the PDF's line breaks; shown as one line of text. */
+function plainTitle(title: string): string {
+  return title.replace(/\s+/g, " ").trim();
 }
 
 function ancestors(node: CurriculumNode | undefined): CurriculumNode[] {
@@ -190,6 +198,80 @@ export function subjectTopics(
     sequence: index + 1,
     ...topicPlacement(competency, language),
   }));
+}
+
+/*
+ * An official learning goal (learning indicator) of the subject that
+ * no FILUMIRE topic teaches yet. Read-only: it is never registered as
+ * a competency, so it cannot enter the learning path, mastery totals
+ * or reports, and it has no lesson to open.
+ */
+export interface UpcomingCurriculumGoal {
+  /* The curriculum node id, not a competency id. */
+  id: string;
+  code: string;
+  /* Official wording; there is no French version yet. */
+  title: string;
+  language: "en";
+  /* Source order within the subject. */
+  order: number;
+  strand: CurriculumPlace;
+  subStrand: CurriculumPlace;
+}
+
+export interface SubjectCurriculumCoverage {
+  /* Official learning goals taught by at least one FILUMIRE topic. */
+  available: number;
+  /* available + upcoming.length: the goals the subject page lists. */
+  total: number;
+  upcoming: UpcomingCurriculumGoal[];
+}
+
+/*
+ * How much of a subject's official curriculum FILUMIRE teaches. Every
+ * learning indicator is either covered by a registered topic or listed
+ * as upcoming, except a goal whose source wording still has an
+ * unresolved issue: that one is left out until the source is settled.
+ * Where every indicator has a topic (Basic 4-6), upcoming is empty.
+ */
+export function subjectCurriculumCoverage(
+  subjectId: string,
+  language: NavigationLanguage = "en",
+): SubjectCurriculumCoverage {
+  const covered = new Set<string>();
+  for (const competency of getCompetenciesForSubject(subjectId)) {
+    covered.add(competency.learningIndicatorId);
+    for (const node of getCurriculumNodesForCompetency(competency.id)) covered.add(node.id);
+  }
+  const registrations = new Map(
+    getFrameworkCompetencyRegistrationsForSubject(subjectId).map((registration) => [registration.curriculumNodeId, registration]),
+  );
+  let available = 0;
+  const upcoming: UpcomingCurriculumGoal[] = [];
+  for (const node of getCurriculumNodesForSubject(subjectId)) {
+    if (node.nodeType !== "learning_indicator") continue;
+    if (covered.has(node.id)) {
+      available += 1;
+      continue;
+    }
+    const registration = registrations.get(node.id);
+    if (registration && getCcpBlockingSourceIssueIds(registration.sourceIssueIds).length) continue;
+    const chain = ancestors(node);
+    const strand = chain.find((item) => item.nodeType === "strand");
+    const subStrand = chain.find((item) => item.nodeType === "sub_strand");
+    if (!strand || !subStrand) continue;
+    upcoming.push({
+      id: node.id,
+      code: node.code ?? "",
+      title: plainTitle(registration?.title ?? node.title),
+      language: "en",
+      order: node.order,
+      strand: place(strand.id, strand.code ?? "", strand.title, strand.order, language),
+      subStrand: place(subStrand.id, subStrand.code ?? "", subStrand.title, subStrand.order, language),
+    });
+  }
+  upcoming.sort((a, b) => a.order - b.order);
+  return { available, total: available + upcoming.length, upcoming };
 }
 
 export function topicPlacementById(
