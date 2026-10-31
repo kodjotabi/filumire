@@ -9,10 +9,7 @@ const MOVED: [string, string][] = [
   ["/partners", "/about#work-with-us"],
 ];
 
-/* Until payments are live (same flag as src/lib/payments.ts), the learner app's pricing links land on family support instead of a 404 (owner decision, 28 Oct 2026). */
-if (process.env.NEXT_PUBLIC_FILUMIRE_PAYMENTS_LIVE !== "true") {
-  MOVED.push(["/pricing", "/contact?inquiry=family"]);
-}
+/* /pricing is a page of its own, not a redirect: plans once payments are live, subscription information without prices until then (src/lib/pages.tsx; review fix 31 Oct 2026). */
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,

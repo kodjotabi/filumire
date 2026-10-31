@@ -59,8 +59,8 @@ export const HOME_COPY = {
     ] as Item[],
     howLink: "See how FILUMIRE works",
     subjectsEyebrow: "Subjects",
-    subjectsTitle: "Four core subjects across Basic 4–9",
-    subjectsLead: "FILUMIRE serves Basic 4–9 in English Language, Mathematics, Science and Computing. Additional curriculum subjects for Basic 4–6 and Basic 7–9 are being prepared for mainstream release.",
+    subjectsTitle: "Explore FILUMIRE Subjects",
+    subjectsLead: "FILUMIRE is growing to support learners across the subjects of Ghana’s national curriculum. Today it serves English Language, Mathematics, Science and Computing across Basic 4–9. Additional curriculum subjects for Basic 4–6 and Basic 7–9 are being prepared and open to learners once their curriculum review is complete.",
     subjectsLink: "Explore the subjects",
     filuEyebrow: "Meet FILU",
     filuTitle: "A friendly guide inside every lesson",
@@ -77,7 +77,7 @@ export const HOME_COPY = {
     trustEyebrow: "Built on the curriculum",
     trustTitle: "Rooted in Ghana’s national curriculum",
     trust: [
-      { title: "Follows the national standards", text: "Lessons for Basic 4–6 follow Ghana’s Standards-Based Curriculum; Basic 7–9 lessons follow the Common Core Programme. Four core subjects are served across Basic 4–9." },
+      { title: "Follows the national standards", text: "FILUMIRE aligns learning experiences with Ghana’s national curriculum, supporting learners across subjects and educational levels." },
       { title: "Curriculum review comes first", text: "New subjects open to learners only after their curriculum has been reviewed." },
       { title: "Familiar to children", text: "Examples use names, places and Ghana cedis that children recognise." },
       { title: "English and French", text: "This website and the app’s screens can be used in English or French. Lessons are in English for now; French lessons are being prepared." },
@@ -102,8 +102,8 @@ export const HOME_COPY = {
     ] as Item[],
     howLink: "Découvrir notre approche",
     subjectsEyebrow: "Matières",
-    subjectsTitle: "Quatre matières principales du Basic 4 au Basic 9",
-    subjectsLead: "FILUMIRE propose l’anglais, les mathématiques, les sciences et l’informatique du Basic 4 au Basic 9. D’autres matières du programme, pour le Basic 4 à 6 et le Basic 7 à 9, sont en préparation pour leur ouverture aux élèves.",
+    subjectsTitle: "Découvrir les matières FILUMIRE",
+    subjectsLead: "FILUMIRE s’étend pour accompagner les élèves dans les matières du programme national du Ghana. Aujourd’hui, il propose l’anglais, les mathématiques, les sciences et l’informatique du Basic 4 au Basic 9. D’autres matières du programme, pour le Basic 4 à 6 et le Basic 7 à 9, sont en préparation et s’ouvriront aux élèves une fois leur programme examiné.",
     subjectsLink: "Voir toutes les matières",
     filuEyebrow: "Faites connaissance avec FILU",
     filuTitle: "Un guide bienveillant dans chaque leçon",
@@ -120,7 +120,7 @@ export const HOME_COPY = {
     trustEyebrow: "Fondé sur le programme officiel",
     trustTitle: "Ancré dans le programme national du Ghana",
     trust: [
-      { title: "Conforme aux normes nationales", text: "Les leçons de Basic 4 à 6 suivent le programme national du Ghana fondé sur les normes ; celles de Basic 7 à 9 suivent le Common Core Programme. Quatre matières principales sont proposées du Basic 4 au Basic 9." },
+      { title: "Conforme aux normes nationales", text: "FILUMIRE aligne ses expériences d’apprentissage sur le programme national du Ghana et accompagne les élèves dans différentes matières et à différents niveaux." },
       { title: "Le programme examiné d’abord", text: "Une nouvelle matière n’est ouverte aux élèves qu’après l’examen de son programme." },
       { title: "Des repères familiers", text: "Les exemples s’appuient sur des prénoms, des lieux et des montants en cedis que les enfants connaissent." },
       { title: "En anglais ou en français", text: "Ce site et les écrans de l’application s’utilisent en anglais ou en français. Les leçons sont pour l’instant en anglais ; les leçons en français sont en préparation." },
@@ -448,6 +448,34 @@ export const HELP_COPY = {
   },
 } satisfies Bilingual<Record<string, unknown>>;
 
+/* /pricing while payments are off: what a subscription is, with no plans or prices until they are approved. */
+export const SUBSCRIPTION_INFO_COPY = {
+  en: {
+    eyebrow: "Subscription",
+    title: "FILUMIRE subscriptions",
+    lead: "Subscription plans and prices have not been published yet. FILUMIRE is open to invited families, learners and teachers during its review period, and no payment is taken.",
+    family: "Ask about family access",
+    schools: "Ask about school access",
+    points: [
+      { title: "No prices yet", text: "Plans and prices will appear on this page once they are approved. Until then, nobody is asked to pay." },
+      { title: "Progress is kept", text: "A learner’s progress never depends on the state of an account or a subscription." },
+      { title: "Schools and institutions", text: "Schools can contact us about access for their classes." },
+    ] as Item[],
+  },
+  fr: {
+    eyebrow: "Abonnement",
+    title: "Les abonnements FILUMIRE",
+    lead: "Les offres et les tarifs d’abonnement ne sont pas encore publiés. Pendant sa période d’évaluation, FILUMIRE est ouvert aux familles, élèves et enseignants invités, et aucun paiement n’est demandé.",
+    family: "Se renseigner pour une famille",
+    schools: "Se renseigner pour une école",
+    points: [
+      { title: "Pas encore de tarifs", text: "Les offres et les tarifs figureront sur cette page dès leur validation. D’ici là, aucun paiement n’est demandé." },
+      { title: "Les progrès sont conservés", text: "Le parcours d’un élève ne dépend jamais de l’état d’un compte ou d’un abonnement." },
+      { title: "Écoles et établissements", text: "Les écoles peuvent nous contacter pour un accès destiné à leurs classes." },
+    ] as Item[],
+  },
+} satisfies Bilingual<Record<string, unknown>>;
+
 /* Page titles and descriptions for metadata (EN, FR). */
 export const PAGE_META: Record<string, Bilingual<{ title: string; description: string }>> = {
   "/": {
@@ -499,8 +527,8 @@ export const PAGE_META: Record<string, Bilingual<{ title: string; description: s
     fr: { title: "Nigeria : bientôt disponible", description: "FILUMIRE prépare ses leçons pour le Nigeria." },
   },
   "/pricing": {
-    en: { title: "Subscriptions", description: "FILUMIRE subscription plans." },
-    fr: { title: "Abonnements", description: "Offres d’abonnement FILUMIRE." },
+    en: { title: "Subscriptions", description: "How FILUMIRE subscriptions work, and when plans and prices will be published." },
+    fr: { title: "Abonnements", description: "Le fonctionnement des abonnements FILUMIRE et la publication des offres et des tarifs." },
   },
   "/account": {
     en: { title: "Parent account", description: "Parent account." },
