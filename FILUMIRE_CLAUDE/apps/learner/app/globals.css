@@ -500,7 +500,8 @@ a {
 .homeScreen .learningNextNote { position: absolute; right: 0; top: 4px; width: 52px; transform: rotate(-8deg); color: var(--ui-brand); font-family: var(--font-hand), cursive; font-size: 13px; line-height: 1.05; text-align: center; }
 .homeScreen .learningStart { display: flex; align-items: center; justify-content: center; gap: 8px; height: 42px; margin-top: 12px; border-radius: 12px; background: var(--ui-blue); color: #ffffff; font-size: 16px; font-weight: 800; text-decoration: none; }
 .homeScreen .learningStart svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-.homeScreen .homeFooter.hand p { top: 4px; font-family: var(--font-hand), cursive; font-size: 14px; line-height: 1.1; font-weight: 400; }
+/* The slogan uses the brand sans font like every other learner footer (review 31 Oct 2026), not the handwritten accent font. */
+.homeScreen .homeFooter.hand p { top: 4px; font-size: 13px; line-height: 1.1; font-weight: 600; }
 
 /* Page 6 subject */
 .homeScreen .subjectPage { display: flex; flex-direction: column; flex: 1; }
@@ -518,7 +519,8 @@ a {
 .homeScreen .subjectCurrent { margin-top: 8px; padding: 10px; border-radius: 16px; background: var(--tint); }
 .homeScreen .subjectCurrentBody { display: flex; align-items: center; gap: 12px; }
 .homeScreen .subjectCurrentBody .homeSubjectIcon { width: 52px; height: 52px; }
-.homeScreen .subjectCurrentBody h2 { margin: 4px 0 0; color: var(--ui-ink); font-size: 18px; font-weight: 800; line-height: 1.15; }
+.homeScreen .subjectCurrentBody > div { min-width: 0; }
+.homeScreen .subjectCurrentBody h2 { margin: 4px 0 0; color: var(--ui-ink); font-size: 18px; font-weight: 800; line-height: 1.2; overflow-wrap: break-word; hyphens: manual; }
 .homeScreen .subjectCurrentBody p { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; margin: 4px 0 0; color: var(--ui-ink-soft); font-size: 13px; line-height: 1.3; }
 .homeScreen .subjectTag { display: inline-block; padding: 2px 10px; border-radius: 99px; background: var(--accent); color: #ffffff; font-size: 12px; font-weight: 700; }
 .homeScreen .subjectCta { display: flex; align-items: center; justify-content: center; gap: 8px; height: 36px; margin-top: 8px; border-radius: 12px; background: var(--accent); color: #ffffff; font-size: 16px; font-weight: 800; text-decoration: none; }
@@ -537,9 +539,16 @@ a {
 .homeScreen .subjectAreaIcon svg { width: 18px; height: 18px; fill: currentColor; }
 .homeScreen .subjectArea > div { min-width: 0; flex: 1; }
 /* Competency titles are curriculum text: shown in full, wrapped at spaces. */
-.homeScreen .subjectArea strong { display: block; hyphens: manual; color: var(--ui-ink); font-size: 14px; font-weight: 800; line-height: 1.2; }
+.homeScreen .subjectArea strong { display: block; overflow-wrap: break-word; hyphens: manual; color: var(--ui-ink); font-size: 14px; font-weight: 800; line-height: 1.25; }
 .homeScreen .subjectArea small { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; margin-top: 2px; color: var(--ui-ink-soft); font-size: 11.5px; line-height: 1.25; }
-.homeScreen .subjectAreaPill { flex: none; padding: 4px 10px; border-radius: 99px; color: var(--ui-ink); font-size: 11px; font-weight: 700; }
+/* The pill is as wide as its words, at most 45% of the row. */
+.homeScreen .subjectAreaPill { flex: 0 1 auto; max-width: 45%; min-width: 0; padding: 4px 10px; border-radius: 99px; color: var(--ui-ink); font-size: 11px; font-weight: 700; overflow-wrap: break-word; }
+/* Phones: the pill moves under the title so the title keeps the row's width. */
+@media (max-width: 479px) {
+  .homeScreen .subjectArea { flex-wrap: wrap; row-gap: 4px; }
+  .homeScreen .subjectArea > div { flex: 1 1 calc(100% - 48px); }
+  .homeScreen .subjectAreaPill { max-width: calc(100% - 48px); margin-left: 48px; }
+}
 .homeScreen .completed .subjectAreaPill { background: color-mix(in srgb, var(--ui-green) 18%, #ffffff); }
 .homeScreen .inprogress .subjectAreaPill { background: color-mix(in srgb, var(--ui-amber) 22%, #ffffff); }
 .homeScreen .new .subjectAreaPill { background: color-mix(in srgb, var(--ui-blue) 16%, #ffffff); }
@@ -549,13 +558,22 @@ a {
 .homeScreen .subjectStrand h3 { margin: 0 0 6px; color: var(--ui-ink); font-size: 15px; font-weight: 800; }
 .homeScreen .subjectSubStrand { margin-bottom: 6px; border: 1px solid var(--filumire-border); border-radius: 14px; background: var(--filumire-surface); }
 .homeScreen .subjectSubStrand > summary { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 44px; padding: 8px 14px; cursor: pointer; color: var(--ui-ink); font-size: 14px; font-weight: 700; }
-.homeScreen .subjectSubStrand > summary small { flex: none; color: var(--ui-ink-soft); font-size: 11.5px; font-weight: 600; }
+.homeScreen .subjectSubStrand > summary span { min-width: 0; overflow-wrap: break-word; hyphens: manual; }
+.homeScreen .subjectSubStrand > summary small { flex: 0 1 auto; max-width: 50%; color: var(--ui-ink-soft); font-size: 11.5px; font-weight: 600; text-align: right; }
 .homeScreen .subjectSubStrand > summary:focus-visible { outline: 3px solid var(--filumire-navy); outline-offset: 2px; border-radius: 14px; }
 .homeScreen .subjectSubStrand ul { margin: 0; padding: 0 8px 8px; }
 .homeScreen a.subjectArea { min-height: 44px; color: inherit; text-decoration: none; }
 .homeScreen a.subjectArea:hover strong, .homeScreen a.subjectArea:focus-visible strong { text-decoration: underline; }
 .homeScreen a.subjectArea:focus-visible { outline: 3px solid var(--filumire-navy); outline-offset: 2px; }
 .homeScreen a.subjectArea.current { box-shadow: inset 0 0 0 2px var(--filumire-navy); }
+/* Current topic in the list: one line, since the Current Topic card shows it in full (review 31 Oct 2026). */
+.homeScreen .subjectArea strong.subjectAreaShort { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+/* Official goals still in development: plain text, visibly not a lesson to open. */
+.homeScreen .subjectArea.upcoming { min-height: 44px; border: 1px dashed var(--filumire-border); background: transparent; }
+.homeScreen .upcoming .subjectAreaIcon { background: transparent; color: var(--ui-ink-soft); }
+.homeScreen .subjectArea.upcoming strong { color: var(--ui-ink-soft); font-weight: 600; }
+.homeScreen .upcoming .subjectAreaPill { border: 1px solid var(--filumire-border); background: transparent; color: var(--ui-ink-soft); font-weight: 600; }
+.homeScreen .subjectProgress .subjectCoverage { margin-top: 4px; }
 .homeScreen .subjectKeep { position: relative; display: flex; align-items: center; gap: 12px; min-height: 76px; margin-top: auto; padding: 8px 150px 8px 14px; border-radius: 16px; background: var(--tint); overflow: hidden; }
 .homeScreen .subjectTrophy { display: grid; place-items: center; flex: none; width: 52px; height: 52px; border-radius: 50%; background: color-mix(in srgb, var(--accent) 30%, #ffffff); color: var(--accent); }
 .homeScreen .subjectTrophy svg { width: 26px; height: 26px; fill: currentColor; }
@@ -1671,5 +1689,170 @@ a {
 
   .filumireAdultHeader .filumireHeaderActions {
     min-width: 0;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Collapsible learner sidebar (review 31 Oct 2026). LearnerNavToggle
+   sets <html data-learner-nav>: "expanded" (icons and labels),
+   "collapsed" (icons only) or "hidden" (slid out of view). The width
+   variable drives both the sidebar and the space pages reserve for it,
+   so learning content widens into the recovered space. Phones and
+   tablets keep the bottom bar; none of this applies below 1024px.
+   ------------------------------------------------------------------ */
+.filumireNavControls,
+.filumireNavReveal {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  :root[data-learner-nav="collapsed"] {
+    --filumire-sidebar-width: 84px;
+    /* The content column keeps the width the sidebar gave back (248px - 84px). */
+    --filumire-content-max: 1284px;
+  }
+
+  :root[data-learner-nav="hidden"] {
+    --filumire-sidebar-width: 0px;
+    --filumire-content-max: 1368px;
+  }
+
+  .filumireBottomNav:not(.filumireBottomNavInline) {
+    transition: width 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  }
+
+  .filumireBottomNav:not(.filumireBottomNavInline) .filumireNavControls {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .filumireNavControl {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 44px;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    color: #ffffff;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .filumireNavControl:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .filumireNavControl svg,
+  .filumireNavReveal svg {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .filumireNavControl svg path[d^="M4 5h2"],
+  .filumireNavReveal svg path {
+    fill: currentColor;
+    stroke: none;
+  }
+
+  .filumireNavControl:focus-visible,
+  .filumireBottomNav:not(.filumireBottomNavInline) .filumireNavItem:focus-visible,
+  .filumireNavReveal:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 2px;
+  }
+
+  /* Icons only: labels stay in the accessibility tree, visually hidden. */
+  :root[data-learner-nav="collapsed"] .filumireBottomNav:not(.filumireBottomNavInline) {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  :root[data-learner-nav="collapsed"] .filumireBottomNav:not(.filumireBottomNavInline) .filumireNavItem,
+  :root[data-learner-nav="collapsed"] .filumireNavControl {
+    justify-content: center;
+    gap: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  :root[data-learner-nav="collapsed"] .filumireBottomNav:not(.filumireBottomNavInline) .filumireNavLabel,
+  :root[data-learner-nav="collapsed"] .filumireNavControlLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* The logo row keeps FILUMIRE's mark, the left part of the logo. */
+  :root[data-learner-nav="collapsed"] .filumireBottomNav:not(.filumireBottomNavInline) .filumireNavBrand {
+    justify-content: center;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  :root[data-learner-nav="collapsed"] .filumireNavBrand img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    object-position: left center;
+  }
+
+  /* Hidden: slid out of view and out of the tab order; the reveal button brings it back. */
+  :root[data-learner-nav="hidden"] .filumireBottomNav:not(.filumireBottomNavInline) {
+    visibility: hidden;
+    transform: translateX(-100%);
+  }
+
+  .filumireNavReveal {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 31;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--ui-bar);
+    box-shadow: 0 4px 16px rgba(0, 59, 113, 0.2);
+    color: #ffffff;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .filumireNavReveal[hidden] {
+    display: none;
+  }
+
+  /* The fixed reveal button must not cover the header's first item. */
+  :root[data-learner-nav="hidden"] .learnerShell .filumireLearnerHeader {
+    padding-left: max(150px, calc((100% - var(--filumire-content-max)) / 2 + var(--filumire-gutter-desktop)));
+  }
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+  .filumireBottomNav:not(.filumireBottomNavInline) {
+    transition: none;
   }
 }

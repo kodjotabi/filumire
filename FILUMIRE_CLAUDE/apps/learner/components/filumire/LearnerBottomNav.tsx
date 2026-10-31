@@ -2,6 +2,7 @@ import Link from "next/link";
 import { askFiluHref } from "../../services/dashboard-navigation";
 
 import type { AgeBand } from "./ageBand";
+import { LearnerNavReveal, LearnerNavToggle, learnerNavId } from "./LearnerNavToggle";
 
 export type LearnerNavItem =
   | "home"
@@ -117,8 +118,12 @@ export function LearnerBottomNav({
     },
   ];
 
+  const sidebar = variant !== "inline";
+
   return (
+    <>
     <nav
+      id={sidebar ? learnerNavId : undefined}
       className={
         variant === "inline"
           ? "filumireBottomNav filumireBottomNavInline"
@@ -146,11 +151,17 @@ export function LearnerBottomNav({
           aria-current={
             active === item.key ? "page" : undefined
           }
+          // Names the icon when the sidebar shows icons only.
+          title={sidebar ? item.label.replaceAll("­", "") : undefined}
         >
           <NavIcon name={item.icon} />
-          <span>{item.label}</span>
+          <span className="filumireNavLabel">{item.label}</span>
         </Link>
       ))}
+      {/* Sidebar size controls: shown only where the navigation is a sidebar (globals.css, 1024px+). */}
+      {sidebar ? <LearnerNavToggle language={language} /> : null}
     </nav>
+    {sidebar ? <LearnerNavReveal language={language} /> : null}
+    </>
   );
 }
