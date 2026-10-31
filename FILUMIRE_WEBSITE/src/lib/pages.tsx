@@ -2,7 +2,7 @@ import { Pricing } from '@/components/subscriptions/Pricing';
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Privacy from "@/components/pages/privacy";
-import { AboutPage, ComingSoonPage, GhanaPage, HelpPage, HowItWorksPage, LandingPage, LearnersPage, ParentsPage, SchoolsPage, SubjectsPage } from "@/components/site/pages";
+import { AboutPage, ComingSoonPage, GhanaPage, HelpPage, HowItWorksPage, LandingPage, LearnersPage, ParentsPage, SchoolsPage, SubjectsPage, SubscriptionInfoPage } from "@/components/site/pages";
 import { notFound } from "next/navigation";
 import { translateTree } from "./translate";
 import { localizeHref, type Locale } from "./locale";
@@ -23,8 +23,8 @@ export function pageMetadata(path: string, locale: Locale): Metadata {
 
 export async function renderPage(path: string, locale: Locale, searchParams: Promise<{inquiry?:string|string[]}>) {
  if(path === "/cote-divoire" || path === "/nigeria") return <ComingSoonPage country={path.slice(1) as "cote-divoire"|"nigeria"} locale={locale}/>;
- // Pricing stays hidden until payments are live.
- if(path === "/pricing") { if (!paymentsLive()) notFound(); return <Pricing locale={locale}/>; }
+ // Plans and prices stay hidden until payments are live; until then the page explains subscriptions without prices.
+ if(path === "/pricing") { if (!paymentsLive()) return <SubscriptionInfoPage locale={locale}/>; return <Pricing locale={locale}/>; }
  // The help page reads the request so its language switch keeps ?inquiry= links.
  if(path === "/contact") { await searchParams; return <HelpPage locale={locale}/>; }
  if(path === "/privacy") return translateTree(Privacy(),locale);

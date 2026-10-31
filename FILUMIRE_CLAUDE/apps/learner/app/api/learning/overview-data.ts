@@ -13,7 +13,7 @@ import {
 import { getCompetencyProgressRows, summariseSubjects } from "../../../../../services/learner-progress";
 import { classifyProgress } from "../../../../../services/learner-progress/reporting";
 import { buildRevisionSummaries, primaryRevision } from "../../../../../services/learner-path/revision";
-import { subjectTopics, type NavigationLanguage } from "../../../../../services/curriculum-navigation";
+import { subjectCurriculumCoverage, subjectTopics, type NavigationLanguage } from "../../../../../services/curriculum-navigation";
 
 type OverviewSubject = { id: string; name: string; code: string; discipline: string };
 
@@ -98,6 +98,10 @@ export async function buildLearningOverview(
         };
       })
     : [];
+  // Read-only curriculum outline for the same subject; mastery totals above stay on its topics.
+  const curriculumCoverage = areasSubjectId && subjects[areasSubjectId]
+    ? subjectCurriculumCoverage(areasSubjectId, language)
+    : null;
 
   const revisions = await buildRevisionSummaries(
     learnerId,
@@ -127,5 +131,6 @@ export async function buildLearningOverview(
     subjects,
     areasSubjectId,
     areas,
+    curriculumCoverage,
   };
 }

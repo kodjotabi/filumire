@@ -1151,7 +1151,8 @@ function LearnerDashboardView() {
                       subject={selectedSubject}
                       language={language}
                       overview={overview}
-                      currentTitle={currentSubject?.key === selectedSubject.key ? competencyTitle : ""}
+                      /* A topic title only: without one the page picks the learner's next topic, never the "Ready to continue" prompt. */
+                      currentTitle={currentSubject?.key === selectedSubject.key ? data?.progress.competencyTitle ?? "" : ""}
                       learnHref={selectedLearnHref}
                       icon={<SubjectIcon name={selectedSubject.key} />}
                       footer={<section className="homeFooter">

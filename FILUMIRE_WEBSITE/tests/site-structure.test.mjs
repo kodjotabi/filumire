@@ -113,15 +113,19 @@ test("pricing stays hidden until payments are live",async()=>{
  assert.ok(!site.NAV_LINKS.some(link=>link.href==="/pricing"));
  for(const file of ["SiteHeader.tsx","SiteFooter.tsx","pages.tsx"])assert.doesNotMatch(await read("../src/components/site/"+file),/pricing/);
  const router=await read("../src/lib/pages.tsx");
- assert.match(router,/if\(path === "\/pricing"\) \{ if \(!paymentsLive\(\)\) notFound\(\);/);
+ assert.match(router,/if\(path === "\/pricing"\) \{ if \(!paymentsLive\(\)\) return <SubscriptionInfoPage locale=\{locale\}\/>;/);
  assert.match(await read("../src/lib/payments.ts"),/NEXT_PUBLIC_FILUMIRE_PAYMENTS_LIVE === "true"/);
  for(const file of ["ParentAccount.tsx","LegacyParentAccount.tsx"])assert.match(await read("../src/components/subscriptions/"+file),/paymentsLive\(\) \? <Link[^>]*\/pricing/);
 });
 
-test("the learner app's pricing links redirect to family support until payments are live",async()=>{
+test("the learner app's Subscription links open subscription information, not Help & contact (review 31 Oct 2026)",async()=>{
  const config=await read("../next.config.ts");
- assert.match(config,/if \(process\.env\.NEXT_PUBLIC_FILUMIRE_PAYMENTS_LIVE !== "true"\) \{\s*MOVED\.push\(\["\/pricing", "\/contact\?inquiry=family"\]\);\s*\}/);
- assert.ok(config.indexOf("MOVED.push")<config.indexOf("const nextConfig"),"added before the config reads MOVED");
+ assert.doesNotMatch(config,/\["\/pricing"/,"no redirect from /pricing");
+ const copy=pages.SUBSCRIPTION_INFO_COPY;
+ for(const locale of ["en","fr"]){
+  const text=JSON.stringify(copy[locale]);
+  assert.doesNotMatch(text,/GH₵|₵|\bGHS\b|\d+(\.\d+)?\s*(cedis?|per month|par mois)/i,"no unapproved prices ("+locale+")");
+ }
  assert.match(await read("../src/lib/inquiries.ts"),/"family":"Parent & family support"/);
 });
 
@@ -140,9 +144,12 @@ test("retired pages redirect to their replacements in both languages",async()=>{
  * JHS 1–3); Curriculum Review subjects are additional subjects being prepared for both bands.
  */
 test("public scope claims: four core subjects across Basic 4–9, additional subjects being prepared for both bands",async()=>{
- assert.match(pages.HOME_COPY.en.subjectsTitle,/^Four core subjects across Basic 4–9$/);
- assert.match(pages.HOME_COPY.en.subjectsLead,/serves Basic 4–9 in English Language, Mathematics, Science and Computing\. Additional curriculum subjects for Basic 4–6 and Basic 7–9 are being prepared/);
+ // Review 31 Oct 2026: the /ghana heading names the broader offer; the lead still states exactly what is served today.
+ assert.match(pages.HOME_COPY.en.subjectsTitle,/^Explore FILUMIRE Subjects$/);
+ assert.match(pages.HOME_COPY.fr.subjectsTitle,/^Découvrir les matières FILUMIRE$/);
+ assert.match(pages.HOME_COPY.en.subjectsLead,/Today it serves English Language, Mathematics, Science and Computing across Basic 4–9\. Additional curriculum subjects for Basic 4–6 and Basic 7–9 are being prepared/);
  assert.match(pages.HOME_COPY.fr.subjectsLead,/l’anglais, les mathématiques, les sciences et l’informatique du Basic 4 au Basic 9/);
+ assert.equal(pages.HOME_COPY.en.trust[0].text,"FILUMIRE aligns learning experiences with Ghana’s national curriculum, supporting learners across subjects and educational levels.");
  assert.match(pages.SUBJECTS_COPY.en.lead,/English Language, Mathematics, Science and Computing are available across Basic 4–9, and additional subjects are being prepared for both grade bands\./);
  assert.match(pages.SUBJECTS_COPY.fr.lead,/proposés du Basic 4 au Basic 9, et d’autres matières sont en préparation pour les deux cycles\./);
  for(const locale of ["en","fr"]){assert.match(pages.SUBJECTS_COPY[locale].primaryNote,/Four core subjects available|Quatre matières principales disponibles/);assert.match(pages.SUBJECTS_COPY[locale].jhsNote,/Four core subjects available|Quatre matières principales disponibles/);}
