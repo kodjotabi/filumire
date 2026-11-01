@@ -1,0 +1,7 @@
+
+> filumire-core@0.1.0 test:subject-catalogue
+> node ./scripts/run-offline-suites.mjs ./tests/additional-subject-catalogue.test.ts ./tests/jhs-review-subjects.test.ts
+
+PASS additional-subject-catalogue (1.1s)
+PASS jhs-review-subjects (0.1s)
+PASS: all 2 offline suites (memory only, PostgreSQL unreachable)

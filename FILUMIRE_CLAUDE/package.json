@@ -19,6 +19,8 @@
                     "test:public-site-navigation": "node ./scripts/run-offline-suites.mjs ./tests/public-site-navigation.test.ts",
                     "test:voice": "node ./scripts/run-offline-suites.mjs ./tests/browser-speech.test.ts ./tests/african-voice.test.ts",
                     "test:immediate-correction": "node ./scripts/run-offline-suites.mjs ./tests/immediate-correction.test.ts ./tests/outline-visuals.test.ts",
+                    "test:subject-catalogue": "node ./scripts/run-offline-suites.mjs ./tests/additional-subject-catalogue.test.ts ./tests/jhs-review-subjects.test.ts",
+                    "test:subject-catalogue:browser": "node ./tests/additional-subject-catalogue.browser.mjs",
                     "test:curriculum-navigation": "node ./scripts/run-offline-suites.mjs ./tests/curriculum-navigation.test.ts ./tests/selected-topic-lesson-integration.test.ts",
                     "test:topic-closure:browser": "node ./tests/selected-topic-closure.browser.mjs",
                     "test:outline-visuals": "node ./scripts/run-offline-suites.mjs outline-visuals",
