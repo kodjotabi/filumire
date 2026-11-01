@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ProgressStatus } from "./ProgressStatus";
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import type { LearningOverview } from "../../services/learning-client";
 import { completionPercent } from "../../services/learning-presentation";
@@ -40,6 +40,10 @@ const TEXT: Record<
     great: string;
     practice: string;
     status: Record<AreaStatus, string>;
+    coverage: (available: number, total: number) => string;
+    upcoming: string;
+    upcomingCount: (count: number) => string;
+    upcomingHint: string;
     tagline: Words;
     note: Words;
   }
@@ -60,6 +64,10 @@ const TEXT: Record<
     great: "You're making great progress in",
     practice: "Practice today, progress tomorrow!",
     status: { completed: "Mastered", inprogress: "In Progress", new: "Not Started" },
+    coverage: (available, total) => `Official curriculum: ${available} of ${total} learning goals available in FILUMIRE`,
+    upcoming: "In development",
+    upcomingCount: (count) => `${count} in development`,
+    upcomingHint: "Goals marked “In development” are part of the official curriculum. Their lessons are not ready yet.",
     tagline: {
       english: "Read. Think. Express.",
       mathematics: "Solve. Reason. Grow.",
@@ -89,6 +97,10 @@ const TEXT: Record<
     great: "Tu progresses bien en",
     practice: "Pratique aujourd'hui, progresse demain !",
     status: { completed: "Maîtrisé", inprogress: "En cours", new: "Pas commencé" },
+    coverage: (available, total) => `Programme officiel : ${available} sur ${total} objectifs d’apprentissage disponibles dans FILUMIRE`,
+    upcoming: "En préparation",
+    upcomingCount: (count) => `${count} en préparation`,
+    upcomingHint: "Les objectifs « En préparation » font partie du programme officiel. Leurs leçons ne sont pas encore prêtes.",
     tagline: {
       english: "Lire. Penser. Exprimer.",
       mathematics: "Résoudre. Raisonner. Grandir.",
@@ -123,6 +135,35 @@ const AREA_ICONS: Record<AreaStatus, ReactNode> = {
   ),
 };
 
+// An official goal whose lesson is still being written: a clock, nothing to open.
+const UPCOMING_ICON = (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 2a8 8 0 1 1 0 16 8 8 0 0 1 0-16zm1 3h-2v6l5 3 1-1.7-4-2.3z" />
+  </svg>
+);
+
+/*
+ * Display only: official wording such as "topics/texts/issues" may
+ * break after a slash between words instead of mid-word. The text
+ * itself is unchanged, and slashes in numbers (1/2) are left whole.
+ */
+function withSlashBreaks(text: string): ReactNode {
+  const parts = text.split(/(?<=\p{L})\/(?=\p{L})/u);
+  if (parts.length === 1) return text;
+  return parts.map((part, index) => (
+    <Fragment key={index}>
+      {part}
+      {index < parts.length - 1 ? <>/<wbr /></> : null}
+    </Fragment>
+  ));
+}
+
+/* A description that only repeats the title is not shown twice. */
+function sameText(a: string, b: string): boolean {
+  const plain = (text: string) => text.replace(/\s+/g, " ").trim().replace(/[.\s]+$/, "").toLowerCase();
+  return plain(a) === plain(b);
+}
+
 type Area = LearningOverview["areas"][number];
 
 type StrandGroup = {
@@ -136,20 +177,24 @@ type StrandGroup = {
     language: "en" | "fr";
     order: number;
     topics: Area[];
+    upcoming: UpcomingGoal[];
   }>;
 };
 
+type UpcomingGoal = NonNullable<LearningOverview["curriculumCoverage"]>["upcoming"][number];
+type Place = NonNullable<Area["strand"]>;
+
 /*
  * Phase 2: topics grouped strand -> sub-strand in curriculum order;
- * within a sub-strand, topics keep their learning sequence.
+ * within a sub-strand, topics keep their learning sequence. Official
+ * goals still in development join the same groups, after the topics,
+ * in source order.
  */
-function groupByCurriculum(areas: Area[]): StrandGroup[] {
+function groupByCurriculum(areas: Area[], upcoming: UpcomingGoal[] = []): StrandGroup[] {
   const strands = new Map<string, StrandGroup>();
   // A topic without a curriculum place (an older overview) is still listed, ungrouped.
   const unplaced = { key: "", code: "", title: "", language: "en" as const, order: 0 };
-  for (const area of [...areas].sort((a, b) => (a.sequence ?? 0) - (b.sequence ?? 0))) {
-    const strandPlace = area.strand ?? unplaced;
-    const subStrandPlace = area.subStrand ?? unplaced;
+  const groupFor = (strandPlace: Place, subStrandPlace: Place) => {
     let strand = strands.get(strandPlace.key);
     if (!strand) {
       strand = { ...strandPlace, subStrands: [] };
@@ -157,10 +202,16 @@ function groupByCurriculum(areas: Area[]): StrandGroup[] {
     }
     let subStrand = strand.subStrands.find((item) => item.key === subStrandPlace.key);
     if (!subStrand) {
-      subStrand = { ...subStrandPlace, topics: [] };
+      subStrand = { ...subStrandPlace, topics: [], upcoming: [] };
       strand.subStrands.push(subStrand);
     }
-    subStrand.topics.push(area);
+    return subStrand;
+  };
+  for (const area of [...areas].sort((a, b) => (a.sequence ?? 0) - (b.sequence ?? 0))) {
+    groupFor(area.strand ?? unplaced, area.subStrand ?? unplaced).topics.push(area);
+  }
+  for (const goal of [...upcoming].sort((a, b) => a.order - b.order)) {
+    groupFor(goal.strand, goal.subStrand).upcoming.push(goal);
   }
   const byPlace = (a: { order: number; code?: string }, b: { order: number; code?: string }) =>
     a.order - b.order || (a.code ?? "").localeCompare(b.code ?? "", undefined, { numeric: true });
@@ -196,10 +247,15 @@ export function SubjectPage({
   const topic = titled ?? currentArea;
   const topicTitle = currentTitle || currentArea?.title || "";
   const name = subjectLabel(subject.name, language);
-  const strands = groupByCurriculum(areas);
+  // Coverage belongs to the same subject as the areas; mastery figures never include upcoming goals.
+  const coverage =
+    overview && overview.areasSubjectId === subject.subjectId ? overview.curriculumCoverage ?? null : null;
+  const upcoming = coverage?.upcoming ?? [];
+  const strands = groupByCurriculum(areas, upcoming);
+  const firstWithTopics = strands.flatMap((strand) => strand.subStrands).find((item) => item.topics.length > 0);
   const topicHref = (competencyId: string) =>
     `/learn?lang=${language}&subjectId=${encodeURIComponent(subject.subjectId)}&competencyId=${encodeURIComponent(competencyId)}`;
-  const topicList = (topics: Area[]) => (
+  const topicList = (topics: Area[], upcomingGoals: UpcomingGoal[] = []) => (
     <ul>
       {topics.map((area) => {
         const current = area.id === currentArea?.id;
@@ -212,14 +268,30 @@ export function SubjectPage({
             >
               <span className="subjectAreaIcon">{AREA_ICONS[area.status]}</span>
               <div>
-                <strong>{area.title}</strong>
+                {/* The current topic's full title is in the Current Topic card above; here one line is enough
+                    (the full text stays in the link's accessible name and tooltip). */}
+                <strong className={current && topicTitle ? "subjectAreaShort" : undefined} title={current && topicTitle ? area.title : undefined}>
+                  {withSlashBreaks(area.title)}
+                </strong>
                 {current ? <small>{t.here}</small> : null}
               </div>
-              <span className="subjectAreaPill" style={{ flex: "0 1 45%", minWidth: 0, overflowWrap: "anywhere" }}>{area.progressStatus ? <ProgressStatus status={area.progressStatus} language={language} /> : t.status[area.status]}</span>
+              <span className="subjectAreaPill">{area.progressStatus ? <ProgressStatus status={area.progressStatus} language={language} /> : t.status[area.status]}</span>
             </Link>
           </li>
         );
       })}
+      {/* Not a link and not focusable: there is no lesson to open yet. */}
+      {upcomingGoals.map((goal) => (
+        <li key={goal.id}>
+          <div className="subjectArea upcoming">
+            <span className="subjectAreaIcon">{UPCOMING_ICON}</span>
+            <div>
+              <strong lang={goal.language}>{withSlashBreaks(goal.title)}</strong>
+            </div>
+            <span className="subjectAreaPill">{t.upcoming}</span>
+          </div>
+        </li>
+      ))}
     </ul>
   );
 
@@ -256,6 +328,9 @@ export function SubjectPage({
         <small>
           {stats ? `${done} ${t.of} ${total} ${t.topics}` : language === "fr" ? "Progression indisponible" : "Progress unavailable"}
         </small>
+        {upcoming.length > 0 && coverage ? (
+          <small className="subjectCoverage">{t.coverage(coverage.available, coverage.total)}</small>
+        ) : null}
       </section>
 
       {topicTitle ? (
@@ -264,8 +339,8 @@ export function SubjectPage({
             <span className="homeSubjectIcon">{icon}</span>
             <div>
               <span className="subjectTag">{t.current}</span>
-              <h2>{topicTitle}</h2>
-              {topic?.description ? <p>{topic.description}</p> : null}
+              <h2>{withSlashBreaks(topicTitle)}</h2>
+              {topic?.description && !sameText(topic.description, topicTitle) ? <p>{topic.description}</p> : null}
             </div>
           </div>
           {learnHref ? (
@@ -295,6 +370,7 @@ export function SubjectPage({
             <h2 id="subject-topics-heading">{t.areas}</h2>
           </div>
           <p className="subjectTopicsHint">{t.hint}</p>
+          {upcoming.length > 0 ? <p className="subjectTopicsHint">{t.upcomingHint}</p> : null}
           {strands.map((strand, strandIndex) => (
             <section
               key={strand.key || "unplaced"}
@@ -306,21 +382,25 @@ export function SubjectPage({
               ) : null}
               {strand.subStrands.map((subStrand) => {
                 if (!subStrand.title) {
-                  return <div key={subStrand.key || "unplaced"}>{topicList(subStrand.topics)}</div>;
+                  return <div key={subStrand.key || "unplaced"}>{topicList(subStrand.topics, subStrand.upcoming)}</div>;
                 }
                 const mastered = subStrand.topics.filter((area) => area.status === "completed").length;
                 const holdsCurrent = subStrand.topics.some((area) => area.id === currentArea?.id);
+                const counts = [
+                  subStrand.topics.length > 0 ? `${mastered} ${t.of} ${subStrand.topics.length} ${t.mastered}` : "",
+                  subStrand.upcoming.length > 0 ? t.upcomingCount(subStrand.upcoming.length) : "",
+                ].filter(Boolean).join(" · ");
                 return (
                   <details
                     key={subStrand.key}
                     className="subjectSubStrand"
-                    open={holdsCurrent || (!currentArea && subStrand === strands[0].subStrands[0])}
+                    open={holdsCurrent || (!currentArea && subStrand === firstWithTopics)}
                   >
                     <summary>
                       <span lang={subStrand.language}>{subStrand.title}</span>
-                      <small>{`${mastered} ${t.of} ${subStrand.topics.length} ${t.mastered}`}</small>
+                      <small>{counts}</small>
                     </summary>
-                    {topicList(subStrand.topics)}
+                    {topicList(subStrand.topics, subStrand.upcoming)}
                   </details>
                 );
               })}

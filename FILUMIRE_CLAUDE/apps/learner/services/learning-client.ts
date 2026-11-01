@@ -439,6 +439,24 @@ export type LearningOverview = {
     strand?: CurriculumPlace;
     subStrand?: CurriculumPlace;
   }>;
+  /*
+   * Official curriculum coverage of the areas subject: goals with a
+   * FILUMIRE topic, and the goals still in development (no lesson, not
+   * part of any mastery total). Absent from older servers.
+   */
+  curriculumCoverage?: {
+    available: number;
+    total: number;
+    upcoming: Array<{
+      id: string;
+      code: string;
+      title: string;
+      language: "en";
+      order: number;
+      strand: CurriculumPlace;
+      subStrand: CurriculumPlace;
+    }>;
+  } | null;
 };
 
 export async function fetchLearningOverview(
