@@ -217,16 +217,25 @@
 .learnerUi[data-appearance="dark"] .learnerShell .filuConversation .quickAction { background: #203752; color: #e5efff; border-color: #839fbe; }
 .learnerUi[data-appearance="dark"] .learnerShell .filuConversation .message.user > div { background: #1d4a3f; color: #e5efff; border-color: #6fbfa6; }
 
-/* Curriculum Review subject cards (home, Basic 4-9): compact, muted, not interactive. */
+/* Outline-only subject cards reuse the home grid, icons and muted palette. */
 .learnerUi .homeScreen .homeReview { margin-top: 14px; }
 .learnerUi .homeScreen .homeReview h3 { margin: 0 4px 8px; color: var(--ui-ink-soft); font-size: .875rem; font-weight: 700; line-height: 1.4; }
 .learnerUi .homeScreen .homeReviewList { margin: 0; padding: 0; list-style: none; }
-.learnerUi .homeScreen .homeSubject.review { --accent: #7d8fab; --tint: #eef2f7; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 10px; row-gap: 0; min-height: 0; padding: 10px 12px; border-radius: 14px; cursor: default; }
+.learnerUi .homeScreen .homeSubject.review { --accent: #7d8fab; --tint: #eef2f7; display: block; align-self: start; min-height: 0; padding: 10px 12px; border-radius: 14px; cursor: default; }
 .learnerUi .homeScreen .homeSubject.review:hover { transform: none; box-shadow: none; }
 .learnerUi .homeScreen .homeSubject.review .homeSubjectIcon { width: 36px; height: 36px; }
 .learnerUi .homeScreen .homeSubject.review .homeSubjectIcon svg { width: 20px; height: 20px; }
 .learnerUi .homeScreen .homeSubject.review .homeSubjectText { padding-right: 0; }
 .learnerUi .homeScreen .homeSubject.review .homeSubjectText strong { font-size: .8125rem; line-height: 1.3; }
-.learnerUi .homeScreen .homeSubject.review .reviewChip { grid-column: 1 / -1; justify-self: start; max-width: 100%; white-space: normal; display: inline-block; margin-top: 8px; padding: 1px 8px; border: 1px solid var(--ui-line); border-radius: 99px; background: #ffffff; color: var(--ui-ink-soft); font-size: .6875rem; font-weight: 700; line-height: 1.5; }
-.learnerUi[data-appearance="dark"] .homeScreen .homeSubject.review .reviewChip { background: transparent; border-color: #58718e; color: #bdcee4; }
 .learnerUi .homeScreen .homeSubject.review .homeSubjectText strong { overflow-wrap: break-word; hyphens: auto; }
+.learnerUi .subjectOutline { min-width: 0; }
+.learnerUi .subjectOutline summary { display: flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; border-radius: 8px; }
+.learnerUi .subjectOutline summary::marker { content: ""; }
+.learnerUi .subjectOutline summary::-webkit-details-marker { display: none; }
+.learnerUi .subjectOutline .homeSubjectText { min-width: 0; flex: 1; }
+.learnerUi .subjectOutline .homeSubjectText small { display: block; margin-top: 4px; white-space: normal; color: var(--ui-ink-soft); }
+.learnerUi .subjectOutline .outlineAction { display: block; margin-top: 6px; font-size: .75rem; text-decoration: underline; color: var(--ui-ink); }
+.learnerUi .subjectOutline summary:focus-visible, .learnerUi .subjectOutline a:focus-visible { outline: 2px solid var(--learner-focus); outline-offset: 3px; }
+.learnerUi .subjectOutlineBody { margin-top: 12px; border-top: 1px solid var(--ui-line); font-size: .8125rem; line-height: 1.5; color: var(--ui-ink-soft); }
+.learnerUi .subjectOutlineBody a { display: flex; align-items: center; min-height: 44px; padding-block: 8px; color: var(--ui-ink); text-decoration: underline; overflow-wrap: anywhere; }
+.learnerUi .subjectOutline .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }

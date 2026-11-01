@@ -1,8 +1,7 @@
 /*
  * Curriculum Review subject cards on the learner home (Basic 4-6 and 7-9).
- * Presentation-only checks: the sourced NaCCA lists, no duplicates with
- * server subjects, an icon for every card, and guards that the cards are
- * not links and leave the active subject cards and gating unchanged.
+ * Presentation-only checks: sourced NaCCA lists, no duplicates with server
+ * subjects, icons, outline catalogue wiring and unchanged lesson navigation.
  */
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -84,20 +83,17 @@ for (const subject of reviewSubjectsFor("junior-high", active)) {
     assert.match(markup, /<g>/, `${subject.key} needs an icon.`);
   });
 }
-check(() => assert.equal(REVIEW_COPY.en.status, "Curriculum Review"));
+check(() => assert.equal(REVIEW_COPY.en.status, "Outline only"));
 check(() => assert.ok(REVIEW_COPY.fr.status.length > 0));
 
 /* ---- the home page wiring ---- */
 const page = read("apps/learner/app/dashboard/page.tsx");
 const start = page.indexOf('<div className="homeReview">');
-const end = page.indexOf("</ul>", start);
-const block = page.slice(start, end);
-check(() => assert.ok(start > 0, "Review block is rendered on the home."));
-check(() => assert.ok(!/<Link|href=|onClick|tabIndex/.test(block), "Review cards are not links or controls."));
-check(() => assert.match(block, /<li key=\{subject\.key\} className=\{`homeSubject review/));
+check(() => assert.ok(start > 0, "Outline catalogue is rendered on the home."));
+check(() => assert.match(page, /<SubjectOutlineCards subjects=\{reviewSubjects\} language=\{language\} \/>/));
 check(() => assert.ok(page.indexOf('<div className="homeReview">') < page.indexOf('<section className="homeTiles">'), "Subjects come before the tiles."));
 check(() => assert.match(page, /subjects\.length > 0 && reviewSubjects\.length > 0/));
-check(() => assert.match(page, /reviewSubjectsFor\(ageBand, overview\?\.availableSubjects\)/));
+check(() => assert.match(page, /outlineSubjectsForGrade\(overview\)/));
 check(() => assert.match(page, /const subjects = toFilumireSubjects\(overview\?\.availableSubjects\);/, "Active subjects still come only from the server."));
 check(() => assert.match(page, /href=\{`\/dashboard\?lang=\$\{language\}&view=learning&subjectId=\$\{subject\.subjectId\}`\}\n\s+className=\{`homeSubject \$\{subject\.key\}`\}/, "Active cards keep their links."));
 

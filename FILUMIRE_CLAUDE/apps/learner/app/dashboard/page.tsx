@@ -43,7 +43,8 @@ import ProfilePage from "../../components/filumire/ProfilePage";
 import { AVATAR_KEY, LEARNER_AVATARS, useLearnerAvatar } from "../../components/filumire/avatars";
 import { findFilumireSubject, subjectLabel, toFilumireSubjects } from "../../components/filumire/subjects";
 import { SubjectIcon } from "../../components/filumire/SubjectIcon";
-import { REVIEW_COPY, reviewSubjectsFor } from "../../components/filumire/subjectCatalogue";
+import { SubjectOutlineCards } from "../../components/filumire/SubjectOutlineCards";
+import { REVIEW_COPY, outlineSubjectsForGrade } from "../../components/filumire/subjectCatalogue";
 import { useLanguage, withLang } from "../../components/filumire/language";
 import {
   SetupClassField,
@@ -355,8 +356,8 @@ function LearnerDashboardView() {
 
   // Subjects for the learner's grade, as returned by the server.
   const subjects = toFilumireSubjects(overview?.availableSubjects);
-  // The rest of the band's official subjects, shown as Curriculum Review cards only.
-  const reviewSubjects = reviewSubjectsFor(ageBand, overview?.availableSubjects);
+  // Official outline references for the registered grade; no learning activities.
+  const reviewSubjects = outlineSubjectsForGrade(overview);
   // Display order only:the server remains authoritative for availability.
   const learningOrder = ["science", "computing", "mathematics", "english"];
   const learningSubjects = [...subjects].sort((a,b) => learningOrder.indexOf(a.key)-learningOrder.indexOf(b.key));
@@ -976,19 +977,7 @@ function LearnerDashboardView() {
                   {subjects.length > 0 && reviewSubjects.length > 0 ? (
                     <div className="homeReview">
                       <h3>{REVIEW_COPY[language].heading}</h3>
-                      <ul className="homeSubjects homeReviewList">
-                        {reviewSubjects.map((subject) => (
-                          <li key={subject.key} className={`homeSubject review ${subject.key}`}>
-                            <span className="homeSubjectIcon">
-                              <SubjectIcon name={subject.key} />
-                            </span>
-                            <span className="homeSubjectText">
-                              <strong>{subject.name[language]}</strong>
-                            </span>
-                            <small className="reviewChip">{REVIEW_COPY[language].status}</small>
-                          </li>
-                        ))}
-                      </ul>
+                      <SubjectOutlineCards subjects={reviewSubjects} language={language} />
                     </div>
                   ) : null}
                 </section>
