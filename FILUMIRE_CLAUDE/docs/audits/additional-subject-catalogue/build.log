@@ -1,0 +1,77 @@
+
+> filumire-core@0.1.0 build:learner
+> npm run build --workspace=@filumire/learner
+
+
+> @filumire/learner@0.1.0 build
+> node ../../scripts/deploy-guard.mjs && next build
+
+{"ok":true,"mode":"local"}
+   ▲ Next.js 15.5.23
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 21.4s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/36) ...
+   Generating static pages (9/36) 
+   Generating static pages (18/36) 
+   Generating static pages (27/36) 
+ ✓ Generating static pages (36/36)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                                    Size  First Load JS
+┌ ○ /                                                       4.84 kB         119 kB
+├ ○ /_not-found                                               988 B         104 kB
+├ ○ /adult                                                  9.79 kB         128 kB
+├ ƒ /api/account/access                                       214 B         103 kB
+├ ƒ /api/account/learners                                     214 B         103 kB
+├ ƒ /api/account/learners/[learnerId]                         214 B         103 kB
+├ ƒ /api/account/learners/[learnerId]/password                214 B         103 kB
+├ ƒ /api/account/learners/[learnerId]/placement               214 B         103 kB
+├ ƒ /api/account/learners/[learnerId]/teachers                214 B         103 kB
+├ ƒ /api/account/learners/[learnerId]/teachers/[teacherId]    214 B         103 kB
+├ ƒ /api/account/learners/[learnerId]/tutoring-recovery       214 B         103 kB
+├ ƒ /api/account/password                                     214 B         103 kB
+├ ƒ /api/account/phone                                        214 B         103 kB
+├ ƒ /api/account/placement-choices                            214 B         103 kB
+├ ƒ /api/account/register                                     214 B         103 kB
+├ ƒ /api/account/subscription                                 214 B         103 kB
+├ ƒ /api/account/teacher-links                                214 B         103 kB
+├ ƒ /api/account/teacher-links/[learnerId]                    214 B         103 kB
+├ ƒ /api/adult/summary                                        214 B         103 kB
+├ ƒ /api/learning                                             214 B         103 kB
+├ ƒ /api/learning/closure                                     214 B         103 kB
+├ ƒ /api/parent/messages                                      214 B         103 kB
+├ ƒ /api/presentation-scope                                   214 B         103 kB
+├ ƒ /api/session/issue                                        214 B         103 kB
+├ ƒ /api/session/login                                        214 B         103 kB
+├ ƒ /api/session/logout                                       214 B         103 kB
+├ ƒ /api/session/me                                           214 B         103 kB
+├ ƒ /api/session/select-learner                               214 B         103 kB
+├ ƒ /api/session/sign-out-others                              214 B         103 kB
+├ ƒ /api/teacher/actions                                      214 B         103 kB
+├ ƒ /api/teacher/messages                                     214 B         103 kB
+├ ƒ /api/teacher/notes                                        214 B         103 kB
+├ ƒ /api/teacher/observations                                 214 B         103 kB
+├ ƒ /api/teacher/review                                       214 B         103 kB
+├ ƒ /api/teacher/summary                                      214 B         103 kB
+├ ƒ /api/tutoring/conversation                                214 B         103 kB
+├ ○ /dashboard                                              45.6 kB         175 kB
+├ ○ /dev/age-interface                                      5.07 kB         108 kB
+├ ○ /family                                                 12.1 kB         127 kB
+├ ƒ /family-access                                          3.47 kB         115 kB
+├ ○ /learn                                                  30.2 kB         156 kB
+├ ○ /login                                                   8.1 kB         123 kB
+├ ○ /privacy                                                5.08 kB         111 kB
+├ ○ /register                                               5.82 kB         120 kB
+└ ○ /teacher                                                15.8 kB         134 kB
++ First Load JS shared by all                                103 kB
+  ├ chunks/18-536e344942e9442c.js                           46.4 kB
+  ├ chunks/87c73c54-24122e7b92478d00.js                     54.2 kB
+  └ other shared chunks (total)                             1.93 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand

@@ -1,0 +1,41 @@
+
+> filumire-core@0.1.0 test:subject-catalogue:browser
+> node ./tests/additional-subject-catalogue.browser.mjs
+
+PASS Basic 4 en 320px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 4 en 390px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 4 en 1440px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 5 en 320px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 5 en 390px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 5 en 1440px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 6 en 320px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 6 en 390px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 6 en 1440px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 7 en 320px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 7 en 390px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 7 en 1440px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 8 en 320px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 8 en 390px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 8 en 1440px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 9 en 320px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 9 en 390px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 9 en 1440px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 4 fr 320px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 4 fr 390px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 4 fr 1440px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 5 fr 320px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 5 fr 390px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 5 fr 1440px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 6 fr 320px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 6 fr 390px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 6 fr 1440px: 6 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 7 fr 320px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 7 fr 390px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 7 fr 1440px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 8 fr 320px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 8 fr 390px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 8 fr 1440px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 9 fr 320px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 9 fr 390px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS Basic 9 fr 1440px: 8 outline cards, four established subjects, keyboard, layout and unchanged progress
+PASS 36 catalogue browser cases

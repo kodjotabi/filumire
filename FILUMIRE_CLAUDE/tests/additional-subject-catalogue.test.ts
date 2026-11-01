@@ -1,10 +1,14 @@
 import assert from "node:assert/strict";
-import { createElement } from "react";
+import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { outlineSubjectsForGrade } from "../apps/learner/components/filumire/subjectCatalogue";
 import { SubjectOutlineCards } from "../apps/learner/components/filumire/SubjectOutlineCards";
 import { toFilumireSubjects } from "../apps/learner/components/filumire/subjects";
 import { getSubjectsForGrade, getAvailableSubjectsForGrade } from "../packages/curriculum-framework";
+
+// The repository's tsx runner uses the classic JSX transform in components.
+(globalThis as { React?: typeof React }).React = React;
+const { createElement } = React;
 
 const core = ["english", "mathematics", "science", "computing"];
 const availableSubjects = core.map((discipline) => ({ id: discipline, discipline }));
